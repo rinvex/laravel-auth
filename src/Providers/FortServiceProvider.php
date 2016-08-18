@@ -209,7 +209,7 @@ class FortServiceProvider extends BaseServiceProvider
     /**
      * Load the routes.
      *
-     * @param  \Illuminate\Routing\Router $router
+     * @param \Illuminate\Routing\Router $router
      *
      * @return void
      */

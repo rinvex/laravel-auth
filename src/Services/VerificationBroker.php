@@ -168,7 +168,7 @@ class VerificationBroker implements VerificationBrokerContract
         // Verify email
         app('rinvex.fort.user')->update($user->id, [
             'email_verified'    => true,
-            'email_verified_at' => new Carbon,
+            'email_verified_at' => new Carbon(),
         ]);
 
         // Once we have called this callback, we will remove this token row from the
@@ -211,7 +211,7 @@ class VerificationBroker implements VerificationBrokerContract
     /**
      * Create a new verification token for the given user.
      *
-     * @param  \Rinvex\Fort\Contracts\CanVerifyEmailContract $user
+     * @param \Rinvex\Fort\Contracts\CanVerifyEmailContract $user
      *
      * @return string
      */
@@ -223,7 +223,7 @@ class VerificationBroker implements VerificationBrokerContract
     /**
      * Delete the given verification token.
      *
-     * @param  string $token
+     * @param string $token
      *
      * @return void
      */
@@ -235,8 +235,8 @@ class VerificationBroker implements VerificationBrokerContract
     /**
      * Validate the given verification token.
      *
-     * @param  \Rinvex\Fort\Contracts\CanVerifyEmailContract $user
-     * @param  string                                        $token
+     * @param \Rinvex\Fort\Contracts\CanVerifyEmailContract $user
+     * @param string                                        $token
      *
      * @return bool
      */

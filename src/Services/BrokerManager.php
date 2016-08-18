@@ -45,8 +45,8 @@ class BrokerManager implements BrokerManagerContract
     /**
      * Create a new broker manager instance.
      *
-     * @param  \Illuminate\Foundation\Application $app
-     * @param  string                             $type
+     * @param \Illuminate\Foundation\Application $app
+     * @param string                             $type
      *
      * @return void
      */
@@ -69,7 +69,7 @@ class BrokerManager implements BrokerManagerContract
     /**
      * Resolve the given broker.
      *
-     * @param  string $name
+     * @param string $name
      *
      * @throws \InvalidArgumentException
      *
@@ -94,7 +94,7 @@ class BrokerManager implements BrokerManagerContract
     /**
      * Create a token repository instance based on the given configuration.
      *
-     * @param  array $config
+     * @param array $config
      *
      * @return \Rinvex\Fort\Contracts\ResetTokenRepositoryContract|\Rinvex\Fort\Contracts\VerificationTokenRepositoryContract
      */
@@ -115,7 +115,7 @@ class BrokerManager implements BrokerManagerContract
     /**
      * Get the broker configuration.
      *
-     * @param  string $name
+     * @param string $name
      *
      * @return array
      */
@@ -141,7 +141,7 @@ class BrokerManager implements BrokerManagerContract
     /**
      * Set the default broker name.
      *
-     * @param  string $name
+     * @param string $name
      *
      * @return void
      */
@@ -155,8 +155,8 @@ class BrokerManager implements BrokerManagerContract
     /**
      * Dynamically call the default broker instance.
      *
-     * @param  string $method
-     * @param  array  $parameters
+     * @param string $method
+     * @param array  $parameters
      *
      * @return mixed
      */

@@ -33,7 +33,7 @@ class Socialite extends Model
      *
      * @param array $attributes
      *
-     * @return        void
+     * @return void
      */
     public function __construct(array $attributes = [])
     {

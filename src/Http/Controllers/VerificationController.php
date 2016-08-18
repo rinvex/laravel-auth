@@ -82,14 +82,14 @@ class VerificationController extends FoundationController
                     'with'     => ['rinvex.fort.alert.success' => Lang::get($result)],
                 ]);
 
-            case VerificationBrokerContract::INVALID_USER;
+            case VerificationBrokerContract::INVALID_USER:
                 return intend([
                     'intended'   => route('rinvex.fort.verification.email'),
                     'withInput'  => $request->only('email'),
                     'withErrors' => ['email' => Lang::get($result)],
                 ]);
 
-            case VerificationBrokerContract::INVALID_TOKEN;
+            case VerificationBrokerContract::INVALID_TOKEN:
             default:
                 return intend([
                     'intended'   => route('rinvex.fort.verification.email'),
@@ -169,13 +169,13 @@ class VerificationController extends FoundationController
                     'with'     => ['rinvex.fort.alert.success' => Lang::get($result)],
                 ]);
 
-            case SessionGuard::AUTH_LOGIN;
+            case SessionGuard::AUTH_LOGIN:
                 return intend([
                     'intended' => route('home'),
                     'with'     => ['rinvex.fort.alert.success' => Lang::get($result)],
                 ]);
 
-            case SessionGuard::AUTH_TWOFACTOR_FAILED;
+            case SessionGuard::AUTH_TWOFACTOR_FAILED:
             default:
                 // If Two-Factor authentication failed, remember Two-Factor persistence
                 Auth::guard($this->getGuard())->rememberTwoFactor();

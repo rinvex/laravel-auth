@@ -38,7 +38,7 @@ class CreateRinvexFortSocoaliteTable extends Migration
             $table->index('user_id');
             $table->unique([
                 'provider',
-                'provider_uid'
+                'provider_uid',
             ]);
             $table->foreign('user_id')
                   ->references('id')

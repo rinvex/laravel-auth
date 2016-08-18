@@ -67,10 +67,10 @@ class ResetBroker implements ResetBrokerContract
     /**
      * Create a new password broker instance.
      *
-     * @param  \Rinvex\Fort\Contracts\ResetTokenRepositoryContract $tokens
-     * @param  \Rinvex\Fort\Contracts\UserRepositoryContract       $users
-     * @param  \Illuminate\Contracts\Mail\Mailer                   $mailer
-     * @param  string                                              $emailView
+     * @param \Rinvex\Fort\Contracts\ResetTokenRepositoryContract $tokens
+     * @param \Rinvex\Fort\Contracts\UserRepositoryContract       $users
+     * @param \Illuminate\Contracts\Mail\Mailer                   $mailer
+     * @param string                                              $emailView
      *
      * @return void
      */
@@ -197,7 +197,7 @@ class ResetBroker implements ResetBrokerContract
     /**
      * Determine if the passwords are valid for the request.
      *
-     * @param  array $credentials
+     * @param array $credentials
      *
      * @return bool
      */
@@ -236,7 +236,7 @@ class ResetBroker implements ResetBrokerContract
     /**
      * Create a new password reset token for the given user.
      *
-     * @param  \Rinvex\Fort\Contracts\CanResetPasswordContract $user
+     * @param \Rinvex\Fort\Contracts\CanResetPasswordContract $user
      *
      * @return string
      */
@@ -248,7 +248,7 @@ class ResetBroker implements ResetBrokerContract
     /**
      * Delete the given password reset token.
      *
-     * @param  string $token
+     * @param string $token
      *
      * @return void
      */
@@ -260,8 +260,8 @@ class ResetBroker implements ResetBrokerContract
     /**
      * Validate the given password reset token.
      *
-     * @param  \Rinvex\Fort\Contracts\CanResetPasswordContract $user
-     * @param  string                                          $token
+     * @param \Rinvex\Fort\Contracts\CanResetPasswordContract $user
+     * @param string                                          $token
      *
      * @return bool
      */

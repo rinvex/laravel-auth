@@ -75,7 +75,8 @@ class AccountController extends FoundationController
 
     /**
      * Process the account update form.
-     *re
+     *re.
+     *
      * @param \Rinvex\Fort\Http\Requests\AccountUpdate $request
      *
      * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse
@@ -91,12 +92,12 @@ class AccountController extends FoundationController
 
         $emailVerification = $data['email'] != $this->currentUser->email ? [
             'email_verified'    => false,
-            'email_verified_at' => null
+            'email_verified_at' => null,
         ] : [];
 
         $phoneVerification = $data['phone'] != $this->currentUser->phone ? [
             'phone_verified'    => false,
-            'phone_verified_at' => null
+            'phone_verified_at' => null,
         ] : [];
 
         $countryVerification = $data['country'] !== $this->currentUser->country;
@@ -139,7 +140,7 @@ class AccountController extends FoundationController
         if ($token) {
             app('rinvex.fort.persistence')->delete($token);
             $status = Lang::get('rinvex.fort::message.auth.session.flushed');
-        } else if (request()->get('confirm')) {
+        } elseif (request()->get('confirm')) {
             app('rinvex.fort.persistence')->deleteByUser($this->currentUser->id);
             $status = Lang::get('rinvex.fort::message.auth.session.flushedall');
         }
@@ -164,7 +165,7 @@ class AccountController extends FoundationController
 
         if (array_get($settings, 'totp.enabled') && ! session()->get('rinvex.fort.alert.success') && ! session()->get('errors')) {
             $messageBag = new MessageBag([Lang::get('rinvex.fort::message.verification.twofactor.totp.already')]);
-            $errors     = (new ViewErrorBag)->put('default', $messageBag);
+            $errors     = (new ViewErrorBag())->put('default', $messageBag);
         }
 
         if (! $secret = array_get($settings, 'totp.secret')) {
@@ -200,7 +201,7 @@ class AccountController extends FoundationController
             array_set($settings, 'totp.enabled', true);
             array_set($settings, 'totp.secret', $secret);
             array_set($settings, 'totp.backup', $backup ?: $this->generateTwoFactorTotpBackups());
-            array_set($settings, 'totp.backup_at', $backupAt ?: (new Carbon)->toDateTimeString());
+            array_set($settings, 'totp.backup_at', $backupAt ?: (new Carbon())->toDateTimeString());
 
             // Update Two-Factor settings
             $this->users->update($this->currentUser->id, [
@@ -307,7 +308,7 @@ class AccountController extends FoundationController
         $settings = $this->currentUser->getTwoFactor();
 
         array_set($settings, 'totp.backup', $this->generateTwoFactorTotpBackups());
-        array_set($settings, 'totp.backup_at', (new Carbon)->toDateTimeString());
+        array_set($settings, 'totp.backup_at', (new Carbon())->toDateTimeString());
 
         $this->users->update($this->currentUser->id, [
             'two_factor' => $settings,

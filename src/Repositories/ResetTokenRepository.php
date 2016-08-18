@@ -56,7 +56,7 @@ class ResetTokenRepository extends AbstractTokenRepository implements ResetToken
     /**
      * Delete all existing reset tokens from the database.
      *
-     * @param  \Rinvex\Fort\Contracts\CanResetPasswordContract $user
+     * @param \Rinvex\Fort\Contracts\CanResetPasswordContract $user
      *
      * @return int
      */

@@ -35,7 +35,7 @@ class CreateRinvexFortRoleUserTable extends Migration
             // Indexes
             $table->primary([
                 'role_id',
-                'user_id'
+                'user_id',
             ]);
             $table->foreign('role_id')
                   ->references('id')

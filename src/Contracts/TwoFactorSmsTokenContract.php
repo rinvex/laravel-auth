@@ -21,7 +21,7 @@ interface TwoFactorSmsTokenContract
      * Send the user Two-Factor authentication token via SMS.
      *
      * @param \Rinvex\Fort\Contracts\AuthenticatableContract $user
-     * @param boolean                                        $force
+     * @param bool                                           $force
      *
      * @return void
      */

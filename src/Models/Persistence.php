@@ -32,7 +32,7 @@ class Persistence extends Model
      * @var array
      */
     protected $dates = [
-        'created_at'
+        'created_at',
     ];
 
     /**
@@ -52,7 +52,7 @@ class Persistence extends Model
      *
      * @param array $attributes
      *
-     * @return       void
+     * @return void
      */
     public function __construct(array $attributes = [])
     {

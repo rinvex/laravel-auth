@@ -41,8 +41,8 @@ interface UserRepositoryContract extends RepositoryContract, CacheableContract
     /**
      * Find a user by their unique identifier and "remember me" token.
      *
-     * @param  mixed  $identifier
-     * @param  string $token
+     * @param mixed  $identifier
+     * @param string $token
      *
      * @return \Rinvex\Fort\Contracts\AuthenticatableContract|null
      */
@@ -51,7 +51,7 @@ interface UserRepositoryContract extends RepositoryContract, CacheableContract
     /**
      * Find a user by the given credentials.
      *
-     * @param  array $credentials
+     * @param array $credentials
      *
      * @return \Rinvex\Fort\Contracts\AuthenticatableContract|null
      */
@@ -60,8 +60,8 @@ interface UserRepositoryContract extends RepositoryContract, CacheableContract
     /**
      * Update the "remember me" token for the given user in storage.
      *
-     * @param  \Rinvex\Fort\Contracts\AuthenticatableContract $user
-     * @param  string                                         $token
+     * @param \Rinvex\Fort\Contracts\AuthenticatableContract $user
+     * @param string                                         $token
      *
      * @return void
      */
@@ -70,8 +70,8 @@ interface UserRepositoryContract extends RepositoryContract, CacheableContract
     /**
      * Validate a user against the given credentials.
      *
-     * @param  \Rinvex\Fort\Contracts\AuthenticatableContract $user
-     * @param  array                                          $credentials
+     * @param \Rinvex\Fort\Contracts\AuthenticatableContract $user
+     * @param array                                          $credentials
      *
      * @return bool
      */
