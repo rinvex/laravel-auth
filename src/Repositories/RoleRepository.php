@@ -50,7 +50,7 @@ class RoleRepository extends EloquentRepository implements RoleRepositoryContrac
     public function delete($id)
     {
         // Find the given instance
-        $deleted = false;
+        $deleted  = false;
         $instance = $id instanceof Model ? $id : $this->find($id);
 
         if ($instance && $instance->users->count() === 0) {

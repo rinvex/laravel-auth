@@ -51,7 +51,7 @@ class FortEventListener
     /**
      * Register the listeners for the subscriber.
      *
-     * @param  \Illuminate\Contracts\Events\Dispatcher $dispatcher
+     * @param \Illuminate\Contracts\Events\Dispatcher $dispatcher
      */
     public function subscribe(Dispatcher $dispatcher)
     {
@@ -156,8 +156,8 @@ class FortEventListener
     /**
      * Listen to the authentication event.
      *
-     * @param  \Rinvex\Fort\Contracts\AuthenticatableContract $user
-     * @param  bool                                           $remember
+     * @param \Rinvex\Fort\Contracts\AuthenticatableContract $user
+     * @param bool                                           $remember
      *
      * @return void
      */
@@ -169,8 +169,8 @@ class FortEventListener
     /**
      * Listen to the authentication fail event.
      *
-     * @param array   $credentials
-     * @param boolean $remember
+     * @param array $credentials
+     * @param bool  $remember
      *
      * @return void
      */
@@ -201,7 +201,7 @@ class FortEventListener
     /**
      * Listen to the authentication moderated event.
      *
-     * @param  \Rinvex\Fort\Contracts\AuthenticatableContract $user
+     * @param \Rinvex\Fort\Contracts\AuthenticatableContract $user
      *
      * @return void
      */
@@ -213,7 +213,7 @@ class FortEventListener
     /**
      * Listen to the authentication unverified event.
      *
-     * @param  \Rinvex\Fort\Contracts\AuthenticatableContract $user
+     * @param \Rinvex\Fort\Contracts\AuthenticatableContract $user
      *
      * @return void
      */
@@ -235,9 +235,9 @@ class FortEventListener
     /**
      * Listen to the authentication attempt event.
      *
-     * @param  array $credentials
-     * @param  bool  $remember
-     * @param  bool  $login
+     * @param array $credentials
+     * @param bool  $remember
+     * @param bool  $login
      *
      * @return void
      */
@@ -249,7 +249,7 @@ class FortEventListener
     /**
      * Listen to the authentication logout event.
      *
-     * @param  \Rinvex\Fort\Contracts\AuthenticatableContract $user
+     * @param \Rinvex\Fort\Contracts\AuthenticatableContract $user
      *
      * @return void
      */
@@ -579,9 +579,9 @@ class FortEventListener
 
             if (config('rinvex.fort.verification.required') && config('rinvex.fort.registration.moderated')) {
                 $body = Lang::get('rinvex.fort::email.register.welcome_verification_moderated_body');
-            } else if (! config('rinvex.fort.verification.required') && config('rinvex.fort.registration.moderated')) {
+            } elseif (! config('rinvex.fort.verification.required') && config('rinvex.fort.registration.moderated')) {
                 $body = Lang::get('rinvex.fort::email.register.welcome_moderated_body');
-            } else if (config('rinvex.fort.verification.required') && ! config('rinvex.fort.registration.moderated')) {
+            } elseif (config('rinvex.fort.verification.required') && ! config('rinvex.fort.registration.moderated')) {
                 $body = Lang::get('rinvex.fort::email.register.welcome_verification_body');
             } else {
                 $body = Lang::get('rinvex.fort::email.register.welcome_body');

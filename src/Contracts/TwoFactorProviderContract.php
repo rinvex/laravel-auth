@@ -31,7 +31,7 @@ interface TwoFactorProviderContract
      *
      * @param \Rinvex\Fort\Contracts\AuthenticatableContract $user
      * @param string                                         $token
-     * @param boolean                                        $force
+     * @param bool                                           $force
      *
      * @return bool
      */

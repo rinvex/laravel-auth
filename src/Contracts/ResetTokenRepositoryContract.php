@@ -20,7 +20,7 @@ interface ResetTokenRepositoryContract
     /**
      * Create a new token.
      *
-     * @param  \Rinvex\Fort\Contracts\CanResetPasswordContract $user
+     * @param \Rinvex\Fort\Contracts\CanResetPasswordContract $user
      *
      * @return string
      */
@@ -29,8 +29,8 @@ interface ResetTokenRepositoryContract
     /**
      * Determine if a token record exists and is valid.
      *
-     * @param  \Rinvex\Fort\Contracts\CanResetPasswordContract $user
-     * @param  string                                          $token
+     * @param \Rinvex\Fort\Contracts\CanResetPasswordContract $user
+     * @param string                                          $token
      *
      * @return bool
      */
@@ -39,7 +39,7 @@ interface ResetTokenRepositoryContract
     /**
      * Delete a reset token record.
      *
-     * @param  string $token
+     * @param string $token
      *
      * @return void
      */

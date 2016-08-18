@@ -20,7 +20,7 @@ interface BrokerManagerContract
     /**
      * Get a broker instance by name.
      *
-     * @param  string $name
+     * @param string $name
      *
      * @return \Rinvex\Fort\Contracts\ResetBrokerContract|\Rinvex\Fort\Contracts\VerificationBrokerContract
      */

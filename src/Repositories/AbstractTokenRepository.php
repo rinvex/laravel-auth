@@ -85,14 +85,14 @@ abstract class AbstractTokenRepository
             'token'      => $token,
             'agent'      => $agent,
             'ip'         => $ip,
-            'created_at' => new Carbon,
+            'created_at' => new Carbon(),
         ];
     }
 
     /**
      * Determine if the given token has expired.
      *
-     * @param  array $token
+     * @param array $token
      *
      * @return bool
      */
@@ -170,8 +170,8 @@ abstract class AbstractTokenRepository
     /**
      * Get token data.
      *
-     * @param  \Rinvex\Fort\Contracts\CanResetPasswordContract $user
-     * @param  string                                          $token
+     * @param \Rinvex\Fort\Contracts\CanResetPasswordContract $user
+     * @param string                                          $token
      *
      * @return array
      */

@@ -75,7 +75,7 @@ class AbilityRepository extends EloquentRepository implements AbilityRepositoryC
     public function delete($id)
     {
         // Find the given instance
-        $deleted = false;
+        $deleted  = false;
         $instance = $id instanceof Model ? $id : $this->find($id);
 
         if ($instance && $instance->roles->count() === 0 && $instance->users->count() === 0) {

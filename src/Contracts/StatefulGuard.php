@@ -22,9 +22,9 @@ interface StatefulGuard extends Guard
     /**
      * Attempt to authenticate a user using the given credentials.
      *
-     * @param  array $credentials
-     * @param  bool  $remember
-     * @param  bool  $login
+     * @param array $credentials
+     * @param bool  $remember
+     * @param bool  $login
      *
      * @return string
      */
@@ -33,7 +33,7 @@ interface StatefulGuard extends Guard
     /**
      * Log a user into the application without sessions or cookies.
      *
-     * @param  array $credentials
+     * @param array $credentials
      *
      * @return bool
      */
@@ -42,9 +42,9 @@ interface StatefulGuard extends Guard
     /**
      * Log a user into the application.
      *
-     * @param  \Rinvex\Fort\Contracts\AuthenticatableContract $user
-     * @param  bool                                           $remember
-     * @param  string                                         $persistence
+     * @param \Rinvex\Fort\Contracts\AuthenticatableContract $user
+     * @param bool                                           $remember
+     * @param string                                         $persistence
      *
      * @return string
      */
@@ -53,8 +53,8 @@ interface StatefulGuard extends Guard
     /**
      * Log the given user ID into the application.
      *
-     * @param  mixed $id
-     * @param  bool  $remember
+     * @param mixed $id
+     * @param bool  $remember
      *
      * @return \Rinvex\Fort\Contracts\AuthenticatableContract
      */
@@ -63,7 +63,7 @@ interface StatefulGuard extends Guard
     /**
      * Log the given user ID into the application without sessions or cookies.
      *
-     * @param  mixed $id
+     * @param mixed $id
      *
      * @return bool
      */

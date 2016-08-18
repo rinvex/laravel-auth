@@ -54,7 +54,7 @@ class TwoFactorTotpProvider
      */
     public function generateSecretKey($length = 32, $prefix = '')
     {
-        $b32 = "234567QWERTYUIOPASDFGHJKLZXCVBNM";
+        $b32 = '234567QWERTYUIOPASDFGHJKLZXCVBNM';
 
         $secret = $prefix ? $this->toBase32($prefix) : '';
 
@@ -70,7 +70,7 @@ class TwoFactorTotpProvider
     /**
      * Get the current Unix Timestamp divided by the KEY_REGENERATION period.
      *
-     * @return integer
+     * @return int
      **/
     public function getTimestamp()
     {
@@ -84,7 +84,7 @@ class TwoFactorTotpProvider
      *
      * @throws \Exception
      *
-     * @return integer
+     * @return int
      */
     public function base32Decode($b32)
     {
@@ -141,12 +141,12 @@ class TwoFactorTotpProvider
      * Verify given key against the current timestamp.
      * Check $window keys either side of the timestamp.
      *
-     * @param string  $b32seed
-     * @param string  $key - User specified key
-     * @param integer $window
-     * @param boolean $useTimeStamp
+     * @param string $b32seed
+     * @param string $key          - User specified key
+     * @param int    $window
+     * @param bool   $useTimeStamp
      *
-     * @return boolean
+     * @return bool
      **/
     public function verifyKey($b32seed, $key, $window = 1, $useTimeStamp = true)
     {
@@ -181,7 +181,7 @@ class TwoFactorTotpProvider
      *
      * @param string $hash
      *
-     * @return integer
+     * @return int
      **/
     public function oathTruncate($hash)
     {

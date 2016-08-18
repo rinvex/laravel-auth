@@ -189,10 +189,10 @@ class SessionGuard implements StatefulGuard, SupportsBasicAuth
     /**
      * Create a new authentication guard.
      *
-     * @param  string                                        $name
-     * @param  \Rinvex\Fort\Contracts\UserRepositoryContract $provider
-     * @param  \Illuminate\Session\SessionInterface          $session
-     * @param  \Illuminate\Http\Request                      $request
+     * @param string                                        $name
+     * @param \Rinvex\Fort\Contracts\UserRepositoryContract $provider
+     * @param \Illuminate\Session\SessionInterface          $session
+     * @param \Illuminate\Http\Request                      $request
      *
      * @return void
      */
@@ -236,7 +236,7 @@ class SessionGuard implements StatefulGuard, SupportsBasicAuth
         // every call to this method because that would be tremendously slow.
         if (! is_null($this->user)) {
             // Update last activity
-            $this->provider->update($this->user->id, ['active_at' => new Carbon]);
+            $this->provider->update($this->user->id, ['active_at' => new Carbon()]);
 
             return $this->user;
         }
@@ -294,7 +294,7 @@ class SessionGuard implements StatefulGuard, SupportsBasicAuth
     /**
      * Pull a user from the repository by its recaller ID.
      *
-     * @param  string $recaller
+     * @param string $recaller
      *
      * @return mixed
      */
@@ -336,7 +336,7 @@ class SessionGuard implements StatefulGuard, SupportsBasicAuth
     /**
      * Determine if the recaller cookie is in a valid format.
      *
-     * @param  mixed $recaller
+     * @param mixed $recaller
      *
      * @return bool
      */
@@ -354,7 +354,7 @@ class SessionGuard implements StatefulGuard, SupportsBasicAuth
     /**
      * Log a user into the application without sessions or cookies.
      *
-     * @param  array $credentials
+     * @param array $credentials
      *
      * @return bool
      */
@@ -372,7 +372,7 @@ class SessionGuard implements StatefulGuard, SupportsBasicAuth
     /**
      * Validate a user's credentials.
      *
-     * @param  array $credentials
+     * @param array $credentials
      *
      * @return bool
      */
@@ -384,8 +384,8 @@ class SessionGuard implements StatefulGuard, SupportsBasicAuth
     /**
      * Attempt to authenticate using HTTP Basic Auth.
      *
-     * @param  string $field
-     * @param  array  $extraConditions
+     * @param string $field
+     * @param array  $extraConditions
      *
      * @return \Illuminate\Http\Response|null
      */
@@ -408,8 +408,8 @@ class SessionGuard implements StatefulGuard, SupportsBasicAuth
     /**
      * Perform a stateless HTTP Basic login attempt.
      *
-     * @param  string $field
-     * @param  array  $extraConditions
+     * @param string $field
+     * @param array  $extraConditions
      *
      * @return \Illuminate\Http\Response|null
      */
@@ -425,9 +425,9 @@ class SessionGuard implements StatefulGuard, SupportsBasicAuth
     /**
      * Attempt to authenticate using basic authentication.
      *
-     * @param  \Illuminate\Http\Request $request
-     * @param  string                   $field
-     * @param  array                    $extraConditions
+     * @param \Illuminate\Http\Request $request
+     * @param string                   $field
+     * @param array                    $extraConditions
      *
      * @return bool
      */
@@ -445,8 +445,8 @@ class SessionGuard implements StatefulGuard, SupportsBasicAuth
     /**
      * Get the credential array for a HTTP Basic request.
      *
-     * @param  \Illuminate\Http\Request $request
-     * @param  string                   $field
+     * @param \Illuminate\Http\Request $request
+     * @param string                   $field
      *
      * @return array
      */
@@ -454,7 +454,7 @@ class SessionGuard implements StatefulGuard, SupportsBasicAuth
     {
         return [
             $field     => $request->getUser(),
-            'password' => $request->getPassword()
+            'password' => $request->getPassword(),
         ];
     }
 
@@ -473,9 +473,9 @@ class SessionGuard implements StatefulGuard, SupportsBasicAuth
     /**
      * Attempt to authenticate a user using the given credentials.
      *
-     * @param  array $credentials
-     * @param  bool  $remember
-     * @param  bool  $login
+     * @param array $credentials
+     * @param bool  $remember
+     * @param bool  $login
      *
      * @return string
      */
@@ -564,8 +564,8 @@ class SessionGuard implements StatefulGuard, SupportsBasicAuth
     /**
      * Determine if the user matches the credentials.
      *
-     * @param  mixed $user
-     * @param  array $credentials
+     * @param mixed $user
+     * @param array $credentials
      *
      * @return bool
      */
@@ -577,9 +577,9 @@ class SessionGuard implements StatefulGuard, SupportsBasicAuth
     /**
      * Log a user into the application.
      *
-     * @param  \Rinvex\Fort\Contracts\AuthenticatableContract $user
-     * @param  bool                                           $remember
-     * @param  string                                         $persistence
+     * @param \Rinvex\Fort\Contracts\AuthenticatableContract $user
+     * @param bool                                           $remember
+     * @param string                                         $persistence
      *
      * @return string
      */
@@ -611,7 +611,7 @@ class SessionGuard implements StatefulGuard, SupportsBasicAuth
         }
 
         // Update user last login datetime
-        $this->provider->update($user->id, ['login_at' => new Carbon]);
+        $this->provider->update($user->id, ['login_at' => new Carbon()]);
 
         // Update user persistence
         $this->updatePersistence($user->id, $persistence ?: $this->session->getId(), false);
@@ -635,7 +635,7 @@ class SessionGuard implements StatefulGuard, SupportsBasicAuth
     /**
      * Update the session with the given ID.
      *
-     * @param  string $id
+     * @param string $id
      *
      * @return void
      */
@@ -649,8 +649,8 @@ class SessionGuard implements StatefulGuard, SupportsBasicAuth
     /**
      * Log the given user ID into the application.
      *
-     * @param  mixed $id
-     * @param  bool  $remember
+     * @param mixed $id
+     * @param bool  $remember
      *
      * @return \Rinvex\Fort\Contracts\AuthenticatableContract
      */
@@ -666,7 +666,7 @@ class SessionGuard implements StatefulGuard, SupportsBasicAuth
     /**
      * Log the given user ID into the application without sessions or cookies.
      *
-     * @param  mixed $id
+     * @param mixed $id
      *
      * @return bool
      */
@@ -684,7 +684,7 @@ class SessionGuard implements StatefulGuard, SupportsBasicAuth
     /**
      * Queue the recaller cookie into the cookie jar.
      *
-     * @param  \Rinvex\Fort\Contracts\AuthenticatableContract $user
+     * @param \Rinvex\Fort\Contracts\AuthenticatableContract $user
      *
      * @return void
      */
@@ -698,7 +698,7 @@ class SessionGuard implements StatefulGuard, SupportsBasicAuth
     /**
      * Create a "remember me" cookie for a given ID.
      *
-     * @param  string $value
+     * @param string $value
      *
      * @return \Symfony\Component\HttpFoundation\Cookie
      */
@@ -762,7 +762,7 @@ class SessionGuard implements StatefulGuard, SupportsBasicAuth
     /**
      * Refresh the "remember me" token for the user.
      *
-     * @param  \Rinvex\Fort\Contracts\AuthenticatableContract $user
+     * @param \Rinvex\Fort\Contracts\AuthenticatableContract $user
      *
      * @return void
      */
@@ -776,7 +776,7 @@ class SessionGuard implements StatefulGuard, SupportsBasicAuth
     /**
      * Create a new "remember me" token for the user if one doesn't already exist.
      *
-     * @param  \Rinvex\Fort\Contracts\AuthenticatableContract $user
+     * @param \Rinvex\Fort\Contracts\AuthenticatableContract $user
      *
      * @return void
      */
@@ -790,9 +790,9 @@ class SessionGuard implements StatefulGuard, SupportsBasicAuth
     /**
      * Get the cookie creator instance used by the guard.
      *
-     * @return \Illuminate\Contracts\Cookie\QueueingFactory
-     *
      * @throws \RuntimeException
+     *
+     * @return \Illuminate\Contracts\Cookie\QueueingFactory
      */
     public function getCookieJar()
     {
@@ -806,7 +806,7 @@ class SessionGuard implements StatefulGuard, SupportsBasicAuth
     /**
      * Set the cookie creator instance used by the guard.
      *
-     * @param  \Illuminate\Contracts\Cookie\QueueingFactory $cookie
+     * @param \Illuminate\Contracts\Cookie\QueueingFactory $cookie
      *
      * @return void
      */
@@ -828,7 +828,7 @@ class SessionGuard implements StatefulGuard, SupportsBasicAuth
     /**
      * Set the event dispatcher instance.
      *
-     * @param  \Illuminate\Contracts\Events\Dispatcher $events
+     * @param \Illuminate\Contracts\Events\Dispatcher $events
      *
      * @return void
      */
@@ -860,7 +860,7 @@ class SessionGuard implements StatefulGuard, SupportsBasicAuth
     /**
      * Set the user provider used by the guard.
      *
-     * @param  \Rinvex\Fort\Contracts\UserRepositoryContract $provider
+     * @param \Rinvex\Fort\Contracts\UserRepositoryContract $provider
      *
      * @return void
      */
@@ -882,7 +882,7 @@ class SessionGuard implements StatefulGuard, SupportsBasicAuth
     /**
      * Set the current user.
      *
-     * @param  \Rinvex\Fort\Contracts\AuthenticatableContract $user
+     * @param \Rinvex\Fort\Contracts\AuthenticatableContract $user
      *
      * @return void
      */
@@ -906,7 +906,7 @@ class SessionGuard implements StatefulGuard, SupportsBasicAuth
     /**
      * Set the current request instance.
      *
-     * @param  \Illuminate\Http\Request $request
+     * @param \Illuminate\Http\Request $request
      *
      * @return $this
      */
@@ -986,9 +986,9 @@ class SessionGuard implements StatefulGuard, SupportsBasicAuth
     /**
      * Update user persistence.
      *
-     * @param int     $id
-     * @param string  $token
-     * @param boolean $attempt
+     * @param int    $id
+     * @param string $token
+     * @param bool   $attempt
      *
      * @return void
      */
@@ -1007,7 +1007,7 @@ class SessionGuard implements StatefulGuard, SupportsBasicAuth
             'attempt'    => $attempt,
             'agent'      => $agent,
             'ip'         => $ip,
-            'created_at' => new Carbon,
+            'created_at' => new Carbon(),
         ]);
     }
 

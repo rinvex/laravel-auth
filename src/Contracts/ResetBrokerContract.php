@@ -64,8 +64,8 @@ interface ResetBrokerContract
     /**
      * Send a password reset link to a user.
      *
-     * @param  array         $credentials
-     * @param  \Closure|null $callback
+     * @param array         $credentials
+     * @param \Closure|null $callback
      *
      * @return string
      */
@@ -74,8 +74,8 @@ interface ResetBrokerContract
     /**
      * Reset the password for the given credentials.
      *
-     * @param  array    $credentials
-     * @param  \Closure $callback
+     * @param array    $credentials
+     * @param \Closure $callback
      *
      * @return mixed
      */
@@ -84,7 +84,7 @@ interface ResetBrokerContract
     /**
      * Set a custom password validator.
      *
-     * @param  \Closure $callback
+     * @param \Closure $callback
      *
      * @return void
      */
@@ -93,7 +93,7 @@ interface ResetBrokerContract
     /**
      * Determine if the passwords match for the request.
      *
-     * @param  array $credentials
+     * @param array $credentials
      *
      * @return bool
      */

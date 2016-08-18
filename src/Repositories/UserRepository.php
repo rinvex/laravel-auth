@@ -126,7 +126,7 @@ class UserRepository extends EloquentRepository implements UserRepositoryContrac
     /**
      * Sets the hasher implementation.
      *
-     * @param  \Illuminate\Contracts\Hashing\Hasher $hasher
+     * @param \Illuminate\Contracts\Hashing\Hasher $hasher
      *
      * @return $this
      */
