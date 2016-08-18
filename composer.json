@@ -1,0 +1,69 @@
+{
+    "name": "rinvex/fort",
+    "description": "A powerful authentication, authorization and verification package built on top of Laravel. It provides developers with Role Based Access Control, Two-Factor Authentication, Social Authentication, and much more, compatible Laravel’s standard API and fully featured out of the box.",
+    "keywords": [
+        "authentication",
+        "authorization",
+        "verification",
+        "abilities",
+        "security",
+        "laravel",
+        "rinvex",
+        "users",
+        "rbac",
+        "acl",
+        "roles"
+    ],
+    "license": "MIT",
+    "homepage": "https://rinvex.com",
+    "support": {
+        "email": "help@rinvex.com",
+        "issues": "https://github.com/rinvex/fort/issues",
+        "source": "https://github.com/rinvex/fort",
+        "docs": "https://github.com/rinvex/fort/README.md"
+    },
+    "authors": [
+        {
+            "name": "Rinvex LLC",
+            "homepage": "https://rinvex.com",
+            "email": "help@rinvex.com"
+        },
+        {
+            "name": "Abdelrahman Omran",
+            "homepage": "https://omranic.com",
+            "email": "me@omranic.com",
+            "role": "Project Lead"
+        },
+        {
+            "name": "The Generous Laravel Community",
+            "homepage": "https://github.com/rinvex/fort/contributors"
+        }
+    ],
+    "require": {
+        "php": ">=5.5.9",
+        "laravel/socialite": "2.0.*",
+        "bacon/bacon-qr-code": "1.0.*",
+        "rinvex/support": "dev-develop",
+        "rinvex/country": "dev-develop",
+        "symfony/polyfill-php56": "1.2.*",
+        "rinvex/repository": "dev-develop",
+        "paragonie/random_compat": "2.0.*",
+        "christian-riesen/base32": "1.3.*",
+        "laravel/framework": "5.1.*|5.2.*|5.3.*"
+    },
+    "autoload": {
+        "files": [
+            "src/Support/helpers.php"
+        ],
+        "psr-4": {
+            "Rinvex\\Fort\\": "src"
+        }
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "1.0-dev"
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
+}
