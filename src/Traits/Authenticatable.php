@@ -49,7 +49,7 @@ trait Authenticatable
      */
     public function getCountryCodeForTwoFactorAuth()
     {
-        return Country::find($this->country)['dialling']['calling_code'][0];
+        return (new Country)->find($this->country)['dialling']['calling_code'][0];
     }
 
     /**

@@ -65,10 +65,10 @@ class AccountController extends FoundationController
      *
      * @return \Illuminate\Http\Response
      */
-    public function showAccountUpdate()
+    public function showAccountUpdate(Country $country)
     {
         $twoFactor = $this->currentUser->getTwoFactor();
-        $countries = Country::findAll()->pluck('name.common', 'iso_3166_1_alpha2');
+        $countries = $country->findAll()->pluck('name.common', 'iso_3166_1_alpha2');
 
         return view('rinvex.fort::account.page', compact('twoFactor', 'countries'));
     }
