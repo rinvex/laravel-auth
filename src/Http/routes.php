@@ -86,10 +86,10 @@ Route::group([
 
             Route::group(['as' => 'totp.', 'prefix' => 'totp'], function () {
 
-                Route::get('backup', ['as' => 'backup', 'uses' => 'AccountController@processTwoFactorTotpBackup']);
-                Route::get('disable', ['as' => 'disable', 'uses' => 'AccountController@processTwoFactorTotpDisable']);
                 Route::get('enable', ['as' => 'enable', 'uses' => 'AccountController@showTwoFactorTotpEnable']);
                 Route::post('enable', ['as' => 'enable.post', 'uses' => 'AccountController@processTwoFactorTotpEnable']);
+                Route::get('disable', ['as' => 'disable', 'uses' => 'AccountController@processTwoFactorTotpDisable']);
+                Route::get('backup', ['as' => 'backup', 'uses' => 'AccountController@processTwoFactorTotpBackup']);
 
             });
 
@@ -132,13 +132,13 @@ Route::group([
         Route::get('phone', ['as' => 'phone', 'uses' => 'VerificationController@showPhoneVerificationRequest']);
         Route::post('phone', ['as' => 'phone.post', 'uses' => 'VerificationController@processPhoneVerificationRequest']);
 
-        Route::get('phone/verify', ['as' => 'phone.token', 'uses' => 'VerificationController@showPhoneVerification']);
-        Route::post('phone/verify', ['as' => 'phone.token.post', 'uses' => 'VerificationController@processPhoneVerification']);
+        Route::get('phone/verify', ['as' => 'phone.verify', 'uses' => 'VerificationController@showPhoneVerification']);
+        Route::post('phone/verify', ['as' => 'phone.verify.post', 'uses' => 'VerificationController@processPhoneVerification']);
 
         Route::get('email', ['as' => 'email', 'uses' => 'VerificationController@showEmailVerificationRequest']);
         Route::post('email', ['as' => 'email.post', 'uses' => 'VerificationController@processEmailVerificationRequest']);
 
-        Route::get('email/verify', ['as' => 'email.token', 'uses' => 'VerificationController@processEmailVerification']);
+        Route::get('email/verify', ['as' => 'email.verify', 'uses' => 'VerificationController@processEmailVerification']);
 
     });
 

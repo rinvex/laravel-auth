@@ -128,7 +128,7 @@ class VerificationController extends FoundationController
             ->sendPhoneVerification($this->currentUser, $request->get('method')) ? 'sent' : 'failed';
 
         return intend([
-            'intended' => route('rinvex.fort.verification.phone.token'),
+            'intended' => route('rinvex.fort.verification.phone.verify'),
             'with'     => ['rinvex.fort.alert.success' => Lang::get('rinvex.fort::message.verification.phone.'.$status)],
         ]);
     }

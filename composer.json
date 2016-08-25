@@ -1,16 +1,22 @@
 {
     "name": "rinvex/fort",
-    "description": "A powerful authentication, authorization and verification package built on top of Laravel. It provides developers with Role Based Access Control, Two-Factor Authentication, Social Authentication, and much more, compatible Laravel’s standard API and fully featured out of the box.",
+    "description": "Rinvex Fort is a powerful authentication, authorization and verification package built on top of Laravel. It provides developers with Role Based Access Control, Two-Factor Authentication, Social Authentication, compatible with Laravel’s standard API and fully featured all-in-one solution out of the box.",
     "keywords": [
         "authentication",
         "authorization",
         "verification",
+        "activation",
         "abilities",
+        "phone",
+        "sms",
+        "call",
+        "users",
         "security",
+        "twofactor",
         "laravel",
         "rinvex",
-        "users",
         "rbac",
+        "totp",
         "acl",
         "roles"
     ],
@@ -49,7 +55,7 @@
         "rinvex/repository": "dev-develop",
         "paragonie/random_compat": "2.0.*",
         "christian-riesen/base32": "1.3.*",
-        "laravel/framework": "5.1.*|5.2.*|5.3.*"
+        "laravel/framework": "5.2.*|5.3.*"
     },
     "autoload": {
         "files": [

@@ -15,7 +15,7 @@
                     <div class="panel-body">
 
                         {{-- Form --}}
-                        <form id="rinvex-fort-user-account-form" class="form-horizontal" role="form" method="POST" action="{{ route('rinvex.fort.verification.phone.token.post') }}">
+                        <form id="rinvex-fort-user-account-form" class="form-horizontal" role="form" method="POST" action="{{ route('rinvex.fort.verification.phone.verify.post') }}">
 
                             {{-- Form: CSRF Token --}}
                             {!! csrf_field() !!}

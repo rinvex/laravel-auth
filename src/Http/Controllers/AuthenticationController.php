@@ -190,7 +190,7 @@ class AuthenticationController extends FoundationController
 
             // Two-Factor authentication required
             case SessionGuard::AUTH_TWOFACTOR_REQUIRED:
-                $route = ! isset(session('rinvex.fort.twofactor.methods')['totp']) ? 'rinvex.fort.verification.phone' : 'rinvex.fort.verification.phone.token';
+                $route = ! isset(session('rinvex.fort.twofactor.methods')['totp']) ? 'rinvex.fort.verification.phone' : 'rinvex.fort.verification.phone.verify';
 
                 return intend([
                     'route' => $route,

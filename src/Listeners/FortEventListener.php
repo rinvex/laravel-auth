@@ -15,8 +15,9 @@
 
 namespace Rinvex\Fort\Listeners;
 
-use Rinvex\Fort\Models\Role;
 use Illuminate\Http\Request;
+use Rinvex\Fort\Models\Role;
+use Rinvex\Fort\Models\User;
 use Rinvex\Fort\Models\Ability;
 use Rinvex\Fort\Models\Persistence;
 use Illuminate\Support\Facades\Lang;
@@ -25,7 +26,6 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Contracts\Events\Dispatcher;
 use Illuminate\Contracts\Container\Container;
 use Rinvex\Fort\Contracts\AuthenticatableContract;
-use Rinvex\Fort\Models\User;
 
 class FortEventListener
 {
