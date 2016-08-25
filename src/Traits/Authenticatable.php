@@ -49,7 +49,7 @@ trait Authenticatable
      */
     public function getCountryCodeForTwoFactorAuth()
     {
-        return array_get((new Country)->find($this->country), 'dialling.calling_code.0');
+        return array_get((new Country())->find($this->country), 'dialling.calling_code.0');
     }
 
     /**
@@ -65,7 +65,7 @@ trait Authenticatable
     /**
      * Get the Two-Factor options in array format.
      *
-     * @param  string $options
+     * @param string $options
      *
      * @return array
      */
@@ -77,7 +77,7 @@ trait Authenticatable
     /**
      * Set the Two-Factor options in array format.
      *
-     * @param  array $options
+     * @param array $options
      *
      * @return void
      */

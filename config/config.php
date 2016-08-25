@@ -600,7 +600,7 @@ return [
 
             'keys' => [
                 'live'    => env('AUTHY_KEYS_LIVE', ''),
-                'sandbox' => env('AUTHY_KEYS_SANDBOX', '')
+                'sandbox' => env('AUTHY_KEYS_SANDBOX', ''),
             ],
 
         ],

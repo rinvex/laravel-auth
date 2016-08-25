@@ -30,7 +30,7 @@ interface VerificationTokenRepositoryContract
      * Determine if a verification token record exists and is valid.
      *
      * @param \Rinvex\Fort\Contracts\CanVerifyEmailContract $user
-     * @param  string                                       $token
+     * @param string                                        $token
      *
      * @return bool
      */
@@ -39,7 +39,7 @@ interface VerificationTokenRepositoryContract
     /**
      * Delete a verification token record.
      *
-     * @param  string $token
+     * @param string $token
      *
      * @return void
      */

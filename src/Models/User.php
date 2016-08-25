@@ -43,7 +43,7 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
     ];
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     protected $fillable = [
         'username',
@@ -70,7 +70,7 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
     ];
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     protected $hidden = [
         'password',
@@ -83,7 +83,7 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
      *
      * @param array $attributes
      *
-     * @return       void
+     * @return void
      */
     public function __construct(array $attributes = [])
     {

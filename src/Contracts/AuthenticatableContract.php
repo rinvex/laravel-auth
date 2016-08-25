@@ -59,7 +59,7 @@ interface AuthenticatableContract extends BaseAuthenticatable
     /**
      * Set the Two-Factor options in array format.
      *
-     * @param  array $options
+     * @param array $options
      *
      * @return void
      */

@@ -50,7 +50,7 @@ class CreateRinvexFortUsersTable extends Migration
             $table->enum('gender', [
                 'male',
                 'female',
-                'undisclosed'
+                'undisclosed',
             ])->default('undisclosed');
             $table->boolean('moderated')->default(false);
             $table->timestamp('login_at')->nullable();

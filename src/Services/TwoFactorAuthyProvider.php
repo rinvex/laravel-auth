@@ -29,7 +29,7 @@ class TwoFactorAuthyProvider implements TwoFactorProviderContract, TwoFactorSmsT
     /**
      * Array containing configuration data.
      *
-     * @var array $config
+     * @var array
      */
     private $config;
 
@@ -62,7 +62,7 @@ class TwoFactorAuthyProvider implements TwoFactorProviderContract, TwoFactorSmsT
             $url          = $this->config['api_url'].'/protected/json/sms/'.$authyId.'?api_key='.$apiKey.$force;
 
             // Send SMS auth token
-            if (($response = json_decode((new HttpClient)->get($url)->getBody(), true)) && $response['success']) {
+            if (($response = json_decode((new HttpClient())->get($url)->getBody(), true)) && $response['success']) {
                 // Fire the Two-Factor phone sms success event
                 event('rinvex.fort.twofactor.phone.sms.success', [$user, $response]);
 
@@ -101,7 +101,7 @@ class TwoFactorAuthyProvider implements TwoFactorProviderContract, TwoFactorSmsT
             $url          = $this->config['api_url'].'/protected/json/call/'.$authyId.'?force=true&api_key='.$apiKey.$force;
 
             // Send SMS auth token
-            if (($response = json_decode((new HttpClient)->get($url)->getBody(), true)) && $response['success']) {
+            if (($response = json_decode((new HttpClient())->get($url)->getBody(), true)) && $response['success']) {
                 // Fire the Two-Factor phone call success event
                 event('rinvex.fort.twofactor.phone.call.success', [$user, $response]);
 
@@ -134,7 +134,7 @@ class TwoFactorAuthyProvider implements TwoFactorProviderContract, TwoFactorSmsT
 
             // Register given user with authy and get response
             $url      = $this->config['api_url'].'/protected/json/users/new?api_key='.$this->config['api_key'];
-            $response = json_decode((new HttpClient)->post($url, [
+            $response = json_decode((new HttpClient())->post($url, [
                 'form_params' => [
                     'user' => [
                         'email'        => $user->getEmailForTwoFactorAuth(),
@@ -195,13 +195,13 @@ class TwoFactorAuthyProvider implements TwoFactorProviderContract, TwoFactorSmsT
             $url          = $this->config['api_url'].'/protected/json/verify/'.$token.'/'.$authyId.'?force=true&api_key='.$apiKey.$force;
 
             // Send SMS auth token
-            $response = json_decode((new HttpClient)->get($url)->getBody(), true);
+            $response = json_decode((new HttpClient())->get($url)->getBody(), true);
 
             // Authy API returns 'true' as a string not a boolean only at this endpoint!
             if ($response['success'] === 'true') {
                 app('rinvex.fort.user')->update($user->id, [
                     'phone_verified'    => true,
-                    'phone_verified_at' => new Carbon,
+                    'phone_verified_at' => new Carbon(),
                 ]);
 
                 // Fire the Two-Factor phone verify success event
@@ -242,7 +242,7 @@ class TwoFactorAuthyProvider implements TwoFactorProviderContract, TwoFactorSmsT
             $url          = $this->config['api_url'].'/protected/json/users/delete/'.$authyId.'?api_key='.$apiKey;
 
             // Send SMS auth token
-            $response = json_decode((new HttpClient)->post($url)->getBody(), true);
+            $response = json_decode((new HttpClient())->post($url)->getBody(), true);
 
             array_set($settings, 'phone', []);
 

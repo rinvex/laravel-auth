@@ -35,7 +35,7 @@ class CreateRinvexFortAbilityRoleTable extends Migration
             // Indexes
             $table->primary([
                 'ability_id',
-                'role_id'
+                'role_id',
             ]);
             $table->foreign('ability_id')
                   ->references('id')

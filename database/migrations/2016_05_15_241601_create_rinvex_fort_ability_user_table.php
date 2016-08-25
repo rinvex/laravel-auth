@@ -35,7 +35,7 @@ class CreateRinvexFortAbilityUserTable extends Migration
             // Indexes
             $table->primary([
                 'ability_id',
-                'user_id'
+                'user_id',
             ]);
             $table->foreign('ability_id')
                   ->references('id')

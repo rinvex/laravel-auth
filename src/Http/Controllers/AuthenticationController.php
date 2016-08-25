@@ -62,7 +62,7 @@ class AuthenticationController extends FoundationController
     /**
      * Process to the login form.
      *
-     * @param  \Rinvex\Fort\Http\Requests\UserAuthentication $request
+     * @param \Rinvex\Fort\Http\Requests\UserAuthentication $request
      *
      * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse
      */
@@ -102,7 +102,7 @@ class AuthenticationController extends FoundationController
     /**
      * Show the registration form.
      *
-     * @param  \Rinvex\Fort\Http\Requests\UserRegistration $request
+     * @param \Rinvex\Fort\Http\Requests\UserRegistration $request
      *
      * @return \Illuminate\Http\Response
      */
@@ -117,7 +117,7 @@ class AuthenticationController extends FoundationController
     /**
      * Process the registration form.
      *
-     * @param  \Rinvex\Fort\Http\Requests\UserRegistration $request
+     * @param \Rinvex\Fort\Http\Requests\UserRegistration $request
      *
      * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse
      */

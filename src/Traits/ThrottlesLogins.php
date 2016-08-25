@@ -23,7 +23,7 @@ trait ThrottlesLogins
     /**
      * Get the lockout seconds.
      *
-     * @param  \Illuminate\Http\Request $request
+     * @param \Illuminate\Http\Request $request
      *
      * @return int
      */
@@ -35,7 +35,7 @@ trait ThrottlesLogins
     /**
      * Clear the login locks for the given user credentials.
      *
-     * @param  \Illuminate\Http\Request $request
+     * @param \Illuminate\Http\Request $request
      *
      * @return void
      */
@@ -47,7 +47,7 @@ trait ThrottlesLogins
     /**
      * Get the throttle key for the given request.
      *
-     * @param  \Illuminate\Http\Request $request
+     * @param \Illuminate\Http\Request $request
      *
      * @return string
      */
@@ -59,7 +59,7 @@ trait ThrottlesLogins
     /**
      * Determine if the user has too many failed login attempts.
      *
-     * @param  \Illuminate\Http\Request $request
+     * @param \Illuminate\Http\Request $request
      *
      * @return bool
      */
@@ -75,7 +75,7 @@ trait ThrottlesLogins
     /**
      * Increment the login attempts for the user.
      *
-     * @param  \Illuminate\Http\Request $request
+     * @param \Illuminate\Http\Request $request
      *
      * @return int
      */
@@ -87,7 +87,7 @@ trait ThrottlesLogins
     /**
      * Determine how many retries are left for the user.
      *
-     * @param  \Illuminate\Http\Request $request
+     * @param \Illuminate\Http\Request $request
      *
      * @return int
      */
