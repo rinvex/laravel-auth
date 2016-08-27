@@ -18,7 +18,7 @@
                         <form id="rinvex-fort-user-account-form" class="form-horizontal" role="form" method="POST" action="{{ route('rinvex.fort.account.twofactor.totp.enable.post') }}">
 
                             {{-- Form: CSRF Token --}}
-                            {!! csrf_field() !!}
+                            {{ csrf_field() }}
 
                             @include('rinvex.fort::alerts.success')
                             @include('rinvex.fort::alerts.warning')

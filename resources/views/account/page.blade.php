@@ -18,7 +18,7 @@
                         <form id="rinvex-fort-user-account-form" class="form-horizontal" role="form" method="POST" action="{{ route('rinvex.fort.account.page.post') }}">
 
                             {{-- Form: CSRF Token --}}
-                            {!! csrf_field() !!}
+                            {{ csrf_field() }}
 
                             <input id="id" name="id" type="hidden" class="form-control" value="{{ $currentUser->id }}">
 
@@ -30,9 +30,7 @@
                                 <div class="col-md-12 col-sm-12 col-xs-12">
 
                                     <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
-                                        <label class="col-md-3 control-label">
-                                            {{ trans('rinvex.fort::form.account.email') }}
-                                        </label>
+                                        <label for="email" class="col-md-3 control-label">{{ trans('rinvex.fort::form.account.email') }}</label>
 
                                         <div class="col-md-8">
                                             <input id="email" name="email" type="email" class="form-control" value="{{ old('email', $currentUser->email) }}" placeholder="{{ old('email', $currentUser->email) }}" required>
@@ -58,9 +56,7 @@
                                 <div class="col-md-12 col-sm-12 col-xs-12">
 
                                     <div class="form-group{{ $errors->has('username') ? ' has-error' : '' }}">
-                                        <label class="col-md-3 control-label">
-                                            {{ trans('rinvex.fort::form.account.username') }}
-                                        </label>
+                                        <label for="username" class="col-md-3 control-label">{{ trans('rinvex.fort::form.account.username') }}</label>
 
                                         <div class="col-md-8">
                                             <input id="username" name="username" type="text" class="form-control" value="{{ old('username', $currentUser->username) }}" placeholder="{{ old('username', $currentUser->username) }}" required>
@@ -84,9 +80,7 @@
                                 <div class="col-md-12 col-sm-12 col-xs-12">
 
                                     <div class="form-group{{ $errors->has('first_name') ? ' has-error' : '' }}">
-                                        <label class="col-md-3 control-label">
-                                            {{ trans('rinvex.fort::form.account.first_name') }}
-                                        </label>
+                                        <label for="first_name" class="col-md-3 control-label">{{ trans('rinvex.fort::form.account.first_name') }}</label>
 
                                         <div class="col-md-8">
                                             <input id="first_name" name="first_name" type="text" class="form-control" value="{{ old('first_name', $currentUser->first_name) }}" placeholder="{{ old('first_name', $currentUser->first_name ?: trans('rinvex.fort::form.account.first_name')) }}">
@@ -106,9 +100,7 @@
                                 <div class="col-md-12 col-sm-12 col-xs-12">
 
                                     <div class="form-group{{ $errors->has('middle_name') ? ' has-error' : '' }}">
-                                        <label class="col-md-3 control-label">
-                                            {{ trans('rinvex.fort::form.account.middle_name') }}
-                                        </label>
+                                        <label for="middle_name" class="col-md-3 control-label">{{ trans('rinvex.fort::form.account.middle_name') }}</label>
 
                                         <div class="col-md-8">
                                             <input id="middle_name" name="middle_name" type="text" class="form-control" value="{{ old('middle_name', $currentUser->middle_name) }}" placeholder="{{ old('middle_name', $currentUser->middle_name ?: trans('rinvex.fort::form.account.middle_name')) }}">
@@ -128,9 +120,7 @@
                                 <div class="col-md-12 col-sm-12 col-xs-12">
 
                                     <div class="form-group{{ $errors->has('last_name') ? ' has-error' : '' }}">
-                                        <label class="col-md-3 control-label">
-                                            {{ trans('rinvex.fort::form.account.last_name') }}
-                                        </label>
+                                        <label for="last_name" class="col-md-3 control-label">{{ trans('rinvex.fort::form.account.last_name') }}</label>
 
                                         <div class="col-md-8">
                                             <input id="last_name" name="last_name" type="text" class="form-control" value="{{ old('last_name', $currentUser->last_name) }}" placeholder="{{ old('last_name', $currentUser->last_name ?: trans('rinvex.fort::form.account.last_name')) }}">
@@ -180,9 +170,7 @@
                                 <div class="col-md-12 col-sm-12 col-xs-12">
 
                                     <div class="form-group{{ $errors->has('phone') ? ' has-error' : '' }}">
-                                        <label class="col-md-3 control-label">
-                                            {{ trans('rinvex.fort::form.account.phone') }}
-                                        </label>
+                                        <label for="phone" class="col-md-3 control-label">{{ trans('rinvex.fort::form.account.phone') }}</label>
 
                                         <div class="col-md-8">
                                             <input id="phone" name="phone" type="phone" class="form-control" value="{{ old('phone', $currentUser->phone) }}" placeholder="{{ old('phone', $currentUser->phone) }}">
@@ -211,9 +199,7 @@
                                 <div class="col-md-12 col-sm-12 col-xs-12">
 
                                     <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">
-                                        <label class="col-md-3 control-label">
-                                            {{ trans('rinvex.fort::form.account.password') }}
-                                        </label>
+                                        <label for="password" class="col-md-3 control-label">{{ trans('rinvex.fort::form.account.password') }}</label>
 
                                         <div class="col-md-8">
                                             <input id="password" name="password" type="password" class="form-control" value="" placeholder="{{ trans('rinvex.fort::form.account.password') }}">
@@ -233,9 +219,7 @@
                                 <div class="col-md-12 col-sm-12 col-xs-12">
 
                                     <div class="form-group{{ $errors->has('password_confirmation') ? ' has-error' : '' }}">
-                                        <label class="col-md-3 control-label">
-                                            {{ trans('rinvex.fort::form.account.password_confirmation') }}
-                                        </label>
+                                        <label for="password_confirmation" class="col-md-3 control-label">{{ trans('rinvex.fort::form.account.password_confirmation') }}</label>
 
                                         <div class="col-md-8">
                                             <input id="password_confirmation" name="password_confirmation" type="password" class="form-control" value="" placeholder="{{ trans('rinvex.fort::form.account.password_confirmation') }}">

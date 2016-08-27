@@ -18,18 +18,19 @@
                         <form id="rinvex-fort-user-account-form" class="form-horizontal" role="form" method="POST" action="{{ route('rinvex.fort.verification.phone.verify.post') }}">
 
                             {{-- Form: CSRF Token --}}
-                            {!! csrf_field() !!}
+                            {{ csrf_field() }}
 
                             @include('rinvex.fort::alerts.success')
                             @include('rinvex.fort::alerts.warning')
                             @include('rinvex.fort::alerts.error')
 
                             <div class="form-group{{ $errors->has('token') ? ' has-error' : '' }}">
-                                <label class="col-md-4 control-label">{{ trans('rinvex.fort::form.verification.phone.verify.token') }}</label>
+                                <label for="token" class="col-md-4 control-label">{{ trans('rinvex.fort::form.verification.phone.verify.token') }}</label>
 
                                 <div class="col-md-6">
                                     <input id="token" name="token" type="text" value="{{ old('token') }}" class="form-control" placeholder="Authentication Code" required autofocus>
                                     {{ trans('rinvex.fort::form.verification.phone.verify.backup_notice') }}<br />
+
                                     @if ($methods['phone'])
                                         <strong>{!! trans('rinvex.fort::form.verification.phone.verify.backup_sms', ['href' => route('rinvex.fort.verification.phone')]) !!}</strong>
                                     @else

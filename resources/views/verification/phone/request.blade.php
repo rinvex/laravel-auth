@@ -11,14 +11,14 @@
                     <div class="panel-body">
 
                         <form class="form-horizontal" role="form" method="POST" action="{{ route('rinvex.fort.verification.phone.post') }}">
-                            {!! csrf_field() !!}
+                            {{ csrf_field() }}
 
                             @include('rinvex.fort::alerts.success')
                             @include('rinvex.fort::alerts.warning')
                             @include('rinvex.fort::alerts.error')
 
                             <div class="form-group{{ $errors->has('phone') ? ' has-error' : '' }}">
-                                <label class="col-md-4 control-label">{{ trans('rinvex.fort::form.verification.phone.request.phone') }}</label>
+                                <label for="phone" class="col-md-4 control-label">{{ trans('rinvex.fort::form.verification.phone.request.phone') }}</label>
 
                                 <div class="col-md-6">
                                     <input id="phone" name="phone" type="phone" class="form-control" value="{{ old('phone', auth()->guest() ? '' : $currentUser->phone) }}" placeholder="{{ trans('rinvex.fort::form.verification.phone.request.phone') }}" required autofocus>
@@ -37,11 +37,11 @@
                                 <div class="col-md-6">
 
                                     <div class="btn-group" data-toggle="buttons">
-                                        <label class="btn btn-default active">
-                                            <input type="radio" name="method" id="sms" value="sms" autocomplete="off" checked> SMS
+                                        <label for="sms" class="btn btn-default active">
+                                            <input id="sms" name="method" type="radio" value="sms" autocomplete="off" checked> SMS
                                         </label>
-                                        <label class="btn btn-default">
-                                            <input type="radio" name="method" id="call" value="call" autocomplete="off"> Voice Call
+                                        <label for="call" class="btn btn-default">
+                                            <input id="call" name="method" type="radio" value="call" autocomplete="off"> Voice Call
                                         </label>
                                     </div>
 

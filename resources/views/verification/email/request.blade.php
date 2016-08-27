@@ -11,14 +11,14 @@
                     <div class="panel-body">
 
                         <form class="form-horizontal" role="form" method="POST" action="{{ route('rinvex.fort.verification.email.post') }}">
-                            {!! csrf_field() !!}
+                            {{ csrf_field() }}
 
                             @include('rinvex.fort::alerts.success')
                             @include('rinvex.fort::alerts.warning')
                             @include('rinvex.fort::alerts.error')
 
                             <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
-                                <label class="col-md-4 control-label">{{ trans('rinvex.fort::form.verification.email.field') }}</label>
+                                <label for="email" class="col-md-4 control-label">{{ trans('rinvex.fort::form.verification.email.field') }}</label>
 
                                 <div class="col-md-6">
                                     <input id="email" name="email" type="email" class="form-control" value="{{ old('email', auth()->guest() ? '' : $currentUser->email) }}" placeholder="{{ trans('rinvex.fort::form.verification.email.field') }}" required autofocus>

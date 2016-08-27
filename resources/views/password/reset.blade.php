@@ -10,7 +10,7 @@
 
                     <div class="panel-body">
                         <form class="form-horizontal" role="form" method="POST" action="{{ route('rinvex.fort.password.reset.post') }}">
-                            {!! csrf_field() !!}
+                            {{ csrf_field() }}
 
                             @include('rinvex.fort::alerts.success')
                             @include('rinvex.fort::alerts.warning')
@@ -19,7 +19,7 @@
                             <input type="hidden" id="token" name="token" value="{{ $token }}">
 
                             <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
-                                <label class="col-md-4 control-label">{{ trans('rinvex.fort::form.password.email') }}</label>
+                                <label for="email" class="col-md-4 control-label">{{ trans('rinvex.fort::form.password.email') }}</label>
 
                                 <div class="col-md-6">
                                     <input id="email" name="email" type="email" class="form-control" value="{{ $email or old('email') }}" placeholder="{{ trans('rinvex.fort::form.password.email') }}" required readonly>
@@ -33,7 +33,7 @@
                             </div>
 
                             <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">
-                                <label class="col-md-4 control-label">{{ trans('rinvex.fort::form.password.password') }}</label>
+                                <label for="password" class="col-md-4 control-label">{{ trans('rinvex.fort::form.password.password') }}</label>
 
                                 <div class="col-md-6">
                                     <input id="password" name="password" type="password" class="form-control" placeholder="{{ trans('rinvex.fort::form.password.password') }}" required autofocus>
@@ -47,7 +47,8 @@
                             </div>
 
                             <div class="form-group{{ $errors->has('password_confirmation') ? ' has-error' : '' }}">
-                                <label class="col-md-4 control-label">{{ trans('rinvex.fort::form.password.password_confirmation') }}</label>
+                                <label for="password_confirmation" class="col-md-4 control-label">{{ trans('rinvex.fort::form.password.password_confirmation') }}</label>
+
                                 <div class="col-md-6">
                                     <input id="password_confirmation" name="password_confirmation" type="password" class="form-control" placeholder="{{ trans('rinvex.fort::form.password.password_confirmation') }}" required>
 
