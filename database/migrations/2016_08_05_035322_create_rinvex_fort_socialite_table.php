@@ -17,7 +17,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateRinvexFortSocoaliteTable extends Migration
+class CreateRinvexFortSocialiteTable extends Migration
 {
     /**
      * Run the migrations.
