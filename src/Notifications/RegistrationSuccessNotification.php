@@ -77,7 +77,7 @@ class RegistrationSuccessNotification extends Notification
             }
         }
 
-        return (new MailMessage)
+        return (new MailMessage())
             ->subject(Lang::get('rinvex.fort::email.registration.welcome.subject'))
             ->line($phrase);
     }
