@@ -207,13 +207,15 @@ class SessionGuard implements StatefulGuard, SupportsBasicAuth
     /**
      * Return login attempt user.
      *
-     * @return \Rinvex\Fort\Contracts\AuthenticatableContract|null
+     * @return \Rinvex\Fort\Contracts\AuthenticatableContract|object|null
      */
     public function attemptUser()
     {
-        $persistence = app('rinvex.fort.persistence')->findBy('token', session('rinvex.fort.twofactor.persistence'));
+        if (! empty($session = session('rinvex.fort.twofactor.persistence')) && $persistence = app('rinvex.fort.persistence')->findBy('token', $session)) {
+            return $this->provider->find($persistence->user_id);
+        }
 
-        return $persistence ? $this->provider->find($persistence->user_id) : null;
+        return null;
     }
 
     /**
@@ -223,7 +225,7 @@ class SessionGuard implements StatefulGuard, SupportsBasicAuth
      */
     public function user()
     {
-        if (! $this->logoutAttempted && ! app('rinvex.fort.persistence')->findByToken($this->session->getId())) {
+        if (! $this->logoutAttempted && ! is_null($this->user) && ! app('rinvex.fort.persistence')->findByToken($this->session->getId())) {
             $this->logout();
         }
 
@@ -249,7 +251,10 @@ class SessionGuard implements StatefulGuard, SupportsBasicAuth
         $user = null;
 
         if (! is_null($id)) {
-            $user = $this->provider->find($id);
+            if ($user = $this->provider->find($id)) {
+                // Fire the authenticated event
+                $this->events->fire('rinvex.fort.auth.user', [$user]);
+            }
         }
 
         // If the user is null, but we decrypt a "recaller" cookie we can attempt to
@@ -282,7 +287,7 @@ class SessionGuard implements StatefulGuard, SupportsBasicAuth
             return;
         }
 
-        $id = $this->session->get($this->getName(), $this->getRecallerId());
+        $id = $this->session->get($this->getName());
 
         if (is_null($id) && $this->user()) {
             $id = $this->user()->getAuthIdentifier();
@@ -652,15 +657,19 @@ class SessionGuard implements StatefulGuard, SupportsBasicAuth
      * @param mixed $id
      * @param bool  $remember
      *
-     * @return \Rinvex\Fort\Contracts\AuthenticatableContract
+     * @return \Rinvex\Fort\Contracts\AuthenticatableContract|false
      */
     public function loginUsingId($id, $remember = false)
     {
-        $this->session->set($this->getName(), $id);
+        $user = $this->provider->find($id);
 
-        $this->login($user = $this->provider->find($id), $remember);
+        if (! is_null($user)) {
+            $this->login($user, $remember);
 
-        return $user;
+            return $user;
+        }
+
+        return false;
     }
 
     /**
@@ -668,14 +677,16 @@ class SessionGuard implements StatefulGuard, SupportsBasicAuth
      *
      * @param mixed $id
      *
-     * @return bool
+     * @return \Rinvex\Fort\Contracts\AuthenticatableContract|false
      */
     public function onceUsingId($id)
     {
-        if (! is_null($user = $this->provider->find($id))) {
+        $user = $this->provider->find($id);
+
+        if (! is_null($user)) {
             $this->setUser($user);
 
-            return true;
+            return $user;
         }
 
         return false;
@@ -891,6 +902,11 @@ class SessionGuard implements StatefulGuard, SupportsBasicAuth
         $this->user = $user;
 
         $this->loggedOut = false;
+
+        // Fire the authenticated event
+        $this->events->fire('rinvex.fort.auth.user', [$user]);
+
+        return $this;
     }
 
     /**
@@ -1137,8 +1153,8 @@ class SessionGuard implements StatefulGuard, SupportsBasicAuth
         $this->events->fire('rinvex.fort.register.start', [$credentials]);
 
         // Prepare registration data
-        $credentials['password'] = bcrypt($credentials['password']);
-        $credentials['active']   = config('rinvex.fort.registration.moderated');
+        $credentials['password']  = bcrypt($credentials['password']);
+        $credentials['moderated'] = config('rinvex.fort.registration.moderated');
 
         // Create new user
         $user = $this->provider->create($credentials);
@@ -1168,8 +1184,8 @@ class SessionGuard implements StatefulGuard, SupportsBasicAuth
         $this->events->fire('rinvex.fort.register.social.start', [$credentials]);
 
         // Prepare registration data
-        $credentials['password'] = bcrypt(str_random());
-        $credentials['active']   = config('rinvex.fort.registration.moderated');
+        $credentials['password']  = bcrypt(str_random());
+        $credentials['moderated'] = config('rinvex.fort.registration.moderated');
 
         // Create new user
         $user = $this->provider->create($credentials);

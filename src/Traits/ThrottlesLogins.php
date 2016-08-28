@@ -15,47 +15,12 @@
 
 namespace Rinvex\Fort\Traits;
 
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Cache\RateLimiter;
 
 trait ThrottlesLogins
 {
-    /**
-     * Get the lockout seconds.
-     *
-     * @param \Illuminate\Http\Request $request
-     *
-     * @return int
-     */
-    public function secondsRemainingOnLockout(Request $request)
-    {
-        return app(RateLimiter::class)->availableIn($this->getThrottleKey($request));
-    }
-
-    /**
-     * Clear the login locks for the given user credentials.
-     *
-     * @param \Illuminate\Http\Request $request
-     *
-     * @return void
-     */
-    protected function clearLoginAttempts(Request $request)
-    {
-        app(RateLimiter::class)->clear($this->getThrottleKey($request));
-    }
-
-    /**
-     * Get the throttle key for the given request.
-     *
-     * @param \Illuminate\Http\Request $request
-     *
-     * @return string
-     */
-    protected function getThrottleKey(Request $request)
-    {
-        return mb_strtolower($request->input('loginfield')).'|'.$request->ip();
-    }
-
     /**
      * Determine if the user has too many failed login attempts.
      *
@@ -65,11 +30,11 @@ trait ThrottlesLogins
      */
     protected function hasTooManyLoginAttempts(Request $request)
     {
-        $throttleKey      = $this->getThrottleKey($request);
-        $throttleAttempts = config('rinvex.fort.throttle.maxloginattempts', 5);
-        $throttleTimeout  = config('rinvex.fort.throttle.lockouttime', 60) / 60;
+        $throttleKey      = $this->throttleKey($request);
+        $throttleAttempts = config('rinvex.fort.throttle.max_login_attempts', 5);
+        $throttleTimeout  = config('rinvex.fort.throttle.lockout_time', 1);
 
-        return app(RateLimiter::class)->tooManyAttempts($throttleKey, $throttleAttempts, $throttleTimeout);
+        return $this->limiter()->tooManyAttempts($throttleKey, $throttleAttempts, $throttleTimeout);
     }
 
     /**
@@ -81,18 +46,52 @@ trait ThrottlesLogins
      */
     protected function incrementLoginAttempts(Request $request)
     {
-        app(RateLimiter::class)->hit($this->getThrottleKey($request));
+        $this->limiter()->hit($this->throttleKey($request));
     }
 
     /**
-     * Determine how many retries are left for the user.
+     * Clear the login locks for the given user credentials.
+     *
+     * @param \Illuminate\Http\Request $request
+     *
+     * @return void
+     */
+    protected function clearLoginAttempts(Request $request)
+    {
+        $this->limiter()->clear($this->throttleKey($request));
+    }
+
+    /**
+     * Get the throttle key for the given request.
+     *
+     * @param \Illuminate\Http\Request $request
+     *
+     * @return string
+     */
+    protected function throttleKey(Request $request)
+    {
+        return Str::lower($request->input('loginfield')).'|'.$request->ip();
+    }
+
+    /**
+     * Get the rate limiter instance.
+     *
+     * @return \Illuminate\Cache\RateLimiter
+     */
+    protected function limiter()
+    {
+        return app(RateLimiter::class);
+    }
+
+    /**
+     * Get the lockout seconds.
      *
      * @param \Illuminate\Http\Request $request
      *
      * @return int
      */
-    protected function retriesLeft(Request $request)
+    public function secondsRemainingOnLockout(Request $request)
     {
-        return app(RateLimiter::class)->retriesLeft($this->getThrottleKey($request), config('rinvex.fort.throttle.maxloginattempts', 5));
+        return $this->limiter()->availableIn($this->throttleKey($request));
     }
 }

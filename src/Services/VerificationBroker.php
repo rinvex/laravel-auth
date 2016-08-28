@@ -56,12 +56,7 @@ class VerificationBroker implements VerificationBrokerContract
     }
 
     /**
-     * Send Two-Factor Token.
-     *
-     * @param \Rinvex\Fort\Contracts\AuthenticatableContract $user
-     * @param string                                         $method
-     *
-     * @return bool
+     * {@inheritdoc}
      */
     public function sendPhoneVerification(AuthenticatableContract $user, $method)
     {

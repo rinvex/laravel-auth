@@ -51,4 +51,21 @@ interface ResetTokenRepositoryContract
      * @return void
      */
     public function deleteExpired();
+
+    /**
+     * Get the token expiration in seconds.
+     *
+     * @return int
+     */
+    public function getExpiration();
+
+    /**
+     * Get password reset token data.
+     *
+     * @param \Rinvex\Fort\Contracts\CanResetPasswordContract $user
+     * @param string                                      $token
+     *
+     * @return array
+     */
+    public function getData(CanResetPasswordContract $user, $token);
 }

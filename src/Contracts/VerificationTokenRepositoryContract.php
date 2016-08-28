@@ -51,4 +51,21 @@ interface VerificationTokenRepositoryContract
      * @return void
      */
     public function deleteExpired();
+
+    /**
+     * Get the token expiration in seconds.
+     *
+     * @return int
+     */
+    public function getExpiration();
+
+    /**
+     * Get email verification token data.
+     *
+     * @param \Rinvex\Fort\Contracts\CanVerifyEmailContract $user
+     * @param string                                        $token
+     *
+     * @return array
+     */
+    public function getData(CanVerifyEmailContract $user, $token);
 }

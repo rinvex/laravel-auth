@@ -1,4 +1,4 @@
-# Rinvex Fort
+# Rinvex Fort [WIP]
 
 **Rinvex Fort** is a powerful authentication, authorization and verification package built on top of Laravel. It provides developers with Role Based Access Control, Two-Factor Authentication, Social Authentication, compatible with Laravel’s standard API and fully featured all-in-one solution out of the box.
 
@@ -15,39 +15,42 @@
 
 1. Install through `composer require rinvex/fort`
 2. Open `app/Http/Kernel.php` and do the following:
-First:
-```php
-// Replace this:
-'auth' => \App\Http\Middleware\Authenticate::class,
 
-// With this:
-'auth' => \Rinvex\Fort\Http\Middleware\Authenticate::class,
-```
+    1st Step:
+    ```php
+    // Replace this:
+    'auth' => \App\Http\Middleware\Authenticate::class,
+    
+    // With this:
+    'auth' => \Rinvex\Fort\Http\Middleware\Authenticate::class,
+    ```
 
-Second:
-```php
-// Replace this:
-'guest' => \App\Http\Middleware\RedirectIfAuthenticated::class,
+    2nd Step:
+    ```php
+    // Replace this:
+    'guest' => \App\Http\Middleware\RedirectIfAuthenticated::class,
+    
+    // With this:
+    'guest' => \Rinvex\Fort\Http\Middleware\RedirectIfAuthenticated::class,
+    ```
 
-// With this:
-'guest' => \Rinvex\Fort\Http\Middleware\RedirectIfAuthenticated::class,
-```
-
-Third:
-```php
-// Add this to the end of $routeMiddleware array
-'abilities' => \Rinvex\Fort\Http\Middleware\Abilities::class,
-```
+    3rd Step:
+    ```php
+    // Add this to the end of $routeMiddleware array
+    'abilities' => \Rinvex\Fort\Http\Middleware\Abilities::class,
+    ```
 
 3. Open `config/app.php` and add the following line to the end of `providers` array:
-```php
-Rinvex\Fort\Providers\FortServiceProvider::class,
-```
+
+    ```php
+    Rinvex\Fort\Providers\FortServiceProvider::class,
+    ```
 
 4. Execute migrations:
-```shell
-php artisan migrate --path="vendor/rinvex/fort/database/migrations"
-```
+
+    ```shell
+    php artisan migrate --path="vendor/rinvex/fort/database/migrations"
+    ```
 
 5. Done!
 
@@ -269,6 +272,7 @@ php artisan migrate --path="vendor/rinvex/fort/database/migrations"
 - Social login using Facebook, Google, Twitter, LinkedIn, Github, Bitbucket
 - Customizable table database table and model names
 - Database stored role based access control
+- Uses Laravel 5.3 Notifications System
 
 - Registration
     - Require email verification
@@ -337,6 +341,15 @@ Just like authentication, the authorization part is almost identical to the defa
 
 - Phone verification is optional unless the user wants to activate Two-Factor phone authentication, in such case it's required and mandatory.
 - If the user changed profile's country or phone number, the Two-Factor phone authentication will be automatically disabled, and his previous phone verification will be invalidated, so it's required to verify phone again, and re-enable Two-Factor phone authentication manually.
+
+
+## Notifications Sent
+
+- Email Verification
+- Authentication Lockout
+- Email Verification Success
+- Password Reset Request
+- Registration Success
 
 
 ## Config Options
@@ -646,6 +659,17 @@ return [
 
         'default_role' => 'registered',
 
+        /*
+        |--------------------------------------------------------------------------
+        | Send Welcome Email
+        |--------------------------------------------------------------------------
+        |
+        | Send welcome email to users upon registration success.
+        |
+        */
+
+        'welcome_email' => true,
+
     ],
 
     /*
@@ -664,50 +688,6 @@ return [
     */
 
     'persistence' => 'multiple',
-
-    /*
-    |--------------------------------------------------------------------------
-    | Email Messaging
-    |--------------------------------------------------------------------------
-    */
-
-    'email' => [
-
-        /*
-        |--------------------------------------------------------------------------
-        | Send Welcome Email
-        |--------------------------------------------------------------------------
-        |
-        | Send welcome email to users upon registration/verification success.
-        |
-        */
-
-        'welcome' => true,
-
-        /*
-        |--------------------------------------------------------------------------
-        | Send Verification Success Email
-        |--------------------------------------------------------------------------
-        |
-        | Send verification success email to users upon completing email verification successfully.
-        |
-        */
-
-        'verification' => true,
-
-        /*
-        |--------------------------------------------------------------------------
-        | Send Lockout Email
-        |--------------------------------------------------------------------------
-        |
-        | Send lockout email to users upon multiple failed login attempts.
-        |
-        */
-
-        'lockout' => true,
-
-    ],
-
 
     /*
     |--------------------------------------------------------------------------
@@ -732,7 +712,7 @@ return [
 
         /*
         |--------------------------------------------------------------------------
-        | Reset Password Default Broker
+        | Password Reset Default Broker
         |--------------------------------------------------------------------------
         |
         | This option controls the default reset password broker for your
@@ -749,18 +729,15 @@ return [
 
         /*
         |--------------------------------------------------------------------------
-        | Brokers Configuration
+        | Password Reset Broker Configuration
         |--------------------------------------------------------------------------
         |
-        | Here you may configure brokers.
-        | A default configuration has been added
-        | for each back-end shipped with this package. You are free to add more.
+        | Here you may configure password reset broker.
         |
         */
 
         'users' => [
             'provider' => 'users',
-            'email'    => 'rinvex.fort::password.message',
             'expire'   => 60,
         ],
 
@@ -808,20 +785,28 @@ return [
 
         /*
         |--------------------------------------------------------------------------
-        | Brokers Configuration
+        | Email Verification Broker Configuration
         |--------------------------------------------------------------------------
         |
-        | Here you may configure brokers.
-        | A default configuration has been added
-        | for each back-end shipped with this package. You are free to add more.
+        | Here you may configure email verification broker.
         |
         */
 
         'users' => [
             'provider' => 'users',
-            'email'    => 'rinvex.fort::verification.email.message',
             'expire'   => 60,
         ],
+
+        /*
+        |--------------------------------------------------------------------------
+        | Send Verification Success Email
+        |--------------------------------------------------------------------------
+        |
+        | Send verification success email to users upon completing email verification successfully.
+        |
+        */
+
+        'success_email' => true,
 
     ],
 
@@ -857,20 +842,31 @@ return [
         |
         */
 
-        'maxloginattempts' => 5,
+        'max_login_attempts' => 5,
 
         /*
         |--------------------------------------------------------------------------
         | Lockout Time
         |--------------------------------------------------------------------------
         |
-        | Number of seconds to delay further login attempts.
+        | Number of minutes to delay further login attempts.
         |
-        | Default: 60
+        | Default: 1
         |
         */
 
-        'lockouttime' => 60,
+        'lockout_time' => 1,
+
+        /*
+        |--------------------------------------------------------------------------
+        | Send Lockout Email
+        |--------------------------------------------------------------------------
+        |
+        | Send lockout email to users upon multiple failed login attempts.
+        |
+        */
+
+        'lockout_email' => true,
 
     ],
 
@@ -931,7 +927,7 @@ return [
 
             'keys' => [
                 'live'    => env('AUTHY_KEYS_LIVE', ''),
-                'sandbox' => env('AUTHY_KEYS_SANDBOX', '')
+                'sandbox' => env('AUTHY_KEYS_SANDBOX', ''),
             ],
 
         ],

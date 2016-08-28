@@ -20,11 +20,10 @@ use Illuminate\Support\Facades\Auth;
 use Rinvex\Fort\Traits\GetsMiddleware;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
-use Illuminate\Foundation\Auth\Access\AuthorizesResources;
 
 class FoundationController extends Controller
 {
-    use AuthorizesRequests, AuthorizesResources, DispatchesJobs, GetsMiddleware;
+    use AuthorizesRequests, DispatchesJobs, GetsMiddleware;
 
     /**
      * The currently logged in user instance.

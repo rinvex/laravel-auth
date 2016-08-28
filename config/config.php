@@ -368,7 +368,7 @@ return [
 
         /*
         |--------------------------------------------------------------------------
-        | Reset Password Default Broker
+        | Password Reset Default Broker
         |--------------------------------------------------------------------------
         |
         | This option controls the default reset password broker for your
@@ -385,12 +385,10 @@ return [
 
         /*
         |--------------------------------------------------------------------------
-        | Brokers Configuration
+        | Password Reset Broker Configuration
         |--------------------------------------------------------------------------
         |
-        | Here you may configure brokers.
-        | A default configuration has been added
-        | for each back-end shipped with this package. You are free to add more.
+        | Here you may configure password reset broker.
         |
         */
 
@@ -443,12 +441,10 @@ return [
 
         /*
         |--------------------------------------------------------------------------
-        | Brokers Configuration
+        | Email Verification Broker Configuration
         |--------------------------------------------------------------------------
         |
-        | Here you may configure brokers.
-        | A default configuration has been added
-        | for each back-end shipped with this package. You are free to add more.
+        | Here you may configure email verification broker.
         |
         */
 
@@ -502,20 +498,20 @@ return [
         |
         */
 
-        'maxloginattempts' => 5,
+        'max_login_attempts' => 5,
 
         /*
         |--------------------------------------------------------------------------
         | Lockout Time
         |--------------------------------------------------------------------------
         |
-        | Number of seconds to delay further login attempts.
+        | Number of minutes to delay further login attempts.
         |
-        | Default: 60
+        | Default: 1
         |
         */
 
-        'lockouttime' => 60,
+        'lockout_time' => 1,
 
         /*
         |--------------------------------------------------------------------------

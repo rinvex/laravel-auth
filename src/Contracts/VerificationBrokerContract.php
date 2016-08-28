@@ -48,6 +48,16 @@ interface VerificationBrokerContract
     const INVALID_TOKEN = 'rinvex.fort::message.verification.email.invalid_token';
 
     /**
+     * Send Two-Factor Token.
+     *
+     * @param \Rinvex\Fort\Contracts\AuthenticatableContract $user
+     * @param string                                         $method
+     *
+     * @return bool
+     */
+    public function sendPhoneVerification(AuthenticatableContract $user, $method);
+
+    /**
      * Send a user verification link.
      *
      * @param array $credentials
@@ -59,10 +69,10 @@ interface VerificationBrokerContract
     /**
      * Verify given account.
      *
-     * @param array    $credentials
-     * @param \Closure $callback
+     * @param array         $credentials
+     * @param \Closure|null $callback
      *
      * @return mixed
      */
-    public function verify(array $credentials, Closure $callback);
+    public function verify(array $credentials, Closure $callback = null);
 }

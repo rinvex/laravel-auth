@@ -92,7 +92,7 @@ class UserRepository extends EloquentRepository implements UserRepositoryContrac
             }
         }
 
-        return $model->first();
+        return $model->findFirst();
     }
 
     /**

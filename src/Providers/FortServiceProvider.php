@@ -67,6 +67,9 @@ class FortServiceProvider extends BaseServiceProvider
         // Load language phrases
         $this->loadTranslationsFrom(__DIR__.'/../../resources/lang', 'rinvex.fort');
 
+        // Load migrations
+        $this->loadMigrationsFrom(__DIR__.'/../../database/migrations');
+
         // Define the abilities
         $abilityRepository->defineAbilities();
 

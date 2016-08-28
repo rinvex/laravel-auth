@@ -54,14 +54,20 @@ class ResetTokenRepository extends AbstractTokenRepository implements ResetToken
     }
 
     /**
-     * Delete all existing reset tokens from the database.
-     *
-     * @param \Rinvex\Fort\Contracts\CanResetPasswordContract $user
-     *
-     * @return int
+     * {@inheritdoc}
      */
     protected function deleteExisting(CanResetPasswordContract $user)
     {
         return $this->getTable()->where('email', $user->getEmailForPasswordReset())->delete();
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getData(CanResetPasswordContract $user, $token)
+    {
+        $email = $user->getEmailForPasswordReset();
+
+        return (array) $this->getTable()->where('email', $email)->where('token', $token)->first();
     }
 }

@@ -104,12 +104,13 @@ class BrokerManager implements BrokerManagerContract
         $type       = ucfirst(strtolower($this->type));
         $table      = str_plural(strtolower($this->type));
         $tokenClass = "Rinvex\\Fort\\Repositories\\{$type}TokenRepository";
+        $connection = isset($config['connection']) ? $config['connection'] : null;
 
         if (Str::startsWith($key, 'base64:')) {
             $key = base64_decode(substr($key, 7));
         }
 
-        return new $tokenClass($this->app['db']->connection(), $this->app['config']["rinvex.fort.tables.{$table}"], $key, $config['expire']);
+        return new $tokenClass($this->app['db']->connection($connection), $this->app['config']["rinvex.fort.tables.{$table}"], $key, $config['expire']);
     }
 
     /**
@@ -162,6 +163,6 @@ class BrokerManager implements BrokerManagerContract
      */
     public function __call($method, $parameters)
     {
-        return call_user_func_array([$this->broker(), $method], $parameters);
+        return $this->broker()->{$method}(...$parameters);
     }
 }

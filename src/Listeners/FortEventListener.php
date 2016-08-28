@@ -57,6 +57,7 @@ class FortEventListener
     public function subscribe(Dispatcher $dispatcher)
     {
         // Authentication events
+        $dispatcher->listen('rinvex.fort.auth.user', __CLASS__.'@authUser');
         $dispatcher->listen('rinvex.fort.auth.login', __CLASS__.'@authLogin');
         $dispatcher->listen('rinvex.fort.auth.failed', __CLASS__.'@authFailed');
         $dispatcher->listen('rinvex.fort.auth.lockout', __CLASS__.'@authLockout');
@@ -152,6 +153,18 @@ class FortEventListener
         $dispatcher->listen('rinvex.fort.persistence.updated', __CLASS__.'@persistenceUpdated');
         $dispatcher->listen('rinvex.fort.persistence.deleting', __CLASS__.'@persistenceDeleting');
         $dispatcher->listen('rinvex.fort.persistence.deleted', __CLASS__.'@persistenceDeleted');
+    }
+
+    /**
+     * Listen to the authentication event.
+     *
+     * @param \Rinvex\Fort\Contracts\AuthenticatableContract $user
+     *
+     * @return void
+     */
+    public function authUser(AuthenticatableContract $user)
+    {
+        //
     }
 
     /**

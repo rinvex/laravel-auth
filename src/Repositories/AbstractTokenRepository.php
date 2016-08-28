@@ -18,7 +18,6 @@ namespace Rinvex\Fort\Repositories;
 use Carbon\Carbon;
 use Illuminate\Support\Str;
 use Illuminate\Database\ConnectionInterface;
-use Rinvex\Fort\Contracts\CanResetPasswordContract;
 
 abstract class AbstractTokenRepository
 {
@@ -165,20 +164,5 @@ abstract class AbstractTokenRepository
     public function getExpiration()
     {
         return $this->expires;
-    }
-
-    /**
-     * Get token data.
-     *
-     * @param \Rinvex\Fort\Contracts\CanResetPasswordContract $user
-     * @param string                                          $token
-     *
-     * @return array
-     */
-    public function getData(CanResetPasswordContract $user, $token)
-    {
-        $email = $user->getEmailForPasswordReset();
-
-        return (array) $this->getTable()->where('email', $email)->where('token', $token)->first();
     }
 }

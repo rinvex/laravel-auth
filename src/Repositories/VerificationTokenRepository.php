@@ -54,14 +54,20 @@ class VerificationTokenRepository extends AbstractTokenRepository implements Ver
     }
 
     /**
-     * Delete all existing reset tokens from the database.
-     *
-     * @param \Rinvex\Fort\Contracts\CanVerifyEmailContract $user
-     *
-     * @return int
+     * {@inheritdoc}
      */
     protected function deleteExisting(CanVerifyEmailContract $user)
     {
         return $this->getTable()->where('email', $user->getEmailForVerification())->delete();
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getData(CanVerifyEmailContract $user, $token)
+    {
+        $email = $user->getEmailForVerification();
+
+        return (array) $this->getTable()->where('email', $email)->where('token', $token)->first();
     }
 }

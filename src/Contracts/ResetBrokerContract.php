@@ -73,12 +73,12 @@ interface ResetBrokerContract
     /**
      * Reset the password for the given credentials.
      *
-     * @param array    $credentials
-     * @param \Closure $callback
+     * @param array         $credentials
+     * @param \Closure|null $callback
      *
      * @return mixed
      */
-    public function reset(array $credentials, Closure $callback);
+    public function reset(array $credentials, Closure $callback = null);
 
     /**
      * Set a custom password validator.
