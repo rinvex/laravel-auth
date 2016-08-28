@@ -18,10 +18,7 @@ namespace Rinvex\Fort\Services;
 use Closure;
 use Carbon\Carbon;
 use Illuminate\Support\Arr;
-use Illuminate\Mail\Message;
 use UnexpectedValueException;
-use Illuminate\Support\Facades\Lang;
-use Illuminate\Contracts\Mail\Mailer;
 use Rinvex\Fort\Contracts\UserRepositoryContract;
 use Rinvex\Fort\Contracts\CanVerifyEmailContract;
 use Rinvex\Fort\Contracts\AuthenticatableContract;
@@ -45,35 +42,17 @@ class VerificationBroker implements VerificationBrokerContract
     protected $users;
 
     /**
-     * The mailer instance.
-     *
-     * @var \Illuminate\Contracts\Mail\Mailer
-     */
-    protected $mailer;
-
-    /**
-     * The view of the verification link email.
-     *
-     * @var string
-     */
-    protected $emailView;
-
-    /**
      * Create a new verification broker instance.
      *
      * @param \Rinvex\Fort\Contracts\VerificationTokenRepositoryContract $tokens
      * @param \Rinvex\Fort\Contracts\UserRepositoryContract              $users
-     * @param \Illuminate\Contracts\Mail\Mailer                          $mailer
-     * @param string                                                     $emailView
      *
      * @return void
      */
-    public function __construct(VerificationTokenRepositoryContract $tokens, UserRepositoryContract $users, Mailer $mailer, $emailView)
+    public function __construct(VerificationTokenRepositoryContract $tokens, UserRepositoryContract $users)
     {
-        $this->users     = $users;
-        $this->mailer    = $mailer;
-        $this->tokens    = $tokens;
-        $this->emailView = $emailView;
+        $this->users  = $users;
+        $this->tokens = $tokens;
     }
 
     /**
@@ -106,7 +85,7 @@ class VerificationBroker implements VerificationBrokerContract
     /**
      * {@inheritdoc}
      */
-    public function sendVerificationLink(array $credentials, Closure $callback = null)
+    public function sendVerificationLink(array $credentials)
     {
         // First we will check to see if we found a user at the given credentials and
         // if we did not we will redirect back to this current URI with a piece of
@@ -116,32 +95,18 @@ class VerificationBroker implements VerificationBrokerContract
         }
 
         // Fire the email verification request start event
-        event('rinvex.fort.verification.email.request.start', [$user, $this->mailer]);
+        event('rinvex.fort.verification.email.request.start', [$user]);
 
         // Once we have the verification token, we are ready to send the message out
         // to this user with a link for verification. We will then redirect back to
         // the current URI having nothing set in the session to indicate errors.
-        $token = $this->createToken($user);
-
-        // We will use verification email view that was given to the broker.
-        // We'll pass a "token" variable into the view so that it may
-        // be displayed for an user to click for verification.
-        $view       = $this->emailView;
+        $token      = $this->tokens->getData($user, $this->tokens->create($user));
         $expiration = $this->tokens->getExpiration() / 60;
-        $tokenData  = $this->tokens->getData($user, $token);
-        $email      = function (Message $message) use ($user, $token, $callback) {
-            $message->to($user->getEmailForVerification());
-            $message->subject(Lang::get('rinvex.fort::email.verification.subject'));
 
-            if (! is_null($callback)) {
-                call_user_func($callback, $message, $user, $token);
-            }
-        };
-
-        $this->mailer->send($view, compact('token', 'user', 'expiration', 'tokenData'), $email);
+        $user->sendEmailVerificationNotification($token, $expiration);
 
         // Fire the email verification request success event
-        event('rinvex.fort.verification.email.request.success', [$user, $this->mailer]);
+        event('rinvex.fort.verification.email.request.success', [$user]);
 
         return static::REQUEST_SENT;
     }
@@ -163,7 +128,7 @@ class VerificationBroker implements VerificationBrokerContract
         }
 
         // Fire the email verification start event
-        event('rinvex.fort.verification.email.verify.start', [$user, $this->mailer]);
+        event('rinvex.fort.verification.email.verify.start', [$user]);
 
         // Verify email
         app('rinvex.fort.user')->update($user->id, [
@@ -175,13 +140,13 @@ class VerificationBroker implements VerificationBrokerContract
         // table and return the response from this callback so the user gets sent
         // to the destination given by the developers from the callback return.
         if (! is_null($callback)) {
-            call_user_func($callback, $user);
+            $callback($user);
         }
 
         $this->deleteToken($credentials['token']);
 
         // Fire the email verification success event
-        event('rinvex.fort.verification.email.verify.success', [$user, $this->mailer]);
+        event('rinvex.fort.verification.email.verify.success', [$user]);
 
         return static::EMAIL_VERIFIED;
     }
@@ -206,18 +171,6 @@ class VerificationBroker implements VerificationBrokerContract
         }
 
         return $user;
-    }
-
-    /**
-     * Create a new verification token for the given user.
-     *
-     * @param \Rinvex\Fort\Contracts\CanVerifyEmailContract $user
-     *
-     * @return string
-     */
-    public function createToken(CanVerifyEmailContract $user)
-    {
-        return $this->tokens->create($user);
     }
 
     /**

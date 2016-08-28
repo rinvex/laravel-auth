@@ -20,12 +20,13 @@ use Rinvex\Fort\Models\Role;
 use Rinvex\Fort\Models\User;
 use Rinvex\Fort\Models\Ability;
 use Rinvex\Fort\Models\Persistence;
-use Illuminate\Support\Facades\Lang;
-use Illuminate\Contracts\Mail\Mailer;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Contracts\Events\Dispatcher;
 use Illuminate\Contracts\Container\Container;
 use Rinvex\Fort\Contracts\AuthenticatableContract;
+use Rinvex\Fort\Notifications\RegistrationSuccessNotification;
+use Rinvex\Fort\Notifications\VerificationSuccessNotification;
+use Rinvex\Fort\Notifications\AuthenticationLockoutNotification;
 
 class FortEventListener
 {
@@ -188,13 +189,10 @@ class FortEventListener
      */
     public function authLockout(Request $request)
     {
-        if (config('rinvex.fort.email.lockout')) {
+        if (config('rinvex.fort.throttle.lockout_email')) {
             $user = get_login_field($loginfield = $request->get('loginfield')) == 'email' ? $this->app['rinvex.fort.user']->findByEmail($loginfield) : $this->app['rinvex.fort.user']->findByUsername($loginfield);
 
-            $this->app['mailer']->send('rinvex.fort::auth.lockout', compact('user', 'request'), function ($message) use ($user) {
-                $message->to($user->getEmailForPasswordReset());
-                $message->subject(Lang::get('rinvex.fort::email.auth.lockout'));
-            });
+            $user->notify(new AuthenticationLockoutNotification($request));
         }
     }
 
@@ -574,23 +572,8 @@ class FortEventListener
     public function registerSuccess(AuthenticatableContract $user)
     {
         // Send welcome email
-        if (config('rinvex.fort.email.welcome')) {
-            $mailer = app(Mailer::class);
-
-            if (config('rinvex.fort.verification.required') && config('rinvex.fort.registration.moderated')) {
-                $body = Lang::get('rinvex.fort::email.register.welcome_verification_moderated_body');
-            } elseif (! config('rinvex.fort.verification.required') && config('rinvex.fort.registration.moderated')) {
-                $body = Lang::get('rinvex.fort::email.register.welcome_moderated_body');
-            } elseif (config('rinvex.fort.verification.required') && ! config('rinvex.fort.registration.moderated')) {
-                $body = Lang::get('rinvex.fort::email.register.welcome_verification_body');
-            } else {
-                $body = Lang::get('rinvex.fort::email.register.welcome_body');
-            }
-
-            $mailer->send('rinvex.fort::auth.welcome', compact('user', 'body'), function ($message) use ($user) {
-                $message->to($user->email);
-                $message->subject(Lang::get('rinvex.fort::email.register.welcome'));
-            });
+        if (config('rinvex.fort.registration.welcome_email')) {
+            $user->notify(new RegistrationSuccessNotification());
         }
 
         // Attach default role to the registered user
@@ -623,19 +606,8 @@ class FortEventListener
     public function registerSocialSuccess(AuthenticatableContract $user)
     {
         // Send welcome email
-        if (config('rinvex.fort.email.welcome')) {
-            $mailer = app(Mailer::class);
-
-            if (config('rinvex.fort.registration.moderated')) {
-                $body = Lang::get('rinvex.fort::email.register.welcome_moderated_body');
-            } else {
-                $body = Lang::get('rinvex.fort::email.register.welcome_body');
-            }
-
-            $mailer->send('rinvex.fort::auth.welcome', compact('user', 'body'), function ($message) use ($user) {
-                $message->to($user->email);
-                $message->subject(Lang::get('rinvex.fort::email.register.welcome'));
-            });
+        if (config('rinvex.fort.registration.welcome_email')) {
+            $user->notify(new RegistrationSuccessNotification(true));
         }
 
         // Attach default role to the registered user
@@ -650,11 +622,10 @@ class FortEventListener
      * Listen to the password reset start event.
      *
      * @param \Rinvex\Fort\Contracts\AuthenticatableContract $user
-     * @param \Illuminate\Contracts\Mail\Mailer              $mailer
      *
      * @return void
      */
-    public function passwordResetStart(AuthenticatableContract $user, Mailer $mailer)
+    public function passwordResetStart(AuthenticatableContract $user)
     {
         //
     }
@@ -663,11 +634,10 @@ class FortEventListener
      * Listen to the password reset success event.
      *
      * @param \Rinvex\Fort\Contracts\AuthenticatableContract $user
-     * @param \Illuminate\Contracts\Mail\Mailer              $mailer
      *
      * @return void
      */
-    public function passwordResetSuccess(AuthenticatableContract $user, Mailer $mailer)
+    public function passwordResetSuccess(AuthenticatableContract $user)
     {
         //
     }
@@ -676,11 +646,10 @@ class FortEventListener
      * Listen to the password reset request start event.
      *
      * @param \Rinvex\Fort\Contracts\AuthenticatableContract $user
-     * @param \Illuminate\Contracts\Mail\Mailer              $mailer
      *
      * @return void
      */
-    public function passwordRequestStart(AuthenticatableContract $user, Mailer $mailer)
+    public function passwordRequestStart(AuthenticatableContract $user)
     {
         //
     }
@@ -689,11 +658,10 @@ class FortEventListener
      * Listen to the password reset request success event.
      *
      * @param \Rinvex\Fort\Contracts\AuthenticatableContract $user
-     * @param \Illuminate\Contracts\Mail\Mailer              $mailer
      *
      * @return void
      */
-    public function passwordRequestSuccess(AuthenticatableContract $user, Mailer $mailer)
+    public function passwordRequestSuccess(AuthenticatableContract $user)
     {
         //
     }
@@ -702,11 +670,10 @@ class FortEventListener
      * Listen to the email verification start.
      *
      * @param \Rinvex\Fort\Contracts\AuthenticatableContract $user
-     * @param \Illuminate\Contracts\Mail\Mailer              $mailer
      *
      * @return void
      */
-    public function verificationEmailVerifyStart(AuthenticatableContract $user, Mailer $mailer)
+    public function verificationEmailVerifyStart(AuthenticatableContract $user)
     {
         //
     }
@@ -715,23 +682,13 @@ class FortEventListener
      * Listen to the email verification success.
      *
      * @param \Rinvex\Fort\Contracts\AuthenticatableContract $user
-     * @param \Illuminate\Contracts\Mail\Mailer              $mailer
      *
      * @return void
      */
-    public function verificationEmailVerifySuccess(AuthenticatableContract $user, Mailer $mailer)
+    public function verificationEmailVerifySuccess(AuthenticatableContract $user)
     {
-        if (config('rinvex.fort.email.verification')) {
-            if ($user->moderated) {
-                $body = Lang::get('rinvex.fort::email.verification.success_moderated_body');
-            } else {
-                $body = Lang::get('rinvex.fort::email.verification.success_body');
-            }
-
-            $mailer->send('rinvex.fort::verification.email.success', compact('user', 'body'), function ($message) use ($user) {
-                $message->to($user->getEmailForVerification());
-                $message->subject(Lang::get('rinvex.fort::email.verification.success'));
-            });
+        if (config('rinvex.fort.verification.success_email')) {
+            $user->notify(new VerificationSuccessNotification($user->moderated));
         }
     }
 
@@ -739,11 +696,10 @@ class FortEventListener
      * Listen to the email verification request start.
      *
      * @param \Rinvex\Fort\Contracts\AuthenticatableContract $user
-     * @param \Illuminate\Contracts\Mail\Mailer              $mailer
      *
      * @return void
      */
-    public function verificationEmailRequestStart(AuthenticatableContract $user, Mailer $mailer)
+    public function verificationEmailRequestStart(AuthenticatableContract $user)
     {
         //
     }
@@ -752,11 +708,10 @@ class FortEventListener
      * Listen to the email verification request success.
      *
      * @param \Rinvex\Fort\Contracts\AuthenticatableContract $user
-     * @param \Illuminate\Contracts\Mail\Mailer              $mailer
      *
      * @return void
      */
-    public function verificationEmailRequestSuccess(AuthenticatableContract $user, Mailer $mailer)
+    public function verificationEmailRequestSuccess(AuthenticatableContract $user)
     {
         //
     }

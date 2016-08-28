@@ -30,4 +30,14 @@ interface CanVerifyEmailContract
      * @return bool
      */
     public function isEmailVerified();
+
+    /**
+     * Send the email verification notification.
+     *
+     * @param array  $token
+     * @param string $expiration
+     *
+     * @return void
+     */
+    public function sendEmailVerificationNotification(array $token, $expiration);
 }

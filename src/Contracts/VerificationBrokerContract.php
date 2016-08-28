@@ -50,12 +50,11 @@ interface VerificationBrokerContract
     /**
      * Send a user verification link.
      *
-     * @param array         $credentials
-     * @param \Closure|null $callback
+     * @param array $credentials
      *
      * @return string
      */
-    public function sendVerificationLink(array $credentials, Closure $callback = null);
+    public function sendVerificationLink(array $credentials);
 
     /**
      * Verify given account.

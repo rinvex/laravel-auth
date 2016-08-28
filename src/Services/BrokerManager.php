@@ -88,7 +88,7 @@ class BrokerManager implements BrokerManagerContract
         // The broker uses a token repository to validate tokens and send user
         // e-mails, as well as validating that the process as an aggregate
         // service of sorts providing a convenient interface.
-        return new $brokerClass($this->createTokenRepository($config), $this->app['auth']->createUserProvider($config['provider']), $this->app['mailer'], $config['email']);
+        return new $brokerClass($this->createTokenRepository($config), $this->app['auth']->createUserProvider($config['provider']));
     }
 
     /**

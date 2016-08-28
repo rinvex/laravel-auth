@@ -18,10 +18,7 @@ namespace Rinvex\Fort\Services;
 use Closure;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
-use Illuminate\Mail\Message;
 use UnexpectedValueException;
-use Illuminate\Support\Facades\Lang;
-use Illuminate\Contracts\Mail\Mailer;
 use Rinvex\Fort\Contracts\ResetBrokerContract;
 use Rinvex\Fort\Contracts\UserRepositoryContract;
 use Rinvex\Fort\Contracts\CanResetPasswordContract;
@@ -44,20 +41,6 @@ class ResetBroker implements ResetBrokerContract
     protected $users;
 
     /**
-     * The mailer instance.
-     *
-     * @var \Illuminate\Contracts\Mail\Mailer
-     */
-    protected $mailer;
-
-    /**
-     * The view of the password reset link email.
-     *
-     * @var string
-     */
-    protected $emailView;
-
-    /**
      * The custom password validator callback.
      *
      * @var \Closure
@@ -69,23 +52,19 @@ class ResetBroker implements ResetBrokerContract
      *
      * @param \Rinvex\Fort\Contracts\ResetTokenRepositoryContract $tokens
      * @param \Rinvex\Fort\Contracts\UserRepositoryContract       $users
-     * @param \Illuminate\Contracts\Mail\Mailer                   $mailer
-     * @param string                                              $emailView
      *
      * @return void
      */
-    public function __construct(ResetTokenRepositoryContract $tokens, UserRepositoryContract $users, Mailer $mailer, $emailView)
+    public function __construct(ResetTokenRepositoryContract $tokens, UserRepositoryContract $users)
     {
-        $this->users     = $users;
-        $this->mailer    = $mailer;
-        $this->tokens    = $tokens;
-        $this->emailView = $emailView;
+        $this->users  = $users;
+        $this->tokens = $tokens;
     }
 
     /**
      * {@inheritdoc}
      */
-    public function sendResetLink(array $credentials, Closure $callback = null)
+    public function sendResetLink(array $credentials)
     {
         // First we will check to see if we found a user at the given credentials and
         // if we did not we will redirect back to this current URI with a piece of
@@ -95,32 +74,18 @@ class ResetBroker implements ResetBrokerContract
         }
 
         // Fire the password request start event
-        event('rinvex.fort.password.request.start', [$user, $this->mailer]);
+        event('rinvex.fort.password.request.start', [$user]);
 
         // Once we have the reset password token, we are ready to send the message out
         // to this user with a link for password. We will then redirect back to the
         // current URI having nothing set in the session to indicate errors.
-        $token = $this->createToken($user);
-
-        // We will use reset password email view that was given to the broker.
-        // We'll pass a "token" variable into the view so that it may
-        // be displayed for an user to click for password reset.
-        $view       = $this->emailView;
+        $token      = $this->tokens->getData($user, $this->tokens->create($user));
         $expiration = $this->tokens->getExpiration() / 60;
-        $tokenData  = $this->tokens->getData($user, $token);
-        $email      = function (Message $message) use ($user, $token, $callback) {
-            $message->to($user->getEmailForPasswordReset());
-            $message->subject(Lang::get('rinvex.fort::email.password.subject'));
 
-            if (! is_null($callback)) {
-                call_user_func($callback, $message, $user, $token);
-            }
-        };
-
-        $this->mailer->send($view, compact('token', 'user', 'expiration', 'tokenData'), $email);
+        $user->sendPasswordResetNotification($token, $expiration);
 
         // Fire the password request sent event
-        event('rinvex.fort.password.request.success', [$user, $this->mailer]);
+        event('rinvex.fort.password.request.success', [$user]);
 
         return static::REQUEST_SENT;
     }
@@ -146,7 +111,7 @@ class ResetBroker implements ResetBrokerContract
         }
 
         // Fire the password reset start event
-        event('rinvex.fort.password.reset.start', [$user, $this->mailer]);
+        event('rinvex.fort.password.reset.start', [$user]);
 
         // Update user password
         app('rinvex.fort.user')->update($user->id, [
@@ -158,13 +123,13 @@ class ResetBroker implements ResetBrokerContract
         // table and return the response from this callback so the user gets sent
         // to the destination given by the developers from the callback return.
         if (! is_null($callback)) {
-            call_user_func($callback, $user, $credentials['password']);
+            $callback($user, $credentials['password']);
         }
 
         $this->deleteToken($credentials['token']);
 
         // Fire the password reset success event
-        event('rinvex.fort.password.reset.success', [$user, $this->mailer]);
+        event('rinvex.fort.password.reset.success', [$user]);
 
         return static::RESET_SUCCESS;
     }
@@ -231,18 +196,6 @@ class ResetBroker implements ResetBrokerContract
         }
 
         return $user;
-    }
-
-    /**
-     * Create a new password reset token for the given user.
-     *
-     * @param \Rinvex\Fort\Contracts\CanResetPasswordContract $user
-     *
-     * @return string
-     */
-    public function createToken(CanResetPasswordContract $user)
-    {
-        return $this->tokens->create($user);
     }
 
     /**

@@ -315,6 +315,17 @@ return [
 
         'default_role' => 'registered',
 
+        /*
+        |--------------------------------------------------------------------------
+        | Send Welcome Email
+        |--------------------------------------------------------------------------
+        |
+        | Send welcome email to users upon registration success.
+        |
+        */
+
+        'welcome_email' => true,
+
     ],
 
     /*
@@ -333,50 +344,6 @@ return [
     */
 
     'persistence' => 'multiple',
-
-    /*
-    |--------------------------------------------------------------------------
-    | Email Messaging
-    |--------------------------------------------------------------------------
-    */
-
-    'email' => [
-
-        /*
-        |--------------------------------------------------------------------------
-        | Send Welcome Email
-        |--------------------------------------------------------------------------
-        |
-        | Send welcome email to users upon registration/verification success.
-        |
-        */
-
-        'welcome' => true,
-
-        /*
-        |--------------------------------------------------------------------------
-        | Send Verification Success Email
-        |--------------------------------------------------------------------------
-        |
-        | Send verification success email to users upon completing email verification successfully.
-        |
-        */
-
-        'verification' => true,
-
-        /*
-        |--------------------------------------------------------------------------
-        | Send Lockout Email
-        |--------------------------------------------------------------------------
-        |
-        | Send lockout email to users upon multiple failed login attempts.
-        |
-        */
-
-        'lockout' => true,
-
-    ],
-
 
     /*
     |--------------------------------------------------------------------------
@@ -429,7 +396,6 @@ return [
 
         'users' => [
             'provider' => 'users',
-            'email'    => 'rinvex.fort::password.message',
             'expire'   => 60,
         ],
 
@@ -488,9 +454,19 @@ return [
 
         'users' => [
             'provider' => 'users',
-            'email'    => 'rinvex.fort::verification.email.message',
             'expire'   => 60,
         ],
+
+        /*
+        |--------------------------------------------------------------------------
+        | Send Verification Success Email
+        |--------------------------------------------------------------------------
+        |
+        | Send verification success email to users upon completing email verification successfully.
+        |
+        */
+
+        'success_email' => true,
 
     ],
 
@@ -540,6 +516,17 @@ return [
         */
 
         'lockouttime' => 60,
+
+        /*
+        |--------------------------------------------------------------------------
+        | Send Lockout Email
+        |--------------------------------------------------------------------------
+        |
+        | Send lockout email to users upon multiple failed login attempts.
+        |
+        */
+
+        'lockout_email' => true,
 
     ],
 
