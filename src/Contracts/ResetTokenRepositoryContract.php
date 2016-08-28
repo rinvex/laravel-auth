@@ -63,7 +63,7 @@ interface ResetTokenRepositoryContract
      * Get password reset token data.
      *
      * @param \Rinvex\Fort\Contracts\CanResetPasswordContract $user
-     * @param string                                      $token
+     * @param string                                          $token
      *
      * @return array
      */

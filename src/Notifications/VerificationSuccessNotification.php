@@ -39,6 +39,7 @@ class VerificationSuccessNotification extends Notification
     {
         $this->moderated = $moderated;
     }
+
     /**
      * Get the notification's channels.
      *
@@ -64,7 +65,7 @@ class VerificationSuccessNotification extends Notification
             $phrase = Lang::get('rinvex.fort::email.verification.email.success.intro_default');
         }
 
-        return (new MailMessage)
+        return (new MailMessage())
             ->subject(Lang::get('rinvex.fort::email.verification.email.success.subject'))
             ->line($phrase);
     }
