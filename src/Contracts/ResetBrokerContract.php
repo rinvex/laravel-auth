@@ -64,7 +64,7 @@ interface ResetBrokerContract
     /**
      * Send a password reset link to a user.
      *
-     * @param array         $credentials
+     * @param array $credentials
      *
      * @return string
      */

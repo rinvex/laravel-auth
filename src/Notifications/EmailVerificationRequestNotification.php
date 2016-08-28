@@ -68,7 +68,7 @@ class EmailVerificationRequestNotification extends Notification
      */
     public function toMail()
     {
-        return (new MailMessage)
+        return (new MailMessage())
             ->subject(Lang::get('rinvex.fort::email.verification.email.subject'))
             ->line(Lang::get('rinvex.fort::email.verification.email.intro'))
             ->action(Lang::get('rinvex.fort::email.verification.email.action'), route('rinvex.fort.verification.email.verify').'?token='.$this->token['token'].'&email='.$this->token['email'])

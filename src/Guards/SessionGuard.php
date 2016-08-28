@@ -214,8 +214,6 @@ class SessionGuard implements StatefulGuard, SupportsBasicAuth
         if (! empty($session = session('rinvex.fort.twofactor.persistence')) && $persistence = app('rinvex.fort.persistence')->findBy('token', $session)) {
             return $this->provider->find($persistence->user_id);
         }
-
-        return null;
     }
 
     /**

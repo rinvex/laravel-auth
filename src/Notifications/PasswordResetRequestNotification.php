@@ -68,7 +68,7 @@ class PasswordResetRequestNotification extends Notification
      */
     public function toMail()
     {
-        return (new MailMessage)
+        return (new MailMessage())
             ->subject(Lang::get('rinvex.fort::email.reset.request.subject'))
             ->line(Lang::get('rinvex.fort::email.reset.request.intro'))
             ->action(Lang::get('rinvex.fort::email.reset.request.action'), route('rinvex.fort.password.reset').'?token='.$this->token['token'].'&email='.$this->token['email'])
