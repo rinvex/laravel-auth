@@ -16,7 +16,6 @@
 namespace Rinvex\Fort\Listeners;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Lang;
 use Rinvex\Fort\Models\Role;
 use Rinvex\Fort\Models\User;
 use Rinvex\Fort\Models\Ability;

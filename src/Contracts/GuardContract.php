@@ -48,7 +48,8 @@ interface GuardContract
     /**
      * Validate a user's credentials.
      *
-     * @param  array  $credentials
+     * @param array $credentials
+     *
      * @return bool
      */
     public function validate(array $credentials = []);
@@ -56,7 +57,8 @@ interface GuardContract
     /**
      * Set the current user.
      *
-     * @param  \Rinvex\Fort\Contracts\AuthenticatableContract  $user
+     * @param \Rinvex\Fort\Contracts\AuthenticatableContract $user
+     *
      * @return void
      */
     public function setUser(AuthenticatableContract $user);
