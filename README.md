@@ -14,18 +14,39 @@
 ## Quick Installation Guide
 
 1. Install through `composer require rinvex/fort`
-2. Open `app/Http/Kernel.php` and do the following:
+2. Open `app/Exceptions/Handler.php` and do the following:
 
-    1st Step:
     ```php
     // Replace this:
-    'auth' => \App\Http\Middleware\Authenticate::class,
+    if ($request->expectsJson()) {
+        return response()->json(['error' => 'Unauthenticated.'], 401);
+    }
+
+    return redirect()->guest('login');
     
     // With this:
-    'auth' => \Rinvex\Fort\Http\Middleware\Authenticate::class,
+    return intend([
+        'intended'   => route('rinvex.fort.auth.login'),
+        'withErrors' => ['rinvex.fort.session.required' => Lang::get('rinvex.fort::message.auth.session.required')],
+    ], 401);
+    ```
+    
+    In the same file `app/Exceptions/Handler.php`:
+    ```php
+    // Search for the following line:
+    return parent::render($request, $exception);
+ 
+    // Add above it directly the following code:
+    if ($exception instanceof \Rinvex\Fort\Exceptions\InvalidPersistenceException) {
+        return intend([
+            'intended'   => route('rinvex.fort.auth.login'),
+            'withErrors' => ['rinvex.fort.session.expired' => Lang::get('rinvex.fort::message.auth.session.expired')],
+        ], 401);
+    }
     ```
 
-    2nd Step:
+2. Open `app/Http/Kernel.php` and do the following:
+
     ```php
     // Replace this:
     'guest' => \App\Http\Middleware\RedirectIfAuthenticated::class,
@@ -34,9 +55,9 @@
     'guest' => \Rinvex\Fort\Http\Middleware\RedirectIfAuthenticated::class,
     ```
 
-    3rd Step:
+    In the same file `app/Http/Kernel.php`:
     ```php
-    // Add this to the end of $routeMiddleware array
+    // Add this to the end of '$routeMiddleware' array
     'abilities' => \Rinvex\Fort\Http\Middleware\Abilities::class,
     ```
 
@@ -53,6 +74,7 @@
     ```
 
 5. Done!
+    **If you know anyway to make installation simpler or avoid some steps, please send a PR.**
 
 
 ## Quick Walk-Through
@@ -270,6 +292,7 @@
 - Listen to any triggered events at any process (with almost 65+ listened to events)
 - Use any of Google Authenticator, Duo Mobile, Authy, or Windows Phone Authenticator for Two-Factor TOTP Authentication
 - Social login using Facebook, Google, Twitter, LinkedIn, Github, Bitbucket
+- Automatically logout user if his session has been tampered
 - Customizable table database table and model names
 - Database stored role based access control
 - Uses Laravel 5.3 Notifications System

@@ -125,7 +125,7 @@ class VerificationController extends FoundationController
     {
         $status = app('rinvex.fort.verifier')
             ->broker($this->getBroker())
-            ->sendPhoneVerification($this->currentUser, $request->get('method')) ? 'sent' : 'failed';
+            ->sendPhoneVerification(Auth::guard($this->getGuard())->user(), $request->get('method')) ? 'sent' : 'failed';
 
         return intend([
             'intended' => route('rinvex.fort.verification.phone.verify'),
@@ -160,7 +160,7 @@ class VerificationController extends FoundationController
     public function processPhoneVerification(PhoneVerification $request)
     {
         $token  = $request->get('token');
-        $result = Auth::guard($this->getGuard())->attemptTwoFactor($this->currentUser, $token);
+        $result = Auth::guard($this->getGuard())->attemptTwoFactor(Auth::guard($this->getGuard())->user(), $token);
 
         switch ($result) {
             case SessionGuard::AUTH_PHONE_VERIFIED:

@@ -18,6 +18,7 @@ namespace Rinvex\Fort\Http\Controllers;
 use Carbon\Carbon;
 use Rinvex\Country\Models\Country;
 use Illuminate\Support\MessageBag;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\ViewErrorBag;
 use Illuminate\Support\Facades\Lang;
 use Rinvex\Fort\Http\Requests\AccountUpdate;
@@ -53,8 +54,6 @@ class AccountController extends FoundationController
      */
     public function __construct(UserRepositoryContract $users)
     {
-        parent::__construct();
-
         $this->users = $users;
 
         $this->middleware($this->getAuthMiddleware(), ['except' => $this->authWhitelist]);
@@ -67,7 +66,7 @@ class AccountController extends FoundationController
      */
     public function showAccountUpdate(Country $country)
     {
-        $twoFactor = $this->currentUser->getTwoFactor();
+        $twoFactor = $this->currentUser()->getTwoFactor();
         $countries = $country->findAll()->pluck('name.common', 'iso_3166_1_alpha2');
 
         return view('rinvex.fort::account.page', compact('twoFactor', 'countries'));
@@ -82,24 +81,25 @@ class AccountController extends FoundationController
      */
     public function processAccountUpdate(AccountUpdate $request)
     {
-        $data      = $request->except(['_token', 'id']);
-        $twoFactor = $this->currentUser->getTwoFactor();
+        $currentUser = $this->currentUser();
+        $data        = $request->except(['_token', 'id']);
+        $twoFactor   = $currentUser->getTwoFactor();
 
         if (isset($data['password'])) {
             $data['password'] = bcrypt($data['password']);
         }
 
-        $emailVerification = $data['email'] != $this->currentUser->email ? [
+        $emailVerification = $data['email'] != $currentUser->email ? [
             'email_verified'    => false,
             'email_verified_at' => null,
         ] : [];
 
-        $phoneVerification = $data['phone'] != $this->currentUser->phone ? [
+        $phoneVerification = $data['phone'] != $currentUser->phone ? [
             'phone_verified'    => false,
             'phone_verified_at' => null,
         ] : [];
 
-        $countryVerification = $data['country'] !== $this->currentUser->country;
+        $countryVerification = $data['country'] !== $currentUser->country;
 
         if ($phoneVerification || $countryVerification) {
             array_set($twoFactor, 'phone.enabled', false);
@@ -111,7 +111,7 @@ class AccountController extends FoundationController
             'back' => true,
             'with' => [
                           'rinvex.fort.alert.success' => Lang::get('rinvex.fort::message.account.'.(! empty($emailVerification) ? 'reverify' : 'updated')),
-                      ] + ($twoFactor !== $this->currentUser->getTwoFactor() ? ['rinvex.fort.alert.warning' => Lang::get('rinvex.fort::message.verification.twofactor.phone.auto_disabled')] : []),
+                      ] + ($twoFactor !== $currentUser->getTwoFactor() ? ['rinvex.fort.alert.warning' => Lang::get('rinvex.fort::message.verification.twofactor.phone.auto_disabled')] : []),
         ]);
     }
 
@@ -140,7 +140,7 @@ class AccountController extends FoundationController
             app('rinvex.fort.persistence')->delete($token);
             $status = Lang::get('rinvex.fort::message.auth.session.flushed');
         } elseif (request()->get('confirm')) {
-            app('rinvex.fort.persistence')->deleteByUser($this->currentUser->id);
+            app('rinvex.fort.persistence')->deleteByUser($this->currentUser()->id);
             $status = Lang::get('rinvex.fort::message.auth.session.flushedall');
         }
 
@@ -160,7 +160,8 @@ class AccountController extends FoundationController
      */
     public function showTwoFactorTotpEnable(TwoFactorTotp $request, TwoFactorTotpProvider $totpProvider)
     {
-        $settings = $this->currentUser->getTwoFactor();
+        $currentUser = $this->currentUser();
+        $settings    = $currentUser->getTwoFactor();
 
         if (array_get($settings, 'totp.enabled') && ! session()->get('rinvex.fort.alert.success') && ! session()->get('errors')) {
             $messageBag = new MessageBag([Lang::get('rinvex.fort::message.verification.twofactor.totp.already')]);
@@ -171,12 +172,12 @@ class AccountController extends FoundationController
             array_set($settings, 'totp.enabled', false);
             array_set($settings, 'totp.secret', $secret = $totpProvider->generateSecretKey());
 
-            $this->users->update($this->currentUser->id, [
+            $this->users->update($currentUser->id, [
                 'two_factor' => $settings,
             ]);
         }
 
-        $qrCode = $totpProvider->getQRCodeInline(config('rinvex.fort.twofactor.issuer'), $this->currentUser->email, $secret);
+        $qrCode = $totpProvider->getQRCodeInline(config('rinvex.fort.twofactor.issuer'), $currentUser->email, $secret);
 
         return view('rinvex.fort::account.twofactor', compact('secret', 'qrCode', 'settings', 'errors'));
     }
@@ -191,10 +192,11 @@ class AccountController extends FoundationController
      */
     public function processTwoFactorTotpEnable(TwoFactorTotp $request, TwoFactorTotpProvider $totpProvider)
     {
-        $settings = $this->currentUser->getTwoFactor();
-        $secret   = array_get($settings, 'totp.secret');
-        $backup   = array_get($settings, 'totp.backup');
-        $backupAt = array_get($settings, 'totp.backup_at');
+        $currentUser = $this->currentUser();
+        $settings    = $currentUser->getTwoFactor();
+        $secret      = array_get($settings, 'totp.secret');
+        $backup      = array_get($settings, 'totp.backup');
+        $backupAt    = array_get($settings, 'totp.backup_at');
 
         if ($totpProvider->verifyKey($secret, $request->get('token'))) {
             array_set($settings, 'totp.enabled', true);
@@ -203,7 +205,7 @@ class AccountController extends FoundationController
             array_set($settings, 'totp.backup_at', $backupAt ?: (new Carbon())->toDateTimeString());
 
             // Update Two-Factor settings
-            $this->users->update($this->currentUser->id, [
+            $this->users->update($currentUser->id, [
                 'two_factor' => $settings,
             ]);
 
@@ -228,11 +230,12 @@ class AccountController extends FoundationController
      */
     public function processTwoFactorTotpDisable(TwoFactorTotp $request)
     {
-        $settings = $this->currentUser->getTwoFactor();
+        $currentUser = $this->currentUser();
+        $settings    = $currentUser->getTwoFactor();
 
         array_set($settings, 'totp', []);
 
-        $this->users->update($this->currentUser->id, [
+        $this->users->update($currentUser->id, [
             'two_factor' => $settings,
         ]);
 
@@ -251,18 +254,20 @@ class AccountController extends FoundationController
      */
     public function processTwoFactorPhoneEnable(TwoFactorPhone $request)
     {
-        if (! $this->currentUser->phone || ! $this->currentUser->phone_verified) {
+        $currentUser = $this->currentUser();
+
+        if (! $currentUser->phone || ! $currentUser->phone_verified) {
             return intend([
                 'intended'   => route('rinvex.fort.account.page'),
                 'withErrors' => ['phone' => Lang::get('rinvex.fort::message.account.phone_required')],
             ]);
         }
 
-        $settings = $this->currentUser->getTwoFactor();
+        $settings = $this->currentUser()->getTwoFactor();
 
         array_set($settings, 'phone.enabled', true);
 
-        $this->users->update($this->currentUser->id, [
+        $this->users->update($currentUser->id, [
             'two_factor' => $settings,
         ]);
 
@@ -281,11 +286,12 @@ class AccountController extends FoundationController
      */
     public function processTwoFactorPhoneDisable(TwoFactorPhone $request)
     {
-        $settings = $this->currentUser->getTwoFactor();
+        $currentUser = $this->currentUser();
+        $settings    = $currentUser->getTwoFactor();
 
         array_set($settings, 'phone.enabled', false);
 
-        $this->users->update($this->currentUser->id, [
+        $this->users->update($currentUser->id, [
             'two_factor' => $settings,
         ]);
 
@@ -304,12 +310,13 @@ class AccountController extends FoundationController
      */
     public function processTwoFactorTotpBackup(TwoFactorTotp $request)
     {
-        $settings = $this->currentUser->getTwoFactor();
+        $currentUser = $this->currentUser();
+        $settings    = $currentUser->getTwoFactor();
 
         array_set($settings, 'totp.backup', $this->generateTwoFactorTotpBackups());
         array_set($settings, 'totp.backup_at', (new Carbon())->toDateTimeString());
 
-        $this->users->update($this->currentUser->id, [
+        $this->users->update($currentUser->id, [
             'two_factor' => $settings,
         ]);
 
@@ -333,5 +340,15 @@ class AccountController extends FoundationController
         }
 
         return $backup;
+    }
+
+    /**
+     * Get current user.
+     *
+     * @return \Rinvex\Fort\Contracts\AuthenticatableContract
+     */
+    protected function currentUser()
+    {
+        return Auth::guard($this->getGuard())->user();
     }
 }

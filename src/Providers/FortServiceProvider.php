@@ -16,6 +16,7 @@
 namespace Rinvex\Fort\Providers;
 
 use Illuminate\Routing\Router;
+use Illuminate\Support\Facades\Auth;
 use Rinvex\Fort\Guards\SessionGuard;
 use Rinvex\Fort\Services\BrokerManager;
 use Rinvex\Fort\Listeners\FortEventListener;
@@ -104,6 +105,11 @@ class FortServiceProvider extends BaseServiceProvider
             }
 
             return $guard;
+        });
+
+        // Share current user instance with all views
+        $this->app['view']->composer('*', function ($view) {
+            $view->with('currentUser', Auth::user());
         });
     }
 

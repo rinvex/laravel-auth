@@ -26,31 +26,11 @@ class FoundationController extends Controller
     use AuthorizesRequests, DispatchesJobs, GetsMiddleware;
 
     /**
-     * The currently logged in user instance.
-     *
-     * @var \Rinvex\Fort\Contracts\AuthenticatableContract
-     */
-    protected $currentUser;
-
-    /**
      * The password broker.
      *
      * @var string
      */
     protected $broker;
-
-    /**
-     * Create a new basic controller instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        // Get currently logged in user instance, or user instance of current Two-Factor login attempt
-        $this->currentUser = Auth::guard($this->getGuard())->user() ?: Auth::guard($this->getGuard())->attemptUser();
-
-        view()->share(['currentUser' => $this->currentUser]);
-    }
 
     /**
      * Get the broker to be used.
