@@ -107,7 +107,7 @@ return [
         'two_factor_notice'     => 'Protect your account with an extra layer of security by requiring access to your phone. Once configured, you\'ll be required to enter both your password and an authentication code from your mobile phone in order to sign into your account.',
         'two_factor_active'     => 'Two-Factor Authentication currently <strong>active</strong>, click to activate!',
         'two_factor_inactive'   => 'Two-Factor Authentication currently <strong>inactive</strong>, click to de-activate!',
-        'twofactor_totp_head'   => 'User An App',
+        'twofactor_totp_head'   => 'Use An App',
         'twofactor_totp_body'   => 'Retrieve codes from an authentication app on your device, like Google Authenticator, Duo Mobile, Authy, or Windows Phone Authenticator.',
         'twofactor_phone_head'  => 'SMS Text Message / Automated Phone Call',
         'twofactor_phone_body'  => 'Receive a text message, or an automated phone call to your mobile device when signing in.',

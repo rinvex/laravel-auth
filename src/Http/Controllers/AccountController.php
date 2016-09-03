@@ -313,6 +313,13 @@ class AccountController extends FoundationController
         $currentUser = $this->currentUser();
         $settings    = $currentUser->getTwoFactor();
 
+        if (! array_get($settings, 'totp.enabled')) {
+            return intend([
+                'intended'   => route('rinvex.fort.account.page'),
+                'withErrors' => ['rinvex.fort.verification.twofactor.totp.cant_backup' => Lang::get('rinvex.fort::message.verification.twofactor.totp.cant_backup')],
+            ]);
+        }
+
         array_set($settings, 'totp.backup', $this->generateTwoFactorTotpBackups());
         array_set($settings, 'totp.backup_at', (new Carbon())->toDateTimeString());
 

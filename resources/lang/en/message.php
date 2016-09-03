@@ -78,6 +78,7 @@ return [
                 'enabled'          => 'Two-Factor TOTP authentication has been enabled and backup codes generated for your account.',
                 'disabled'         => 'Two-Factor TOTP authentication has been disabled for your account.',
                 'rebackup'         => 'Two-Factor TOTP authentication backup codes re-generated for your account.',
+                'cant_backup'      => 'Two-Factor TOTP authentication currently disabled for your account, thus backup codes can not be generated.',
                 'already'          => 'You have already configured Two-Factor TOTP authentication. This page allows you to switch to a different authentication app. If this is not what you\'d like to do, you can go back to your account settings.',
                 'invalid_token'    => 'Your passcode did not match, or expired after scanning. Remove the old barcode from your app, and try again. Since this process is time-sensitive, make sure your device\'s date and time is set to "automatic."',
                 'globaly_disabled' => 'Sorry, Two-Factor TOTP authentication globally disabled!',
