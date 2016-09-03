@@ -138,7 +138,7 @@ class AuthenticationController extends FoundationController
             case SessionGuard::AUTH_REGISTERED:
             default:
                 return intend([
-                    'route' => 'rivnex.fort.auth.login',
+                    'route' => 'rinvex.fort.auth.login',
                     'with'  => ['rinvex.fort.alert.success' => Lang::get($result)],
                 ]);
 
