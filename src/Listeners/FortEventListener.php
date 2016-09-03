@@ -16,6 +16,7 @@
 namespace Rinvex\Fort\Listeners;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Lang;
 use Rinvex\Fort\Models\Role;
 use Rinvex\Fort\Models\User;
 use Rinvex\Fort\Models\Ability;
@@ -64,6 +65,7 @@ class FortEventListener
         $dispatcher->listen('rinvex.fort.auth.moderated', __CLASS__.'@authModerated');
         $dispatcher->listen('rinvex.fort.auth.unverified', __CLASS__.'@authUnverified');
         $dispatcher->listen('rinvex.fort.auth.unauthorized', __CLASS__.'@authUnauthorized');
+        $dispatcher->listen('rinvex.fort.auth.autologout', __CLASS__.'@authAutoLogout');
         $dispatcher->listen('rinvex.fort.auth.attempt', __CLASS__.'@authAttempt');
         $dispatcher->listen('rinvex.fort.auth.logout', __CLASS__.'@authLogout');
         $dispatcher->listen('rinvex.fort.auth.valid', __CLASS__.'@authValid');
@@ -216,7 +218,7 @@ class FortEventListener
      *
      * @return void
      */
-    public function authModerated($user)
+    public function authModerated(AuthenticatableContract $user)
     {
         //
     }
@@ -228,7 +230,7 @@ class FortEventListener
      *
      * @return void
      */
-    public function authUnverified($user)
+    public function authUnverified(AuthenticatableContract $user)
     {
         //
     }
@@ -239,6 +241,16 @@ class FortEventListener
      * @return void
      */
     public function authUnauthorized()
+    {
+        //
+    }
+
+    /**
+     * Listen to the automatic logout event.
+     *
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Http\JsonResponse
+     */
+    public function authAutoLogout()
     {
         //
     }
@@ -264,7 +276,7 @@ class FortEventListener
      *
      * @return void
      */
-    public function authLogout($user)
+    public function authLogout(AuthenticatableContract $user)
     {
         //
     }

@@ -15,9 +15,7 @@
 
 namespace Rinvex\Fort\Contracts;
 
-use Illuminate\Contracts\Auth\Guard;
-
-interface StatefulGuard extends Guard
+interface StatefulGuardContract extends GuardContract
 {
     /**
      * Attempt to authenticate a user using the given credentials.

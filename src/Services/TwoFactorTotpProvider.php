@@ -48,9 +48,9 @@ class TwoFactorTotpProvider
      *
      * @param int $length
      *
-     * @throws \Exception
-     *
      * @return string
+     *
+     * @throws \Exception
      */
     public function generateSecretKey($length = 32, $prefix = '')
     {
@@ -82,9 +82,9 @@ class TwoFactorTotpProvider
      *
      * @param string $b32
      *
-     * @throws \Exception
-     *
      * @return int
+     *
+     * @throws \Exception
      */
     public function base32Decode($b32)
     {
@@ -101,9 +101,9 @@ class TwoFactorTotpProvider
      * @param string $binaryKey
      * @param int    $timestamp
      *
-     * @throws \Exception
-     *
      * @return string
+     *
+     * @throws \Exception
      */
     public function oathHotp($binaryKey, $timestamp)
     {
@@ -124,9 +124,9 @@ class TwoFactorTotpProvider
      *
      * @param string $initalizationKey
      *
-     * @throws \Exception
-     *
      * @return string
+     *
+     * @throws \Exception
      */
     public function getCurrentOtp($initalizationKey)
     {
@@ -260,9 +260,9 @@ class TwoFactorTotpProvider
      *
      * @param string $b32
      *
-     * @throws \Exception
-     *
      * @return void
+     *
+     * @throws \Exception
      */
     private function validateSecret($b32)
     {

@@ -181,9 +181,9 @@ class ResetBroker implements ResetBrokerContract
      *
      * @param array $credentials
      *
-     * @throws \UnexpectedValueException
-     *
      * @return \Rinvex\Fort\Contracts\CanResetPasswordContract
+     *
+     * @throws \UnexpectedValueException
      */
     public function getUser(array $credentials)
     {

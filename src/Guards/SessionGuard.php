@@ -23,18 +23,17 @@ use Illuminate\Http\Response;
 use Illuminate\Auth\GuardHelpers;
 use Rinvex\Fort\Traits\ThrottlesLogins;
 use Illuminate\Session\SessionInterface;
-use Rinvex\Fort\Contracts\StatefulGuard;
 use Illuminate\Contracts\Events\Dispatcher;
-use Illuminate\Contracts\Auth\Authenticatable;
 use Rinvex\Fort\Services\TwoFactorTotpProvider;
 use Rinvex\Fort\Services\TwoFactorAuthyProvider;
+use Rinvex\Fort\Contracts\StatefulGuardContract;
 use Illuminate\Contracts\Auth\SupportsBasicAuth;
 use Rinvex\Fort\Contracts\UserRepositoryContract;
 use Rinvex\Fort\Contracts\AuthenticatableContract;
 use Rinvex\Fort\Exceptions\InvalidPersistenceException;
 use Illuminate\Contracts\Cookie\QueueingFactory as CookieJar;
 
-class SessionGuard implements StatefulGuard, SupportsBasicAuth
+class SessionGuard implements StatefulGuardContract, SupportsBasicAuth
 {
     use GuardHelpers, ThrottlesLogins;
 
@@ -132,13 +131,6 @@ class SessionGuard implements StatefulGuard, SupportsBasicAuth
     protected $lastAttempted;
 
     /**
-     * Indicates if there's logout attempt.
-     *
-     * @var bool
-     */
-    protected $logoutAttempted;
-
-    /**
      * Indicates if the user was authenticated via a recaller cookie.
      *
      * @var bool
@@ -179,6 +171,13 @@ class SessionGuard implements StatefulGuard, SupportsBasicAuth
      * @var bool
      */
     protected $loggedOut = false;
+
+    /**
+     * Indicates if there's logout attempt.
+     *
+     * @var bool
+     */
+    protected $logoutAttempted = false;
 
     /**
      * Indicates if a token user retrieval has been attempted.
@@ -803,9 +802,9 @@ class SessionGuard implements StatefulGuard, SupportsBasicAuth
     /**
      * Get the cookie creator instance used by the guard.
      *
-     * @throws \RuntimeException
-     *
      * @return \Illuminate\Contracts\Cookie\QueueingFactory
+     *
+     * @throws \RuntimeException
      */
     public function getCookieJar()
     {
@@ -899,7 +898,7 @@ class SessionGuard implements StatefulGuard, SupportsBasicAuth
      *
      * @return void
      */
-    public function setUser(Authenticatable $user)
+    public function setUser(AuthenticatableContract $user)
     {
         $this->user = $user;
 

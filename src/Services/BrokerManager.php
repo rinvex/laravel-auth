@@ -71,9 +71,9 @@ class BrokerManager implements BrokerManagerContract
      *
      * @param string $name
      *
-     * @throws \InvalidArgumentException
-     *
      * @return \Rinvex\Fort\Contracts\ResetBrokerContract|\Rinvex\Fort\Contracts\VerificationBrokerContract
+     *
+     * @throws \InvalidArgumentException
      */
     protected function resolve($name)
     {

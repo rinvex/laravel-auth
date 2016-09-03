@@ -35,7 +35,7 @@ class Authenticate
         if ($guest = Auth::guard($guard)->guest()) {
             return intend([
                 'intended'   => route('rinvex.fort.auth.login'),
-                'withErrors' => ['rinvex.fort.session.expired' => Lang::get('rinvex.fort::message.auth.session.'.($guest ? 'expired' : 'required'))],
+                'withErrors' => ['rinvex.fort.session.expired' => Lang::get('rinvex.fort::message.auth.session.required')],
             ], 401);
         }
 
