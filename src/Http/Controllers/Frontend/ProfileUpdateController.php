@@ -13,13 +13,14 @@
  * Link:    https://rinvex.com
  */
 
-namespace Rinvex\Fort\Http\Controllers;
+namespace Rinvex\Fort\Http\Controllers\Frontend;
 
 use Rinvex\Country\Models\Country;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Lang;
 use Rinvex\Fort\Http\Requests\ProfileUpdate;
 use Rinvex\Fort\Contracts\UserRepositoryContract;
+use Rinvex\Fort\Http\Controllers\AbstractController;
 
 class ProfileUpdateController extends AbstractController
 {

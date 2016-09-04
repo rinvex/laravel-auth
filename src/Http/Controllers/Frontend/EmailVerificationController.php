@@ -13,10 +13,11 @@
  * Link:    https://rinvex.com
  */
 
-namespace Rinvex\Fort\Http\Controllers;
+namespace Rinvex\Fort\Http\Controllers\Frontend;
 
 use Illuminate\Support\Facades\Lang;
 use Rinvex\Fort\Http\Requests\EmailVerification;
+use Rinvex\Fort\Http\Controllers\AbstractController;
 use Rinvex\Fort\Contracts\VerificationBrokerContract;
 
 class EmailVerificationController extends AbstractController

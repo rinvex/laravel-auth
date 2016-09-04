@@ -13,7 +13,7 @@
  * Link:    https://rinvex.com
  */
 
-namespace Rinvex\Fort\Http\Controllers;
+namespace Rinvex\Fort\Http\Controllers\Frontend;
 
 use Carbon\Carbon;
 use Illuminate\Support\MessageBag;
@@ -24,6 +24,7 @@ use Rinvex\Fort\Http\Requests\TwoFactorTotp;
 use Rinvex\Fort\Http\Requests\TwoFactorPhone;
 use Rinvex\Fort\Services\TwoFactorTotpProvider;
 use Rinvex\Fort\Contracts\UserRepositoryContract;
+use Rinvex\Fort\Http\Controllers\AbstractController;
 
 class TwoFactorUpdateController extends AbstractController
 {

@@ -13,11 +13,12 @@
  * Link:    https://rinvex.com
  */
 
-namespace Rinvex\Fort\Http\Controllers;
+namespace Rinvex\Fort\Http\Controllers\Frontend;
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Lang;
 use Rinvex\Fort\Contracts\UserRepositoryContract;
+use Rinvex\Fort\Http\Controllers\AbstractController;
 
 class ManagePersistenceController extends AbstractController
 {

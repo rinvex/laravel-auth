@@ -13,11 +13,12 @@
  * Link:    https://rinvex.com
  */
 
-namespace Rinvex\Fort\Http\Controllers;
+namespace Rinvex\Fort\Http\Controllers\Frontend;
 
 use Illuminate\Support\Facades\Lang;
 use Rinvex\Fort\Http\Requests\PasswordReset;
 use Rinvex\Fort\Contracts\ResetBrokerContract;
+use Rinvex\Fort\Http\Controllers\AbstractController;
 
 class ResetPasswordController extends AbstractController
 {

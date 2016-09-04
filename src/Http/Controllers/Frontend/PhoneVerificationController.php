@@ -13,12 +13,13 @@
  * Link:    https://rinvex.com
  */
 
-namespace Rinvex\Fort\Http\Controllers;
+namespace Rinvex\Fort\Http\Controllers\Frontend;
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Lang;
 use Rinvex\Fort\Guards\SessionGuard;
 use Rinvex\Fort\Http\Requests\PhoneVerification;
+use Rinvex\Fort\Http\Controllers\AbstractController;
 use Rinvex\Fort\Http\Requests\PhoneVerificationRequest;
 
 class PhoneVerificationController extends AbstractController
