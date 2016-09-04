@@ -113,7 +113,7 @@ class AuthenticationController extends FoundationController
         switch ($result) {
 
             // Registration completed, verification required
-            case VerificationBrokerContract::REQUEST_SENT:
+            case VerificationBrokerContract::LINK_SENT:
                 return intend([
                     'home' => true,
                     'with' => ['rinvex.fort.alert.success' => Lang::get('rinvex.fort::message.register.success_verify')],

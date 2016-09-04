@@ -7,10 +7,10 @@
         <div class="row">
             <div class="col-md-8 col-md-offset-2">
                 <div class="panel panel-default">
-                    <div class="panel-heading">{{ trans('rinvex.fort::form.password.request.heading') }}</div>
+                    <div class="panel-heading">{{ trans('rinvex.fort::form.password.forgot.heading') }}</div>
                     <div class="panel-body">
 
-                        <form class="form-horizontal" role="form" method="POST" action="{{ route('rinvex.fort.password.request.post') }}">
+                        <form class="form-horizontal" role="form" method="POST" action="{{ route('rinvex.fort.password.forgot.post') }}">
                             {{ csrf_field() }}
 
                             @include('rinvex.fort::alerts.success')
@@ -34,7 +34,7 @@
                             <div class="row">
                                 <div class="col-md-12 col-sm-12 col-xs-12 text-center">
 
-                                    <button type="submit" class="btn btn-primary"><i class="fa fa-btn fa-envelope"></i> {{ trans('rinvex.fort::form.password.request.submit') }}</button>
+                                    <button type="submit" class="btn btn-primary"><i class="fa fa-btn fa-envelope"></i> {{ trans('rinvex.fort::form.password.forgot.submit') }}</button>
 
                                 </div>
                             </div>

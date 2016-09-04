@@ -103,7 +103,7 @@ class VerificationBroker implements VerificationBrokerContract
         // Fire the email verification request success event
         event('rinvex.fort.verification.email.request.success', [$user]);
 
-        return static::REQUEST_SENT;
+        return static::LINK_SENT;
     }
 
     /**

@@ -117,16 +117,29 @@ Route::group([
 
     /*
     |--------------------------------------------------------------------------
-    | Reset Password Routes
+    | Password Routes
     |--------------------------------------------------------------------------
     */
 
     Route::group(['as' => 'password.', 'prefix' => 'password'], function () {
-        Route::get('request', ['as' => 'request', 'uses' => 'ResetterController@showPasswordResetRequest']);
-        Route::post('request', ['as' => 'request.post', 'uses' => 'ResetterController@processPasswordResetRequest']);
 
-        Route::get('reset', ['as' => 'reset', 'uses' => 'ResetterController@showPasswordReset']);
-        Route::post('reset', ['as' => 'reset.post', 'uses' => 'ResetterController@processPasswordReset']);
+        /*
+        |--------------------------------------------------------------------------
+        | Forgot Password Routes
+        |--------------------------------------------------------------------------
+        */
+
+        Route::get('forgot', ['as' => 'forgot', 'uses' => 'ForgotPasswordController@showForgotPassword']);
+        Route::post('forgot', ['as' => 'forgot.post', 'uses' => 'ForgotPasswordController@processForgotPassword']);
+
+        /*
+        |--------------------------------------------------------------------------
+        | Reset Password Routes
+        |--------------------------------------------------------------------------
+        */
+
+        Route::get('reset', ['as' => 'reset', 'uses' => 'ResetPasswordController@showResetPassword']);
+        Route::post('reset', ['as' => 'reset.post', 'uses' => 'ResetPasswordController@processResetPassword']);
     });
 
 

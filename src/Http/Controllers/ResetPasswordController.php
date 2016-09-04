@@ -18,9 +18,8 @@ namespace Rinvex\Fort\Http\Controllers;
 use Illuminate\Support\Facades\Lang;
 use Rinvex\Fort\Http\Requests\PasswordReset;
 use Rinvex\Fort\Contracts\ResetBrokerContract;
-use Rinvex\Fort\Http\Requests\PasswordResetRequest;
 
-class ResetterController extends FoundationController
+class ResetPasswordController extends FoundationController
 {
     /**
      * Create a new reset password controller instance.
@@ -29,45 +28,7 @@ class ResetterController extends FoundationController
      */
     public function __construct()
     {
-        $this->middleware($this->getGuestMiddleware(), ['except' => $this->authWhitelist]);
-    }
-
-    /**
-     * Show the password reset request form.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function showPasswordResetRequest()
-    {
-        return view('rinvex.fort::password.request');
-    }
-
-    /**
-     * Process the password reset request form.
-     *
-     * @param \Rinvex\Fort\Http\Requests\PasswordResetRequest $request
-     *
-     * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse
-     */
-    public function processPasswordResetRequest(PasswordResetRequest $request)
-    {
-        $result = app('rinvex.fort.resetter')->broker($this->getBroker())->sendResetLink($request->except(['_token']));
-
-        switch ($result) {
-            case ResetBrokerContract::REQUEST_SENT:
-                return intend([
-                    'intended' => route('home'),
-                    'with'     => ['rinvex.fort.alert.success' => Lang::get($result)],
-                ]);
-
-            case ResetBrokerContract::INVALID_USER:
-            default:
-                return intend([
-                    'back'       => true,
-                    'withInput'  => $request->only('email'),
-                    'withErrors' => ['email' => Lang::get($result)],
-                ]);
-        }
+        $this->middleware($this->getGuestMiddleware(), ['except' => $this->middlewareWhitelist]);
     }
 
     /**
@@ -77,7 +38,7 @@ class ResetterController extends FoundationController
      *
      * @return \Illuminate\Http\Response
      */
-    public function showPasswordReset(PasswordReset $request)
+    public function showResetPassword(PasswordReset $request)
     {
         $email  = $request->get('email');
         $token  = $request->get('token');
@@ -87,7 +48,7 @@ class ResetterController extends FoundationController
             case ResetBrokerContract::INVALID_USER:
             case ResetBrokerContract::INVALID_TOKEN:
                 return intend([
-                    'intended'   => route('rinvex.fort.password.request'),
+                    'intended'   => route('rinvex.fort.password.forgot'),
                     'withInput'  => $request->only('email'),
                     'withErrors' => ['email' => Lang::get($result)],
                 ]);
@@ -105,7 +66,7 @@ class ResetterController extends FoundationController
      *
      * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse
      */
-    public function processPasswordReset(PasswordReset $request)
+    public function processResetPassword(PasswordReset $request)
     {
         $result = app('rinvex.fort.resetter')->broker($this->getBroker())->reset($request->except(['_token']));
 
@@ -121,7 +82,7 @@ class ResetterController extends FoundationController
             case ResetBrokerContract::INVALID_PASSWORD:
             default:
                 return intend([
-                    'intended'   => route('rinvex.fort.password.request'),
+                    'intended'   => route('rinvex.fort.password.forgot'),
                     'withInput'  => $request->only('email'),
                     'withErrors' => ['email' => Lang::get($result)],
                 ]);

@@ -24,7 +24,7 @@ interface ResetBrokerContract
      *
      * @var string
      */
-    const REQUEST_SENT = 'rinvex.fort::message.password.request_sent';
+    const LINK_SENT = 'rinvex.fort::message.password.link_sent';
 
     /**
      * Constant representing a successfully reset password.

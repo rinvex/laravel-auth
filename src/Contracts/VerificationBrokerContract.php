@@ -24,7 +24,7 @@ interface VerificationBrokerContract
      *
      * @var string
      */
-    const REQUEST_SENT = 'rinvex.fort::message.verification.email.request_sent';
+    const LINK_SENT = 'rinvex.fort::message.verification.email.link_sent';
 
     /**
      * Constant representing a successfully verified email.

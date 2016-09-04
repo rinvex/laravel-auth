@@ -117,8 +117,8 @@ class FortEventListener
         // Reset password events
         $dispatcher->listen('rinvex.fort.password.reset.start', __CLASS__.'@passwordResetStart');
         $dispatcher->listen('rinvex.fort.password.reset.success', __CLASS__.'@passwordResetSuccess');
-        $dispatcher->listen('rinvex.fort.password.request.start', __CLASS__.'@passwordRequestStart');
-        $dispatcher->listen('rinvex.fort.password.request.success', __CLASS__.'@passwordRequestSuccess');
+        $dispatcher->listen('rinvex.fort.password.forgot.start', __CLASS__.'@passwordForgotStart');
+        $dispatcher->listen('rinvex.fort.password.forgot.success', __CLASS__.'@passwordForgotSuccess');
 
         // Email verification events
         $dispatcher->listen('rinvex.fort.verification.email.verify.start', __CLASS__.'@verificationEmailVerifyStart');
@@ -668,25 +668,25 @@ class FortEventListener
     }
 
     /**
-     * Listen to the password reset request start event.
+     * Listen to the password forgot start event.
      *
      * @param \Rinvex\Fort\Contracts\AuthenticatableContract $user
      *
      * @return void
      */
-    public function passwordRequestStart(AuthenticatableContract $user)
+    public function passwordForgotStart(AuthenticatableContract $user)
     {
         //
     }
 
     /**
-     * Listen to the password reset request success event.
+     * Listen to the password forgot success event.
      *
      * @param \Rinvex\Fort\Contracts\AuthenticatableContract $user
      *
      * @return void
      */
-    public function passwordRequestSuccess(AuthenticatableContract $user)
+    public function passwordForgotSuccess(AuthenticatableContract $user)
     {
         //
     }

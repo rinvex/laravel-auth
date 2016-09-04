@@ -32,12 +32,12 @@ return [
     ],
 
     'login' => [
-        'heading'       => 'Login',
-        'loginfield'    => 'Username / Email',
-        'password'      => 'Password',
-        'resetpassword' => 'Reset Password',
-        'remember'      => 'Remember Me',
-        'submit'        => 'Login',
+        'heading'         => 'Login',
+        'loginfield'      => 'Username / Email',
+        'password'        => 'Password',
+        'forgot_password' => 'Forgot Password',
+        'remember'        => 'Remember Me',
+        'submit'          => 'Login',
     ],
 
     'password' => [
@@ -45,12 +45,12 @@ return [
         'password'              => 'Password',
         'password_confirmation' => 'Password Confirmation',
 
-        'request' => [
+        'forgot' => [
             'heading' => 'Request Password Reset',
             'submit'  => 'Request Password Reset',
         ],
 
-        'reset'   => [
+        'reset' => [
             'heading' => 'Reset Password',
             'submit'  => 'Reset Password',
         ],
@@ -65,9 +65,9 @@ return [
 
         'phone' => [
             'request' => [
-                'heading'    => 'Request Phone Verification',
-                'phone'      => 'Phone Number',
-                'submit'     => 'Request Phone Verification',
+                'heading' => 'Request Phone Verification',
+                'phone'   => 'Phone Number',
+                'submit'  => 'Request Phone Verification',
             ],
 
             'verify' => [
