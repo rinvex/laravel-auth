@@ -151,9 +151,9 @@ class VerificationBroker implements VerificationBrokerContract
      *
      * @param array $credentials
      *
-     * @return \Rinvex\Fort\Contracts\CanVerifyEmailContract
-     *
      * @throws \UnexpectedValueException
+     *
+     * @return \Rinvex\Fort\Contracts\CanVerifyEmailContract
      */
     public function getUser(array $credentials)
     {
