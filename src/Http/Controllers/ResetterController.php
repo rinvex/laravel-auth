@@ -23,15 +23,6 @@ use Rinvex\Fort\Http\Requests\PasswordResetRequest;
 class ResetterController extends FoundationController
 {
     /**
-     * Whitelisted methods.
-     *
-     * Array of whitelisted methods which do not need to be authorized.
-     *
-     * @var array
-     */
-    protected $authWhitelist = [];
-
-    /**
      * Create a new reset password controller instance.
      *
      * @return void

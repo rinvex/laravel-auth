@@ -26,13 +26,9 @@ use Rinvex\Fort\Contracts\VerificationBrokerContract;
 class AuthenticationController extends FoundationController
 {
     /**
-     * Whitelisted methods.
-     *
-     * Array of whitelisted methods which do not need to be guest.
-     *
-     * @var array
+     * {@inheritdoc}
      */
-    protected $guestWhitelist = ['logout'];
+    protected $middlewareWhitelist = ['logout'];
 
     /**
      * Create a new authentication controller instance.
@@ -41,7 +37,7 @@ class AuthenticationController extends FoundationController
      */
     public function __construct()
     {
-        $this->middleware($this->getGuestMiddleware(), ['except' => $this->guestWhitelist]);
+        $this->middleware($this->getGuestMiddleware(), ['except' => $this->middlewareWhitelist]);
     }
 
     /**

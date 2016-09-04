@@ -30,15 +30,6 @@ use Rinvex\Fort\Contracts\UserRepositoryContract;
 class AccountController extends FoundationController
 {
     /**
-     * Whitelisted methods.
-     *
-     * Array of whitelisted methods which do not need to be authorized.
-     *
-     * @var array
-     */
-    protected $authWhitelist = [];
-
-    /**
      * The users repository instance.
      *
      * @var \Rinvex\Fort\Contracts\UserRepositoryContract
@@ -56,7 +47,7 @@ class AccountController extends FoundationController
     {
         $this->users = $users;
 
-        $this->middleware($this->getAuthMiddleware(), ['except' => $this->authWhitelist]);
+        $this->middleware($this->getAuthMiddleware(), ['except' => $this->middlewareWhitelist]);
     }
 
     /**

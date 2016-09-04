@@ -26,6 +26,15 @@ class FoundationController extends Controller
     use AuthorizesRequests, DispatchesJobs, GetsMiddleware;
 
     /**
+     * Whitelisted methods.
+     *
+     * Array of whitelisted methods which do not need to go through middleware.
+     *
+     * @var array
+     */
+    protected $middlewareWhitelist = [];
+
+    /**
      * The password broker.
      *
      * @var string
