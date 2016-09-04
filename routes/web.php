@@ -81,8 +81,8 @@ Route::group([
         |--------------------------------------------------------------------------
         */
 
-        Route::get('page', ['as' => 'page', 'uses' => 'AccountController@showAccountUpdate']);
-        Route::post('page', ['as' => 'page.post', 'uses' => 'AccountController@processAccountUpdate']);
+        Route::get('page', ['as' => 'page', 'uses' => 'ProfileUpdateController@showProfileUpdate']);
+        Route::post('page', ['as' => 'page.post', 'uses' => 'ProfileUpdateController@processProfileUpdate']);
 
         /*
         |--------------------------------------------------------------------------
@@ -90,9 +90,9 @@ Route::group([
         |--------------------------------------------------------------------------
         */
 
-        Route::get('sessions', ['as' => 'sessions', 'uses' => 'AccountController@showAccountSessions']);
-        Route::get('sessions/flush/{token}', ['as' => 'sessions.flush', 'uses' => 'AccountController@processSessionFlush'])->where('token', '[0-9a-zA-Z]+');
-        Route::get('sessions/flushall', ['as' => 'sessions.flushall', 'uses' => 'AccountController@processSessionFlush']);
+        Route::get('sessions', ['as' => 'sessions', 'uses' => 'ManagePersistenceController@showPersistence']);
+        Route::get('sessions/flush/{token}', ['as' => 'sessions.flush', 'uses' => 'ManagePersistenceController@processPersistenceFlush'])->where('token', '[0-9a-zA-Z]+');
+        Route::get('sessions/flushall', ['as' => 'sessions.flushall', 'uses' => 'ManagePersistenceController@processPersistenceFlush']);
 
         /*
         |--------------------------------------------------------------------------
@@ -109,10 +109,10 @@ Route::group([
             */
 
             Route::group(['as' => 'totp.', 'prefix' => 'totp'], function () {
-                Route::get('enable', ['as' => 'enable', 'uses' => 'AccountController@showTwoFactorTotpEnable']);
-                Route::post('enable', ['as' => 'enable.post', 'uses' => 'AccountController@processTwoFactorTotpEnable']);
-                Route::get('disable', ['as' => 'disable', 'uses' => 'AccountController@processTwoFactorTotpDisable']);
-                Route::get('backup', ['as' => 'backup', 'uses' => 'AccountController@processTwoFactorTotpBackup']);
+                Route::get('enable', ['as' => 'enable', 'uses' => 'TwoFactorUpdateController@showTwoFactorTotpEnable']);
+                Route::post('enable', ['as' => 'enable.post', 'uses' => 'TwoFactorUpdateController@processTwoFactorTotpEnable']);
+                Route::get('disable', ['as' => 'disable', 'uses' => 'TwoFactorUpdateController@processTwoFactorTotpDisable']);
+                Route::get('backup', ['as' => 'backup', 'uses' => 'TwoFactorUpdateController@processTwoFactorTotpBackup']);
             });
 
             /*
@@ -122,8 +122,8 @@ Route::group([
             */
 
             Route::group(['as' => 'phone.', 'prefix' => 'phone'], function () {
-                Route::get('enable', ['as' => 'enable', 'uses' => 'AccountController@processTwoFactorPhoneEnable']);
-                Route::get('disable', ['as' => 'disable', 'uses' => 'AccountController@processTwoFactorPhoneDisable']);
+                Route::get('enable', ['as' => 'enable', 'uses' => 'TwoFactorUpdateController@processTwoFactorPhoneEnable']);
+                Route::get('disable', ['as' => 'disable', 'uses' => 'TwoFactorUpdateController@processTwoFactorPhoneDisable']);
             });
         });
     });

@@ -16,18 +16,16 @@
 namespace Rinvex\Fort\Http\Controllers;
 
 use Carbon\Carbon;
-use Rinvex\Country\Models\Country;
 use Illuminate\Support\MessageBag;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\ViewErrorBag;
 use Illuminate\Support\Facades\Lang;
-use Rinvex\Fort\Http\Requests\AccountUpdate;
 use Rinvex\Fort\Http\Requests\TwoFactorTotp;
 use Rinvex\Fort\Http\Requests\TwoFactorPhone;
 use Rinvex\Fort\Services\TwoFactorTotpProvider;
 use Rinvex\Fort\Contracts\UserRepositoryContract;
 
-class AccountController extends AbstractController
+class TwoFactorUpdateController extends AbstractController
 {
     /**
      * The users repository instance.
@@ -48,97 +46,6 @@ class AccountController extends AbstractController
         $this->users = $users;
 
         $this->middleware($this->getAuthMiddleware(), ['except' => $this->middlewareWhitelist]);
-    }
-
-    /**
-     * Show the account update form.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function showAccountUpdate(Country $country)
-    {
-        $twoFactor = $this->currentUser()->getTwoFactor();
-        $countries = $country->findAll()->pluck('name.common', 'iso_3166_1_alpha2');
-
-        return view('rinvex.fort::account.page', compact('twoFactor', 'countries'));
-    }
-
-    /**
-     * Process the account update form.
-     *
-     * @param \Rinvex\Fort\Http\Requests\AccountUpdate $request
-     *
-     * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse
-     */
-    public function processAccountUpdate(AccountUpdate $request)
-    {
-        $currentUser = $this->currentUser();
-        $data        = $request->except(['_token', 'id']);
-        $twoFactor   = $currentUser->getTwoFactor();
-
-        if (isset($data['password'])) {
-            $data['password'] = bcrypt($data['password']);
-        }
-
-        $emailVerification = $data['email'] != $currentUser->email ? [
-            'email_verified'    => false,
-            'email_verified_at' => null,
-        ] : [];
-
-        $phoneVerification = $data['phone'] != $currentUser->phone ? [
-            'phone_verified'    => false,
-            'phone_verified_at' => null,
-        ] : [];
-
-        $countryVerification = $data['country'] !== $currentUser->country;
-
-        if ($phoneVerification || $countryVerification) {
-            array_set($twoFactor, 'phone.enabled', false);
-        }
-
-        $this->users->update($request->get('id'), $data + $emailVerification + $phoneVerification + $twoFactor);
-
-        return intend([
-            'back' => true,
-            'with' => [
-                          'rinvex.fort.alert.success' => Lang::get('rinvex.fort::message.account.'.(! empty($emailVerification) ? 'reverify' : 'updated')),
-                      ] + ($twoFactor !== $currentUser->getTwoFactor() ? ['rinvex.fort.alert.warning' => Lang::get('rinvex.fort::message.verification.twofactor.phone.auto_disabled')] : []),
-        ]);
-    }
-
-    /**
-     * Show the account sessions.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function showAccountSessions()
-    {
-        return view('rinvex.fort::account.sessions');
-    }
-
-    /**
-     * Flush the given session.
-     *
-     * @param string $token
-     *
-     * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse
-     */
-    public function processSessionFlush($token = null)
-    {
-        $status = '';
-
-        if ($token) {
-            app('rinvex.fort.persistence')->delete($token);
-            $status = Lang::get('rinvex.fort::message.auth.session.flushed');
-        } elseif (request()->get('confirm')) {
-            app('rinvex.fort.persistence')->deleteByUser($this->currentUser()->id);
-            $status = Lang::get('rinvex.fort::message.auth.session.flushedall');
-        }
-
-        return intend([
-            'back' => true,
-            'with' => ['rinvex.fort.alert.warning' => $status],
-        ]);
     }
 
     /**
@@ -170,7 +77,7 @@ class AccountController extends AbstractController
 
         $qrCode = $totpProvider->getQRCodeInline(config('rinvex.fort.twofactor.issuer'), $currentUser->email, $secret);
 
-        return view('rinvex.fort::account.twofactor', compact('secret', 'qrCode', 'settings', 'errors'));
+        return view('rinvex.fort::profile.twofactor', compact('secret', 'qrCode', 'settings', 'errors'));
     }
 
     /**
@@ -254,7 +161,7 @@ class AccountController extends AbstractController
             ]);
         }
 
-        $settings = $this->currentUser()->getTwoFactor();
+        $settings = $currentUser->getTwoFactor();
 
         array_set($settings, 'phone.enabled', true);
 

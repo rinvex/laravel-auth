@@ -17,7 +17,7 @@ namespace Rinvex\Fort\Http\Requests;
 
 use Rinvex\Support\Http\Requests\FormRequest;
 
-class AccountUpdate extends FormRequest
+class ProfileUpdate extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
