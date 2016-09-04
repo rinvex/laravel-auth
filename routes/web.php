@@ -28,6 +28,13 @@ Route::group([
     'as'         => 'rinvex.fort.',
     'namespace'  => 'Rinvex\Fort\Http\Controllers',
 ], function () {
+
+    /*
+    |--------------------------------------------------------------------------
+    | Authentication Routes
+    |--------------------------------------------------------------------------
+    */
+
     Route::group(['as' => 'auth.', 'prefix' => 'auth'], function () {
 
         /*
@@ -67,8 +74,21 @@ Route::group([
     */
 
     Route::group(['as' => 'account.', 'prefix' => 'account'], function () {
+
+        /*
+        |--------------------------------------------------------------------------
+        | Account Page Routes
+        |--------------------------------------------------------------------------
+        */
+
         Route::get('page', ['as' => 'page', 'uses' => 'AccountController@showAccountUpdate']);
         Route::post('page', ['as' => 'page.post', 'uses' => 'AccountController@processAccountUpdate']);
+
+        /*
+        |--------------------------------------------------------------------------
+        | Sessions Manipulation Routes
+        |--------------------------------------------------------------------------
+        */
 
         Route::get('sessions', ['as' => 'sessions', 'uses' => 'AccountController@showAccountSessions']);
         Route::get('sessions/flush/{token}', ['as' => 'sessions.flush', 'uses' => 'AccountController@processSessionFlush'])->where('token', '[0-9a-zA-Z]+');
@@ -110,13 +130,13 @@ Route::group([
     });
 
 
-    Route::group(['as' => 'verification.', 'prefix' => 'verification'], function () {
+    /*
+    |--------------------------------------------------------------------------
+    | Verification Routes
+    |--------------------------------------------------------------------------
+    */
 
-        /*
-        |--------------------------------------------------------------------------
-        | Verification Routes
-        |--------------------------------------------------------------------------
-        */
+    Route::group(['as' => 'verification.', 'prefix' => 'verification'], function () {
 
         Route::get('phone', ['as' => 'phone', 'uses' => 'VerificationController@showPhoneVerificationRequest']);
         Route::post('phone', ['as' => 'phone.post', 'uses' => 'VerificationController@processPhoneVerificationRequest']);

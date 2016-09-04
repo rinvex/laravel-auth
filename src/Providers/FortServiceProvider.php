@@ -231,7 +231,7 @@ class FortServiceProvider extends BaseServiceProvider
             });
         } else {
             // Load the application routes
-            require __DIR__.'/../Http/routes.php';
+            require __DIR__.'/../../routes/web.php';
 
             $this->app->booted(function () use ($router) {
                 $router->getRoutes()->refreshNameLookups();
