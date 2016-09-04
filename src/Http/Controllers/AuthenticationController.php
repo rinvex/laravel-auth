@@ -19,9 +19,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Lang;
 use Rinvex\Fort\Guards\SessionGuard;
-use Rinvex\Fort\Http\Requests\UserRegistration;
 use Rinvex\Fort\Http\Requests\UserAuthentication;
-use Rinvex\Fort\Contracts\VerificationBrokerContract;
 
 class AuthenticationController extends AbstractController
 {
@@ -85,49 +83,6 @@ class AuthenticationController extends AbstractController
             'intended' => route('home'),
             'with'     => ['rinvex.fort.alert.warning' => Lang::get($result)],
         ]);
-    }
-
-    /**
-     * Show the registration form.
-     *
-     * @param \Rinvex\Fort\Http\Requests\UserRegistration $request
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function showRegisteration(UserRegistration $request)
-    {
-        return view('rinvex.fort::auth.register');
-    }
-
-    /**
-     * Process the registration form.
-     *
-     * @param \Rinvex\Fort\Http\Requests\UserRegistration $request
-     *
-     * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse
-     */
-    public function processRegisteration(UserRegistration $request)
-    {
-        $result = Auth::guard($this->getGuard())->register($request->except('_token'));
-
-        switch ($result) {
-
-            // Registration completed, verification required
-            case VerificationBrokerContract::LINK_SENT:
-                return intend([
-                    'home' => true,
-                    'with' => ['rinvex.fort.alert.success' => Lang::get('rinvex.fort::message.register.success_verify')],
-                ]);
-
-            // Registration completed successfully
-            case SessionGuard::AUTH_REGISTERED:
-            default:
-                return intend([
-                    'route' => 'rinvex.fort.auth.login',
-                    'with'  => ['rinvex.fort.alert.success' => Lang::get($result)],
-                ]);
-
-        }
     }
 
     /**

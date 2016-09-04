@@ -53,8 +53,8 @@ Route::group([
         |--------------------------------------------------------------------------
         */
 
-        Route::get('register', ['as' => 'register', 'uses' => 'AuthenticationController@showRegisteration']);
-        Route::post('register', ['as' => 'register.post', 'uses' => 'AuthenticationController@processRegisteration']);
+        Route::get('register', ['as' => 'register', 'uses' => 'RegistrationController@showRegisteration']);
+        Route::post('register', ['as' => 'register.post', 'uses' => 'RegistrationController@processRegisteration']);
 
         /*
         |--------------------------------------------------------------------------
