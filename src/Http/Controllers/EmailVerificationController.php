@@ -19,7 +19,7 @@ use Illuminate\Support\Facades\Lang;
 use Rinvex\Fort\Http\Requests\EmailVerification;
 use Rinvex\Fort\Contracts\VerificationBrokerContract;
 
-class VerifyEmailController extends AbstractController
+class EmailVerificationController extends AbstractController
 {
     /**
      * Show the email verification request form.

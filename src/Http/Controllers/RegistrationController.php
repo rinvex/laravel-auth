@@ -42,7 +42,7 @@ class RegistrationController extends AbstractController
      */
     public function showRegisteration(UserRegistration $request)
     {
-        return view('rinvex.fort::auth.register');
+        return view('rinvex.fort::authentication.register');
     }
 
     /**
