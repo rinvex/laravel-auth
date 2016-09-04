@@ -151,15 +151,25 @@ Route::group([
 
     Route::group(['as' => 'verification.', 'prefix' => 'verification'], function () {
 
-        Route::get('phone', ['as' => 'phone', 'uses' => 'VerificationController@showPhoneVerificationRequest']);
-        Route::post('phone', ['as' => 'phone.post', 'uses' => 'VerificationController@processPhoneVerificationRequest']);
+        /*
+        |--------------------------------------------------------------------------
+        | Phone Verification Routes
+        |--------------------------------------------------------------------------
+        */
 
-        Route::get('phone/verify', ['as' => 'phone.verify', 'uses' => 'VerificationController@showPhoneVerification']);
-        Route::post('phone/verify', ['as' => 'phone.verify.post', 'uses' => 'VerificationController@processPhoneVerification']);
+        Route::get('phone', ['as' => 'phone', 'uses' => 'VerifyPhoneController@showPhoneVerificationRequest']);
+        Route::post('phone', ['as' => 'phone.post', 'uses' => 'VerifyPhoneController@processPhoneVerificationRequest']);
+        Route::get('phone/verify', ['as' => 'phone.verify', 'uses' => 'VerifyPhoneController@showPhoneVerification']);
+        Route::post('phone/verify', ['as' => 'phone.verify.post', 'uses' => 'VerifyPhoneController@processPhoneVerification']);
 
-        Route::get('email', ['as' => 'email', 'uses' => 'VerificationController@showEmailVerificationRequest']);
-        Route::post('email', ['as' => 'email.post', 'uses' => 'VerificationController@processEmailVerificationRequest']);
+        /*
+        |--------------------------------------------------------------------------
+        | Email Verification Routes
+        |--------------------------------------------------------------------------
+        */
 
-        Route::get('email/verify', ['as' => 'email.verify', 'uses' => 'VerificationController@processEmailVerification']);
+        Route::get('email', ['as' => 'email', 'uses' => 'VerifyEmailController@showEmailVerificationRequest']);
+        Route::post('email', ['as' => 'email.post', 'uses' => 'VerifyEmailController@processEmailVerificationRequest']);
+        Route::get('email/verify', ['as' => 'email.verify', 'uses' => 'VerifyEmailController@processEmailVerification']);
     });
 });
