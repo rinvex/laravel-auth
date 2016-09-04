@@ -18,23 +18,28 @@ namespace Rinvex\Fort\Traits;
 trait GetsMiddleware
 {
     /**
+     * The authentication guard.
+     *
+     * @var string
+     */
+    protected $guard;
+
+    /**
      * Get the guard to be used during authentication.
      *
      * @return string|null
      */
     protected function getGuard()
     {
-        return property_exists($this, 'guard') ? $this->guard : null;
+        return $this->guard;
     }
 
     /**
      * Get the guest middleware for the application.
      */
-    public function getGuestMiddleware()
+    protected function getGuestMiddleware()
     {
-        $guard = $this->getGuard();
-
-        return $guard ? 'guest:'.$guard : 'guest';
+        return ($guard = $this->getGuard()) ? 'guest:'.$guard : 'guest';
     }
 
     /**
@@ -42,10 +47,8 @@ trait GetsMiddleware
      *
      * @return string
      */
-    public function getAuthMiddleware()
+    protected function getAuthMiddleware()
     {
-        $guard = property_exists($this, 'guard') ? $this->guard : null;
-
-        return $guard ? 'auth:'.$guard : 'auth';
+        return ($guard = $this->getGuard()) ? 'auth:'.$guard : 'auth';
     }
 }
