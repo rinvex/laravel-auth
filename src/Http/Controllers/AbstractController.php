@@ -16,12 +16,11 @@
 namespace Rinvex\Fort\Http\Controllers;
 
 use Illuminate\Routing\Controller;
-use Illuminate\Support\Facades\Auth;
 use Rinvex\Fort\Traits\GetsMiddleware;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 
-class FoundationController extends Controller
+abstract class AbstractController extends Controller
 {
     use AuthorizesRequests, DispatchesJobs, GetsMiddleware;
 

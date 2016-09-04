@@ -21,7 +21,7 @@ use Rinvex\Fort\Guards\SessionGuard;
 use Rinvex\Fort\Http\Requests\PhoneVerification;
 use Rinvex\Fort\Http\Requests\PhoneVerificationRequest;
 
-class VerifyPhoneController extends FoundationController
+class VerifyPhoneController extends AbstractController
 {
     /**
      * Show the phone verification request form.

@@ -27,7 +27,7 @@ use Rinvex\Fort\Http\Requests\TwoFactorPhone;
 use Rinvex\Fort\Services\TwoFactorTotpProvider;
 use Rinvex\Fort\Contracts\UserRepositoryContract;
 
-class AccountController extends FoundationController
+class AccountController extends AbstractController
 {
     /**
      * The users repository instance.

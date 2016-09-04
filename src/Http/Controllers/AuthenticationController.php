@@ -23,7 +23,7 @@ use Rinvex\Fort\Http\Requests\UserRegistration;
 use Rinvex\Fort\Http\Requests\UserAuthentication;
 use Rinvex\Fort\Contracts\VerificationBrokerContract;
 
-class AuthenticationController extends FoundationController
+class AuthenticationController extends AbstractController
 {
     /**
      * {@inheritdoc}

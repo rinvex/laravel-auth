@@ -19,7 +19,7 @@ use Illuminate\Support\Facades\Lang;
 use Rinvex\Fort\Contracts\ResetBrokerContract;
 use Rinvex\Fort\Http\Requests\PasswordResetRequest;
 
-class ForgotPasswordController extends FoundationController
+class ForgotPasswordController extends AbstractController
 {
     /**
      * Create a new reset password controller instance.
