@@ -285,7 +285,6 @@
 - Request password reset via email
 - Grant/Revoke Abilities to Users/Roles
 - Assign/Remove Roles to Users (multiple roles allowed)
-- Save Intended URL for later redirect after login/register
 - Request phone verification via SMS or automated phone call
 - Alert messages with every completed action (success/warning/failure)
 - Complete Solution out of the box, views, routes, controllers, migrations, ..etc

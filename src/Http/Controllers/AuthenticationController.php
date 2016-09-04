@@ -47,9 +47,6 @@ class AuthenticationController extends FoundationController
      */
     public function showLogin()
     {
-        // Remember previous URL for later redirect back
-        session()->put('url.intended', url()->previous());
-
         return view('rinvex.fort::auth.login');
     }
 
@@ -82,9 +79,6 @@ class AuthenticationController extends FoundationController
      */
     public function logout()
     {
-        // Remember previous URL for later redirect back
-        session()->put('url.intended', url()->previous());
-
         $result = Auth::guard($this->getGuard())->logout();
 
         return intend([
@@ -102,9 +96,6 @@ class AuthenticationController extends FoundationController
      */
     public function showRegisteration(UserRegistration $request)
     {
-        // Remember previous URL for later redirect back
-        session()->put('url.intended', url()->previous());
-
         return view('rinvex.fort::auth.register');
     }
 
