@@ -29,7 +29,7 @@ class EmailVerificationController extends AbstractController
      */
     public function showEmailVerificationRequest()
     {
-        return view('rinvex.fort::verification.email.request');
+        return view('rinvex.fort::frontend.verification.email.request');
     }
 
     /**

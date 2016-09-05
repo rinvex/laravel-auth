@@ -23,9 +23,9 @@
 
                             <input id="id" name="id" type="hidden" class="form-control" value="{{ $currentUser->id }}">
 
-                            @include('rinvex.fort::alerts.success')
-                            @include('rinvex.fort::alerts.warning')
-                            @include('rinvex.fort::alerts.error')
+                            @include('rinvex.fort::frontend.alerts.success')
+                            @include('rinvex.fort::frontend.alerts.warning')
+                            @include('rinvex.fort::frontend.alerts.error')
 
                             <div class="row">
                                 <div class="col-md-12 col-sm-12 col-xs-12">

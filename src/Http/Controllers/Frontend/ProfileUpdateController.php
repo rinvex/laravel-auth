@@ -55,7 +55,7 @@ class ProfileUpdateController extends AbstractController
         $twoFactor = $this->currentUser()->getTwoFactor();
         $countries = $country->findAll()->pluck('name.common', 'iso_3166_1_alpha2');
 
-        return view('rinvex.fort::profile.page', compact('twoFactor', 'countries'));
+        return view('rinvex.fort::frontend.profile.page', compact('twoFactor', 'countries'));
     }
 
     /**

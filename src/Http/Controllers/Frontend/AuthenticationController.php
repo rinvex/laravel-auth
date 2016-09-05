@@ -46,7 +46,7 @@ class AuthenticationController extends AbstractController
      */
     public function showLogin()
     {
-        return view('rinvex.fort::authentication.login');
+        return view('rinvex.fort::frontend.authentication.login');
     }
 
     /**

@@ -39,7 +39,7 @@ class ForgotPasswordController extends AbstractController
      */
     public function showForgotPassword()
     {
-        return view('rinvex.fort::password.forgot');
+        return view('rinvex.fort::frontend.password.forgot');
     }
 
     /**

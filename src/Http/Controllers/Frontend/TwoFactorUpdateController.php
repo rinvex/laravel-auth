@@ -78,7 +78,7 @@ class TwoFactorUpdateController extends AbstractController
 
         $qrCode = $totpProvider->getQRCodeInline(config('rinvex.fort.twofactor.issuer'), $currentUser->email, $secret);
 
-        return view('rinvex.fort::profile.twofactor', compact('secret', 'qrCode', 'settings', 'errors'));
+        return view('rinvex.fort::frontend.profile.twofactor', compact('secret', 'qrCode', 'settings', 'errors'));
     }
 
     /**

@@ -21,9 +21,9 @@
                             {{-- Form: CSRF Token --}}
                             {{ csrf_field() }}
 
-                            @include('rinvex.fort::alerts.success')
-                            @include('rinvex.fort::alerts.warning')
-                            @include('rinvex.fort::alerts.error')
+                            @include('rinvex.fort::frontend.alerts.success')
+                            @include('rinvex.fort::frontend.alerts.warning')
+                            @include('rinvex.fort::frontend.alerts.error')
 
                             <div class="form-group{{ $errors->has('token') ? ' has-error' : '' }}">
                                 <label for="token" class="col-md-4 control-label">{{ trans('rinvex.fort::form.verification.phone.verify.token') }}</label>

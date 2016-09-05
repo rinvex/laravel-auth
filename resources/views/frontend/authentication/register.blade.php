@@ -12,9 +12,9 @@
                         <form class="form-horizontal" role="form" method="POST" action="{{ route('rinvex.fort.auth.register.post') }}">
                             {{ csrf_field() }}
 
-                            @include('rinvex.fort::alerts.success')
-                            @include('rinvex.fort::alerts.warning')
-                            @include('rinvex.fort::alerts.error')
+                            @include('rinvex.fort::frontend.alerts.success')
+                            @include('rinvex.fort::frontend.alerts.warning')
+                            @include('rinvex.fort::frontend.alerts.error')
 
                             <div class="form-group{{ $errors->has('username') ? ' has-error' : '' }}">
                                 <label for="username" class="col-md-4 control-label">{{ trans('rinvex.fort::form.register.username') }}</label>

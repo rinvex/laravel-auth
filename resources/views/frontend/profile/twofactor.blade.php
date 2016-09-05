@@ -21,9 +21,9 @@
                             {{-- Form: CSRF Token --}}
                             {{ csrf_field() }}
 
-                            @include('rinvex.fort::alerts.success')
-                            @include('rinvex.fort::alerts.warning')
-                            @include('rinvex.fort::alerts.error')
+                            @include('rinvex.fort::frontend.alerts.success')
+                            @include('rinvex.fort::frontend.alerts.warning')
+                            @include('rinvex.fort::frontend.alerts.error')
 
                             <p class="text-justify">
                                 {!! trans('rinvex.fort::form.twofactor.totp_apps') !!}

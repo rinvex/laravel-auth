@@ -56,7 +56,7 @@ class ResetPasswordController extends AbstractController
 
             case ResetBrokerContract::VALID_TOKEN:
             default:
-                return view('rinvex.fort::password.reset')->with(compact('token', 'email'));
+                return view('rinvex.fort::frontend.password.reset')->with(compact('token', 'email'));
         }
     }
 

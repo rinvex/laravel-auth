@@ -41,7 +41,7 @@ class ManagePersistenceController extends AbstractController
      */
     public function showPersistence()
     {
-        return view('rinvex.fort::profile.persistence');
+        return view('rinvex.fort::frontend.profile.persistence');
     }
 
     /**
