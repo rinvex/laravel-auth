@@ -43,7 +43,7 @@ class SocialAuthenticationController extends AuthenticationController
             $githubUser = Socialite::driver('github')->user();
         } catch (Exception $e) {
             return intend([
-                'intended' => route('rinvex.fort.auth.social.github'),
+                'intended' => route('rinvex.fort.frontend.auth.social.github'),
             ]);
         }
 

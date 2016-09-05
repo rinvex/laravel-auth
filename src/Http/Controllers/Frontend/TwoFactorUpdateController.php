@@ -139,7 +139,7 @@ class TwoFactorUpdateController extends AbstractController
         ]);
 
         return intend([
-            'intended' => route('rinvex.fort.account.page'),
+            'intended' => route('rinvex.fort.frontend.account.page'),
             'with'     => ['rinvex.fort.alert.success' => Lang::get('rinvex.fort::message.verification.twofactor.totp.disabled')],
         ]);
     }
@@ -157,7 +157,7 @@ class TwoFactorUpdateController extends AbstractController
 
         if (! $currentUser->phone || ! $currentUser->phone_verified) {
             return intend([
-                'intended'   => route('rinvex.fort.account.page'),
+                'intended'   => route('rinvex.fort.frontend.account.page'),
                 'withErrors' => ['phone' => Lang::get('rinvex.fort::message.account.phone_required')],
             ]);
         }
@@ -171,7 +171,7 @@ class TwoFactorUpdateController extends AbstractController
         ]);
 
         return intend([
-            'intended' => route('rinvex.fort.account.page'),
+            'intended' => route('rinvex.fort.frontend.account.page'),
             'with'     => ['rinvex.fort.alert.success' => Lang::get('rinvex.fort::message.verification.twofactor.phone.enabled')],
         ]);
     }
@@ -195,7 +195,7 @@ class TwoFactorUpdateController extends AbstractController
         ]);
 
         return intend([
-            'intended' => route('rinvex.fort.account.page'),
+            'intended' => route('rinvex.fort.frontend.account.page'),
             'with'     => ['rinvex.fort.alert.success' => Lang::get('rinvex.fort::message.verification.twofactor.phone.disabled')],
         ]);
     }
@@ -214,7 +214,7 @@ class TwoFactorUpdateController extends AbstractController
 
         if (! array_get($settings, 'totp.enabled')) {
             return intend([
-                'intended'   => route('rinvex.fort.account.page'),
+                'intended'   => route('rinvex.fort.frontend.account.page'),
                 'withErrors' => ['rinvex.fort.verification.twofactor.totp.cant_backup' => Lang::get('rinvex.fort::message.verification.twofactor.totp.cant_backup')],
             ]);
         }

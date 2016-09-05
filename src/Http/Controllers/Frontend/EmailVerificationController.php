@@ -81,7 +81,7 @@ class EmailVerificationController extends AbstractController
 
             case VerificationBrokerContract::INVALID_USER:
                 return intend([
-                    'intended'   => route('rinvex.fort.verification.email'),
+                    'intended'   => route('rinvex.fort.frontend.verification.email'),
                     'withInput'  => $request->only('email'),
                     'withErrors' => ['email' => Lang::get($result)],
                 ]);
@@ -89,7 +89,7 @@ class EmailVerificationController extends AbstractController
             case VerificationBrokerContract::INVALID_TOKEN:
             default:
                 return intend([
-                    'intended'   => route('rinvex.fort.verification.email'),
+                    'intended'   => route('rinvex.fort.frontend.verification.email'),
                     'withInput'  => $request->only('email'),
                     'withErrors' => ['token' => Lang::get($result)],
                 ]);

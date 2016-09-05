@@ -77,7 +77,7 @@
                                                     </div>
                                                     <div class="modal-footer">
                                                         <button type="button" class="btn btn-default" data-dismiss="modal">{{ trans('rinvex.fort::form.common.close') }}</button>
-                                                        <a role="button" class="btn btn-danger" href="{{ route('rinvex.fort.account.sessions.flush', ['token' => $persistence->token]) }}"><i class="fa fa-remove"></i> {{ trans('rinvex.fort::form.sessions.flush_single') }}</a>
+                                                        <a role="button" class="btn btn-danger" href="{{ route('rinvex.fort.frontend.account.sessions.flush', ['token' => $persistence->token]) }}"><i class="fa fa-remove"></i> {{ trans('rinvex.fort::form.sessions.flush_single') }}</a>
                                                     </div>
                                                 </div>
                                             </div>
@@ -111,7 +111,7 @@
                                     </div>
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-default" data-dismiss="modal">{{ trans('rinvex.fort::form.common.close') }}</button>
-                                        <a role="button" class="btn btn-danger" href="{{ route('rinvex.fort.account.sessions.flushall', ['confirm' => true]) }}"><i class="fa fa-remove"></i> {{ trans('rinvex.fort::form.sessions.flush_all') }}</a>
+                                        <a role="button" class="btn btn-danger" href="{{ route('rinvex.fort.frontend.account.sessions.flushall', ['confirm' => true]) }}"><i class="fa fa-remove"></i> {{ trans('rinvex.fort::form.sessions.flush_all') }}</a>
                                     </div>
                                 </div>
                             </div>

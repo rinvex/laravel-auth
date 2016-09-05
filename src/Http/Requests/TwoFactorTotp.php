@@ -26,7 +26,7 @@ class TwoFactorTotp extends FormRequest
     public function forbiddenResponse()
     {
         return intend([
-            'intended'   => route('rinvex.fort.account.page'),
+            'intended'   => route('rinvex.fort.frontend.account.page'),
             'withErrors' => ['token' => Lang::get('rinvex.fort::message.verification.twofactor.totp.globaly_disabled')],
         ]);
     }

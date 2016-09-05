@@ -16,7 +16,7 @@
                     <div class="panel-body">
 
                         {{-- Form --}}
-                        <form id="rinvex-fort-user-account-form" class="form-horizontal" role="form" method="POST" action="{{ route('rinvex.fort.account.page.post') }}">
+                        <form id="rinvex-fort-user-account-form" class="form-horizontal" role="form" method="POST" action="{{ route('rinvex.fort.frontend.account.page.post') }}">
 
                             {{-- Form: CSRF Token --}}
                             {{ csrf_field() }}
@@ -39,7 +39,7 @@
                                             @if ($currentUser->email_verified && $currentUser->email_verified_at)
                                                 <small class="text-success">{!! trans('rinvex.fort::form.account.email_verified', ['date' => $currentUser->email_verified_at]) !!}</small>
                                             @else
-                                                <small class="text-danger">{!! trans('rinvex.fort::form.account.email_unverified', ['href' => route('rinvex.fort.verification.email')]) !!}</small>
+                                                <small class="text-danger">{!! trans('rinvex.fort::form.account.email_unverified', ['href' => route('rinvex.fort.frontend.verification.email')]) !!}</small>
                                             @endif
 
                                             @if ($errors->has('email'))
@@ -179,7 +179,7 @@
                                             @if ($currentUser->phone_verified && $currentUser->phone_verified_at)
                                                 <small class="text-success">{!! trans('rinvex.fort::form.account.phone_verified', ['date' => $currentUser->phone_verified_at]) !!}</small>
                                             @else
-                                                <small class="text-danger">{!! trans('rinvex.fort::form.account.phone_unverified', ['href' => route('rinvex.fort.verification.phone')]) !!}</small>
+                                                <small class="text-danger">{!! trans('rinvex.fort::form.account.phone_unverified', ['href' => route('rinvex.fort.frontend.verification.phone')]) !!}</small>
                                             @endif
 
                                             @if ($errors->has('phone'))
@@ -267,9 +267,9 @@
 
                                                         <div class="panel panel-primary">
                                                             <div class="panel-heading">
-                                                                <a class="btn btn-default btn-xs pull-right" style="margin-left: 10px" href="{{ route('rinvex.fort.account.twofactor.totp.enable') }}">@if(array_get($twoFactor, 'totp.enabled')) {{ trans('rinvex.fort::form.account.settings') }} @else {{ trans('rinvex.fort::form.account.enable') }} @endif</a>
+                                                                <a class="btn btn-default btn-xs pull-right" style="margin-left: 10px" href="{{ route('rinvex.fort.frontend.account.twofactor.totp.enable') }}">@if(array_get($twoFactor, 'totp.enabled')) {{ trans('rinvex.fort::form.account.settings') }} @else {{ trans('rinvex.fort::form.account.enable') }} @endif</a>
                                                                 @if(array_get($twoFactor, 'totp.enabled'))
-                                                                    <a class="btn btn-default btn-xs pull-right" href="{{ route('rinvex.fort.account.twofactor.totp.disable') }}">{{ trans('rinvex.fort::form.account.disable') }}</a>
+                                                                    <a class="btn btn-default btn-xs pull-right" href="{{ route('rinvex.fort.frontend.account.twofactor.totp.disable') }}">{{ trans('rinvex.fort::form.account.disable') }}</a>
                                                                 @endif
                                                                 <h3 class="panel-title">
                                                                     {{ trans('rinvex.fort::form.account.twofactor_totp_head') }}
@@ -287,9 +287,9 @@
                                                         <div class="panel panel-primary">
                                                             <div class="panel-heading">
                                                                 @if(array_get($twoFactor, 'phone.enabled'))
-                                                                    <a class="btn btn-default btn-xs pull-right" href="{{ route('rinvex.fort.account.twofactor.phone.disable') }}">{{ trans('rinvex.fort::form.account.disable') }}</a>
+                                                                    <a class="btn btn-default btn-xs pull-right" href="{{ route('rinvex.fort.frontend.account.twofactor.phone.disable') }}">{{ trans('rinvex.fort::form.account.disable') }}</a>
                                                                 @else
-                                                                    <a class="btn btn-default btn-xs pull-right" href="{{ route('rinvex.fort.account.twofactor.phone.enable') }}">{{ trans('rinvex.fort::form.account.enable') }}</a>
+                                                                    <a class="btn btn-default btn-xs pull-right" href="{{ route('rinvex.fort.frontend.account.twofactor.phone.enable') }}">{{ trans('rinvex.fort::form.account.enable') }}</a>
                                                                 @endif
                                                                 <h3 class="panel-title">
                                                                     {{ trans('rinvex.fort::form.account.twofactor_phone_head') }}

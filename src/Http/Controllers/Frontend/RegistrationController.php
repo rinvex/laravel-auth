@@ -70,8 +70,8 @@ class RegistrationController extends AbstractController
             case SessionGuard::AUTH_REGISTERED:
             default:
                 return intend([
-                    'route' => 'rinvex.fort.auth.login',
-                    'with'  => ['rinvex.fort.alert.success' => Lang::get($result)],
+                    'intended' => route('rinvex.fort.frontend.auth.login'),
+                    'with'     => ['rinvex.fort.alert.success' => Lang::get($result)],
                 ]);
 
         }

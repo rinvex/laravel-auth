@@ -16,7 +16,7 @@
                     <div class="panel-body">
 
                         {{-- Form --}}
-                        <form id="rinvex-fort-user-account-form" class="form-horizontal" role="form" method="POST" action="{{ route('rinvex.fort.account.twofactor.totp.enable.post') }}">
+                        <form id="rinvex-fort-user-account-form" class="form-horizontal" role="form" method="POST" action="{{ route('rinvex.fort.frontend.account.twofactor.totp.enable.post') }}">
 
                             {{-- Form: CSRF Token --}}
                             {{ csrf_field() }}
@@ -113,7 +113,7 @@
                                                     @if(array_get($settings, 'totp.backup'))
                                                         <div class="panel panel-primary">
                                                             <div class="panel-heading">
-                                                                <a class="btn btn-default btn-xs pull-right" style="margin-left: 10px" href="{{ route('rinvex.fort.account.twofactor.totp.backup') }}">{{ trans('rinvex.fort::form.twofactor.totp_backup_generate') }}</a>
+                                                                <a class="btn btn-default btn-xs pull-right" style="margin-left: 10px" href="{{ route('rinvex.fort.frontend.account.twofactor.totp.backup') }}">{{ trans('rinvex.fort::form.twofactor.totp_backup_generate') }}</a>
                                                                 <h3 class="panel-title">{{ trans('rinvex.fort::form.twofactor.totp_backup_head') }}</h3>
                                                             </div>
                                                             <div class="panel-body">

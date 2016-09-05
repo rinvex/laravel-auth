@@ -26,7 +26,7 @@
     
     // With this:
     return intend([
-        'intended'   => route('rinvex.fort.auth.login'),
+        'intended'   => route('rinvex.fort.frontend.auth.login'),
         'withErrors' => ['rinvex.fort.session.required' => Lang::get('rinvex.fort::message.auth.session.required')],
     ], 401);
     ```
@@ -39,7 +39,7 @@
     // Add above it directly the following code:
     if ($exception instanceof \Rinvex\Fort\Exceptions\InvalidPersistenceException) {
         return intend([
-            'intended'   => route('rinvex.fort.auth.login'),
+            'intended'   => route('rinvex.fort.frontend.auth.login'),
             'withErrors' => ['rinvex.fort.session.expired' => Lang::get('rinvex.fort::message.auth.session.expired')],
         ], 401);
     }

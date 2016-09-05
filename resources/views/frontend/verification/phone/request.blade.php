@@ -10,7 +10,7 @@
                     <div class="panel-heading">{{ trans('rinvex.fort::form.verification.phone.request.heading') }}</div>
                     <div class="panel-body">
 
-                        <form class="form-horizontal" role="form" method="POST" action="{{ route('rinvex.fort.verification.phone.post') }}">
+                        <form class="form-horizontal" role="form" method="POST" action="{{ route('rinvex.fort.frontend.verification.phone.post') }}">
                             {{ csrf_field() }}
 
                             @include('rinvex.fort::frontend.alerts.success')

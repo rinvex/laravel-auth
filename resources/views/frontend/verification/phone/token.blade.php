@@ -16,7 +16,7 @@
                     <div class="panel-body">
 
                         {{-- Form --}}
-                        <form id="rinvex-fort-user-account-form" class="form-horizontal" role="form" method="POST" action="{{ route('rinvex.fort.verification.phone.verify.post') }}">
+                        <form id="rinvex-fort-user-account-form" class="form-horizontal" role="form" method="POST" action="{{ route('rinvex.fort.frontend.verification.phone.verify.post') }}">
 
                             {{-- Form: CSRF Token --}}
                             {{ csrf_field() }}
@@ -33,7 +33,7 @@
                                     {{ trans('rinvex.fort::form.verification.phone.verify.backup_notice') }}<br />
 
                                     @if ($methods['phone'])
-                                        <strong>{!! trans('rinvex.fort::form.verification.phone.verify.backup_sms', ['href' => route('rinvex.fort.verification.phone')]) !!}</strong>
+                                        <strong>{!! trans('rinvex.fort::form.verification.phone.verify.backup_sms', ['href' => route('rinvex.fort.frontend.verification.phone')]) !!}</strong>
                                     @else
                                         <strong>{{ trans('rinvex.fort::form.verification.phone.verify.backup') }}</strong>
                                     @endif

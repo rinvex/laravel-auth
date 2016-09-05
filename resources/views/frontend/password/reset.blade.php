@@ -10,7 +10,7 @@
                     <div class="panel-heading">{{ trans('rinvex.fort::form.password.reset.heading') }}</div>
 
                     <div class="panel-body">
-                        <form class="form-horizontal" role="form" method="POST" action="{{ route('rinvex.fort.password.reset.post') }}">
+                        <form class="form-horizontal" role="form" method="POST" action="{{ route('rinvex.fort.frontend.password.reset.post') }}">
                             {{ csrf_field() }}
 
                             @include('rinvex.fort::frontend.alerts.success')

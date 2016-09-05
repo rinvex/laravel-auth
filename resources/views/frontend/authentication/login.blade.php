@@ -9,7 +9,7 @@
                 <div class="panel panel-default">
                     <div class="panel-heading">{{ trans('rinvex.fort::form.login.heading') }}</div>
                     <div class="panel-body">
-                        <form class="form-horizontal" role="form" method="POST" action="{{ route('rinvex.fort.auth.login.post') }}">
+                        <form class="form-horizontal" role="form" method="POST" action="{{ route('rinvex.fort.frontend.auth.login.post') }}">
                             {{ csrf_field() }}
 
                             @include('rinvex.fort::frontend.alerts.success')
@@ -58,7 +58,7 @@
                                 <div class="col-md-12 col-sm-12 col-xs-12 text-center">
 
                                     <button type="submit" class="btn btn-primary"><i class="fa fa-btn fa-sign-in"></i>{{ trans('rinvex.fort::form.login.submit') }}</button>
-                                    <a class="btn btn-link" href="{{ route('rinvex.fort.password.forgot') }}">{{ trans('rinvex.fort::form.login.forgot_password') }}</a>
+                                    <a class="btn btn-link" href="{{ route('rinvex.fort.frontend.password.forgot') }}">{{ trans('rinvex.fort::form.login.forgot_password') }}</a>
 
                                 </div>
                             </div>
