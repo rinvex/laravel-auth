@@ -204,7 +204,7 @@ class SessionGuard implements StatefulGuardContract, SupportsBasicAuth
      */
     public function attemptUser()
     {
-        if (! empty($session = session('rinvex.fort.twofactor.persistence')) && $persistence = $this->getPersistenceByToken($session)) {
+        if (! empty($session = $this->session->get('rinvex.fort.twofactor.persistence')) && $persistence = $this->getPersistenceByToken($session)) {
             return $this->provider->find($persistence->user_id);
         }
     }
@@ -1027,10 +1027,8 @@ class SessionGuard implements StatefulGuardContract, SupportsBasicAuth
         // Prepare required variables
         $validBackup = false;
 
-        // Verify Two-Factor authentication, then login user
-        if (session('rinvex.fort.twofactor.persistence') && ($this->isValidTwoFactorTotp($user, $token) || $this->isValidTwoFactorPhone($user, $token) || $validBackup = $this->isValidTwoFactorBackup($user, $token))) {
-            $this->login($user, session('rinvex.fort.twofactor.remember'), session('rinvex.fort.twofactor.persistence'));
-
+        // Verify Two-Factor authentication
+        if ($this->session->get('rinvex.fort.twofactor.persistence') && ($this->isValidTwoFactorTotp($user, $token) || $this->isValidTwoFactorPhone($user, $token) || $validBackup = $this->isValidTwoFactorBackup($user, $token))) {
             if ($validBackup) {
                 $this->invalidateTwoFactorBackup($user, $token);
             }
@@ -1039,7 +1037,7 @@ class SessionGuard implements StatefulGuardContract, SupportsBasicAuth
         }
 
         // This is NOT login attempt, it's just account update -> phone verification
-        if (! session('rinvex.fort.twofactor.persistence') && $this->isValidTwoFactorPhone($user, $token)) {
+        if (! $this->session->get('rinvex.fort.twofactor.persistence') && $this->isValidTwoFactorPhone($user, $token)) {
             return static::AUTH_PHONE_VERIFIED;
         }
 
@@ -1081,7 +1079,7 @@ class SessionGuard implements StatefulGuardContract, SupportsBasicAuth
     {
         $authy = app(TwoFactorAuthyProvider::class);
 
-        return strlen($token) === 7 && isset(session('rinvex.fort.twofactor.methods')['phone']) && $authy->tokenIsValid($user, $token);
+        return strlen($token) === 7 && isset($this->session->get('rinvex.fort.twofactor.methods')['phone']) && $authy->tokenIsValid($user, $token);
     }
 
     /**
@@ -1124,7 +1122,7 @@ class SessionGuard implements StatefulGuardContract, SupportsBasicAuth
         $totp   = app(TwoFactorTotpProvider::class);
         $secret = array_get($user->getTwoFactor(), 'totp.secret');
 
-        return strlen($token) === 6 && isset(session('rinvex.fort.twofactor.methods')['totp']) && $totp->verifyKey($secret, $token);
+        return strlen($token) === 6 && isset($this->session->get('rinvex.fort.twofactor.methods')['totp']) && $totp->verifyKey($secret, $token);
     }
 
     /**
