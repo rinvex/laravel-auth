@@ -25,5 +25,5 @@ interface TwoFactorSmsTokenContract
      *
      * @return void
      */
-    public function sendSmsToken(AuthenticatableContract $user, $force = true);
+    public function sendSmsToken(AuthenticatableContract $user, $force = false);
 }

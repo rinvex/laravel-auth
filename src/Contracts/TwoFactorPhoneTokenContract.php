@@ -25,5 +25,5 @@ interface TwoFactorPhoneTokenContract
      *
      * @return void
      */
-    public function sendPhoneCallToken(AuthenticatableContract $user, $force = true);
+    public function sendPhoneCallToken(AuthenticatableContract $user, $force = false);
 }

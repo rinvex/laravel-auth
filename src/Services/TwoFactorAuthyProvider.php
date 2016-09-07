@@ -48,7 +48,7 @@ class TwoFactorAuthyProvider implements TwoFactorProviderContract, TwoFactorSmsT
     /**
      * {@inheritdoc}
      */
-    public function sendSmsToken(AuthenticatableContract $user, $force = true)
+    public function sendSmsToken(AuthenticatableContract $user, $force = false)
     {
         try {
             // Fire the Two-Factor phone sms start event
@@ -87,7 +87,7 @@ class TwoFactorAuthyProvider implements TwoFactorProviderContract, TwoFactorSmsT
     /**
      * {@inheritdoc}
      */
-    public function sendPhoneCallToken(AuthenticatableContract $user, $force = true)
+    public function sendPhoneCallToken(AuthenticatableContract $user, $force = false)
     {
         try {
             // Fire the Two-Factor phone call start event
@@ -98,7 +98,7 @@ class TwoFactorAuthyProvider implements TwoFactorProviderContract, TwoFactorSmsT
             $twoFactorSms = array_get($user->getTwoFactor(), 'phone');
             $authyId      = $twoFactorSms['authy_id'];
             $apiKey       = $this->config['api_key'];
-            $url          = $this->config['api_url'].'/protected/json/call/'.$authyId.'?force=true&api_key='.$apiKey.$force;
+            $url          = $this->config['api_url'].'/protected/json/call/'.$authyId.'?api_key='.$apiKey.$force;
 
             // Send SMS auth token
             if (($response = json_decode((new HttpClient())->get($url)->getBody(), true)) && $response['success']) {
@@ -192,7 +192,7 @@ class TwoFactorAuthyProvider implements TwoFactorProviderContract, TwoFactorSmsT
             $twoFactorSms = array_get($user->getTwoFactor(), 'phone');
             $authyId      = $twoFactorSms['authy_id'];
             $apiKey       = $this->config['api_key'];
-            $url          = $this->config['api_url'].'/protected/json/verify/'.$token.'/'.$authyId.'?force=true&api_key='.$apiKey.$force;
+            $url          = $this->config['api_url'].'/protected/json/verify/'.$token.'/'.$authyId.'?api_key='.$apiKey.$force;
 
             // Send SMS auth token
             $response = json_decode((new HttpClient())->get($url)->getBody(), true);
