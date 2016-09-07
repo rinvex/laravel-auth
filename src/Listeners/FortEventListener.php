@@ -61,7 +61,6 @@ class FortEventListener
         $dispatcher->listen('rinvex.fort.auth.login', __CLASS__.'@authLogin');
         $dispatcher->listen('rinvex.fort.auth.failed', __CLASS__.'@authFailed');
         $dispatcher->listen('rinvex.fort.auth.lockout', __CLASS__.'@authLockout');
-        $dispatcher->listen('rinvex.fort.auth.moderated', __CLASS__.'@authModerated');
         $dispatcher->listen('rinvex.fort.auth.unverified', __CLASS__.'@authUnverified');
         $dispatcher->listen('rinvex.fort.auth.unauthorized', __CLASS__.'@authUnauthorized');
         $dispatcher->listen('rinvex.fort.auth.autologout', __CLASS__.'@authAutoLogout');
@@ -208,18 +207,6 @@ class FortEventListener
 
             $user->notify(new AuthenticationLockoutNotification($request));
         }
-    }
-
-    /**
-     * Listen to the authentication moderated event.
-     *
-     * @param \Rinvex\Fort\Contracts\AuthenticatableContract $user
-     *
-     * @return void
-     */
-    public function authModerated(AuthenticatableContract $user)
-    {
-        //
     }
 
     /**

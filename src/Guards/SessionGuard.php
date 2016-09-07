@@ -66,13 +66,6 @@ class SessionGuard implements StatefulGuardContract, SupportsBasicAuth
     const AUTH_UNVERIFIED = 'rinvex.fort::message.auth.unverified';
 
     /**
-     * Constant representing a moderated user.
-     *
-     * @var string
-     */
-    const AUTH_MODERATED = 'rinvex.fort::message.auth.moderated';
-
-    /**
      * Constant representing a locked out user.
      *
      * @var string
@@ -487,6 +480,8 @@ class SessionGuard implements StatefulGuardContract, SupportsBasicAuth
      */
     public function attempt(array $credentials = [], $remember = false, $login = true)
     {
+        $credentials = $credentials + ['moderated' => 0];
+
         // Fire the authentication attempt event
         $this->events->fire('rinvex.fort.auth.attempt', [$credentials, $remember, $login]);
 
@@ -591,15 +586,6 @@ class SessionGuard implements StatefulGuardContract, SupportsBasicAuth
      */
     public function login(AuthenticatableContract $user, $remember = false, $force = false, $persistence = null)
     {
-        // Check if moderated
-        if ($user->moderated && ! $force) {
-            // Fire the authentication moderated event
-            $this->events->fire('rinvex.fort.auth.moderated', [$user]);
-
-            // Activation required
-            return static::AUTH_MODERATED;
-        }
-
         $this->updateSession($user->getAuthIdentifier());
 
         // If the user should be permanently "remembered" by the application we will

@@ -114,13 +114,6 @@ class AuthenticationController extends AbstractController
                     'withErrors' => ['email' => Lang::get($result)],
                 ]);
 
-            // Valid credentials, but user is moderated; Can NOT login!
-            case SessionGuard::AUTH_MODERATED:
-                return intend([
-                    'home'       => true,
-                    'withErrors' => ['rinvex.fort.auth.moderated' => Lang::get($result)],
-                ]);
-
             // Wrong credentials, failed login
             case SessionGuard::AUTH_FAILED:
                 return intend([
