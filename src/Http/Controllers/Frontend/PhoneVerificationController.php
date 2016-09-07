@@ -25,7 +25,7 @@ use Rinvex\Fort\Http\Requests\PhoneVerificationRequest;
 class PhoneVerificationController extends AbstractController
 {
     /**
-     * Show the phone verification request form.
+     * Show the phone verification form.
      *
      * @param \Rinvex\Fort\Http\Requests\PhoneVerificationRequest $request
      *

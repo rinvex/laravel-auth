@@ -25,7 +25,7 @@ use Rinvex\Fort\Contracts\VerificationBrokerContract;
 class RegistrationController extends AbstractController
 {
     /**
-     * Create a new authentication controller instance.
+     * Create a new registration controller instance.
      *
      * @return void
      */

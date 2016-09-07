@@ -36,7 +36,7 @@ class TwoFactorUpdateController extends AbstractController
     protected $users;
 
     /**
-     * Create a new account controller instance.
+     * Create a new Two-Factor update controller instance.
      *
      * @param \Rinvex\Fort\Contracts\UserRepositoryContract $users
      *

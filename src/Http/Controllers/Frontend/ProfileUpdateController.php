@@ -32,7 +32,7 @@ class ProfileUpdateController extends AbstractController
     protected $users;
 
     /**
-     * Create a new account controller instance.
+     * Create a new profile update controller instance.
      *
      * @param \Rinvex\Fort\Contracts\UserRepositoryContract $users
      *

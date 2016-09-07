@@ -23,7 +23,7 @@ use Rinvex\Fort\Http\Controllers\AbstractController;
 class ForgotPasswordController extends AbstractController
 {
     /**
-     * Create a new reset password controller instance.
+     * Create a new forgot password controller instance.
      *
      * @return void
      */

@@ -23,7 +23,7 @@ use Rinvex\Fort\Http\Controllers\AbstractController;
 class ManagePersistenceController extends AbstractController
 {
     /**
-     * Create a new account controller instance.
+     * Create a new manage persistence controller instance.
      *
      * @param \Rinvex\Fort\Contracts\UserRepositoryContract $users
      *
