@@ -17,7 +17,6 @@ namespace Rinvex\Fort\Http\Controllers\Frontend;
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Lang;
-use Rinvex\Fort\Contracts\UserRepositoryContract;
 use Rinvex\Fort\Http\Controllers\AbstractController;
 
 class ManagePersistenceController extends AbstractController
@@ -25,11 +24,9 @@ class ManagePersistenceController extends AbstractController
     /**
      * Create a new manage persistence controller instance.
      *
-     * @param \Rinvex\Fort\Contracts\UserRepositoryContract $users
-     *
      * @return void
      */
-    public function __construct(UserRepositoryContract $users)
+    public function __construct()
     {
         $this->middleware($this->getAuthMiddleware(), ['except' => $this->middlewareWhitelist]);
     }

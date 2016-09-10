@@ -58,6 +58,9 @@
         "laravel/framework": "5.3.*"
     },
     "autoload": {
+        "classmap": [
+            "database"
+        ],
         "files": [
             "src/Support/helpers.php"
         ],

@@ -34,14 +34,17 @@ class Abilities
     public function handle(Request $request, Closure $next, $guard = null)
     {
         // Check if the user has ability
-        if (! Auth::guard($guard)->check() || ! Auth::guard($guard)->user()->hasAbilityTo(['global.superuser', $request->route()->getName()])) {
+        if (($guest = Auth::guard($guard)->guest()) || ! Auth::guard($guard)->user()->hasAbilityTo(['global.superuser', $request->route()->getName()])) {
             // Fire the unauthorized event
             event('rinvex.fort.auth.unauthorized');
 
-            return intend([
+            return $guest ? intend([
+                'intended'   => route('rinvex.fort.frontend.auth.login'),
+                'withErrors' => ['rinvex.fort.session.expired' => Lang::get('rinvex.fort::message.auth.session.required')],
+            ], 401) : intend([
                 'intended'   => route('home'),
                 'withErrors' => ['no_ability' => Lang::get('rinvex.fort::message.auth.unauthorized')],
-            ]);
+            ], 401);
         }
 
         return $next($request);

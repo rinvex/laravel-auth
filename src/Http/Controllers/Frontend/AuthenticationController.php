@@ -46,6 +46,9 @@ class AuthenticationController extends AbstractController
      */
     public function showLogin()
     {
+        // Remember previous URL for later redirect back
+        session()->put('url.intended', url()->previous());
+
         return view('rinvex.fort::frontend.authentication.login');
     }
 
