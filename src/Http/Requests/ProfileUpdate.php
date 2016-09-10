@@ -42,7 +42,7 @@ class ProfileUpdate extends FormRequest
             unset($data['password'], $data['password_confirmation']);
         }
 
-        return $data;
+        return array_filter(array_map('trim', $data));
     }
 
     /**
