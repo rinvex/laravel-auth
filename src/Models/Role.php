@@ -72,20 +72,4 @@ class Role extends Model
         return $this->belongsToMany(config('rinvex.fort.models.user'), config('rinvex.fort.tables.role_user'))
                     ->withTimestamps();
     }
-
-    /**
-     * Determine if the role has the given ability.
-     *
-     * @param \Rinvex\Fort\Models\Ability|string $ability
-     *
-     * @return bool
-     */
-    public function hasAbilityTo($ability)
-    {
-        if (is_string($ability)) {
-            $ability = $this->whereSlug($ability)->first();
-        }
-
-        return $this->abilities->contains('id', $ability->id);
-    }
 }
