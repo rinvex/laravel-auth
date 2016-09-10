@@ -31,8 +31,8 @@ class Ability extends Model
      * {@inheritdoc}
      */
     protected $fillable = [
-        'name',
         'slug',
+        'title',
         'description',
     ];
 

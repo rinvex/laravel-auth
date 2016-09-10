@@ -32,8 +32,8 @@ class Role extends Model
      * {@inheritdoc}
      */
     protected $fillable = [
-        'name',
         'slug',
+        'title',
         'description',
     ];
 
