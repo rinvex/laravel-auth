@@ -21,13 +21,6 @@ use Rinvex\Repository\Contracts\RepositoryContract;
 interface AbilityRepositoryContract extends RepositoryContract, CacheableContract
 {
     /**
-     * Define the abilities.
-     *
-     * @return $this
-     */
-    public function defineAbilities();
-
-    /**
      * Find an ability by its slug.
      *
      * @param string $slug

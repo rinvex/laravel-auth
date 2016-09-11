@@ -42,28 +42,6 @@ class AbilityRepository extends EloquentRepository implements AbilityRepositoryC
     /**
      * {@inheritdoc}
      */
-    public function defineAbilities()
-    {
-        try {
-            $this->findAll()->map(function ($ability) {
-                $this->getContainer(Gate::class)->define($ability->slug, function ($user) use ($ability) {
-                    return $user->hasAbilityTo($ability);
-                });
-            });
-
-            // Fire the ability defined event
-            $this->getContainer('events')->fire('rinvex.fort.ability.defined');
-        } catch (Exception $e) {
-            // Fail silently! Probably we had issues connecting to the database!!
-            Log::alert($e->getMessage());
-        }
-
-        return $this;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
     public function findBySlug($slug)
     {
         return $this->findBy('slug', $slug);

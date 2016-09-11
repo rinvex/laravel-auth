@@ -71,9 +71,6 @@ class FortServiceProvider extends BaseServiceProvider
         // Load migrations
         $this->loadMigrationsFrom(__DIR__.'/../../database/migrations');
 
-        // Define the abilities
-        $abilityRepository->defineAbilities();
-
         // Subscribe the registered event listener
         $this->app['events']->subscribe('rinvex.fort.listener');
 
