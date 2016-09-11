@@ -264,7 +264,7 @@ class SessionGuard implements StatefulGuardContract, SupportsBasicAuth
 
         // Update last activity
         if (! $this->logoutAttempted && ! is_null($user)) {
-            $this->provider->update($user->id, ['active_at' => new Carbon()]);
+            $this->provider->update($user, ['active_at' => new Carbon()]);
         }
 
         return $this->user = $user;
@@ -603,7 +603,7 @@ class SessionGuard implements StatefulGuardContract, SupportsBasicAuth
         }
 
         // Update user last login datetime
-        $this->provider->update($user->id, ['login_at' => new Carbon()]);
+        $this->provider->update($user, ['login_at' => new Carbon()]);
 
         // Update user persistence
         $this->updatePersistence($user->id, $persistence ?: $this->session->getId(), false);
@@ -1062,7 +1062,7 @@ class SessionGuard implements StatefulGuardContract, SupportsBasicAuth
         array_set($settings, 'totp.backup', $backup);
 
         // Update Two-Factor OTP backup codes
-        $this->provider->update($user->id, [
+        $this->provider->update($user, [
             'two_factor' => $settings,
         ]);
     }

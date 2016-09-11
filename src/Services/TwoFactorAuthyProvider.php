@@ -153,7 +153,7 @@ class TwoFactorAuthyProvider implements TwoFactorProviderContract, TwoFactorSmsT
                 array_set($settings, 'phone', $twoFactorSms);
 
                 // Update user account
-                app('rinvex.fort.user')->update($user->id, [
+                app('rinvex.fort.user')->update($user, [
                     'two_factor' => $settings,
                 ]);
 
@@ -199,7 +199,7 @@ class TwoFactorAuthyProvider implements TwoFactorProviderContract, TwoFactorSmsT
 
             // Authy API returns 'true' as a string not a boolean only at this endpoint!
             if ($response['success'] === 'true') {
-                app('rinvex.fort.user')->update($user->id, [
+                app('rinvex.fort.user')->update($user, [
                     'phone_verified'    => true,
                     'phone_verified_at' => new Carbon(),
                 ]);
@@ -248,7 +248,7 @@ class TwoFactorAuthyProvider implements TwoFactorProviderContract, TwoFactorSmsT
 
             if ($response['success']) {
                 // Update user account
-                app('rinvex.fort.user')->update($user->id, [
+                app('rinvex.fort.user')->update($user, [
                     'two_factor' => $settings,
                 ]);
 

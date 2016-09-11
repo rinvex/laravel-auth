@@ -71,7 +71,7 @@ class TwoFactorUpdateController extends AbstractController
             array_set($settings, 'totp.enabled', false);
             array_set($settings, 'totp.secret', $secret = $totpProvider->generateSecretKey());
 
-            $this->users->update($currentUser->id, [
+            $this->users->update($currentUser, [
                 'two_factor' => $settings,
             ]);
         }
@@ -104,7 +104,7 @@ class TwoFactorUpdateController extends AbstractController
             array_set($settings, 'totp.backup_at', $backupAt ?: (new Carbon())->toDateTimeString());
 
             // Update Two-Factor settings
-            $this->users->update($currentUser->id, [
+            $this->users->update($currentUser, [
                 'two_factor' => $settings,
             ]);
 
@@ -134,7 +134,7 @@ class TwoFactorUpdateController extends AbstractController
 
         array_set($settings, 'totp', []);
 
-        $this->users->update($currentUser->id, [
+        $this->users->update($currentUser, [
             'two_factor' => $settings,
         ]);
 
@@ -166,7 +166,7 @@ class TwoFactorUpdateController extends AbstractController
 
         array_set($settings, 'phone.enabled', true);
 
-        $this->users->update($currentUser->id, [
+        $this->users->update($currentUser, [
             'two_factor' => $settings,
         ]);
 
@@ -190,7 +190,7 @@ class TwoFactorUpdateController extends AbstractController
 
         array_set($settings, 'phone.enabled', false);
 
-        $this->users->update($currentUser->id, [
+        $this->users->update($currentUser, [
             'two_factor' => $settings,
         ]);
 
@@ -222,7 +222,7 @@ class TwoFactorUpdateController extends AbstractController
         array_set($settings, 'totp.backup', $this->generateTwoFactorTotpBackups());
         array_set($settings, 'totp.backup_at', (new Carbon())->toDateTimeString());
 
-        $this->users->update($currentUser->id, [
+        $this->users->update($currentUser, [
             'two_factor' => $settings,
         ]);
 

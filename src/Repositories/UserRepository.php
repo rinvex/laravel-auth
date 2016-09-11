@@ -100,7 +100,7 @@ class UserRepository extends EloquentRepository implements UserRepositoryContrac
      */
     public function updateRememberToken(AuthenticatableContract $user, $token)
     {
-        $this->update($user->id, [$this->getRememberTokenName() => $token]);
+        $this->update($user, [$this->getRememberTokenName() => $token]);
     }
 
     /**

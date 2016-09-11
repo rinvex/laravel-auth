@@ -126,7 +126,7 @@ class VerificationBroker implements VerificationBrokerContract
         event('rinvex.fort.verification.email.verify.start', [$user]);
 
         // Verify email
-        app('rinvex.fort.user')->update($user->id, [
+        app('rinvex.fort.user')->update($user, [
             'email_verified'    => true,
             'email_verified_at' => new Carbon(),
         ]);

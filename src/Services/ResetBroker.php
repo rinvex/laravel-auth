@@ -114,7 +114,7 @@ class ResetBroker implements ResetBrokerContract
         event('rinvex.fort.password.reset.start', [$user]);
 
         // Update user password
-        app('rinvex.fort.user')->update($user->id, [
+        app('rinvex.fort.user')->update($user, [
             'password'       => bcrypt($credentials['password']),
             'remember_token' => Str::random(60),
         ]);
