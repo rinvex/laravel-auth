@@ -15,7 +15,6 @@
 
 namespace Rinvex\Fort\Models;
 
-use Rinvex\Fort\Traits\HasRoles;
 use Rinvex\Fort\Traits\CanVerifyEmail;
 use Rinvex\Fort\Traits\Authenticatable;
 use Illuminate\Database\Eloquent\Model;
@@ -30,7 +29,7 @@ use Illuminate\Contracts\Auth\Access\Authorizable as AuthorizableContract;
 
 class User extends Model implements AuthenticatableContract, AuthorizableContract, CanResetPasswordContract, CanVerifyEmailContract
 {
-    use Notifiable, Authenticatable, Authorizable, CanResetPassword, CanVerifyEmail, SoftDeletes, HasRoles;
+    use Notifiable, Authenticatable, Authorizable, CanResetPassword, CanVerifyEmail, SoftDeletes;
 
     /**
      * {@inheritdoc}
@@ -131,17 +130,5 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
     public function socialites()
     {
         return $this->hasMany(config('rinvex.fort.models.socialite'));
-    }
-
-    /**
-     * Determine if the user may perform the given ability.
-     *
-     * @param string|array|\Rinvex\Fort\Models\Ability|\Illuminate\Support\Collection $role
-     *
-     * @return bool
-     */
-    public function hasAbilityTo($ability)
-    {
-        return $this->hasDirectAbility($ability) || $this->hasAbilityViaRole($ability);
     }
 }

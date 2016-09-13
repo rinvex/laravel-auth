@@ -740,12 +740,12 @@ class FortEventListener
     /**
      * Listen to the ability giving.
      *
-     * @param string|array|\Rinvex\Fort\Models\Ability|\Illuminate\Support\Collection $ability
      * @param \Illuminate\Database\Eloquent\Model                                     $model
+     * @param string|array|\Rinvex\Fort\Models\Ability|\Illuminate\Support\Collection $ability
      *
      * @return void
      */
-    public function abilityGiving($ability, Model $model)
+    public function abilityGiving(Model $model, $ability)
     {
         //
     }
@@ -753,12 +753,12 @@ class FortEventListener
     /**
      * Listen to the ability given.
      *
-     * @param string|array|\Rinvex\Fort\Models\Ability|\Illuminate\Support\Collection $ability
      * @param \Illuminate\Database\Eloquent\Model                                     $model
+     * @param string|array|\Rinvex\Fort\Models\Ability|\Illuminate\Support\Collection $ability
      *
      * @return void
      */
-    public function abilityGiven($ability, Model $model)
+    public function abilityGiven(Model $model, $ability)
     {
         $this->app['rinvex.fort.ability']->forgetCache();
         $this->app['rinvex.fort.role']->forgetCache();
@@ -768,12 +768,12 @@ class FortEventListener
     /**
      * Listen to the ability revoking.
      *
-     * @param string|array|\Rinvex\Fort\Models\Ability|\Illuminate\Support\Collection $ability
      * @param \Illuminate\Database\Eloquent\Model                                     $model
+     * @param string|array|\Rinvex\Fort\Models\Ability|\Illuminate\Support\Collection $ability
      *
      * @return void
      */
-    public function abilityRevoking($ability, Model $model)
+    public function abilityRevoking(Model $model, $ability)
     {
         //
     }
@@ -781,12 +781,12 @@ class FortEventListener
     /**
      * Listen to the ability revoked.
      *
-     * @param string|array|\Rinvex\Fort\Models\Ability|\Illuminate\Support\Collection $ability
      * @param \Illuminate\Database\Eloquent\Model                                     $model
+     * @param string|array|\Rinvex\Fort\Models\Ability|\Illuminate\Support\Collection $ability
      *
      * @return void
      */
-    public function abilityRevoked($ability, Model $model)
+    public function abilityRevoked(Model $model, $ability)
     {
         $this->app['rinvex.fort.ability']->forgetCache();
         $this->app['rinvex.fort.role']->forgetCache();
@@ -872,12 +872,12 @@ class FortEventListener
     /**
      * Listen to the role assigning.
      *
-     * @param string|array|\Rinvex\Fort\Models\Role|\Illuminate\Support\Collection $role
      * @param \Illuminate\Database\Eloquent\Model                                  $model
+     * @param string|array|\Rinvex\Fort\Models\Role|\Illuminate\Support\Collection $role
      *
      * @return void
      */
-    public function roleAssigning($role, Model $model)
+    public function roleAssigning(Model $model, $role)
     {
         //
     }
@@ -885,12 +885,12 @@ class FortEventListener
     /**
      * Listen to the role assigned.
      *
-     * @param string|array|\Rinvex\Fort\Models\Role|\Illuminate\Support\Collection $role
      * @param \Illuminate\Database\Eloquent\Model                                  $model
+     * @param string|array|\Rinvex\Fort\Models\Role|\Illuminate\Support\Collection $role
      *
      * @return void
      */
-    public function roleAssigned($role, Model $model)
+    public function roleAssigned(Model $model, $role)
     {
         $this->app['rinvex.fort.role']->forgetCache();
         $this->app['rinvex.fort.user']->forgetCache();
@@ -899,12 +899,12 @@ class FortEventListener
     /**
      * Listen to the role removing.
      *
-     * @param string|array|\Rinvex\Fort\Models\Role|\Illuminate\Support\Collection $role
      * @param \Illuminate\Database\Eloquent\Model                                  $model
+     * @param string|array|\Rinvex\Fort\Models\Role|\Illuminate\Support\Collection $role
      *
      * @return void
      */
-    public function roleRemoving($role, Model $model)
+    public function roleRemoving(Model $model, $role)
     {
         //
     }
@@ -912,12 +912,12 @@ class FortEventListener
     /**
      * Listen to the role removed.
      *
-     * @param string|array|\Rinvex\Fort\Models\Role|\Illuminate\Support\Collection $role
      * @param \Illuminate\Database\Eloquent\Model                                  $model
+     * @param string|array|\Rinvex\Fort\Models\Role|\Illuminate\Support\Collection $role
      *
      * @return void
      */
-    public function roleRemoved($role, Model $model)
+    public function roleRemoved(Model $model, $role)
     {
         $this->app['rinvex.fort.role']->forgetCache();
         $this->app['rinvex.fort.user']->forgetCache();

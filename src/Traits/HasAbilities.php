@@ -17,35 +17,37 @@ namespace Rinvex\Fort\Traits;
 
 use Rinvex\Fort\Models\Ability;
 use Illuminate\Support\Collection;
+use Illuminate\Database\Eloquent\Model;
 
 trait HasAbilities
 {
     /**
-     * Give the given ability to a role/user.
+     * Give the given ability to the given model.
      *
+     * @param \Illuminate\Database\Eloquent\Model                                     $model
      * @param string|array|\Rinvex\Fort\Models\Ability|\Illuminate\Support\Collection $ability
      *
      * @return $this
      */
-    public function giveAbilityTo($ability)
+    public function giveAbilityTo(Model $model, $ability)
     {
         $origAbility = $ability;
 
         // Fire the ability giving event
-        event('rinvex.fort.ability.giving', [$origAbility, $this]);
+        event('rinvex.fort.ability.giving', [$model, $origAbility]);
 
         // Single ability slug
         if (is_string($ability)) {
-            $ability = app('rinvex.fort.ability')->whereSlug($ability)->first();
+            $ability = app('rinvex.fort.ability')->findBy('slug', $ability);
         }
 
         // Single ability model
         if ($ability instanceof Ability) {
-            if ($this->hasAbilityTo($ability)) {
+            if ($this->hasAbilityTo($model, $ability)) {
                 return $this;
             }
 
-            $this->abilities()->attach($ability);
+            $model->abilities()->attach($ability);
         }
 
         // Array of ability slugs
@@ -59,41 +61,42 @@ trait HasAbilities
                 return $ability instanceof Ability ? $ability->id : $ability;
             })->toArray();
 
-            $this->abilities()->syncWithoutDetaching($ability);
+            $model->abilities()->syncWithoutDetaching($ability);
         }
 
         // Fire the ability given event
-        event('rinvex.fort.ability.given', [$origAbility, $this]);
+        event('rinvex.fort.ability.given', [$model, $origAbility]);
 
         return $this;
     }
 
     /**
-     * Revoke the given ability from a role/user.
+     * Revoke the given ability from the given model.
      *
+     * @param \Illuminate\Database\Eloquent\Model                                     $model
      * @param string|array|\Rinvex\Fort\Models\Ability|\Illuminate\Support\Collection $ability
      *
      * @return $this
      */
-    public function revokeAbilityTo($ability)
+    public function revokeAbilityTo(Model $model, $ability)
     {
         $origAbility = $ability;
 
         // Fire the ability revoking event
-        event('rinvex.fort.ability.revoking', [$origAbility, $this]);
+        event('rinvex.fort.ability.revoking', [$model, $origAbility]);
 
         // Single ability slug
         if (is_string($ability)) {
-            $ability = $this->abilities()->whereSlug($ability)->first();
+            $ability = $model->abilities->contains('slug', $ability);
         }
 
         // Single ability model
         if ($ability instanceof Ability) {
-            if (! $this->hasAbilityTo($ability)) {
+            if (! $this->hasAbilityTo($model, $ability)) {
                 return $this;
             }
 
-            $this->abilities()->detach($ability);
+            $model->abilities()->detach($ability);
         }
 
         // Array of ability slugs
@@ -103,58 +106,61 @@ trait HasAbilities
 
         // Collection of ability models
         if ($ability instanceof Collection) {
-            $remove = $ability->map(function ($ability) {
+            $current = $model->abilities()->getRelatedIds()->toArray();
+            $remove  = $ability->map(function ($ability) {
                 return $ability instanceof Ability ? $ability->id : $ability;
             })->toArray();
 
-            $this->abilities()->sync(array_diff($this->abilities()->getRelatedIds()->toArray(), $remove));
+            $model->abilities()->sync(array_diff($current, $remove));
         }
 
         // Fire the ability revoked event
-        event('rinvex.fort.ability.revoked', [$origAbility, $this]);
+        event('rinvex.fort.ability.revoked', [$model, $origAbility]);
 
         return $this;
     }
 
     /**
-     * Determine if the user may perform the given ability.
+     * Determine if the given model may perform the given ability.
      *
+     * @param \Illuminate\Database\Eloquent\Model                                     $model
      * @param string|array|\Rinvex\Fort\Models\Ability|\Illuminate\Support\Collection $role
      *
      * @return bool
      */
-    public function hasAbilityTo($ability)
+    public function hasAbilityTo(Model $model, $ability)
     {
-        return $this->hasDirectAbility($ability);
+        return $this->hasDirectAbility($model, $ability);
     }
 
     /**
-     * Determine if the user has the given ability.
+     * Determine if the given model has the given ability.
      *
+     * @param \Illuminate\Database\Eloquent\Model                                     $model
      * @param string|array|\Rinvex\Fort\Models\Ability|\Illuminate\Support\Collection $role
      *
      * @return bool
      */
-    protected function hasDirectAbility($ability)
+    protected function hasDirectAbility(Model $model, $ability)
     {
         // Single ability slug
         if (is_string($ability)) {
-            return $this->abilities()->whereSlug($ability)->first() ? true : false;
+            return $model->abilities->contains('slug', $ability) ? true : false;
         }
 
         // Single ability model
         if ($ability instanceof Ability) {
-            return $this->abilities->contains('slug', $ability->slug);
+            return $model->abilities->contains('slug', $ability->slug);
         }
 
         // Array of ability slugs
         if (is_array($ability)) {
-            return $this->abilities->pluck('slug')->intersect($ability)->isEmpty() ? false : true;
+            return $model->abilities->pluck('slug')->intersect($ability)->isEmpty() ? false : true;
         }
 
-        // Collection of role models
+        // Collection of ability models
         if ($ability instanceof Collection) {
-            return $this->abilities->pluck('slug')->intersect($ability->pluck('slug')->toArray())->isEmpty() ? false : true;
+            return $model->abilities->pluck('slug')->intersect($ability->pluck('slug')->toArray())->isEmpty() ? false : true;
         }
 
         return false;

@@ -16,6 +16,8 @@
 namespace Rinvex\Fort\Repositories;
 
 use Illuminate\Support\Str;
+use Rinvex\Fort\Traits\HasRoles;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Contracts\Hashing\Hasher;
 use Illuminate\Contracts\Foundation\Application;
 use Rinvex\Fort\Contracts\UserRepositoryContract;
@@ -24,6 +26,8 @@ use Rinvex\Repository\Repositories\EloquentRepository;
 
 class UserRepository extends EloquentRepository implements UserRepositoryContract
 {
+    use HasRoles;
+
     /**
      * The hasher implementation.
      *
@@ -135,5 +139,18 @@ class UserRepository extends EloquentRepository implements UserRepositoryContrac
         $this->hasher = $hasher;
 
         return $this;
+    }
+
+    /**
+     * Determine if the user may perform the given ability.
+     *
+     * @param \Illuminate\Database\Eloquent\Model                                     $model
+     * @param string|array|\Rinvex\Fort\Models\Ability|\Illuminate\Support\Collection $role
+     *
+     * @return bool
+     */
+    public function hasAbilityTo(Model $model, $ability)
+    {
+        return $this->hasDirectAbility($model, $ability) || $this->hasAbilityViaRole($model, $ability);
     }
 }

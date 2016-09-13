@@ -18,37 +18,39 @@ namespace Rinvex\Fort\Traits;
 use Rinvex\Fort\Models\Role;
 use Rinvex\Fort\Models\Ability;
 use Illuminate\Support\Collection;
+use Illuminate\Database\Eloquent\Model;
 
 trait HasRoles
 {
     use HasAbilities;
 
     /**
-     * Assign the given role to the user.
+     * Assign the given role to the given model.
      *
+     * @param \Illuminate\Database\Eloquent\Model                                  $model
      * @param string|array|\Rinvex\Fort\Models\Role|\Illuminate\Support\Collection $role
      *
      * @return $this
      */
-    public function assignRole($role)
+    public function assignRole(Model $model, $role)
     {
         $origRole = $role;
 
         // Fire the role given event
-        event('rinvex.fort.role.assigning', [$origRole, $this]);
+        event('rinvex.fort.role.assigning', [$model, $origRole]);
 
         // Single role slug
         if (is_string($role)) {
-            $role = app('rinvex.fort.role')->whereSlug($role)->first();
+            $role = app('rinvex.fort.role')->findBy('slug', $role);
         }
 
         // Single role model
         if ($role instanceof Role) {
-            if ($this->hasRole($role)) {
+            if ($this->hasRole($model, $role)) {
                 return $this;
             }
 
-            $this->roles()->attach($role);
+            $model->roles()->attach($role);
         }
 
         // Array of role slugs
@@ -62,41 +64,42 @@ trait HasRoles
                 return $role instanceof Role ? $role->id : $role;
             })->toArray();
 
-            $this->roles()->syncWithoutDetaching($role);
+            $model->roles()->syncWithoutDetaching($role);
         }
 
         // Fire the role given event
-        event('rinvex.fort.role.assigned', [$origRole, $this]);
+        event('rinvex.fort.role.assigned', [$model, $origRole]);
 
         return $this;
     }
 
     /**
-     * Remove the given role from the user.
+     * Remove the given role from the given model.
      *
+     * @param \Illuminate\Database\Eloquent\Model                                  $model
      * @param string|array|\Rinvex\Fort\Models\Role|\Illuminate\Support\Collection $role
      *
      * @return $this
      */
-    public function removeRole($role)
+    public function removeRole(Model $model, $role)
     {
         $origRole = $role;
 
         // Fire the role removed event
-        event('rinvex.fort.role.removing', [$origRole, $this]);
+        event('rinvex.fort.role.removing', [$model, $origRole]);
 
         // Single role slug
         if (is_string($role)) {
-            $role = $this->roles()->whereSlug($role)->first();
+            $role = $model->roles->contains('slug', $role);
         }
 
         // Single role model
         if ($role instanceof Role) {
-            if (! $this->hasRole($role)) {
+            if (! $this->hasRole($model, $role)) {
                 return $this;
             }
 
-            $this->roles()->detach($role);
+            $model->roles()->detach($role);
         }
 
         // Array of role slugs
@@ -106,36 +109,38 @@ trait HasRoles
 
         // Collection of role models
         if ($role instanceof Collection) {
-            $remove = $role->map(function ($role) {
+            $current = $model->roles()->getRelatedIds()->toArray();
+            $remove  = $role->map(function ($role) {
                 return $role instanceof Role ? $role->id : $role;
             })->toArray();
 
-            $this->roles()->sync(array_diff($this->roles()->getRelatedIds()->toArray(), $remove));
+            $model->roles()->sync(array_diff($current, $remove));
         }
 
         // Fire the role removed event
-        event('rinvex.fort.role.removed', [$origRole, $this]);
+        event('rinvex.fort.role.removed', [$model, $origRole]);
 
         return $this;
     }
 
     /**
-     * Determine if the user has (one of) the given role(s).
+     * Determine if the given model has (one of) the given role.
      *
+     * @param \Illuminate\Database\Eloquent\Model                                  $model
      * @param string|array|\Rinvex\Fort\Models\Role|\Illuminate\Support\Collection $role
      *
      * @return bool
      */
-    public function hasRole($role)
+    public function hasRole(Model $model, $role)
     {
         // Single role slug
         if (is_string($role)) {
-            return $this->roles->contains('slug', $role);
+            return $model->roles->contains('slug', $role);
         }
 
         // Single role model
         if ($role instanceof Role) {
-            return $this->roles->contains('slug', $role->slug);
+            return $model->roles->contains('slug', $role->slug);
         }
 
         // Array of role slugs
@@ -145,7 +150,7 @@ trait HasRoles
 
         // Collection of role models
         if ($role instanceof Collection) {
-            return ! $role->intersect($this->roles)->isEmpty();
+            return ! $role->intersect($model->roles)->isEmpty();
         }
 
         return false;
@@ -153,34 +158,35 @@ trait HasRoles
 
     /**
      * Alias for `hasRole` method.
-     * Determine if the user has any of the given role(s).
      *
+     * @param \Illuminate\Database\Eloquent\Model                                  $model
      * @param string|array|\Rinvex\Fort\Models\Role|\Illuminate\Support\Collection $role
      *
      * @return bool
      */
-    public function hasAnyRole($role)
+    public function hasAnyRole(Model $model, $role)
     {
-        return $this->hasRole($role);
+        return $this->hasRole($model, $role);
     }
 
     /**
-     * Determine if the user has all of the given role(s).
+     * Determine if the given model has all of the given role.
      *
+     * @param \Illuminate\Database\Eloquent\Model                                  $model
      * @param string|array|\Rinvex\Fort\Models\Role|\Illuminate\Support\Collection $role
      *
      * @return bool
      */
-    public function hasAllRoles($role)
+    public function hasAllRoles(Model $model, $role)
     {
         // Single role slug
         if (is_string($role)) {
-            return $this->roles->contains('slug', $role);
+            return $model->roles->contains('slug', $role);
         }
 
         // Single role model
         if ($role instanceof Role) {
-            return $this->roles->contains('slug', $role->slug);
+            return $model->roles->contains('slug', $role->slug);
         }
 
         // Array of role slugs
@@ -190,41 +196,42 @@ trait HasRoles
 
         // Collection of role models
         if ($role instanceof Collection) {
-            return $role->diff($this->roles)->isEmpty();
+            return $model->roles->toArray() == $role->toArray();
         }
 
         return false;
     }
 
     /**
-     * Determine if the user has, via roles, the given ability.
+     * Determine if the given model has, via roles, the given ability.
      *
+     * @param \Illuminate\Database\Eloquent\Model                                     $model
      * @param string|array|\Rinvex\Fort\Models\Ability|\Illuminate\Support\Collection $role
      *
      * @return bool
      */
-    public function hasAbilityViaRole($ability)
+    protected function hasAbilityViaRole(Model $model, $ability)
     {
         // Single ability slug
         if (is_string($ability)) {
-            $ability = app('rinvex.fort.ability')->whereSlug($ability)->first();
+            $ability = app('rinvex.fort.ability')->with(['roles'])->findBy('slug', $ability);
         }
 
         // Single ability model
         if ($ability instanceof Ability) {
-            return $this->hasRole($ability->roles);
+            return $this->hasRole($model, $ability->roles);
         }
 
         // Array of ability slugs
         if (is_array($ability)) {
-            $ability = app('rinvex.fort.ability')->findWhereIn(['slug', $ability]);
+            $ability = app('rinvex.fort.ability')->with(['roles'])->findWhereIn(['slug', $ability]);
         }
 
         // Collection of ability models
         if ($ability instanceof Collection) {
-            $roles = $ability->pluck('roles')->flatten()->pluck('slug');
+            $roles = $ability->pluck('roles')->flatten()->pluck('slug')->unique()->toArray();
 
-            return $this->hasRole($roles->toArray());
+            return $this->hasRole($model, $roles);
         }
 
         return false;
