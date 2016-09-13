@@ -197,7 +197,6 @@ class FortServiceProvider extends BaseServiceProvider
             $bladeCompiler->directive('endhasability', function () {
                 return '<?php endif; ?>';
             });
-
         });
     }
 
