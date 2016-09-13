@@ -151,36 +151,53 @@ class FortServiceProvider extends BaseServiceProvider
         $this->app->afterResolving('blade.compiler', function (BladeCompiler $bladeCompiler) {
 
             // @role('writer')
-            $bladeCompiler->directive('role', function ($role) {
-                return "<?php if(auth()->check() && auth()->user()->hasRole({$role})): ?>";
+            $bladeCompiler->directive('role', function ($model, $role) {
+                return "<?php if(auth()->check() && app('rinvex.fort.user')->hasRole({$model}, {$role})): ?>";
             });
             $bladeCompiler->directive('endrole', function () {
                 return '<?php endif; ?>';
             });
 
             // @hasrole('writer')
-            $bladeCompiler->directive('hasrole', function ($role) {
-                return "<?php if(auth()->check() && auth()->user()->hasRole({$role})): ?>";
+            $bladeCompiler->directive('hasrole', function ($model, $role) {
+                return "<?php if(auth()->check() && app('rinvex.fort.user')->hasRole({$model}, {$role})): ?>";
             });
             $bladeCompiler->directive('endhasrole', function () {
                 return '<?php endif; ?>';
             });
 
             // @hasanyrole(['writer', 'editor'])
-            $bladeCompiler->directive('hasanyrole', function ($roles) {
-                return "<?php if(auth()->check() && auth()->user()->hasAnyRole({$roles})): ?>";
+            $bladeCompiler->directive('hasanyrole', function ($model, $roles) {
+                return "<?php if(auth()->check() && app('rinvex.fort.user')->hasAnyRole({$model}, {$roles})): ?>";
             });
             $bladeCompiler->directive('endhasanyrole', function () {
                 return '<?php endif; ?>';
             });
 
             // @hasallroles(['writer', 'editor'])
-            $bladeCompiler->directive('hasallroles', function ($roles) {
-                return "<?php if(auth()->check() && auth()->user()->hasAllRoles({$roles})): ?>";
+            $bladeCompiler->directive('hasallroles', function ($model, $roles) {
+                return "<?php if(auth()->check() && app('rinvex.fort.user')->hasAllRoles({$model}, {$roles})): ?>";
             });
             $bladeCompiler->directive('endhasallroles', function () {
                 return '<?php endif; ?>';
             });
+
+            // @ability('global.superuser')
+            $bladeCompiler->directive('ability', function ($model, $ability) {
+                return "<?php if(auth()->check() && app('rinvex.fort.user')->hasAbilityTo({$model}, {$ability})): ?>";
+            });
+            $bladeCompiler->directive('endability', function () {
+                return '<?php endif; ?>';
+            });
+
+            // @hasability('global.superuser')
+            $bladeCompiler->directive('hasability', function ($model, $ability) {
+                return "<?php if(auth()->check() && app('rinvex.fort.user')->hasAbilityTo({$model}, {$ability})): ?>";
+            });
+            $bladeCompiler->directive('endhasability', function () {
+                return '<?php endif; ?>';
+            });
+
         });
     }
 
