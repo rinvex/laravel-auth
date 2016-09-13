@@ -16,6 +16,7 @@
 namespace Rinvex\Fort\Repositories;
 
 use Illuminate\Support\Str;
+use Rinvex\Fort\Models\Role;
 use Rinvex\Fort\Traits\HasRoles;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Contracts\Hashing\Hasher;
@@ -152,5 +153,39 @@ class UserRepository extends EloquentRepository implements UserRepositoryContrac
     public function hasAbilityTo(Model $model, $ability)
     {
         return $this->hasDirectAbility($model, $ability) || $this->hasAbilityViaRole($model, $ability);
+    }
+
+    /**
+     * Get the menus for the given user.
+     *
+     * @param int  $modelId
+     * @param bool $root
+     *
+     * @return mixed
+     */
+    public function menus($modelId, $root = true)
+    {
+        return $this->executeCallback(get_called_class(), __FUNCTION__, func_get_args(), function () use ($modelId, $root) {
+            if (! is_int($modelId) || ! $model = $this->with(['abilities'])->find($modelId)) {
+                return [];
+            }
+
+            $roleAbilities = null;
+            $callback      = function ($item) {
+                if (strpos($item, '.index') === false) {
+                    return str_replace(strrchr($item, '.'), '.index', $item);
+                } else {
+                    return 'root';
+                }
+            };
+
+            if (! $model instanceof Role) {
+                $roleAbilities = $model->roles()->with(['abilities'])->get()->pluck('abilities')->flatten()->pluck('slug');
+            }
+
+            $userAbilities = $model->abilities->pluck('slug')->merge($roleAbilities)->unique()->groupBy($callback)->toArray();
+
+            return $root ? $userAbilities['root'] : $userAbilities;
+        });
     }
 }
