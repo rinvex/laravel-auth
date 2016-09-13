@@ -54,7 +54,6 @@ class CreateRinvexFortUsersTable extends Migration
             ])->default('undisclosed');
             $table->boolean('moderated')->default(false);
             $table->timestamp('login_at')->nullable();
-            $table->timestamp('active_at')->nullable();
             $table->timestamps();
             $table->softDeletes();
 

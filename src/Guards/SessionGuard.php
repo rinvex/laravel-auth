@@ -231,8 +231,9 @@ class SessionGuard implements StatefulGuardContract, SupportsBasicAuth
 
         $userBySession = $this->getUserBySession();
         $userByCookie  = $this->getUserByCookie();
+        $persistence   = $this->getPersistenceByToken($this->session->getId());
 
-        if (! $this->logoutAttempted && ($userBySession || $userByCookie) && ! $this->getPersistenceByToken($this->session->getId())) {
+        if (! $this->logoutAttempted && ($userBySession || $userByCookie) && ! $persistence) {
             $this->logout();
 
             // Fire the automatic logout event
@@ -263,8 +264,8 @@ class SessionGuard implements StatefulGuardContract, SupportsBasicAuth
         $user = $userBySession ?: $userByCookie;
 
         // Update last activity
-        if (! $this->logoutAttempted && ! is_null($user)) {
-            $this->provider->update($user, ['active_at' => new Carbon()]);
+        if (! $this->logoutAttempted && ! is_null($user) && ! is_null($persistence)) {
+            $persistence->touch();
         }
 
         return $this->user = $user;
@@ -1010,7 +1011,6 @@ class SessionGuard implements StatefulGuardContract, SupportsBasicAuth
             'attempt'    => $attempt,
             'agent'      => $agent,
             'ip'         => $ip,
-            'created_at' => new Carbon(),
         ]);
     }
 

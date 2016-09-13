@@ -40,7 +40,6 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
         'deleted_at',
         'birthdate',
         'login_at',
-        'active_at',
     ];
 
     /**
@@ -67,7 +66,6 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
         'gender',
         'moderated',
         'login_at',
-        'active_at',
     ];
 
     /**

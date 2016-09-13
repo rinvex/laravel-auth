@@ -34,7 +34,7 @@ class CreateRinvexFortPersistencesTable extends Migration
             $table->string('agent')->nullable();
             $table->string('ip')->nullable();
             $table->boolean('attempt')->default(0);
-            $table->timestamp('created_at');
+            $table->timestamps();
 
             // Indexes
             $table->index('user_id');
