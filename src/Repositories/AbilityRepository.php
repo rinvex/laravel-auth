@@ -15,10 +15,7 @@
 
 namespace Rinvex\Fort\Repositories;
 
-use Exception;
-use Illuminate\Support\Facades\Log;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Contracts\Auth\Access\Gate;
 use Illuminate\Contracts\Foundation\Application;
 use Rinvex\Fort\Contracts\AbilityRepositoryContract;
 use Rinvex\Repository\Repositories\EloquentRepository;
