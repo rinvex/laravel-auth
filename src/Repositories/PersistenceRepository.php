@@ -23,6 +23,13 @@ use Rinvex\Fort\Contracts\PersistenceRepositoryContract;
 class PersistenceRepository extends EloquentRepository implements PersistenceRepositoryContract
 {
     /**
+     * The repository cache lifetime.
+     *
+     * @var float|int
+     */
+    protected $cacheLifetime = 0;
+
+    /**
      * create a new persistence repository instance.
      *
      * @param \Illuminate\Contracts\Foundation\Application $app
