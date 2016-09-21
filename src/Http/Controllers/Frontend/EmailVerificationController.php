@@ -48,7 +48,7 @@ class EmailVerificationController extends AbstractController
         switch ($result) {
             case VerificationBrokerContract::LINK_SENT:
                 return intend([
-                    'intended' => route('home'),
+                    'intended' => url('/'),
                     'with'     => ['rinvex.fort.alert.success' => Lang::get($result)],
                 ]);
 
@@ -75,7 +75,7 @@ class EmailVerificationController extends AbstractController
         switch ($result) {
             case VerificationBrokerContract::EMAIL_VERIFIED:
                 return intend([
-                    'intended' => route('home'),
+                    'intended' => url('/'),
                     'with'     => ['rinvex.fort.alert.success' => Lang::get($result)],
                 ]);
 

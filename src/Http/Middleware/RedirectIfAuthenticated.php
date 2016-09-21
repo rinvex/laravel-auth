@@ -34,7 +34,7 @@ class RedirectIfAuthenticated
     {
         if (Auth::guard($guard)->check()) {
             return intend([
-                'intended' => route('home'),
+                'intended' => url('/'),
                 'with'     => ['rinvex.fort.alert.success' => Lang::get('rinvex.fort::message.auth.already')],
             ]);
         }

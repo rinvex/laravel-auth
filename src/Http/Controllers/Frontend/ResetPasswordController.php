@@ -74,7 +74,7 @@ class ResetPasswordController extends AbstractController
         switch ($result) {
             case ResetBrokerContract::RESET_SUCCESS:
                 return intend([
-                    'intended' => route('home'),
+                    'intended' => url('/'),
                     'with'     => ['rinvex.fort.alert.success' => Lang::get($result)],
                 ]);
 

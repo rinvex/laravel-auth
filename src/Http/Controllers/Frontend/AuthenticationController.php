@@ -84,7 +84,7 @@ class AuthenticationController extends AbstractController
         $result = Auth::guard($this->getGuard())->logout();
 
         return intend([
-            'intended' => route('home'),
+            'intended' => url('/'),
             'with'     => ['rinvex.fort.alert.warning' => Lang::get($result)],
         ]);
     }
@@ -105,7 +105,7 @@ class AuthenticationController extends AbstractController
                 $seconds = Auth::guard($this->getGuard())->secondsRemainingOnLockout($request);
 
                 return intend([
-                    'intended'   => route('home'),
+                    'intended'   => url('/'),
                     'withInput'  => $request->only('loginfield', 'remember'),
                     'withErrors' => ['loginfield' => Lang::get($result, ['seconds' => $seconds])],
                 ]);
@@ -138,7 +138,7 @@ class AuthenticationController extends AbstractController
             case SessionGuard::AUTH_LOGIN:
             default:
                 return intend([
-                    'intended' => route('home'),
+                    'intended' => url('/'),
                     'with'     => ['rinvex.fort.alert.success' => Lang::get($result)],
                 ]);
         }

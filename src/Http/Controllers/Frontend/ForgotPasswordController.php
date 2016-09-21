@@ -56,7 +56,7 @@ class ForgotPasswordController extends AbstractController
         switch ($result) {
             case ResetBrokerContract::LINK_SENT:
                 return intend([
-                    'intended' => route('home'),
+                    'intended' => url('/'),
                     'with'     => ['rinvex.fort.alert.success' => Lang::get($result)],
                 ]);
 
