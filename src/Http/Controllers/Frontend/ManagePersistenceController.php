@@ -17,20 +17,10 @@ namespace Rinvex\Fort\Http\Controllers\Frontend;
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Lang;
-use Rinvex\Fort\Http\Controllers\AbstractController;
+use Rinvex\Fort\Http\Controllers\AuthorizedController;
 
-class ManagePersistenceController extends AbstractController
+class ManagePersistenceController extends AuthorizedController
 {
-    /**
-     * Create a new manage persistence controller instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        $this->middleware($this->getAuthMiddleware(), ['except' => $this->middlewareWhitelist]);
-    }
-
     /**
      * Show the account sessions.
      *

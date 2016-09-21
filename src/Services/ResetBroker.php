@@ -34,11 +34,11 @@ class ResetBroker implements ResetBrokerContract
     protected $tokens;
 
     /**
-     * The user provider.
+     * The user provider implementation.
      *
      * @var \Rinvex\Fort\Contracts\UserRepositoryContract
      */
-    protected $users;
+    protected $userRepository;
 
     /**
      * The custom password validator callback.
@@ -51,14 +51,14 @@ class ResetBroker implements ResetBrokerContract
      * Create a new password broker instance.
      *
      * @param \Rinvex\Fort\Contracts\ResetTokenRepositoryContract $tokens
-     * @param \Rinvex\Fort\Contracts\UserRepositoryContract       $users
+     * @param \Rinvex\Fort\Contracts\UserRepositoryContract       $userRepository
      *
      * @return void
      */
-    public function __construct(ResetTokenRepositoryContract $tokens, UserRepositoryContract $users)
+    public function __construct(ResetTokenRepositoryContract $tokens, UserRepositoryContract $userRepository)
     {
-        $this->users  = $users;
-        $this->tokens = $tokens;
+        $this->tokens         = $tokens;
+        $this->userRepository = $userRepository;
     }
 
     /**
@@ -189,7 +189,7 @@ class ResetBroker implements ResetBrokerContract
     {
         $credentials = Arr::except($credentials, ['token']);
 
-        $user = $this->users->findByCredentials($credentials);
+        $user = $this->userRepository->findByCredentials($credentials);
 
         if ($user && ! $user instanceof CanResetPasswordContract) {
             throw new UnexpectedValueException('User must implement CanResetPasswordContract interface.');

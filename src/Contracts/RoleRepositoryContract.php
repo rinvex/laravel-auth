@@ -20,12 +20,5 @@ use Rinvex\Repository\Contracts\RepositoryContract;
 
 interface RoleRepositoryContract extends RepositoryContract, CacheableContract
 {
-    /**
-     * Find a role by its slug.
-     *
-     * @param string $slug
-     *
-     * @return \Rinvex\Fort\Models\Role
-     */
-    public function findBySlug($slug);
+    //
 }

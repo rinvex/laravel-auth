@@ -21,24 +21,6 @@ use Rinvex\Repository\Contracts\RepositoryContract;
 interface UserRepositoryContract extends RepositoryContract, CacheableContract
 {
     /**
-     * Find a user by its email.
-     *
-     * @param string $email
-     *
-     * @return \Rinvex\Fort\Contracts\AuthenticatableContract|null
-     */
-    public function findByEmail($email);
-
-    /**
-     * Find a user by its username.
-     *
-     * @param string $username
-     *
-     * @return \Rinvex\Fort\Contracts\AuthenticatableContract|null
-     */
-    public function findByUsername($username);
-
-    /**
      * Find a user by their unique identifier and "remember me" token.
      *
      * @param mixed  $identifier

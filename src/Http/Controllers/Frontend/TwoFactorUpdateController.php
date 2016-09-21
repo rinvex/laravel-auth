@@ -24,29 +24,29 @@ use Rinvex\Fort\Http\Requests\TwoFactorTotp;
 use Rinvex\Fort\Http\Requests\TwoFactorPhone;
 use Rinvex\Fort\Services\TwoFactorTotpProvider;
 use Rinvex\Fort\Contracts\UserRepositoryContract;
-use Rinvex\Fort\Http\Controllers\AbstractController;
+use Rinvex\Fort\Http\Controllers\AuthorizedController;
 
-class TwoFactorUpdateController extends AbstractController
+class TwoFactorUpdateController extends AuthorizedController
 {
     /**
-     * The users repository instance.
+     * The user repository instance.
      *
      * @var \Rinvex\Fort\Contracts\UserRepositoryContract
      */
-    protected $users;
+    protected $userRepository;
 
     /**
      * Create a new Two-Factor update controller instance.
      *
-     * @param \Rinvex\Fort\Contracts\UserRepositoryContract $users
+     * @param \Rinvex\Fort\Contracts\UserRepositoryContract $userRepository
      *
      * @return void
      */
-    public function __construct(UserRepositoryContract $users)
+    public function __construct(UserRepositoryContract $userRepository)
     {
-        $this->users = $users;
+        parent::__construct();
 
-        $this->middleware($this->getAuthMiddleware(), ['except' => $this->middlewareWhitelist]);
+        $this->userRepository = $userRepository;
     }
 
     /**
@@ -71,7 +71,7 @@ class TwoFactorUpdateController extends AbstractController
             array_set($settings, 'totp.enabled', false);
             array_set($settings, 'totp.secret', $secret = $totpProvider->generateSecretKey());
 
-            $this->users->update($currentUser, [
+            $this->userRepository->update($currentUser, [
                 'two_factor' => $settings,
             ]);
         }
@@ -104,7 +104,7 @@ class TwoFactorUpdateController extends AbstractController
             array_set($settings, 'totp.backup_at', $backupAt ?: (new Carbon())->toDateTimeString());
 
             // Update Two-Factor settings
-            $this->users->update($currentUser, [
+            $this->userRepository->update($currentUser, [
                 'two_factor' => $settings,
             ]);
 
@@ -134,7 +134,7 @@ class TwoFactorUpdateController extends AbstractController
 
         array_set($settings, 'totp', []);
 
-        $this->users->update($currentUser, [
+        $this->userRepository->update($currentUser, [
             'two_factor' => $settings,
         ]);
 
@@ -166,7 +166,7 @@ class TwoFactorUpdateController extends AbstractController
 
         array_set($settings, 'phone.enabled', true);
 
-        $this->users->update($currentUser, [
+        $this->userRepository->update($currentUser, [
             'two_factor' => $settings,
         ]);
 
@@ -190,7 +190,7 @@ class TwoFactorUpdateController extends AbstractController
 
         array_set($settings, 'phone.enabled', false);
 
-        $this->users->update($currentUser, [
+        $this->userRepository->update($currentUser, [
             'two_factor' => $settings,
         ]);
 
@@ -222,7 +222,7 @@ class TwoFactorUpdateController extends AbstractController
         array_set($settings, 'totp.backup', $this->generateTwoFactorTotpBackups());
         array_set($settings, 'totp.backup_at', (new Carbon())->toDateTimeString());
 
-        $this->users->update($currentUser, [
+        $this->userRepository->update($currentUser, [
             'two_factor' => $settings,
         ]);
 

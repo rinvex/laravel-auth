@@ -54,22 +54,6 @@ class UserRepository extends EloquentRepository implements UserRepositoryContrac
     /**
      * {@inheritdoc}
      */
-    public function findByEmail($email)
-    {
-        return $this->findBy('email', $email);
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function findByUsername($username)
-    {
-        return $this->findBy('username', $username);
-    }
-
-    /**
-     * {@inheritdoc}
-     */
     public function findByToken($identifier, $token)
     {
         return $this->where($this->getAuthIdentifierName(), $identifier)

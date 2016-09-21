@@ -213,7 +213,9 @@ class FortEventListener
     public function authLockout(Request $request)
     {
         if (config('rinvex.fort.throttle.lockout_email')) {
-            $user = get_login_field($loginfield = $request->get('loginfield')) == 'email' ? $this->app['rinvex.fort.user']->findByEmail($loginfield) : $this->app['rinvex.fort.user']->findByUsername($loginfield);
+            $user = get_login_field($loginfield = $request->get('loginfield')) == 'email'
+                ? $this->app['rinvex.fort.user']->findBy('email', $loginfield)
+                : $this->app['rinvex.fort.user']->findBy('username', $loginfield);
 
             $user->notify(new AuthenticationLockoutNotification($request));
         }
@@ -599,7 +601,7 @@ class FortEventListener
 
         // Attach default role to the registered user
         if ($default = $this->app['config']->get('rinvex.fort.registration.default_role')) {
-            if ($role = $this->app['rinvex.fort.role']->findBySlug($default)) {
+            if ($role = $this->app['rinvex.fort.role']->findBy('slug', $default)) {
                 $user->roles()->attach($role);
             }
         }
@@ -633,7 +635,7 @@ class FortEventListener
 
         // Attach default role to the registered user
         if ($default = $this->app['config']->get('rinvex.fort.registration.default_role')) {
-            if ($role = $this->app['rinvex.fort.role']->findBySlug($default)) {
+            if ($role = $this->app['rinvex.fort.role']->findBy('slug', $default)) {
                 $user->roles()->attach($role);
             }
         }

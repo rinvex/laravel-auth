@@ -39,14 +39,6 @@ class AbilityRepository extends EloquentRepository implements AbilityRepositoryC
     /**
      * {@inheritdoc}
      */
-    public function findBySlug($slug)
-    {
-        return $this->findBy('slug', $slug);
-    }
-
-    /**
-     * {@inheritdoc}
-     */
     public function delete($id)
     {
         // Find the given instance

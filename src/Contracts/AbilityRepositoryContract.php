@@ -20,12 +20,5 @@ use Rinvex\Repository\Contracts\RepositoryContract;
 
 interface AbilityRepositoryContract extends RepositoryContract, CacheableContract
 {
-    /**
-     * Find an ability by its slug.
-     *
-     * @param string $slug
-     *
-     * @return \Rinvex\Fort\Models\Ability|null
-     */
-    public function findBySlug($slug);
+    //
 }

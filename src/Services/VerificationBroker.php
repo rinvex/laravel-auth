@@ -39,20 +39,20 @@ class VerificationBroker implements VerificationBrokerContract
      *
      * @var \Rinvex\Fort\Contracts\UserRepositoryContract
      */
-    protected $users;
+    protected $userRepository;
 
     /**
      * Create a new verification broker instance.
      *
      * @param \Rinvex\Fort\Contracts\VerificationTokenRepositoryContract $tokens
-     * @param \Rinvex\Fort\Contracts\UserRepositoryContract              $users
+     * @param \Rinvex\Fort\Contracts\UserRepositoryContract              $userRepository
      *
      * @return void
      */
-    public function __construct(VerificationTokenRepositoryContract $tokens, UserRepositoryContract $users)
+    public function __construct(VerificationTokenRepositoryContract $tokens, UserRepositoryContract $userRepository)
     {
-        $this->users  = $users;
-        $this->tokens = $tokens;
+        $this->tokens         = $tokens;
+        $this->userRepository = $userRepository;
     }
 
     /**
@@ -159,7 +159,7 @@ class VerificationBroker implements VerificationBrokerContract
     {
         $credentials = Arr::except($credentials, ['token']);
 
-        $user = $this->users->findByCredentials($credentials);
+        $user = $this->userRepository->findByCredentials($credentials);
 
         if ($user && ! $user instanceof CanVerifyEmailContract) {
             throw new UnexpectedValueException('User must implement CanVerifyEmailContract interface.');

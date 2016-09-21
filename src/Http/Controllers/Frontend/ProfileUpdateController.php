@@ -20,29 +20,29 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Lang;
 use Rinvex\Fort\Http\Requests\ProfileUpdate;
 use Rinvex\Fort\Contracts\UserRepositoryContract;
-use Rinvex\Fort\Http\Controllers\AbstractController;
+use Rinvex\Fort\Http\Controllers\AuthorizedController;
 
-class ProfileUpdateController extends AbstractController
+class ProfileUpdateController extends AuthorizedController
 {
     /**
-     * The users repository instance.
+     * The user repository instance.
      *
      * @var \Rinvex\Fort\Contracts\UserRepositoryContract
      */
-    protected $users;
+    protected $userRepository;
 
     /**
      * Create a new profile update controller instance.
      *
-     * @param \Rinvex\Fort\Contracts\UserRepositoryContract $users
+     * @param \Rinvex\Fort\Contracts\UserRepositoryContract $userRepository
      *
      * @return void
      */
-    public function __construct(UserRepositoryContract $users)
+    public function __construct(UserRepositoryContract $userRepository)
     {
-        $this->users = $users;
+        parent::__construct();
 
-        $this->middleware($this->getAuthMiddleware(), ['except' => $this->middlewareWhitelist]);
+        $this->userRepository = $userRepository;
     }
 
     /**
@@ -91,7 +91,7 @@ class ProfileUpdateController extends AbstractController
             array_set($twoFactor, 'phone.enabled', false);
         }
 
-        $this->users->update($request->get('id'), $data + $emailVerification + $phoneVerification + $twoFactor);
+        $this->userRepository->update($request->get('id'), $data + $emailVerification + $phoneVerification + $twoFactor);
 
         return intend([
             'back' => true,

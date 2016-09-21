@@ -42,14 +42,6 @@ class RoleRepository extends EloquentRepository implements RoleRepositoryContrac
     /**
      * {@inheritdoc}
      */
-    public function findBySlug($slug)
-    {
-        return $this->findBy('slug', $slug);
-    }
-
-    /**
-     * {@inheritdoc}
-     */
     public function delete($id)
     {
         // Find the given instance
