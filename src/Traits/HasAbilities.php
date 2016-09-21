@@ -24,7 +24,7 @@ trait HasAbilities
     /**
      * Give the given ability to the given model.
      *
-     * @param int|\Illuminate\Database\Eloquent\Model                                     $id
+     * @param int|\Illuminate\Database\Eloquent\Model                                 $id
      * @param string|array|\Rinvex\Fort\Models\Ability|\Illuminate\Support\Collection $ability
      *
      * @return $this
@@ -78,7 +78,7 @@ trait HasAbilities
     /**
      * Revoke the given ability from the given model.
      *
-     * @param int|\Illuminate\Database\Eloquent\Model                                     $id
+     * @param int|\Illuminate\Database\Eloquent\Model                                 $id
      * @param string|array|\Rinvex\Fort\Models\Ability|\Illuminate\Support\Collection $ability
      *
      * @return $this
