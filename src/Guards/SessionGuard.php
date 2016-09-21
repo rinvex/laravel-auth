@@ -231,17 +231,6 @@ class SessionGuard implements StatefulGuardContract, SupportsBasicAuth
 
         $userBySession = $this->getUserBySession();
         $userByCookie  = $this->getUserByCookie();
-        $persistence   = $this->getPersistenceByToken($this->session->getId());
-
-        if (! $this->logoutAttempted && ($userBySession || $userByCookie) && ! $persistence) {
-            $this->logout();
-
-            // Fire the automatic logout event
-            $this->events->fire('rinvex.fort.auth.autologout');
-
-            // Throw invalid persistence exception
-            throw new InvalidPersistenceException();
-        }
 
         // First we will try to load the user using the identifier in the session if
         // one exists. Otherwise we will check for a "remember me" cookie in this
@@ -255,12 +244,35 @@ class SessionGuard implements StatefulGuardContract, SupportsBasicAuth
         // pull the user data on that cookie which serves as a remember cookie on
         // the application. Once we have a user we can return it to the caller.
         if (is_null($userBySession) && $userByCookie) {
+            // The `updateSession` method changes session ID,
+            // and we need old session ID for later usage.
+            $oldSession = $this->session->getId();
+
+            // Update user session
             $this->updateSession($userByCookie->getAuthIdentifier());
+
+            // Update user persistence
+            $this->updatePersistence($userByCookie->id, $oldSession, false);
 
             // Fire the authentication login event
             $this->events->fire('rinvex.fort.auth.login', [$userByCookie, true]);
         }
 
+        // Prepare current persistence instance
+        $persistence = $this->getPersistenceByToken($this->session->getId());
+
+        // Check if we've a valid persistence
+        if (! $this->logoutAttempted && ($userBySession || $userByCookie) && ! $persistence) {
+            $this->logout();
+
+            // Fire the automatic logout event
+            $this->events->fire('rinvex.fort.auth.autologout');
+
+            // Throw invalid persistence exception
+            throw new InvalidPersistenceException();
+        }
+
+        // Prepare current user instance
         $user = $userBySession ?: $userByCookie;
 
         // Update last activity
@@ -585,7 +597,7 @@ class SessionGuard implements StatefulGuardContract, SupportsBasicAuth
      *
      * @return string
      */
-    public function login(AuthenticatableContract $user, $remember = false, $force = false, $persistence = null)
+    public function login(AuthenticatableContract $user, $remember = false, $persistence = null)
     {
         $this->updateSession($user->getAuthIdentifier());
 
@@ -1002,7 +1014,7 @@ class SessionGuard implements StatefulGuardContract, SupportsBasicAuth
         $ip    = request()->ip();
 
         // Delete previous user persistence
-        app('rinvex.fort.persistence')->whereAttempt(1)->delete($token);
+        app('rinvex.fort.persistence')->delete($token);
 
         // Create new user persistence
         app('rinvex.fort.persistence')->create([
@@ -1197,7 +1209,7 @@ class SessionGuard implements StatefulGuardContract, SupportsBasicAuth
      *
      * @return \Rinvex\Fort\Contracts\AuthenticatableContract|null
      */
-    public function getUserBySession()
+    protected function getUserBySession()
     {
         return ! is_null($id = $this->session->get($this->getName())) ? $this->provider->find($id) : null;
     }
@@ -1207,7 +1219,7 @@ class SessionGuard implements StatefulGuardContract, SupportsBasicAuth
      *
      * @return \Rinvex\Fort\Contracts\AuthenticatableContract|null
      */
-    public function getUserByCookie()
+    protected function getUserByCookie()
     {
         return ! is_null($recaller = $this->getRecaller()) ? $this->getUserByRecaller($recaller) : null;
     }

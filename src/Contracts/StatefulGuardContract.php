@@ -46,7 +46,7 @@ interface StatefulGuardContract extends GuardContract
      *
      * @return string
      */
-    public function login(AuthenticatableContract $user, $remember = false, $force = false, $persistence = null);
+    public function login(AuthenticatableContract $user, $remember = false, $persistence = null);
 
     /**
      * Log the given user ID into the application.
