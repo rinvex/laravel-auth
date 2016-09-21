@@ -25,6 +25,15 @@ abstract class AbstractController extends Controller
     use AuthorizesRequests, DispatchesJobs, GetsMiddleware;
 
     /**
+     * Resource Ability Map.
+     *
+     * Array of resource ability map.
+     *
+     * @var array
+     */
+    protected $resourceAbilityMap = [];
+
+    /**
      * Whitelisted methods.
      *
      * Array of whitelisted methods which do not need to go through middleware.
@@ -48,5 +57,24 @@ abstract class AbstractController extends Controller
     protected function getBroker()
     {
         return $this->broker;
+    }
+
+    /**
+     * Get the map of resource methods to ability names.
+     *
+     * @return array
+     */
+    protected function resourceAbilityMap()
+    {
+        return $this->resourceAbilityMap + [
+            'show'    => 'view',
+            'index'   => 'view',
+            'bulk'    => 'bulk',
+            'create'  => 'create',
+            'store'   => 'create',
+            'edit'    => 'update',
+            'update'  => 'update',
+            'destroy' => 'delete',
+        ];
     }
 }
