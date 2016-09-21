@@ -45,7 +45,7 @@ Route::group([
 
         Route::get('login', ['as' => 'login', 'uses' => 'AuthenticationController@showLogin']);
         Route::post('login', ['as' => 'login.post', 'uses' => 'AuthenticationController@processLogin']);
-        Route::get('logout', ['as' => 'logout', 'uses' => 'AuthenticationController@logout']);
+        Route::post('logout', ['as' => 'logout', 'uses' => 'AuthenticationController@logout']);
 
         /*
         |--------------------------------------------------------------------------
