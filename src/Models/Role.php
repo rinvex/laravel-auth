@@ -76,6 +76,7 @@ class Role extends Model
         return $this->belongsToMany(config('rinvex.fort.models.user'), config('rinvex.fort.tables.role_user'))
                     ->withTimestamps();
     }
+
     /**
      * Determine if the role is super admin.
      *
