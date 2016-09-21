@@ -27,7 +27,6 @@ use Laravel\Socialite\SocialiteServiceProvider;
 use Rinvex\Fort\Repositories\AbilityRepository;
 use Rinvex\Support\Providers\BaseServiceProvider;
 use Rinvex\Fort\Repositories\PersistenceRepository;
-use Rinvex\Fort\Contracts\AbilityRepositoryContract;
 
 class FortServiceProvider extends BaseServiceProvider
 {
@@ -47,14 +46,14 @@ class FortServiceProvider extends BaseServiceProvider
         // Register the event listener
         $this->app->bind('rinvex.fort.listener', FortEventListener::class);
 
-        // Register Socialite Service Provider
+        // Register the Socialite Service Provider
         $this->app->register(SocialiteServiceProvider::class);
     }
 
     /**
      * {@inheritdoc}
      */
-    public function boot(AbilityRepositoryContract $abilityRepository, Router $router)
+    public function boot(Router $router)
     {
         // Publish Resources
         $this->publishResources();
@@ -74,35 +73,11 @@ class FortServiceProvider extends BaseServiceProvider
         // Subscribe the registered event listener
         $this->app['events']->subscribe('rinvex.fort.listener');
 
-        // Add custom user provider / Override default 'eloquent' user provider
-        $this->app['auth']->provider('eloquent', function ($app, array $config) {
-            // Return an instance of Rinvex\Fort\Contracts\UserRepositoryContract
-            return $this->app['rinvex.fort.user'];
-        });
+        // Add custom user provider
+        $this->addCustomUserProvider();
 
-        // Add custom session guard / Override default 'session' guard driver
-        $this->app['auth']->extend('session', function ($app, $name, array $config) {
-            $provider = $app['auth']->createUserProvider($config['provider']);
-
-            $guard = new SessionGuard($name, $provider, $app['session.store'], $app['request']);
-
-            // When using the remember me functionality of the authentication services we
-            // will need to be set the encryption instance of the guard, which allows
-            // secure, encrypted cookie values to get generated for those cookies.
-            if (method_exists($guard, 'setCookieJar')) {
-                $guard->setCookieJar($this->app['cookie']);
-            }
-
-            if (method_exists($guard, 'setDispatcher')) {
-                $guard->setDispatcher($this->app['events']);
-            }
-
-            if (method_exists($guard, 'setRequest')) {
-                $guard->setRequest($this->app->refresh('request', $guard, 'setRequest'));
-            }
-
-            return $guard;
-        });
+        // Add custom session guard
+        $this->addCustomSessionGuard();
 
         // Share current user instance with all views
         $this->app['view']->composer('*', function ($view) {
@@ -250,5 +225,50 @@ class FortServiceProvider extends BaseServiceProvider
                 $router->getRoutes()->refreshNameLookups();
             });
         }
+    }
+
+    /**
+     * Add custom user provider.
+     *
+     * @return void
+     */
+    protected function addCustomUserProvider()
+    {
+        $this->app['auth']->provider('eloquent', function ($app, array $config) {
+            // Return an instance of Rinvex\Fort\Contracts\UserRepositoryContract
+            return $this->app['rinvex.fort.user'];
+        });
+    }
+
+    /**
+     * Add custom session guard.
+     *
+     * @return void
+     */
+    protected function addCustomSessionGuard()
+    {
+        // Add custom session guard
+        $this->app['auth']->extend('session', function ($app, $name, array $config) {
+            $provider = $app['auth']->createUserProvider($config['provider']);
+
+            $guard = new SessionGuard($name, $provider, $app['session.store'], $app['request']);
+
+            // When using the remember me functionality of the authentication services we
+            // will need to be set the encryption instance of the guard, which allows
+            // secure, encrypted cookie values to get generated for those cookies.
+            if (method_exists($guard, 'setCookieJar')) {
+                $guard->setCookieJar($this->app['cookie']);
+            }
+
+            if (method_exists($guard, 'setDispatcher')) {
+                $guard->setDispatcher($this->app['events']);
+            }
+
+            if (method_exists($guard, 'setRequest')) {
+                $guard->setRequest($this->app->refresh('request', $guard, 'setRequest'));
+            }
+
+            return $guard;
+        });
     }
 }
