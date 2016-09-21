@@ -29,14 +29,15 @@ class CreateRinvexFortAbilitiesTable extends Migration
         Schema::create(config('rinvex.fort.tables.abilities'), function (Blueprint $table) {
             // Columns
             $table->increments('id');
-            $table->string('slug');
+            $table->string('action');
+            $table->string('policy')->nullable();
             $table->string('title');
             $table->text('description')->nullable();
             $table->timestamps();
             $table->softDeletes();
 
             // Indexes
-            $table->unique('slug');
+            $table->unique('action');
 
             // Engine
             $table->engine = 'InnoDB';

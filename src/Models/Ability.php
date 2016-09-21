@@ -31,7 +31,8 @@ class Ability extends Model
      * {@inheritdoc}
      */
     protected $fillable = [
-        'slug',
+        'action',
+        'policy',
         'title',
         'description',
     ];
@@ -70,5 +71,25 @@ class Ability extends Model
     {
         return $this->belongsToMany(config('rinvex.fort.models.user'), config('rinvex.fort.tables.ability_user'))
                     ->withTimestamps();
+    }
+
+    /**
+     * Determine if the ability is super admin.
+     *
+     * @return bool
+     */
+    public function isSuperadmin()
+    {
+        return ! $this->policy && $this->action === 'superadmin';
+    }
+
+    /**
+     * Determine if the ability is protected.
+     *
+     * @return bool
+     */
+    public function isProtected()
+    {
+        return in_array($this->id, config('rinvex.fort.protected.abilities'));
     }
 }

@@ -77,6 +77,11 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
     ];
 
     /**
+     * {@inheritdoc}
+     */
+    protected $with = ['abilities', 'roles'];
+
+    /**
      * Create a new Eloquent model instance.
      *
      * @param array $attributes
@@ -130,5 +135,35 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
     public function socialites()
     {
         return $this->hasMany(config('rinvex.fort.models.socialite'));
+    }
+
+    /**
+     * Get all abilities of the user.
+     *
+     * @return \Illuminate\Support\Collection
+     */
+    public function getAllAbilitiesAttribute()
+    {
+        return $this->abilities->merge($this->roles->pluck('abilities')->collapse());
+    }
+
+    /**
+     * Determine if the user is super admin.
+     *
+     * @return bool
+     */
+    public function isSuperadmin()
+    {
+        return $this->getAllAbilitiesAttribute()->where('policy', null)->contains('action', 'superadmin');
+    }
+
+    /**
+     * Determine if the user is protected.
+     *
+     * @return bool
+     */
+    public function isProtected()
+    {
+        return in_array($this->id, config('rinvex.fort.protected.users'));
     }
 }

@@ -156,22 +156,6 @@ class FortServiceProvider extends BaseServiceProvider
             $bladeCompiler->directive('endhasallroles', function () {
                 return '<?php endif; ?>';
             });
-
-            // @ability('global.superuser')
-            $bladeCompiler->directive('ability', function ($model, $ability) {
-                return "<?php if(auth()->check() && app('rinvex.fort.user')->hasAbilityTo({$model}, {$ability})): ?>";
-            });
-            $bladeCompiler->directive('endability', function () {
-                return '<?php endif; ?>';
-            });
-
-            // @hasability('global.superuser')
-            $bladeCompiler->directive('hasability', function ($model, $ability) {
-                return "<?php if(auth()->check() && app('rinvex.fort.user')->hasAbilityTo({$model}, {$ability})): ?>";
-            });
-            $bladeCompiler->directive('endhasability', function () {
-                return '<?php endif; ?>';
-            });
         });
     }
 

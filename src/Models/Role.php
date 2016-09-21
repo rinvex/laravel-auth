@@ -37,6 +37,11 @@ class Role extends Model
     ];
 
     /**
+     * {@inheritdoc}
+     */
+    protected $with = ['abilities'];
+
+    /**
      * Create a new Eloquent model instance.
      *
      * @param array $attributes
@@ -70,5 +75,24 @@ class Role extends Model
     {
         return $this->belongsToMany(config('rinvex.fort.models.user'), config('rinvex.fort.tables.role_user'))
                     ->withTimestamps();
+    }
+    /**
+     * Determine if the role is super admin.
+     *
+     * @return bool
+     */
+    public function isSuperadmin()
+    {
+        return $this->abilities->where('policy', null)->contains('action', 'superadmin');
+    }
+
+    /**
+     * Determine if the role is protected.
+     *
+     * @return bool
+     */
+    public function isProtected()
+    {
+        return in_array($this->id, config('rinvex.fort.protected.roles'));
     }
 }
