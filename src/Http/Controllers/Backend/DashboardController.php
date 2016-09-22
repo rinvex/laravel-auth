@@ -29,8 +29,8 @@ class DashboardController extends AuthorizedController
     public function home()
     {
         $abilityRepository = app('rinvex.fort.ability');
-        $roleRepository = app('rinvex.fort.role');
-        $userRepository = app('rinvex.fort.user');
+        $roleRepository    = app('rinvex.fort.role');
+        $userRepository    = app('rinvex.fort.user');
 
         // Get recent registered users
         $limit = config('rinvex.fort.backend.items_per_dashboard');
@@ -39,8 +39,8 @@ class DashboardController extends AuthorizedController
         // Get statistics
         $stats = [
             'abilities' => $abilityRepository->count(),
-            'roles' => $roleRepository->count(),
-            'users' => $userRepository->count(),
+            'roles'     => $roleRepository->count(),
+            'users'     => $userRepository->count(),
         ];
 
         // Get online users

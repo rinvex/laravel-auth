@@ -29,7 +29,6 @@ Route::group([
     'as'         => 'rinvex.fort.backend.',
     'namespace'  => 'Rinvex\Fort\Http\Controllers\Backend',
 ], function () {
-
     Route::get('/', ['as' => 'dashboard.home', 'uses' => 'DashboardController@home']);
 
 
@@ -40,7 +39,6 @@ Route::group([
     */
 
     Route::group(['as' => 'abilities.', 'prefix' => 'abilities'], function () {
-
         Route::get('/', ['as' => 'index', 'uses' => 'AbilitiesController@index']);
         Route::post('/', ['as' => 'bulk', 'uses' => 'AbilitiesController@bulk']);
 
@@ -58,7 +56,6 @@ Route::group([
         Route::post('create', ['as' => 'store', 'uses' => 'AbilitiesController@store']);
 
         Route::delete('{ability}', ['as' => 'destroy', 'uses' => 'AbilitiesController@destroy']);
-
     });
 
 
@@ -69,7 +66,6 @@ Route::group([
     */
 
     Route::group(['as' => 'roles.', 'prefix' => 'roles'], function () {
-
         Route::get('/', ['as' => 'index', 'uses' => 'RolesController@index']);
         Route::post('/', ['as' => 'bulk', 'uses' => 'RolesController@bulk']);
 
@@ -87,7 +83,6 @@ Route::group([
         Route::post('create', ['as' => 'store', 'uses' => 'RolesController@store']);
 
         Route::delete('{role}', ['as' => 'destroy', 'uses' => 'RolesController@destroy']);
-
     });
 
 
@@ -98,7 +93,6 @@ Route::group([
     */
 
     Route::group(['as' => 'users.', 'prefix' => 'users'], function () {
-
         Route::get('/', ['as' => 'index', 'uses' => 'UsersController@index']);
         Route::post('/', ['as' => 'bulk', 'uses' => 'UsersController@bulk']);
 
@@ -116,8 +110,5 @@ Route::group([
         Route::post('create', ['as' => 'store', 'uses' => 'UsersController@store']);
 
         Route::delete('{user}', ['as' => 'destroy', 'uses' => 'UsersController@destroy']);
-
     });
-
-
 });
