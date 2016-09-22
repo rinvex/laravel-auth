@@ -17,7 +17,6 @@ namespace Rinvex\Fort\Http\Controllers\Backend;
 
 use Illuminate\Http\Request;
 use Rinvex\Fort\Models\Role;
-use Illuminate\Support\Facades\Lang;
 use Rinvex\Fort\Contracts\RoleRepositoryContract;
 use Rinvex\Fort\Http\Controllers\AuthorizedController;
 
@@ -67,7 +66,7 @@ class RolesController extends AuthorizedController
     /**
      * Display the specified resource.
      *
-     * @param  int $id
+     * @param int $id
      *
      * @return \Illuminate\Http\Response
      */
@@ -99,7 +98,7 @@ class RolesController extends AuthorizedController
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request $request
+     * @param \Illuminate\Http\Request $request
      *
      * @return \Illuminate\Http\Response
      */
@@ -111,7 +110,7 @@ class RolesController extends AuthorizedController
     /**
      * Show the form for copying the given resource.
      *
-     * @param  int $id
+     * @param int $id
      *
      * @return \Illuminate\Http\Response
      */
@@ -123,7 +122,7 @@ class RolesController extends AuthorizedController
     /**
      * Show the form for editing the given resource.
      *
-     * @param  int $id
+     * @param int $id
      *
      * @return \Illuminate\Http\Response
      */
@@ -135,8 +134,8 @@ class RolesController extends AuthorizedController
     /**
      * Update the given resource in storage.
      *
-     * @param  \Illuminate\Http\Request $request
-     * @param  int                      $id
+     * @param \Illuminate\Http\Request $request
+     * @param int                      $id
      *
      * @return \Illuminate\Http\Response
      */
@@ -148,7 +147,7 @@ class RolesController extends AuthorizedController
     /**
      * Delete the given resource from storage.
      *
-     * @param  int $id
+     * @param int $id
      *
      * @return \Illuminate\Http\Response
      */

@@ -20,7 +20,7 @@ return [
     [
         'username'          => 'rinvex',
         'email'             => 'rinvex@example.com',
-        'email_verified_at' => new Carbon,
+        'email_verified_at' => new Carbon(),
         'password'          => '123456',
     ],
 

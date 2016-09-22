@@ -19,7 +19,7 @@ use Illuminate\Database\Eloquent\Model;
 class RinvexFortDatabaseSeeder extends Seeder
 {
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function run()
     {
