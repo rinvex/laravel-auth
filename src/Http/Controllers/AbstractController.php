@@ -69,7 +69,9 @@ abstract class AbstractController extends Controller
         return $this->resourceAbilityMap + [
             'show'    => 'view',
             'index'   => 'view',
-            'bulk'    => 'bulk',
+            'import'  => 'import',
+            'export'  => 'export',
+            'copy'    => 'copy',
             'create'  => 'create',
             'store'   => 'create',
             'edit'    => 'update',
