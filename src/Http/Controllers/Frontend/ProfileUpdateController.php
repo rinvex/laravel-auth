@@ -17,7 +17,6 @@ namespace Rinvex\Fort\Http\Controllers\Frontend;
 
 use Rinvex\Country\Models\Country;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Lang;
 use Rinvex\Fort\Http\Requests\ProfileUpdate;
 use Rinvex\Fort\Contracts\UserRepositoryContract;
 use Rinvex\Fort\Http\Controllers\AuthorizedController;
@@ -96,8 +95,8 @@ class ProfileUpdateController extends AuthorizedController
         return intend([
             'back' => true,
             'with' => [
-                          'rinvex.fort.alert.success' => Lang::get('rinvex.fort::frontend/messages.account.'.(! empty($emailVerification) ? 'reverify' : 'updated')),
-                      ] + ($twoFactor !== $currentUser->getTwoFactor() ? ['rinvex.fort.alert.warning' => Lang::get('rinvex.fort::frontend/messages.verification.twofactor.phone.auto_disabled')] : []),
+                          'rinvex.fort.alert.success' => trans('rinvex.fort::frontend/messages.account.'.(! empty($emailVerification) ? 'reverify' : 'updated')),
+                      ] + ($twoFactor !== $currentUser->getTwoFactor() ? ['rinvex.fort.alert.warning' => trans('rinvex.fort::frontend/messages.verification.twofactor.phone.auto_disabled')] : []),
         ]);
     }
 

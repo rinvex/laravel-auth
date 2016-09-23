@@ -15,7 +15,6 @@
 
 namespace Rinvex\Fort\Notifications;
 
-use Illuminate\Support\Facades\Lang;
 use Illuminate\Notifications\Notification;
 use Illuminate\Notifications\Messages\MailMessage;
 
@@ -69,10 +68,10 @@ class PasswordResetRequestNotification extends Notification
     public function toMail()
     {
         return (new MailMessage())
-            ->subject(Lang::get('rinvex.fort::frontend/emails.password.forgot.subject'))
-            ->line(Lang::get('rinvex.fort::frontend/emails.password.forgot.intro'))
-            ->action(Lang::get('rinvex.fort::frontend/emails.password.forgot.action'), route('rinvex.fort.frontend.password.reset').'?token='.$this->token['token'].'&email='.$this->token['email'])
-            ->line(Lang::get('rinvex.fort::frontend/emails.password.forgot.outro', [
+            ->subject(trans('rinvex.fort::frontend/emails.password.forgot.subject'))
+            ->line(trans('rinvex.fort::frontend/emails.password.forgot.intro'))
+            ->action(trans('rinvex.fort::frontend/emails.password.forgot.action'), route('rinvex.fort.frontend.password.reset').'?token='.$this->token['token'].'&email='.$this->token['email'])
+            ->line(trans('rinvex.fort::frontend/emails.password.forgot.outro', [
                 'created_at' => $this->token['created_at'],
                 'ip'         => $this->token['ip'],
                 'agent'      => $this->token['agent'],

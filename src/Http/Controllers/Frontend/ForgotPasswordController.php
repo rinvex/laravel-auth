@@ -15,7 +15,6 @@
 
 namespace Rinvex\Fort\Http\Controllers\Frontend;
 
-use Illuminate\Support\Facades\Lang;
 use Rinvex\Fort\Contracts\ResetBrokerContract;
 use Rinvex\Fort\Http\Requests\PasswordResetRequest;
 use Rinvex\Fort\Http\Controllers\AbstractController;
@@ -57,7 +56,7 @@ class ForgotPasswordController extends AbstractController
             case ResetBrokerContract::LINK_SENT:
                 return intend([
                     'intended' => url('/'),
-                    'with'     => ['rinvex.fort.alert.success' => Lang::get($result)],
+                    'with'     => ['rinvex.fort.alert.success' => trans($result)],
                 ]);
 
             case ResetBrokerContract::INVALID_USER:
@@ -65,7 +64,7 @@ class ForgotPasswordController extends AbstractController
                 return intend([
                     'back'       => true,
                     'withInput'  => $request->only('email'),
-                    'withErrors' => ['email' => Lang::get($result)],
+                    'withErrors' => ['email' => trans($result)],
                 ]);
         }
     }

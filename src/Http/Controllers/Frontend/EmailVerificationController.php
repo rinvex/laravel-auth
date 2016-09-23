@@ -15,7 +15,6 @@
 
 namespace Rinvex\Fort\Http\Controllers\Frontend;
 
-use Illuminate\Support\Facades\Lang;
 use Rinvex\Fort\Http\Requests\EmailVerification;
 use Rinvex\Fort\Http\Controllers\AbstractController;
 use Rinvex\Fort\Contracts\VerificationBrokerContract;
@@ -49,14 +48,14 @@ class EmailVerificationController extends AbstractController
             case VerificationBrokerContract::LINK_SENT:
                 return intend([
                     'intended' => url('/'),
-                    'with'     => ['rinvex.fort.alert.success' => Lang::get($result)],
+                    'with'     => ['rinvex.fort.alert.success' => trans($result)],
                 ]);
 
             default:
                 return intend([
                     'back'       => true,
                     'withInput'  => $request->only('email'),
-                    'withErrors' => ['email' => Lang::get($result)],
+                    'withErrors' => ['email' => trans($result)],
                 ]);
         }
     }
@@ -76,14 +75,14 @@ class EmailVerificationController extends AbstractController
             case VerificationBrokerContract::EMAIL_VERIFIED:
                 return intend([
                     'intended' => url('/'),
-                    'with'     => ['rinvex.fort.alert.success' => Lang::get($result)],
+                    'with'     => ['rinvex.fort.alert.success' => trans($result)],
                 ]);
 
             case VerificationBrokerContract::INVALID_USER:
                 return intend([
                     'intended'   => route('rinvex.fort.frontend.verification.email'),
                     'withInput'  => $request->only('email'),
-                    'withErrors' => ['email' => Lang::get($result)],
+                    'withErrors' => ['email' => trans($result)],
                 ]);
 
             case VerificationBrokerContract::INVALID_TOKEN:
@@ -91,7 +90,7 @@ class EmailVerificationController extends AbstractController
                 return intend([
                     'intended'   => route('rinvex.fort.frontend.verification.email'),
                     'withInput'  => $request->only('email'),
-                    'withErrors' => ['token' => Lang::get($result)],
+                    'withErrors' => ['token' => trans($result)],
                 ]);
         }
     }

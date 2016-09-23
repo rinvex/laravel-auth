@@ -15,7 +15,6 @@
 
 namespace Rinvex\Fort\Notifications;
 
-use Illuminate\Support\Facades\Lang;
 use Illuminate\Notifications\Notification;
 use Illuminate\Notifications\Messages\MailMessage;
 
@@ -60,13 +59,13 @@ class VerificationSuccessNotification extends Notification
     public function toMail()
     {
         if ($this->moderated) {
-            $phrase = Lang::get('rinvex.fort::frontend/emails.verification.email.success.intro_moderation');
+            $phrase = trans('rinvex.fort::frontend/emails.verification.email.success.intro_moderation');
         } else {
-            $phrase = Lang::get('rinvex.fort::frontend/emails.verification.email.success.intro_default');
+            $phrase = trans('rinvex.fort::frontend/emails.verification.email.success.intro_default');
         }
 
         return (new MailMessage())
-            ->subject(Lang::get('rinvex.fort::frontend/emails.verification.email.success.subject'))
+            ->subject(trans('rinvex.fort::frontend/emails.verification.email.success.subject'))
             ->line($phrase);
     }
 }

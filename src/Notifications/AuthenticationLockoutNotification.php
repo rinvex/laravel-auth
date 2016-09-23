@@ -17,7 +17,6 @@ namespace Rinvex\Fort\Notifications;
 
 use Carbon\Carbon;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Lang;
 use Illuminate\Notifications\Notification;
 use Illuminate\Notifications\Messages\MailMessage;
 
@@ -62,12 +61,12 @@ class AuthenticationLockoutNotification extends Notification
     public function toMail()
     {
         return (new MailMessage())
-            ->subject(Lang::get('rinvex.fort::frontend/emails.auth.lockout.subject'))
-            ->line(Lang::get('rinvex.fort::frontend/emails.auth.lockout.intro', [
+            ->subject(trans('rinvex.fort::frontend/emails.auth.lockout.subject'))
+            ->line(trans('rinvex.fort::frontend/emails.auth.lockout.intro', [
                 'created_at' => new Carbon(),
                 'ip'         => $this->request->ip(),
                 'agent'      => $this->request->server('HTTP_USER_AGENT'),
             ]))
-            ->line(Lang::get('rinvex.fort::frontend/emails.auth.lockout.outro'));
+            ->line(trans('rinvex.fort::frontend/emails.auth.lockout.outro'));
     }
 }

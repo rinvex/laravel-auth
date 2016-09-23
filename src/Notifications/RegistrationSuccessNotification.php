@@ -15,7 +15,6 @@
 
 namespace Rinvex\Fort\Notifications;
 
-use Illuminate\Support\Facades\Lang;
 use Illuminate\Notifications\Notification;
 use Illuminate\Notifications\Messages\MailMessage;
 
@@ -61,24 +60,24 @@ class RegistrationSuccessNotification extends Notification
     {
         if ($this->social) {
             if (config('rinvex.fort.registration.moderated')) {
-                $phrase = Lang::get('rinvex.fort::frontend/emails.registration.welcome.intro_moderation');
+                $phrase = trans('rinvex.fort::frontend/emails.registration.welcome.intro_moderation');
             } else {
-                $phrase = Lang::get('rinvex.fort::frontend/emails.registration.welcome.intro_default');
+                $phrase = trans('rinvex.fort::frontend/emails.registration.welcome.intro_default');
             }
         } else {
             if (config('rinvex.fort.verification.required') && config('rinvex.fort.registration.moderated')) {
-                $phrase = Lang::get('rinvex.fort::frontend/emails.registration.welcome.intro_verification_moderation');
+                $phrase = trans('rinvex.fort::frontend/emails.registration.welcome.intro_verification_moderation');
             } elseif (! config('rinvex.fort.verification.required') && config('rinvex.fort.registration.moderated')) {
-                $phrase = Lang::get('rinvex.fort::frontend/emails.registration.welcome.intro_moderation');
+                $phrase = trans('rinvex.fort::frontend/emails.registration.welcome.intro_moderation');
             } elseif (config('rinvex.fort.verification.required') && ! config('rinvex.fort.registration.moderated')) {
-                $phrase = Lang::get('rinvex.fort::frontend/emails.registration.welcome.intro_verification');
+                $phrase = trans('rinvex.fort::frontend/emails.registration.welcome.intro_verification');
             } else {
-                $phrase = Lang::get('rinvex.fort::frontend/emails.registration.welcome.intro_default');
+                $phrase = trans('rinvex.fort::frontend/emails.registration.welcome.intro_default');
             }
         }
 
         return (new MailMessage())
-            ->subject(Lang::get('rinvex.fort::frontend/emails.registration.welcome.subject'))
+            ->subject(trans('rinvex.fort::frontend/emails.registration.welcome.subject'))
             ->line($phrase);
     }
 }

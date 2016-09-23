@@ -15,7 +15,6 @@
 
 namespace Rinvex\Fort\Http\Controllers\Frontend;
 
-use Illuminate\Support\Facades\Lang;
 use Rinvex\Fort\Http\Requests\UserRegistration;
 use Rinvex\Fort\Contracts\UserRepositoryContract;
 use Rinvex\Fort\Http\Controllers\AbstractController;
@@ -63,7 +62,7 @@ class RegistrationController extends AbstractController
             case VerificationBrokerContract::LINK_SENT:
                 return intend([
                     'home' => true,
-                    'with' => ['rinvex.fort.alert.success' => Lang::get('rinvex.fort::frontend/messages.register.success_verify')],
+                    'with' => ['rinvex.fort.alert.success' => trans('rinvex.fort::frontend/messages.register.success_verify')],
                 ]);
 
             // Registration completed successfully
@@ -71,7 +70,7 @@ class RegistrationController extends AbstractController
             default:
                 return intend([
                     'intended' => route('rinvex.fort.frontend.auth.login'),
-                    'with'     => ['rinvex.fort.alert.success' => Lang::get($result)],
+                    'with'     => ['rinvex.fort.alert.success' => trans($result)],
                 ]);
 
         }

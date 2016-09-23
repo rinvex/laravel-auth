@@ -15,7 +15,6 @@
 
 namespace Rinvex\Fort\Http\Requests;
 
-use Illuminate\Support\Facades\Lang;
 use Rinvex\Support\Http\Requests\FormRequest;
 
 class TwoFactorPhone extends FormRequest
@@ -27,7 +26,7 @@ class TwoFactorPhone extends FormRequest
     {
         return intend([
             'intended'   => route('rinvex.fort.frontend.account.page'),
-            'withErrors' => ['token' => Lang::get('rinvex.fort::frontend/messages.verification.twofactor.phone.globaly_disabled')],
+            'withErrors' => ['token' => trans('rinvex.fort::frontend/messages.verification.twofactor.phone.globaly_disabled')],
         ]);
     }
 

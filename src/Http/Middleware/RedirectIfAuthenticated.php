@@ -17,7 +17,6 @@ namespace Rinvex\Fort\Http\Middleware;
 
 use Closure;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Lang;
 
 class RedirectIfAuthenticated
 {
@@ -35,7 +34,7 @@ class RedirectIfAuthenticated
         if (Auth::guard($guard)->check()) {
             return intend([
                 'intended' => url('/'),
-                'with'     => ['rinvex.fort.alert.success' => Lang::get('rinvex.fort::frontend/messages.auth.already')],
+                'with'     => ['rinvex.fort.alert.success' => trans('rinvex.fort::frontend/messages.auth.already')],
             ]);
         }
 

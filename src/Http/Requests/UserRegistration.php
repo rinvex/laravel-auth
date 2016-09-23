@@ -15,7 +15,6 @@
 
 namespace Rinvex\Fort\Http\Requests;
 
-use Illuminate\Support\Facades\Lang;
 use Rinvex\Support\Http\Requests\FormRequest;
 
 class UserRegistration extends FormRequest
@@ -27,7 +26,7 @@ class UserRegistration extends FormRequest
     {
         return intend([
             'intended'   => url('/'),
-            'withErrors' => ['rinvex.fort.registration.disabled' => Lang::get('rinvex.fort::frontend/messages.register.disabled')],
+            'withErrors' => ['rinvex.fort.registration.disabled' => trans('rinvex.fort::frontend/messages.register.disabled')],
         ]);
     }
 

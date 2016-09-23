@@ -17,7 +17,6 @@ namespace Rinvex\Fort\Http\Controllers\Frontend;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Lang;
 use Rinvex\Fort\Guards\SessionGuard;
 use Rinvex\Fort\Http\Requests\UserAuthentication;
 use Rinvex\Fort\Http\Controllers\AbstractController;
@@ -85,7 +84,7 @@ class AuthenticationController extends AbstractController
 
         return intend([
             'intended' => url('/'),
-            'with'     => ['rinvex.fort.alert.warning' => Lang::get($result)],
+            'with'     => ['rinvex.fort.alert.warning' => trans($result)],
         ]);
     }
 
@@ -107,14 +106,14 @@ class AuthenticationController extends AbstractController
                 return intend([
                     'intended'   => url('/'),
                     'withInput'  => $request->only('loginfield', 'remember'),
-                    'withErrors' => ['loginfield' => Lang::get($result, ['seconds' => $seconds])],
+                    'withErrors' => ['loginfield' => trans($result, ['seconds' => $seconds])],
                 ]);
 
             // Valid credentials, but user is unverified; Can NOT login!
             case SessionGuard::AUTH_UNVERIFIED:
                 return intend([
                     'intended'   => route('rinvex.fort.frontend.verification.email'),
-                    'withErrors' => ['email' => Lang::get($result)],
+                    'withErrors' => ['email' => trans($result)],
                 ]);
 
             // Wrong credentials, failed login
@@ -122,7 +121,7 @@ class AuthenticationController extends AbstractController
                 return intend([
                     'back'       => true,
                     'withInput'  => $request->only('loginfield', 'remember'),
-                    'withErrors' => ['loginfield' => Lang::get($result)],
+                    'withErrors' => ['loginfield' => trans($result)],
                 ]);
 
             // Two-Factor authentication required
@@ -131,7 +130,7 @@ class AuthenticationController extends AbstractController
 
                 return intend([
                     'intended' => route($route),
-                    'with'     => ['rinvex.fort.alert.warning' => Lang::get($result)],
+                    'with'     => ['rinvex.fort.alert.warning' => trans($result)],
                 ]);
 
             // Login successful and everything is fine!
@@ -139,7 +138,7 @@ class AuthenticationController extends AbstractController
             default:
                 return intend([
                     'intended' => url('/'),
-                    'with'     => ['rinvex.fort.alert.success' => Lang::get($result)],
+                    'with'     => ['rinvex.fort.alert.success' => trans($result)],
                 ]);
         }
     }

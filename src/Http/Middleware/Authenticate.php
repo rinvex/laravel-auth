@@ -17,7 +17,6 @@ namespace Rinvex\Fort\Http\Middleware;
 
 use Closure;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Lang;
 
 class Authenticate
 {
@@ -35,7 +34,7 @@ class Authenticate
         if ($guest = Auth::guard($guard)->guest()) {
             return intend([
                 'intended'   => route('rinvex.fort.frontend.auth.login'),
-                'withErrors' => ['rinvex.fort.session.expired' => Lang::get('rinvex.fort::frontend/messages.auth.session.required')],
+                'withErrors' => ['rinvex.fort.session.expired' => trans('rinvex.fort::frontend/messages.auth.session.required')],
             ], 401);
         }
 

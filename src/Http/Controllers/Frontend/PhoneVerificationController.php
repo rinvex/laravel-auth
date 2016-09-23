@@ -16,7 +16,6 @@
 namespace Rinvex\Fort\Http\Controllers\Frontend;
 
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Lang;
 use Rinvex\Fort\Guards\SessionGuard;
 use Rinvex\Fort\Http\Requests\PhoneVerification;
 use Rinvex\Fort\Http\Controllers\AbstractController;
@@ -54,7 +53,7 @@ class PhoneVerificationController extends AbstractController
 
         return intend([
             'intended' => route('rinvex.fort.frontend.verification.phone.verify'),
-            'with'     => ['rinvex.fort.alert.success' => Lang::get('rinvex.fort::frontend/messages.verification.phone.'.$status)],
+            'with'     => ['rinvex.fort.alert.success' => trans('rinvex.fort::frontend/messages.verification.phone.'.$status)],
         ]);
     }
 
@@ -93,7 +92,7 @@ class PhoneVerificationController extends AbstractController
             case SessionGuard::AUTH_PHONE_VERIFIED:
                 return intend([
                     'intended' => route('rinvex.fort.frontend.account.page'),
-                    'with'     => ['rinvex.fort.alert.success' => Lang::get($result)],
+                    'with'     => ['rinvex.fort.alert.success' => trans($result)],
                 ]);
 
             case SessionGuard::AUTH_LOGIN:
@@ -101,7 +100,7 @@ class PhoneVerificationController extends AbstractController
 
                 return intend([
                     'intended' => url('/'),
-                    'with'     => ['rinvex.fort.alert.success' => Lang::get($result)],
+                    'with'     => ['rinvex.fort.alert.success' => trans($result)],
                 ]);
 
             case SessionGuard::AUTH_TWOFACTOR_FAILED:
@@ -112,7 +111,7 @@ class PhoneVerificationController extends AbstractController
                 return intend([
                     'back'       => true,
                     'withInput'  => $request->only(['token']),
-                    'withErrors' => ['token' => Lang::get($result)],
+                    'withErrors' => ['token' => trans($result)],
                 ]);
         }
     }

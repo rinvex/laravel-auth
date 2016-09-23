@@ -15,7 +15,6 @@
 
 namespace Rinvex\Fort\Notifications;
 
-use Illuminate\Support\Facades\Lang;
 use Illuminate\Notifications\Notification;
 use Illuminate\Notifications\Messages\MailMessage;
 
@@ -69,10 +68,10 @@ class EmailVerificationRequestNotification extends Notification
     public function toMail()
     {
         return (new MailMessage())
-            ->subject(Lang::get('rinvex.fort::frontend/emails.verification.email.subject'))
-            ->line(Lang::get('rinvex.fort::frontend/emails.verification.email.intro'))
-            ->action(Lang::get('rinvex.fort::frontend/emails.verification.email.action'), route('rinvex.fort.frontend.verification.email.verify').'?token='.$this->token['token'].'&email='.$this->token['email'])
-            ->line(Lang::get('rinvex.fort::frontend/emails.verification.email.outro', [
+            ->subject(trans('rinvex.fort::frontend/emails.verification.email.subject'))
+            ->line(trans('rinvex.fort::frontend/emails.verification.email.intro'))
+            ->action(trans('rinvex.fort::frontend/emails.verification.email.action'), route('rinvex.fort.frontend.verification.email.verify').'?token='.$this->token['token'].'&email='.$this->token['email'])
+            ->line(trans('rinvex.fort::frontend/emails.verification.email.outro', [
                 'created_at' => $this->token['created_at'],
                 'ip'         => $this->token['ip'],
                 'agent'      => $this->token['agent'],
