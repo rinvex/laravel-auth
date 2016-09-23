@@ -60,13 +60,13 @@ class VerificationSuccessNotification extends Notification
     public function toMail()
     {
         if ($this->moderated) {
-            $phrase = Lang::get('rinvex.fort::email.verification.email.success.intro_moderation');
+            $phrase = Lang::get('rinvex.fort::frontend/emails.verification.email.success.intro_moderation');
         } else {
-            $phrase = Lang::get('rinvex.fort::email.verification.email.success.intro_default');
+            $phrase = Lang::get('rinvex.fort::frontend/emails.verification.email.success.intro_default');
         }
 
         return (new MailMessage())
-            ->subject(Lang::get('rinvex.fort::email.verification.email.success.subject'))
+            ->subject(Lang::get('rinvex.fort::frontend/emails.verification.email.success.subject'))
             ->line($phrase);
     }
 }

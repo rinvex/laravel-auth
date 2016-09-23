@@ -10,7 +10,7 @@
                 <section class="panel panel-default">
 
                     <header class="panel-heading">
-                        {{ trans('rinvex.fort::form.verification.phone.verify.heading') }}
+                        {{ trans('rinvex.fort::frontend/forms.verification.phone.verify.heading') }}
                     </header>
 
                     <div class="panel-body">
@@ -26,16 +26,16 @@
                             @include('rinvex.fort::frontend.alerts.error')
 
                             <div class="form-group{{ $errors->has('token') ? ' has-error' : '' }}">
-                                <label for="token" class="col-md-4 control-label">{{ trans('rinvex.fort::form.verification.phone.verify.token') }}</label>
+                                <label for="token" class="col-md-4 control-label">{{ trans('rinvex.fort::frontend/forms.verification.phone.verify.token') }}</label>
 
                                 <div class="col-md-6">
                                     <input id="token" name="token" type="text" value="{{ old('token') }}" class="form-control" placeholder="Authentication Code" required autofocus>
-                                    {{ trans('rinvex.fort::form.verification.phone.verify.backup_notice') }}<br />
+                                    {{ trans('rinvex.fort::frontend/forms.verification.phone.verify.backup_notice') }}<br />
 
                                     @if ($methods['phone'])
-                                        <strong>{!! trans('rinvex.fort::form.verification.phone.verify.backup_sms', ['href' => route('rinvex.fort.frontend.verification.phone')]) !!}</strong>
+                                        <strong>{!! trans('rinvex.fort::frontend/forms.verification.phone.verify.backup_sms', ['href' => route('rinvex.fort.frontend.verification.phone')]) !!}</strong>
                                     @else
-                                        <strong>{{ trans('rinvex.fort::form.verification.phone.verify.backup') }}</strong>
+                                        <strong>{{ trans('rinvex.fort::frontend/forms.verification.phone.verify.backup') }}</strong>
                                     @endif
 
                                     @if ($errors->has('token'))
@@ -49,7 +49,7 @@
                             <div class="row">
                                 <div class="col-md-12 col-sm-12 col-xs-12 text-center">
 
-                                    <button type="submit" class="btn btn-primary"><i class="fa fa-btn fa-check"></i> {{ trans('rinvex.fort::form.verification.phone.verify.submit') }}</button>
+                                    <button type="submit" class="btn btn-primary"><i class="fa fa-btn fa-check"></i> {{ trans('rinvex.fort::frontend/forms.verification.phone.verify.submit') }}</button>
 
                                 </div>
                             </div>

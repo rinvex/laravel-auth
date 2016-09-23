@@ -24,42 +24,42 @@ interface ResetBrokerContract
      *
      * @var string
      */
-    const LINK_SENT = 'rinvex.fort::message.password.link_sent';
+    const LINK_SENT = 'rinvex.fort::frontend/messages.password.link_sent';
 
     /**
      * Constant representing a successfully reset password.
      *
      * @var string
      */
-    const RESET_SUCCESS = 'rinvex.fort::message.password.reset_success';
+    const RESET_SUCCESS = 'rinvex.fort::frontend/messages.password.reset_success';
 
     /**
      * Constant representing an invalid user.
      *
      * @var string
      */
-    const INVALID_USER = 'rinvex.fort::message.password.invalid_user';
+    const INVALID_USER = 'rinvex.fort::frontend/messages.password.invalid_user';
 
     /**
      * Constant representing an invalid password.
      *
      * @var string
      */
-    const INVALID_PASSWORD = 'rinvex.fort::message.password.invalid_password';
+    const INVALID_PASSWORD = 'rinvex.fort::frontend/messages.password.invalid_password';
 
     /**
      * Constant representing an invalid token.
      *
      * @var string
      */
-    const INVALID_TOKEN = 'rinvex.fort::message.password.invalid_token';
+    const INVALID_TOKEN = 'rinvex.fort::frontend/messages.password.invalid_token';
 
     /**
      * Constant representing an valid token.
      *
      * @var string
      */
-    const VALID_TOKEN = 'rinvex.fort::message.password.valid_token';
+    const VALID_TOKEN = 'rinvex.fort::frontend/messages.password.valid_token';
 
     /**
      * Send a password reset link to a user.

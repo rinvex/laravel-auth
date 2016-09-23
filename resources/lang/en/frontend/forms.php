@@ -15,6 +15,11 @@
 
 return [
 
+    'common' => [
+        'reset'  => 'Reset',
+        'logout' => 'Logout',
+    ],
+
     'sessions' => [
         'flush_single'        => 'Flush Selected Session',
         'flush_single_notice' => '<strong>Warning:</strong> Selected session will be flushed, and thus re-login again will be required on effected device.',

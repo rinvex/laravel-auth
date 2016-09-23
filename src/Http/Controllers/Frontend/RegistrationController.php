@@ -63,7 +63,7 @@ class RegistrationController extends AbstractController
             case VerificationBrokerContract::LINK_SENT:
                 return intend([
                     'home' => true,
-                    'with' => ['rinvex.fort.alert.success' => Lang::get('rinvex.fort::message.register.success_verify')],
+                    'with' => ['rinvex.fort.alert.success' => Lang::get('rinvex.fort::frontend/messages.register.success_verify')],
                 ]);
 
             // Registration completed successfully

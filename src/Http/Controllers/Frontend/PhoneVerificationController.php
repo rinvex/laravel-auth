@@ -54,7 +54,7 @@ class PhoneVerificationController extends AbstractController
 
         return intend([
             'intended' => route('rinvex.fort.frontend.verification.phone.verify'),
-            'with'     => ['rinvex.fort.alert.success' => Lang::get('rinvex.fort::message.verification.phone.'.$status)],
+            'with'     => ['rinvex.fort.alert.success' => Lang::get('rinvex.fort::frontend/messages.verification.phone.'.$status)],
         ]);
     }
 

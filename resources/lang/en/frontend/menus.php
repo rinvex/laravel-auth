@@ -15,12 +15,17 @@
 
 return [
 
-    'login'    => 'Login',
-    'register' => 'Register',
-    'logout'   => 'Logout',
-    'account'  => 'Account',
-    'sessions' => 'Sessions',
-    'close'    => 'Close',
-    'reset'    => 'Reset',
+    'profile' => [
+        'index'    => 'Users',
+        'create'   => 'Create',
+        'delete'   => 'Delete',
+        'account'  => 'Account',
+        'sessions' => 'Sessions',
+        'page'     => 'Profile',
+    ],
+
+    'dashboard' => [
+        'home'    => 'Dashboard',
+    ],
 
 ];

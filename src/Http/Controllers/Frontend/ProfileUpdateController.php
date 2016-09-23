@@ -96,8 +96,8 @@ class ProfileUpdateController extends AuthorizedController
         return intend([
             'back' => true,
             'with' => [
-                          'rinvex.fort.alert.success' => Lang::get('rinvex.fort::message.account.'.(! empty($emailVerification) ? 'reverify' : 'updated')),
-                      ] + ($twoFactor !== $currentUser->getTwoFactor() ? ['rinvex.fort.alert.warning' => Lang::get('rinvex.fort::message.verification.twofactor.phone.auto_disabled')] : []),
+                          'rinvex.fort.alert.success' => Lang::get('rinvex.fort::frontend/messages.account.'.(! empty($emailVerification) ? 'reverify' : 'updated')),
+                      ] + ($twoFactor !== $currentUser->getTwoFactor() ? ['rinvex.fort.alert.warning' => Lang::get('rinvex.fort::frontend/messages.verification.twofactor.phone.auto_disabled')] : []),
         ]);
     }
 

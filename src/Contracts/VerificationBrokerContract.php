@@ -24,28 +24,28 @@ interface VerificationBrokerContract
      *
      * @var string
      */
-    const LINK_SENT = 'rinvex.fort::message.verification.email.link_sent';
+    const LINK_SENT = 'rinvex.fort::frontend/messages.verification.email.link_sent';
 
     /**
      * Constant representing a successfully verified email.
      *
      * @var string
      */
-    const EMAIL_VERIFIED = 'rinvex.fort::message.verification.email.verified';
+    const EMAIL_VERIFIED = 'rinvex.fort::frontend/messages.verification.email.verified';
 
     /**
      * Constant representing an invalid user.
      *
      * @var string
      */
-    const INVALID_USER = 'rinvex.fort::message.verification.email.invalid_user';
+    const INVALID_USER = 'rinvex.fort::frontend/messages.verification.email.invalid_user';
 
     /**
      * Constant representing an invalid token.
      *
      * @var string
      */
-    const INVALID_TOKEN = 'rinvex.fort::message.verification.email.invalid_token';
+    const INVALID_TOKEN = 'rinvex.fort::frontend/messages.verification.email.invalid_token';
 
     /**
      * Send Two-Factor Token.

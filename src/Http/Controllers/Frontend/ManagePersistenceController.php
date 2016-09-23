@@ -44,10 +44,10 @@ class ManagePersistenceController extends AuthorizedController
 
         if ($token) {
             app('rinvex.fort.persistence')->delete($token);
-            $status = Lang::get('rinvex.fort::message.auth.session.flushed');
+            $status = Lang::get('rinvex.fort::frontend/messages.auth.session.flushed');
         } elseif (request()->get('confirm')) {
             app('rinvex.fort.persistence')->deleteByUser(Auth::guard($this->getGuard())->user()->id);
-            $status = Lang::get('rinvex.fort::message.auth.session.flushedall');
+            $status = Lang::get('rinvex.fort::frontend/messages.auth.session.flushedall');
         }
 
         return intend([

@@ -10,7 +10,7 @@
                 <section class="panel panel-default">
 
                     <header class="panel-heading">
-                        {{ trans('rinvex.fort::form.account.active_sessions') }}
+                        {{ trans('rinvex.fort::frontend/forms.account.active_sessions') }}
                     </header>
 
                     <div class="panel-body">
@@ -37,7 +37,7 @@
                                                         <div class="col-md-11 col-sm-11 col-xs-11">
 
                                                             <span class="label label-info">{{ $persistence->created_at->format('F d, Y - h:ia') }} <span style="background-color: #428bca; border-radius: 0 3px 3px 0; margin-right: -6px; padding: 2px 4px 3px;">{{ $persistence->created_at->diffForHumans() }}</span></span>
-                                                            @if ($persistence->token === request()->session()->getId())<span class="label label-success">{{ trans('rinvex.fort::form.account.you') }}</span>@endif
+                                                            @if ($persistence->token === request()->session()->getId())<span class="label label-success">{{ trans('rinvex.fort::frontend/forms.account.you') }}</span>@endif
                                                             <span class="badge pull-right">{{ $persistence->ip }}</span>
 
                                                         </div>
@@ -70,14 +70,14 @@
                                                 <div class="modal-content">
                                                     <div class="modal-header">
                                                         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                                        <h4 class="modal-title" id="confirmSingleLabel{{ $persistence->token }}">{{ trans('rinvex.fort::form.sessions.flush_single') }}</h4>
+                                                        <h4 class="modal-title" id="confirmSingleLabel{{ $persistence->token }}">{{ trans('rinvex.fort::frontend/forms.sessions.flush_single') }}</h4>
                                                     </div>
                                                     <div class="modal-body">
-                                                        {!! trans('rinvex.fort::form.sessions.flush_single_notice') !!}
+                                                        {!! trans('rinvex.fort::frontend/forms.sessions.flush_single_notice') !!}
                                                     </div>
                                                     <div class="modal-footer">
-                                                        <button type="button" class="btn btn-default" data-dismiss="modal">{{ trans('rinvex.fort::form.common.close') }}</button>
-                                                        <a role="button" class="btn btn-danger" href="{{ route('rinvex.fort.frontend.account.sessions.flush', ['token' => $persistence->token]) }}"><i class="fa fa-remove"></i> {{ trans('rinvex.fort::form.sessions.flush_single') }}</a>
+                                                        <button type="button" class="btn btn-default" data-dismiss="modal">{{ trans('rinvex.fort::frontend/forms.common.close') }}</button>
+                                                        <a role="button" class="btn btn-danger" href="{{ route('rinvex.fort.frontend.account.sessions.flush', ['token' => $persistence->token]) }}"><i class="fa fa-remove"></i> {{ trans('rinvex.fort::frontend/forms.sessions.flush_single') }}</a>
                                                     </div>
                                                 </div>
                                             </div>
@@ -93,7 +93,7 @@
                         <div class="row">
                             <div class="col-md-12 col-sm-12 col-xs-12 text-center">
 
-                                <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#confirmAll"><i class="fa fa-remove"></i> {{ trans('rinvex.fort::form.sessions.flush_all') }}</button>
+                                <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#confirmAll"><i class="fa fa-remove"></i> {{ trans('rinvex.fort::frontend/forms.sessions.flush_all') }}</button>
 
                             </div>
                         </div>
@@ -104,14 +104,14 @@
                                 <div class="modal-content">
                                     <div class="modal-header">
                                         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                        <h4 class="modal-title" id="confirmAllLabel">{{ trans('rinvex.fort::form.sessions.flush_all') }}</h4>
+                                        <h4 class="modal-title" id="confirmAllLabel">{{ trans('rinvex.fort::frontend/forms.sessions.flush_all') }}</h4>
                                     </div>
                                     <div class="modal-body">
-                                        {!! trans('rinvex.fort::form.sessions.flush_all_notice') !!}
+                                        {!! trans('rinvex.fort::frontend/forms.sessions.flush_all_notice') !!}
                                     </div>
                                     <div class="modal-footer">
-                                        <button type="button" class="btn btn-default" data-dismiss="modal">{{ trans('rinvex.fort::form.common.close') }}</button>
-                                        <a role="button" class="btn btn-danger" href="{{ route('rinvex.fort.frontend.account.sessions.flushall', ['confirm' => true]) }}"><i class="fa fa-remove"></i> {{ trans('rinvex.fort::form.sessions.flush_all') }}</a>
+                                        <button type="button" class="btn btn-default" data-dismiss="modal">{{ trans('rinvex.fort::frontend/forms.common.close') }}</button>
+                                        <a role="button" class="btn btn-danger" href="{{ route('rinvex.fort.frontend.account.sessions.flushall', ['confirm' => true]) }}"><i class="fa fa-remove"></i> {{ trans('rinvex.fort::frontend/forms.sessions.flush_all') }}</a>
                                     </div>
                                 </div>
                             </div>
