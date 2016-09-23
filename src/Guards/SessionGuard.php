@@ -486,7 +486,7 @@ class SessionGuard implements StatefulGuardContract, SupportsBasicAuth
      */
     public function attempt(array $credentials = [], $remember = false, $login = true)
     {
-        $credentials = $credentials + ['moderated' => 0];
+        $credentials = $credentials + ['active' => true];
 
         // Fire the authentication attempt event
         $this->events->fire('rinvex.fort.auth.attempt', [$credentials, $remember, $login]);

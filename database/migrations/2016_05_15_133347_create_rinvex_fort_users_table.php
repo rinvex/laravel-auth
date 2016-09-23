@@ -52,7 +52,7 @@ class CreateRinvexFortUsersTable extends Migration
                 'female',
                 'undisclosed',
             ])->default('undisclosed');
-            $table->boolean('moderated')->default(false);
+            $table->boolean('active')->default(true);
             $table->timestamp('login_at')->nullable();
             $table->timestamps();
             $table->softDeletes();

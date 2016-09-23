@@ -93,8 +93,8 @@ class UserRepository extends EloquentRepository implements UserRepositoryContrac
         $this->getContainer('events')->fire('rinvex.fort.register'.$social.'.start', [$attributes]);
 
         // Prepare registration data
-        $attributes['password']  = bcrypt(! $social ? $attributes['password'] : str_random());
-        $attributes['moderated'] = config('rinvex.fort.registration.moderated');
+        $attributes['password'] = bcrypt(! $social ? $attributes['password'] : str_random());
+        $attributes['active']   = ! config('rinvex.fort.registration.moderated');
 
         // Create new user
         $user = parent::create($attributes);

@@ -63,7 +63,7 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
         'country',
         'birthdate',
         'gender',
-        'moderated',
+        'active',
         'login_at',
     ];
 
