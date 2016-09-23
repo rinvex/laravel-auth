@@ -15,10 +15,9 @@
 
 namespace Rinvex\Fort\Http\Controllers\Frontend;
 
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Lang;
-use Rinvex\Fort\Guards\SessionGuard;
 use Rinvex\Fort\Http\Requests\UserRegistration;
+use Rinvex\Fort\Contracts\UserRepositoryContract;
 use Rinvex\Fort\Http\Controllers\AbstractController;
 use Rinvex\Fort\Contracts\VerificationBrokerContract;
 
@@ -49,13 +48,14 @@ class RegistrationController extends AbstractController
     /**
      * Process the registration form.
      *
-     * @param \Rinvex\Fort\Http\Requests\UserRegistration $request
+     * @param \Rinvex\Fort\Http\Requests\UserRegistration   $request
+     * @param \Rinvex\Fort\Contracts\UserRepositoryContract $userRepository
      *
      * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse
      */
-    public function processRegisteration(UserRegistration $request)
+    public function processRegisteration(UserRegistration $request, UserRepositoryContract $userRepository)
     {
-        $result = Auth::guard($this->getGuard())->register($request->except('_token'));
+        $result = $userRepository->create($request->except('_token'));
 
         switch ($result) {
 
@@ -67,7 +67,7 @@ class RegistrationController extends AbstractController
                 ]);
 
             // Registration completed successfully
-            case SessionGuard::AUTH_REGISTERED:
+            case UserRepositoryContract::AUTH_REGISTERED:
             default:
                 return intend([
                     'intended' => route('rinvex.fort.frontend.auth.login'),

@@ -17,7 +17,6 @@ namespace Rinvex\Fort\Repositories;
 
 use Illuminate\Support\Str;
 use Rinvex\Fort\Traits\HasRoles;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Contracts\Hashing\Hasher;
 use Illuminate\Contracts\Foundation\Application;
 use Rinvex\Fort\Contracts\UserRepositoryContract;
@@ -81,6 +80,35 @@ class UserRepository extends EloquentRepository implements UserRepositoryContrac
         }
 
         return $model->findFirst();
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function create(array $attributes = [])
+    {
+        $social = array_pull($attributes, 'social', false);
+
+        // Fire the register start event
+        $this->getContainer('events')->fire('rinvex.fort.register'.$social.'.start', [$attributes]);
+
+        // Prepare registration data
+        $attributes['password']  = bcrypt(! $social ? $attributes['password'] : str_random());
+        $attributes['moderated'] = config('rinvex.fort.registration.moderated');
+
+        // Create new user
+        $user = parent::create($attributes);
+
+        // Fire the register success event
+        $this->getContainer('events')->fire('rinvex.fort.register'.$social.'.success', [$user]);
+
+        // Send verification if required
+        if (! $social && config('rinvex.fort.verification.required')) {
+            return app('rinvex.fort.verifier')->broker()->sendVerificationLink(['email' => $attributes['email']]);
+        }
+
+        // Registration completed successfully
+        return ! $social ? static::AUTH_REGISTERED : $user;
     }
 
     /**

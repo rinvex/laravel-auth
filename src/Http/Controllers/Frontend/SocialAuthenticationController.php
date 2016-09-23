@@ -19,6 +19,7 @@ use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Laravel\Socialite\Facades\Socialite;
+use Rinvex\Fort\Contracts\UserRepositoryContract;
 
 class SocialAuthenticationController extends AuthenticationController
 {
@@ -35,9 +36,12 @@ class SocialAuthenticationController extends AuthenticationController
     /**
      * Handle Github authentication callback.
      *
+     * @param \Illuminate\Http\Request                      $request
+     * @param \Rinvex\Fort\Contracts\UserRepositoryContract $userRepository
+     *
      * @return \Illuminate\Http\Response
      */
-    public function handleGithubCallback(Request $request)
+    public function handleGithubCallback(Request $request, UserRepositoryContract $userRepository)
     {
         try {
             $githubUser = Socialite::driver('github')->user();
@@ -52,7 +56,8 @@ class SocialAuthenticationController extends AuthenticationController
         })->first();
 
         if (! $user) {
-            $user = Auth::guard($this->getGuard())->registerSocialite([
+            $user = $userRepository->create([
+                'social'   => true,
                 'email'    => $githubUser->email,
                 'username' => $githubUser->username,
             ]);

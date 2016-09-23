@@ -94,13 +94,6 @@ class SessionGuard implements StatefulGuardContract, SupportsBasicAuth
     const AUTH_PHONE_VERIFIED = 'rinvex.fort::message.verification.phone.verified';
 
     /**
-     * Constant representing a user with phone verified.
-     *
-     * @var string
-     */
-    const AUTH_REGISTERED = 'rinvex.fort::message.register.success';
-
-    /**
      * Constant representing a logged out user.
      *
      * @var string
@@ -1135,63 +1128,6 @@ class SessionGuard implements StatefulGuardContract, SupportsBasicAuth
         $secret = array_get($user->getTwoFactor(), 'totp.secret');
 
         return strlen($token) === 6 && isset($this->session->get('rinvex.fort.twofactor.methods')['totp']) && $totp->verifyKey($secret, $token);
-    }
-
-    /**
-     * Register a new user.
-     *
-     * @param array $credentials
-     *
-     * @return string
-     */
-    public function register(array $credentials)
-    {
-        // Fire the register start event
-        $this->events->fire('rinvex.fort.register.start', [$credentials]);
-
-        // Prepare registration data
-        $credentials['password']  = bcrypt($credentials['password']);
-        $credentials['moderated'] = config('rinvex.fort.registration.moderated');
-
-        // Create new user
-        $user = $this->provider->create($credentials);
-
-        // Fire the register success event
-        $this->events->fire('rinvex.fort.register.success', [$user]);
-
-        // Send verification if required
-        if (config('rinvex.fort.verification.required')) {
-            return app('rinvex.fort.verifier')->broker()->sendVerificationLink(['email' => $credentials['email']]);
-        }
-
-        // Registration completed successfully
-        return static::AUTH_REGISTERED;
-    }
-
-    /**
-     * Register a new social user.
-     *
-     * @param array $credentials
-     *
-     * @return string
-     */
-    public function registerSocialite(array $credentials)
-    {
-        // Fire the register social start event
-        $this->events->fire('rinvex.fort.register.social.start', [$credentials]);
-
-        // Prepare registration data
-        $credentials['password']  = bcrypt(str_random());
-        $credentials['moderated'] = config('rinvex.fort.registration.moderated');
-
-        // Create new user
-        $user = $this->provider->create($credentials);
-
-        // Fire the register social success event
-        $this->events->fire('rinvex.fort.register.social.success', [$user]);
-
-        // Registration completed successfully
-        return $user;
     }
 
     /**
