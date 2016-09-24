@@ -60,7 +60,9 @@ class RolesController extends AuthorizedController
      */
     public function index()
     {
-        //
+        $roles = $this->roleRepository->paginate(config('rinvex.fort.backend.items_per_page'));
+
+        return view('rinvex.fort::backend.roles.index', compact('roles'));
     }
 
     /**
