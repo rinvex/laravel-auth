@@ -30,6 +30,9 @@ return [
     'heading' => 'Users',
     'edit'    => 'Edit User :user',
     'create'  => 'Create New User',
+    'created_at'  => 'Created At',
     'delete'  => 'Delete User :user',
+    'manage'  => 'Manage Users',
+    'online'  => 'Online Users (last :mins mins)',
 
 ];

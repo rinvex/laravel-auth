@@ -18,14 +18,14 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="jumbotron">
-                    <h1><i class="fa fa-dashboard"></i> Dashboard</h1>
+                    <h1><i class="fa fa-dashboard"></i> {{ trans('rinvex.fort::backend/dashboard.heading') }}</h1>
 
                     <div class="row">
                         <div class="col-md-8">
                             <div class="panel panel-default">
                                 <div class="panel-heading">
-                                    Recently Registered Users
-                                    <span class="pull-right"><a class="btn btn-xs btn-default" href="{{ route('rinvex.fort.backend.users.index') }}" role="button">Manage Users</a></span>
+                                    {{ trans('rinvex.fort::backend/dashboard.recent.registered') }}
+                                    <span class="pull-right"><a class="btn btn-xs btn-default" href="{{ route('rinvex.fort.backend.users.index') }}" role="button">{{ trans('rinvex.fort::backend/users.manage') }}</a></span>
                                 </div>
                                 <div class="panel-body">
 
@@ -38,7 +38,7 @@
                                                     <th style="width: 20%">{{ trans('rinvex.fort::backend/users.name') }}</th>
                                                     <th style="width: 20%">{{ trans('rinvex.fort::backend/users.contact') }}</th>
                                                     <th style="width: 15%">{{ trans('rinvex.fort::backend/users.status.title') }}</th>
-                                                    <th style="width: 15%">{{ trans('rinvex.fort::backend/users.date') }}</th>
+                                                    <th style="width: 15%">{{ trans('rinvex.fort::backend/users.created_at') }}</th>
                                                 </tr>
                                             </thead>
 
@@ -48,7 +48,7 @@
 
                                                     <tr>
                                                         <td>
-                                                            <a href="{{ route('rinvex.fort.backend.users.show', ['userid' => $user->id]) }}">
+                                                            <a href="{{ route('rinvex.fort.backend.users.show', ['user' => $user->id]) }}">
                                                                 <strong>
                                                                     @if($user->first_name)
                                                                         {{ $user->first_name }} {{ $user->middle_name }} {{ $user->last_name }}
@@ -70,7 +70,7 @@
                                                         </td>
 
                                                         <td>
-                                                            @if($user->moderated)
+                                                            @if($user->active)
                                                                 <span class="label label-success">{{ trans('rinvex.fort::backend/users.status.active') }}</span>
                                                             @else
                                                                 <span class="label label-warning">{{ trans('rinvex.fort::backend/users.status.inactive') }}</span>
@@ -78,12 +78,9 @@
                                                         </td>
 
                                                         <td class="small">
-                                                            <div>{{ trans('rinvex.fort::backend/users.created') }}:
-                                                                <time datetime="{{ $user->created_at }}">{{ $user->created_at->format('Y-m-d') }}</time>
-                                                            </div>
-                                                            <div>{{ trans('rinvex.fort::backend/users.updated') }}:
-                                                                <time datetime="{{ $user->updated_at }}">{{ $user->updated_at->format('Y-m-d') }}</time>
-                                                            </div>
+                                                            @if($user->created_at)
+                                                                <div><time datetime="{{ $user->created_at }}">{{ $user->created_at->format('Y-m-d') }}</time></div>
+                                                            @endif
                                                         </td>
 
                                                     </tr>
@@ -105,7 +102,7 @@
 
                                 <div class="panel panel-default">
                                     <div class="panel-heading">
-                                        <strong>Statistics</strong>
+                                        <strong>{{ trans('rinvex.fort::backend/dashboard.statistics') }}</strong>
                                     </div>
 
                                     <ul class="list-group" style="vertical-align: middle">
@@ -133,7 +130,7 @@
                                 <div class="panel panel-default">
                                     <div class="panel-heading">
                                         <strong>
-                                            Online Users ({{ config('rinvex.fort.online.interval') }} mins)
+                                            {{ trans('rinvex.fort::backend/users.online', ['mins' => config('rinvex.fort.online.interval')]) }}
                                             <span class="pull-right">{{ $persistences->count() }}</span>
                                         </strong>
                                     </div>
@@ -143,7 +140,10 @@
                                         @foreach($persistences as $persistence)
 
                                             <li class="list-group-item" style="vertical-align: middle">
-                                                <label class="pull-right badge">{{ $persistence->updated_at->diffForHumans() }}</label>
+                                                <span class="pull-right">
+                                                    @if($persistence->user_id == $currentUser->id)<span class="label label-info">{{ trans('rinvex.fort::backend/dashboard.you') }}</span> @endif
+                                                    <span class="badge">{{ $persistence->updated_at->diffForHumans() }}</span>
+                                                </span>
                                                 <a href="{{ route('rinvex.fort.backend.users.show', ['userid' => $persistence->user_id]) }}">
                                                     <strong>
                                                         @if($persistence->user->first_name)

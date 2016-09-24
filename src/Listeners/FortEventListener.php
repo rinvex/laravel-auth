@@ -711,7 +711,7 @@ class FortEventListener
     public function verificationEmailVerifySuccess(AuthenticatableContract $user)
     {
         if (config('rinvex.fort.verification.success_email')) {
-            $user->notify(new VerificationSuccessNotification($user->moderated));
+            $user->notify(new VerificationSuccessNotification($user->active));
         }
     }
 

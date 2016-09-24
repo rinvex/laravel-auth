@@ -21,11 +21,11 @@ use Illuminate\Notifications\Messages\MailMessage;
 class VerificationSuccessNotification extends Notification
 {
     /**
-     * Indicates if the user is moderated or not.
+     * Indicates if the user is active.
      *
      * @var bool
      */
-    public $moderated;
+    public $active;
 
     /**
      * Create a notification instance.
@@ -34,9 +34,9 @@ class VerificationSuccessNotification extends Notification
      *
      * @return void
      */
-    public function __construct($moderated = false)
+    public function __construct($active = false)
     {
-        $this->moderated = $moderated;
+        $this->active = $active;
     }
 
     /**
@@ -58,10 +58,10 @@ class VerificationSuccessNotification extends Notification
      */
     public function toMail()
     {
-        if ($this->moderated) {
-            $phrase = trans('rinvex.fort::frontend/emails.verification.email.success.intro_moderation');
-        } else {
+        if ($this->active) {
             $phrase = trans('rinvex.fort::frontend/emails.verification.email.success.intro_default');
+        } else {
+            $phrase = trans('rinvex.fort::frontend/emails.verification.email.success.intro_moderation');
         }
 
         return (new MailMessage())

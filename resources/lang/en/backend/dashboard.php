@@ -15,6 +15,11 @@
 
 return [
 
-    'pages'     => 'Showing :count out of :total items',
+    'heading' => 'Dashboard',
+    'recent' => [
+        'registered' => 'Recently Registered Users',
+    ],
+    'statistics' => 'Statistics',
+    'you' => 'You',
 
 ];
