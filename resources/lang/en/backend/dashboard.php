@@ -16,10 +16,10 @@
 return [
 
     'heading' => 'Dashboard',
-    'recent' => [
+    'recent'  => [
         'registered' => 'Recently Registered Users',
     ],
     'statistics' => 'Statistics',
-    'you' => 'You',
+    'you'        => 'You',
 
 ];

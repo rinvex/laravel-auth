@@ -108,5 +108,4 @@ Route::group([
 
         Route::delete('{user}', ['as' => 'delete', 'uses' => 'UsersController@delete']);
     });
-
 });
