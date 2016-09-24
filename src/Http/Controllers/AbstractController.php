@@ -67,16 +67,16 @@ abstract class AbstractController extends Controller
     protected function resourceAbilityMap()
     {
         return $this->resourceAbilityMap + [
-            'show'    => 'view',
-            'index'   => 'view',
-            'import'  => 'import',
-            'export'  => 'export',
-            'copy'    => 'copy',
-            'create'  => 'create',
-            'store'   => 'create',
-            'edit'    => 'update',
-            'update'  => 'update',
-            'destroy' => 'delete',
+            'show'   => 'view',
+            'index'  => 'view',
+            'import' => 'import',
+            'export' => 'export',
+            'copy'   => 'copy',
+            'create' => 'create',
+            'store'  => 'create',
+            'edit'   => 'update',
+            'update' => 'update',
+            'delete' => 'delete',
         ];
     }
 }

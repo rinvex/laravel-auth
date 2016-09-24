@@ -40,7 +40,7 @@ Route::group([
 
     Route::group(['as' => 'abilities.', 'prefix' => 'abilities'], function () {
         Route::get('/', ['as' => 'index', 'uses' => 'AbilitiesController@index']);
-        Route::post('/', ['as' => 'bulk', 'uses' => 'AbilitiesController@bulk']);
+        Route::put('/', ['as' => 'bulk', 'uses' => 'AbilitiesController@bulk']);
 
         Route::post('import', ['as' => 'import', 'uses' => 'AbilitiesController@import']);
         Route::post('export', ['as' => 'export', 'uses' => 'AbilitiesController@export']);
@@ -48,14 +48,13 @@ Route::group([
         Route::get('{ability}', ['as' => 'show', 'uses' => 'AbilitiesController@show']);
 
         Route::get('{ability}/copy', ['as' => 'copy', 'uses' => 'AbilitiesController@copy']);
+        Route::get('create', ['as' => 'create', 'uses' => 'AbilitiesController@create']);
+        Route::post('/', ['as' => 'store', 'uses' => 'AbilitiesController@store']);
 
         Route::get('{ability}/edit', ['as' => 'edit', 'uses' => 'AbilitiesController@edit']);
-        Route::post('{ability}/edit', ['as' => 'update', 'uses' => 'AbilitiesController@update']);
+        Route::put('{ability}', ['as' => 'update', 'uses' => 'AbilitiesController@update']);
 
-        Route::get('create', ['as' => 'create', 'uses' => 'AbilitiesController@create']);
-        Route::post('create', ['as' => 'store', 'uses' => 'AbilitiesController@store']);
-
-        Route::delete('{ability}', ['as' => 'destroy', 'uses' => 'AbilitiesController@destroy']);
+        Route::delete('{ability}', ['as' => 'delete', 'uses' => 'AbilitiesController@delete']);
     });
 
 
@@ -67,7 +66,7 @@ Route::group([
 
     Route::group(['as' => 'roles.', 'prefix' => 'roles'], function () {
         Route::get('/', ['as' => 'index', 'uses' => 'RolesController@index']);
-        Route::post('/', ['as' => 'bulk', 'uses' => 'RolesController@bulk']);
+        Route::put('/', ['as' => 'bulk', 'uses' => 'RolesController@bulk']);
 
         Route::post('import', ['as' => 'import', 'uses' => 'RolesController@import']);
         Route::post('export', ['as' => 'export', 'uses' => 'RolesController@export']);
@@ -75,14 +74,13 @@ Route::group([
         Route::get('{role}', ['as' => 'show', 'uses' => 'RolesController@show']);
 
         Route::get('{role}/copy', ['as' => 'copy', 'uses' => 'RolesController@copy']);
+        Route::get('create', ['as' => 'create', 'uses' => 'RolesController@create']);
+        Route::post('/', ['as' => 'store', 'uses' => 'RolesController@store']);
 
         Route::get('{role}/edit', ['as' => 'edit', 'uses' => 'RolesController@edit']);
-        Route::post('{role}/edit', ['as' => 'update', 'uses' => 'RolesController@update']);
+        Route::put('{role}', ['as' => 'update', 'uses' => 'RolesController@update']);
 
-        Route::get('create', ['as' => 'create', 'uses' => 'RolesController@create']);
-        Route::post('create', ['as' => 'store', 'uses' => 'RolesController@store']);
-
-        Route::delete('{role}', ['as' => 'destroy', 'uses' => 'RolesController@destroy']);
+        Route::delete('{role}', ['as' => 'delete', 'uses' => 'RolesController@delete']);
     });
 
 
@@ -94,7 +92,7 @@ Route::group([
 
     Route::group(['as' => 'users.', 'prefix' => 'users'], function () {
         Route::get('/', ['as' => 'index', 'uses' => 'UsersController@index']);
-        Route::post('/', ['as' => 'bulk', 'uses' => 'UsersController@bulk']);
+        Route::put('/', ['as' => 'bulk', 'uses' => 'UsersController@bulk']);
 
         Route::post('import', ['as' => 'import', 'uses' => 'UsersController@import']);
         Route::post('export', ['as' => 'export', 'uses' => 'UsersController@export']);
@@ -102,13 +100,13 @@ Route::group([
         Route::get('{user}', ['as' => 'show', 'uses' => 'UsersController@show']);
 
         Route::get('{user}/copy', ['as' => 'copy', 'uses' => 'UsersController@copy']);
+        Route::get('create', ['as' => 'create', 'uses' => 'UsersController@create']);
+        Route::post('/', ['as' => 'store', 'uses' => 'UsersController@store']);
 
         Route::get('{user}/edit', ['as' => 'edit', 'uses' => 'UsersController@edit']);
-        Route::post('{user}/edit', ['as' => 'update', 'uses' => 'UsersController@update']);
+        Route::put('{user}', ['as' => 'update', 'uses' => 'UsersController@update']);
 
-        Route::get('create', ['as' => 'create', 'uses' => 'UsersController@create']);
-        Route::post('create', ['as' => 'store', 'uses' => 'UsersController@store']);
-
-        Route::delete('{user}', ['as' => 'destroy', 'uses' => 'UsersController@destroy']);
+        Route::delete('{user}', ['as' => 'delete', 'uses' => 'UsersController@delete']);
     });
+
 });

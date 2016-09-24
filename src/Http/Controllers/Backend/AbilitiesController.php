@@ -149,7 +149,7 @@ class AbilitiesController extends AuthorizedController
      *
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function delete($id)
     {
         //
     }
