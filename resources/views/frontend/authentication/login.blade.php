@@ -3,6 +3,15 @@
 {{-- Main Content --}}
 @section('content')
 
+    <style>
+        .btn span.fa-check {
+            opacity: 0;
+        }
+        .btn.active span.fa-check {
+            opacity: 1;
+        }
+    </style>
+
     <div class="container">
         <div class="row">
             <div class="col-md-8 col-md-offset-2">
@@ -46,11 +55,16 @@
 
                             <div class="form-group">
                                 <div class="col-md-6 col-md-offset-4">
-                                    <div class="checkbox">
-                                        <label for="remember">
-                                            <input id="remember" name="remember" type="checkbox" value="1" @if(old('remember')) checked @endif> {{ trans('rinvex.fort::form.login.remember') }}
+
+                                    <div class="btn-group" data-toggle="buttons">
+
+                                        <label for="remember" class="btn btn-default">
+                                            <span class="fa fa-check"></span>
+                                            <input id="remember" name="remember" type="checkbox" autocomplete="off" value="1" @if(old('remember')) checked @endif> {{ trans('rinvex.fort::frontend/forms.login.remember') }}
                                         </label>
+
                                     </div>
+
                                 </div>
                             </div>
 

@@ -152,38 +152,4 @@ class UserRepository extends EloquentRepository implements UserRepositoryContrac
 
         return $this;
     }
-
-    /**
-     * Get the menus for the given user.
-     *
-     * @param int  $modelId
-     * @param bool $root
-     *
-     * @return mixed
-     */
-    public function menus($modelId, $root = true)
-    {
-        return $this->executeCallback(get_called_class(), __FUNCTION__, func_get_args(), function () use ($modelId, $root) {
-            if (! is_int($modelId) || ! $model = $this->with(['abilities'])->find($modelId)) {
-                return [];
-            }
-
-            $roleAbilities = null;
-            $callback      = function ($item) {
-                if (strpos($item, '.index') === false) {
-                    return str_replace(strrchr($item, '.'), '.index', $item);
-                } else {
-                    return 'root';
-                }
-            };
-
-            if (! $model instanceof Role) {
-                $roleAbilities = $model->roles()->with(['abilities'])->get()->pluck('abilities')->flatten()->pluck('slug');
-            }
-
-            $userAbilities = $model->abilities->pluck('slug')->merge($roleAbilities)->unique()->groupBy($callback)->toArray();
-
-            return $root ? $userAbilities['root'] : $userAbilities;
-        });
-    }
 }

@@ -23,7 +23,7 @@
                 <h4>
                     {{ trans('rinvex.fort::backend/abilities.heading') }}
                     <span class="pull-right" style="margin-top: -7px">
-                        <a href="{{ route('rinvex.fort.backend.abilities.create') }}" class="btn btn-default"><i class="fa fa-plus"></i></a>
+                        <a href="{{ route('rinvex.fort.backend.abilities.create') }}" class="btn btn-default" title="{{ trans('rinvex.fort::backend/abilities.create') }}"><i class="fa fa-plus"></i></a>
                     </span>
                 </h4>
             </div>
@@ -62,13 +62,13 @@
 
                                     <td class="small">
                                         @if($ability->created_at)
-                                            <div>{{ trans('rinvex.fort::backend/abilities.created') }}:
-                                                <time datetime="{{ $ability->created_at }}">{{ $ability->created_at->format('Y-m-d') }}</time>
+                                            <div>
+                                                {{ trans('rinvex.fort::backend/abilities.created_at') }}: <time datetime="{{ $ability->created_at }}">{{ $ability->created_at->format('Y-m-d') }}</time>
                                             </div>
                                         @endif
                                         @if($ability->updated_at)
-                                            <div>{{ trans('rinvex.fort::backend/abilities.updated') }}:
-                                                <time datetime="{{ $ability->updated_at }}">{{ $ability->updated_at->format('Y-m-d') }}</time>
+                                            <div>
+                                                {{ trans('rinvex.fort::backend/abilities.updated_at') }}: <time datetime="{{ $ability->updated_at }}">{{ $ability->updated_at->format('Y-m-d') }}</time>
                                             </div>
                                         @endif
                                     </td>
@@ -94,7 +94,7 @@
             </div>
 
             {{-- Pagination --}}
-            @include('rinvex.fort::backend.abilities.pagination', ['resource' => $abilities])
+            @include('rinvex.fort::backend.common.pagination', ['resource' => $abilities])
 
         </div>
 

@@ -23,7 +23,7 @@
                 <h4>
                     {{ trans('rinvex.fort::backend/roles.heading') }}
                     <span class="pull-right" style="margin-top: -7px">
-                        <a href="{{ route('rinvex.fort.backend.roles.create') }}" class="btn btn-default"><i class="fa fa-plus"></i></a>
+                        <a href="{{ route('rinvex.fort.backend.roles.create') }}" class="btn btn-default" title="{{ trans('rinvex.fort::backend/roles.create') }}"><i class="fa fa-plus"></i></a>
                     </span>
                 </h4>
             </div>
@@ -62,13 +62,13 @@
 
                                     <td class="small">
                                         @if($role->created_at)
-                                            <div>{{ trans('rinvex.fort::backend/roles.created') }}:
-                                                <time datetime="{{ $role->created_at }}">{{ $role->created_at->format('Y-m-d') }}</time>
+                                            <div>
+                                                {{ trans('rinvex.fort::backend/roles.created_at') }}: <time datetime="{{ $role->created_at }}">{{ $role->created_at->format('Y-m-d') }}</time>
                                             </div>
                                         @endif
                                         @if($role->updated_at)
-                                            <div>{{ trans('rinvex.fort::backend/roles.updated') }}:
-                                                <time datetime="{{ $role->updated_at }}">{{ $role->updated_at->format('Y-m-d') }}</time>
+                                            <div>
+                                                {{ trans('rinvex.fort::backend/roles.updated_at') }}: <time datetime="{{ $role->updated_at }}">{{ $role->updated_at->format('Y-m-d') }}</time>
                                             </div>
                                         @endif
                                     </td>
