@@ -138,6 +138,18 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
     }
 
     /**
+     * Get name attribute.
+     *
+     * @return string
+     */
+    public function getNameAttribute()
+    {
+        $segments = [$this->prefix, $this->first_name, $this->middle_name, $this->last_name, $this->suffix];
+
+        return implode(' ', $segments);
+    }
+
+    /**
      * Get all abilities of the user.
      *
      * @return \Illuminate\Support\Collection
