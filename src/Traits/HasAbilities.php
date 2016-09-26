@@ -16,7 +16,6 @@
 namespace Rinvex\Fort\Traits;
 
 use Rinvex\Fort\Models\Ability;
-use Illuminate\Support\Collection;
 use Illuminate\Database\Eloquent\Model;
 
 trait HasAbilities

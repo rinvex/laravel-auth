@@ -15,7 +15,7 @@
 
 return [
 
-    'pages' => 'Showing :count out of :total items',
+    'pages'      => 'Showing :count out of :total items',
     'created_at' => 'Showing :count out of :total items',
 
 ];
