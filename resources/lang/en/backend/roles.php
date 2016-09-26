@@ -15,17 +15,17 @@
 
 return [
 
-    'title'       => 'Title',
-    'description' => 'Description',
-    'dates'       => 'Dates',
-    'actions'     => 'Actions',
+    'title'          => 'Title',
+    'description'    => 'Description',
+    'dates'          => 'Dates',
+    'actions'        => 'Actions',
     'created_at'     => 'Created At',
     'updated_at'     => 'Updated At',
-    'pages'       => 'Showing :count out of :total items',
-    'heading'     => 'Roles',
-    'show'        => 'View :role Role  <small>(:slug)</small>',
-    'edit'        => 'Edit Role :role',
-    'create'      => 'Create New Role',
-    'delete'      => 'Delete Role :role',
+    'pages'          => 'Showing :count out of :total items',
+    'heading'        => 'Roles',
+    'show'           => 'View :role Role  <small>(:slug)</small>',
+    'edit'           => 'Edit Role :role',
+    'create'         => 'Create New Role',
+    'delete'         => 'Delete Role :role',
 
 ];

@@ -80,9 +80,9 @@ class UsersController extends AuthorizedController
             ]);
         }
 
-        $actions   = ['view', 'create', 'edit', 'delete', 'import', 'export'];
-        $resources = app('rinvex.fort.ability')->findAll()->groupBy('resource');
-        $columns   = ['resource', 'view', 'create', 'edit', 'delete', 'import', 'export', 'other'];
+        $actions       = ['view', 'create', 'edit', 'delete', 'import', 'export'];
+        $resources     = app('rinvex.fort.ability')->findAll()->groupBy('resource');
+        $columns       = ['resource', 'view', 'create', 'edit', 'delete', 'import', 'export', 'other'];
         $user->country = (new Country())->find($user->country)['name']['common'];
 
         return view('rinvex.fort::backend.users.show', compact('user', 'resources', 'actions', 'columns'));

@@ -26,6 +26,6 @@ return [
     'edit'        => 'Edit Ability :ability',
     'create'      => 'Create New Ability',
     'delete'      => 'Delete Ability :ability',
-    'show'      => 'View :ability Abilitiy <small>(:slug)</small>',
+    'show'        => 'View :ability Abilitiy <small>(:slug)</small>',
 
 ];
