@@ -70,11 +70,22 @@ class RolesController extends AuthorizedController
      *
      * @param int $id
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\Response|\Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse
      */
     public function show($id)
     {
-        //
+        if (! $role = $this->roleRepository->find($id)) {
+            return intend([
+                'intended'   => route('rinvex.fort.backend.roles.index'),
+                'withErrors' => ['rinvex.fort.role.not_found' => trans('rinvex.fort::backend/messages.role.not_found', ['role' => $id])],
+            ]);
+        }
+
+        $actions   = ['view', 'create', 'edit', 'delete', 'import', 'export'];
+        $resources = app('rinvex.fort.ability')->findAll()->groupBy('resource');
+        $columns   = ['resource', 'view', 'create', 'edit', 'delete', 'import', 'export', 'other'];
+
+        return view('rinvex.fort::backend.roles.show', compact('role', 'resources', 'actions', 'columns'));
     }
 
     /**

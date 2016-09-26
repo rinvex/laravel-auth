@@ -16,6 +16,7 @@
 namespace Rinvex\Fort\Http\Controllers\Backend;
 
 use Illuminate\Http\Request;
+use Rinvex\Country\Models\Country;
 use Rinvex\Fort\Models\User;
 use Rinvex\Fort\Contracts\UserRepositoryContract;
 use Rinvex\Fort\Http\Controllers\AuthorizedController;
@@ -68,11 +69,23 @@ class UsersController extends AuthorizedController
      *
      * @param int $id
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\Response|\Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse
      */
     public function show($id)
     {
-        //
+        if (! $user = $this->userRepository->find($id)) {
+            return intend([
+                'intended'   => route('rinvex.fort.backend.users.index'),
+                'withErrors' => ['rinvex.fort.user.not_found' => trans('rinvex.fort::backend/messages.user.not_found', ['user' => $id])],
+            ]);
+        }
+
+        $actions   = ['view', 'create', 'edit', 'delete', 'import', 'export'];
+        $resources = app('rinvex.fort.ability')->findAll()->groupBy('resource');
+        $columns   = ['resource', 'view', 'create', 'edit', 'delete', 'import', 'export', 'other'];
+        $user->country = (new Country())->find($user->country)['name']['common'];
+
+        return view('rinvex.fort::backend.users.show', compact('user', 'resources', 'actions', 'columns'));
     }
 
     /**

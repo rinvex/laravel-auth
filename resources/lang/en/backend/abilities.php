@@ -19,12 +19,13 @@ return [
     'description' => 'Description',
     'dates'       => 'Dates',
     'actions'     => 'Actions',
-    'created'     => 'Created',
-    'updated'     => 'Updated',
+    'created_at'  => 'Created At',
+    'updated_at'  => 'Updated At',
     'pages'       => 'Showing :count out of :total items',
     'heading'     => 'Abilities',
     'edit'        => 'Edit Ability :ability',
     'create'      => 'Create New Ability',
     'delete'      => 'Delete Ability :ability',
+    'show'      => 'View :ability Abilitiy <small>(:slug)</small>',
 
 ];

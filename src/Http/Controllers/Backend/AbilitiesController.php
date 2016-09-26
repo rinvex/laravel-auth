@@ -68,11 +68,18 @@ class AbilitiesController extends AuthorizedController
      *
      * @param int $id
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\Response|\Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse
      */
     public function show($id)
     {
-        //
+        if (! $ability = $this->abilityRepository->find($id)) {
+            return intend([
+                'intended'   => route('rinvex.fort.backend.abilities.index'),
+                'withErrors' => ['rinvex.fort.ability.not_found' => trans('rinvex.fort::backend/messages.ability.not_found', ['ability' => $id])],
+            ]);
+        }
+
+        return view('rinvex.fort::backend.abilities.show', compact('ability'));
     }
 
     /**
