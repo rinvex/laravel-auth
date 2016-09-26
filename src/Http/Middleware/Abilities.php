@@ -41,7 +41,7 @@ class Abilities
                 });
 
                 // Define abilities and policies
-                Gate::define($ability->action, $ability->policy ?: function () {
+                Gate::define($ability->slug, $ability->policy ?: function () {
                     return true;
                 });
             });

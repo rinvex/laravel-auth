@@ -154,7 +154,10 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
      */
     public function isSuperadmin()
     {
-        return $this->getAllAbilitiesAttribute()->where('policy', null)->contains('action', 'superadmin');
+        return $this->getAllAbilitiesAttribute()
+                    ->where('resource', 'global')
+                    ->where('policy', null)
+                    ->contains('action', 'superadmin');
     }
 
     /**

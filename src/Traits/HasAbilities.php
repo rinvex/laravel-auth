@@ -24,52 +24,47 @@ trait HasAbilities
     /**
      * Give the given ability to the given model.
      *
-     * @param int|\Illuminate\Database\Eloquent\Model                                 $id
-     * @param string|array|\Rinvex\Fort\Models\Ability|\Illuminate\Support\Collection $ability
+     * @param int|\Illuminate\Database\Eloquent\Model $id
+     * @param string|array                            $action
+     * @param string|array                            $resource
      *
      * @return $this
      */
-    public function giveAbilityTo($id, $ability)
+    public function giveAbilityTo($id, $action, $resource)
     {
         // Find the given instance
         $instance = $id instanceof Model ?: $this->find($id);
 
         if ($instance) {
-            $origAbility = $ability;
-
             // Fire the ability giving event
-            event('rinvex.fort.ability.giving', [$instance, $origAbility]);
+            event('rinvex.fort.ability.giving', [$instance, $action, $resource]);
 
-            // Single ability slug
-            if (is_string($ability)) {
-                $ability = app('rinvex.fort.ability')->findBy('action', $ability);
+            $repository = app('rinvex.fort.ability');
+
+            if (is_string($action) && $action !== '*') {
+                $repository = $repository->where('action', $action);
             }
 
-            // Single ability model
-            if ($ability instanceof Ability) {
-                if ($instance->all_abilities->contains('action', $ability->action)) {
-                    return $this;
-                }
-
-                $instance->abilities()->attach($ability);
+            if (is_array($action)) {
+                $repository = $repository->whereIn('action', $action);
             }
 
-            // Array of ability slugs
-            if (is_array($ability)) {
-                $ability = app('rinvex.fort.ability')->findWhereIn(['action', $ability]);
+            if (is_string($resource) && $resource !== '*') {
+                $repository = $repository->where('resource', $resource);
             }
 
-            // Collection of ability models
-            if ($ability instanceof Collection) {
-                $ability = $ability->map(function ($ability) {
-                    return $ability instanceof Ability ? $ability->id : $ability;
-                })->toArray();
-
-                $instance->abilities()->syncWithoutDetaching($ability);
+            if (is_array($resource)) {
+                $repository = $repository->whereIn('resource', $resource);
             }
+
+            // Find the given abilities
+            $abilities = $repository->findAll();
+
+            // Sync abilities
+            $instance->abilities()->syncWithoutDetaching($abilities);
 
             // Fire the ability given event
-            event('rinvex.fort.ability.given', [$instance, $origAbility]);
+            event('rinvex.fort.ability.given', [$instance, $action, $resource]);
         }
 
         return $this;
@@ -78,53 +73,48 @@ trait HasAbilities
     /**
      * Revoke the given ability from the given model.
      *
-     * @param int|\Illuminate\Database\Eloquent\Model                                 $id
-     * @param string|array|\Rinvex\Fort\Models\Ability|\Illuminate\Support\Collection $ability
+     * @param int|\Illuminate\Database\Eloquent\Model $id
+     * @param string|array                            $action
+     * @param string|array                            $resource
      *
      * @return $this
      */
-    public function revokeAbilityTo($id, $ability)
+    public function revokeAbilityTo($id, $action, $resource)
     {
         // Find the given instance
         $instance = $id instanceof Model ?: $this->find($id);
 
         if ($instance) {
-            $origAbility = $ability;
+            // Fire the ability giving event
+            event('rinvex.fort.ability.revoking', [$instance, $action, $resource]);
 
-            // Fire the ability revoking event
-            event('rinvex.fort.ability.revoking', [$instance, $origAbility]);
+            $repository = app('rinvex.fort.ability');
 
-            // Single ability slug
-            if (is_string($ability)) {
-                $ability = $instance->abilities->contains('action', $ability);
+            if (is_string($action) && $action !== '*') {
+                $repository = $repository->where('action', $action);
             }
 
-            // Single ability model
-            if ($ability instanceof Ability) {
-                if (! $instance->all_abilities->contains('action', $ability->action)) {
-                    return $this;
-                }
-
-                $instance->abilities()->detach($ability);
+            if (is_array($action)) {
+                $repository = $repository->whereIn('action', $action);
             }
 
-            // Array of ability slugs
-            if (is_array($ability)) {
-                $ability = app('rinvex.fort.ability')->findWhereIn(['action', $ability]);
+            if (is_string($resource) && $resource !== '*') {
+                $repository = $repository->where('resource', $resource);
             }
 
-            // Collection of ability models
-            if ($ability instanceof Collection) {
-                $current = $instance->abilities()->getRelatedIds()->toArray();
-                $remove  = $ability->map(function ($ability) {
-                    return $ability instanceof Ability ? $ability->id : $ability;
-                })->toArray();
-
-                $instance->abilities()->sync(array_diff($current, $remove));
+            if (is_array($resource)) {
+                $repository = $repository->whereIn('resource', $resource);
             }
 
-            // Fire the ability revoked event
-            event('rinvex.fort.ability.revoked', [$instance, $origAbility]);
+            // Find the given abilities
+            $remove = $repository->findAll();
+
+            // Sync abilities
+            $current = $instance->abilities()->getRelatedIds()->toArray();
+            $instance->abilities()->sync(array_diff($current, $remove->pluck('id')->toArray()));
+
+            // Fire the ability given event
+            event('rinvex.fort.ability.revoked', [$instance, $action, $resource]);
         }
 
         return $this;

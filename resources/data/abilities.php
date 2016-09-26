@@ -17,166 +17,192 @@ return [
 
     // Global abilities
     [
-        'action'      => 'superadmin',
-        'title'       => 'Super Administrator',
+        'action'   => 'superadmin',
+        'resource' => 'global',
+        'title'    => 'Super Administrator',
     ],
 
 
     // Dashboard abilities
     [
-        'action'      => 'access-dashboard',
-        'policy'      => 'Rinvex\Fort\Policies\DashboardPolicy@access',
-        'title'       => 'Access Dashboard',
+        'action'   => 'access',
+        'resource' => 'dashboard',
+        'policy'   => 'Rinvex\Fort\Policies\DashboardPolicy@access',
+        'title'    => 'Access Dashboard',
     ],
 
 
     // Abilities abilities
     [
-        'action'      => 'view-ability',
-        'policy'      => 'Rinvex\Fort\Policies\AbilityPolicy@view',
-        'title'       => 'Can View Existing Abilities',
+        'action'   => 'view',
+        'resource' => 'ability',
+        'policy'   => 'Rinvex\Fort\Policies\AbilityPolicy@view',
+        'title'    => 'Can View Existing Abilities',
     ],
 
     [
-        'action'      => 'create-ability',
-        'policy'      => 'Rinvex\Fort\Policies\AbilityPolicy@create',
-        'title'       => 'Can Create New Abilities',
+        'action'   => 'create',
+        'resource' => 'ability',
+        'policy'   => 'Rinvex\Fort\Policies\AbilityPolicy@create',
+        'title'    => 'Can Create New Abilities',
     ],
 
     [
-        'action'      => 'edit-ability',
-        'policy'      => 'Rinvex\Fort\Policies\AbilityPolicy@edit',
-        'title'       => 'Can Edit Existing Abilities',
+        'action'   => 'edit',
+        'resource' => 'ability',
+        'policy'   => 'Rinvex\Fort\Policies\AbilityPolicy@edit',
+        'title'    => 'Can Edit Existing Abilities',
     ],
 
     [
-        'action'      => 'delete-ability',
-        'policy'      => 'Rinvex\Fort\Policies\AbilityPolicy@delete',
-        'title'       => 'Can Delete Existing Abilities',
+        'action'   => 'delete',
+        'resource' => 'ability',
+        'policy'   => 'Rinvex\Fort\Policies\AbilityPolicy@delete',
+        'title'    => 'Can Delete Existing Abilities',
     ],
 
     [
-        'action'      => 'import-ability',
-        'policy'      => 'Rinvex\Fort\Policies\AbilityPolicy@import',
-        'title'       => 'Can Import New Abilities',
+        'action'   => 'import',
+        'resource' => 'ability',
+        'policy'   => 'Rinvex\Fort\Policies\AbilityPolicy@import',
+        'title'    => 'Can Import New Abilities',
     ],
 
     [
-        'action'      => 'export-ability',
-        'policy'      => 'Rinvex\Fort\Policies\AbilityPolicy@export',
-        'title'       => 'Can Export Existing Abilities',
+        'action'   => 'export',
+        'resource' => 'ability',
+        'policy'   => 'Rinvex\Fort\Policies\AbilityPolicy@export',
+        'title'    => 'Can Export Existing Abilities',
     ],
 
     [
-        'action'      => 'give-ability',
-        'policy'      => 'Rinvex\Fort\Policies\AbilityPolicy@give',
-        'title'       => 'Can Give Abilities To Users',
+        'action'   => 'give',
+        'resource' => 'ability',
+        'policy'   => 'Rinvex\Fort\Policies\AbilityPolicy@give',
+        'title'    => 'Can Give Abilities To Users',
     ],
 
     [
-        'action'      => 'revoke-ability',
-        'policy'      => 'Rinvex\Fort\Policies\AbilityPolicy@revoke',
-        'title'       => 'Can Revoke Abilities From Users',
+        'action'   => 'revoke',
+        'resource' => 'ability',
+        'policy'   => 'Rinvex\Fort\Policies\AbilityPolicy@revoke',
+        'title'    => 'Can Revoke Abilities From Users',
     ],
 
 
     // Roles abilities
     [
-        'action'      => 'view-role',
-        'policy'      => 'Rinvex\Fort\Policies\RolePolicy@view',
-        'title'       => 'Can View Existing Roles',
+        'action'   => 'view',
+        'resource' => 'role',
+        'policy'   => 'Rinvex\Fort\Policies\RolePolicy@view',
+        'title'    => 'Can View Existing Roles',
     ],
 
     [
-        'action'      => 'create-role',
-        'policy'      => 'Rinvex\Fort\Policies\RolePolicy@create',
-        'title'       => 'Can Create New Roles',
+        'action'   => 'create',
+        'resource' => 'role',
+        'policy'   => 'Rinvex\Fort\Policies\RolePolicy@create',
+        'title'    => 'Can Create New Roles',
     ],
 
     [
-        'action'      => 'edit-role',
-        'policy'      => 'Rinvex\Fort\Policies\RolePolicy@edit',
-        'title'       => 'Can Edit Existing Roles',
+        'action'   => 'edit',
+        'resource' => 'role',
+        'policy'   => 'Rinvex\Fort\Policies\RolePolicy@edit',
+        'title'    => 'Can Edit Existing Roles',
     ],
 
     [
-        'action'      => 'delete-role',
-        'policy'      => 'Rinvex\Fort\Policies\RolePolicy@delete',
-        'title'       => 'Can Delete Existing Roles',
+        'action'   => 'delete',
+        'resource' => 'role',
+        'policy'   => 'Rinvex\Fort\Policies\RolePolicy@delete',
+        'title'    => 'Can Delete Existing Roles',
     ],
 
     [
-        'action'      => 'import-role',
-        'policy'      => 'Rinvex\Fort\Policies\RolePolicy@import',
-        'title'       => 'Can Import New Roles',
+        'action'   => 'import',
+        'resource' => 'role',
+        'policy'   => 'Rinvex\Fort\Policies\RolePolicy@import',
+        'title'    => 'Can Import New Roles',
     ],
 
     [
-        'action'      => 'export-role',
-        'policy'      => 'Rinvex\Fort\Policies\RolePolicy@export',
-        'title'       => 'Can Export Existing Roles',
+        'action'   => 'export',
+        'resource' => 'role',
+        'policy'   => 'Rinvex\Fort\Policies\RolePolicy@export',
+        'title'    => 'Can Export Existing Roles',
     ],
 
     [
-        'action'      => 'assign-role',
-        'policy'      => 'Rinvex\Fort\Policies\RolePolicy@assign',
-        'title'       => 'Can Assign Roles To Users',
+        'action'   => 'assign',
+        'resource' => 'role',
+        'policy'   => 'Rinvex\Fort\Policies\RolePolicy@assign',
+        'title'    => 'Can Assign Roles To Users',
     ],
 
     [
-        'action'      => 'remove-role',
-        'policy'      => 'Rinvex\Fort\Policies\RolePolicy@remove',
-        'title'       => 'Can Remove Roles From Users',
+        'action'   => 'remove',
+        'resource' => 'role',
+        'policy'   => 'Rinvex\Fort\Policies\RolePolicy@remove',
+        'title'    => 'Can Remove Roles From Users',
     ],
 
 
     // Users abilities
     [
-        'action'      => 'view-user',
-        'policy'      => 'Rinvex\Fort\Policies\UserPolicy@view',
-        'title'       => 'Can View Existing Users',
+        'action'   => 'view',
+        'resource' => 'user',
+        'policy'   => 'Rinvex\Fort\Policies\UserPolicy@view',
+        'title'    => 'Can View Existing Users',
     ],
 
     [
-        'action'      => 'create-user',
-        'policy'      => 'Rinvex\Fort\Policies\UserPolicy@create',
-        'title'       => 'Can Create New Users',
+        'action'   => 'create',
+        'resource' => 'user',
+        'policy'   => 'Rinvex\Fort\Policies\UserPolicy@create',
+        'title'    => 'Can Create New Users',
     ],
 
     [
-        'action'      => 'edit-user',
-        'policy'      => 'Rinvex\Fort\Policies\UserPolicy@edit',
-        'title'       => 'Can Edit Existing Users',
+        'action'   => 'edit',
+        'resource' => 'user',
+        'policy'   => 'Rinvex\Fort\Policies\UserPolicy@edit',
+        'title'    => 'Can Edit Existing Users',
     ],
 
     [
-        'action'      => 'delete-user',
-        'policy'      => 'Rinvex\Fort\Policies\UserPolicy@delete',
-        'title'       => 'Can Delete Existing Users',
+        'action'   => 'delete',
+        'resource' => 'user',
+        'policy'   => 'Rinvex\Fort\Policies\UserPolicy@delete',
+        'title'    => 'Can Delete Existing Users',
     ],
 
     [
-        'action'      => 'import-user',
-        'policy'      => 'Rinvex\Fort\Policies\UserPolicy@import',
-        'title'       => 'Can Import New Users',
+        'action'   => 'import',
+        'resource' => 'user',
+        'policy'   => 'Rinvex\Fort\Policies\UserPolicy@import',
+        'title'    => 'Can Import New Users',
     ],
 
     [
-        'action'      => 'export-user',
-        'policy'      => 'Rinvex\Fort\Policies\UserPolicy@export',
-        'title'       => 'Can Export Existing Users',
+        'action'   => 'export',
+        'resource' => 'user',
+        'policy'   => 'Rinvex\Fort\Policies\UserPolicy@export',
+        'title'    => 'Can Export Existing Users',
     ],
 
     [
-        'action'      => 'activate-user',
-        'policy'      => 'Rinvex\Fort\Policies\UserPolicy@activate',
-        'title'       => 'Can activate Users',
+        'action'   => 'activate',
+        'resource' => 'user',
+        'policy'   => 'Rinvex\Fort\Policies\UserPolicy@activate',
+        'title'    => 'Can activate Users',
     ],
 
     [
-        'action'      => 'deactivate-user',
-        'policy'      => 'Rinvex\Fort\Policies\UserPolicy@deactivate',
-        'title'       => 'Can De-activate Users',
+        'action'   => 'deactivate',
+        'resource' => 'user',
+        'policy'   => 'Rinvex\Fort\Policies\UserPolicy@deactivate',
+        'title'    => 'Can De-activate Users',
     ],
 
 ];

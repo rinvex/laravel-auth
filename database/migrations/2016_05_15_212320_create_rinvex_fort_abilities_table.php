@@ -30,6 +30,7 @@ class CreateRinvexFortAbilitiesTable extends Migration
             // Columns
             $table->increments('id');
             $table->string('action');
+            $table->string('resource');
             $table->string('policy')->nullable();
             $table->string('title');
             $table->text('description')->nullable();
@@ -37,7 +38,7 @@ class CreateRinvexFortAbilitiesTable extends Migration
             $table->softDeletes();
 
             // Indexes
-            $table->unique('action');
+            $table->unique(['action', 'resource']);
 
             // Engine
             $table->engine = 'InnoDB';

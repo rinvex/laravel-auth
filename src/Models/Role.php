@@ -84,7 +84,7 @@ class Role extends Model
      */
     public function isSuperadmin()
     {
-        return $this->abilities->where('policy', null)->contains('action', 'superadmin');
+        return $this->abilities->where('resource', 'global')->where('policy', null)->contains('action', 'superadmin');
     }
 
     /**

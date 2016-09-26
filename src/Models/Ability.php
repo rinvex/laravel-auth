@@ -32,6 +32,7 @@ class Ability extends Model
      */
     protected $fillable = [
         'action',
+        'resource',
         'policy',
         'title',
         'description',
@@ -80,7 +81,7 @@ class Ability extends Model
      */
     public function isSuperadmin()
     {
-        return ! $this->policy && $this->action === 'superadmin';
+        return ! $this->policy && $this->resource === 'global' && $this->action === 'superadmin';
     }
 
     /**
@@ -91,5 +92,15 @@ class Ability extends Model
     public function isProtected()
     {
         return in_array($this->id, config('rinvex.fort.protected.abilities'));
+    }
+
+    /**
+     * Get slug attribute out of ability's action & resource.
+     *
+     * @return bool
+     */
+    public function getSlugAttribute()
+    {
+        return $this->action.'-'.$this->resource;
     }
 }
