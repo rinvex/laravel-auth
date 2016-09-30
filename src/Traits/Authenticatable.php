@@ -15,7 +15,7 @@
 
 namespace Rinvex\Fort\Traits;
 
-use Rinvex\Country\Models\Country;
+use Rinvex\Country\Loader;
 use Illuminate\Auth\Authenticatable as BaseAuthenticatable;
 
 trait Authenticatable
@@ -49,7 +49,7 @@ trait Authenticatable
      */
     public function getCountryCodeForTwoFactorAuth()
     {
-        return array_get((new Country())->find($this->country), 'dialling.calling_code.0');
+        return Loader::country($this->country)->getCallingCode();
     }
 
     /**

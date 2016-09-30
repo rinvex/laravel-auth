@@ -15,8 +15,8 @@
 
 namespace Rinvex\Fort\Http\Controllers\Backend;
 
+use Rinvex\Country\Loader;
 use Illuminate\Http\Request;
-use Rinvex\Country\Models\Country;
 use Rinvex\Fort\Models\User;
 use Rinvex\Fort\Contracts\UserRepositoryContract;
 use Rinvex\Fort\Http\Controllers\AuthorizedController;
@@ -80,12 +80,14 @@ class UsersController extends AuthorizedController
             ]);
         }
 
-        $actions       = ['view', 'create', 'edit', 'delete', 'import', 'export'];
-        $resources     = app('rinvex.fort.ability')->findAll()->groupBy('resource');
-        $columns       = ['resource', 'view', 'create', 'edit', 'delete', 'import', 'export', 'other'];
-        $user->country = (new Country())->find($user->country)['name']['common'];
+        $actions     = ['view', 'create', 'edit', 'delete', 'import', 'export'];
+        $resources   = app('rinvex.fort.ability')->findAll()->groupBy('resource');
+        $columns     = ['resource', 'view', 'create', 'edit', 'delete', 'import', 'export', 'other'];
+        $userCountry = Loader::country($user->country);
+        $country     = $userCountry->getName().' '.$userCountry->getEmoji();
+        $phone       = $userCountry->getCallingCode().$user->phone;
 
-        return view('rinvex.fort::backend.users.show', compact('user', 'resources', 'actions', 'columns'));
+        return view('rinvex.fort::backend.users.show', compact('user', 'resources', 'actions', 'columns', 'country', 'phone'));
     }
 
     /**

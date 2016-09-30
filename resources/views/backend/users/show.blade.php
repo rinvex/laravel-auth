@@ -36,16 +36,16 @@
                         <strong>{{ trans('rinvex.fort::backend/users.email') }}</strong>: {{ $user->email }} @if($user->email_verified) <span title="{{ $user->email_verified_at }}"><i class="fa text-success fa-check"></i></span> @endif
                     </div>
                     <div class="col-md-4">
-                        <strong>{{ trans('rinvex.fort::backend/users.phone') }}</strong>: {{ $user->phone }} @if($user->phone_verified) <span title="{{ $user->phone_verified_at }}"><i class="fa text-success fa-check"></i></span> @endif
+                        <strong>{{ trans('rinvex.fort::backend/users.phone') }}</strong>: +{{ $phone }} @if($user->phone_verified) <span title="{{ $user->phone_verified_at }}"><i class="fa text-success fa-check"></i></span> @endif
                     </div>
                 </div>
 
                 <div class="row">
                     <div class="col-md-4">
-                        <strong>{{ trans('rinvex.fort::backend/users.country') }}</strong>: {{ $user->country }}
+                        <strong>{{ trans('rinvex.fort::backend/users.country') }}</strong>: {{ $country }}
                     </div>
                     <div class="col-md-4">
-                        <strong>{{ trans('rinvex.fort::backend/users.gender') }}</strong>: {{ ucfirst($user->gender) }}
+                        <strong>{{ trans('rinvex.fort::backend/users.gender') }}</strong>: {{ ucfirst($user->gender) }} @if(in_array($user->gender, ['male', 'female'])) <i class="fa fa-{{ $user->gender }}"></i> @endif
                     </div>
                     <div class="col-md-4">
                         <strong>{{ trans('rinvex.fort::backend/users.birthdate') }}</strong>: {{ $user->birthdate->toDateString() }} ({{ $user->birthdate->age }} years old)
