@@ -146,7 +146,7 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
     {
         $segments = [$this->prefix, $this->first_name, $this->middle_name, $this->last_name, $this->suffix];
 
-        return implode(' ', $segments);
+        return trim(implode(' ', $segments));
     }
 
     /**

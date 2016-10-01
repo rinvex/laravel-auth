@@ -24,7 +24,7 @@
                 <h4>
                     {{ trans('rinvex.fort::backend/users.heading') }}
                     <span class="pull-right" style="margin-top: -7px">
-                        <a href="{{ route('rinvex.fort.backend.users.create') }}" class="btn btn-default" title="{{ trans('rinvex.fort::backend/users.create') }}"><i class="fa fa-plus"></i></a>
+                        <a href="{{ route('rinvex.fort.backend.users.create') }}" class="btn btn-default"><i class="fa fa-plus"></i></a>
                     </span>
                 </h4>
             </div>
@@ -53,7 +53,7 @@
 
                                 <tr>
                                     <td>
-                                        <a href="{{ route('rinvex.fort.backend.users.show', ['user' => $user->id]) }}">
+                                        <a href="{{ route('rinvex.fort.backend.users.show', ['userId' => $user->id]) }}">
                                             <strong>
                                                 @if($user->first_name)
                                                     {{ $user->first_name }} {{ $user->middle_name }} {{ $user->last_name }}
@@ -102,8 +102,8 @@
                                     </td>
 
                                     <td class="text-right">
-                                        <a href="{{ route('rinvex.fort.backend.users.edit', ['user' => $user->id]) }}" class="btn btn-xs btn-default" title="{{ trans('rinvex.fort::backend/users.edit', ['user' => $user->username]) }}"><i class="fa fa-pencil text-primary"></i></a>
-                                        <a href="#" class="btn btn-xs btn-default" data-toggle="modal" data-target="#delete-confirmation" data-href="{{ route('rinvex.fort.backend.users.delete', ['user' => $user->id]) }}" title="{{ trans('rinvex.fort::backend/users.delete', ['user' => $user->username]) }}" data-item-name="{{ $user->username }}"><i class="fa fa-trash-o text-danger"></i></a>
+                                        <a href="{{ route('rinvex.fort.backend.users.edit', ['userId' => $user->id]) }}" class="btn btn-xs btn-default"><i class="fa fa-pencil text-primary"></i></a>
+                                        <a href="#" class="btn btn-xs btn-default" data-toggle="modal" data-target="#delete-confirmation" data-href="{{ route('rinvex.fort.backend.users.delete', ['userId' => $user->id]) }}" data-item-name="{{ $user->username }}"><i class="fa fa-trash-o text-danger"></i></a>
                                     </td>
                                 </tr>
 

@@ -19,27 +19,35 @@
             {{-- Heading --}}
             <div class="panel-heading">
                 <h4>
-                    <a href="{{ route('rinvex.fort.backend.users.index') }}">{{ trans('rinvex.fort::backend/users.heading') }}</a>
-                    »
-                    {!! trans('rinvex.fort::backend/users.show', ['user' => $user->name]) !!}
-                    <small>
-                        @if($user->job_title) ({{ $user->job_title }}) @endif
-                        @if($user->active)
-                            <span class="label label-success btn-xs">{{ trans('rinvex.fort::backend/users.status.active') }}</span>
-                        @else
-                            <span class="label label-warning btn-xs">{{ trans('rinvex.fort::backend/users.status.inactive') }}</span>
-                        @endif
-                    </small>
+                    <a href="{{ route('rinvex.fort.backend.users.index') }}">{{ trans('rinvex.fort::backend/users.heading') }}</a> / {{ trans('rinvex.fort::backend/users.view') }} » {{ $user->username }}
                     <span class="pull-right" style="margin-top: -7px">
-                        <a href="#" class="btn btn-default" title="{{ trans('rinvex.fort::backend/users.delete', ['user' => $user->username]) }}" data-toggle="modal" data-target="#delete-confirmation" data-item-href="{{ route('rinvex.fort.backend.users.delete', ['user' => $user->id]) }}" data-item-name="{{ $user->username }}"><i class="fa fa-trash-o text-danger"></i></a>
-                        <a href="{{ route('rinvex.fort.backend.users.edit', ['user' => $user->id]) }}" class="btn btn-default" title="{{ trans('rinvex.fort::backend/users.edit', ['user' => $user->username]) }}"><i class="fa fa-pencil text-primary"></i></a>
-                        <a href="{{ route('rinvex.fort.backend.users.create') }}" class="btn btn-default" title="{{ trans('rinvex.fort::backend/users.create') }}"><i class="fa fa-plus"></i></a>
+                        <a href="{{ route('rinvex.fort.backend.users.edit', ['userId' => $user->id]) }}" class="btn btn-default"><i class="fa fa-pencil text-primary"></i></a>
+                        <a href="{{ route('rinvex.fort.backend.users.copy', ['userId' => $user->id]) }}" class="btn btn-default"><i class="fa fa-copy text-primary"></i></a>
+                        <a href="#" class="btn btn-default" data-toggle="modal" data-target="#delete-confirmation" data-item-href="{{ route('rinvex.fort.backend.users.delete', ['userId' => $user->id]) }}" data-item-name="{{ $user->username }}"><i class="fa fa-trash-o text-danger"></i></a>
+                        <a href="{{ route('rinvex.fort.backend.users.create') }}" class="btn btn-default"><i class="fa fa-plus"></i></a>
                     </span>
                 </h4>
             </div>
 
             {{-- Data --}}
             <div class="panel-body">
+
+                <div class="row">
+                    <div class="col-md-4">
+                        <strong>{{ trans('rinvex.fort::backend/users.name') }}</strong>: @if($user->name) {{ $user->name }} @else N/A @endif
+                    </div>
+                    <div class="col-md-4">
+                        <strong>{{ trans('rinvex.fort::backend/users.job_title') }}</strong>: @if($user->job_title) {{ $user->job_title }} @else N/A @endif
+                    </div>
+                    <div class="col-md-4">
+                        <strong>{{ trans('rinvex.fort::backend/users.status.title') }}</strong>:
+                        @if($user->active)
+                            <span class="label label-success">{{ trans('rinvex.fort::backend/users.status.active') }}</span>
+                        @else
+                            <span class="label label-warning">{{ trans('rinvex.fort::backend/users.status.inactive') }}</span>
+                        @endif
+                    </div>
+                </div>
 
                 <div class="row">
                     <div class="col-md-4">

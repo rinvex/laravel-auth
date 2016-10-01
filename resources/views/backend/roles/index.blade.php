@@ -24,7 +24,7 @@
                 <h4>
                     {{ trans('rinvex.fort::backend/roles.heading') }}
                     <span class="pull-right" style="margin-top: -7px">
-                        <a href="{{ route('rinvex.fort.backend.roles.create') }}" class="btn btn-default" title="{{ trans('rinvex.fort::backend/roles.create') }}"><i class="fa fa-plus"></i></a>
+                        <a href="{{ route('rinvex.fort.backend.roles.create') }}" class="btn btn-default"><i class="fa fa-plus"></i></a>
                     </span>
                 </h4>
             </div>
@@ -51,7 +51,7 @@
 
                                 <tr>
                                     <td>
-                                        <a href="{{ route('rinvex.fort.backend.roles.show', ['role' => $role->id]) }}">
+                                        <a href="{{ route('rinvex.fort.backend.roles.show', ['roleId' => $role->id]) }}">
                                             <strong>{{ $role->title }}</strong>
                                             <div class="small ">{{ $role->slug }}</div>
                                         </a>
@@ -75,8 +75,8 @@
                                     </td>
 
                                     <td class="text-right">
-                                        <a href="{{ route('rinvex.fort.backend.roles.edit', ['role' => $role->id]) }}" class="btn btn-xs btn-default" title="{{ trans('rinvex.fort::backend/roles.edit', ['role' => $role->slug]) }}"><i class="fa fa-pencil text-primary"></i></a>
-                                        <a href="#" class="btn btn-xs btn-default" data-toggle="modal" data-target="#delete-confirmation" data-href="{{ route('rinvex.fort.backend.roles.delete', ['role' => $role->id]) }}" title="{{ trans('rinvex.fort::backend/roles.delete', ['role' => $role->slug]) }}" data-item-name="{{ $role->slug }}"><i class="fa fa-trash-o text-danger"></i></a>
+                                        <a href="{{ route('rinvex.fort.backend.roles.edit', ['roleId' => $role->id]) }}" class="btn btn-xs btn-default"><i class="fa fa-pencil text-primary"></i></a>
+                                        <a href="#" class="btn btn-xs btn-default" data-toggle="modal" data-target="#delete-confirmation" data-href="{{ route('rinvex.fort.backend.roles.delete', ['roleId' => $role->id]) }}" data-item-name="{{ $role->slug }}"><i class="fa fa-trash-o text-danger"></i></a>
                                     </td>
                                 </tr>
 

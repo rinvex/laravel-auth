@@ -48,7 +48,7 @@
 
                                                     <tr>
                                                         <td>
-                                                            <a href="{{ route('rinvex.fort.backend.users.show', ['user' => $user->id]) }}">
+                                                            <a href="{{ route('rinvex.fort.backend.users.show', ['userId' => $user->id]) }}">
                                                                 <strong>
                                                                     @if($user->first_name)
                                                                         {{ $user->first_name }} {{ $user->middle_name }} {{ $user->last_name }}

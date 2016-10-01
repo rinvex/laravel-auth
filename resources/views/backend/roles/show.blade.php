@@ -19,13 +19,12 @@
             {{-- Heading --}}
             <div class="panel-heading">
                 <h4>
-                    <a href="{{ route('rinvex.fort.backend.roles.index') }}">{{ trans('rinvex.fort::backend/roles.heading') }}</a>
-                    »
-                    {!! trans('rinvex.fort::backend/roles.show', ['role' => $role->title, 'slug' => $role->slug]) !!}
+                    <a href="{{ route('rinvex.fort.backend.roles.index') }}">{{ trans('rinvex.fort::backend/roles.heading') }}</a> / {{ trans('rinvex.fort::backend/roles.view') }} » {{ $role->slug }}
                     <span class="pull-right" style="margin-top: -7px">
-                        <a href="#" class="btn btn-default" title="{{ trans('rinvex.fort::backend/roles.delete', ['role' => $role->slug]) }}" data-toggle="modal" data-target="#delete-confirmation" data-item-href="{{ route('rinvex.fort.backend.roles.delete', ['role' => $role->id]) }}" data-item-name="{{ $role->slug }}"><i class="fa fa-trash-o text-danger"></i></a>
-                        <a href="{{ route('rinvex.fort.backend.roles.edit', ['role' => $role->id]) }}" class="btn btn-default" title="{{ trans('rinvex.fort::backend/roles.edit', ['role' => $role->slug]) }}"><i class="fa fa-pencil text-primary"></i></a>
-                        <a href="{{ route('rinvex.fort.backend.roles.create') }}" class="btn btn-default" title="{{ trans('rinvex.fort::backend/roles.create') }}"><i class="fa fa-plus"></i></a>
+                        <a href="{{ route('rinvex.fort.backend.roles.edit', ['roleId' => $role->id]) }}" class="btn btn-default"><i class="fa fa-pencil text-primary"></i></a>
+                        <a href="{{ route('rinvex.fort.backend.roles.copy', ['roleId' => $role->id]) }}" class="btn btn-default"><i class="fa fa-copy text-success"></i></a>
+                        <a href="#" class="btn btn-default" data-toggle="modal" data-target="#delete-confirmation" data-item-href="{{ route('rinvex.fort.backend.roles.delete', ['roleId' => $role->id]) }}" data-item-name="{{ $role->slug }}"><i class="fa fa-trash-o text-danger"></i></a>
+                        <a href="{{ route('rinvex.fort.backend.roles.create') }}" class="btn btn-default"><i class="fa fa-plus"></i></a>
                     </span>
                 </h4>
             </div>
@@ -33,14 +32,24 @@
             {{-- Data --}}
             <div class="panel-body">
 
-                @if($role->description)
+                <div class="row">
+                    <div class="col-md-4">
+                        <strong>{{ trans('rinvex.fort::backend/roles.title') }}</strong>: @if($role->title) {{ $role->title }} @else N/A @endif
+                    </div>
+                    <div class="col-md-4">
+                        <strong>{{ trans('rinvex.fort::backend/roles.slug') }}</strong>: @if($role->slug) {{ $role->slug }} @else N/A @endif
+                    </div>
+                </div>
+
+               @if($role->description)
                     <div class="row">
                         <div class="col-md-12">
-                            {{ $role->description }}
-                            <hr />
+                            <strong>{{ trans('rinvex.fort::backend/roles.description') }}</strong>: {{ $role->description }}
                         </div>
                     </div>
                 @endif
+
+                <hr />
 
                 <div class="row">
                     <div class="col-md-12">
