@@ -23,9 +23,9 @@ return [
     'updated_at'  => 'Updated At',
     'pages'       => 'Showing :count out of :total items',
     'heading'     => 'Abilities',
-    'edit'        => 'Edit Ability :ability',
+    'edit'        => 'Edit :ability Ability',
     'create'      => 'Create New Ability',
-    'delete'      => 'Delete Ability :ability',
+    'delete'      => 'Delete :ability Ability',
     'show'        => 'View :ability Abilitiy <small>(:slug)</small>',
 
 ];

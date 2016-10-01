@@ -15,7 +15,13 @@
 
 return [
 
-    'pages'      => 'Showing :count out of :total items',
-    'created_at' => 'Showing :count out of :total items',
+    'pages'               => 'Showing :count out of :total items',
+    'created_at'          => 'Showing :count out of :total items',
+    'delete' => [
+        'heading' => 'Delete Confirmation',
+        'footer' => 'Delete Confirmation',
+        'body' => 'Are you sure you want to delete <strong class="item-name"></strong> :type?',
+    ],
+    'cancel'              => 'Cancel',
 
 ];

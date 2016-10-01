@@ -15,6 +15,7 @@
         @include('rinvex.fort::frontend.alerts.success')
         @include('rinvex.fort::frontend.alerts.warning')
         @include('rinvex.fort::frontend.alerts.error')
+        @include('rinvex.fort::backend.common.confirm-modal', ['type' => 'role'])
 
         <div class="panel panel-default">
 
@@ -75,11 +76,7 @@
 
                                     <td class="text-right">
                                         <a href="{{ route('rinvex.fort.backend.roles.edit', ['role' => $role->id]) }}" class="btn btn-xs btn-default" title="{{ trans('rinvex.fort::backend/roles.edit', ['role' => $role->slug]) }}"><i class="fa fa-pencil text-primary"></i></a>
-                                        <a href="{{ route('rinvex.fort.backend.roles.delete', ['role' => $role->id]) }}" class="btn btn-xs btn-default" title="{{ trans('rinvex.fort::backend/roles.delete', ['role' => $role->slug]) }}" onclick="event.preventDefault(); document.getElementById('role-delete-form-{{ $role->id }}').submit();"><i class="fa fa-trash-o text-danger"></i></a>
-                                        <form id="role-delete-form-{{ $role->id }}" action="{{ route('rinvex.fort.backend.roles.delete', ['role' => $role->id]) }}" method="POST" style="display: none;">
-                                            <input type="hidden" name="_method" value="DELETE">
-                                            {{ csrf_field() }}
-                                        </form>
+                                        <a href="#" class="btn btn-xs btn-default" data-toggle="modal" data-target="#delete-confirmation" data-href="{{ route('rinvex.fort.backend.roles.delete', ['role' => $role->id]) }}" title="{{ trans('rinvex.fort::backend/roles.delete', ['role' => $role->slug]) }}" data-item-name="{{ $role->slug }}"><i class="fa fa-trash-o text-danger"></i></a>
                                     </td>
                                 </tr>
 

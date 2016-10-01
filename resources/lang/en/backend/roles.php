@@ -24,8 +24,8 @@ return [
     'pages'          => 'Showing :count out of :total items',
     'heading'        => 'Roles',
     'show'           => 'View :role Role  <small>(:slug)</small>',
-    'edit'           => 'Edit Role :role',
+    'edit'           => 'Edit :role Role',
     'create'         => 'Create New Role',
-    'delete'         => 'Delete Role :role',
+    'delete'         => 'Delete :role Role',
 
 ];

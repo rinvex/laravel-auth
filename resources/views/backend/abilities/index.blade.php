@@ -15,6 +15,7 @@
         @include('rinvex.fort::frontend.alerts.success')
         @include('rinvex.fort::frontend.alerts.warning')
         @include('rinvex.fort::frontend.alerts.error')
+        @include('rinvex.fort::backend.common.confirm-modal', ['type' => 'ability'])
 
         <div class="panel panel-default">
 
@@ -75,11 +76,7 @@
 
                                     <td class="text-right">
                                         <a href="{{ route('rinvex.fort.backend.abilities.edit', ['ability' => $ability->id]) }}" class="btn btn-xs btn-default" title="{{ trans('rinvex.fort::backend/abilities.edit', ['ability' => $ability->action]) }}"><i class="fa fa-pencil text-primary"></i></a>
-                                        <a href="{{ route('rinvex.fort.backend.abilities.delete', ['ability' => $ability->id]) }}" class="btn btn-xs btn-default" title="{{ trans('rinvex.fort::backend/abilities.delete', ['ability' => $ability->action]) }}" onclick="event.preventDefault(); document.getElementById('ability-delete-form-{{ $ability->id }}').submit();"><i class="fa fa-trash-o text-danger"></i></a>
-                                        <form id="ability-delete-form-{{ $ability->id }}" action="{{ route('rinvex.fort.backend.abilities.delete', ['ability' => $ability->id]) }}" method="POST" style="display: none;">
-                                            <input type="hidden" name="_method" value="DELETE">
-                                            {{ csrf_field() }}
-                                        </form>
+                                        <a href="#" class="btn btn-xs btn-default" data-toggle="modal" data-target="#delete-confirmation" data-href="{{ route('rinvex.fort.backend.abilities.delete', ['ability' => $ability->id]) }}" title="{{ trans('rinvex.fort::backend/abilities.delete', ['ability' => $ability->slug]) }}" data-item-name="{{ $ability->slug }}"><i class="fa fa-trash-o text-danger"></i></a>
                                     </td>
                                 </tr>
 
