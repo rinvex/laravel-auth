@@ -10,10 +10,10 @@
             </div>
             <div class="modal-footer">
                 <form id="delete-item-form" action="#" method="POST">
-                    <input type="hidden" name="_method" value="DELETE">
                     {{ csrf_field() }}
+                    <input type="hidden" name="_method" value="DELETE">
                     <button type="button" class="btn btn-default" data-dismiss="modal">{{ trans('rinvex.fort::backend/common.cancel') }}</button>
-                    <button type="submit" class="btn btn-danger btn-ok"><i class="fa fa-trash-o"></i> {!! trans('rinvex.fort::backend/'.str_plural($type).'.delete', [$type => '<strong class="item-name"></strong>']) !!}</button>
+                    <button type="submit" class="btn btn-danger btn-ok"><i class="fa fa-trash-o"></i> {!! trans('rinvex.fort::backend/'.str_plural($type).'.delete') !!}</button>
                 </form>
             </div>
         </div>

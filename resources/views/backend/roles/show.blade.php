@@ -12,6 +12,9 @@
 
     <div class="container">
 
+        @include('rinvex.fort::frontend.alerts.success')
+        @include('rinvex.fort::frontend.alerts.warning')
+        @include('rinvex.fort::frontend.alerts.error')
         @include('rinvex.fort::backend.common.confirm-modal', ['type' => 'role'])
 
         <div class="panel panel-default">

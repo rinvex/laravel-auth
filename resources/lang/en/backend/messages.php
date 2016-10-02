@@ -16,15 +16,15 @@
 return [
 
     'ability' => [
-        'not_found' => 'Sorry, ability :ability not found!',
+        'not_found' => 'Sorry, ability [:ability] not found!',
     ],
 
     'role' => [
-        'not_found' => 'Sorry, role :role not found!',
+        'not_found' => 'Sorry, role [:role] not found!',
     ],
 
     'user' => [
-        'not_found' => 'Sorry, user :user not found!',
+        'not_found' => 'Sorry, user [:user] not found!',
     ],
 
 ];
