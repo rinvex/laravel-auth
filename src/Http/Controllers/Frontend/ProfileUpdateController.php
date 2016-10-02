@@ -51,8 +51,8 @@ class ProfileUpdateController extends AuthorizedController
      */
     public function showProfileUpdate()
     {
+        $countries = Loader::countries();
         $twoFactor = $this->currentUser()->getTwoFactor();
-        $countries = collect(Loader::countries())->pluck('name', 'iso_3166_1_alpha2');
 
         return view('rinvex.fort::frontend.profile.page', compact('twoFactor', 'countries'));
     }

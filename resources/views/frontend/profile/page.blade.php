@@ -151,8 +151,8 @@
                                         <div class="col-md-8">
                                             <select id="country" name="country" class="form-control">
                                                 <option value="" disabled selected>{{ trans('rinvex.fort::frontend/forms.account.country_select') }}</option>
-                                                @foreach($countries as $countryKey => $countryName)
-                                                    <option value="{{ $countryKey }}" @if(old('country', $currentUser->country) === $countryKey) selected="selected" @endif>{{ $countryName }}</option>
+                                                @foreach($countries as $code => $country)
+                                                    <option value="{{ $code }}" @if(old('country', $currentUser->country) === $code) selected="selected" @endif>{{ $country->getName() }} {{ $country->getEmoji() }}</option>
                                                 @endforeach
                                             </select>
 
