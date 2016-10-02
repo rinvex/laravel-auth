@@ -17,16 +17,16 @@ namespace Rinvex\Fort\Http\Controllers\Frontend;
 
 use Illuminate\Support\Facades\Auth;
 use Rinvex\Fort\Guards\SessionGuard;
-use Rinvex\Fort\Http\Requests\PhoneVerification;
 use Rinvex\Fort\Http\Controllers\AbstractController;
-use Rinvex\Fort\Http\Requests\PhoneVerificationRequest;
+use Rinvex\Fort\Http\Requests\Frontend\PhoneVerification;
+use Rinvex\Fort\Http\Requests\Frontend\PhoneVerificationRequest;
 
 class PhoneVerificationController extends AbstractController
 {
     /**
      * Show the phone verification form.
      *
-     * @param \Rinvex\Fort\Http\Requests\PhoneVerificationRequest $request
+     * @param \Rinvex\Fort\Http\Requests\Frontend\PhoneVerificationRequest $request
      *
      * @return \Illuminate\Http\Response|\Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse
      */
@@ -41,7 +41,7 @@ class PhoneVerificationController extends AbstractController
     /**
      * Process the phone verification request form.
      *
-     * @param \Rinvex\Fort\Http\Requests\PhoneVerificationRequest $request
+     * @param \Rinvex\Fort\Http\Requests\Frontend\PhoneVerificationRequest $request
      *
      * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse
      */
@@ -60,7 +60,7 @@ class PhoneVerificationController extends AbstractController
     /**
      * Show the phone verification form.
      *
-     * @param \Rinvex\Fort\Http\Requests\PhoneVerification $request
+     * @param \Rinvex\Fort\Http\Requests\Frontend\PhoneVerification $request
      *
      * @return \Illuminate\Http\Response|\Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse
      */
@@ -77,7 +77,7 @@ class PhoneVerificationController extends AbstractController
     /**
      * Process the phone verification form.
      *
-     * @param \Rinvex\Fort\Http\Requests\PhoneVerification $request
+     * @param \Rinvex\Fort\Http\Requests\Frontend\PhoneVerification $request
      *
      * @return \Illuminate\Http\Response|\Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse
      */

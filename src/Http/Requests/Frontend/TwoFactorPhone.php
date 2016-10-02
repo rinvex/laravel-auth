@@ -13,12 +13,23 @@
  * Link:    https://rinvex.com
  */
 
-namespace Rinvex\Fort\Http\Requests;
+namespace Rinvex\Fort\Http\Requests\Frontend;
 
 use Rinvex\Support\Http\Requests\FormRequest;
 
-class UserAuthentication extends FormRequest
+class TwoFactorPhone extends FormRequest
 {
+    /**
+     * {@inheritdoc}
+     */
+    public function forbiddenResponse()
+    {
+        return intend([
+            'intended'   => route('rinvex.fort.frontend.account.page'),
+            'withErrors' => ['token' => trans('rinvex.fort::frontend/messages.verification.twofactor.phone.globaly_disabled')],
+        ]);
+    }
+
     /**
      * Determine if the user is authorized to make this request.
      *
@@ -26,7 +37,7 @@ class UserAuthentication extends FormRequest
      */
     public function authorize()
     {
-        return true;
+        return in_array('phone', config('rinvex.fort.twofactor.providers'));
     }
 
     /**
@@ -36,9 +47,6 @@ class UserAuthentication extends FormRequest
      */
     public function rules()
     {
-        return [
-            'loginfield' => 'required',
-            'password'   => 'required',
-        ];
+        return [];
     }
 }

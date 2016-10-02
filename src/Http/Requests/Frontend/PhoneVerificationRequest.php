@@ -13,7 +13,7 @@
  * Link:    https://rinvex.com
  */
 
-namespace Rinvex\Fort\Http\Requests;
+namespace Rinvex\Fort\Http\Requests\Frontend;
 
 use Illuminate\Support\Facades\Auth;
 

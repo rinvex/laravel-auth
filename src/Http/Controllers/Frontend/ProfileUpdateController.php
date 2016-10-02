@@ -17,8 +17,8 @@ namespace Rinvex\Fort\Http\Controllers\Frontend;
 
 use Rinvex\Country\Loader;
 use Illuminate\Support\Facades\Auth;
-use Rinvex\Fort\Http\Requests\ProfileUpdate;
 use Rinvex\Fort\Contracts\UserRepositoryContract;
+use Rinvex\Fort\Http\Requests\Frontend\ProfileUpdate;
 use Rinvex\Fort\Http\Controllers\AuthorizedController;
 
 class ProfileUpdateController extends AuthorizedController
@@ -60,7 +60,7 @@ class ProfileUpdateController extends AuthorizedController
     /**
      * Process the account update form.
      *
-     * @param \Rinvex\Fort\Http\Requests\ProfileUpdate $request
+     * @param \Rinvex\Fort\Http\Requests\Frontend\ProfileUpdate $request
      *
      * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse
      */

@@ -13,11 +13,11 @@
  * Link:    https://rinvex.com
  */
 
-namespace Rinvex\Fort\Http\Requests;
+namespace Rinvex\Fort\Http\Requests\Frontend;
 
 use Rinvex\Support\Http\Requests\FormRequest;
 
-class TwoFactorTotp extends FormRequest
+class UserRegistration extends FormRequest
 {
     /**
      * {@inheritdoc}
@@ -25,8 +25,8 @@ class TwoFactorTotp extends FormRequest
     public function forbiddenResponse()
     {
         return intend([
-            'intended'   => route('rinvex.fort.frontend.account.page'),
-            'withErrors' => ['token' => trans('rinvex.fort::frontend/messages.verification.twofactor.totp.globaly_disabled')],
+            'intended'   => url('/'),
+            'withErrors' => ['rinvex.fort.registration.disabled' => trans('rinvex.fort::frontend/messages.register.disabled')],
         ]);
     }
 
@@ -37,7 +37,7 @@ class TwoFactorTotp extends FormRequest
      */
     public function authorize()
     {
-        return in_array('totp', config('rinvex.fort.twofactor.providers'));
+        return config('rinvex.fort.registration.enabled');
     }
 
     /**
@@ -47,6 +47,10 @@ class TwoFactorTotp extends FormRequest
      */
     public function rules()
     {
-        return [];
+        return $this->isMethod('post') ? [
+            'email'    => 'required|email|max:255|unique:'.config('rinvex.fort.tables.users').',email',
+            'username' => 'required|max:255|unique:'.config('rinvex.fort.tables.users').',username',
+            'password' => 'required|min:6|confirmed',
+        ] : [];
     }
 }

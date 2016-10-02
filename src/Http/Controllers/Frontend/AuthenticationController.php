@@ -18,8 +18,8 @@ namespace Rinvex\Fort\Http\Controllers\Frontend;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Rinvex\Fort\Guards\SessionGuard;
-use Rinvex\Fort\Http\Requests\UserAuthentication;
 use Rinvex\Fort\Http\Controllers\AbstractController;
+use Rinvex\Fort\Http\Requests\Frontend\UserAuthentication;
 
 class AuthenticationController extends AbstractController
 {
@@ -54,7 +54,7 @@ class AuthenticationController extends AbstractController
     /**
      * Process to the login form.
      *
-     * @param \Rinvex\Fort\Http\Requests\UserAuthentication $request
+     * @param \Rinvex\Fort\Http\Requests\Frontend\UserAuthentication $request
      *
      * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse
      */

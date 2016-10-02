@@ -15,10 +15,10 @@
 
 namespace Rinvex\Fort\Http\Controllers\Frontend;
 
-use Rinvex\Fort\Http\Requests\UserRegistration;
 use Rinvex\Fort\Contracts\UserRepositoryContract;
 use Rinvex\Fort\Http\Controllers\AbstractController;
 use Rinvex\Fort\Contracts\VerificationBrokerContract;
+use Rinvex\Fort\Http\Requests\Frontend\UserRegistration;
 
 class RegistrationController extends AbstractController
 {
@@ -35,7 +35,7 @@ class RegistrationController extends AbstractController
     /**
      * Show the registration form.
      *
-     * @param \Rinvex\Fort\Http\Requests\UserRegistration $request
+     * @param \Rinvex\Fort\Http\Requests\Frontend\UserRegistration $request
      *
      * @return \Illuminate\Http\Response
      */
@@ -47,7 +47,7 @@ class RegistrationController extends AbstractController
     /**
      * Process the registration form.
      *
-     * @param \Rinvex\Fort\Http\Requests\UserRegistration   $request
+     * @param \Rinvex\Fort\Http\Requests\Frontend\UserRegistration   $request
      * @param \Rinvex\Fort\Contracts\UserRepositoryContract $userRepository
      *
      * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse

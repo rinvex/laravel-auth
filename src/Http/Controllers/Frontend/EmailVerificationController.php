@@ -15,9 +15,9 @@
 
 namespace Rinvex\Fort\Http\Controllers\Frontend;
 
-use Rinvex\Fort\Http\Requests\EmailVerification;
 use Rinvex\Fort\Http\Controllers\AbstractController;
 use Rinvex\Fort\Contracts\VerificationBrokerContract;
+use Rinvex\Fort\Http\Requests\Frontend\EmailVerification;
 
 class EmailVerificationController extends AbstractController
 {
@@ -34,7 +34,7 @@ class EmailVerificationController extends AbstractController
     /**
      * Process the email verification request form.
      *
-     * @param \Rinvex\Fort\Http\Requests\EmailVerification $request
+     * @param \Rinvex\Fort\Http\Requests\Frontend\EmailVerification $request
      *
      * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse
      */
@@ -63,7 +63,7 @@ class EmailVerificationController extends AbstractController
     /**
      * Process the email verification.
      *
-     * @param \Rinvex\Fort\Http\Requests\EmailVerification $request
+     * @param \Rinvex\Fort\Http\Requests\Frontend\EmailVerification $request
      *
      * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse
      */

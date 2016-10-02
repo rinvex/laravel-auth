@@ -19,10 +19,10 @@ use Carbon\Carbon;
 use Illuminate\Support\MessageBag;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\ViewErrorBag;
-use Rinvex\Fort\Http\Requests\TwoFactorTotp;
-use Rinvex\Fort\Http\Requests\TwoFactorPhone;
 use Rinvex\Fort\Services\TwoFactorTotpProvider;
 use Rinvex\Fort\Contracts\UserRepositoryContract;
+use Rinvex\Fort\Http\Requests\Frontend\TwoFactorTotp;
+use Rinvex\Fort\Http\Requests\Frontend\TwoFactorPhone;
 use Rinvex\Fort\Http\Controllers\AuthorizedController;
 
 class TwoFactorUpdateController extends AuthorizedController
@@ -51,7 +51,7 @@ class TwoFactorUpdateController extends AuthorizedController
     /**
      * Show the Two-Factor TOTP enable form.
      *
-     * @param \Rinvex\Fort\Http\Requests\TwoFactorTotp    $request
+     * @param \Rinvex\Fort\Http\Requests\Frontend\TwoFactorTotp    $request
      * @param \Rinvex\Fort\Services\TwoFactorTotpProvider $totpProvider
      *
      * @return \Illuminate\Http\Response
@@ -83,7 +83,7 @@ class TwoFactorUpdateController extends AuthorizedController
     /**
      * Process the Two-Factor TOTP enable form.
      *
-     * @param \Rinvex\Fort\Http\Requests\TwoFactorTotp    $request
+     * @param \Rinvex\Fort\Http\Requests\Frontend\TwoFactorTotp    $request
      * @param \Rinvex\Fort\Services\TwoFactorTotpProvider $totpProvider
      *
      * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse
@@ -122,7 +122,7 @@ class TwoFactorUpdateController extends AuthorizedController
     /**
      * Process the Two-Factor TOTP disable.
      *
-     * @param \Rinvex\Fort\Http\Requests\TwoFactorTotp $request
+     * @param \Rinvex\Fort\Http\Requests\Frontend\TwoFactorTotp $request
      *
      * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse
      */
@@ -146,7 +146,7 @@ class TwoFactorUpdateController extends AuthorizedController
     /**
      * Process the Two-Factor Phone enable.
      *
-     * @param \Rinvex\Fort\Http\Requests\TwoFactorPhone $request
+     * @param \Rinvex\Fort\Http\Requests\Frontend\TwoFactorPhone $request
      *
      * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse
      */
@@ -178,7 +178,7 @@ class TwoFactorUpdateController extends AuthorizedController
     /**
      * Process the Two-Factor Phone disable.
      *
-     * @param \Rinvex\Fort\Http\Requests\TwoFactorPhone $request
+     * @param \Rinvex\Fort\Http\Requests\Frontend\TwoFactorPhone $request
      *
      * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse
      */
@@ -202,7 +202,7 @@ class TwoFactorUpdateController extends AuthorizedController
     /**
      * Process the Two-Factor OTP backup.
      *
-     * @param \Rinvex\Fort\Http\Requests\TwoFactorTotp $request
+     * @param \Rinvex\Fort\Http\Requests\Frontend\TwoFactorTotp $request
      *
      * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse
      */

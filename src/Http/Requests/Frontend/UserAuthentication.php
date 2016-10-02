@@ -13,11 +13,11 @@
  * Link:    https://rinvex.com
  */
 
-namespace Rinvex\Fort\Http\Requests;
+namespace Rinvex\Fort\Http\Requests\Frontend;
 
 use Rinvex\Support\Http\Requests\FormRequest;
 
-class EmailVerification extends FormRequest
+class UserAuthentication extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -36,11 +36,9 @@ class EmailVerification extends FormRequest
      */
     public function rules()
     {
-        return $this->isMethod('post') ? [
-            'email' => 'required|email|max:255',
-        ] : [
-            'email' => 'required|email|max:255',
-            'token' => 'required|regex:/^[0-9a-zA-Z]+$/',
+        return [
+            'loginfield' => 'required',
+            'password'   => 'required',
         ];
     }
 }

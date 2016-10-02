@@ -16,8 +16,8 @@
 namespace Rinvex\Fort\Http\Controllers\Frontend;
 
 use Rinvex\Fort\Contracts\ResetBrokerContract;
-use Rinvex\Fort\Http\Requests\PasswordResetRequest;
 use Rinvex\Fort\Http\Controllers\AbstractController;
+use Rinvex\Fort\Http\Requests\Frontend\PasswordResetRequest;
 
 class ForgotPasswordController extends AbstractController
 {
@@ -44,7 +44,7 @@ class ForgotPasswordController extends AbstractController
     /**
      * Process the password reset request form.
      *
-     * @param \Rinvex\Fort\Http\Requests\PasswordResetRequest $request
+     * @param \Rinvex\Fort\Http\Requests\Frontend\PasswordResetRequest $request
      *
      * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse
      */
