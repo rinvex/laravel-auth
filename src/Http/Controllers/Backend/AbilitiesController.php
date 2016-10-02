@@ -99,19 +99,7 @@ class AbilitiesController extends AuthorizedController
      */
     public function create()
     {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param \Illuminate\Http\Request $request
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
+        return $this->form('create', 'store');
     }
 
     /**
@@ -123,7 +111,7 @@ class AbilitiesController extends AuthorizedController
      */
     public function copy($id)
     {
-        //
+        return $this->form('copy', 'store', $id);
     }
 
     /**
@@ -134,6 +122,39 @@ class AbilitiesController extends AuthorizedController
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
+    {
+        return $this->form('edit', 'update', $id);
+    }
+
+    /**
+     * Show the form for create/edit/copy of the given resource.
+     *
+     * @param string   $mode
+     * @param string   $action
+     * @param int|null $id
+     *
+     * @return \Illuminate\Http\Response
+     */
+    protected function form($mode, $action, $id = null)
+    {
+        if (! $ability = $this->abilityRepository->getModelInstance($id)) {
+            return intend([
+                'intended'   => route('rinvex.fort.backend.abilities.index'),
+                'withErrors' => ['rinvex.fort.ability.not_found' => trans('rinvex.fort::backend/messages.ability.not_found', ['ability' => $id])],
+            ]);
+        }
+
+        return view('rinvex.fort::backend.abilities.form', compact('ability', 'resources', 'mode', 'action'));
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param \Illuminate\Http\Request $request
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function store(Request $request)
     {
         //
     }

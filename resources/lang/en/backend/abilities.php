@@ -28,5 +28,10 @@ return [
     'view'        => 'View Ability',
     'copy'        => 'Copy Ability',
     'delete'      => 'Delete Ability',
+    'slug'        => 'Slug',
+    'action'      => 'Action',
+    'resource'    => 'Resource',
+    'roles'       => 'Roles',
+    'policy'      => 'Policy',
 
 ];

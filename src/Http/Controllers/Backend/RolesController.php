@@ -105,19 +105,7 @@ class RolesController extends AuthorizedController
      */
     public function create()
     {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param \Illuminate\Http\Request $request
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
+        return $this->form('create', 'store');
     }
 
     /**
@@ -129,7 +117,7 @@ class RolesController extends AuthorizedController
      */
     public function copy($id)
     {
-        //
+        return $this->form('copy', 'store', $id);
     }
 
     /**
@@ -141,6 +129,42 @@ class RolesController extends AuthorizedController
      */
     public function edit($id)
     {
+        return $this->form('edit', 'update', $id);
+    }
+
+    /**
+     * Show the form for create/edit/copy of the given resource.
+     *
+     * @param string   $mode
+     * @param string   $action
+     * @param int|null $id
+     *
+     * @return \Illuminate\Http\Response
+     */
+    protected function form($mode, $action, $id = null)
+    {
+        if (! $role = $this->roleRepository->getModelInstance($id)) {
+            return intend([
+                'intended'   => route('rinvex.fort.backend.roles.index'),
+                'withErrors' => ['rinvex.fort.role.not_found' => trans('rinvex.fort::backend/messages.role.not_found', ['role' => $id])],
+            ]);
+        }
+
+        $resources = app('rinvex.fort.ability')->findAll()->groupBy('resource');
+
+        return view('rinvex.fort::backend.roles.form', compact('role', 'resources', 'mode', 'action'));
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param \Illuminate\Http\Request $request
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function store(Request $request)
+    {
+        dd($request->all());
         //
     }
 

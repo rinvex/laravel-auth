@@ -107,19 +107,7 @@ class UsersController extends AuthorizedController
      */
     public function create()
     {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param \Illuminate\Http\Request $request
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
+        return $this->form('create', 'store');
     }
 
     /**
@@ -131,7 +119,7 @@ class UsersController extends AuthorizedController
      */
     public function copy($id)
     {
-        //
+        return $this->form('copy', 'store', $id);
     }
 
     /**
@@ -142,6 +130,42 @@ class UsersController extends AuthorizedController
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
+    {
+        return $this->form('edit', 'update', $id);
+    }
+
+    /**
+     * Show the form for create/edit/copy of the given resource.
+     *
+     * @param string   $mode
+     * @param string   $action
+     * @param int|null $id
+     *
+     * @return \Illuminate\Http\Response
+     */
+    protected function form($mode, $action, $id = null)
+    {
+        if (! $user = $this->userRepository->getModelInstance($id)) {
+            return intend([
+                'intended'   => route('rinvex.fort.backend.users.index'),
+                'withErrors' => ['rinvex.fort.user.not_found' => trans('rinvex.fort::backend/messages.user.not_found', ['user' => $id])],
+            ]);
+        }
+
+        $countries = Loader::countries();
+        $resources = app('rinvex.fort.ability')->findAll()->groupBy('resource');
+
+        return view('rinvex.fort::backend.users.form', compact('user', 'resources', 'countries', 'mode', 'action'));
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param \Illuminate\Http\Request $request
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function store(Request $request)
     {
         //
     }
