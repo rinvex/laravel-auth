@@ -25,7 +25,7 @@ return [
     'suffix'      => 'Suffix',
     'contact'     => 'Contact',
     'abilities'   => 'Abilities',
-    'password'   => 'Password',
+    'password'    => 'Password',
     'roles'       => 'Roles',
     'status'      => [
         'select'   => 'Select Status',
