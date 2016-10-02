@@ -131,21 +131,13 @@ Route::group([
 
     /*
     |--------------------------------------------------------------------------
-    | Password Routes
+    | Password Reset Routes
     |--------------------------------------------------------------------------
     */
 
     Route::group(['as' => 'passwordreset.', 'prefix' => 'passwordreset'], function () {
-
-        /*
-        |--------------------------------------------------------------------------
-        | Password Reset Routes
-        |--------------------------------------------------------------------------
-        */
-
         Route::get('request', ['as' => 'request', 'uses' => 'PasswordResetController@request']);
         Route::post('send', ['as' => 'send', 'uses' => 'PasswordResetController@send']);
-
         Route::get('reset', ['as' => 'reset', 'uses' => 'PasswordResetController@reset']);
         Route::post('process', ['as' => 'process', 'uses' => 'PasswordResetController@process']);
     });
@@ -165,10 +157,12 @@ Route::group([
         |--------------------------------------------------------------------------
         */
 
-        Route::get('phone', ['as' => 'phone', 'uses' => 'PhoneVerificationController@showPhoneVerificationRequest']);
-        Route::post('phone', ['as' => 'phone.post', 'uses' => 'PhoneVerificationController@processPhoneVerificationRequest']);
-        Route::get('phone/verify', ['as' => 'phone.verify', 'uses' => 'PhoneVerificationController@showPhoneVerification']);
-        Route::post('phone/verify', ['as' => 'phone.verify.post', 'uses' => 'PhoneVerificationController@processPhoneVerification']);
+        Route::group(['as' => 'phone.', 'prefix' => 'phone'], function () {
+            Route::get('request', ['as' => 'request', 'uses' => 'PhoneVerificationController@request']);
+            Route::post('send', ['as' => 'send', 'uses' => 'PhoneVerificationController@send']);
+            Route::get('verify', ['as' => 'verify', 'uses' => 'PhoneVerificationController@verify']);
+            Route::post('process', ['as' => 'process', 'uses' => 'PhoneVerificationController@process']);
+        });
 
         /*
         |--------------------------------------------------------------------------
@@ -176,8 +170,10 @@ Route::group([
         |--------------------------------------------------------------------------
         */
 
-        Route::get('email', ['as' => 'email', 'uses' => 'EmailVerificationController@showEmailVerificationRequest']);
-        Route::post('email', ['as' => 'email.post', 'uses' => 'EmailVerificationController@processEmailVerificationRequest']);
-        Route::get('email/verify', ['as' => 'email.verify', 'uses' => 'EmailVerificationController@processEmailVerification']);
+        Route::group(['as' => 'email.', 'prefix' => 'email'], function () {
+            Route::get('request', ['as' => 'request', 'uses' => 'EmailVerificationController@request']);
+            Route::post('send', ['as' => 'send', 'uses' => 'EmailVerificationController@send']);
+            Route::get('verify', ['as' => 'verify', 'uses' => 'EmailVerificationController@verify']);
+        });
     });
 });

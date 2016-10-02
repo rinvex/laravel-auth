@@ -30,7 +30,7 @@ class PhoneVerificationController extends AbstractController
      *
      * @return \Illuminate\Http\Response|\Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse
      */
-    public function showPhoneVerificationRequest(PhoneVerificationRequest $request)
+    public function request(PhoneVerificationRequest $request)
     {
         // If Two-Factor authentication failed, remember Two-Factor persistence
         Auth::guard($this->getGuard())->rememberTwoFactor();
@@ -45,7 +45,7 @@ class PhoneVerificationController extends AbstractController
      *
      * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse
      */
-    public function processPhoneVerificationRequest(PhoneVerificationRequest $request)
+    public function send(PhoneVerificationRequest $request)
     {
         $status = app('rinvex.fort.verifier')
             ->broker($this->getBroker())
@@ -64,7 +64,7 @@ class PhoneVerificationController extends AbstractController
      *
      * @return \Illuminate\Http\Response|\Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse
      */
-    public function showPhoneVerification(PhoneVerification $request)
+    public function verify(PhoneVerification $request)
     {
         // If Two-Factor authentication failed, remember Two-Factor persistence
         Auth::guard($this->getGuard())->rememberTwoFactor();
@@ -81,7 +81,7 @@ class PhoneVerificationController extends AbstractController
      *
      * @return \Illuminate\Http\Response|\Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse
      */
-    public function processPhoneVerification(PhoneVerification $request)
+    public function process(PhoneVerification $request)
     {
         $guard  = $this->getGuard();
         $token  = $request->get('token');

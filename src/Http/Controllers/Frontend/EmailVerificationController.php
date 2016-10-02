@@ -26,7 +26,7 @@ class EmailVerificationController extends AbstractController
      *
      * @return \Illuminate\Http\Response
      */
-    public function showEmailVerificationRequest()
+    public function request()
     {
         return view('rinvex.fort::frontend.verification.email.request');
     }
@@ -38,7 +38,7 @@ class EmailVerificationController extends AbstractController
      *
      * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse
      */
-    public function processEmailVerificationRequest(EmailVerification $request)
+    public function send(EmailVerification $request)
     {
         $result = app('rinvex.fort.verifier')
             ->broker($this->getBroker())
@@ -67,7 +67,7 @@ class EmailVerificationController extends AbstractController
      *
      * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse
      */
-    public function processEmailVerification(EmailVerification $request)
+    public function verify(EmailVerification $request)
     {
         $result = app('rinvex.fort.verifier')->broker($this->getBroker())->verify($request->except('_token'));
 
@@ -80,7 +80,7 @@ class EmailVerificationController extends AbstractController
 
             case VerificationBrokerContract::INVALID_USER:
                 return intend([
-                    'intended'   => route('rinvex.fort.frontend.verification.email'),
+                    'intended'   => route('rinvex.fort.frontend.verification.email.request'),
                     'withInput'  => $request->only('email'),
                     'withErrors' => ['email' => trans($result)],
                 ]);
@@ -88,7 +88,7 @@ class EmailVerificationController extends AbstractController
             case VerificationBrokerContract::INVALID_TOKEN:
             default:
                 return intend([
-                    'intended'   => route('rinvex.fort.frontend.verification.email'),
+                    'intended'   => route('rinvex.fort.frontend.verification.email.request'),
                     'withInput'  => $request->only('email'),
                     'withErrors' => ['token' => trans($result)],
                 ]);

@@ -10,7 +10,7 @@
                     <div class="panel-heading">{{ trans('rinvex.fort::frontend/forms.verification.email.heading') }}</div>
                     <div class="panel-body">
 
-                        <form class="form-horizontal" role="form" method="POST" action="{{ route('rinvex.fort.frontend.verification.email.post') }}">
+                        <form class="form-horizontal" role="form" method="POST" action="{{ route('rinvex.fort.frontend.verification.email.send') }}">
                             {{ csrf_field() }}
 
                             @include('rinvex.fort::frontend.alerts.success')
