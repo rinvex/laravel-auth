@@ -49,10 +49,10 @@ Route::group([
 
         Route::get('{abilityId}/copy', ['as' => 'copy', 'uses' => 'AbilitiesController@copy'])->where('abilityId', '[0-9]+');
         Route::get('create', ['as' => 'create', 'uses' => 'AbilitiesController@create']);
-        Route::post('/', ['as' => 'store', 'uses' => 'AbilitiesController@store']);
+        Route::post('create', ['as' => 'store', 'uses' => 'AbilitiesController@store']);
 
         Route::get('{abilityId}/edit', ['as' => 'edit', 'uses' => 'AbilitiesController@edit'])->where('abilityId', '[0-9]+');
-        Route::put('{abilityId}', ['as' => 'update', 'uses' => 'AbilitiesController@update'])->where('abilityId', '[0-9]+');
+        Route::put('{abilityId}/edit', ['as' => 'update', 'uses' => 'AbilitiesController@update'])->where('abilityId', '[0-9]+');
 
         Route::delete('{abilityId}', ['as' => 'delete', 'uses' => 'AbilitiesController@delete'])->where('abilityId', '[0-9]+');
     });
@@ -75,10 +75,10 @@ Route::group([
 
         Route::get('{roleId}/copy', ['as' => 'copy', 'uses' => 'RolesController@copy'])->where('roleId', '[0-9]+');
         Route::get('create', ['as' => 'create', 'uses' => 'RolesController@create']);
-        Route::post('/', ['as' => 'store', 'uses' => 'RolesController@store']);
+        Route::post('create', ['as' => 'store', 'uses' => 'RolesController@store']);
 
         Route::get('{roleId}/edit', ['as' => 'edit', 'uses' => 'RolesController@edit'])->where('roleId', '[0-9]+');
-        Route::put('{roleId}', ['as' => 'update', 'uses' => 'RolesController@update'])->where('roleId', '[0-9]+');
+        Route::put('{roleId}/edit', ['as' => 'update', 'uses' => 'RolesController@update'])->where('roleId', '[0-9]+');
 
         Route::delete('{roleId}', ['as' => 'delete', 'uses' => 'RolesController@delete'])->where('roleId', '[0-9]+');
     });
@@ -101,10 +101,10 @@ Route::group([
 
         Route::get('{userId}/copy', ['as' => 'copy', 'uses' => 'UsersController@copy'])->where('userId', '[0-9]+');
         Route::get('create', ['as' => 'create', 'uses' => 'UsersController@create']);
-        Route::post('/', ['as' => 'store', 'uses' => 'UsersController@store']);
+        Route::post('create', ['as' => 'store', 'uses' => 'UsersController@store']);
 
         Route::get('{userId}/edit', ['as' => 'edit', 'uses' => 'UsersController@edit'])->where('userId', '[0-9]+');
-        Route::put('{userId}', ['as' => 'update', 'uses' => 'UsersController@update'])->where('userId', '[0-9]+');
+        Route::put('{userId}/edit', ['as' => 'update', 'uses' => 'UsersController@update'])->where('userId', '[0-9]+');
 
         Route::delete('{userId}', ['as' => 'delete', 'uses' => 'UsersController@delete'])->where('userId', '[0-9]+');
     });
