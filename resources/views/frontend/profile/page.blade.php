@@ -80,6 +80,26 @@
                             <div class="row">
                                 <div class="col-md-12 col-sm-12 col-xs-12">
 
+                                    <div class="form-group{{ $errors->has('prefix') ? ' has-error' : '' }}">
+                                        <label for="prefix" class="col-md-3 control-label">{{ trans('rinvex.fort::frontend/forms.account.prefix') }}</label>
+
+                                        <div class="col-md-8">
+                                            <input id="prefix" name="prefix" type="text" class="form-control" value="{{ old('prefix', $currentUser->prefix) }}" placeholder="{{ old('prefix', $currentUser->prefix ?: trans('rinvex.fort::frontend/forms.account.prefix')) }}">
+
+                                            @if ($errors->has('prefix'))
+                                                <span class="help-block">
+                                                    <strong>{{ $errors->first('prefix') }}</strong>
+                                                </span>
+                                            @endif
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-12 col-sm-12 col-xs-12">
+
                                     <div class="form-group{{ $errors->has('first_name') ? ' has-error' : '' }}">
                                         <label for="first_name" class="col-md-3 control-label">{{ trans('rinvex.fort::frontend/forms.account.first_name') }}</label>
 
@@ -137,8 +157,54 @@
                                 </div>
                             </div>
 
+                            <div class="row">
+                                <div class="col-md-12 col-sm-12 col-xs-12">
+
+                                    <div class="form-group{{ $errors->has('suffix') ? ' has-error' : '' }}">
+                                        <label for="suffix" class="col-md-3 control-label">{{ trans('rinvex.fort::frontend/forms.account.suffix') }}</label>
+
+                                        <div class="col-md-8">
+                                            <input id="suffix" name="suffix" type="text" class="form-control" value="{{ old('suffix', $currentUser->suffix) }}" placeholder="{{ old('suffix', $currentUser->suffix ?: trans('rinvex.fort::frontend/forms.account.suffix')) }}">
+
+                                            @if ($errors->has('suffix'))
+                                                <span class="help-block">
+                                                    <strong>{{ $errors->first('suffix') }}</strong>
+                                                </span>
+                                            @endif
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
 
                             <hr />
+
+                            <div class="row">
+                                <div class="col-md-12 col-sm-12 col-xs-12">
+
+                                    <div class="form-group{{ $errors->has('gender') ? ' has-error' : '' }}">
+                                        <label class="col-md-3 control-label">
+                                            {{ trans('rinvex.fort::frontend/forms.account.gender.title') }}
+                                        </label>
+
+                                        <div class="col-md-8">
+                                            <select id="gender" name="gender" class="form-control">
+                                                <option value="" disabled selected>{{ trans('rinvex.fort::frontend/forms.account.gender.select') }}</option>
+                                                <option value="male" @if(old('gender', $currentUser->gender) === 'male') selected @endif>{{ trans('rinvex.fort::frontend/forms.account.gender.male') }}</option>
+                                                <option value="female" @if(old('gender', $currentUser->gender) === 'female') selected @endif>{{ trans('rinvex.fort::frontend/forms.account.gender.female') }}</option>
+                                                <option value="undisclosed" @if(old('gender', $currentUser->gender) === 'undisclosed') selected @endif>{{ trans('rinvex.fort::frontend/forms.account.gender.undisclosed') }}</option>
+                                            </select>
+
+                                            @if ($errors->has('gender'))
+                                                <span class="help-block">
+                                                    <strong>{{ $errors->first('gender') }}</strong>
+                                                </span>
+                                            @endif
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
 
                             <div class="row">
                                 <div class="col-md-12 col-sm-12 col-xs-12">
