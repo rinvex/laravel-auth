@@ -74,7 +74,7 @@ class ResetBroker implements ResetBrokerContract
         }
 
         // Fire the password request start event
-        event('rinvex.fort.password.forgot.start', [$user]);
+        event('rinvex.fort.passwordreset.request.start', [$user]);
 
         // Once we have the reset password token, we are ready to send the message out
         // to this user with a link for password. We will then redirect back to the
@@ -85,7 +85,7 @@ class ResetBroker implements ResetBrokerContract
         $user->sendPasswordResetNotification($token, $expiration);
 
         // Fire the password request sent event
-        event('rinvex.fort.password.forgot.success', [$user]);
+        event('rinvex.fort.passwordreset.request.success', [$user]);
 
         return static::LINK_SENT;
     }
@@ -111,7 +111,7 @@ class ResetBroker implements ResetBrokerContract
         }
 
         // Fire the password reset start event
-        event('rinvex.fort.password.reset.start', [$user]);
+        event('rinvex.fort.passwordreset.reset.start', [$user]);
 
         // Update user password
         app('rinvex.fort.user')->update($user, [
@@ -129,7 +129,7 @@ class ResetBroker implements ResetBrokerContract
         $this->deleteToken($credentials['token']);
 
         // Fire the password reset success event
-        event('rinvex.fort.password.reset.success', [$user]);
+        event('rinvex.fort.passwordreset.reset.success', [$user]);
 
         return static::RESET_SUCCESS;
     }

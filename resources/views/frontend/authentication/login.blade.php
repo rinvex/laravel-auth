@@ -72,7 +72,7 @@
                                 <div class="col-md-12 col-sm-12 col-xs-12 text-center">
 
                                     <button type="submit" class="btn btn-primary"><i class="fa fa-btn fa-sign-in"></i>{{ trans('rinvex.fort::frontend/forms.login.submit') }}</button>
-                                    <a class="btn btn-link" href="{{ route('rinvex.fort.frontend.password.forgot') }}">{{ trans('rinvex.fort::frontend/forms.login.forgot_password') }}</a>
+                                    <a class="btn btn-link" href="{{ route('rinvex.fort.frontend.passwordreset.request') }}">{{ trans('rinvex.fort::frontend/forms.login.forgot_password') }}</a>
 
                                 </div>
                             </div>

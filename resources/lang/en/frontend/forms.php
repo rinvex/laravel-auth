@@ -45,12 +45,12 @@ return [
         'submit'          => 'Login',
     ],
 
-    'password' => [
+    'passwordreset' => [
         'email'                 => 'Email Address',
-        'password'              => 'Password',
-        'password_confirmation' => 'Password Confirmation',
+        'password'              => 'New Password',
+        'password_confirmation' => 'New Password Confirmation',
 
-        'forgot' => [
+        'request' => [
             'heading' => 'Request Password Reset',
             'submit'  => 'Request Password Reset',
         ],

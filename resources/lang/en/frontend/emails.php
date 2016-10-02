@@ -33,8 +33,8 @@ return [
         ],
     ],
 
-    'password' => [
-        'forgot' => [
+    'passwordreset' => [
+        'request' => [
             'action'  => 'Reset Password',
             'subject' => 'Your Password Reset Link',
             'intro'   => 'You are receiving this email because we received a password reset request for your account. Click the button below to reset your password:',

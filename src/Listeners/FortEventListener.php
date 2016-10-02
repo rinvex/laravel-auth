@@ -113,10 +113,10 @@ class FortEventListener
         $dispatcher->listen('rinvex.fort.register.social.success', __CLASS__.'@registerSocialSuccess');
 
         // Reset password events
-        $dispatcher->listen('rinvex.fort.password.reset.start', __CLASS__.'@passwordResetStart');
-        $dispatcher->listen('rinvex.fort.password.reset.success', __CLASS__.'@passwordResetSuccess');
-        $dispatcher->listen('rinvex.fort.password.forgot.start', __CLASS__.'@passwordForgotStart');
-        $dispatcher->listen('rinvex.fort.password.forgot.success', __CLASS__.'@passwordForgotSuccess');
+        $dispatcher->listen('rinvex.fort.passwordreset.reset.start', __CLASS__.'@passwordResetStart');
+        $dispatcher->listen('rinvex.fort.passwordreset.reset.success', __CLASS__.'@passwordResetSuccess');
+        $dispatcher->listen('rinvex.fort.passwordreset.request.start', __CLASS__.'@passwordForgotStart');
+        $dispatcher->listen('rinvex.fort.passwordreset.request.success', __CLASS__.'@passwordForgotSuccess');
 
         // Email verification events
         $dispatcher->listen('rinvex.fort.verification.email.verify.start', __CLASS__.'@verificationEmailVerifyStart');
