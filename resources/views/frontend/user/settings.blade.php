@@ -16,7 +16,7 @@
                     <div class="panel-body">
 
                         {{-- Form --}}
-                        <form id="rinvex-fort-user-account-form" class="form-horizontal" role="form" method="POST" action="{{ route('rinvex.fort.frontend.account.page.post') }}">
+                        <form id="rinvex-fort-user-account-form" class="form-horizontal" role="form" method="POST" action="{{ route('rinvex.fort.frontend.user.settings.update') }}">
 
                             {{-- Form: CSRF Token --}}
                             {{ csrf_field() }}
@@ -333,9 +333,9 @@
 
                                                         <div class="panel panel-primary">
                                                             <div class="panel-heading">
-                                                                <a class="btn btn-default btn-xs pull-right" style="margin-left: 10px" href="{{ route('rinvex.fort.frontend.account.twofactor.totp.enable') }}">@if(array_get($twoFactor, 'totp.enabled')) {{ trans('rinvex.fort::frontend/forms.account.settings') }} @else {{ trans('rinvex.fort::frontend/forms.account.enable') }} @endif</a>
+                                                                <a class="btn btn-default btn-xs pull-right" style="margin-left: 10px" href="{{ route('rinvex.fort.frontend.user.twofactor.totp.enable') }}">@if(array_get($twoFactor, 'totp.enabled')) {{ trans('rinvex.fort::frontend/forms.account.settings') }} @else {{ trans('rinvex.fort::frontend/forms.account.enable') }} @endif</a>
                                                                 @if(array_get($twoFactor, 'totp.enabled'))
-                                                                    <a class="btn btn-default btn-xs pull-right" href="{{ route('rinvex.fort.frontend.account.twofactor.totp.disable') }}">{{ trans('rinvex.fort::frontend/forms.account.disable') }}</a>
+                                                                    <a class="btn btn-default btn-xs pull-right" href="{{ route('rinvex.fort.frontend.user.twofactor.totp.disable') }}">{{ trans('rinvex.fort::frontend/forms.account.disable') }}</a>
                                                                 @endif
                                                                 <h3 class="panel-title">
                                                                     {{ trans('rinvex.fort::frontend/forms.account.twofactor_totp_head') }}
@@ -353,9 +353,9 @@
                                                         <div class="panel panel-primary">
                                                             <div class="panel-heading">
                                                                 @if(array_get($twoFactor, 'phone.enabled'))
-                                                                    <a class="btn btn-default btn-xs pull-right" href="{{ route('rinvex.fort.frontend.account.twofactor.phone.disable') }}">{{ trans('rinvex.fort::frontend/forms.account.disable') }}</a>
+                                                                    <a class="btn btn-default btn-xs pull-right" href="{{ route('rinvex.fort.frontend.user.twofactor.phone.disable') }}">{{ trans('rinvex.fort::frontend/forms.account.disable') }}</a>
                                                                 @else
-                                                                    <a class="btn btn-default btn-xs pull-right" href="{{ route('rinvex.fort.frontend.account.twofactor.phone.enable') }}">{{ trans('rinvex.fort::frontend/forms.account.enable') }}</a>
+                                                                    <a class="btn btn-default btn-xs pull-right" href="{{ route('rinvex.fort.frontend.user.twofactor.phone.enable') }}">{{ trans('rinvex.fort::frontend/forms.account.enable') }}</a>
                                                                 @endif
                                                                 <h3 class="panel-title">
                                                                     {{ trans('rinvex.fort::frontend/forms.account.twofactor_phone_head') }}

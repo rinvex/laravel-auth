@@ -25,7 +25,7 @@ class TwoFactorPhone extends FormRequest
     public function forbiddenResponse()
     {
         return intend([
-            'intended'   => route('rinvex.fort.frontend.account.page'),
+            'intended'   => route('rinvex.fort.frontend.user.settings'),
             'withErrors' => ['token' => trans('rinvex.fort::frontend/messages.verification.twofactor.phone.globaly_disabled')],
         ]);
     }

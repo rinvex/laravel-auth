@@ -91,7 +91,7 @@ class PhoneVerificationController extends AbstractController
         switch ($result) {
             case SessionGuard::AUTH_PHONE_VERIFIED:
                 return intend([
-                    'intended' => route('rinvex.fort.frontend.account.page'),
+                    'intended' => route('rinvex.fort.frontend.user.settings'),
                     'with'     => ['rinvex.fort.alert.success' => trans($result)],
                 ]);
 

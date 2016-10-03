@@ -30,7 +30,7 @@ class PhoneVerification extends FormRequest
 
         return $user && ! $user->country ? intend([
             // Logged in user, no country, phone verification attempt (account update)
-            'intended'   => route('rinvex.fort.frontend.account.page'),
+            'intended'   => route('rinvex.fort.frontend.user.settings'),
             'withErrors' => ['country' => trans('rinvex.fort::frontend/messages.account.country_required')],
         ]) : ($attemptUser && ! $attemptUser->country ? intend([
             // Login attempt, no country, enabled Two-Factor

@@ -18,16 +18,16 @@ namespace Rinvex\Fort\Http\Controllers\Frontend;
 use Illuminate\Support\Facades\Auth;
 use Rinvex\Fort\Http\Controllers\AuthorizedController;
 
-class ManagePersistenceController extends AuthorizedController
+class UserSessionsController extends AuthorizedController
 {
     /**
      * Show the account sessions.
      *
      * @return \Illuminate\Http\Response
      */
-    public function showPersistence()
+    public function index()
     {
-        return view('rinvex.fort::frontend.profile.persistence');
+        return view('rinvex.fort::frontend.user.sessions');
     }
 
     /**
@@ -37,7 +37,7 @@ class ManagePersistenceController extends AuthorizedController
      *
      * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse
      */
-    public function processPersistenceFlush($token = null)
+    public function flush($token = null)
     {
         $status = '';
 

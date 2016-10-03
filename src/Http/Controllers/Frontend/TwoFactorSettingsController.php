@@ -25,7 +25,7 @@ use Rinvex\Fort\Http\Requests\Frontend\TwoFactorTotp;
 use Rinvex\Fort\Http\Requests\Frontend\TwoFactorPhone;
 use Rinvex\Fort\Http\Controllers\AuthorizedController;
 
-class TwoFactorUpdateController extends AuthorizedController
+class TwoFactorSettingsController extends AuthorizedController
 {
     /**
      * The user repository instance.
@@ -56,7 +56,7 @@ class TwoFactorUpdateController extends AuthorizedController
      *
      * @return \Illuminate\Http\Response
      */
-    public function showTwoFactorTotpEnable(TwoFactorTotp $request, TwoFactorTotpProvider $totpProvider)
+    public function enableTotp(TwoFactorTotp $request, TwoFactorTotpProvider $totpProvider)
     {
         $currentUser = $this->currentUser();
         $settings    = $currentUser->getTwoFactor();
@@ -77,7 +77,7 @@ class TwoFactorUpdateController extends AuthorizedController
 
         $qrCode = $totpProvider->getQRCodeInline(config('rinvex.fort.twofactor.issuer'), $currentUser->email, $secret);
 
-        return view('rinvex.fort::frontend.profile.twofactor', compact('secret', 'qrCode', 'settings', 'errors'));
+        return view('rinvex.fort::frontend.user.twofactor', compact('secret', 'qrCode', 'settings', 'errors'));
     }
 
     /**
@@ -88,7 +88,7 @@ class TwoFactorUpdateController extends AuthorizedController
      *
      * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse
      */
-    public function processTwoFactorTotpEnable(TwoFactorTotp $request, TwoFactorTotpProvider $totpProvider)
+    public function updateTotp(TwoFactorTotp $request, TwoFactorTotpProvider $totpProvider)
     {
         $currentUser = $this->currentUser();
         $settings    = $currentUser->getTwoFactor();
@@ -99,7 +99,7 @@ class TwoFactorUpdateController extends AuthorizedController
         if ($totpProvider->verifyKey($secret, $request->get('token'))) {
             array_set($settings, 'totp.enabled', true);
             array_set($settings, 'totp.secret', $secret);
-            array_set($settings, 'totp.backup', $backup ?: $this->generateTwoFactorTotpBackups());
+            array_set($settings, 'totp.backup', $backup ?: $this->generateTotpBackups());
             array_set($settings, 'totp.backup_at', $backupAt ?: (new Carbon())->toDateTimeString());
 
             // Update Two-Factor settings
@@ -126,7 +126,7 @@ class TwoFactorUpdateController extends AuthorizedController
      *
      * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse
      */
-    public function processTwoFactorTotpDisable(TwoFactorTotp $request)
+    public function disableTotp(TwoFactorTotp $request)
     {
         $currentUser = $this->currentUser();
         $settings    = $currentUser->getTwoFactor();
@@ -138,7 +138,7 @@ class TwoFactorUpdateController extends AuthorizedController
         ]);
 
         return intend([
-            'intended' => route('rinvex.fort.frontend.account.page'),
+            'intended' => route('rinvex.fort.frontend.user.settings'),
             'with'     => ['rinvex.fort.alert.success' => trans('rinvex.fort::frontend/messages.verification.twofactor.totp.disabled')],
         ]);
     }
@@ -150,13 +150,13 @@ class TwoFactorUpdateController extends AuthorizedController
      *
      * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse
      */
-    public function processTwoFactorPhoneEnable(TwoFactorPhone $request)
+    public function enablePhone(TwoFactorPhone $request)
     {
         $currentUser = $this->currentUser();
 
         if (! $currentUser->phone || ! $currentUser->phone_verified) {
             return intend([
-                'intended'   => route('rinvex.fort.frontend.account.page'),
+                'intended'   => route('rinvex.fort.frontend.user.settings'),
                 'withErrors' => ['phone' => trans('rinvex.fort::frontend/messages.account.phone_required')],
             ]);
         }
@@ -170,7 +170,7 @@ class TwoFactorUpdateController extends AuthorizedController
         ]);
 
         return intend([
-            'intended' => route('rinvex.fort.frontend.account.page'),
+            'intended' => route('rinvex.fort.frontend.user.settings'),
             'with'     => ['rinvex.fort.alert.success' => trans('rinvex.fort::frontend/messages.verification.twofactor.phone.enabled')],
         ]);
     }
@@ -182,7 +182,7 @@ class TwoFactorUpdateController extends AuthorizedController
      *
      * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse
      */
-    public function processTwoFactorPhoneDisable(TwoFactorPhone $request)
+    public function disablePhone(TwoFactorPhone $request)
     {
         $currentUser = $this->currentUser();
         $settings    = $currentUser->getTwoFactor();
@@ -194,7 +194,7 @@ class TwoFactorUpdateController extends AuthorizedController
         ]);
 
         return intend([
-            'intended' => route('rinvex.fort.frontend.account.page'),
+            'intended' => route('rinvex.fort.frontend.user.settings'),
             'with'     => ['rinvex.fort.alert.success' => trans('rinvex.fort::frontend/messages.verification.twofactor.phone.disabled')],
         ]);
     }
@@ -206,19 +206,19 @@ class TwoFactorUpdateController extends AuthorizedController
      *
      * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse
      */
-    public function processTwoFactorTotpBackup(TwoFactorTotp $request)
+    public function backupTotp(TwoFactorTotp $request)
     {
         $currentUser = $this->currentUser();
         $settings    = $currentUser->getTwoFactor();
 
         if (! array_get($settings, 'totp.enabled')) {
             return intend([
-                'intended'   => route('rinvex.fort.frontend.account.page'),
+                'intended'   => route('rinvex.fort.frontend.user.settings'),
                 'withErrors' => ['rinvex.fort.verification.twofactor.totp.cant_backup' => trans('rinvex.fort::frontend/messages.verification.twofactor.totp.cant_backup')],
             ]);
         }
 
-        array_set($settings, 'totp.backup', $this->generateTwoFactorTotpBackups());
+        array_set($settings, 'totp.backup', $this->generateTotpBackups());
         array_set($settings, 'totp.backup_at', (new Carbon())->toDateTimeString());
 
         $this->userRepository->update($currentUser, [
@@ -236,7 +236,7 @@ class TwoFactorUpdateController extends AuthorizedController
      *
      * @return array
      */
-    protected function generateTwoFactorTotpBackups()
+    protected function generateTotpBackups()
     {
         $backup = [];
 

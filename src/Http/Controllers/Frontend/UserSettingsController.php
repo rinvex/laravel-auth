@@ -21,7 +21,7 @@ use Rinvex\Fort\Contracts\UserRepositoryContract;
 use Rinvex\Fort\Http\Requests\Frontend\ProfileUpdate;
 use Rinvex\Fort\Http\Controllers\AuthorizedController;
 
-class ProfileUpdateController extends AuthorizedController
+class UserSettingsController extends AuthorizedController
 {
     /**
      * The user repository instance.
@@ -49,12 +49,12 @@ class ProfileUpdateController extends AuthorizedController
      *
      * @return \Illuminate\Http\Response
      */
-    public function showProfileUpdate()
+    public function edit()
     {
         $countries = Loader::countries();
         $twoFactor = $this->currentUser()->getTwoFactor();
 
-        return view('rinvex.fort::frontend.profile.page', compact('twoFactor', 'countries'));
+        return view('rinvex.fort::frontend.user.settings', compact('twoFactor', 'countries'));
     }
 
     /**
@@ -64,7 +64,7 @@ class ProfileUpdateController extends AuthorizedController
      *
      * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse
      */
-    public function processProfileUpdate(ProfileUpdate $request)
+    public function update(ProfileUpdate $request)
     {
         $currentUser = $this->currentUser();
         $data        = $request->except(['_token', 'id']);
