@@ -51,8 +51,8 @@ class TwoFactorSettingsController extends AuthorizedController
     /**
      * Show the Two-Factor TOTP enable form.
      *
-     * @param \Rinvex\Fort\Http\Requests\Frontend\TwoFactorTotp    $request
-     * @param \Rinvex\Fort\Services\TwoFactorTotpProvider $totpProvider
+     * @param \Rinvex\Fort\Http\Requests\Frontend\TwoFactorTotp $request
+     * @param \Rinvex\Fort\Services\TwoFactorTotpProvider       $totpProvider
      *
      * @return \Illuminate\Http\Response
      */
@@ -83,8 +83,8 @@ class TwoFactorSettingsController extends AuthorizedController
     /**
      * Process the Two-Factor TOTP enable form.
      *
-     * @param \Rinvex\Fort\Http\Requests\Frontend\TwoFactorTotp    $request
-     * @param \Rinvex\Fort\Services\TwoFactorTotpProvider $totpProvider
+     * @param \Rinvex\Fort\Http\Requests\Frontend\TwoFactorTotp $request
+     * @param \Rinvex\Fort\Services\TwoFactorTotpProvider       $totpProvider
      *
      * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse
      */
