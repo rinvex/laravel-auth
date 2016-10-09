@@ -57,12 +57,11 @@ class RegistrationController extends AbstractController
         $result = $userRepository->create($request->except('_token'));
 
         switch ($result) {
-
             // Registration completed, verification required
             case VerificationBrokerContract::LINK_SENT:
                 return intend([
-                    'home' => true,
-                    'with' => ['rinvex.fort.alert.success' => trans('rinvex.fort::frontend/messages.register.success_verify')],
+                    'intended' => url('/'),
+                    'with'     => ['rinvex.fort.alert.success' => trans('rinvex.fort::frontend/messages.register.success_verify')],
                 ]);
 
             // Registration completed successfully

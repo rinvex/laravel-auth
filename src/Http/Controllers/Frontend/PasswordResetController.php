@@ -87,7 +87,7 @@ class PasswordResetController extends AbstractController
             case ResetBrokerContract::INVALID_USER:
             case ResetBrokerContract::INVALID_TOKEN:
                 return intend([
-                    'intended'   => route('rinvex.fort.frontend.passwordreset.request'),
+                    'route'      => 'rinvex.fort.frontend.passwordreset.request',
                     'withInput'  => $request->only('email'),
                     'withErrors' => ['email' => trans($result)],
                 ]);
@@ -121,7 +121,7 @@ class PasswordResetController extends AbstractController
             case ResetBrokerContract::INVALID_PASSWORD:
             default:
                 return intend([
-                    'intended'   => route('rinvex.fort.frontend.passwordreset.request'),
+                    'back'       => true,
                     'withInput'  => $request->only('email'),
                     'withErrors' => ['email' => trans($result)],
                 ]);

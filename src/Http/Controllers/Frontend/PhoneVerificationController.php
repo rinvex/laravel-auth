@@ -52,8 +52,8 @@ class PhoneVerificationController extends AbstractController
             ->sendPhoneVerification(Auth::guard($this->getGuard())->user(), $request->get('method')) ? 'sent' : 'failed';
 
         return intend([
-            'intended' => route('rinvex.fort.frontend.verification.phone.verify'),
-            'with'     => ['rinvex.fort.alert.success' => trans('rinvex.fort::frontend/messages.verification.phone.'.$status)],
+            'route' => 'rinvex.fort.frontend.verification.phone.verify',
+            'with'  => ['rinvex.fort.alert.success' => trans('rinvex.fort::frontend/messages.verification.phone.'.$status)],
         ]);
     }
 
@@ -91,8 +91,8 @@ class PhoneVerificationController extends AbstractController
         switch ($result) {
             case SessionGuard::AUTH_PHONE_VERIFIED:
                 return intend([
-                    'intended' => route('rinvex.fort.frontend.user.settings'),
-                    'with'     => ['rinvex.fort.alert.success' => trans($result)],
+                    'route' => 'rinvex.fort.frontend.user.settings',
+                    'with'  => ['rinvex.fort.alert.success' => trans($result)],
                 ]);
 
             case SessionGuard::AUTH_LOGIN:
