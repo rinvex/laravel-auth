@@ -24,9 +24,9 @@
                 <h4>
                     <a href="{{ route('rinvex.fort.backend.abilities.index') }}">{{ trans('rinvex.fort::backend/abilities.heading') }}</a> / {{ trans('rinvex.fort::backend/abilities.view') }} » {{ $ability->slug }}
                     <span class="pull-right" style="margin-top: -7px">
-                        <a href="{{ route('rinvex.fort.backend.abilities.edit', ['abilityId' => $ability->id]) }}" class="btn btn-default"><i class="fa fa-pencil text-primary"></i></a>
+                        <a href="{{ route('rinvex.fort.backend.abilities.edit', ['ability' => $ability]) }}" class="btn btn-default"><i class="fa fa-pencil text-primary"></i></a>
                         <a href="{{ route('rinvex.fort.backend.abilities.copy', ['ability' => $ability->id]) }}" class="btn btn-default"><i class="fa fa-copy text-success"></i></a>
-                        <a href="#" class="btn btn-default" data-toggle="modal" data-target="#delete-confirmation" data-item-href="{{ route('rinvex.fort.backend.abilities.delete', ['abilityId' => $ability->id]) }}" data-item-name="{{ $ability->slug }}"><i class="fa fa-trash-o text-danger"></i></a>
+                        <a href="#" class="btn btn-default" data-toggle="modal" data-target="#delete-confirmation" data-item-href="{{ route('rinvex.fort.backend.abilities.delete', ['ability' => $ability]) }}" data-item-name="{{ $ability->slug }}"><i class="fa fa-trash-o text-danger"></i></a>
                         <a href="{{ route('rinvex.fort.backend.abilities.create') }}" class="btn btn-default"><i class="fa fa-plus"></i></a>
                     </span>
                 </h4>

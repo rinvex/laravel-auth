@@ -68,19 +68,12 @@ class RolesController extends AuthorizedController
     /**
      * Display the specified resource.
      *
-     * @param int $id
+     * @param \Rinvex\Fort\Models\Role $role
      *
      * @return \Illuminate\Http\Response|\Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse
      */
-    public function show($id)
+    public function show(Role $role)
     {
-        if (! $role = $this->roleRepository->find($id)) {
-            return intend([
-                'intended'   => route('rinvex.fort.backend.roles.index'),
-                'withErrors' => ['rinvex.fort.role.not_found' => trans('rinvex.fort::backend/messages.role.not_found', ['role' => $id])],
-            ]);
-        }
-
         $actions   = ['view', 'create', 'edit', 'delete', 'import', 'export'];
         $resources = app('rinvex.fort.ability')->findAll()->groupBy('resource');
         $columns   = ['resource', 'view', 'create', 'edit', 'delete', 'import', 'export', 'other'];
@@ -105,51 +98,44 @@ class RolesController extends AuthorizedController
      */
     public function create()
     {
-        return $this->form('create', 'store');
+        return $this->form('create', 'store', $this->roleRepository->createModel());
     }
 
     /**
      * Show the form for copying the given resource.
      *
-     * @param int $id
+     * @param \Rinvex\Fort\Models\Role $role
      *
      * @return \Illuminate\Http\Response
      */
-    public function copy($id)
+    public function copy(Role $role)
     {
-        return $this->form('copy', 'store', $id);
+        return $this->form('copy', 'store', $role);
     }
 
     /**
      * Show the form for editing the given resource.
      *
-     * @param int $id
+     * @param \Rinvex\Fort\Models\Role $role
      *
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Role $role)
     {
-        return $this->form('edit', 'update', $id);
+        return $this->form('edit', 'update', $role);
     }
 
     /**
      * Show the form for create/edit/copy of the given resource.
      *
-     * @param string   $mode
-     * @param string   $action
-     * @param int|null $id
+     * @param string                   $mode
+     * @param string                   $action
+     * @param \Rinvex\Fort\Models\Role $role
      *
      * @return \Illuminate\Http\Response
      */
-    protected function form($mode, $action, $id = null)
+    protected function form($mode, $action, Role $role)
     {
-        if (! $role = $this->roleRepository->getModelInstance($id)) {
-            return intend([
-                'intended'   => route('rinvex.fort.backend.roles.index'),
-                'withErrors' => ['rinvex.fort.role.not_found' => trans('rinvex.fort::backend/messages.role.not_found', ['role' => $id])],
-            ]);
-        }
-
         $resources = app('rinvex.fort.ability')->findAll()->groupBy('resource');
 
         return view('rinvex.fort::backend.roles.form', compact('role', 'resources', 'mode', 'action'));
@@ -164,7 +150,6 @@ class RolesController extends AuthorizedController
      */
     public function store(Request $request)
     {
-        dd($request->all());
         //
     }
 
@@ -172,11 +157,11 @@ class RolesController extends AuthorizedController
      * Update the given resource in storage.
      *
      * @param \Illuminate\Http\Request $request
-     * @param int                      $id
+     * @param \Rinvex\Fort\Models\Role $role
      *
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Role $role)
     {
         //
     }
@@ -184,11 +169,11 @@ class RolesController extends AuthorizedController
     /**
      * Delete the given resource from storage.
      *
-     * @param int $id
+     * @param \Rinvex\Fort\Models\Role $role
      *
      * @return \Illuminate\Http\Response
      */
-    public function delete($id)
+    public function delete(Role $role)
     {
         //
     }

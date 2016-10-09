@@ -19,7 +19,7 @@
             @include('rinvex.fort::backend.common.confirm-modal', ['type' => 'user'])
         @endif
 
-        <form id="backend-content-form" action="{{ ($action === 'update' ? route('rinvex.fort.backend.users.store') : route('rinvex.fort.backend.users.update', ['userId' => $user->id])) }}" user="form" method="post">
+        <form id="backend-content-form" action="{{ ($action === 'update' ? route('rinvex.fort.backend.users.store') : route('rinvex.fort.backend.users.update', ['user' => $user])) }}" user="form" method="post">
             {{ csrf_field() }}
 
             <div class="panel panel-default">
@@ -30,9 +30,9 @@
                         <a href="{{ route('rinvex.fort.backend.users.index') }}">{{ trans('rinvex.fort::backend/users.heading') }}</a> / {{ trans('rinvex.fort::backend/users.'.$mode) }} @if($user->exists) » {{ $user->username }} @endif
                         @if($user->exists && $mode !== 'copy')
                             <span class="pull-right" style="margin-top: -7px">
-                                <a href="{{ route('rinvex.fort.backend.users.show', ['userId' => $user->id]) }}" class="btn btn-default"><i class="fa fa-eye text-primary"></i></a>
-                                <a href="{{ route('rinvex.fort.backend.users.copy', ['userId' => $user->id]) }}" class="btn btn-default"><i class="fa fa-copy text-success"></i></a>
-                                <a href="#" class="btn btn-default" data-toggle="modal" data-target="#delete-confirmation" data-item-href="{{ route('rinvex.fort.backend.users.delete', ['userId' => $user->id]) }}" data-item-name="{{ $user->username }}"><i class="fa fa-trash-o text-danger"></i></a>
+                                <a href="{{ route('rinvex.fort.backend.users.show', ['user' => $user]) }}" class="btn btn-default"><i class="fa fa-eye text-primary"></i></a>
+                                <a href="{{ route('rinvex.fort.backend.users.copy', ['user' => $user]) }}" class="btn btn-default"><i class="fa fa-copy text-success"></i></a>
+                                <a href="#" class="btn btn-default" data-toggle="modal" data-target="#delete-confirmation" data-item-href="{{ route('rinvex.fort.backend.users.delete', ['user' => $user]) }}" data-item-name="{{ $user->username }}"><i class="fa fa-trash-o text-danger"></i></a>
                                 <a href="{{ route('rinvex.fort.backend.users.create') }}" class="btn btn-default"><i class="fa fa-plus"></i></a>
                             </span>
                         @endif

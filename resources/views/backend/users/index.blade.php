@@ -53,7 +53,7 @@
 
                                 <tr>
                                     <td>
-                                        <a href="{{ route('rinvex.fort.backend.users.show', ['userId' => $user->id]) }}">
+                                        <a href="{{ route('rinvex.fort.backend.users.show', ['user' => $user]) }}">
                                             <strong>
                                                 @if($user->first_name)
                                                     {{ $user->first_name }} {{ $user->middle_name }} {{ $user->last_name }}
@@ -102,8 +102,8 @@
                                     </td>
 
                                     <td class="text-right">
-                                        <a href="{{ route('rinvex.fort.backend.users.edit', ['userId' => $user->id]) }}" class="btn btn-xs btn-default"><i class="fa fa-pencil text-primary"></i></a>
-                                        <a href="#" class="btn btn-xs btn-default" data-toggle="modal" data-target="#delete-confirmation" data-href="{{ route('rinvex.fort.backend.users.delete', ['userId' => $user->id]) }}" data-item-name="{{ $user->username }}"><i class="fa fa-trash-o text-danger"></i></a>
+                                        <a href="{{ route('rinvex.fort.backend.users.edit', ['user' => $user]) }}" class="btn btn-xs btn-default"><i class="fa fa-pencil text-primary"></i></a>
+                                        <a href="#" class="btn btn-xs btn-default" data-toggle="modal" data-target="#delete-confirmation" data-href="{{ route('rinvex.fort.backend.users.delete', ['user' => $user]) }}" data-item-name="{{ $user->username }}"><i class="fa fa-trash-o text-danger"></i></a>
                                     </td>
                                 </tr>
 

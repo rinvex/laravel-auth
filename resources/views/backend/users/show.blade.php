@@ -24,9 +24,9 @@
                 <h4>
                     <a href="{{ route('rinvex.fort.backend.users.index') }}">{{ trans('rinvex.fort::backend/users.heading') }}</a> / {{ trans('rinvex.fort::backend/users.view') }} » {{ $user->username }}
                     <span class="pull-right" style="margin-top: -7px">
-                        <a href="{{ route('rinvex.fort.backend.users.edit', ['userId' => $user->id]) }}" class="btn btn-default"><i class="fa fa-pencil text-primary"></i></a>
-                        <a href="{{ route('rinvex.fort.backend.users.copy', ['userId' => $user->id]) }}" class="btn btn-default"><i class="fa fa-copy text-primary"></i></a>
-                        <a href="#" class="btn btn-default" data-toggle="modal" data-target="#delete-confirmation" data-item-href="{{ route('rinvex.fort.backend.users.delete', ['userId' => $user->id]) }}" data-item-name="{{ $user->username }}"><i class="fa fa-trash-o text-danger"></i></a>
+                        <a href="{{ route('rinvex.fort.backend.users.edit', ['user' => $user]) }}" class="btn btn-default"><i class="fa fa-pencil text-primary"></i></a>
+                        <a href="{{ route('rinvex.fort.backend.users.copy', ['user' => $user]) }}" class="btn btn-default"><i class="fa fa-copy text-primary"></i></a>
+                        <a href="#" class="btn btn-default" data-toggle="modal" data-target="#delete-confirmation" data-item-href="{{ route('rinvex.fort.backend.users.delete', ['user' => $user]) }}" data-item-name="{{ $user->username }}"><i class="fa fa-trash-o text-danger"></i></a>
                         <a href="{{ route('rinvex.fort.backend.users.create') }}" class="btn btn-default"><i class="fa fa-plus"></i></a>
                     </span>
                 </h4>
