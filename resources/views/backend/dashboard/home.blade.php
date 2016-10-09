@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('rinvex.fort::backend.common.layout')
 
 {{-- Main Content --}}
 @section('content')
