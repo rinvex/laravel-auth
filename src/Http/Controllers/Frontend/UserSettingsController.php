@@ -70,10 +70,6 @@ class UserSettingsController extends AuthorizedController
         $data        = $request->except(['_token', 'id']);
         $twoFactor   = $currentUser->getTwoFactor();
 
-        if (isset($data['password'])) {
-            $data['password'] = bcrypt($data['password']);
-        }
-
         $emailVerification = $data['email'] != $currentUser->email ? [
             'email_verified'    => false,
             'email_verified_at' => null,

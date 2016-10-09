@@ -181,4 +181,16 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
     {
         return in_array($this->id, config('rinvex.fort.protected.users'));
     }
+
+    /**
+     * Set the user's password.
+     *
+     * @param string $value
+     *
+     * @return void
+     */
+    public function setPasswordAttribute($value)
+    {
+        $this->attributes['password'] = bcrypt($value);
+    }
 }
