@@ -17,7 +17,7 @@ namespace Rinvex\Fort\Http\Controllers\Frontend;
 
 use Rinvex\Fort\Http\Controllers\AbstractController;
 use Rinvex\Fort\Contracts\VerificationBrokerContract;
-use Rinvex\Fort\Http\Requests\Frontend\EmailVerification;
+use Rinvex\Fort\Http\Requests\Frontend\EmailVerificationRequest;
 
 class EmailVerificationController extends AbstractController
 {
@@ -34,11 +34,11 @@ class EmailVerificationController extends AbstractController
     /**
      * Process the email verification request form.
      *
-     * @param \Rinvex\Fort\Http\Requests\Frontend\EmailVerification $request
+     * @param \Rinvex\Fort\Http\Requests\Frontend\EmailVerificationRequest $request
      *
      * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse
      */
-    public function send(EmailVerification $request)
+    public function send(EmailVerificationRequest $request)
     {
         $result = app('rinvex.fort.verifier')
             ->broker($this->getBroker())
@@ -63,11 +63,11 @@ class EmailVerificationController extends AbstractController
     /**
      * Process the email verification.
      *
-     * @param \Rinvex\Fort\Http\Requests\Frontend\EmailVerification $request
+     * @param \Rinvex\Fort\Http\Requests\Frontend\EmailVerificationRequest $request
      *
      * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse
      */
-    public function verify(EmailVerification $request)
+    public function verify(EmailVerificationRequest $request)
     {
         $result = app('rinvex.fort.verifier')->broker($this->getBroker())->verify($request->except('_token'));
 

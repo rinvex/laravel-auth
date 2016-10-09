@@ -36,8 +36,13 @@ class PasswordResetRequest extends FormRequest
      */
     public function rules()
     {
-        return [
+        return $this->isMethod('post') ? [
+            'email'    => 'required|email|max:255',
+            'token'    => 'required|regex:/^[0-9a-zA-Z]+$/',
+            'password' => 'required|confirmed|min:6',
+        ] : [
             'email' => 'required|email|max:255',
+            'token' => 'required|regex:/^[0-9a-zA-Z]+$/',
         ];
     }
 }

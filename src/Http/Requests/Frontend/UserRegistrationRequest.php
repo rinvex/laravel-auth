@@ -17,7 +17,7 @@ namespace Rinvex\Fort\Http\Requests\Frontend;
 
 use Rinvex\Support\Http\Requests\FormRequest;
 
-class UserRegistration extends FormRequest
+class UserRegistrationRequest extends FormRequest
 {
     /**
      * {@inheritdoc}

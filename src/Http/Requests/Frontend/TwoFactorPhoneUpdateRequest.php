@@ -17,8 +17,19 @@ namespace Rinvex\Fort\Http\Requests\Frontend;
 
 use Rinvex\Support\Http\Requests\FormRequest;
 
-class EmailVerification extends FormRequest
+class TwoFactorPhoneUpdateRequest extends FormRequest
 {
+    /**
+     * {@inheritdoc}
+     */
+    public function forbiddenResponse()
+    {
+        return intend([
+            'route'      => 'rinvex.fort.frontend.user.settings',
+            'withErrors' => ['token' => trans('rinvex.fort::frontend/messages.verification.twofactor.phone.globaly_disabled')],
+        ]);
+    }
+
     /**
      * Determine if the user is authorized to make this request.
      *
@@ -26,7 +37,7 @@ class EmailVerification extends FormRequest
      */
     public function authorize()
     {
-        return true;
+        return in_array('phone', config('rinvex.fort.twofactor.providers'));
     }
 
     /**
@@ -36,11 +47,6 @@ class EmailVerification extends FormRequest
      */
     public function rules()
     {
-        return $this->isMethod('post') ? [
-            'email' => 'required|email|max:255',
-        ] : [
-            'email' => 'required|email|max:255',
-            'token' => 'required|regex:/^[0-9a-zA-Z]+$/',
-        ];
+        return [];
     }
 }

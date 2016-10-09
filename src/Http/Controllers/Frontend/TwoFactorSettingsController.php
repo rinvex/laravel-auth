@@ -21,9 +21,9 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\ViewErrorBag;
 use Rinvex\Fort\Services\TwoFactorTotpProvider;
 use Rinvex\Fort\Contracts\UserRepositoryContract;
-use Rinvex\Fort\Http\Requests\Frontend\TwoFactorTotp;
-use Rinvex\Fort\Http\Requests\Frontend\TwoFactorPhone;
 use Rinvex\Fort\Http\Controllers\AuthorizedController;
+use Rinvex\Fort\Http\Requests\Frontend\TwoFactorTotpUpdateRequest;
+use Rinvex\Fort\Http\Requests\Frontend\TwoFactorPhoneUpdateRequest;
 
 class TwoFactorSettingsController extends AuthorizedController
 {
@@ -51,12 +51,12 @@ class TwoFactorSettingsController extends AuthorizedController
     /**
      * Show the Two-Factor TOTP enable form.
      *
-     * @param \Rinvex\Fort\Http\Requests\Frontend\TwoFactorTotp $request
+     * @param \Rinvex\Fort\Http\Requests\Frontend\TwoFactorTotpUpdateRequest $request
      * @param \Rinvex\Fort\Services\TwoFactorTotpProvider       $totpProvider
      *
      * @return \Illuminate\Http\Response
      */
-    public function enableTotp(TwoFactorTotp $request, TwoFactorTotpProvider $totpProvider)
+    public function enableTotp(TwoFactorTotpUpdateRequest $request, TwoFactorTotpProvider $totpProvider)
     {
         $currentUser = $this->currentUser();
         $settings    = $currentUser->getTwoFactor();
@@ -83,12 +83,12 @@ class TwoFactorSettingsController extends AuthorizedController
     /**
      * Process the Two-Factor TOTP enable form.
      *
-     * @param \Rinvex\Fort\Http\Requests\Frontend\TwoFactorTotp $request
+     * @param \Rinvex\Fort\Http\Requests\Frontend\TwoFactorTotpUpdateRequest $request
      * @param \Rinvex\Fort\Services\TwoFactorTotpProvider       $totpProvider
      *
      * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse
      */
-    public function updateTotp(TwoFactorTotp $request, TwoFactorTotpProvider $totpProvider)
+    public function updateTotp(TwoFactorTotpUpdateRequest $request, TwoFactorTotpProvider $totpProvider)
     {
         $currentUser = $this->currentUser();
         $settings    = $currentUser->getTwoFactor();
@@ -122,11 +122,11 @@ class TwoFactorSettingsController extends AuthorizedController
     /**
      * Process the Two-Factor TOTP disable.
      *
-     * @param \Rinvex\Fort\Http\Requests\Frontend\TwoFactorTotp $request
+     * @param \Rinvex\Fort\Http\Requests\Frontend\TwoFactorTotpUpdateRequest $request
      *
      * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse
      */
-    public function disableTotp(TwoFactorTotp $request)
+    public function disableTotp(TwoFactorTotpUpdateRequest $request)
     {
         $currentUser = $this->currentUser();
         $settings    = $currentUser->getTwoFactor();
@@ -146,11 +146,11 @@ class TwoFactorSettingsController extends AuthorizedController
     /**
      * Process the Two-Factor Phone enable.
      *
-     * @param \Rinvex\Fort\Http\Requests\Frontend\TwoFactorPhone $request
+     * @param \Rinvex\Fort\Http\Requests\Frontend\TwoFactorPhoneUpdateRequest $request
      *
      * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse
      */
-    public function enablePhone(TwoFactorPhone $request)
+    public function enablePhone(TwoFactorPhoneUpdateRequest $request)
     {
         $currentUser = $this->currentUser();
 
@@ -178,11 +178,11 @@ class TwoFactorSettingsController extends AuthorizedController
     /**
      * Process the Two-Factor Phone disable.
      *
-     * @param \Rinvex\Fort\Http\Requests\Frontend\TwoFactorPhone $request
+     * @param \Rinvex\Fort\Http\Requests\Frontend\TwoFactorPhoneUpdateRequest $request
      *
      * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse
      */
-    public function disablePhone(TwoFactorPhone $request)
+    public function disablePhone(TwoFactorPhoneUpdateRequest $request)
     {
         $currentUser = $this->currentUser();
         $settings    = $currentUser->getTwoFactor();
@@ -202,11 +202,11 @@ class TwoFactorSettingsController extends AuthorizedController
     /**
      * Process the Two-Factor OTP backup.
      *
-     * @param \Rinvex\Fort\Http\Requests\Frontend\TwoFactorTotp $request
+     * @param \Rinvex\Fort\Http\Requests\Frontend\TwoFactorTotpUpdateRequest $request
      *
      * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse
      */
-    public function backupTotp(TwoFactorTotp $request)
+    public function backupTotp(TwoFactorTotpUpdateRequest $request)
     {
         $currentUser = $this->currentUser();
         $settings    = $currentUser->getTwoFactor();

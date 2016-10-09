@@ -17,19 +17,8 @@ namespace Rinvex\Fort\Http\Requests\Frontend;
 
 use Rinvex\Support\Http\Requests\FormRequest;
 
-class TwoFactorTotp extends FormRequest
+class PasswordResetSendRequest extends FormRequest
 {
-    /**
-     * {@inheritdoc}
-     */
-    public function forbiddenResponse()
-    {
-        return intend([
-            'route'      => 'rinvex.fort.frontend.user.settings',
-            'withErrors' => ['token' => trans('rinvex.fort::frontend/messages.verification.twofactor.totp.globaly_disabled')],
-        ]);
-    }
-
     /**
      * Determine if the user is authorized to make this request.
      *
@@ -37,7 +26,7 @@ class TwoFactorTotp extends FormRequest
      */
     public function authorize()
     {
-        return in_array('totp', config('rinvex.fort.twofactor.providers'));
+        return true;
     }
 
     /**
@@ -47,6 +36,8 @@ class TwoFactorTotp extends FormRequest
      */
     public function rules()
     {
-        return [];
+        return [
+            'email' => 'required|email|max:255',
+        ];
     }
 }

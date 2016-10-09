@@ -17,7 +17,7 @@ namespace Rinvex\Fort\Http\Requests\Frontend;
 
 use Rinvex\Support\Http\Requests\FormRequest;
 
-class TwoFactorPhone extends FormRequest
+class TwoFactorTotpUpdateRequest extends FormRequest
 {
     /**
      * {@inheritdoc}
@@ -26,7 +26,7 @@ class TwoFactorPhone extends FormRequest
     {
         return intend([
             'route'      => 'rinvex.fort.frontend.user.settings',
-            'withErrors' => ['token' => trans('rinvex.fort::frontend/messages.verification.twofactor.phone.globaly_disabled')],
+            'withErrors' => ['token' => trans('rinvex.fort::frontend/messages.verification.twofactor.totp.globaly_disabled')],
         ]);
     }
 
@@ -37,7 +37,7 @@ class TwoFactorPhone extends FormRequest
      */
     public function authorize()
     {
-        return in_array('phone', config('rinvex.fort.twofactor.providers'));
+        return in_array('totp', config('rinvex.fort.twofactor.providers'));
     }
 
     /**

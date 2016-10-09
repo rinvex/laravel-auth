@@ -18,7 +18,7 @@ namespace Rinvex\Fort\Http\Controllers\Frontend;
 use Rinvex\Fort\Contracts\UserRepositoryContract;
 use Rinvex\Fort\Http\Controllers\AbstractController;
 use Rinvex\Fort\Contracts\VerificationBrokerContract;
-use Rinvex\Fort\Http\Requests\Frontend\UserRegistration;
+use Rinvex\Fort\Http\Requests\Frontend\UserRegistrationRequest;
 
 class RegistrationController extends AbstractController
 {
@@ -35,11 +35,11 @@ class RegistrationController extends AbstractController
     /**
      * Show the registration form.
      *
-     * @param \Rinvex\Fort\Http\Requests\Frontend\UserRegistration $request
+     * @param \Rinvex\Fort\Http\Requests\Frontend\UserRegistrationRequest $request
      *
      * @return \Illuminate\Http\Response
      */
-    public function showRegisteration(UserRegistration $request)
+    public function showRegisteration(UserRegistrationRequest $request)
     {
         return view('rinvex.fort::frontend.authentication.register');
     }
@@ -47,12 +47,12 @@ class RegistrationController extends AbstractController
     /**
      * Process the registration form.
      *
-     * @param \Rinvex\Fort\Http\Requests\Frontend\UserRegistration $request
+     * @param \Rinvex\Fort\Http\Requests\Frontend\UserRegistrationRequest $request
      * @param \Rinvex\Fort\Contracts\UserRepositoryContract        $userRepository
      *
      * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse
      */
-    public function processRegisteration(UserRegistration $request, UserRepositoryContract $userRepository)
+    public function processRegisteration(UserRegistrationRequest $request, UserRepositoryContract $userRepository)
     {
         $result = $userRepository->create($request->except('_token'));
 

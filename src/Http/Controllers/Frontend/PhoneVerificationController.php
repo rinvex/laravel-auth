@@ -18,19 +18,19 @@ namespace Rinvex\Fort\Http\Controllers\Frontend;
 use Illuminate\Support\Facades\Auth;
 use Rinvex\Fort\Guards\SessionGuard;
 use Rinvex\Fort\Http\Controllers\AbstractController;
-use Rinvex\Fort\Http\Requests\Frontend\PhoneVerification;
 use Rinvex\Fort\Http\Requests\Frontend\PhoneVerificationRequest;
+use Rinvex\Fort\Http\Requests\Frontend\PhoneVerificationSendRequest;
 
 class PhoneVerificationController extends AbstractController
 {
     /**
      * Show the phone verification form.
      *
-     * @param \Rinvex\Fort\Http\Requests\Frontend\PhoneVerificationRequest $request
+     * @param \Rinvex\Fort\Http\Requests\Frontend\PhoneVerificationSendRequest $request
      *
      * @return \Illuminate\Http\Response|\Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse
      */
-    public function request(PhoneVerificationRequest $request)
+    public function request(PhoneVerificationSendRequest $request)
     {
         // If Two-Factor authentication failed, remember Two-Factor persistence
         Auth::guard($this->getGuard())->rememberTwoFactor();
@@ -41,11 +41,11 @@ class PhoneVerificationController extends AbstractController
     /**
      * Process the phone verification request form.
      *
-     * @param \Rinvex\Fort\Http\Requests\Frontend\PhoneVerificationRequest $request
+     * @param \Rinvex\Fort\Http\Requests\Frontend\PhoneVerificationSendRequest $request
      *
      * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse
      */
-    public function send(PhoneVerificationRequest $request)
+    public function send(PhoneVerificationSendRequest $request)
     {
         $status = app('rinvex.fort.verifier')
             ->broker($this->getBroker())
@@ -60,11 +60,11 @@ class PhoneVerificationController extends AbstractController
     /**
      * Show the phone verification form.
      *
-     * @param \Rinvex\Fort\Http\Requests\Frontend\PhoneVerification $request
+     * @param \Rinvex\Fort\Http\Requests\Frontend\PhoneVerificationRequest $request
      *
      * @return \Illuminate\Http\Response|\Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse
      */
-    public function verify(PhoneVerification $request)
+    public function verify(PhoneVerificationRequest $request)
     {
         // If Two-Factor authentication failed, remember Two-Factor persistence
         Auth::guard($this->getGuard())->rememberTwoFactor();
@@ -77,11 +77,11 @@ class PhoneVerificationController extends AbstractController
     /**
      * Process the phone verification form.
      *
-     * @param \Rinvex\Fort\Http\Requests\Frontend\PhoneVerification $request
+     * @param \Rinvex\Fort\Http\Requests\Frontend\PhoneVerificationRequest $request
      *
      * @return \Illuminate\Http\Response|\Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse
      */
-    public function process(PhoneVerification $request)
+    public function process(PhoneVerificationRequest $request)
     {
         $guard  = $this->getGuard();
         $token  = $request->get('token');

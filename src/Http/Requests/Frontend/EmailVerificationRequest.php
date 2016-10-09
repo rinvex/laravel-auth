@@ -17,7 +17,7 @@ namespace Rinvex\Fort\Http\Requests\Frontend;
 
 use Rinvex\Support\Http\Requests\FormRequest;
 
-class PasswordReset extends FormRequest
+class EmailVerificationRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -37,9 +37,7 @@ class PasswordReset extends FormRequest
     public function rules()
     {
         return $this->isMethod('post') ? [
-            'email'    => 'required|email|max:255',
-            'token'    => 'required|regex:/^[0-9a-zA-Z]+$/',
-            'password' => 'required|confirmed|min:6',
+            'email' => 'required|email|max:255',
         ] : [
             'email' => 'required|email|max:255',
             'token' => 'required|regex:/^[0-9a-zA-Z]+$/',

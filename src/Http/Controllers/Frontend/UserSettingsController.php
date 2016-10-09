@@ -18,8 +18,8 @@ namespace Rinvex\Fort\Http\Controllers\Frontend;
 use Rinvex\Country\Loader;
 use Illuminate\Support\Facades\Auth;
 use Rinvex\Fort\Contracts\UserRepositoryContract;
-use Rinvex\Fort\Http\Requests\Frontend\ProfileUpdate;
 use Rinvex\Fort\Http\Controllers\AuthorizedController;
+use Rinvex\Fort\Http\Requests\Frontend\UserSettingsUpdateRequest;
 
 class UserSettingsController extends AuthorizedController
 {
@@ -60,11 +60,11 @@ class UserSettingsController extends AuthorizedController
     /**
      * Process the account update form.
      *
-     * @param \Rinvex\Fort\Http\Requests\Frontend\ProfileUpdate $request
+     * @param \Rinvex\Fort\Http\Requests\Frontend\UserSettingsUpdateRequest $request
      *
      * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse
      */
-    public function update(ProfileUpdate $request)
+    public function update(UserSettingsUpdateRequest $request)
     {
         $currentUser = $this->currentUser();
         $data        = $request->except(['_token', 'id']);

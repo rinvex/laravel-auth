@@ -19,7 +19,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Rinvex\Fort\Guards\SessionGuard;
 use Rinvex\Fort\Http\Controllers\AbstractController;
-use Rinvex\Fort\Http\Requests\Frontend\UserAuthentication;
+use Rinvex\Fort\Http\Requests\Frontend\UserAuthenticationRequest;
 
 class AuthenticationController extends AbstractController
 {
@@ -54,11 +54,11 @@ class AuthenticationController extends AbstractController
     /**
      * Process to the login form.
      *
-     * @param \Rinvex\Fort\Http\Requests\Frontend\UserAuthentication $request
+     * @param \Rinvex\Fort\Http\Requests\Frontend\UserAuthenticationRequest $request
      *
      * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse
      */
-    public function processLogin(UserAuthentication $request)
+    public function processLogin(UserAuthenticationRequest $request)
     {
         // Prepare variables
         $remember    = $request->has('remember');

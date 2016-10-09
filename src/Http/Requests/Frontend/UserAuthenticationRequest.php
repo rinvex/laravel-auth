@@ -17,7 +17,7 @@ namespace Rinvex\Fort\Http\Requests\Frontend;
 
 use Rinvex\Support\Http\Requests\FormRequest;
 
-class UserAuthentication extends FormRequest
+class UserAuthenticationRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.

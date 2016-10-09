@@ -17,8 +17,8 @@ namespace Rinvex\Fort\Http\Controllers\Frontend;
 
 use Rinvex\Fort\Contracts\ResetBrokerContract;
 use Rinvex\Fort\Http\Controllers\AbstractController;
-use Rinvex\Fort\Http\Requests\Frontend\PasswordReset;
 use Rinvex\Fort\Http\Requests\Frontend\PasswordResetRequest;
+use Rinvex\Fort\Http\Requests\Frontend\PasswordResetSendRequest;
 
 class PasswordResetController extends AbstractController
 {
@@ -45,11 +45,11 @@ class PasswordResetController extends AbstractController
     /**
      * Process the password reset request form.
      *
-     * @param \Rinvex\Fort\Http\Requests\Frontend\PasswordResetRequest $request
+     * @param \Rinvex\Fort\Http\Requests\Frontend\PasswordResetSendRequest $request
      *
      * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse
      */
-    public function send(PasswordResetRequest $request)
+    public function send(PasswordResetSendRequest $request)
     {
         $result = app('rinvex.fort.resetter')->broker($this->getBroker())->sendResetLink($request->except(['_token']));
 
@@ -73,11 +73,11 @@ class PasswordResetController extends AbstractController
     /**
      * Show the password reset form.
      *
-     * @param \Rinvex\Fort\Http\Requests\Frontend\PasswordReset $request
+     * @param \Rinvex\Fort\Http\Requests\Frontend\PasswordResetRequest $request
      *
      * @return \Illuminate\Http\Response
      */
-    public function reset(PasswordReset $request)
+    public function reset(PasswordResetRequest $request)
     {
         $email  = $request->get('email');
         $token  = $request->get('token');
@@ -101,11 +101,11 @@ class PasswordResetController extends AbstractController
     /**
      * Process the password reset form.
      *
-     * @param \Rinvex\Fort\Http\Requests\Frontend\PasswordReset $request
+     * @param \Rinvex\Fort\Http\Requests\Frontend\PasswordResetRequest $request
      *
      * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse
      */
-    public function process(PasswordReset $request)
+    public function process(PasswordResetRequest $request)
     {
         $result = app('rinvex.fort.resetter')->broker($this->getBroker())->reset($request->except(['_token']));
 
