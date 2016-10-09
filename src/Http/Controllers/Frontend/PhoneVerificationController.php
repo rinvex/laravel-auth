@@ -85,7 +85,7 @@ class PhoneVerificationController extends AbstractController
     {
         $guard  = $this->getGuard();
         $token  = $request->get('token');
-        $user   = Auth::guard($guard)->user();
+        $user   = session('rinvex.fort.twofactor.user') ?: Auth::guard($guard)->user();
         $result = Auth::guard($guard)->attemptTwoFactor($user, $token);
 
         switch ($result) {

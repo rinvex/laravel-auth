@@ -527,9 +527,10 @@ class SessionGuard implements StatefulGuardContract, SupportsBasicAuth
                 // Update user persistence
                 $this->updatePersistence($user->id, $this->session->getId(), true);
 
-                $this->session->flash('rinvex.fort.twofactor.methods', ['totp' => $totp, 'phone' => $phone]);
+                $this->session->flash('rinvex.fort.twofactor.user', $user);
                 $this->session->flash('rinvex.fort.twofactor.remember', $remember);
                 $this->session->flash('rinvex.fort.twofactor.persistence', $this->session->getId());
+                $this->session->flash('rinvex.fort.twofactor.methods', ['totp' => $totp, 'phone' => $phone]);
 
                 // Fire the Two-Factor authentication required event
                 $this->events->fire('rinvex.fort.twofactor.required', [$user]);
@@ -973,9 +974,12 @@ class SessionGuard implements StatefulGuardContract, SupportsBasicAuth
      */
     protected function clearTwoFactor()
     {
-        $this->session->forget('rinvex.fort.twofactor.methods');
-        $this->session->forget('rinvex.fort.twofactor.remember');
-        $this->session->forget('rinvex.fort.twofactor.persistence');
+        $this->session->forget([
+            'rinvex.fort.twofactor.user',
+            'rinvex.fort.twofactor.methods',
+            'rinvex.fort.twofactor.remember',
+            'rinvex.fort.twofactor.persistence',
+        ]);
     }
 
     /**
@@ -986,6 +990,7 @@ class SessionGuard implements StatefulGuardContract, SupportsBasicAuth
     public function rememberTwoFactor()
     {
         $this->session->keep([
+            'rinvex.fort.twofactor.user',
             'rinvex.fort.twofactor.methods',
             'rinvex.fort.twofactor.remember',
             'rinvex.fort.twofactor.persistence',
