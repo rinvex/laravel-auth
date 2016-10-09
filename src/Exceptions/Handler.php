@@ -26,8 +26,8 @@ class Handler extends ExceptionHandler
     /**
      * Render an exception into an HTTP response.
      *
-     * @param  \Illuminate\Http\Request $request
-     * @param  \Exception               $exception
+     * @param \Illuminate\Http\Request $request
+     * @param \Exception               $exception
      *
      * @return \Illuminate\Http\Response
      */
@@ -38,7 +38,7 @@ class Handler extends ExceptionHandler
                 'route'      => 'rinvex.fort.frontend.auth.login',
                 'withErrors' => ['rinvex.fort.session.expired' => Lang::get('rinvex.fort::frontend/messages.auth.session.expired')],
             ], 401);
-        } else if ($exception instanceof EntityNotFoundException) {
+        } elseif ($exception instanceof EntityNotFoundException) {
             $single = strtolower(trim(strrchr($exception->getModel(), '\\'), '\\'));
             $plural = str_plural($single);
 
@@ -54,8 +54,8 @@ class Handler extends ExceptionHandler
     /**
      * Convert an authentication exception into an unauthenticated response.
      *
-     * @param  \Illuminate\Http\Request                 $request
-     * @param  \Illuminate\Auth\AuthenticationException $exception
+     * @param \Illuminate\Http\Request                 $request
+     * @param \Illuminate\Auth\AuthenticationException $exception
      *
      * @return \Illuminate\Http\Response
      */

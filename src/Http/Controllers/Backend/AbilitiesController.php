@@ -148,7 +148,7 @@ class AbilitiesController extends AuthorizedController
     /**
      * Update the given resource in storage.
      *
-     * @param \Illuminate\Http\Request $request
+     * @param \Illuminate\Http\Request    $request
      * @param \Rinvex\Fort\Models\Ability $ability
      *
      * @return \Illuminate\Http\Response
