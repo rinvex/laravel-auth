@@ -61,6 +61,12 @@ class FortServiceProvider extends BaseServiceProvider
         // Load routes
         $this->loadRoutes($router);
 
+        // Override exception handler
+        $this->app->singleton(
+            \Illuminate\Contracts\Debug\ExceptionHandler::class,
+            \Rinvex\Fort\Exceptions\Handler::class
+        );
+
         // Load views
         $this->loadViewsFrom(__DIR__.'/../../resources/views', 'rinvex.fort');
 
