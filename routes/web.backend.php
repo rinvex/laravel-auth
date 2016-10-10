@@ -25,7 +25,7 @@
 
 Route::group([
     'prefix'     => 'backend',
-    'middleware' => ['web', 'can:access-dashboard'],
+    'middleware' => ['rinvex.fort.backend', 'can:access-dashboard'],
     'as'         => 'rinvex.fort.backend.',
     'namespace'  => 'Rinvex\Fort\Http\Controllers\Backend',
 ], function () {
@@ -99,7 +99,6 @@ Route::group([
     */
 
     Route::bind('user', function ($id) {
-        //dd(app('rinvex.fort.user')->findOrFail($id)->toArray());
         return app('rinvex.fort.user')->findOrFail($id);
     });
 
