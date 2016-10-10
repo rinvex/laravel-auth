@@ -48,7 +48,7 @@ class RegistrationController extends AbstractController
      * Process the registration form.
      *
      * @param \Rinvex\Fort\Http\Requests\Frontend\UserRegistrationRequest $request
-     * @param \Rinvex\Fort\Contracts\UserRepositoryContract        $userRepository
+     * @param \Rinvex\Fort\Contracts\UserRepositoryContract               $userRepository
      *
      * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse
      */
