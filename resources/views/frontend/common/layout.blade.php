@@ -1,5 +1,5 @@
 @extends('rinvex/fort::frontend.common.layout-example')
 
 @section('content')
-	@yield('content')
+    @yield('content')
 @endsection
