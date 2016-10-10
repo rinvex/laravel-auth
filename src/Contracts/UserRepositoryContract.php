@@ -25,7 +25,7 @@ interface UserRepositoryContract extends RepositoryContract, CacheableContract
      *
      * @var string
      */
-    const AUTH_REGISTERED = 'rinvex.fort::frontend/messages.register.success';
+    const AUTH_REGISTERED = 'rinvex/fort::frontend/messages.register.success';
 
     /**
      * Find a user by their unique identifier and "remember me" token.

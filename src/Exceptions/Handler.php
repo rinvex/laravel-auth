@@ -36,7 +36,7 @@ class Handler extends ExceptionHandler
         if ($exception instanceof InvalidPersistenceException) {
             return intend([
                 'route'      => 'rinvex.fort.frontend.auth.login',
-                'withErrors' => ['rinvex.fort.session.expired' => Lang::get('rinvex.fort::frontend/messages.auth.session.expired')],
+                'withErrors' => ['rinvex.fort.session.expired' => Lang::get('rinvex/fort::frontend/messages.auth.session.expired')],
             ], 401);
         } elseif ($exception instanceof EntityNotFoundException) {
             $single = strtolower(trim(strrchr($exception->getModel(), '\\'), '\\'));
@@ -44,7 +44,7 @@ class Handler extends ExceptionHandler
 
             return intend([
                 'route'      => 'rinvex.fort.backend.'.$plural.'.index',
-                'withErrors' => ['rinvex.fort.'.$single.'.not_found' => trans('rinvex.fort::backend/messages.'.$single.'.not_found', [$single => $exception->getId()])],
+                'withErrors' => ['rinvex.fort.'.$single.'.not_found' => trans('rinvex/fort::backend/messages.'.$single.'.not_found', [$single => $exception->getId()])],
             ]);
         }
 
@@ -63,7 +63,7 @@ class Handler extends ExceptionHandler
     {
         return intend([
             'route'      => 'rinvex.fort.frontend.auth.login',
-            'withErrors' => ['rinvex.fort.session.required' => Lang::get('rinvex.fort::frontend/messages.auth.session.required')],
+            'withErrors' => ['rinvex.fort.session.required' => Lang::get('rinvex/fort::frontend/messages.auth.session.required')],
         ], 401);
     }
 }

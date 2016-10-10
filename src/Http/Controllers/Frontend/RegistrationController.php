@@ -41,7 +41,7 @@ class RegistrationController extends AbstractController
      */
     public function showRegisteration(UserRegistrationRequest $request)
     {
-        return view('rinvex.fort::frontend.authentication.register');
+        return view('rinvex/fort::frontend.authentication.register');
     }
 
     /**
@@ -61,7 +61,7 @@ class RegistrationController extends AbstractController
             case VerificationBrokerContract::LINK_SENT:
                 return intend([
                     'intended' => url('/'),
-                    'with'     => ['rinvex.fort.alert.success' => trans('rinvex.fort::frontend/messages.register.success_verify')],
+                    'with'     => ['rinvex.fort.alert.success' => trans('rinvex/fort::frontend/messages.register.success_verify')],
                 ]);
 
             // Registration completed successfully

@@ -26,7 +26,7 @@ class UserRegistrationRequest extends FormRequest
     {
         return intend([
             'intended'   => url('/'),
-            'withErrors' => ['rinvex.fort.registration.disabled' => trans('rinvex.fort::frontend/messages.register.disabled')],
+            'withErrors' => ['rinvex.fort.registration.disabled' => trans('rinvex/fort::frontend/messages.register.disabled')],
         ]);
     }
 

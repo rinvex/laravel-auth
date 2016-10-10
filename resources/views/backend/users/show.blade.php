@@ -1,4 +1,4 @@
-@extends('rinvex.fort::backend.common.layout')
+@extends('rinvex/fort::backend.common.layout')
 
 {{-- Main Content --}}
 
@@ -12,17 +12,17 @@
 
     <div class="container">
 
-        @include('rinvex.fort::frontend.alerts.success')
-        @include('rinvex.fort::frontend.alerts.warning')
-        @include('rinvex.fort::frontend.alerts.error')
-        @include('rinvex.fort::backend.common.confirm-modal', ['type' => 'user'])
+        @include('rinvex/fort::frontend.alerts.success')
+        @include('rinvex/fort::frontend.alerts.warning')
+        @include('rinvex/fort::frontend.alerts.error')
+        @include('rinvex/fort::backend.common.confirm-modal', ['type' => 'user'])
 
         <div class="panel panel-default">
 
             {{-- Heading --}}
             <div class="panel-heading">
                 <h4>
-                    <a href="{{ route('rinvex.fort.backend.users.index') }}">{{ trans('rinvex.fort::backend/users.heading') }}</a> / {{ trans('rinvex.fort::backend/users.view') }} » {{ $user->username }}
+                    <a href="{{ route('rinvex.fort.backend.users.index') }}">{{ trans('rinvex/fort::backend/users.heading') }}</a> / {{ trans('rinvex/fort::backend/users.view') }} » {{ $user->username }}
                     <span class="pull-right" style="margin-top: -7px">
                         <a href="{{ route('rinvex.fort.backend.users.edit', ['user' => $user]) }}" class="btn btn-default"><i class="fa fa-pencil text-primary"></i></a>
                         <a href="{{ route('rinvex.fort.backend.users.copy', ['user' => $user]) }}" class="btn btn-default"><i class="fa fa-copy text-primary"></i></a>
@@ -37,48 +37,48 @@
 
                 <div class="row">
                     <div class="col-md-4">
-                        <strong>{{ trans('rinvex.fort::backend/users.name') }}</strong>: @if($user->name) {{ $user->name }} @else N/A @endif
+                        <strong>{{ trans('rinvex/fort::backend/users.name') }}</strong>: @if($user->name) {{ $user->name }} @else N/A @endif
                     </div>
                     <div class="col-md-4">
-                        <strong>{{ trans('rinvex.fort::backend/users.job_title') }}</strong>: @if($user->job_title) {{ $user->job_title }} @else N/A @endif
+                        <strong>{{ trans('rinvex/fort::backend/users.job_title') }}</strong>: @if($user->job_title) {{ $user->job_title }} @else N/A @endif
                     </div>
                     <div class="col-md-4">
-                        <strong>{{ trans('rinvex.fort::backend/users.status.title') }}</strong>:
+                        <strong>{{ trans('rinvex/fort::backend/users.status.title') }}</strong>:
                         @if($user->active)
-                            <span class="label label-success">{{ trans('rinvex.fort::backend/users.status.active') }}</span>
+                            <span class="label label-success">{{ trans('rinvex/fort::backend/users.status.active') }}</span>
                         @else
-                            <span class="label label-warning">{{ trans('rinvex.fort::backend/users.status.inactive') }}</span>
+                            <span class="label label-warning">{{ trans('rinvex/fort::backend/users.status.inactive') }}</span>
                         @endif
                     </div>
                 </div>
 
                 <div class="row">
                     <div class="col-md-4">
-                        <strong>{{ trans('rinvex.fort::backend/users.username') }}</strong>: {{ $user->username }}
+                        <strong>{{ trans('rinvex/fort::backend/users.username') }}</strong>: {{ $user->username }}
                     </div>
                     <div class="col-md-4">
-                        <strong>{{ trans('rinvex.fort::backend/users.email') }}</strong>: {{ $user->email }} @if($user->email_verified) <span title="{{ $user->email_verified_at }}"><i class="fa text-success fa-check"></i></span> @endif
+                        <strong>{{ trans('rinvex/fort::backend/users.email') }}</strong>: {{ $user->email }} @if($user->email_verified) <span title="{{ $user->email_verified_at }}"><i class="fa text-success fa-check"></i></span> @endif
                     </div>
                     <div class="col-md-4">
-                        <strong>{{ trans('rinvex.fort::backend/users.phone') }}</strong>: @if($phone) +{{ $phone }} @if($user->phone_verified) <span title="{{ $user->phone_verified_at }}"><i class="fa text-success fa-check"></i></span> @endif @else N/A @endif
+                        <strong>{{ trans('rinvex/fort::backend/users.phone') }}</strong>: @if($phone) +{{ $phone }} @if($user->phone_verified) <span title="{{ $user->phone_verified_at }}"><i class="fa text-success fa-check"></i></span> @endif @else N/A @endif
                     </div>
                 </div>
 
                 <div class="row">
                     <div class="col-md-4">
-                        <strong>{{ trans('rinvex.fort::backend/users.country') }}</strong>: @if($country) {{ $country }} @else N/A @endif
+                        <strong>{{ trans('rinvex/fort::backend/users.country') }}</strong>: @if($country) {{ $country }} @else N/A @endif
                     </div>
                     <div class="col-md-4">
-                        <strong>{{ trans('rinvex.fort::backend/users.gender') }}</strong>: {{ ucfirst($user->gender) }} @if(in_array($user->gender, ['male', 'female'])) <i class="fa fa-{{ $user->gender }}"></i> @endif
+                        <strong>{{ trans('rinvex/fort::backend/users.gender') }}</strong>: {{ ucfirst($user->gender) }} @if(in_array($user->gender, ['male', 'female'])) <i class="fa fa-{{ $user->gender }}"></i> @endif
                     </div>
                     <div class="col-md-4">
-                        <strong>{{ trans('rinvex.fort::backend/users.birthdate') }}</strong>: @if($user->birthdate) {{ $user->birthdate->toDateString() }} ({{ $user->birthdate->age }} years old) @else N/A @endif
+                        <strong>{{ trans('rinvex/fort::backend/users.birthdate') }}</strong>: @if($user->birthdate) {{ $user->birthdate->toDateString() }} ({{ $user->birthdate->age }} years old) @else N/A @endif
                     </div>
                 </div>
 
                 <div class="row">
                     <div class="col-md-12">
-                        <strong>{{ trans('rinvex.fort::backend/users.roles') }}</strong>:
+                        <strong>{{ trans('rinvex/fort::backend/users.roles') }}</strong>:
                         @forelse($user->roles->pluck('title', 'id') as $roleId => $role)
                             <a href="{{ route('rinvex.fort.backend.roles.show', ['role' => $roleId]) }}" class="label btn-xs label-info">{{ $role }}</a>
                         @empty
@@ -143,12 +143,12 @@
                 <div class="row">
                     <div class="col-md-12">
                         @if($user->created_at)
-                            <small><strong>{{ trans('rinvex.fort::backend/users.created_at') }}:</strong>
+                            <small><strong>{{ trans('rinvex/fort::backend/users.created_at') }}:</strong>
                                 <time datetime="{{ $user->created_at }}">{{ $user->created_at->format('Y-m-d') }}</time>
                             </small>
                         @endif
                         @if($user->updated_at)
-                            <small><strong>{{ trans('rinvex.fort::backend/users.updated_at') }}:</strong>
+                            <small><strong>{{ trans('rinvex/fort::backend/users.updated_at') }}:</strong>
                                 <time datetime="{{ $user->updated_at }}">{{ $user->updated_at->format('Y-m-d') }}</time>
                             </small>
                         @endif

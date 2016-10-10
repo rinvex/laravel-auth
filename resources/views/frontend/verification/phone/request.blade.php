@@ -1,4 +1,4 @@
-@extends('rinvex.fort::frontend.common.layout')
+@extends('rinvex/fort::frontend.common.layout')
 
 {{-- Main Content --}}
 @section('content')
@@ -7,21 +7,21 @@
         <div class="row">
             <div class="col-md-8 col-md-offset-2">
                 <div class="panel panel-default">
-                    <div class="panel-heading">{{ trans('rinvex.fort::frontend/forms.verification.phone.request.heading') }}</div>
+                    <div class="panel-heading">{{ trans('rinvex/fort::frontend/forms.verification.phone.request.heading') }}</div>
                     <div class="panel-body">
 
                         <form class="form-horizontal" role="form" method="POST" action="{{ route('rinvex.fort.frontend.verification.phone.send') }}">
                             {{ csrf_field() }}
 
-                            @include('rinvex.fort::frontend.alerts.success')
-                            @include('rinvex.fort::frontend.alerts.warning')
-                            @include('rinvex.fort::frontend.alerts.error')
+                            @include('rinvex/fort::frontend.alerts.success')
+                            @include('rinvex/fort::frontend.alerts.warning')
+                            @include('rinvex/fort::frontend.alerts.error')
 
                             <div class="form-group{{ $errors->has('phone') ? ' has-error' : '' }}">
-                                <label for="phone" class="col-md-4 control-label">{{ trans('rinvex.fort::frontend/forms.verification.phone.request.phone') }}</label>
+                                <label for="phone" class="col-md-4 control-label">{{ trans('rinvex/fort::frontend/forms.verification.phone.request.phone') }}</label>
 
                                 <div class="col-md-6">
-                                    <input id="phone" name="phone" type="phone" class="form-control" value="{{ old('phone', auth()->guest() ? '' : $currentUser->phone) }}" placeholder="{{ trans('rinvex.fort::frontend/forms.verification.phone.request.phone') }}" required autofocus>
+                                    <input id="phone" name="phone" type="phone" class="form-control" value="{{ old('phone', auth()->guest() ? '' : $currentUser->phone) }}" placeholder="{{ trans('rinvex/fort::frontend/forms.verification.phone.request.phone') }}" required autofocus>
 
                                     @if ($errors->has('phone'))
                                         <span class="help-block">
@@ -56,7 +56,7 @@
                             <div class="row">
                                 <div class="col-md-12 col-sm-12 col-xs-12 text-center">
 
-                                    <button type="submit" class="btn btn-primary"><i class="fa fa-btn fa-phone"></i> {{ trans('rinvex.fort::frontend/forms.verification.phone.request.submit') }}</button>
+                                    <button type="submit" class="btn btn-primary"><i class="fa fa-btn fa-phone"></i> {{ trans('rinvex/fort::frontend/forms.verification.phone.request.submit') }}</button>
 
                                 </div>
                             </div>

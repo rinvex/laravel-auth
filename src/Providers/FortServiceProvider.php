@@ -68,10 +68,10 @@ class FortServiceProvider extends BaseServiceProvider
         );
 
         // Load views
-        $this->loadViewsFrom(__DIR__.'/../../resources/views', 'rinvex.fort');
+        $this->loadViewsFrom(__DIR__.'/../../resources/views', 'rinvex/fort');
 
         // Load language phrases
-        $this->loadTranslationsFrom(__DIR__.'/../../resources/lang', 'rinvex.fort');
+        $this->loadTranslationsFrom(__DIR__.'/../../resources/lang', 'rinvex/fort');
 
         // Load migrations
         $this->loadMigrationsFrom(__DIR__.'/../../database/migrations');

@@ -54,7 +54,7 @@ class UserSettingsController extends AuthorizedController
         $countries = Loader::countries();
         $twoFactor = $this->currentUser()->getTwoFactor();
 
-        return view('rinvex.fort::frontend.user.settings', compact('twoFactor', 'countries'));
+        return view('rinvex/fort::frontend.user.settings', compact('twoFactor', 'countries'));
     }
 
     /**
@@ -91,8 +91,8 @@ class UserSettingsController extends AuthorizedController
         return intend([
             'back' => true,
             'with' => [
-                          'rinvex.fort.alert.success' => trans('rinvex.fort::frontend/messages.account.'.(! empty($emailVerification) ? 'reverify' : 'updated')),
-                      ] + ($twoFactor !== $currentUser->getTwoFactor() ? ['rinvex.fort.alert.warning' => trans('rinvex.fort::frontend/messages.verification.twofactor.phone.auto_disabled')] : []),
+                          'rinvex.fort.alert.success' => trans('rinvex/fort::frontend/messages.account.'.(! empty($emailVerification) ? 'reverify' : 'updated')),
+                      ] + ($twoFactor !== $currentUser->getTwoFactor() ? ['rinvex.fort.alert.warning' => trans('rinvex/fort::frontend/messages.verification.twofactor.phone.auto_disabled')] : []),
         ]);
     }
 

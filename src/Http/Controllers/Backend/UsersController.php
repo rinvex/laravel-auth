@@ -61,7 +61,7 @@ class UsersController extends AuthorizedController
     {
         $users = $this->userRepository->paginate(config('rinvex.fort.backend.items_per_page'));
 
-        return view('rinvex.fort::backend.users.index', compact('users'));
+        return view('rinvex/fort::backend.users.index', compact('users'));
     }
 
     /**
@@ -80,7 +80,7 @@ class UsersController extends AuthorizedController
         $country     = ! empty($userCountry) ? $userCountry->getName().' '.$userCountry->getEmoji() : null;
         $phone       = ! empty($userCountry) ? $userCountry->getCallingCode().$user->phone : null;
 
-        return view('rinvex.fort::backend.users.show', compact('user', 'resources', 'actions', 'columns', 'country', 'phone'));
+        return view('rinvex/fort::backend.users.show', compact('user', 'resources', 'actions', 'columns', 'country', 'phone'));
     }
 
     /**
@@ -141,7 +141,7 @@ class UsersController extends AuthorizedController
         $countries = Loader::countries();
         $resources = app('rinvex.fort.ability')->findAll()->groupBy('resource');
 
-        return view('rinvex.fort::backend.users.form', compact('user', 'resources', 'countries', 'mode', 'action'));
+        return view('rinvex/fort::backend.users.form', compact('user', 'resources', 'countries', 'mode', 'action'));
     }
 
     /**

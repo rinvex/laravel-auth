@@ -1,4 +1,4 @@
-@extends('rinvex.fort::backend.common.layout')
+@extends('rinvex/fort::backend.common.layout')
 
 {{-- Main Content --}}
 
@@ -12,17 +12,17 @@
 
     <div class="container">
 
-        @include('rinvex.fort::frontend.alerts.success')
-        @include('rinvex.fort::frontend.alerts.warning')
-        @include('rinvex.fort::frontend.alerts.error')
-        @include('rinvex.fort::backend.common.confirm-modal', ['type' => 'ability'])
+        @include('rinvex/fort::frontend.alerts.success')
+        @include('rinvex/fort::frontend.alerts.warning')
+        @include('rinvex/fort::frontend.alerts.error')
+        @include('rinvex/fort::backend.common.confirm-modal', ['type' => 'ability'])
 
         <div class="panel panel-default">
 
             {{-- Heading --}}
             <div class="panel-heading">
                 <h4>
-                    <a href="{{ route('rinvex.fort.backend.abilities.index') }}">{{ trans('rinvex.fort::backend/abilities.heading') }}</a> / {{ trans('rinvex.fort::backend/abilities.view') }} » {{ $ability->slug }}
+                    <a href="{{ route('rinvex.fort.backend.abilities.index') }}">{{ trans('rinvex/fort::backend/abilities.heading') }}</a> / {{ trans('rinvex/fort::backend/abilities.view') }} » {{ $ability->slug }}
                     <span class="pull-right" style="margin-top: -7px">
                         <a href="{{ route('rinvex.fort.backend.abilities.edit', ['ability' => $ability]) }}" class="btn btn-default"><i class="fa fa-pencil text-primary"></i></a>
                         <a href="{{ route('rinvex.fort.backend.abilities.copy', ['ability' => $ability->id]) }}" class="btn btn-default"><i class="fa fa-copy text-success"></i></a>
@@ -38,13 +38,13 @@
 
                 <div class="row">
                     <div class="col-md-4">
-                        <strong>{{ trans('rinvex.fort::backend/abilities.title') }}</strong>: @if($ability->title) {{ $ability->title }} @else N/A @endif
+                        <strong>{{ trans('rinvex/fort::backend/abilities.title') }}</strong>: @if($ability->title) {{ $ability->title }} @else N/A @endif
                     </div>
                     <div class="col-md-4">
-                        <strong>{{ trans('rinvex.fort::backend/abilities.slug') }}</strong>: @if($ability->slug) {{ $ability->slug }} @else N/A @endif
+                        <strong>{{ trans('rinvex/fort::backend/abilities.slug') }}</strong>: @if($ability->slug) {{ $ability->slug }} @else N/A @endif
                     </div>
                     <div class="col-md-4">
-                        <strong>{{ trans('rinvex.fort::backend/abilities.policy') }}</strong>: @if($ability->policy) {{ $ability->policy }} @else N/A @endif
+                        <strong>{{ trans('rinvex/fort::backend/abilities.policy') }}</strong>: @if($ability->policy) {{ $ability->policy }} @else N/A @endif
                     </div>
                 </div>
 
@@ -52,7 +52,7 @@
 
                     <div class="row">
                         <div class="col-md-12">
-                            <strong>{{ trans('rinvex.fort::backend/abilities.description') }}</strong>: {{ $ability->description }}
+                            <strong>{{ trans('rinvex/fort::backend/abilities.description') }}</strong>: {{ $ability->description }}
                         </div>
                     </div>
 
@@ -60,7 +60,7 @@
 
                 <div class="row">
                     <div class="col-md-12">
-                        <strong>{{ trans('rinvex.fort::backend/abilities.roles') }}</strong>:
+                        <strong>{{ trans('rinvex/fort::backend/abilities.roles') }}</strong>:
                         @forelse($ability->roles->pluck('title', 'id') as $roleId => $role)
                             <a href="{{ route('rinvex.fort.backend.roles.show', ['role' => $roleId]) }}" class="label btn-xs label-info">{{ $role }}</a>
                         @empty
@@ -76,12 +76,12 @@
                 <div class="row">
                     <div class="col-md-12">
                         @if($ability->created_at)
-                            <small><strong>{{ trans('rinvex.fort::backend/abilities.created_at') }}:</strong>
+                            <small><strong>{{ trans('rinvex/fort::backend/abilities.created_at') }}:</strong>
                                 <time datetime="{{ $ability->created_at }}">{{ $ability->created_at->format('Y-m-d') }}</time>
                             </small>
                         @endif
                         @if($ability->updated_at)
-                            <small><strong>{{ trans('rinvex.fort::backend/abilities.updated_at') }}:</strong>
+                            <small><strong>{{ trans('rinvex/fort::backend/abilities.updated_at') }}:</strong>
                                 <time datetime="{{ $ability->updated_at }}">{{ $ability->updated_at->format('Y-m-d') }}</time>
                             </small>
                         @endif

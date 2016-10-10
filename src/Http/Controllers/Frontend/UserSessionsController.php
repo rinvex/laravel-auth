@@ -27,7 +27,7 @@ class UserSessionsController extends AuthorizedController
      */
     public function index()
     {
-        return view('rinvex.fort::frontend.user.sessions');
+        return view('rinvex/fort::frontend.user.sessions');
     }
 
     /**
@@ -43,10 +43,10 @@ class UserSessionsController extends AuthorizedController
 
         if ($token) {
             app('rinvex.fort.persistence')->delete($token);
-            $status = trans('rinvex.fort::frontend/messages.auth.session.flushed');
+            $status = trans('rinvex/fort::frontend/messages.auth.session.flushed');
         } elseif (request()->get('confirm')) {
             app('rinvex.fort.persistence')->deleteByUser(Auth::guard($this->getGuard())->user()->id);
-            $status = trans('rinvex.fort::frontend/messages.auth.session.flushedall');
+            $status = trans('rinvex/fort::frontend/messages.auth.session.flushedall');
         }
 
         return intend([

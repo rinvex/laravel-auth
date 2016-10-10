@@ -60,7 +60,7 @@ class AbilitiesController extends AuthorizedController
     {
         $abilities = $this->abilityRepository->paginate(config('rinvex.fort.backend.items_per_page'));
 
-        return view('rinvex.fort::backend.abilities.index', compact('abilities'));
+        return view('rinvex/fort::backend.abilities.index', compact('abilities'));
     }
 
     /**
@@ -72,7 +72,7 @@ class AbilitiesController extends AuthorizedController
      */
     public function show(Ability $ability)
     {
-        return view('rinvex.fort::backend.abilities.show', compact('ability'));
+        return view('rinvex/fort::backend.abilities.show', compact('ability'));
     }
 
     /**
@@ -130,7 +130,7 @@ class AbilitiesController extends AuthorizedController
      */
     protected function form($mode, $action, Ability $ability)
     {
-        return view('rinvex.fort::backend.abilities.form', compact('ability', 'resources', 'mode', 'action'));
+        return view('rinvex/fort::backend.abilities.form', compact('ability', 'resources', 'mode', 'action'));
     }
 
     /**

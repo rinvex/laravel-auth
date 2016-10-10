@@ -1,4 +1,4 @@
-@extends('rinvex.fort::backend.common.layout')
+@extends('rinvex/fort::backend.common.layout')
 
 {{-- Main Content --}}
 
@@ -12,17 +12,17 @@
 
     <div class="container">
 
-        @include('rinvex.fort::frontend.alerts.success')
-        @include('rinvex.fort::frontend.alerts.warning')
-        @include('rinvex.fort::frontend.alerts.error')
-        @include('rinvex.fort::backend.common.confirm-modal', ['type' => 'role'])
+        @include('rinvex/fort::frontend.alerts.success')
+        @include('rinvex/fort::frontend.alerts.warning')
+        @include('rinvex/fort::frontend.alerts.error')
+        @include('rinvex/fort::backend.common.confirm-modal', ['type' => 'role'])
 
         <div class="panel panel-default">
 
             {{-- Heading --}}
             <div class="panel-heading">
                 <h4>
-                    <a href="{{ route('rinvex.fort.backend.roles.index') }}">{{ trans('rinvex.fort::backend/roles.heading') }}</a> / {{ trans('rinvex.fort::backend/roles.view') }} » {{ $role->slug }}
+                    <a href="{{ route('rinvex.fort.backend.roles.index') }}">{{ trans('rinvex/fort::backend/roles.heading') }}</a> / {{ trans('rinvex/fort::backend/roles.view') }} » {{ $role->slug }}
                     <span class="pull-right" style="margin-top: -7px">
                         <a href="{{ route('rinvex.fort.backend.roles.edit', ['role' => $role]) }}" class="btn btn-default"><i class="fa fa-pencil text-primary"></i></a>
                         <a href="{{ route('rinvex.fort.backend.roles.copy', ['role' => $role]) }}" class="btn btn-default"><i class="fa fa-copy text-success"></i></a>
@@ -37,17 +37,17 @@
 
                 <div class="row">
                     <div class="col-md-4">
-                        <strong>{{ trans('rinvex.fort::backend/roles.title') }}</strong>: @if($role->title) {{ $role->title }} @else N/A @endif
+                        <strong>{{ trans('rinvex/fort::backend/roles.title') }}</strong>: @if($role->title) {{ $role->title }} @else N/A @endif
                     </div>
                     <div class="col-md-4">
-                        <strong>{{ trans('rinvex.fort::backend/roles.slug') }}</strong>: @if($role->slug) {{ $role->slug }} @else N/A @endif
+                        <strong>{{ trans('rinvex/fort::backend/roles.slug') }}</strong>: @if($role->slug) {{ $role->slug }} @else N/A @endif
                     </div>
                 </div>
 
                @if($role->description)
                     <div class="row">
                         <div class="col-md-12">
-                            <strong>{{ trans('rinvex.fort::backend/roles.description') }}</strong>: {{ $role->description }}
+                            <strong>{{ trans('rinvex/fort::backend/roles.description') }}</strong>: {{ $role->description }}
                         </div>
                     </div>
                 @endif
@@ -108,12 +108,12 @@
                 <div class="row">
                     <div class="col-md-12">
                         @if($role->created_at)
-                            <small><strong>{{ trans('rinvex.fort::backend/roles.created_at') }}:</strong>
+                            <small><strong>{{ trans('rinvex/fort::backend/roles.created_at') }}:</strong>
                                 <time datetime="{{ $role->created_at }}">{{ $role->created_at->format('Y-m-d') }}</time>
                             </small>
                         @endif
                         @if($role->updated_at)
-                            <small><strong>{{ trans('rinvex.fort::backend/roles.updated_at') }}:</strong>
+                            <small><strong>{{ trans('rinvex/fort::backend/roles.updated_at') }}:</strong>
                                 <time datetime="{{ $role->updated_at }}">{{ $role->updated_at->format('Y-m-d') }}</time>
                             </small>
                         @endif

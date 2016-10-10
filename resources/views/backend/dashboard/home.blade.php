@@ -1,4 +1,4 @@
-@extends('rinvex.fort::backend.common.layout')
+@extends('rinvex/fort::backend.common.layout')
 
 {{-- Main Content --}}
 @section('content')
@@ -11,21 +11,21 @@
 
     <div class="container">
 
-        @include('rinvex.fort::frontend.alerts.success')
-        @include('rinvex.fort::frontend.alerts.warning')
-        @include('rinvex.fort::frontend.alerts.error')
+        @include('rinvex/fort::frontend.alerts.success')
+        @include('rinvex/fort::frontend.alerts.warning')
+        @include('rinvex/fort::frontend.alerts.error')
 
         <div class="row">
             <div class="col-md-12">
                 <div class="jumbotron">
-                    <h1><i class="fa fa-dashboard"></i> {{ trans('rinvex.fort::backend/dashboard.heading') }}</h1>
+                    <h1><i class="fa fa-dashboard"></i> {{ trans('rinvex/fort::backend/dashboard.heading') }}</h1>
 
                     <div class="row">
                         <div class="col-md-8">
                             <div class="panel panel-default">
                                 <div class="panel-heading">
-                                    {{ trans('rinvex.fort::backend/dashboard.recent.registered') }}
-                                    <span class="pull-right"><a class="btn btn-xs btn-default" href="{{ route('rinvex.fort.backend.users.index') }}" role="button">{{ trans('rinvex.fort::backend/users.manage') }}</a></span>
+                                    {{ trans('rinvex/fort::backend/dashboard.recent.registered') }}
+                                    <span class="pull-right"><a class="btn btn-xs btn-default" href="{{ route('rinvex.fort.backend.users.index') }}" role="button">{{ trans('rinvex/fort::backend/users.manage') }}</a></span>
                                 </div>
                                 <div class="panel-body">
 
@@ -35,10 +35,10 @@
 
                                             <thead>
                                                 <tr>
-                                                    <th style="width: 20%">{{ trans('rinvex.fort::backend/users.name') }}</th>
-                                                    <th style="width: 20%">{{ trans('rinvex.fort::backend/users.contact') }}</th>
-                                                    <th style="width: 15%">{{ trans('rinvex.fort::backend/users.status.title') }}</th>
-                                                    <th style="width: 15%">{{ trans('rinvex.fort::backend/users.created_at') }}</th>
+                                                    <th style="width: 20%">{{ trans('rinvex/fort::backend/users.name') }}</th>
+                                                    <th style="width: 20%">{{ trans('rinvex/fort::backend/users.contact') }}</th>
+                                                    <th style="width: 15%">{{ trans('rinvex/fort::backend/users.status.title') }}</th>
+                                                    <th style="width: 15%">{{ trans('rinvex/fort::backend/users.created_at') }}</th>
                                                 </tr>
                                             </thead>
 
@@ -71,9 +71,9 @@
 
                                                         <td>
                                                             @if($user->active)
-                                                                <span class="label label-success">{{ trans('rinvex.fort::backend/users.status.active') }}</span>
+                                                                <span class="label label-success">{{ trans('rinvex/fort::backend/users.status.active') }}</span>
                                                             @else
-                                                                <span class="label label-warning">{{ trans('rinvex.fort::backend/users.status.inactive') }}</span>
+                                                                <span class="label label-warning">{{ trans('rinvex/fort::backend/users.status.inactive') }}</span>
                                                             @endif
                                                         </td>
 
@@ -102,7 +102,7 @@
 
                                 <div class="panel panel-default">
                                     <div class="panel-heading">
-                                        <strong>{{ trans('rinvex.fort::backend/dashboard.statistics') }}</strong>
+                                        <strong>{{ trans('rinvex/fort::backend/dashboard.statistics') }}</strong>
                                     </div>
 
                                     <ul class="list-group" style="vertical-align: middle">
@@ -130,7 +130,7 @@
                                 <div class="panel panel-default">
                                     <div class="panel-heading">
                                         <strong>
-                                            {{ trans('rinvex.fort::backend/users.online', ['mins' => config('rinvex.fort.online.interval')]) }}
+                                            {{ trans('rinvex/fort::backend/users.online', ['mins' => config('rinvex.fort.online.interval')]) }}
                                             <span class="pull-right">{{ $persistences->count() }}</span>
                                         </strong>
                                     </div>
@@ -141,7 +141,7 @@
 
                                             <li class="list-group-item" style="vertical-align: middle">
                                                 <span class="pull-right">
-                                                    @if($persistence->user_id == $currentUser->id)<span class="label label-info">{{ trans('rinvex.fort::backend/dashboard.you') }}</span> @endif
+                                                    @if($persistence->user_id == $currentUser->id)<span class="label label-info">{{ trans('rinvex/fort::backend/dashboard.you') }}</span> @endif
                                                     <span class="badge">{{ $persistence->updated_at->diffForHumans() }}</span>
                                                 </span>
                                                 <a href="{{ route('rinvex.fort.backend.users.show', ['userid' => $persistence->user_id]) }}">

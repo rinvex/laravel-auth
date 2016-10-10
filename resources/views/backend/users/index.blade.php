@@ -1,4 +1,4 @@
-@extends('rinvex.fort::backend.common.layout')
+@extends('rinvex/fort::backend.common.layout')
 
 {{-- Main Content --}}
 
@@ -12,17 +12,17 @@
 
     <div class="container">
 
-        @include('rinvex.fort::frontend.alerts.success')
-        @include('rinvex.fort::frontend.alerts.warning')
-        @include('rinvex.fort::frontend.alerts.error')
-        @include('rinvex.fort::backend.common.confirm-modal', ['type' => 'user'])
+        @include('rinvex/fort::frontend.alerts.success')
+        @include('rinvex/fort::frontend.alerts.warning')
+        @include('rinvex/fort::frontend.alerts.error')
+        @include('rinvex/fort::backend.common.confirm-modal', ['type' => 'user'])
 
         <div class="panel panel-default">
 
             {{-- Heading --}}
             <div class="panel-heading">
                 <h4>
-                    {{ trans('rinvex.fort::backend/users.heading') }}
+                    {{ trans('rinvex/fort::backend/users.heading') }}
                     <span class="pull-right" style="margin-top: -7px">
                         <a href="{{ route('rinvex.fort.backend.users.create') }}" class="btn btn-default"><i class="fa fa-plus"></i></a>
                     </span>
@@ -38,12 +38,12 @@
 
                         <thead>
                             <tr>
-                                <th style="width: 20%">{{ trans('rinvex.fort::backend/users.name') }}</th>
-                                <th style="width: 20%">{{ trans('rinvex.fort::backend/users.contact') }}</th>
-                                <th style="width: 20%">{{ trans('rinvex.fort::backend/users.roles') }}</th>
-                                <th style="width: 15%">{{ trans('rinvex.fort::backend/users.status.title') }}</th>
-                                <th style="width: 15%">{{ trans('rinvex.fort::backend/users.dates') }}</th>
-                                <th style="width: 10%" class="text-right">{{ trans('rinvex.fort::backend/users.actions') }}</th>
+                                <th style="width: 20%">{{ trans('rinvex/fort::backend/users.name') }}</th>
+                                <th style="width: 20%">{{ trans('rinvex/fort::backend/users.contact') }}</th>
+                                <th style="width: 20%">{{ trans('rinvex/fort::backend/users.roles') }}</th>
+                                <th style="width: 15%">{{ trans('rinvex/fort::backend/users.status.title') }}</th>
+                                <th style="width: 15%">{{ trans('rinvex/fort::backend/users.dates') }}</th>
+                                <th style="width: 10%" class="text-right">{{ trans('rinvex/fort::backend/users.actions') }}</th>
                             </tr>
                         </thead>
 
@@ -82,21 +82,21 @@
 
                                     <td>
                                         @if($user->active)
-                                            <span class="label label-success">{{ trans('rinvex.fort::backend/users.status.active') }}</span>
+                                            <span class="label label-success">{{ trans('rinvex/fort::backend/users.status.active') }}</span>
                                         @else
-                                            <span class="label label-warning">{{ trans('rinvex.fort::backend/users.status.inactive') }}</span>
+                                            <span class="label label-warning">{{ trans('rinvex/fort::backend/users.status.inactive') }}</span>
                                         @endif
                                     </td>
 
                                     <td class="small">
                                         @if($user->created_at)
                                             <div>
-                                                {{ trans('rinvex.fort::backend/users.created_at') }}: <time datetime="{{ $user->created_at }}">{{ $user->created_at->format('Y-m-d') }}</time>
+                                                {{ trans('rinvex/fort::backend/users.created_at') }}: <time datetime="{{ $user->created_at }}">{{ $user->created_at->format('Y-m-d') }}</time>
                                             </div>
                                         @endif
                                         @if($user->updated_at)
                                             <div>
-                                                {{ trans('rinvex.fort::backend/users.updated_at') }}: <time datetime="{{ $user->updated_at }}">{{ $user->updated_at->format('Y-m-d') }}</time>
+                                                {{ trans('rinvex/fort::backend/users.updated_at') }}: <time datetime="{{ $user->updated_at }}">{{ $user->updated_at->format('Y-m-d') }}</time>
                                             </div>
                                         @endif
                                     </td>
@@ -118,7 +118,7 @@
             </div>
 
             {{-- Pagination --}}
-            @include('rinvex.fort::backend.common.pagination', ['resource' => $users])
+            @include('rinvex/fort::backend.common.pagination', ['resource' => $users])
 
         </div>
 

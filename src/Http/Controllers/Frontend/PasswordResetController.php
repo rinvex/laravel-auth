@@ -39,7 +39,7 @@ class PasswordResetController extends AbstractController
      */
     public function request()
     {
-        return view('rinvex.fort::frontend.passwordreset.request');
+        return view('rinvex/fort::frontend.passwordreset.request');
     }
 
     /**
@@ -94,7 +94,7 @@ class PasswordResetController extends AbstractController
 
             case ResetBrokerContract::VALID_TOKEN:
             default:
-                return view('rinvex.fort::frontend.passwordreset.reset')->with(compact('token', 'email'));
+                return view('rinvex/fort::frontend.passwordreset.reset')->with(compact('token', 'email'));
         }
     }
 

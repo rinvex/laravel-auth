@@ -3,17 +3,17 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="deleteConfirmationModalLabel">{{ trans('rinvex.fort::backend/common.delete.heading') }}</h4>
+                <h4 class="modal-title" id="deleteConfirmationModalLabel">{{ trans('rinvex/fort::backend/common.delete.heading') }}</h4>
             </div>
             <div class="modal-body">
-                {!! trans('rinvex.fort::backend/common.delete.body', ['type' => $type]) !!}
+                {!! trans('rinvex/fort::backend/common.delete.body', ['type' => $type]) !!}
             </div>
             <div class="modal-footer">
                 <form id="delete-item-form" action="#" method="POST">
                     {{ csrf_field() }}
                     <input type="hidden" name="_method" value="DELETE">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">{{ trans('rinvex.fort::backend/common.cancel') }}</button>
-                    <button type="submit" class="btn btn-danger btn-ok"><i class="fa fa-trash-o"></i> {!! trans('rinvex.fort::backend/'.str_plural($type).'.delete') !!}</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">{{ trans('rinvex/fort::backend/common.cancel') }}</button>
+                    <button type="submit" class="btn btn-danger btn-ok"><i class="fa fa-trash-o"></i> {!! trans('rinvex/fort::backend/'.str_plural($type).'.delete') !!}</button>
                 </form>
             </div>
         </div>

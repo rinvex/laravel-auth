@@ -2,7 +2,7 @@
 
     <div class="alert alert-danger">
         @if ($errors->count() > 1)
-            {!! trans('rinvex.fort::frontend/messages.error') !!}<br><br>
+            {!! trans('rinvex/fort::frontend/messages.error') !!}<br><br>
             <ul>
                 @foreach ($errors->all() as $error)
                     <li>{{ $error }}</li>

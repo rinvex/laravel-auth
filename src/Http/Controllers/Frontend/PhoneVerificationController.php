@@ -35,7 +35,7 @@ class PhoneVerificationController extends AbstractController
         // If Two-Factor authentication failed, remember Two-Factor persistence
         Auth::guard($this->getGuard())->rememberTwoFactor();
 
-        return view('rinvex.fort::frontend.verification.phone.request');
+        return view('rinvex/fort::frontend.verification.phone.request');
     }
 
     /**
@@ -53,7 +53,7 @@ class PhoneVerificationController extends AbstractController
 
         return intend([
             'route' => 'rinvex.fort.frontend.verification.phone.verify',
-            'with'  => ['rinvex.fort.alert.success' => trans('rinvex.fort::frontend/messages.verification.phone.'.$status)],
+            'with'  => ['rinvex.fort.alert.success' => trans('rinvex/fort::frontend/messages.verification.phone.'.$status)],
         ]);
     }
 
@@ -71,7 +71,7 @@ class PhoneVerificationController extends AbstractController
 
         $methods = session('rinvex.fort.twofactor.methods');
 
-        return view('rinvex.fort::frontend.verification.phone.token', compact('methods'));
+        return view('rinvex/fort::frontend.verification.phone.token', compact('methods'));
     }
 
     /**

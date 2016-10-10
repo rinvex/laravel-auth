@@ -62,7 +62,7 @@ class RolesController extends AuthorizedController
     {
         $roles = $this->roleRepository->paginate(config('rinvex.fort.backend.items_per_page'));
 
-        return view('rinvex.fort::backend.roles.index', compact('roles'));
+        return view('rinvex/fort::backend.roles.index', compact('roles'));
     }
 
     /**
@@ -78,7 +78,7 @@ class RolesController extends AuthorizedController
         $resources = app('rinvex.fort.ability')->findAll()->groupBy('resource');
         $columns   = ['resource', 'view', 'create', 'edit', 'delete', 'import', 'export', 'other'];
 
-        return view('rinvex.fort::backend.roles.show', compact('role', 'resources', 'actions', 'columns'));
+        return view('rinvex/fort::backend.roles.show', compact('role', 'resources', 'actions', 'columns'));
     }
 
     /**
@@ -138,7 +138,7 @@ class RolesController extends AuthorizedController
     {
         $resources = app('rinvex.fort.ability')->findAll()->groupBy('resource');
 
-        return view('rinvex.fort::backend.roles.form', compact('role', 'resources', 'mode', 'action'));
+        return view('rinvex/fort::backend.roles.form', compact('role', 'resources', 'mode', 'action'));
     }
 
     /**

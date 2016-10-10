@@ -1,4 +1,4 @@
-@extends('rinvex.fort::backend.common.layout')
+@extends('rinvex/fort::backend.common.layout')
 
 {{-- Main Content --}}
 
@@ -12,11 +12,11 @@
 
     <div class="container">
 
-        @include('rinvex.fort::frontend.alerts.success')
-        @include('rinvex.fort::frontend.alerts.warning')
-        @include('rinvex.fort::frontend.alerts.error')
+        @include('rinvex/fort::frontend.alerts.success')
+        @include('rinvex/fort::frontend.alerts.warning')
+        @include('rinvex/fort::frontend.alerts.error')
         @if($role->exists)
-            @include('rinvex.fort::backend.common.confirm-modal', ['type' => 'role'])
+            @include('rinvex/fort::backend.common.confirm-modal', ['type' => 'role'])
         @endif
 
         <form id="backend-content-form" action="{{ ($action === 'update' ? route('rinvex.fort.backend.roles.store') : route('rinvex.fort.backend.roles.update', ['role' => $role])) }}" role="form" method="post">
@@ -27,7 +27,7 @@
                 {{-- Heading --}}
                 <div class="panel-heading">
                     <h4>
-                        <a href="{{ route('rinvex.fort.backend.roles.index') }}">{{ trans('rinvex.fort::backend/roles.heading') }}</a> / {{ trans('rinvex.fort::backend/roles.'.$mode) }} @if($role->exists) » {{ $role->slug }} @endif
+                        <a href="{{ route('rinvex.fort.backend.roles.index') }}">{{ trans('rinvex/fort::backend/roles.heading') }}</a> / {{ trans('rinvex/fort::backend/roles.'.$mode) }} @if($role->exists) » {{ $role->slug }} @endif
                         @if($role->exists && $mode !== 'copy')
                             <span class="pull-right" style="margin-top: -7px">
                                 <a href="{{ route('rinvex.fort.backend.roles.show', ['role' => $role]) }}" class="btn btn-default"><i class="fa fa-eye text-primary"></i></a>
@@ -47,9 +47,9 @@
                         <div class="col-md-8">
                             <div class="form-group{{ $errors->has('title') ? ' has-error' : '' }}">
 
-                                <label for="title" class="control-label">{{ trans('rinvex.fort::backend/roles.title') }}</label>
+                                <label for="title" class="control-label">{{ trans('rinvex/fort::backend/roles.title') }}</label>
 
-                                <input type="text" class="form-control" name="title" id="title" placeholder="{{ trans('rinvex.fort::backend/roles.title') }}" value="{{ old('title', $role->title) }}" required autofocus>
+                                <input type="text" class="form-control" name="title" id="title" placeholder="{{ trans('rinvex/fort::backend/roles.title') }}" value="{{ old('title', $role->title) }}" required autofocus>
 
                                 @if ($errors->has('title'))
                                     <span class="help-block">
@@ -63,9 +63,9 @@
                         <div class="col-md-4">
                             <div class="form-group{{ $errors->has('slug') ? ' has-error' : '' }}">
 
-                                <label for="slug" class="control-label">{{ trans('rinvex.fort::backend/roles.slug') }}</label>
+                                <label for="slug" class="control-label">{{ trans('rinvex/fort::backend/roles.slug') }}</label>
 
-                                <input type="text" class="form-control" name="slug" id="slug" placeholder="{{ trans('rinvex.fort::backend/roles.slug') }}" value="{{ old('slug', $role->slug) }}" required>
+                                <input type="text" class="form-control" name="slug" id="slug" placeholder="{{ trans('rinvex/fort::backend/roles.slug') }}" value="{{ old('slug', $role->slug) }}" required>
 
                                 @if ($errors->has('slug'))
                                     <span class="help-block">
@@ -81,9 +81,9 @@
                         <div class="col-md-8">
                             <div class="form-group{{ $errors->has('description') ? ' has-error' : '' }}">
 
-                                <label for="description" class="control-label">{{ trans('rinvex.fort::backend/roles.description') }}</label>
+                                <label for="description" class="control-label">{{ trans('rinvex/fort::backend/roles.description') }}</label>
 
-                                <textarea class="form-control" name="description" id="description" placeholder="{{ trans('rinvex.fort::backend/roles.description') }}" rows="3">{{ old('description', $role->description)  }}</textarea>
+                                <textarea class="form-control" name="description" id="description" placeholder="{{ trans('rinvex/fort::backend/roles.description') }}" rows="3">{{ old('description', $role->description)  }}</textarea>
 
                                 @if ($errors->has('description'))
                                     <span class="help-block">
@@ -97,7 +97,7 @@
                         <div class="col-md-4">
                             <div class="form-group{{ $errors->has('abilities') ? ' has-error' : '' }}">
 
-                                <label for="abilities" class="control-label">{{ trans('rinvex.fort::backend/roles.abilities') }}</label>
+                                <label for="abilities" class="control-label">{{ trans('rinvex/fort::backend/roles.abilities') }}</label>
 
                                 <select class="form-control" name="abilities[]" id="abilities" size="4" multiple>
                                     @foreach($resources as $group => $abilities)
@@ -125,12 +125,12 @@
                         <div class="col-md-12">
                             @if($mode !== 'copy')
                                 @if($role->created_at)
-                                    <small><strong>{{ trans('rinvex.fort::backend/roles.created_at') }}:</strong>
+                                    <small><strong>{{ trans('rinvex/fort::backend/roles.created_at') }}:</strong>
                                         <time datetime="{{ $role->created_at }}">{{ $role->created_at->format('Y-m-d') }}</time>
                                     </small>
                                 @endif
                                 @if($role->updated_at)
-                                    <small><strong>{{ trans('rinvex.fort::backend/roles.updated_at') }}:</strong>
+                                    <small><strong>{{ trans('rinvex/fort::backend/roles.updated_at') }}:</strong>
                                         <time datetime="{{ $role->updated_at }}">{{ $role->updated_at->format('Y-m-d') }}</time>
                                     </small>
                                 @endif

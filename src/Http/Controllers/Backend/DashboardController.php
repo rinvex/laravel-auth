@@ -51,6 +51,6 @@ class DashboardController extends AuthorizedController
                                              ->where('updated_at', '>', $onlineInterval)
                                              ->get(['user_id', DB::raw('MAX(updated_at) as updated_at')]);
 
-        return view('rinvex.fort::backend.dashboard.home', compact('users', 'persistences', 'stats'));
+        return view('rinvex/fort::backend.dashboard.home', compact('users', 'persistences', 'stats'));
     }
 }

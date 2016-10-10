@@ -26,7 +26,7 @@ class TwoFactorPhoneUpdateRequest extends FormRequest
     {
         return intend([
             'route'      => 'rinvex.fort.frontend.user.settings',
-            'withErrors' => ['token' => trans('rinvex.fort::frontend/messages.verification.twofactor.phone.globaly_disabled')],
+            'withErrors' => ['token' => trans('rinvex/fort::frontend/messages.verification.twofactor.phone.globaly_disabled')],
         ]);
     }
 
