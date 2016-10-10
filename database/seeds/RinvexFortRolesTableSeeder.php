@@ -29,7 +29,7 @@ class RinvexFortRolesTableSeeder extends Seeder
         DB::table(config('rinvex.fort.tables.roles'))->truncate();
 
         // Get roles data
-        $roles = require __DIR__.'/../../resources/data/roles.php';
+        $roles = json_decode(file_get_contents(__DIR__.'/../../resources/data/roles.json'), true);
 
         // Create new roles
         foreach ($roles as $role) {

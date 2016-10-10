@@ -29,7 +29,7 @@ class RinvexFortAbilitiesTableSeeder extends Seeder
         DB::table(config('rinvex.fort.tables.abilities'))->truncate();
 
         // Get abilities data
-        $abilities = require __DIR__.'/../../resources/data/abilities.php';
+        $abilities = json_decode(file_get_contents(__DIR__.'/../../resources/data/abilities.json'), true);
 
         // Create new abilities
         foreach ($abilities as $ability) {

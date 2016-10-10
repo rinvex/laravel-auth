@@ -1,0 +1,12 @@
+[
+    {
+        "slug": "admin",
+        "title": "Administrator",
+        "description": "Fully privileged administrative role."
+    },
+    {
+        "slug": "registered",
+        "title": "Registered",
+        "description": "Default role for registered users."
+    }
+]

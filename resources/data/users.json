@@ -1,0 +1,12 @@
+[
+    {
+        "username": "rinvex",
+        "email": "rinvex@example.com",
+        "email_verified_at": {
+            "date": "2016-10-10 18:08:05.000000",
+            "timezone_type": 3,
+            "timezone": "UTC"
+        },
+        "password": "123456"
+    }
+]

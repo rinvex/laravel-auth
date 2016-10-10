@@ -29,7 +29,7 @@ class RinvexFortUsersTableSeeder extends Seeder
         DB::table(config('rinvex.fort.tables.users'))->truncate();
 
         // Get users data
-        $users = require __DIR__.'/../../resources/data/users.php';
+        $users = json_decode(file_get_contents(__DIR__.'/../../resources/data/users.json'), true);
 
         // Create new users
         foreach ($users as $user) {
