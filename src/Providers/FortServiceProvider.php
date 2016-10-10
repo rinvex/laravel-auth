@@ -58,6 +58,10 @@ class FortServiceProvider extends BaseServiceProvider
         // Publish Resources
         $this->publishResources();
 
+        // Override route middleware on the fly
+        $router->middleware('auth', \Rinvex\Fort\Http\Middleware\Authenticate::class);
+        $router->middleware('guest', \Rinvex\Fort\Http\Middleware\RedirectIfAuthenticated::class);
+
         // Load routes
         $this->loadRoutes($router);
 
