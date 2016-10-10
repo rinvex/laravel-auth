@@ -45,11 +45,12 @@ class DashboardController extends AuthorizedController
 
         // Get online users
         $onlineInterval = Carbon::now()->subMinutes(config('rinvex.fort.online.interval'));
-        $persistences   = app('rinvex.fort.persistence')->groupBy(['user_id'])
-                                             ->with(['user'])
-                                             ->where('attempt', '=', 0)
-                                             ->where('updated_at', '>', $onlineInterval)
-                                             ->get(['user_id', DB::raw('MAX(updated_at) as updated_at')]);
+        $persistences   = app('rinvex.fort.persistence')
+            ->groupBy(['user_id'])
+            ->with(['user'])
+            ->where('attempt', '=', 0)
+            ->where('updated_at', '>', $onlineInterval)
+            ->findAll(['user_id', DB::raw('MAX(updated_at) as updated_at')]);
 
         return view('rinvex/fort::backend.dashboard.home', compact('users', 'persistences', 'stats'));
     }
