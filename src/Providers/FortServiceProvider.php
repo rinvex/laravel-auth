@@ -94,11 +94,11 @@ class FortServiceProvider extends BaseServiceProvider
         // Subscribe the registered event listener
         $this->app['events']->subscribe('rinvex.fort.listener');
 
-        // Add custom user provider
-        $this->addCustomUserProvider();
+        // Override user provider
+        $this->overrideUserProvider();
 
-        // Add custom session guard
-        $this->addCustomSessionGuard();
+        // Override session guard
+        $this->overrideSessionGuard();
 
         // Share current user instance with all views
         $this->app['view']->composer('*', function ($view) {
@@ -238,9 +238,9 @@ class FortServiceProvider extends BaseServiceProvider
      *
      * @return void
      */
-    protected function addCustomUserProvider()
+    protected function overrideUserProvider()
     {
-        $this->app['auth']->provider('rinvex.fort.eloquent', function ($app, array $config) {
+        $this->app['auth']->provider('eloquent', function ($app, array $config) {
             // Return an instance of Rinvex\Fort\Contracts\UserRepositoryContract
             return $this->app['rinvex.fort.user'];
         });
@@ -251,10 +251,10 @@ class FortServiceProvider extends BaseServiceProvider
      *
      * @return void
      */
-    protected function addCustomSessionGuard()
+    protected function overrideSessionGuard()
     {
         // Add custom session guard
-        $this->app['auth']->extend('rinvex.fort.session', function ($app, $name, array $config) {
+        $this->app['auth']->extend('session', function ($app, $name, array $config) {
             $provider = $app['auth']->createUserProvider($config['provider']);
 
             $guard = new SessionGuard($name, $provider, $app['session.store'], $app['request']);
