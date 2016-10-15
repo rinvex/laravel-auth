@@ -48,17 +48,7 @@ interface EmailVerificationBrokerContract
     const INVALID_TOKEN = 'rinvex/fort::frontend/messages.verification.email.invalid_token';
 
     /**
-     * Send Two-Factor Token.
-     *
-     * @param \Rinvex\Fort\Contracts\AuthenticatableContract $user
-     * @param string                                         $method
-     *
-     * @return bool
-     */
-    public function sendPhoneVerification(AuthenticatableContract $user, $method);
-
-    /**
-     * Send a user verification link.
+     * Send a user email verification.
      *
      * @param array $credentials
      *

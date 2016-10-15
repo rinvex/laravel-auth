@@ -15,111 +15,57 @@
 
 namespace Rinvex\Fort\Services;
 
-use Exception;
 use Carbon\Carbon;
 use GuzzleHttp\Client as HttpClient;
-use Illuminate\Support\Facades\Log;
+use NotificationChannels\Authy\AuthyChannel;
 use Rinvex\Fort\Contracts\AuthenticatableContract;
 use Rinvex\Fort\Contracts\TwoFactorProviderContract;
-use Rinvex\Fort\Contracts\TwoFactorSmsTokenContract;
-use Rinvex\Fort\Contracts\TwoFactorPhoneTokenContract;
+use NotificationChannels\Authy\Exceptions\InvalidConfiguration;
 
-class TwoFactorAuthyProvider implements TwoFactorProviderContract, TwoFactorSmsTokenContract, TwoFactorPhoneTokenContract
+class TwoFactorAuthyProvider implements TwoFactorProviderContract
 {
     /**
-     * Array containing configuration data.
+     * The HTTP client instance.
      *
-     * @var array
+     * @var \GuzzleHttp\Client
      */
-    private $config;
+    protected $http;
+
+    /**
+     * The Authy service key.
+     *
+     * @var string
+     */
+    protected $key;
+
+    /**
+     * The Authy service API endpoint.
+     *
+     * @var string
+     */
+    protected $api;
 
     /**
      * Create a new Authy instance.
      *
+     * @param \GuzzleHttp\Client $http
+     *
+     * @throws \NotificationChannels\Authy\Exceptions\InvalidConfiguration
+     *
      * @return void
      */
-    public function __construct()
+    public function __construct(HttpClient $http)
     {
-        $mode                    = config('rinvex.fort.twofactor.authy.mode');
-        $this->config['api_key'] = config('rinvex.fort.twofactor.authy.keys.'.$mode);
-        $this->config['api_url'] = $mode === 'sandbox' ? 'http://sandbox-api.authy.com' : 'https://api.authy.com';
-    }
+        $this->http = $http;
 
-    /**
-     * {@inheritdoc}
-     */
-    public function sendSmsToken(AuthenticatableContract $user, $force = false)
-    {
-        try {
-            // Fire the Two-Factor phone sms start event
-            event('rinvex.fort.twofactor.phone.sms.start', [$user]);
+        // Prepare required data
+        $mode      = config('services.authy.mode');
+        $this->key = config('services.authy.keys.'.$mode);
+        $this->api = $mode === 'sandbox' ? AuthyChannel::API_ENDPOINT_SANDBOX : AuthyChannel::API_ENDPOINT_PRODUCTION;
 
-            // Prepare required data
-            $force        = $force ? '&force=true' : '';
-            $twoFactorSms = array_get($user->getTwoFactor(), 'phone');
-            $authyId      = $twoFactorSms['authy_id'];
-            $apiKey       = $this->config['api_key'];
-            $url          = $this->config['api_url'].'/protected/json/sms/'.$authyId.'?api_key='.$apiKey.$force;
-
-            // Send SMS auth token
-            if (($response = json_decode((new HttpClient())->get($url)->getBody(), true)) && $response['success']) {
-                // Fire the Two-Factor phone sms success event
-                event('rinvex.fort.twofactor.phone.sms.success', [$user, $response]);
-
-                return true;
-            }
-
-            // Fire the Two-Factor phone sms failed event
-            event('rinvex.fort.twofactor.phone.sms.failed', [$user, $response]);
-
-            // Log failed response
-            Log::alert(json_encode($response));
-
-            return false;
-        } catch (Exception $e) {
-            // Log exceptions & fatal errors
-            Log::alert($e->getMessage());
-
-            return false;
-        }
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function sendPhoneCallToken(AuthenticatableContract $user, $force = false)
-    {
-        try {
-            // Fire the Two-Factor phone call start event
-            event('rinvex.fort.twofactor.phone.call.start', [$user]);
-
-            // Prepare required data
-            $force        = $force ? '&force=true' : '';
-            $twoFactorSms = array_get($user->getTwoFactor(), 'phone');
-            $authyId      = $twoFactorSms['authy_id'];
-            $apiKey       = $this->config['api_key'];
-            $url          = $this->config['api_url'].'/protected/json/call/'.$authyId.'?api_key='.$apiKey.$force;
-
-            // Send SMS auth token
-            if (($response = json_decode((new HttpClient())->get($url)->getBody(), true)) && $response['success']) {
-                // Fire the Two-Factor phone call success event
-                event('rinvex.fort.twofactor.phone.call.success', [$user, $response]);
-
-                return true;
-            }
-
-            // Fire the Two-Factor phone call failed event
-            event('rinvex.fort.twofactor.phone.call.failed', [$user, $response]);
-
-            // Log failed response
-            Log::alert(json_encode($response));
-
-            return false;
-        } catch (Exception $e) {
-            // Log exceptions & fatal errors
-            Log::alert($e->getMessage());
-
-            return false;
+        // Check configuration
+        if (! $mode || ! $this->key) {
+            throw new InvalidConfiguration();
         }
     }
 
@@ -128,54 +74,44 @@ class TwoFactorAuthyProvider implements TwoFactorProviderContract, TwoFactorSmsT
      */
     public function register(AuthenticatableContract $user)
     {
-        try {
-            // Fire the Two-Factor register start event
-            event('rinvex.fort.twofactor.phone.register.start', [$user]);
+        // Fire the Two-Factor register start event
+        event('rinvex.fort.twofactor.phone.register.start', [$user]);
 
-            // Register given user with authy and get response
-            $url      = $this->config['api_url'].'/protected/json/users/new?api_key='.$this->config['api_key'];
-            $response = json_decode((new HttpClient())->post($url, [
-                'form_params' => [
-                    'user' => [
-                        'email'        => $user->getEmailForTwoFactorAuth(),
-                        'cellphone'    => preg_replace('/[^0-9]/', '', $user->getPhoneForTwoFactorAuth()),
-                        'country_code' => $user->getCountryCodeForTwoFactorAuth(),
-                    ],
+        // Register Authy user
+        $url      = $this->api.'/protected/json/users/new?api_key='.$this->key;
+        $response = json_decode($this->http->post($url, [
+            'form_params' => [
+                'user' => [
+                    'email'        => $user->getEmailForVerification(),
+                    'cellphone'    => preg_replace('/[^0-9]/', '', $user->getPhoneForVerification()),
+                    'country_code' => $user->getCountryForVerification(),
                 ],
-            ])->getBody(), true);
+            ],
+        ])->getBody(), true);
 
-            if ($response['success'] && $response['user']['id']) {
-                // Prepare required data
-                $settings                 = $user->getTwoFactor();
-                $twoFactorSms             = array_get($settings, 'phone');
-                $twoFactorSms['authy_id'] = $response['user']['id'];
-
-                array_set($settings, 'phone', $twoFactorSms);
-
-                // Update user account
-                app('rinvex.fort.user')->update($user, [
-                    'two_factor' => $settings,
-                ]);
-
-                // Fire the Two-Factor register success event
-                event('rinvex.fort.twofactor.phone.register.success', [$user, $response]);
-
-                return true;
-            }
-
+        if (! $authyId = array_get($response, 'user.id') || ! isset($response['success']) || ! $response['success']) {
             // Fire the Two-Factor register failed event
             event('rinvex.fort.twofactor.phone.register.failed', [$user, $response]);
 
-            // Log failed response
-            Log::alert(json_encode($response));
-
-            return false;
-        } catch (Exception $e) {
-            // Log exceptions & fatal errors
-            Log::alert($e->getMessage());
-
+            // Registration failed!
             return false;
         }
+
+        // Prepare required variables
+        $settings = $user->getTwoFactor();
+
+        // Update user account
+        array_set($settings, 'phone', [
+            'enabled'  => true,
+            'authy_id' => $authyId,
+        ]);
+        app('rinvex.fort.user')->update($user, ['two_factor' => $settings]);
+
+        // Fire the Two-Factor register success event
+        event('rinvex.fort.twofactor.phone.register.success', [$user, $response]);
+
+        // Return Authy Id
+        return $authyId;
     }
 
     /**
@@ -183,46 +119,38 @@ class TwoFactorAuthyProvider implements TwoFactorProviderContract, TwoFactorSmsT
      */
     public function tokenIsValid(AuthenticatableContract $user, $token, $force = true)
     {
-        try {
-            // Fire the Two-Factor phone verify start event
-            event('rinvex.fort.twofactor.phone.verify.start', [$user, $token]);
+        // Fire the Two-Factor verify start event
+        event('rinvex.fort.twofactor.phone.verify.start', [$user, $token]);
 
-            // Prepare required data
-            $force        = $force ? '&force=true' : '';
-            $twoFactorSms = array_get($user->getTwoFactor(), 'phone');
-            $authyId      = $twoFactorSms['authy_id'];
-            $apiKey       = $this->config['api_key'];
-            $url          = $this->config['api_url'].'/protected/json/verify/'.$token.'/'.$authyId.'?api_key='.$apiKey.$force;
+        // Prepare required variables
+        $force   = $force ? '&force=true' : '';
+        $settings = $user->getTwoFactor();
+        $authyId  = array_get($settings, 'phone.authy_id');
+        $url      = $this->api.'/protected/json/verify/'.$token.'/'.$authyId.'?api_key='.$this->key.$force;
 
-            // Send SMS auth token
-            $response = json_decode((new HttpClient())->get($url)->getBody(), true);
+        // Verify Authy token
+        $response = json_decode($this->http->get($url)->getBody(), true);
 
-            // Authy API returns 'true' as a string not a boolean only at this endpoint!
-            if ($response['success'] === 'true') {
-                app('rinvex.fort.user')->update($user, [
-                    'phone_verified'    => true,
-                    'phone_verified_at' => new Carbon(),
-                ]);
+        // Authy API returns 'true' as a string, not boolean only at this endpoint
+        if (! isset($response['success']) || $response['success'] != 'true') {
+            // Fire the Two-Factor verify failed event
+            event('rinvex.fort.twofactor.phone.verify.failed', [$user, $response]);
 
-                // Fire the Two-Factor phone verify success event
-                event('rinvex.fort.twofactor.phone.verify.success', [$user, $token]);
-
-                return true;
-            }
-
-            // Fire the Two-Factor phone verify failed event
-            event('rinvex.fort.twofactor.phone.verify.failed', [$user, $token]);
-
-            // Log failed response
-            Log::alert(json_encode($response));
-
-            return false;
-        } catch (Exception $e) {
-            // Log exceptions & fatal errors
-            Log::alert($e->getMessage());
-
+            // Invalid token
             return false;
         }
+
+        // Update user account
+        app('rinvex.fort.user')->update($user, [
+            'phone_verified'    => true,
+            'phone_verified_at' => new Carbon(),
+        ]);
+
+        // Fire the Two-Factor verify success event
+        event('rinvex.fort.twofactor.phone.verify.success', [$user, $token, $response]);
+
+        // Return true
+        return true;
     }
 
     /**
@@ -230,46 +158,33 @@ class TwoFactorAuthyProvider implements TwoFactorProviderContract, TwoFactorSmsT
      */
     public function delete(AuthenticatableContract $user)
     {
-        try {
-            // Fire the Two-Factor phone delete start event
-            event('rinvex.fort.twofactor.phone.delete.start', [$user]);
+        // Fire the Two-Factor delete start event
+        event('rinvex.fort.twofactor.phone.delete.start', [$user]);
 
-            // Prepare required data
-            $settings     = $user->getTwoFactor();
-            $twoFactorSms = array_get($settings, 'phone');
-            $authyId      = $twoFactorSms['authy_id'];
-            $apiKey       = $this->config['api_key'];
-            $url          = $this->config['api_url'].'/protected/json/users/delete/'.$authyId.'?api_key='.$apiKey;
+        // Prepare required variables
+        $settings = $user->getTwoFactor();
+        $authyId  = array_get($settings, 'phone.authy_id');
+        $url      = $this->api.'/protected/json/users/'.$authyId.'/delete?api_key='.$this->key;
 
-            // Send SMS auth token
-            $response = json_decode((new HttpClient())->post($url)->getBody(), true);
+        // Delete Authy user
+        $response = json_decode($this->http->post($url)->getBody(), true);
 
-            array_set($settings, 'phone', []);
-
-            if ($response['success']) {
-                // Update user account
-                app('rinvex.fort.user')->update($user, [
-                    'two_factor' => $settings,
-                ]);
-
-                // Fire the Two-Factor phone delete success event
-                event('rinvex.fort.twofactor.phone.delete.success', [$user, $response]);
-
-                return true;
-            }
-
-            // Fire the Two-Factor delete failed event
+        if (! isset($response['success']) || ! $response['success']) {
+            // Fire the Two-Factor verify failed event
             event('rinvex.fort.twofactor.phone.delete.failed', [$user, $response]);
 
-            // Log failed response
-            Log::alert(json_encode($response));
-
-            return false;
-        } catch (Exception $e) {
-            // Log exceptions & fatal errors
-            Log::alert($e->getMessage());
-
+            // Invalid token
             return false;
         }
+
+        // Update user account
+        array_set($settings, 'phone', []);
+        app('rinvex.fort.user')->update($user, ['two_factor' => $settings]);
+
+        // Fire the Two-Factor delete success event
+        event('rinvex.fort.twofactor.phone.delete.success', [$user, $response]);
+
+        // Return true
+        return true;
     }
 }

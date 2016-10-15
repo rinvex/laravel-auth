@@ -22,7 +22,9 @@ interface TwoFactorProviderContract
      *
      * @param \Rinvex\Fort\Contracts\AuthenticatableContract $user
      *
-     * @return bool
+     * @throws \NotificationChannels\Authy\Exceptions\InvalidConfiguration
+     *
+     * @return int
      */
     public function register(AuthenticatableContract $user);
 
@@ -33,6 +35,8 @@ interface TwoFactorProviderContract
      * @param string                                         $token
      * @param bool                                           $force
      *
+     * @throws \NotificationChannels\Authy\Exceptions\InvalidConfiguration
+     *
      * @return bool
      */
     public function tokenIsValid(AuthenticatableContract $user, $token, $force = true);
@@ -41,6 +45,8 @@ interface TwoFactorProviderContract
      * Delete the given user from the provider.
      *
      * @param \Rinvex\Fort\Contracts\AuthenticatableContract $user
+     *
+     * @throws \NotificationChannels\Authy\Exceptions\InvalidConfiguration
      *
      * @return bool
      */

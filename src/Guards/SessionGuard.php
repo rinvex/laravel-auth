@@ -1089,7 +1089,7 @@ class SessionGuard implements StatefulGuardContract, SupportsBasicAuth
     {
         $authy = app(TwoFactorAuthyProvider::class);
 
-        return strlen($token) === 7 && isset($this->session->get('rinvex.fort.twofactor.methods')['phone']) && $authy->tokenIsValid($user, $token);
+        return strlen($token) === 7 && $authy->tokenIsValid($user, $token);
     }
 
     /**

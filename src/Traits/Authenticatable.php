@@ -15,7 +15,6 @@
 
 namespace Rinvex\Fort\Traits;
 
-use Rinvex\Country\Loader;
 use Illuminate\Auth\Authenticatable as BaseAuthenticatable;
 
 trait Authenticatable
@@ -30,36 +29,6 @@ trait Authenticatable
     public function getTwoFactor()
     {
         return $this->two_factor;
-    }
-
-    /**
-     * Get the email address used for Two-Factor authentication.
-     *
-     * @return string
-     */
-    public function getEmailForTwoFactorAuth()
-    {
-        return $this->email;
-    }
-
-    /**
-     * Get the country code used for Two-Factor authentication.
-     *
-     * @return string
-     */
-    public function getCountryCodeForTwoFactorAuth()
-    {
-        return Loader::country($this->country)->getCallingCode();
-    }
-
-    /**
-     * Get the phone number used for Two-Factor authentication.
-     *
-     * @return string
-     */
-    public function getPhoneForTwoFactorAuth()
-    {
-        return $this->phone;
     }
 
     /**

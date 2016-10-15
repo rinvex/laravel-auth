@@ -27,27 +27,6 @@ interface AuthenticatableContract extends BaseAuthenticatable
     public function getTwoFactor();
 
     /**
-     * Get the email address used for Two-Factor authentication.
-     *
-     * @return string
-     */
-    public function getEmailForTwoFactorAuth();
-
-    /**
-     * Get the country code used for Two-Factor authentication.
-     *
-     * @return string
-     */
-    public function getCountryCodeForTwoFactorAuth();
-
-    /**
-     * Get the phone number used for Two-Factor authentication.
-     *
-     * @return string
-     */
-    public function getPhoneForTwoFactorAuth();
-
-    /**
      * Get the Two-Factor options in array format.
      *
      * @param string $options

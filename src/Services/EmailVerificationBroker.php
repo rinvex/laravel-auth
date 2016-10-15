@@ -57,28 +57,6 @@ class EmailVerificationBroker implements EmailVerificationBrokerContract
     /**
      * {@inheritdoc}
      */
-    public function sendPhoneVerification(AuthenticatableContract $user, $method)
-    {
-        $authy = app(TwoFactorAuthyProvider::class);
-
-        // Register user with Authy
-        $registered = $authy->register($user);
-
-        // Refetch user instance again after authy registration
-        $user = app('rinvex.fort.user')->find($user->id);
-
-        // Determine which method to use
-        $method = $method === 'call' ? 'sendPhoneCallToken' : 'sendSmsToken';
-
-        // Send auth token
-        $sent = $authy->$method($user);
-
-        return $registered && $sent;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
     public function send(array $credentials)
     {
         // First we will check to see if we found a user at the given credentials and

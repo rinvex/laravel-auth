@@ -47,13 +47,12 @@ class PhoneVerificationController extends AbstractController
      */
     public function send(PhoneVerificationSendRequest $request)
     {
-        $status = app('rinvex.fort.verifier')
-            ->broker($this->getBroker())
-            ->sendPhoneVerification(Auth::guard($this->getGuard())->user(), $request->get('method')) ? 'sent' : 'failed';
+        // Send phone verification notification
+        $request->user($this->getGuard())->sendPhoneVerificationNotification(false, $request->get('method'));
 
         return intend([
             'route' => 'rinvex.fort.frontend.verification.phone.verify',
-            'with'  => ['rinvex.fort.alert.success' => trans('rinvex/fort::frontend/messages.verification.phone.'.$status)],
+            'with'  => ['rinvex.fort.alert.success' => trans('rinvex/fort::frontend/messages.verification.phone.sent')],
         ]);
     }
 
