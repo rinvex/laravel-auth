@@ -127,7 +127,7 @@ class FortServiceProvider extends BaseServiceProvider
     protected function registerBrokerManagers()
     {
         // Register reset broker manager
-        $this->app->singleton('rinvex.fort.resetter', function ($app) {
+        $this->app->singleton('rinvex.fort.passwordreset', function ($app) {
             return new BrokerManager($app, 'PasswordReset');
         });
 
