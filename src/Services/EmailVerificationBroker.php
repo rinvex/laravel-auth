@@ -44,7 +44,7 @@ class EmailVerificationBroker implements EmailVerificationBrokerContract
      * Create a new verification broker instance.
      *
      * @param \Rinvex\Fort\Contracts\EmailVerificationTokenRepositoryContract $tokens
-     * @param \Rinvex\Fort\Contracts\UserRepositoryContract              $userRepository
+     * @param \Rinvex\Fort\Contracts\UserRepositoryContract                   $userRepository
      *
      * @return void
      */

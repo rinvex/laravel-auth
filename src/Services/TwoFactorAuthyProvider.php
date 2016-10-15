@@ -123,7 +123,7 @@ class TwoFactorAuthyProvider implements TwoFactorProviderContract
         event('rinvex.fort.twofactor.phone.verify.start', [$user, $token]);
 
         // Prepare required variables
-        $force   = $force ? '&force=true' : '';
+        $force    = $force ? '&force=true' : '';
         $settings = $user->getTwoFactor();
         $authyId  = array_get($settings, 'phone.authy_id');
         $url      = $this->api.'/protected/json/verify/'.$token.'/'.$authyId.'?api_key='.$this->key.$force;
