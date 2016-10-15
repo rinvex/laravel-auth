@@ -17,7 +17,7 @@ namespace Rinvex\Fort\Http\Controllers\Frontend;
 
 use Rinvex\Fort\Contracts\UserRepositoryContract;
 use Rinvex\Fort\Http\Controllers\AbstractController;
-use Rinvex\Fort\Contracts\VerificationBrokerContract;
+use Rinvex\Fort\Contracts\EmailVerificationBrokerContract;
 use Rinvex\Fort\Http\Requests\Frontend\UserRegistrationRequest;
 
 class RegistrationController extends AbstractController
@@ -58,7 +58,7 @@ class RegistrationController extends AbstractController
 
         switch ($result) {
             // Registration completed, verification required
-            case VerificationBrokerContract::LINK_SENT:
+            case EmailVerificationBrokerContract::LINK_SENT:
                 return intend([
                     'intended' => url('/'),
                     'with'     => ['rinvex.fort.alert.success' => trans('rinvex/fort::frontend/messages.register.success_verify')],

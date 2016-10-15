@@ -73,7 +73,7 @@ class BrokerManager implements BrokerManagerContract
      *
      * @throws \InvalidArgumentException
      *
-     * @return \Rinvex\Fort\Contracts\PasswordResetBrokerContract|\Rinvex\Fort\Contracts\VerificationBrokerContract
+     * @return \Rinvex\Fort\Contracts\PasswordResetBrokerContract|\Rinvex\Fort\Contracts\EmailVerificationBrokerContract
      */
     protected function resolve($name)
     {
@@ -95,7 +95,7 @@ class BrokerManager implements BrokerManagerContract
      *
      * @param array $config
      *
-     * @return \Rinvex\Fort\Contracts\PasswordResetTokenRepositoryContract|\Rinvex\Fort\Contracts\VerificationTokenRepositoryContract
+     * @return \Rinvex\Fort\Contracts\PasswordResetTokenRepositoryContract|\Rinvex\Fort\Contracts\EmailVerificationTokenRepositoryContract
      */
     protected function createTokenRepository(array $config)
     {

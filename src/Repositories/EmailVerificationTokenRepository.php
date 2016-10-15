@@ -16,9 +16,9 @@
 namespace Rinvex\Fort\Repositories;
 
 use Rinvex\Fort\Contracts\CanVerifyEmailContract;
-use Rinvex\Fort\Contracts\VerificationTokenRepositoryContract;
+use Rinvex\Fort\Contracts\EmailVerificationTokenRepositoryContract;
 
-class VerificationTokenRepository extends AbstractTokenRepository implements VerificationTokenRepositoryContract
+class EmailVerificationTokenRepository extends AbstractTokenRepository implements EmailVerificationTokenRepositoryContract
 {
     /**
      * {@inheritdoc}

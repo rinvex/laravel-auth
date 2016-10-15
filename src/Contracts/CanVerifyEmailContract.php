@@ -18,7 +18,7 @@ namespace Rinvex\Fort\Contracts;
 interface CanVerifyEmailContract
 {
     /**
-     * Get the email address where verification links are sent.
+     * Get the email for verification sending.
      *
      * @return string
      */

@@ -21,16 +21,15 @@ use Illuminate\Support\Arr;
 use UnexpectedValueException;
 use Rinvex\Fort\Contracts\UserRepositoryContract;
 use Rinvex\Fort\Contracts\CanVerifyEmailContract;
-use Rinvex\Fort\Contracts\AuthenticatableContract;
-use Rinvex\Fort\Contracts\VerificationBrokerContract;
-use Rinvex\Fort\Contracts\VerificationTokenRepositoryContract;
+use Rinvex\Fort\Contracts\EmailVerificationBrokerContract;
+use Rinvex\Fort\Contracts\EmailVerificationTokenRepositoryContract;
 
-class VerificationBroker implements VerificationBrokerContract
+class EmailVerificationBroker implements EmailVerificationBrokerContract
 {
     /**
      * The verification token repository.
      *
-     * @var \Rinvex\Fort\Contracts\VerificationTokenRepositoryContract
+     * @var \Rinvex\Fort\Contracts\EmailVerificationTokenRepositoryContract
      */
     protected $tokens;
 
@@ -44,12 +43,12 @@ class VerificationBroker implements VerificationBrokerContract
     /**
      * Create a new verification broker instance.
      *
-     * @param \Rinvex\Fort\Contracts\VerificationTokenRepositoryContract $tokens
+     * @param \Rinvex\Fort\Contracts\EmailVerificationTokenRepositoryContract $tokens
      * @param \Rinvex\Fort\Contracts\UserRepositoryContract              $userRepository
      *
      * @return void
      */
-    public function __construct(VerificationTokenRepositoryContract $tokens, UserRepositoryContract $userRepository)
+    public function __construct(EmailVerificationTokenRepositoryContract $tokens, UserRepositoryContract $userRepository)
     {
         $this->tokens         = $tokens;
         $this->userRepository = $userRepository;
@@ -80,7 +79,7 @@ class VerificationBroker implements VerificationBrokerContract
     /**
      * {@inheritdoc}
      */
-    public function sendVerificationLink(array $credentials)
+    public function send(array $credentials)
     {
         // First we will check to see if we found a user at the given credentials and
         // if we did not we will redirect back to this current URI with a piece of
@@ -196,7 +195,7 @@ class VerificationBroker implements VerificationBrokerContract
     /**
      * Get the verification token repository implementation.
      *
-     * @return \Rinvex\Fort\Contracts\VerificationTokenRepositoryContract
+     * @return \Rinvex\Fort\Contracts\EmailVerificationTokenRepositoryContract
      */
     public function getTokenRepository()
     {

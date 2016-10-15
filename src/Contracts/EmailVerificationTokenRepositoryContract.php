@@ -15,7 +15,7 @@
 
 namespace Rinvex\Fort\Contracts;
 
-interface VerificationTokenRepositoryContract
+interface EmailVerificationTokenRepositoryContract
 {
     /**
      * Create a new verification token.

@@ -511,7 +511,7 @@ class SessionGuard implements StatefulGuardContract, SupportsBasicAuth
         // fact valid we'll log the users into the application and return true.
         if ($this->hasValidCredentials($user, $credentials)) {
             // Check if unverified
-            if (config('rinvex.fort.verification.required') && ! $user->isEmailVerified()) {
+            if (config('rinvex.fort.emailverification.required') && ! $user->isEmailVerified()) {
                 // Fire the authentication unverified event
                 $this->events->fire('rinvex.fort.auth.unverified', [$user]);
 

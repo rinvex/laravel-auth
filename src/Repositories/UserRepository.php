@@ -103,8 +103,8 @@ class UserRepository extends EloquentRepository implements UserRepositoryContrac
         $this->getContainer('events')->fire('rinvex.fort.register'.$social.'.success', [$user]);
 
         // Send verification if required
-        if (! $social && config('rinvex.fort.verification.required')) {
-            return app('rinvex.fort.verifier')->broker()->sendVerificationLink(['email' => $attributes['email']]);
+        if (! $social && config('rinvex.fort.emailverification.required')) {
+            return app('rinvex.fort.emailverification')->broker()->send(['email' => $attributes['email']]);
         }
 
         // Registration completed successfully

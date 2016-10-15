@@ -65,11 +65,11 @@ class RegistrationSuccessNotification extends Notification
                 $phrase = trans('rinvex/fort::frontend/emails.registration.welcome.intro_default');
             }
         } else {
-            if (config('rinvex.fort.verification.required') && config('rinvex.fort.registration.moderated')) {
+            if (config('rinvex.fort.emailverification.required') && config('rinvex.fort.registration.moderated')) {
                 $phrase = trans('rinvex/fort::frontend/emails.registration.welcome.intro_verification_moderation');
-            } elseif (! config('rinvex.fort.verification.required') && config('rinvex.fort.registration.moderated')) {
+            } elseif (! config('rinvex.fort.emailverification.required') && config('rinvex.fort.registration.moderated')) {
                 $phrase = trans('rinvex/fort::frontend/emails.registration.welcome.intro_moderation');
-            } elseif (config('rinvex.fort.verification.required') && ! config('rinvex.fort.registration.moderated')) {
+            } elseif (config('rinvex.fort.emailverification.required') && ! config('rinvex.fort.registration.moderated')) {
                 $phrase = trans('rinvex/fort::frontend/emails.registration.welcome.intro_verification');
             } else {
                 $phrase = trans('rinvex/fort::frontend/emails.registration.welcome.intro_default');

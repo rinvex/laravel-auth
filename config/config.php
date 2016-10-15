@@ -405,7 +405,7 @@ return [
     |--------------------------------------------------------------------------
     */
 
-    'verification' => [
+    'emailverification' => [
 
         /*
         |--------------------------------------------------------------------------
@@ -455,14 +455,14 @@ return [
 
         /*
         |--------------------------------------------------------------------------
-        | Send Verification Success Email
+        | Send Verification Success Notification
         |--------------------------------------------------------------------------
         |
         | Send verification success email to users upon completing email verification successfully.
         |
         */
 
-        'success_email' => true,
+        'success_notification' => true,
 
     ],
 

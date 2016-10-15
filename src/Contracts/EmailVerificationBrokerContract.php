@@ -17,7 +17,7 @@ namespace Rinvex\Fort\Contracts;
 
 use Closure;
 
-interface VerificationBrokerContract
+interface EmailVerificationBrokerContract
 {
     /**
      * Constant representing a successfully sent verification email.
@@ -64,7 +64,7 @@ interface VerificationBrokerContract
      *
      * @return string
      */
-    public function sendVerificationLink(array $credentials);
+    public function send(array $credentials);
 
     /**
      * Verify given account.

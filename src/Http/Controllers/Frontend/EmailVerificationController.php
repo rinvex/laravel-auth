@@ -16,7 +16,7 @@
 namespace Rinvex\Fort\Http\Controllers\Frontend;
 
 use Rinvex\Fort\Http\Controllers\AbstractController;
-use Rinvex\Fort\Contracts\VerificationBrokerContract;
+use Rinvex\Fort\Contracts\EmailVerificationBrokerContract;
 use Rinvex\Fort\Http\Requests\Frontend\EmailVerificationRequest;
 
 class EmailVerificationController extends AbstractController
@@ -40,12 +40,12 @@ class EmailVerificationController extends AbstractController
      */
     public function send(EmailVerificationRequest $request)
     {
-        $result = app('rinvex.fort.verifier')
+        $result = app('rinvex.fort.emailverification')
             ->broker($this->getBroker())
-            ->sendVerificationLink($request->except('_token'));
+            ->send($request->except('_token'));
 
         switch ($result) {
-            case VerificationBrokerContract::LINK_SENT:
+            case EmailVerificationBrokerContract::LINK_SENT:
                 return intend([
                     'intended' => url('/'),
                     'with'     => ['rinvex.fort.alert.success' => trans($result)],
@@ -69,17 +69,17 @@ class EmailVerificationController extends AbstractController
      */
     public function verify(EmailVerificationRequest $request)
     {
-        $result = app('rinvex.fort.verifier')->broker($this->getBroker())->verify($request->except('_token'));
+        $result = app('rinvex.fort.emailverification')->broker($this->getBroker())->verify($request->except('_token'));
 
         switch ($result) {
-            case VerificationBrokerContract::EMAIL_VERIFIED:
+            case EmailVerificationBrokerContract::EMAIL_VERIFIED:
                 return intend([
                     'intended' => url('/'),
                     'with'     => ['rinvex.fort.alert.success' => trans($result)],
                 ]);
 
-            case VerificationBrokerContract::INVALID_USER:
-            case VerificationBrokerContract::INVALID_TOKEN:
+            case EmailVerificationBrokerContract::INVALID_USER:
+            case EmailVerificationBrokerContract::INVALID_TOKEN:
             default:
                 return intend([
                     'route'      => 'rinvex.fort.frontend.verification.email.request',
