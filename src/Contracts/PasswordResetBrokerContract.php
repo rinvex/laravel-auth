@@ -17,7 +17,7 @@ namespace Rinvex\Fort\Contracts;
 
 use Closure;
 
-interface ResetBrokerContract
+interface PasswordResetBrokerContract
 {
     /**
      * Constant representing a successfully sent password reset.
@@ -68,7 +68,7 @@ interface ResetBrokerContract
      *
      * @return string
      */
-    public function sendResetLink(array $credentials);
+    public function send(array $credentials);
 
     /**
      * Reset the password for the given credentials.

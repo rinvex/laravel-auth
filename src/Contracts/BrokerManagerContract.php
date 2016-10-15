@@ -22,7 +22,7 @@ interface BrokerManagerContract
      *
      * @param string $name
      *
-     * @return \Rinvex\Fort\Contracts\ResetBrokerContract|\Rinvex\Fort\Contracts\VerificationBrokerContract
+     * @return \Rinvex\Fort\Contracts\PasswordResetBrokerContract|\Rinvex\Fort\Contracts\VerificationBrokerContract
      */
     public function broker($name = null);
 }

@@ -15,7 +15,7 @@
 
 namespace Rinvex\Fort\Contracts;
 
-interface ResetTokenRepositoryContract
+interface PasswordResetTokenRepositoryContract
 {
     /**
      * Create a new token.

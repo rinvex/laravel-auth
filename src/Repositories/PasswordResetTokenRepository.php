@@ -16,9 +16,9 @@
 namespace Rinvex\Fort\Repositories;
 
 use Rinvex\Fort\Contracts\CanResetPasswordContract;
-use Rinvex\Fort\Contracts\ResetTokenRepositoryContract;
+use Rinvex\Fort\Contracts\PasswordResetTokenRepositoryContract;
 
-class ResetTokenRepository extends AbstractTokenRepository implements ResetTokenRepositoryContract
+class PasswordResetTokenRepository extends AbstractTokenRepository implements PasswordResetTokenRepositoryContract
 {
     /**
      * {@inheritdoc}

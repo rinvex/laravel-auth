@@ -19,17 +19,17 @@ use Closure;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
 use UnexpectedValueException;
-use Rinvex\Fort\Contracts\ResetBrokerContract;
 use Rinvex\Fort\Contracts\UserRepositoryContract;
 use Rinvex\Fort\Contracts\CanResetPasswordContract;
-use Rinvex\Fort\Contracts\ResetTokenRepositoryContract;
+use Rinvex\Fort\Contracts\PasswordResetBrokerContract;
+use Rinvex\Fort\Contracts\PasswordResetTokenRepositoryContract;
 
-class ResetBroker implements ResetBrokerContract
+class PasswordResetBroker implements PasswordResetBrokerContract
 {
     /**
      * The reset password token repository.
      *
-     * @var \Rinvex\Fort\Contracts\ResetTokenRepositoryContract
+     * @var \Rinvex\Fort\Contracts\PasswordResetTokenRepositoryContract
      */
     protected $tokens;
 
@@ -50,12 +50,12 @@ class ResetBroker implements ResetBrokerContract
     /**
      * Create a new password broker instance.
      *
-     * @param \Rinvex\Fort\Contracts\ResetTokenRepositoryContract $tokens
+     * @param \Rinvex\Fort\Contracts\PasswordResetTokenRepositoryContract $tokens
      * @param \Rinvex\Fort\Contracts\UserRepositoryContract       $userRepository
      *
      * @return void
      */
-    public function __construct(ResetTokenRepositoryContract $tokens, UserRepositoryContract $userRepository)
+    public function __construct(PasswordResetTokenRepositoryContract $tokens, UserRepositoryContract $userRepository)
     {
         $this->tokens         = $tokens;
         $this->userRepository = $userRepository;
@@ -64,7 +64,7 @@ class ResetBroker implements ResetBrokerContract
     /**
      * {@inheritdoc}
      */
-    public function sendResetLink(array $credentials)
+    public function send(array $credentials)
     {
         // First we will check to see if we found a user at the given credentials and
         // if we did not we will redirect back to this current URI with a piece of
@@ -226,7 +226,7 @@ class ResetBroker implements ResetBrokerContract
     /**
      * Get the password reset token repository.
      *
-     * @return \Rinvex\Fort\Contracts\ResetTokenRepositoryContract
+     * @return \Rinvex\Fort\Contracts\PasswordResetTokenRepositoryContract
      */
     public function getTokenRepository()
     {
