@@ -15,8 +15,6 @@
 
 namespace Rinvex\Fort\Http\Requests\Frontend;
 
-use Illuminate\Support\Facades\Auth;
-
 class PhoneVerificationSendRequest extends PhoneVerificationRequest
 {
     /**
@@ -26,10 +24,8 @@ class PhoneVerificationSendRequest extends PhoneVerificationRequest
      */
     public function rules()
     {
-        $user = Auth::guard()->user() ?: Auth::guard()->attemptUser();
-
         return $this->isMethod('post') ? [
-            'phone'  => 'required|numeric|exists:'.config('rinvex.fort.tables.users').',phone,id,'.$user->id.',phone_verified,1',
+            'phone'  => 'required|numeric|exists:'.config('rinvex.fort.tables.users').',phone',
             'method' => 'required',
         ] : [];
     }
