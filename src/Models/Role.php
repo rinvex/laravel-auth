@@ -78,6 +78,16 @@ class Role extends Model
     }
 
     /**
+     * Get the list of ability Ids.
+     *
+     * @return array
+     */
+    public function getAbilityListAttribute()
+    {
+        return $this->abilities->pluck('id')->toArray();
+    }
+
+    /**
      * Determine if the role is super admin.
      *
      * @return bool

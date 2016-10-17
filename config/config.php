@@ -368,6 +368,21 @@ return [
 
         /*
         |--------------------------------------------------------------------------
+        | Password Minimum Characters
+        |--------------------------------------------------------------------------
+        |
+        | This option controls the minimum characters for passwords in your
+        | application. You may change this default as required, but
+        | they're a perfect start for most applications.
+        |
+        | Default: 8
+        |
+        */
+
+        'minimum_characters' => 8,
+
+        /*
+        |--------------------------------------------------------------------------
         | Password Reset Default Broker
         |--------------------------------------------------------------------------
         |

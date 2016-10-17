@@ -163,6 +163,26 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
     }
 
     /**
+     * Get the list of ability Ids.
+     *
+     * @return array
+     */
+    public function getAbilityListAttribute()
+    {
+        return $this->abilities->pluck('id')->toArray();
+    }
+
+    /**
+     * Get the list of role Ids.
+     *
+     * @return array
+     */
+    public function getRoleListAttribute()
+    {
+        return $this->roles->pluck('id')->toArray();
+    }
+
+    /**
      * Determine if the user is super admin.
      *
      * @return bool

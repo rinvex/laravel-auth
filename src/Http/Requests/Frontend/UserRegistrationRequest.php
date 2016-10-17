@@ -49,8 +49,8 @@ class UserRegistrationRequest extends FormRequest
     {
         return $this->isMethod('post') ? [
             'email'    => 'required|email|max:255|unique:'.config('rinvex.fort.tables.users').',email',
-            'username' => 'required|max:255|unique:'.config('rinvex.fort.tables.users').',username',
-            'password' => 'required|min:6|confirmed',
+            'username' => 'required|alpha_dash|max:255|unique:'.config('rinvex.fort.tables.users').',username',
+            'password' => 'required|confirmed|min:'.config('rinvex.fort.passwordreset.minimum_characters'),
         ] : [];
     }
 }

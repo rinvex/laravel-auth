@@ -37,12 +37,12 @@ class PasswordResetRequest extends FormRequest
     public function rules()
     {
         return $this->isMethod('post') ? [
-            'email'    => 'required|email|max:255',
             'token'    => 'required|regex:/^[0-9a-zA-Z]+$/',
-            'password' => 'required|confirmed|min:6',
+            'email'    => 'required|email|max:255|exists:'.config('rinvex.fort.tables.users').',email',
+            'password' => 'required|confirmed|min:'.config('rinvex.fort.passwordreset.minimum_characters'),
         ] : [
-            'email' => 'required|email|max:255',
             'token' => 'required|regex:/^[0-9a-zA-Z]+$/',
+            'email' => 'required|email|max:255|exists:'.config('rinvex.fort.tables.users').',email',
         ];
     }
 }
