@@ -23,16 +23,16 @@ return [
     ],
 
     'role' => [
-        'not_found' => 'Sorry! Role [:roleId] not found!',
-        'created'   => 'Congrats! Role [:roleId] created successfully.',
-        'updated'   => 'Congrats! Role [:roleId] updated successfully.',
+        'not_found'       => 'Sorry! Role [:roleId] not found!',
+        'created'         => 'Congrats! Role [:roleId] created successfully.',
+        'updated'         => 'Congrats! Role [:roleId] updated successfully.',
         'nothing_updated' => 'Hmmm! Role [:roleId] had nothing to be updated.',
     ],
 
     'user' => [
-        'not_found' => 'Sorry! User [:userId] not found!',
-        'created'   => 'Congrats! User [:userId] created successfully.',
-        'updated'   => 'Congrats! User [:userId] updated successfully.',
+        'not_found'       => 'Sorry! User [:userId] not found!',
+        'created'         => 'Congrats! User [:userId] created successfully.',
+        'updated'         => 'Congrats! User [:userId] updated successfully.',
         'nothing_updated' => 'Hmmm! User [:userId] had nothing to be updated.',
     ],
 

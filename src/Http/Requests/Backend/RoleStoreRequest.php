@@ -36,9 +36,9 @@ class RoleStoreRequest extends FormRequest
      */
     public function rules()
     {
-
         return [
             'slug'  => 'required|unique:'.config('rinvex.fort.tables.roles').',slug',
             'title' => 'required',
-        ];    }
+        ];
+    }
 }

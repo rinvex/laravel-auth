@@ -17,7 +17,6 @@ namespace Rinvex\Fort\Http\Controllers\Frontend;
 
 use Carbon\Carbon;
 use Illuminate\Support\MessageBag;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\ViewErrorBag;
 use Rinvex\Fort\Services\TwoFactorTotpProvider;
 use Rinvex\Fort\Contracts\UserRepositoryContract;
