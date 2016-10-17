@@ -17,7 +17,6 @@ namespace Rinvex\Fort\Http\Controllers\Frontend;
 
 use Illuminate\Http\Request;
 use Rinvex\Country\Loader;
-use Illuminate\Support\Facades\Auth;
 use Rinvex\Fort\Contracts\UserRepositoryContract;
 use Rinvex\Fort\Http\Controllers\AuthorizedController;
 use Rinvex\Fort\Http\Requests\Frontend\UserSettingsUpdateRequest;
