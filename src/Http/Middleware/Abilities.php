@@ -34,7 +34,7 @@ class Abilities
     public function handle(Request $request, Closure $next, $guard = null)
     {
         if ($user = Auth::guard($guard)->user()) {
-            $user->all_abilities->map(function ($ability) {
+            $user->allAbilities->map(function ($ability) {
                 // Bypass authorization if user is super admin already
                 Gate::before(function ($user) {
                     return $user->isSuperadmin() ? true : null;

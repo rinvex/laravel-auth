@@ -19,6 +19,8 @@ use Illuminate\Http\Request;
 use Rinvex\Fort\Models\Ability;
 use Rinvex\Fort\Contracts\AbilityRepositoryContract;
 use Rinvex\Fort\Http\Controllers\AuthorizedController;
+use Rinvex\Fort\Http\Requests\Backend\AbilityStoreRequest;
+use Rinvex\Fort\Http\Requests\Backend\AbilityUpdateRequest;
 
 class AbilitiesController extends AuthorizedController
 {
@@ -120,42 +122,28 @@ class AbilitiesController extends AuthorizedController
     }
 
     /**
-     * Show the form for create/edit/copy of the given resource.
-     *
-     * @param string                      $mode
-     * @param string                      $action
-     * @param \Rinvex\Fort\Models\Ability $ability
-     *
-     * @return \Illuminate\Http\Response
-     */
-    protected function form($mode, $action, Ability $ability)
-    {
-        return view('rinvex/fort::backend.abilities.form', compact('ability', 'resources', 'mode', 'action'));
-    }
-
-    /**
      * Store a newly created resource in storage.
      *
-     * @param \Illuminate\Http\Request $request
+     * @param \Rinvex\Fort\Http\Requests\Backend\AbilityStoreRequest $request
      *
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(AbilityStoreRequest $request)
     {
-        //
+        return $this->process($request);
     }
 
     /**
      * Update the given resource in storage.
      *
-     * @param \Illuminate\Http\Request    $request
-     * @param \Rinvex\Fort\Models\Ability $ability
+     * @param \Rinvex\Fort\Http\Requests\Backend\AbilityUpdateRequest $request
+     * @param \Rinvex\Fort\Models\Ability                             $ability
      *
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Ability $ability)
+    public function update(AbilityUpdateRequest $request, Ability $ability)
     {
-        //
+        return $this->process($request, $ability);
     }
 
     /**
@@ -188,5 +176,43 @@ class AbilitiesController extends AuthorizedController
     public function export()
     {
         //
+    }
+
+    /**
+     * Show the form for create/edit/copy of the given resource.
+     *
+     * @param string                      $mode
+     * @param string                      $action
+     * @param \Rinvex\Fort\Models\Ability $ability
+     *
+     * @return \Illuminate\Http\Response
+     */
+    protected function form($mode, $action, Ability $ability)
+    {
+        return view('rinvex/fort::backend.abilities.form', compact('ability', 'resources', 'mode', 'action'));
+    }
+
+    /**
+     * Process the form for store/update of the given resource.
+     *
+     * @param \Illuminate\Http\Request    $request
+     * @param \Rinvex\Fort\Models\Ability $ability
+     *
+     * @return \Illuminate\Http\Response
+     */
+    protected function process(Request $request, Ability $ability = null)
+    {
+        // Repository `store` method returns false if no attributes updated (user clicked save without chaning anything)
+        $result = $this->abilityRepository->store($ability, $request->except(['_method', '_token', 'id']));
+        $with   = ! is_null($ability)
+            ? ($result === false
+                ? ['rinvex.fort.alert.warning' => trans('rinvex/fort::backend/messages.ability.nothing_updated', ['abilityId' => $ability->id])]
+                : ['rinvex.fort.alert.success' => trans('rinvex/fort::backend/messages.ability.updated', ['abilityId' => $result->id])])
+            : ['rinvex.fort.alert.success' => trans('rinvex/fort::backend/messages.ability.created', ['abilityId' => $result->id])];
+
+        return intend([
+            'route' => 'rinvex.fort.backend.abilities.index',
+            'with'  => $with,
+        ]);
     }
 }

@@ -19,6 +19,8 @@ use Illuminate\Http\Request;
 use Rinvex\Fort\Models\Role;
 use Rinvex\Fort\Contracts\RoleRepositoryContract;
 use Rinvex\Fort\Http\Controllers\AuthorizedController;
+use Rinvex\Fort\Http\Requests\Backend\RoleStoreRequest;
+use Rinvex\Fort\Http\Requests\Backend\RoleUpdateRequest;
 
 class RolesController extends AuthorizedController
 {
@@ -126,29 +128,13 @@ class RolesController extends AuthorizedController
     }
 
     /**
-     * Show the form for create/edit/copy of the given resource.
-     *
-     * @param string                   $mode
-     * @param string                   $action
-     * @param \Rinvex\Fort\Models\Role $role
-     *
-     * @return \Illuminate\Http\Response
-     */
-    protected function form($mode, $action, Role $role)
-    {
-        $resources = app('rinvex.fort.ability')->findAll()->groupBy('resource');
-
-        return view('rinvex/fort::backend.roles.form', compact('role', 'resources', 'mode', 'action'));
-    }
-
-    /**
      * Store a newly created resource in storage.
      *
-     * @param \Illuminate\Http\Request $request
+     * @param \Rinvex\Fort\Http\Requests\Backend\RoleStoreRequest $request
      *
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(RoleStoreRequest $request)
     {
         //
     }
@@ -156,12 +142,12 @@ class RolesController extends AuthorizedController
     /**
      * Update the given resource in storage.
      *
-     * @param \Illuminate\Http\Request $request
-     * @param \Rinvex\Fort\Models\Role $role
+     * @param \Rinvex\Fort\Http\Requests\Backend\RoleUpdateRequest $request
+     * @param \Rinvex\Fort\Models\Role                             $role
      *
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Role $role)
+    public function update(RoleUpdateRequest $request, Role $role)
     {
         //
     }
@@ -194,6 +180,37 @@ class RolesController extends AuthorizedController
      * @return \Illuminate\Http\Response
      */
     public function export()
+    {
+        //
+    }
+
+    /**
+     * Show the form for create/edit/copy of the given resource.
+     *
+     * @param string                   $mode
+     * @param string                   $action
+     * @param \Rinvex\Fort\Models\Role $role
+     *
+     * @return \Illuminate\Http\Response
+     */
+    protected function form($mode, $action, Role $role)
+    {
+        $abilityList = app('rinvex.fort.ability')->findAll()->groupBy('resource')->map(function ($ability) {
+            return $ability->pluck('title', 'id');
+        })->toArray();
+
+        return view('rinvex/fort::backend.roles.form', compact('role', 'abilityList', 'mode', 'action'));
+    }
+
+    /**
+     * Process the form for store/update of the given resource.
+     *
+     * @param \Illuminate\Http\Request $request
+     * @param \Rinvex\Fort\Models\Role $role
+     *
+     * @return \Illuminate\Http\Response
+     */
+    protected function process(Request $request, Role $role = null)
     {
         //
     }

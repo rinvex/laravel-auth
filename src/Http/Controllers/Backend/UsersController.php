@@ -20,6 +20,8 @@ use Illuminate\Http\Request;
 use Rinvex\Fort\Models\User;
 use Rinvex\Fort\Contracts\UserRepositoryContract;
 use Rinvex\Fort\Http\Controllers\AuthorizedController;
+use Rinvex\Fort\Http\Requests\Backend\UserStoreRequest;
+use Rinvex\Fort\Http\Requests\Backend\UserUpdateRequest;
 
 class UsersController extends AuthorizedController
 {
@@ -128,30 +130,13 @@ class UsersController extends AuthorizedController
     }
 
     /**
-     * Show the form for create/edit/copy of the given resource.
-     *
-     * @param string                   $mode
-     * @param string                   $action
-     * @param \Rinvex\Fort\Models\User $user
-     *
-     * @return \Illuminate\Http\Response
-     */
-    protected function form($mode, $action, User $user)
-    {
-        $countries = Loader::countries();
-        $resources = app('rinvex.fort.ability')->findAll()->groupBy('resource');
-
-        return view('rinvex/fort::backend.users.form', compact('user', 'resources', 'countries', 'mode', 'action'));
-    }
-
-    /**
      * Store a newly created resource in storage.
      *
-     * @param \Illuminate\Http\Request $request
+     * @param \Rinvex\Fort\Http\Requests\Backend\UserStoreRequest $request
      *
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(UserStoreRequest $request)
     {
         //
     }
@@ -159,12 +144,12 @@ class UsersController extends AuthorizedController
     /**
      * Update the given resource in storage.
      *
-     * @param \Illuminate\Http\Request $request
-     * @param \Rinvex\Fort\Models\User $user
+     * @param \Rinvex\Fort\Http\Requests\Backend\UserUpdateRequest $request
+     * @param \Rinvex\Fort\Models\User                             $user
      *
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, User $user)
+    public function update(UserUpdateRequest $request, User $user)
     {
         //
     }
@@ -197,6 +182,43 @@ class UsersController extends AuthorizedController
      * @return \Illuminate\Http\Response
      */
     public function export()
+    {
+        //
+    }
+
+    /**
+     * Show the form for create/edit/copy of the given resource.
+     *
+     * @param string                   $mode
+     * @param string                   $action
+     * @param \Rinvex\Fort\Models\User $user
+     *
+     * @return \Illuminate\Http\Response
+     */
+    protected function form($mode, $action, User $user)
+    {
+        $countries = array_map(function ($country) {
+            return $country['name'];
+        }, Loader::countries());
+
+        $abilityList = app('rinvex.fort.ability')->findAll()->groupBy('resource')->map(function ($item) {
+            return $item->pluck('title', 'id');
+        })->toArray();
+
+        $roleList = app('rinvex.fort.role')->findAll()->pluck('title', 'id')->toArray();
+
+        return view('rinvex/fort::backend.users.form', compact('user', 'abilityList', 'roleList', 'countries', 'mode', 'action'));
+    }
+
+    /**
+     * Process the form for store/update of the given resource.
+     *
+     * @param \Illuminate\Http\Request $request
+     * @param \Rinvex\Fort\Models\User $user
+     *
+     * @return \Illuminate\Http\Response
+     */
+    protected function process(Request $request, User $user = null)
     {
         //
     }
