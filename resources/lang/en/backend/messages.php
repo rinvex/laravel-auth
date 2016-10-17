@@ -16,15 +16,24 @@
 return [
 
     'ability' => [
-        'not_found' => 'Sorry, ability [:ability] not found!',
+        'not_found'       => 'Sorry! Ability [:abilityId] not found!',
+        'created'         => 'Congrats! Ability [:abilityId] created successfully.',
+        'updated'         => 'Congrats! Ability [:abilityId] updated successfully.',
+        'nothing_updated' => 'Hmmm! Ability [:abilityId] had nothing to be updated.',
     ],
 
     'role' => [
-        'not_found' => 'Sorry, role [:role] not found!',
+        'not_found' => 'Sorry! Role [:roleId] not found!',
+        'created'   => 'Congrats! Role [:roleId] created successfully.',
+        'updated'   => 'Congrats! Role [:roleId] updated successfully.',
+        'nothing_updated' => 'Hmmm! Role [:roleId] had nothing to be updated.',
     ],
 
     'user' => [
-        'not_found' => 'Sorry, user [:user] not found!',
+        'not_found' => 'Sorry! User [:userId] not found!',
+        'created'   => 'Congrats! User [:userId] created successfully.',
+        'updated'   => 'Congrats! User [:userId] updated successfully.',
+        'nothing_updated' => 'Hmmm! User [:userId] had nothing to be updated.',
     ],
 
 ];

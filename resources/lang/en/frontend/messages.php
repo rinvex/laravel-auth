@@ -31,7 +31,7 @@ return [
     ],
 
     'auth' => [
-        'unauthorized' => 'Sorry, you do not have access to this area!',
+        'unauthorized' => 'Sorry, you do not have access to the requested resource!',
         'moderated'    => 'Your account is currently moderated!',
         'unverified'   => 'Your account in currently unverified!',
         'failed'       => 'These credentials do not match our records.',
@@ -66,9 +66,10 @@ return [
         ],
 
         'phone' => [
-            'verified' => 'Your phone has been verified!',
-            'sent'     => 'We have sent your verification token to your phone!',
-            'failed'   => 'Weird problem happen while verifying your phone, this issue has been logged and reported to staff.',
+            'verified'     => 'Your phone has been verified!',
+            'sent'         => 'We have sent your verification token to your phone!',
+            'failed'       => 'Weird problem happen while verifying your phone, this issue has been logged and reported to staff.',
+            'invalid_user' => 'We can not find a user with that email address.',
         ],
 
         'twofactor' => [

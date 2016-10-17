@@ -24,9 +24,15 @@ return [
     'prefix'      => 'Prefix',
     'suffix'      => 'Suffix',
     'contact'     => 'Contact',
-    'abilities'   => 'Abilities',
+    'abilities'   => [
+        'title'  => 'Abilities',
+        'select' => 'Select Abilities',
+    ],
+    'roles'       => [
+        'title'  => 'Roles',
+        'select' => 'Select Roles',
+    ],
     'password'    => 'Password',
-    'roles'       => 'Roles',
     'status'      => [
         'select'   => 'Select Status',
         'title'    => 'Status',
@@ -50,7 +56,10 @@ return [
     'online'      => 'Online Users (last :mins mins)',
     'email'       => 'Email',
     'phone'       => 'Phone',
-    'country'     => 'Country',
+    'country'     => [
+        'title'  => 'Country',
+        'select' => 'Select Country',
+    ],
     'birthdate'   => 'Birthdate',
     'create'      => 'Create User',
     'edit'        => 'Edit User',

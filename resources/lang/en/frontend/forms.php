@@ -72,6 +72,11 @@ return [
             'request' => [
                 'heading' => 'Request Phone Verification',
                 'phone'   => 'Phone Number',
+                'method'  => [
+                    'title' => 'Verification Method',
+                    'sms'   => 'SMS',
+                    'call'  => 'Call',
+                ],
                 'submit'  => 'Request Phone Verification',
             ],
 
@@ -89,8 +94,10 @@ return [
     'account' => [
         'heading'               => 'Update Account',
         'phone'                 => 'Phone',
-        'country'               => 'Country',
-        'country_select'        => 'Select your country',
+        'country'               => [
+            'title'  => 'Country',
+            'select' => 'Select Country',
+        ],
         'email'                 => 'Email',
         'username'              => 'Username',
         'prefix'                => 'Prefix',

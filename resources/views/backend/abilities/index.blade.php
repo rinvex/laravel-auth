@@ -76,7 +76,7 @@
 
                                     <td class="text-right">
                                         <a href="{{ route('rinvex.fort.backend.abilities.edit', ['ability' => $ability]) }}" class="btn btn-xs btn-default"><i class="fa fa-pencil text-primary"></i></a>
-                                        <a href="#" class="btn btn-xs btn-default" data-toggle="modal" data-target="#delete-confirmation" data-href="{{ route('rinvex.fort.backend.abilities.delete', ['ability' => $ability]) }}" data-item-name="{{ $ability->slug }}"><i class="fa fa-trash-o text-danger"></i></a>
+                                        <a href="#" class="btn btn-xs btn-default" data-toggle="modal" data-target="#delete-confirmation" data-item-href="{{ route('rinvex.fort.backend.abilities.delete', ['ability' => $ability]) }}" data-item-name="{{ $ability->slug }}"><i class="fa fa-trash-o text-danger"></i></a>
                                     </td>
                                 </tr>
 

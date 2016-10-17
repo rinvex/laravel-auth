@@ -66,10 +66,10 @@
 
                 <div class="row">
                     <div class="col-md-4">
-                        <strong>{{ trans('rinvex/fort::backend/users.country') }}</strong>: @if($country) {{ $country }} @else N/A @endif
+                        <strong>{{ trans('rinvex/fort::backend/users.country.title') }}</strong>: @if($country) {{ $country }} @else N/A @endif
                     </div>
                     <div class="col-md-4">
-                        <strong>{{ trans('rinvex/fort::backend/users.gender') }}</strong>: {{ ucfirst($user->gender) }} @if(in_array($user->gender, ['male', 'female'])) <i class="fa fa-{{ $user->gender }}"></i> @endif
+                        <strong>{{ trans('rinvex/fort::backend/users.gender.title') }}</strong>: {{ ucfirst($user->gender) }} @if(in_array($user->gender, ['male', 'female'])) <i class="fa fa-{{ $user->gender }}"></i> @endif
                     </div>
                     <div class="col-md-4">
                         <strong>{{ trans('rinvex/fort::backend/users.birthdate') }}</strong>: @if($user->birthdate) {{ $user->birthdate->toDateString() }} ({{ $user->birthdate->age }} years old) @else N/A @endif
@@ -78,7 +78,7 @@
 
                 <div class="row">
                     <div class="col-md-12">
-                        <strong>{{ trans('rinvex/fort::backend/users.roles') }}</strong>:
+                        <strong>{{ trans('rinvex/fort::backend/users.roles.title') }}</strong>:
                         @forelse($user->roles->pluck('title', 'id') as $roleId => $role)
                             <a href="{{ route('rinvex.fort.backend.roles.show', ['role' => $roleId]) }}" class="label btn-xs label-info">{{ $role }}</a>
                         @empty
@@ -114,12 +114,12 @@
                                             </td>
 
                                             @foreach($actions as $action)
-                                                <td class="text-center">{!! $user->all_abilities->where('resource', $resource)->contains('action', $action) ? '<i class="text-success fa fa-check"></i>' : (! $abilities->where('resource', $resource)->where('action', $action)->isEmpty() ? '<i class="text-danger fa fa-times"></i>' : '') !!}</td>
+                                                <td class="text-center">{!! $user->allAbilities->where('resource', $resource)->contains('action', $action) ? '<i class="text-success fa fa-check"></i>' : (! $abilities->where('resource', $resource)->where('action', $action)->isEmpty() ? '<i class="text-danger fa fa-times"></i>' : '') !!}</td>
                                             @endforeach
 
                                             <td>
                                                 @foreach($abilities->diff($abilities->whereIn('action', $actions)) as $special)
-                                                    <strong>{{ ucfirst($special->action) }}</strong> {!! $user->all_abilities->where('resource', $resource)->contains('action', $special->action) ? '<i class="text-success fa fa-check"></i>' : '<i class="text-danger fa fa-times"></i>' !!}
+                                                    <strong>{{ ucfirst($special->action) }}</strong> {!! $user->allAbilities->where('resource', $resource)->contains('action', $special->action) ? '<i class="text-success fa fa-check"></i>' : '<i class="text-danger fa fa-times"></i>' !!}
                                                     <br />
                                                 @endforeach
                                             </td>
