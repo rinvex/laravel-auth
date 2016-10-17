@@ -110,7 +110,7 @@
                                         @foreach($stats as $key => $num)
 
                                             <li class="list-group-item" style="vertical-align: middle">
-                                                <label class="pull-right badge">{{ $num }}</label>
+                                                {{ Form::label('stats_number', $num, ['class' => 'pull-right badge']) }}
                                                 <a href="{{ route('rinvex.fort.backend.users.index') }}">
                                                     <strong>
                                                         {{ $key }}

@@ -84,11 +84,9 @@
                                         </a></li>
                                     <li role="separator" class="divider"></li>
                                     <li>
-                                        <a href="{{ route('rinvex.fort.frontend.auth.logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();"><i class="fa fa-sign-out"></i> {{ trans('rinvex/fort::frontend/forms.common.logout') }}
-                                        </a>
-                                        <form id="logout-form" action="{{ route('rinvex.fort.frontend.auth.logout') }}" method="POST" style="display: none;">
-                                            {{ csrf_field() }}
-                                        </form>
+                                        <a href="{{ route('rinvex.fort.frontend.auth.logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();"><i class="fa fa-sign-out"></i> {{ trans('rinvex/fort::frontend/forms.common.logout') }}</a>
+                                        {{ Form::open(['route' => 'rinvex.fort.frontend.auth.logout', 'id' => 'logout-form', 'style' => 'display: none;']) }}
+                                        {{ Form::close() }}
                                     </li>
                                 </ul>
                             </li>

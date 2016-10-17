@@ -16,9 +16,13 @@
 namespace Rinvex\Fort\Providers;
 
 use Illuminate\Routing\Router;
+use Collective\Html\FormFacade;
+use Collective\Html\HtmlFacade;
 use Illuminate\Support\Facades\Auth;
 use Rinvex\Fort\Guards\SessionGuard;
+use Illuminate\Foundation\AliasLoader;
 use Rinvex\Fort\Services\BrokerManager;
+use Collective\Html\HtmlServiceProvider;
 use Rinvex\Fort\Listeners\FortEventListener;
 use Illuminate\View\Compilers\BladeCompiler;
 use Rinvex\Fort\Repositories\UserRepository;
@@ -48,6 +52,13 @@ class FortServiceProvider extends BaseServiceProvider
 
         // Register the Socialite Service Provider
         $this->app->register(SocialiteServiceProvider::class);
+
+        // Register the LaravelCollective HTML Service Provider
+        $this->app->register(HtmlServiceProvider::class);
+
+        // Alias the LaravelCollective Form & HTML Facades
+        AliasLoader::getInstance()->alias('Form', FormFacade::class);
+        AliasLoader::getInstance()->alias('Html', HtmlFacade::class);
     }
 
     /**

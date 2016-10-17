@@ -14,12 +14,7 @@
                     </header>
 
                     <div class="panel-body">
-
-                        {{-- Form --}}
-                        <form id="rinvex-fort-user-account-form" class="form-horizontal" role="form" method="POST" action="{{ route('rinvex.fort.frontend.user.twofactor.totp.update') }}">
-
-                            {{-- Form: CSRF Token --}}
-                            {{ csrf_field() }}
+                        {{ Form::open(['route' => 'rinvex.fort.frontend.user.twofactor.totp.update', 'class' => 'form-horizontal']) }}
 
                             @include('rinvex/fort::frontend.alerts.success')
                             @include('rinvex/fort::frontend.alerts.warning')
@@ -84,7 +79,7 @@
                                 <div class="col-md-8 col-sm-8 col-xs-8">
                                     {!! trans('rinvex/fort::frontend/forms.twofactor.totp_apps_step3') !!}
                                     <p>
-                                        <input id="token" name="token" type="text" class="form-control" value="" placeholder="{{ trans('rinvex/fort::frontend/forms.account.code') }}" required autofocus>
+                                        {{ Form::text('token', old('token'), ['class' => 'form-control', 'placeholder' => trans('rinvex/fort::frontend/forms.account.code'), 'required' => 'required', 'autofocus' => 'autofocus']) }}
                                     </p>
                                 </div>
 
@@ -94,52 +89,48 @@
 
                             @if(array_get($settings, 'totp.enabled'))
                                 <div class="row">
-                                    <div class="col-md-12 col-sm-12 col-xs-12">
+                                    <div class="form-group">
 
-                                        <div class="form-group">
+                                        <div class="col-md-12">
 
-                                            <div class="col-md-12">
+                                            <div class="text-center">
+                                                <a class="btn btn-default text-center" role="button" data-toggle="collapse" href="#collapse2Example" aria-expanded="false" aria-controls="collapseSecretKey">
+                                                    {{ trans('rinvex/fort::frontend/forms.twofactor.totp_backup_button', ['count' => count(array_get($settings, 'totp.backup'))]) }}
+                                                </a>
+                                            </div>
 
-                                                <div class="text-center">
-                                                    <a class="btn btn-default text-center" role="button" data-toggle="collapse" href="#collapse2Example" aria-expanded="false" aria-controls="collapseSecretKey">
-                                                        {{ trans('rinvex/fort::frontend/forms.twofactor.totp_backup_button', ['count' => count(array_get($settings, 'totp.backup'))]) }}
-                                                    </a>
-                                                </div>
+                                            <div class="collapse" id="collapse2Example">
 
-                                                <div class="collapse" id="collapse2Example">
+                                                <hr />
 
-                                                    <hr />
+                                                @if(array_get($settings, 'totp.backup'))
+                                                    <div class="panel panel-primary">
+                                                        <div class="panel-heading">
+                                                            <a class="btn btn-default btn-xs pull-right" style="margin-left: 10px" href="{{ route('rinvex.fort.frontend.user.twofactor.totp.backup') }}">{{ trans('rinvex/fort::frontend/forms.twofactor.totp_backup_generate') }}</a>
+                                                            <h3 class="panel-title">{{ trans('rinvex/fort::frontend/forms.twofactor.totp_backup_head') }}</h3>
+                                                        </div>
+                                                        <div class="panel-body">
+                                                            {{ trans('rinvex/fort::frontend/forms.twofactor.totp_backup_body') }}
+                                                            <div>
 
-                                                    @if(array_get($settings, 'totp.backup'))
-                                                        <div class="panel panel-primary">
-                                                            <div class="panel-heading">
-                                                                <a class="btn btn-default btn-xs pull-right" style="margin-left: 10px" href="{{ route('rinvex.fort.frontend.user.twofactor.totp.backup') }}">{{ trans('rinvex/fort::frontend/forms.twofactor.totp_backup_generate') }}</a>
-                                                                <h3 class="panel-title">{{ trans('rinvex/fort::frontend/forms.twofactor.totp_backup_head') }}</h3>
-                                                            </div>
-                                                            <div class="panel-body">
-                                                                {{ trans('rinvex/fort::frontend/forms.twofactor.totp_backup_body') }}
-                                                                <div>
+                                                                {!! trans('rinvex/fort::frontend/forms.twofactor.totp_backup_notice', ['backup_at' => array_get($settings, 'totp.backup_at')]) !!}
 
-                                                                    {!! trans('rinvex/fort::frontend/forms.twofactor.totp_backup_notice', ['backup_at' => array_get($settings, 'totp.backup_at')]) !!}
+                                                                <ul class="list-group">
+                                                                    @foreach(array_get($settings, 'totp.backup') as $backup)
+                                                                        <li class="list-group-item col-xs-6">{{ $backup }}</li>
+                                                                    @endforeach
+                                                                </ul>
 
-                                                                    <ul class="list-group">
-                                                                        @foreach(array_get($settings, 'totp.backup') as $backup)
-                                                                            <li class="list-group-item col-xs-6">{{ $backup }}</li>
-                                                                        @endforeach
-                                                                    </ul>
-
-                                                                </div>
                                                             </div>
                                                         </div>
-                                                    @else
-                                                        {{ trans('rinvex/fort::frontend/forms.twofactor.totp_backup_none') }}
-                                                    @endif
-
-                                                </div>
+                                                    </div>
+                                                @else
+                                                    {{ trans('rinvex/fort::frontend/forms.twofactor.totp_backup_none') }}
+                                                @endif
 
                                             </div>
-                                        </div>
 
+                                        </div>
                                     </div>
                                 </div>
 
@@ -149,17 +140,12 @@
 
                             <div class="row">
                                 <div class="col-md-12 col-sm-12 col-xs-12 text-center">
-
-                                    <div class="text-center">
-                                        <button type="submit" class="btn btn-primary"><i class="fa fa-cog"></i> {{ trans('rinvex/fort::frontend/forms.twofactor.submit') }}</button>
-                                        <button type="reset" class="btn btn-default">{{ trans('rinvex/fort::frontend/forms.common.reset') }}</button>
-                                    </div>
-
+                                    {{ Form::button('<i class="fa fa-cog"></i> '.trans('rinvex/fort::frontend/forms.twofactor.submit'), ['class' => 'btn btn-primary', 'type' => 'submit']) }}
+                                    {{ Form::button(trans('rinvex/fort::frontend/forms.common.reset'), ['class' => 'btn btn-default']) }}
                                 </div>
                             </div>
 
-                        </form>
-
+                        {{ Form::close() }}
                     </div>
                 </section>
             </div>
