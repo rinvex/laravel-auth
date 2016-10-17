@@ -56,7 +56,7 @@ class UserSettingsController extends AuthorizedController
         }, Loader::countries());
         $twoFactor = $request->user($this->getGuard())->getTwoFactor();
 
-        return view('rinvex/fort::frontend.user.settings', compact('twoFactor', 'countries'));
+        return view('rinvex/fort::frontend/user.settings', compact('twoFactor', 'countries'));
     }
 
     /**

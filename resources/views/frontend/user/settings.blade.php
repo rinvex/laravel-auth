@@ -1,4 +1,4 @@
-@extends('rinvex/fort::frontend.common.layout')
+@extends('rinvex/fort::frontend/common.layout')
 
 {{-- Main Content --}}
 @section('content')
@@ -17,9 +17,9 @@
                         {{ Form::model($currentUser, ['route' => 'rinvex.fort.frontend.user.settings.update', 'class' => 'form-horizontal']) }}
                             {{ Form::hidden('id') }}
 
-                            @include('rinvex/fort::frontend.alerts.success')
-                            @include('rinvex/fort::frontend.alerts.warning')
-                            @include('rinvex/fort::frontend.alerts.error')
+                            @include('rinvex/fort::frontend/alerts.success')
+                            @include('rinvex/fort::frontend/alerts.warning')
+                            @include('rinvex/fort::frontend/alerts.error')
 
                             <div class="row">
                                 <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">

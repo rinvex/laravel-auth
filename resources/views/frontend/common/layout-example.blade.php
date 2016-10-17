@@ -109,8 +109,8 @@
                             <h3>This view is using an example blade layout view.</h3>
                             <div class="alert alert-warning">
                                 <strong>Rinvex Fort default layout view!</strong> This view:
-                                <code>rinvex/fort::frontend.common.layout</code> is extending a default stub layout
-                                <code>rinvex/fort::frontend.common.layout-example</code> which is a default layout to show
+                                <code>rinvex/fort::frontend/common.layout</code> is extending a default stub layout
+                                <code>rinvex/fort::frontend/common.layout-example</code> which is a default layout to show
                                 <highlight>Rinvex Fort</highlight> features, and that view needs overriding to your own custom layout.
                             </div>
 

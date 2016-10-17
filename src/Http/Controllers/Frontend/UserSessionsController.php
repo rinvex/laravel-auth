@@ -28,7 +28,7 @@ class UserSessionsController extends AuthorizedController
      */
     public function index()
     {
-        return view('rinvex/fort::frontend.user.sessions');
+        return view('rinvex/fort::frontend/user.sessions');
     }
 
     /**

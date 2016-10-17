@@ -1,4 +1,4 @@
-@extends('rinvex/fort::backend.common.layout')
+@extends('rinvex/fort::backend/common.layout')
 
 {{-- Main Content --}}
 
@@ -12,11 +12,11 @@
 
     <div class="container">
 
-        @include('rinvex/fort::frontend.alerts.success')
-        @include('rinvex/fort::frontend.alerts.warning')
-        @include('rinvex/fort::frontend.alerts.error')
+        @include('rinvex/fort::frontend/alerts.success')
+        @include('rinvex/fort::frontend/alerts.warning')
+        @include('rinvex/fort::frontend/alerts.error')
         @if($role->exists)
-            @include('rinvex/fort::backend.common.confirm-modal', ['type' => 'role'])
+            @include('rinvex/fort::backend/common.confirm-modal', ['type' => 'role'])
         @endif
 
         @if ($action === 'update')

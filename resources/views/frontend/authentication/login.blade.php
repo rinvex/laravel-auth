@@ -1,4 +1,4 @@
-@extends('rinvex/fort::frontend.common.layout')
+@extends('rinvex/fort::frontend/common.layout')
 
 {{-- Main Content --}}
 @section('content')
@@ -20,9 +20,9 @@
                     <div class="panel-body">
                         {{ Form::open(['route' => 'rinvex.fort.frontend.auth.login.post', 'class' => 'form-horizontal']) }}
 
-                            @include('rinvex/fort::frontend.alerts.success')
-                            @include('rinvex/fort::frontend.alerts.warning')
-                            @include('rinvex/fort::frontend.alerts.error')
+                            @include('rinvex/fort::frontend/alerts.success')
+                            @include('rinvex/fort::frontend/alerts.warning')
+                            @include('rinvex/fort::frontend/alerts.error')
 
                             <div class="form-group{{ $errors->has('loginfield') ? ' has-error' : '' }}">
                                 {{ Form::label('loginfield', trans('rinvex/fort::frontend/forms.login.loginfield'), ['class' => 'col-md-4 control-label']) }}

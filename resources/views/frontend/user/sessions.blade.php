@@ -1,4 +1,4 @@
-@extends('rinvex/fort::frontend.common.layout')
+@extends('rinvex/fort::frontend/common.layout')
 
 {{-- Main Content --}}
 @section('content')
@@ -15,9 +15,9 @@
 
                     <div class="panel-body">
 
-                        @include('rinvex/fort::frontend.alerts.success')
-                        @include('rinvex/fort::frontend.alerts.warning')
-                        @include('rinvex/fort::frontend.alerts.error')
+                        @include('rinvex/fort::frontend/alerts.success')
+                        @include('rinvex/fort::frontend/alerts.warning')
+                        @include('rinvex/fort::frontend/alerts.error')
 
                         <div class="row">
 
