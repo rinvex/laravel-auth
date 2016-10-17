@@ -25,7 +25,7 @@ class PhoneVerificationRequest extends FormRequest
      */
     public function forbiddenResponse()
     {
-        $user        = Auth::guard()->user();
+        $user        = $this->user();
         $attemptUser = Auth::guard()->attemptUser();
 
         return $user && ! $user->country ? intend([
@@ -61,7 +61,7 @@ class PhoneVerificationRequest extends FormRequest
      */
     public function authorize()
     {
-        $user      = Auth::guard()->user() ?: Auth::guard()->attemptUser();
+        $user      = $this->user() ?: Auth::guard()->attemptUser();
         $providers = config('rinvex.fort.twofactor.providers');
 
         return ! $user || ! $user->country || ! in_array('phone', $providers) ? false : true;
@@ -74,8 +74,8 @@ class PhoneVerificationRequest extends FormRequest
      */
     public function rules()
     {
-        return $this->isMethod('post') ? [
+        return ! $this->isMethod('post') ? [] : [
             'token' => 'required|numeric',
-        ] : [];
+        ];
     }
 }

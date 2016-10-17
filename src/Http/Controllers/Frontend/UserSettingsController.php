@@ -15,6 +15,7 @@
 
 namespace Rinvex\Fort\Http\Controllers\Frontend;
 
+use Illuminate\Http\Request;
 use Rinvex\Country\Loader;
 use Illuminate\Support\Facades\Auth;
 use Rinvex\Fort\Contracts\UserRepositoryContract;
@@ -49,10 +50,12 @@ class UserSettingsController extends AuthorizedController
      *
      * @return \Illuminate\Http\Response
      */
-    public function edit()
+    public function edit(Request $request)
     {
-        $countries = Loader::countries();
-        $twoFactor = $this->currentUser()->getTwoFactor();
+        $countries = array_map(function ($country) {
+            return $country['name'];
+        }, Loader::countries());
+        $twoFactor = $request->user($this->getGuard())->getTwoFactor();
 
         return view('rinvex/fort::frontend.user.settings', compact('twoFactor', 'countries'));
     }
@@ -66,7 +69,7 @@ class UserSettingsController extends AuthorizedController
      */
     public function update(UserSettingsUpdateRequest $request)
     {
-        $currentUser = $this->currentUser();
+        $currentUser = $request->user($this->getGuard());
         $data        = $request->except(['_token', 'id']);
         $twoFactor   = $currentUser->getTwoFactor();
 
@@ -94,15 +97,5 @@ class UserSettingsController extends AuthorizedController
                           'rinvex.fort.alert.success' => trans('rinvex/fort::frontend/messages.account.'.(! empty($emailVerification) ? 'reverify' : 'updated')),
                       ] + ($twoFactor !== $currentUser->getTwoFactor() ? ['rinvex.fort.alert.warning' => trans('rinvex/fort::frontend/messages.verification.twofactor.phone.auto_disabled')] : []),
         ]);
-    }
-
-    /**
-     * Get current user.
-     *
-     * @return \Rinvex\Fort\Contracts\AuthenticatableContract
-     */
-    protected function currentUser()
-    {
-        return Auth::guard($this->getGuard())->user();
     }
 }

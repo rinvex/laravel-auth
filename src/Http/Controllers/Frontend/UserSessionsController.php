@@ -15,6 +15,7 @@
 
 namespace Rinvex\Fort\Http\Controllers\Frontend;
 
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Rinvex\Fort\Http\Controllers\AuthorizedController;
 
@@ -37,7 +38,7 @@ class UserSessionsController extends AuthorizedController
      *
      * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse
      */
-    public function flush($token = null)
+    public function flush(Request $request, $token = null)
     {
         $status = '';
 
@@ -45,7 +46,7 @@ class UserSessionsController extends AuthorizedController
             app('rinvex.fort.persistence')->delete($token);
             $status = trans('rinvex/fort::frontend/messages.auth.session.flushed');
         } elseif (request()->get('confirm')) {
-            app('rinvex.fort.persistence')->deleteByUser(Auth::guard($this->getGuard())->user()->id);
+            app('rinvex.fort.persistence')->deleteByUser($request->user($this->getGuard())->id);
             $status = trans('rinvex/fort::frontend/messages.auth.session.flushedall');
         }
 

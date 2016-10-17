@@ -58,7 +58,7 @@ class TwoFactorSettingsController extends AuthorizedController
      */
     public function enableTotp(TwoFactorTotpUpdateRequest $request, TwoFactorTotpProvider $totpProvider)
     {
-        $currentUser = $this->currentUser();
+        $currentUser = $request->user($this->getGuard());
         $settings    = $currentUser->getTwoFactor();
 
         if (array_get($settings, 'totp.enabled') && ! session()->get('rinvex.fort.alert.success') && ! session()->get('errors')) {
@@ -90,7 +90,7 @@ class TwoFactorSettingsController extends AuthorizedController
      */
     public function updateTotp(TwoFactorTotpUpdateRequest $request, TwoFactorTotpProvider $totpProvider)
     {
-        $currentUser = $this->currentUser();
+        $currentUser = $request->user($this->getGuard());
         $settings    = $currentUser->getTwoFactor();
         $secret      = array_get($settings, 'totp.secret');
         $backup      = array_get($settings, 'totp.backup');
@@ -128,7 +128,7 @@ class TwoFactorSettingsController extends AuthorizedController
      */
     public function disableTotp(TwoFactorTotpUpdateRequest $request)
     {
-        $currentUser = $this->currentUser();
+        $currentUser = $request->user($this->getGuard());
         $settings    = $currentUser->getTwoFactor();
 
         array_set($settings, 'totp', []);
@@ -152,7 +152,7 @@ class TwoFactorSettingsController extends AuthorizedController
      */
     public function enablePhone(TwoFactorPhoneUpdateRequest $request)
     {
-        $currentUser = $this->currentUser();
+        $currentUser = $request->user($this->getGuard());
 
         if (! $currentUser->phone || ! $currentUser->phone_verified) {
             return intend([
@@ -184,7 +184,7 @@ class TwoFactorSettingsController extends AuthorizedController
      */
     public function disablePhone(TwoFactorPhoneUpdateRequest $request)
     {
-        $currentUser = $this->currentUser();
+        $currentUser = $request->user($this->getGuard());
         $settings    = $currentUser->getTwoFactor();
 
         array_set($settings, 'phone.enabled', false);
@@ -208,7 +208,7 @@ class TwoFactorSettingsController extends AuthorizedController
      */
     public function backupTotp(TwoFactorTotpUpdateRequest $request)
     {
-        $currentUser = $this->currentUser();
+        $currentUser = $request->user($this->getGuard());
         $settings    = $currentUser->getTwoFactor();
 
         if (! array_get($settings, 'totp.enabled')) {
@@ -245,15 +245,5 @@ class TwoFactorSettingsController extends AuthorizedController
         }
 
         return $backup;
-    }
-
-    /**
-     * Get current user.
-     *
-     * @return \Rinvex\Fort\Contracts\AuthenticatableContract
-     */
-    protected function currentUser()
-    {
-        return Auth::guard($this->getGuard())->user();
     }
 }
