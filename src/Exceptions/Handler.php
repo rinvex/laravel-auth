@@ -19,6 +19,7 @@ use Exception;
 use Illuminate\Support\Facades\Lang;
 use Illuminate\Auth\AuthenticationException;
 use App\Exceptions\Handler as ExceptionHandler;
+use Illuminate\Auth\Access\AuthorizationException;
 use Rinvex\Repository\Exceptions\EntityNotFoundException;
 
 class Handler extends ExceptionHandler
@@ -44,8 +45,13 @@ class Handler extends ExceptionHandler
 
             return intend([
                 'route'      => 'rinvex.fort.backend.'.$plural.'.index',
-                'withErrors' => ['rinvex.fort.'.$single.'.not_found' => trans('rinvex/fort::backend/messages.'.$single.'.not_found', [$single => $exception->getId()])],
+                'withErrors' => ['rinvex.fort.'.$single.'.not_found' => trans('rinvex/fort::backend/messages.'.$single.'.not_found', [$single.'Id' => $exception->getId()])],
             ]);
+        } elseif ($exception instanceof AuthorizationException) {
+            return intend([
+                'intended'   => url('/'),
+                'withErrors' => ['rinvex.fort.unauthorized' => Lang::get('rinvex/fort::frontend/messages.auth.unauthorized')],
+            ], 403);
         }
 
         return parent::render($request, $exception);
