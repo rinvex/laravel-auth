@@ -26,105 +26,125 @@ class RolePolicy
     /**
      * Determine whether the user can view the role.
      *
+     * @param string                   $ability
      * @param \Rinvex\Fort\Models\User $user
-     * @param \Rinvex\Fort\Models\Role $role
+     * @param \Rinvex\Fort\Models\Role $resource
      *
      * @return bool
      */
-    public function view(User $user, Role $role)
+    public function view($ability, User $user, Role $resource)
     {
-        return true;
+        return $user->allAbilities->pluck('slug')->contains($ability);
     }
 
     /**
      * Determine whether the user can create roles.
      *
+     * @param string                   $ability
      * @param \Rinvex\Fort\Models\User $user
      *
      * @return bool
      */
-    public function create(User $user)
+    public function create($ability, User $user)
     {
-        return true;
+        return $user->allAbilities->pluck('slug')->contains($ability);
     }
 
     /**
      * Determine whether the user can update the role.
      *
+     * @param string                   $ability
      * @param \Rinvex\Fort\Models\User $user
-     * @param \Rinvex\Fort\Models\Role $role
+     * @param \Rinvex\Fort\Models\Role $resource
      *
      * @return bool
      */
-    public function update(User $user, Role $role)
+    public function update($ability, User $user, Role $resource)
     {
-        // Super admin & protected roles can be controlled by super admins only!
-        return $role->isProtected() || ($role->isSuperadmin() && ! $user->isSuperadmin()) ? false : true;
+        return $user->allAbilities->pluck('slug')->contains($ability)           // User can update roles
+               && $user->hasRole($resource)                                     // User already have RESOURCE role
+               && ! $resource->isSuperadmin()                                   // RESOURCE role is NOT superadmin
+               && ! $resource->isProtected();                                   // RESOURCE role is NOT protected
     }
 
     /**
      * Determine whether the user can delete the role.
      *
+     * @param string                   $ability
      * @param \Rinvex\Fort\Models\User $user
-     * @param \Rinvex\Fort\Models\Role $role
+     * @param \Rinvex\Fort\Models\Role $resource
      *
      * @return bool
      */
-    public function delete(User $user, Role $role)
+    public function delete($ability, User $user, Role $resource)
     {
-        // Super admin & protected roles can be controlled by super admins only! Deleted role must have no abilities or users attached!!
-        return $role->isProtected() || ($role->isSuperadmin() && ! $user->isSuperadmin()) || ! $role->abilities->isEmpty() || ! $role->users->isEmpty() ? false : true;
+        return $resource->abilities->isEmpty()                                  // RESOURCE role has no abilities attached
+               && $resource->users->isEmpty()                                   // RESOURCE role has no users attached
+               && $user->allAbilities->pluck('slug')->contains($ability)        // User can delete roles
+               && $user->allAbilities->pluck('slug')->contains($resource->slug) // User already have RESOURCE role
+               && ! $resource->isSuperadmin()                                   // RESOURCE role is NOT superadmin
+               && ! $resource->isProtected();                                   // RESOURCE role is NOT protected
     }
 
     /**
      * Determine whether the user can import the roles.
      *
+     * @param string                   $ability
      * @param \Rinvex\Fort\Models\User $user
      *
      * @return bool
      */
-    public function import(User $user)
+    public function import($ability, User $user)
     {
-        return true;
+        return $user->allAbilities->pluck('slug')->contains($ability);
     }
 
     /**
      * Determine whether the user can export the roles.
      *
+     * @param string                   $ability
      * @param \Rinvex\Fort\Models\User $user
      *
      * @return bool
      */
-    public function export(User $user)
+    public function export($ability, User $user)
     {
-        return true;
+        return $user->allAbilities->pluck('slug')->contains($ability);
     }
 
     /**
      * Determine whether the user can give the role.
      *
+     * @param string                   $ability
      * @param \Rinvex\Fort\Models\User $user
+     * @param \Rinvex\Fort\Models\Role $resource
+     * @param \Rinvex\Fort\Models\User $resourced
      *
      * @return bool
      */
-    public function give(User $user)
+    public function give($ability, User $user, Role $resource, User $resourced)
     {
-        // Regardless of this ability, admins must have
-        // the given roles before giving it to others.
-        return true;
+        return $user->allAbilities->pluck('slug')->contains($ability)           // User can give roles
+               && $user->allAbilities->pluck('slug')->contains($resource->slug) // User already have RESOURCE role
+               && ! $resourced->isSuperadmin()                                  // RESOURCED user is NOT superadmin
+               && ! $resourced->isProtected();                                  // RESOURCED user is NOT protected
     }
 
     /**
      * Determine whether the user can remove the role.
      *
+     * @param string                   $ability
      * @param \Rinvex\Fort\Models\User $user
+     * @param \Rinvex\Fort\Models\Role $resource
+     * @param \Rinvex\Fort\Models\User $resourced
      *
      * @return bool
      */
-    public function remove(User $user)
+    public function remove($ability, User $user, Role $resource, User $resourced)
     {
-        // Regardless of this ability, admins must have
-        // the removed roles before removing it from others.
-        return true;
+        return $user->allAbilities->pluck('slug')->contains($ability)           // User can remove roles
+               && $user->allAbilities->pluck('slug')->contains($resource->slug) // User already have RESOURCE role
+               && ! $resourced->isSuperadmin()                                  // RESOURCED user is NOT superadmin
+               && ! $resourced->isProtected();                                  // RESOURCED user is NOT protected
     }
 }

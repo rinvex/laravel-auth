@@ -26,105 +26,125 @@ class AbilityPolicy
     /**
      * Determine whether the user can view the ability.
      *
+     * @param string                      $ability
      * @param \Rinvex\Fort\Models\User    $user
-     * @param \Rinvex\Fort\Models\Ability $ability
+     * @param \Rinvex\Fort\Models\Ability $resource
      *
      * @return bool
      */
-    public function view(User $user, Ability $ability)
+    public function view($ability, User $user, Ability $resource)
     {
-        return true;
+        return $user->allAbilities->pluck('slug')->contains($ability);
     }
 
     /**
      * Determine whether the user can create abilities.
      *
+     * @param string                   $ability
      * @param \Rinvex\Fort\Models\User $user
      *
      * @return bool
      */
-    public function create(User $user)
+    public function create($ability, User $user)
     {
-        return true;
+        return $user->allAbilities->pluck('slug')->contains($ability);
     }
 
     /**
      * Determine whether the user can update the ability.
      *
+     * @param string                      $ability
      * @param \Rinvex\Fort\Models\User    $user
-     * @param \Rinvex\Fort\Models\Ability $ability
+     * @param \Rinvex\Fort\Models\Ability $resource
      *
      * @return bool
      */
-    public function update(User $user, Ability $ability)
+    public function update($ability, User $user, Ability $resource)
     {
-        // Super admin & protected abilities can be controlled by super admins only!
-        return $ability->isProtected() || ($ability->isSuperadmin() && ! $user->isSuperadmin()) ? false : true;
+        return $user->allAbilities->pluck('slug')->contains($ability)           // User can update abilities
+               && $user->allAbilities->pluck('slug')->contains($resource->slug) // User already have RESOURCE ability
+               && ! $resource->isSuperadmin()                                   // RESOURCE ability is NOT superadmin
+               && ! $resource->isProtected();                                   // RESOURCE ability is NOT protected
     }
 
     /**
      * Determine whether the user can delete the ability.
      *
+     * @param string                      $ability
      * @param \Rinvex\Fort\Models\User    $user
-     * @param \Rinvex\Fort\Models\Ability $ability
+     * @param \Rinvex\Fort\Models\Ability $resource
      *
      * @return bool
      */
-    public function delete(User $user, Ability $ability)
+    public function delete($ability, User $user, Ability $resource)
     {
-        // Super admin & protected abilities can be controlled by super admins only! Deleted ability must have no roles or users attached!!
-        return $ability->isProtected() || ($ability->isSuperadmin() && ! $user->isSuperadmin()) || ! $ability->roles->isEmpty() || ! $ability->users->isEmpty() ? false : true;
+        return $resource->roles->isEmpty()                                      // RESOURCE ability has no roles attached
+               && $resource->users->isEmpty()                                   // RESOURCE ability has no users attached
+               && $user->allAbilities->pluck('slug')->contains($ability)        // User can delete abilities
+               && $user->allAbilities->pluck('slug')->contains($resource->slug) // User already have RESOURCE ability
+               && ! $resource->isSuperadmin()                                   // RESOURCE ability is NOT superadmin
+               && ! $resource->isProtected();                                   // RESOURCE ability is NOT protected
     }
 
     /**
      * Determine whether the user can import the abilities.
      *
+     * @param string                   $ability
      * @param \Rinvex\Fort\Models\User $user
      *
      * @return bool
      */
-    public function import(User $user)
+    public function import($ability, User $user)
     {
-        return true;
+        return $user->allAbilities->pluck('slug')->contains($ability);
     }
 
     /**
      * Determine whether the user can export the abilities.
      *
+     * @param string                   $ability
      * @param \Rinvex\Fort\Models\User $user
      *
      * @return bool
      */
-    public function export(User $user)
+    public function export($ability, User $user)
     {
-        return true;
+        return $user->allAbilities->pluck('slug')->contains($ability);
     }
 
     /**
      * Determine whether the user can assign the ability.
      *
-     * @param \Rinvex\Fort\Models\User $user
+     * @param string                      $ability
+     * @param \Rinvex\Fort\Models\User    $user
+     * @param \Rinvex\Fort\Models\Ability $resource
+     * @param \Rinvex\Fort\Models\User    $resourced
      *
      * @return bool
      */
-    public function assign(User $user)
+    public function assign($ability, User $user, Ability $resource, User $resourced)
     {
-        // Regardless of this ability, admins must have
-        // the assigned abilities before assigning it to others.
-        return true;
+        return $user->allAbilities->pluck('slug')->contains($ability)           // User can assign abilities
+               && $user->allAbilities->pluck('slug')->contains($resource->slug) // User already have RESOURCE ability
+               && ! $resourced->isSuperadmin()                                  // RESOURCED user is NOT superadmin
+               && ! $resourced->isProtected();                                  // RESOURCED user is NOT protected
     }
 
     /**
      * Determine whether the user can revoke the ability.
      *
-     * @param \Rinvex\Fort\Models\User $user
+     * @param string                      $ability
+     * @param \Rinvex\Fort\Models\User    $user
+     * @param \Rinvex\Fort\Models\Ability $resource
+     * @param \Rinvex\Fort\Models\User    $resourced
      *
      * @return bool
      */
-    public function revoke(User $user)
+    public function revoke($ability, User $user, Ability $resource, User $resourced)
     {
-        // Regardless of this ability, admins must have
-        // the revoked abilities before revoking it from others.
-        return true;
+        return $user->allAbilities->pluck('slug')->contains($ability)           // User can revoke abilities
+               && $user->allAbilities->pluck('slug')->contains($resource->slug) // User already have RESOURCE ability
+               && ! $resourced->isSuperadmin()                                  // RESOURCED user is NOT superadmin
+               && ! $resourced->isProtected();                                  // RESOURCED user is NOT protected
     }
 }
