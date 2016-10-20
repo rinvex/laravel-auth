@@ -90,7 +90,7 @@ class FortServiceProvider extends BaseServiceProvider
         // Override exception handler
         $this->app->singleton(
             \Illuminate\Contracts\Debug\ExceptionHandler::class,
-            \Rinvex\Fort\Exceptions\Handler::class
+            \Rinvex\Fort\Exceptions\ExceptionHandler::class
         );
 
         // Load views

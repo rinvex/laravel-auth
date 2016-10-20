@@ -18,11 +18,10 @@ namespace Rinvex\Fort\Exceptions;
 use Exception;
 use Illuminate\Support\Facades\Lang;
 use Illuminate\Auth\AuthenticationException;
-use App\Exceptions\Handler as ExceptionHandler;
-use Illuminate\Auth\Access\AuthorizationException;
+use App\Exceptions\Handler as BaseExceptionHandler;
 use Rinvex\Repository\Exceptions\EntityNotFoundException;
 
-class Handler extends ExceptionHandler
+class ExceptionHandler extends BaseExceptionHandler
 {
     /**
      * Render an exception into an HTTP response.
