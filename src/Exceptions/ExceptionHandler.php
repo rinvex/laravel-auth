@@ -16,7 +16,6 @@
 namespace Rinvex\Fort\Exceptions;
 
 use Exception;
-use Illuminate\Support\Facades\Lang;
 use Illuminate\Auth\AuthenticationException;
 use App\Exceptions\Handler as BaseExceptionHandler;
 use Rinvex\Repository\Exceptions\EntityNotFoundException;
@@ -36,7 +35,7 @@ class ExceptionHandler extends BaseExceptionHandler
         if ($exception instanceof InvalidPersistenceException) {
             return intend([
                 'route'      => 'rinvex.fort.frontend.auth.login',
-                'withErrors' => ['rinvex.fort.session.expired' => Lang::get('rinvex/fort::frontend/messages.auth.session.expired')],
+                'withErrors' => ['rinvex.fort.session.expired' => trans('rinvex/fort::frontend/messages.auth.session.expired')],
             ], 401);
         } elseif ($exception instanceof EntityNotFoundException) {
             $single = strtolower(trim(strrchr($exception->getModel(), '\\'), '\\'));
@@ -68,7 +67,7 @@ class ExceptionHandler extends BaseExceptionHandler
     {
         return intend([
             'route'      => 'rinvex.fort.frontend.auth.login',
-            'withErrors' => ['rinvex.fort.session.required' => Lang::get('rinvex/fort::frontend/messages.auth.session.required')],
+            'withErrors' => ['rinvex.fort.session.required' => trans('rinvex/fort::frontend/messages.auth.session.required')],
         ], 401);
     }
 }
