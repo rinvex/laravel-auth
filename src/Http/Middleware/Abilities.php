@@ -39,10 +39,10 @@ class Abilities
             return $user->isSuperadmin() ?: null;
         });
 
+        // Define abilities and policies
         app('rinvex.fort.ability')->findAll()->map(function ($ability) {
-            // Define abilities and policies
             Gate::define($ability->slug, $ability->policy ?: function (User $user, Model $resource = null) use ($ability) {
-                return $user->abilities->pluck('slug')->contains($ability->slug);
+                return $user->allAbilities->pluck('slug')->contains($ability->slug);
             });
         });
 

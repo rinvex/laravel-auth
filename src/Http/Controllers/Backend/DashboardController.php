@@ -27,6 +27,11 @@ class DashboardController extends AuthorizedController
     protected $resource = 'dashboard';
 
     /**
+     * {@inheritdoc}
+     */
+    protected $resourceAbilityMap = ['home'   => 'access'];
+
+    /**
      * Show the dashboard home.
      *
      * @return \Illuminate\Http\Response

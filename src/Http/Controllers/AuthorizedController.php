@@ -94,10 +94,17 @@ class AuthorizedController extends AuthenticatedController
             return $item->class == $controller->name && substr($item->name, 0, 2) != '__';
         });
 
-        // Map resource actions to resource abilities
-        return array_merge(array_combine($items = array_map(function ($action) {
+        // Get controller actions
+        $actions = array_combine($items = array_map(function ($action) {
             return $action->name;
-        }, $methods), $items), $this->resourceAbilityMap());
+        }, $methods), $items);
+
+        // Map resource actions to resourse abilities
+        array_walk($actions, function ($value, $key) use (&$actions) {
+            $actions[$key] = array_get($this->resourceAbilityMap(), $key, $value);
+        });
+
+        return $actions;
     }
 
     /**
