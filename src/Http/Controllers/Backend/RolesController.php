@@ -32,10 +32,7 @@ class RolesController extends AuthorizedController
     /**
      * {@inheritdoc}
      */
-    protected $resourceAbilityMap = [
-        'assign' => 'assign',
-        'remove' => 'remove',
-    ];
+    protected $resourceActionWhitelist = ['assign', 'remove'];
 
     /**
      * The role repository instance.

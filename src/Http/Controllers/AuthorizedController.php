@@ -17,7 +17,6 @@ namespace Rinvex\Fort\Http\Controllers;
 
 use ReflectionClass;
 use ReflectionMethod;
-use Rinvex\Fort\Exceptions\AuthorizationException;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 
 class AuthorizedController extends AuthenticatedController
@@ -32,6 +31,15 @@ class AuthorizedController extends AuthenticatedController
      * @var array
      */
     protected $resourceAbilityMap = [];
+
+    /**
+     * Resource action whitelist.
+     *
+     * Array of resource actions to skip mapping to abilities automatically.
+     *
+     * @var array
+     */
+    protected $resourceActionWhitelist = [];
 
     /**
      * Create a new manage persistence controller instance.
@@ -91,7 +99,7 @@ class AuthorizedController extends AuthenticatedController
 
         // Get public methods and filter magic methods
         $methods = array_filter($controller->getMethods(ReflectionMethod::IS_PUBLIC), function ($item) use ($controller) {
-            return $item->class == $controller->name && substr($item->name, 0, 2) != '__';
+            return $item->class == $controller->name && substr($item->name, 0, 2) != '__' && ! in_array($item->name, $this->resourceActionWhitelist);
         });
 
         // Get controller actions
