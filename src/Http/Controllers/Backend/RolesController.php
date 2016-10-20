@@ -18,12 +18,17 @@ namespace Rinvex\Fort\Http\Controllers\Backend;
 use Illuminate\Http\Request;
 use Rinvex\Fort\Models\Role;
 use Rinvex\Fort\Contracts\RoleRepositoryContract;
-use Rinvex\Fort\Http\Controllers\AuthenticatedController;
+use Rinvex\Fort\Http\Controllers\AuthorizedController;
 use Rinvex\Fort\Http\Requests\Backend\RoleStoreRequest;
 use Rinvex\Fort\Http\Requests\Backend\RoleUpdateRequest;
 
-class RolesController extends AuthenticatedController
+class RolesController extends AuthorizedController
 {
+    /**
+     * {@inheritdoc}
+     */
+    protected $resource = 'role';
+
     /**
      * {@inheritdoc}
      */
@@ -49,8 +54,6 @@ class RolesController extends AuthenticatedController
     public function __construct(RoleRepositoryContract $roleRepository)
     {
         parent::__construct();
-
-        $this->authorizeResource(Role::class);
 
         $this->roleRepository = $roleRepository;
     }

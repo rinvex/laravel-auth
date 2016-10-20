@@ -18,12 +18,17 @@ namespace Rinvex\Fort\Http\Controllers\Backend;
 use Illuminate\Http\Request;
 use Rinvex\Fort\Models\Ability;
 use Rinvex\Fort\Contracts\AbilityRepositoryContract;
-use Rinvex\Fort\Http\Controllers\AuthenticatedController;
+use Rinvex\Fort\Http\Controllers\AuthorizedController;
 use Rinvex\Fort\Http\Requests\Backend\AbilityStoreRequest;
 use Rinvex\Fort\Http\Requests\Backend\AbilityUpdateRequest;
 
-class AbilitiesController extends AuthenticatedController
+class AbilitiesController extends AuthorizedController
 {
+    /**
+     * {@inheritdoc}
+     */
+    protected $resource = 'ability';
+
     /**
      * {@inheritdoc}
      */
@@ -47,8 +52,6 @@ class AbilitiesController extends AuthenticatedController
     public function __construct(AbilityRepositoryContract $abilityRepository)
     {
         parent::__construct();
-
-        $this->authorizeResource(Ability::class);
 
         $this->abilityRepository = $abilityRepository;
     }

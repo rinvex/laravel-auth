@@ -19,12 +19,17 @@ use Rinvex\Country\Loader;
 use Illuminate\Http\Request;
 use Rinvex\Fort\Models\User;
 use Rinvex\Fort\Contracts\UserRepositoryContract;
-use Rinvex\Fort\Http\Controllers\AuthenticatedController;
+use Rinvex\Fort\Http\Controllers\AuthorizedController;
 use Rinvex\Fort\Http\Requests\Backend\UserStoreRequest;
 use Rinvex\Fort\Http\Requests\Backend\UserUpdateRequest;
 
-class UsersController extends AuthenticatedController
+class UsersController extends AuthorizedController
 {
+    /**
+     * {@inheritdoc}
+     */
+    protected $resource = 'user';
+
     /**
      * {@inheritdoc}
      */
@@ -48,8 +53,6 @@ class UsersController extends AuthenticatedController
     public function __construct(UserRepositoryContract $userRepository)
     {
         parent::__construct();
-
-        $this->authorizeResource(User::class);
 
         $this->userRepository = $userRepository;
     }

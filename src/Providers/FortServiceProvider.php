@@ -20,6 +20,7 @@ use Collective\Html\FormFacade;
 use Collective\Html\HtmlFacade;
 use Illuminate\Support\Facades\Auth;
 use Rinvex\Fort\Guards\SessionGuard;
+use Rinvex\Fort\Services\AccessGate;
 use Illuminate\Foundation\AliasLoader;
 use Rinvex\Fort\Services\BrokerManager;
 use Collective\Html\HtmlServiceProvider;
@@ -31,6 +32,7 @@ use Laravel\Socialite\SocialiteServiceProvider;
 use Rinvex\Fort\Repositories\AbilityRepository;
 use Rinvex\Support\Providers\BaseServiceProvider;
 use Rinvex\Fort\Repositories\PersistenceRepository;
+use Illuminate\Contracts\Auth\Access\Gate as GateContract;
 
 class FortServiceProvider extends BaseServiceProvider
 {
@@ -43,6 +45,7 @@ class FortServiceProvider extends BaseServiceProvider
         $this->mergeConfigFrom(realpath(__DIR__.'/../../config/config.php'), 'rinvex.fort');
 
         // Register bindings
+        $this->registerAccessGate();
         $this->registerRepositories();
         $this->registerBrokerManagers();
         $this->registerBladeExtensions();
@@ -114,6 +117,20 @@ class FortServiceProvider extends BaseServiceProvider
         // Share current user instance with all views
         $this->app['view']->composer('*', function ($view) {
             $view->with('currentUser', Auth::user());
+        });
+    }
+
+    /**
+     * Register the access gate service.
+     *
+     * @return void
+     */
+    protected function registerAccessGate()
+    {
+        $this->app->singleton(GateContract::class, function ($app) {
+            return new AccessGate($app, function () use ($app) {
+                return call_user_func($app['auth']->userResolver());
+            });
         });
     }
 

@@ -17,10 +17,15 @@ namespace Rinvex\Fort\Http\Controllers\Backend;
 
 use DB;
 use Carbon\Carbon;
-use Rinvex\Fort\Http\Controllers\AuthenticatedController;
+use Rinvex\Fort\Http\Controllers\AuthorizedController;
 
-class DashboardController extends AuthenticatedController
+class DashboardController extends AuthorizedController
 {
+    /**
+     * {@inheritdoc}
+     */
+    protected $resource = 'dashboard';
+
     /**
      * Show the dashboard home.
      *
