@@ -20,11 +20,11 @@ use Illuminate\Support\MessageBag;
 use Illuminate\Support\ViewErrorBag;
 use Rinvex\Fort\Services\TwoFactorTotpProvider;
 use Rinvex\Fort\Contracts\UserRepositoryContract;
-use Rinvex\Fort\Http\Controllers\AuthorizedController;
+use Rinvex\Fort\Http\Controllers\AuthenticatedController;
 use Rinvex\Fort\Http\Requests\Frontend\TwoFactorTotpUpdateRequest;
 use Rinvex\Fort\Http\Requests\Frontend\TwoFactorPhoneUpdateRequest;
 
-class TwoFactorSettingsController extends AuthorizedController
+class TwoFactorSettingsController extends AuthenticatedController
 {
     /**
      * The user repository instance.

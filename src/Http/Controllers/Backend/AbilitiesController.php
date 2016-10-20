@@ -18,11 +18,11 @@ namespace Rinvex\Fort\Http\Controllers\Backend;
 use Illuminate\Http\Request;
 use Rinvex\Fort\Models\Ability;
 use Rinvex\Fort\Contracts\AbilityRepositoryContract;
-use Rinvex\Fort\Http\Controllers\AuthorizedController;
+use Rinvex\Fort\Http\Controllers\AuthenticatedController;
 use Rinvex\Fort\Http\Requests\Backend\AbilityStoreRequest;
 use Rinvex\Fort\Http\Requests\Backend\AbilityUpdateRequest;
 
-class AbilitiesController extends AuthorizedController
+class AbilitiesController extends AuthenticatedController
 {
     /**
      * {@inheritdoc}

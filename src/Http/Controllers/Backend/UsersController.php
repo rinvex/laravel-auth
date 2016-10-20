@@ -19,11 +19,11 @@ use Rinvex\Country\Loader;
 use Illuminate\Http\Request;
 use Rinvex\Fort\Models\User;
 use Rinvex\Fort\Contracts\UserRepositoryContract;
-use Rinvex\Fort\Http\Controllers\AuthorizedController;
+use Rinvex\Fort\Http\Controllers\AuthenticatedController;
 use Rinvex\Fort\Http\Requests\Backend\UserStoreRequest;
 use Rinvex\Fort\Http\Requests\Backend\UserUpdateRequest;
 
-class UsersController extends AuthorizedController
+class UsersController extends AuthenticatedController
 {
     /**
      * {@inheritdoc}

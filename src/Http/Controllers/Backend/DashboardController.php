@@ -17,9 +17,9 @@ namespace Rinvex\Fort\Http\Controllers\Backend;
 
 use DB;
 use Carbon\Carbon;
-use Rinvex\Fort\Http\Controllers\AuthorizedController;
+use Rinvex\Fort\Http\Controllers\AuthenticatedController;
 
-class DashboardController extends AuthorizedController
+class DashboardController extends AuthenticatedController
 {
     /**
      * Show the dashboard home.

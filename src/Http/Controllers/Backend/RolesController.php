@@ -18,11 +18,11 @@ namespace Rinvex\Fort\Http\Controllers\Backend;
 use Illuminate\Http\Request;
 use Rinvex\Fort\Models\Role;
 use Rinvex\Fort\Contracts\RoleRepositoryContract;
-use Rinvex\Fort\Http\Controllers\AuthorizedController;
+use Rinvex\Fort\Http\Controllers\AuthenticatedController;
 use Rinvex\Fort\Http\Requests\Backend\RoleStoreRequest;
 use Rinvex\Fort\Http\Requests\Backend\RoleUpdateRequest;
 
-class RolesController extends AuthorizedController
+class RolesController extends AuthenticatedController
 {
     /**
      * {@inheritdoc}

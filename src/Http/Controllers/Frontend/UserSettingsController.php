@@ -18,10 +18,10 @@ namespace Rinvex\Fort\Http\Controllers\Frontend;
 use Illuminate\Http\Request;
 use Rinvex\Country\Loader;
 use Rinvex\Fort\Contracts\UserRepositoryContract;
-use Rinvex\Fort\Http\Controllers\AuthorizedController;
+use Rinvex\Fort\Http\Controllers\AuthenticatedController;
 use Rinvex\Fort\Http\Requests\Frontend\UserSettingsUpdateRequest;
 
-class UserSettingsController extends AuthorizedController
+class UserSettingsController extends AuthenticatedController
 {
     /**
      * The user repository instance.

@@ -15,7 +15,7 @@
 
 namespace Rinvex\Fort\Http\Controllers;
 
-class AuthorizedController extends AbstractController
+class AuthenticatedController extends AbstractController
 {
     /**
      * Create a new manage persistence controller instance.
