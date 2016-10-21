@@ -78,16 +78,6 @@ class AbilitiesController extends AuthorizedController
     }
 
     /**
-     * Bulk control the given resources.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function bulk()
-    {
-        //
-    }
-
-    /**
      * Show the form for creating a new resource.
      *
      * @return \Illuminate\Http\Response
@@ -179,6 +169,16 @@ class AbilitiesController extends AuthorizedController
     }
 
     /**
+     * Bulk control the given resources.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function bulk()
+    {
+        //
+    }
+
+    /**
      * Show the form for create/edit/copy of the given resource.
      *
      * @param string                      $mode
@@ -202,8 +202,11 @@ class AbilitiesController extends AuthorizedController
      */
     protected function process(Request $request, Ability $ability = null)
     {
-        // Repository `store` method returns false if no attributes updated (user clicked save without chaning anything)
+        // Store data into the entity
         $result = $this->abilityRepository->store($ability, $request->except(['_method', '_token', 'id']));
+
+        // Repository `store` method returns false if no attributes
+        // updated, happens save button clicked without chaning anything
         $with   = ! is_null($ability)
             ? ($result === false
                 ? ['rinvex.fort.alert.warning' => trans('rinvex/fort::backend/messages.ability.nothing_updated', ['abilityId' => $ability->id])]

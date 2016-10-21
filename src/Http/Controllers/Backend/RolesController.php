@@ -84,16 +84,6 @@ class RolesController extends AuthorizedController
     }
 
     /**
-     * Bulk control the given resources.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function bulk()
-    {
-        //
-    }
-
-    /**
      * Show the form for creating a new resource.
      *
      * @return \Illuminate\Http\Response
@@ -136,7 +126,7 @@ class RolesController extends AuthorizedController
      */
     public function store(RoleStoreRequest $request)
     {
-        //
+        return $this->process($request);
     }
 
     /**
@@ -149,7 +139,7 @@ class RolesController extends AuthorizedController
      */
     public function update(RoleUpdateRequest $request, Role $role)
     {
-        //
+        return $this->process($request, $role);
     }
 
     /**
@@ -185,6 +175,16 @@ class RolesController extends AuthorizedController
     }
 
     /**
+     * Bulk control the given resources.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function bulk()
+    {
+        //
+    }
+
+    /**
      * Show the form for create/edit/copy of the given resource.
      *
      * @param string                   $mode
@@ -212,6 +212,24 @@ class RolesController extends AuthorizedController
      */
     protected function process(Request $request, Role $role = null)
     {
-        //
+        // Prepare required input fields
+        $input     = $request->except(['_method', '_token', 'id']);
+        $abilities = ['abilities' => array_pull($input, 'abilityList')];
+
+        // Store data into the entity
+        $result = $this->roleRepository->store($role, $input + $abilities);
+
+        // Repository `store` method returns false if no attributes
+        // updated, happens save button clicked without chaning anything
+        $message = ! is_null($role)
+            ? ($result === false
+                ? ['rinvex.fort.alert.warning' => trans('rinvex/fort::backend/messages.role.nothing_updated', ['roleId' => $role->id])]
+                : ['rinvex.fort.alert.success' => trans('rinvex/fort::backend/messages.role.updated', ['roleId' => $result->id])])
+            : ['rinvex.fort.alert.success' => trans('rinvex/fort::backend/messages.role.created', ['roleId' => $result->id])];
+
+        return intend([
+            'route' => 'rinvex.fort.backend.roles.index',
+            'with'  => $message,
+        ]);
     }
 }

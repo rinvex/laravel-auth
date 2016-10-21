@@ -89,16 +89,6 @@ class UsersController extends AuthorizedController
     }
 
     /**
-     * Bulk control the given resources.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function bulk()
-    {
-        //
-    }
-
-    /**
      * Show the form for creating a new resource.
      *
      * @return \Illuminate\Http\Response
@@ -141,7 +131,7 @@ class UsersController extends AuthorizedController
      */
     public function store(UserStoreRequest $request)
     {
-        //
+        return $this->process($request);
     }
 
     /**
@@ -154,7 +144,7 @@ class UsersController extends AuthorizedController
      */
     public function update(UserUpdateRequest $request, User $user)
     {
-        //
+        return $this->process($request, $user);
     }
 
     /**
@@ -185,6 +175,16 @@ class UsersController extends AuthorizedController
      * @return \Illuminate\Http\Response
      */
     public function export()
+    {
+        //
+    }
+
+    /**
+     * Bulk control the given resources.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function bulk()
     {
         //
     }
@@ -223,6 +223,25 @@ class UsersController extends AuthorizedController
      */
     protected function process(Request $request, User $user = null)
     {
-        //
+        // Prepare required input fields
+        $input     = $request->except(['_method', '_token', 'id']);
+        $roles     = ['roles' => array_pull($input, 'roleList')];
+        $abilities = ['abilities' => array_pull($input, 'abilityList')];
+
+        // Store data into the entity
+        $result = $this->userRepository->store($user, $input + $roles + $abilities);
+
+        // Repository `store` method returns false if no attributes
+        // updated, happens save button clicked without chaning anything
+        $message = ! is_null($user)
+            ? ($result === false
+                ? ['rinvex.fort.alert.warning' => trans('rinvex/fort::backend/messages.user.nothing_updated', ['userId' => $user->id])]
+                : ['rinvex.fort.alert.success' => trans('rinvex/fort::backend/messages.user.updated', ['userId' => $result->id])])
+            : ['rinvex.fort.alert.success' => trans('rinvex/fort::backend/messages.user.created', ['userId' => $result->id])];
+
+        return intend([
+            'route' => 'rinvex.fort.backend.users.index',
+            'with'  => $message,
+        ]);
     }
 }
