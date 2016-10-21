@@ -38,7 +38,7 @@ class UserUpdateRequest extends FormRequest
     {
         return [
             'username' => 'required|alpha_dash|max:255|unique:'.config('rinvex.fort.tables.users').',username,'.$this->get('username'),
-            'password' => 'required|confirmed|min:'.config('rinvex.fort.passwordreset.minimum_characters'),
+            'password' => 'required|min:'.config('rinvex.fort.passwordreset.minimum_characters'),
             'email'    => 'required|email|max:255|unique:'.config('rinvex.fort.tables.users').',email,'.$this->get('email'),
             'gender'   => 'in:male,female,undisclosed',
         ];
