@@ -56,11 +56,22 @@ class SocialAuthenticationController extends AuthenticationController
         })->first();
 
         if (! $user) {
-            $user = $userRepository->create([
-                'social'   => true,
+            // Prepare registration data
+            $input = $request->except(['_method', '_token']) + [
                 'email'    => $githubUser->email,
                 'username' => $githubUser->username,
-            ]);
+                'password' => str_random(),
+                'active'   => ! config('rinvex.fort.registration.moderated'),
+            ];
+
+            // Fire the register start event
+            $result = $this->getContainer('events')->fire('rinvex.fort.register.social.start', [$input]);
+
+            // Create user
+            $user = $userRepository->create($input);
+
+            // Fire the register success event
+            event('rinvex.fort.register.success', [$result]);
 
             $user->socialites()->create([
                 'user_id'      => 'github',

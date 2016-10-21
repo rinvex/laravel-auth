@@ -54,24 +54,33 @@ class RegistrationController extends AbstractController
      */
     public function processRegisteration(UserRegistrationRequest $request, UserRepositoryContract $userRepository)
     {
-        $result = $userRepository->create($request->except('_token'));
+        // Prepare registration data
+        $input  = $request->except(['_method', '_token']);
+        $active = ['active' => ! config('rinvex.fort.registration.moderated')];
 
-        switch ($result) {
+        // Fire the register start event
+        event('rinvex.fort.register.start', [$input + $active]);
+
+        $result = $userRepository->create($input + $active);
+
+        // Fire the register success event
+        event('rinvex.fort.register.success', [$result]);
+
+        // Send verification if required
+        if (config('rinvex.fort.emailverification.required')) {
+            app('rinvex.fort.emailverification')->broker()->send(['email' => $input['email']]);
+
             // Registration completed, verification required
-            case EmailVerificationBrokerContract::LINK_SENT:
-                return intend([
-                    'intended' => url('/'),
-                    'with'     => ['rinvex.fort.alert.success' => trans('rinvex/fort::frontend/messages.register.success_verify')],
-                ]);
-
-            // Registration completed successfully
-            case UserRepositoryContract::AUTH_REGISTERED:
-            default:
-                return intend([
-                    'intended' => route('rinvex.fort.frontend.auth.login'),
-                    'with'     => ['rinvex.fort.alert.success' => trans($result)],
-                ]);
-
+            return intend([
+                'intended' => url('/'),
+                'with'     => ['rinvex.fort.alert.success' => trans('rinvex/fort::frontend/messages.register.success_verify')],
+            ]);
         }
+
+        // Registration completed successfully
+        return intend([
+            'intended' => route('rinvex.fort.frontend.auth.login'),
+            'with'     => ['rinvex.fort.alert.success' => trans('rinvex/fort::frontend/messages.register.success')],
+        ]);
     }
 }

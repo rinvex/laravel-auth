@@ -21,13 +21,6 @@ use Rinvex\Repository\Contracts\RepositoryContract;
 interface UserRepositoryContract extends RepositoryContract, CacheableContract
 {
     /**
-     * Constant representing a user with phone verified.
-     *
-     * @var string
-     */
-    const AUTH_REGISTERED = 'rinvex/fort::frontend/messages.register.success';
-
-    /**
      * Find a user by their unique identifier and "remember me" token.
      *
      * @param mixed  $identifier

@@ -85,35 +85,6 @@ class UserRepository extends EloquentRepository implements UserRepositoryContrac
     /**
      * {@inheritdoc}
      */
-    public function create(array $attributes = [])
-    {
-        $social = array_pull($attributes, 'social', false);
-
-        // Fire the register start event
-        $this->getContainer('events')->fire('rinvex.fort.register'.$social.'.start', [$attributes]);
-
-        // Prepare registration data
-        $attributes['password'] = ! $social ? $attributes['password'] : str_random();
-        $attributes['active']   = ! config('rinvex.fort.registration.moderated');
-
-        // Create new user
-        $user = parent::create($attributes);
-
-        // Fire the register success event
-        $this->getContainer('events')->fire('rinvex.fort.register'.$social.'.success', [$user]);
-
-        // Send verification if required
-        if (! $social && config('rinvex.fort.emailverification.required')) {
-            return app('rinvex.fort.emailverification')->broker()->send(['email' => $attributes['email']]);
-        }
-
-        // Registration completed successfully
-        return ! $social ? static::AUTH_REGISTERED : $user;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
     public function updateRememberToken(AuthenticatableContract $user, $token)
     {
         $this->update($user, [$this->getRememberTokenName() => $token]);
