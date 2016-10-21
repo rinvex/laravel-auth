@@ -216,7 +216,7 @@ return [
         |
         */
 
-        'verifications' => 'rinvex_fort_verifications',
+        'emailverifications' => 'rinvex_fort_email_verifications',
 
         /*
         |--------------------------------------------------------------------------
@@ -230,7 +230,7 @@ return [
         |
         */
 
-        'resets' => 'rinvex_fort_resets',
+        'passwordresets' => 'rinvex_fort_password_resets',
 
         /*
         |--------------------------------------------------------------------------

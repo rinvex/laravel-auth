@@ -17,7 +17,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateRinvexFortVerificationsTable extends Migration
+class CreateRinvexFortResetsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -26,7 +26,7 @@ class CreateRinvexFortVerificationsTable extends Migration
      */
     public function up()
     {
-        Schema::create(config('rinvex.fort.tables.verifications'), function (Blueprint $table) {
+        Schema::create(config('rinvex.fort.tables.passwordresets'), function (Blueprint $table) {
             // Columns
             $table->string('email');
             $table->string('token');
@@ -50,6 +50,6 @@ class CreateRinvexFortVerificationsTable extends Migration
      */
     public function down()
     {
-        Schema::drop(config('rinvex.fort.tables.verifications'));
+        Schema::drop(config('rinvex.fort.tables.passwordresets'));
     }
 }

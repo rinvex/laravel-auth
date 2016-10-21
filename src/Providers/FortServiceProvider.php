@@ -161,7 +161,7 @@ class FortServiceProvider extends BaseServiceProvider
 
         // Register verification broker manager
         $this->app->singleton('rinvex.fort.emailverification', function ($app) {
-            return new BrokerManager($app, 'EmailVerifier');
+            return new BrokerManager($app, 'EmailVerification');
         });
     }
 
