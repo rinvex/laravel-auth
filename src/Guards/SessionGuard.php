@@ -1142,7 +1142,7 @@ class SessionGuard implements StatefulGuardContract, SupportsBasicAuth
      */
     public function getPersistenceByToken($token)
     {
-        return app('rinvex.fort.persistence')->findByToken($token);
+        return app('rinvex.fort.persistence')->findBy('token', $token);
     }
 
     /**

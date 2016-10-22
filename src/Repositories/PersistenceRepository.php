@@ -46,35 +46,12 @@ class PersistenceRepository extends EloquentRepository implements PersistenceRep
     /**
      * {@inheritdoc}
      */
-    public function findByToken($token)
-    {
-        return $this->findBy('token', $token);
-    }
-
-    /**
-     * {@inheritdoc}
-     */
     public function delete($id)
     {
         // Find the given instance
-        $deleted  = false;
-        $instance = $id instanceof Model ? $id : (is_int($id) ? $this->find($id) : $this->findByToken($id));
+        $entity = $id instanceof Model ? $id : (is_int($id) ? $this->find($id) : $this->findBy('token', $id));
 
-        if ($instance) {
-            // Fire the deleted event
-            $this->getContainer('events')->fire($this->getRepositoryId().'.entity.deleting', [$this, $instance]);
-
-            // Delete the instance
-            $deleted = $instance->delete();
-
-            // Fire the deleted event
-            $this->getContainer('events')->fire($this->getRepositoryId().'.entity.deleted', [$this, $instance]);
-        }
-
-        return [
-            $deleted,
-            $instance,
-        ];
+        return parent::delete($entity);
     }
 
     /**
@@ -82,24 +59,22 @@ class PersistenceRepository extends EloquentRepository implements PersistenceRep
      */
     public function deleteByUser($id)
     {
-        // Find the given instance
         $deleted  = false;
-        $instance = $id instanceof Model ? $id : app('rinvex.fort.user')->find($id);
 
-        if ($instance) {
+        // Find the given instance
+        $entity = $id instanceof Model ? $id : app('rinvex.fort.user')->find($id);
+
+        if ($entity) {
             // Fire the deleted event
-            $this->getContainer('events')->fire($this->getRepositoryId().'.entity.deleting', [$this, $instance]);
+            $this->getContainer('events')->fire($this->getRepositoryId().'.entity.deleting', [$this, $entity]);
 
-            // Delete by instance
-            $deleted = app('rinvex.fort.persistence')->whereUserId($instance->id)->delete();
+            // Delete the instance
+            $deleted = app('rinvex.fort.persistence')->whereUserId($entity->id)->delete();
 
             // Fire the deleted event
-            $this->getContainer('events')->fire($this->getRepositoryId().'.entity.deleted', [$this, $instance]);
+            $this->getContainer('events')->fire($this->getRepositoryId().'.entity.deleted', [$this, $entity]);
         }
 
-        return [
-            $deleted,
-            $instance,
-        ];
+        return $deleted ? $entity : $deleted;
     }
 }

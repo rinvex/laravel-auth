@@ -20,12 +20,5 @@ use Rinvex\Repository\Contracts\RepositoryContract;
 
 interface PersistenceRepositoryContract extends RepositoryContract, CacheableContract
 {
-    /**
-     * Find an persistence by its token.
-     *
-     * @param string $token
-     *
-     * @return \Rinvex\Fort\Models\Persistence|null
-     */
-    public function findByToken($token);
+    //
 }
