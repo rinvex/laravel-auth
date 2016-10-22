@@ -23,9 +23,11 @@
             <div class="panel-heading">
                 <h4>
                     {{ trans('rinvex/fort::backend/users.heading') }}
-                    <span class="pull-right" style="margin-top: -7px">
-                        <a href="{{ route('rinvex.fort.backend.users.create') }}" class="btn btn-default"><i class="fa fa-plus"></i></a>
-                    </span>
+                    @can('create-user')
+                        <span class="pull-right" style="margin-top: -7px">
+                            <a href="{{ route('rinvex.fort.backend.users.create') }}" class="btn btn-default"><i class="fa fa-plus"></i></a>
+                        </span>
+                    @endcan
                 </h4>
             </div>
 
@@ -53,7 +55,7 @@
 
                                 <tr>
                                     <td>
-                                        <a href="{{ route('rinvex.fort.backend.users.show', ['user' => $user]) }}">
+                                        @can('view-user', $user) <a href="{{ route('rinvex.fort.backend.users.show', ['user' => $user]) }}"> @endcan
                                             <strong>
                                                 @if($user->first_name)
                                                     {{ $user->first_name }} {{ $user->middle_name }} {{ $user->last_name }}
@@ -62,7 +64,7 @@
                                                 @endif
                                             </strong>
                                             <div class="small ">{{ $user->job_title }}</div>
-                                        </a>
+                                        @can('view-user', $user) </a> @endcan
                                     </td>
 
                                     <td>
@@ -76,7 +78,7 @@
 
                                     <td>
                                         @foreach($user->roles->pluck('title', 'id') as $roleId => $role)
-                                            <a href="{{ route('rinvex.fort.backend.roles.show', ['role' => $roleId]) }}" class="label btn-xs label-info">{{ $role }}</a>
+                                            @can('view-role', $role) <a href="{{ route('rinvex.fort.backend.roles.show', ['role' => $roleId]) }}" class="label btn-xs label-info">{{ $role }}</a> @else {{ $role }} @endcan
                                         @endforeach
                                     </td>
 
@@ -102,8 +104,8 @@
                                     </td>
 
                                     <td class="text-right">
-                                        <a href="{{ route('rinvex.fort.backend.users.edit', ['user' => $user]) }}" class="btn btn-xs btn-default"><i class="fa fa-pencil text-primary"></i></a>
-                                        <a href="#" class="btn btn-xs btn-default" data-toggle="modal" data-target="#delete-confirmation" data-item-href="{{ route('rinvex.fort.backend.users.delete', ['user' => $user]) }}" data-item-name="{{ $user->username }}"><i class="fa fa-trash-o text-danger"></i></a>
+                                        @can('update-user', $user) <a href="{{ route('rinvex.fort.backend.users.edit', ['user' => $user]) }}" class="btn btn-xs btn-default"><i class="fa fa-pencil text-primary"></i></a> @endcan
+                                        @can('delete-user', $user) <a href="#" class="btn btn-xs btn-default" data-toggle="modal" data-target="#delete-confirmation" data-item-href="{{ route('rinvex.fort.backend.users.delete', ['user' => $user]) }}" data-item-name="{{ $user->username }}"><i class="fa fa-trash-o text-danger"></i></a> @endcan
                                     </td>
                                 </tr>
 

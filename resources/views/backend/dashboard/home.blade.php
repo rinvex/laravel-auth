@@ -48,7 +48,7 @@
 
                                                     <tr>
                                                         <td>
-                                                            <a href="{{ route('rinvex.fort.backend.users.show', ['user' => $user]) }}">
+                                                            @can('view-user', $user) <a href="{{ route('rinvex.fort.backend.users.show', ['user' => $user]) }}"> @endcan
                                                                 <strong>
                                                                     @if($user->first_name)
                                                                         {{ $user->first_name }} {{ $user->middle_name }} {{ $user->last_name }}
@@ -57,7 +57,7 @@
                                                                     @endif
                                                                 </strong>
                                                                 <div class="small ">{{ $user->job_title }}</div>
-                                                            </a>
+                                                            @can('view-user', $user) </a> @endcan
                                                         </td>
 
                                                         <td>
@@ -111,9 +111,9 @@
 
                                             <li class="list-group-item" style="vertical-align: middle">
                                                 {{ Form::label('stats_number', $num, ['class' => 'pull-right badge']) }}
-                                                <a href="{{ route('rinvex.fort.backend.users.index') }}">
+                                                <a href="{{ route('rinvex.fort.backend.'.$key.'.index') }}">
                                                     <strong>
-                                                        {{ $key }}
+                                                        {{ ucfirst($key) }}
                                                     </strong>
                                                 </a>
                                             </li>
@@ -144,7 +144,7 @@
                                                     @if($persistence->user_id == $currentUser->id)<span class="label label-info">{{ trans('rinvex/fort::backend/dashboard.you') }}</span> @endif
                                                     <span class="badge">{{ $persistence->updated_at->diffForHumans() }}</span>
                                                 </span>
-                                                <a href="{{ route('rinvex.fort.backend.users.show', ['userid' => $persistence->user_id]) }}">
+                                                @can('view-user', $user) <a href="{{ route('rinvex.fort.backend.users.show', ['userid' => $persistence->user_id]) }}"> @endcan
                                                     <strong>
                                                         @if($persistence->user->first_name)
                                                             {{ $persistence->user->first_name }} {{ $persistence->user->middle_name }} {{ $persistence->user->last_name }}
@@ -153,7 +153,7 @@
                                                         @endif
                                                     </strong>
                                                     <div class="small ">{{ $persistence->user->job_title }}</div>
-                                                </a>
+                                                @can('view-user', $user) </a> @endcan
                                             </li>
 
                                         @endforeach
