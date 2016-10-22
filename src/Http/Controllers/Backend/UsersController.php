@@ -156,7 +156,12 @@ class UsersController extends AuthorizedController
      */
     public function delete(User $user)
     {
-        //
+        $result = $this->userRepository->delete($user);
+
+        return intend([
+            'route' => 'rinvex.fort.backend.users.index',
+            'with'  => ['rinvex.fort.alert.warning' => trans('rinvex/fort::backend/messages.user.deleted', ['userId' => $result->id])],
+        ]);
     }
 
     /**

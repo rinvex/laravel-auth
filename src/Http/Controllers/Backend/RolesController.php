@@ -151,7 +151,12 @@ class RolesController extends AuthorizedController
      */
     public function delete(Role $role)
     {
-        //
+        $result = $this->roleRepository->delete($role);
+
+        return intend([
+            'route' => 'rinvex.fort.backend.roles.index',
+            'with'  => ['rinvex.fort.alert.warning' => trans('rinvex/fort::backend/messages.role.deleted', ['roleId' => $result->id])],
+        ]);
     }
 
     /**
