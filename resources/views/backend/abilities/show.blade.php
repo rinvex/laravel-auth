@@ -1,7 +1,13 @@
+{{-- Master Layout --}}
 @extends('rinvex/fort::backend/common.layout')
 
-{{-- Main Content --}}
+{{-- Page Title --}}
+@section('title')
+    @parent
+    » {{ trans('rinvex/fort::backend/abilities.heading') }} » {{ trans('rinvex/fort::backend/abilities.view') }} » {{ $ability->slug }}
+@stop
 
+{{-- Main Content --}}
 @section('content')
 
     <style>

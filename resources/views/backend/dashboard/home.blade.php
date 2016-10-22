@@ -1,4 +1,11 @@
+{{-- Master Layout --}}
 @extends('rinvex/fort::backend/common.layout')
+
+{{-- Page Title --}}
+@section('title')
+    @parent
+    » {{ trans('rinvex/fort::backend/dashboard.heading') }}
+@stop
 
 {{-- Main Content --}}
 @section('content')

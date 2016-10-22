@@ -1,7 +1,13 @@
+{{-- Master Layout --}}
 @extends('rinvex/fort::backend/common.layout')
 
-{{-- Main Content --}}
+{{-- Page Title --}}
+@section('title')
+    @parent
+    » {{ trans('rinvex/fort::backend/users.heading') }} » {{ trans('rinvex/fort::backend/users.'.$mode) }} @if($user->exists) » {{ $user->username }} @endif
+@stop
 
+{{-- Main Content --}}
 @section('content')
 
     <style>

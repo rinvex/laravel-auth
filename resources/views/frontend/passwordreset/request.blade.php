@@ -1,4 +1,11 @@
+{{-- Master Layout --}}
 @extends('rinvex/fort::frontend/common.layout')
+
+{{-- Page Title --}}
+@section('title')
+    @parent
+    » {{ trans('rinvex/fort::frontend/forms.passwordreset.request.heading') }}
+@stop
 
 {{-- Main Content --}}
 @section('content')
