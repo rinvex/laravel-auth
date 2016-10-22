@@ -24,6 +24,19 @@ class RolePolicy
     use HandlesAuthorization;
 
     /**
+     * Determine whether the user can list roles.
+     *
+     * @param string                   $ability
+     * @param \Rinvex\Fort\Models\User $user
+     *
+     * @return bool
+     */
+    public function list($ability, User $user)
+    {
+        return $user->allAbilities->pluck('slug')->contains($ability);
+    }
+
+    /**
      * Determine whether the user can view the role.
      *
      * @param string                   $ability

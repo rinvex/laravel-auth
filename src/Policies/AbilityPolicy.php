@@ -24,6 +24,19 @@ class AbilityPolicy
     use HandlesAuthorization;
 
     /**
+     * Determine whether the user can list abilities.
+     *
+     * @param string                   $ability
+     * @param \Rinvex\Fort\Models\User $user
+     *
+     * @return bool
+     */
+    public function list($ability, User $user)
+    {
+        return $user->allAbilities->pluck('slug')->contains($ability);
+    }
+
+    /**
      * Determine whether the user can view the ability.
      *
      * @param string                      $ability

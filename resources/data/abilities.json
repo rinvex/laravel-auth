@@ -11,6 +11,12 @@
         "title": "Access Dashboard"
     },
     {
+        "action": "list",
+        "resource": "ability",
+        "policy": "Rinvex\\Fort\\Policies\\AbilityPolicy@list",
+        "title": "Can List Existing Abilities"
+    },
+    {
         "action": "view",
         "resource": "ability",
         "policy": "Rinvex\\Fort\\Policies\\AbilityPolicy@view",
@@ -23,10 +29,10 @@
         "title": "Can Create New Abilities"
     },
     {
-        "action": "edit",
+        "action": "update",
         "resource": "ability",
-        "policy": "Rinvex\\Fort\\Policies\\AbilityPolicy@edit",
-        "title": "Can Edit Existing Abilities"
+        "policy": "Rinvex\\Fort\\Policies\\AbilityPolicy@update",
+        "title": "Can Update Existing Abilities"
     },
     {
         "action": "delete",
@@ -59,6 +65,12 @@
         "title": "Can Revoke Abilities From Users"
     },
     {
+        "action": "list",
+        "resource": "role",
+        "policy": "Rinvex\\Fort\\Policies\\RolePolicy@list",
+        "title": "Can List Existing Roles"
+    },
+    {
         "action": "view",
         "resource": "role",
         "policy": "Rinvex\\Fort\\Policies\\RolePolicy@view",
@@ -71,10 +83,10 @@
         "title": "Can Create New Roles"
     },
     {
-        "action": "edit",
+        "action": "update",
         "resource": "role",
-        "policy": "Rinvex\\Fort\\Policies\\RolePolicy@edit",
-        "title": "Can Edit Existing Roles"
+        "policy": "Rinvex\\Fort\\Policies\\RolePolicy@update",
+        "title": "Can Update Existing Roles"
     },
     {
         "action": "delete",
@@ -107,6 +119,12 @@
         "title": "Can Remove Roles From Users"
     },
     {
+        "action": "list",
+        "resource": "user",
+        "policy": "Rinvex\\Fort\\Policies\\UserPolicy@list",
+        "title": "Can List Existing Users"
+    },
+    {
         "action": "view",
         "resource": "user",
         "policy": "Rinvex\\Fort\\Policies\\UserPolicy@view",
@@ -119,10 +137,10 @@
         "title": "Can Create New Users"
     },
     {
-        "action": "edit",
+        "action": "update",
         "resource": "user",
-        "policy": "Rinvex\\Fort\\Policies\\UserPolicy@edit",
-        "title": "Can Edit Existing Users"
+        "policy": "Rinvex\\Fort\\Policies\\UserPolicy@update",
+        "title": "Can Update Existing Users"
     },
     {
         "action": "delete",
