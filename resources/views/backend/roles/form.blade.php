@@ -32,12 +32,12 @@
             {{ Form::model($role, ['route' => ['rinvex.fort.backend.roles.store']]) }}
         @endif
 
-            <div class="panel panel-default">
+            <section class="panel panel-default">
 
                 {{-- Heading --}}
-                <div class="panel-heading">
+                <header class="panel-heading">
                     <h4>
-                        <a href="{{ route('rinvex.fort.backend.roles.index') }}">{{ trans('rinvex/fort::backend/roles.heading') }}</a> / {{ trans('rinvex/fort::backend/roles.'.$mode) }} @if($role->exists) » {{ $role->slug }} @endif
+                        <a href="{{ route('rinvex.fort.backend.roles.index') }}">{{ trans('rinvex/fort::backend/roles.heading') }}</a> » {{ trans('rinvex/fort::backend/roles.'.$mode) }} @if($role->exists) » {{ $role->slug }} @endif
                         @if($role->exists && $mode !== 'copy')
                             <span class="pull-right" style="margin-top: -7px">
                                 @can('view-role', $role) <a href="{{ route('rinvex.fort.backend.roles.show', ['role' => $role]) }}" class="btn btn-default"><i class="fa fa-eye text-primary"></i></a> @endcan
@@ -47,7 +47,7 @@
                             </span>
                         @endif
                     </h4>
-                </div>
+                </header>
 
                 {{-- Data --}}
                 <div class="panel-body">
@@ -145,7 +145,7 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </section>
 
         {{ Form::close() }}
 

@@ -16,11 +16,11 @@
 
         <!-- Styles -->
         <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
-    {{-- <link href="{{ elixir('css/app.css') }}" rel="stylesheet"> --}}
+        {{-- <link href="{{ elixir('css/app.css') }}" rel="stylesheet"> --}}
 
-    @yield('styles')
+        @yield('styles')
 
-    <!-- Scripts -->
+        <!-- Scripts -->
         <script>
             window.Laravel = <?php echo json_encode([
                 'csrfToken' => csrf_token(),
@@ -103,8 +103,8 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-10 col-md-offset-1">
-                    <div class="panel panel-default">
-                        <div class="panel-heading">Example Layout</div>
+                    <section class="panel panel-default">
+                        <header class="panel-heading">Example Layout</header>
                         <div class="panel-body">
                             <h3>This view is using an example blade layout view.</h3>
                             <div class="alert alert-warning">
@@ -131,7 +131,7 @@
                             </p>
                         </div>
 
-                    </div>
+                    </section>
                 </div>
             </div>
         </div>

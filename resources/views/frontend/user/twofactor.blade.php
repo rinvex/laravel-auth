@@ -112,10 +112,10 @@
 
                                                 @if(array_get($settings, 'totp.backup'))
                                                     <div class="panel panel-primary">
-                                                        <div class="panel-heading">
+                                                        <header class="panel-heading">
                                                             <a class="btn btn-default btn-xs pull-right" style="margin-left: 10px" href="{{ route('rinvex.fort.frontend.user.twofactor.totp.backup') }}">{{ trans('rinvex/fort::frontend/forms.twofactor.totp_backup_generate') }}</a>
                                                             <h3 class="panel-title">{{ trans('rinvex/fort::frontend/forms.twofactor.totp_backup_head') }}</h3>
-                                                        </div>
+                                                        </header>
                                                         <div class="panel-body">
                                                             {{ trans('rinvex/fort::frontend/forms.twofactor.totp_backup_body') }}
                                                             <div>

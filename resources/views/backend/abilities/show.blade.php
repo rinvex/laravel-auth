@@ -23,12 +23,12 @@
         @include('rinvex/fort::frontend/alerts.error')
         @include('rinvex/fort::backend/common.confirm-modal', ['type' => 'ability'])
 
-        <div class="panel panel-default">
+        <section class="panel panel-default">
 
             {{-- Heading --}}
-            <div class="panel-heading">
+            <header class="panel-heading">
                 <h4>
-                    <a href="{{ route('rinvex.fort.backend.abilities.index') }}">{{ trans('rinvex/fort::backend/abilities.heading') }}</a> / {{ trans('rinvex/fort::backend/abilities.view') }} » {{ $ability->slug }}
+                    <a href="{{ route('rinvex.fort.backend.abilities.index') }}">{{ trans('rinvex/fort::backend/abilities.heading') }}</a> » {{ trans('rinvex/fort::backend/abilities.view') }} » {{ $ability->slug }}
                     <span class="pull-right" style="margin-top: -7px">
                         @can('update-ability', $ability) <a href="{{ route('rinvex.fort.backend.abilities.edit', ['ability' => $ability]) }}" class="btn btn-default"><i class="fa fa-pencil text-primary"></i></a> @endcan
                         @can('create-ability') <a href="{{ route('rinvex.fort.backend.abilities.copy', ['ability' => $ability->id]) }}" class="btn btn-default"><i class="fa fa-copy text-success"></i></a> @endcan
@@ -36,7 +36,7 @@
                         @can('create-ability') <a href="{{ route('rinvex.fort.backend.abilities.create') }}" class="btn btn-default"><i class="fa fa-plus"></i></a> @endcan
                     </span>
                 </h4>
-            </div>
+            </header>
 
             {{-- Data --}}
 
@@ -94,7 +94,7 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </section>
 
     </div>
 

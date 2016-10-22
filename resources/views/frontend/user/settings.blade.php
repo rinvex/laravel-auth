@@ -279,7 +279,7 @@
                                                 @if(in_array('totp', config('rinvex.fort.twofactor.providers')))
 
                                                     <div class="panel panel-primary">
-                                                        <div class="panel-heading">
+                                                        <header class="panel-heading">
                                                             <a class="btn btn-default btn-xs pull-right" style="margin-left: 10px" href="{{ route('rinvex.fort.frontend.user.twofactor.totp.enable') }}">@if(array_get($twoFactor, 'totp.enabled')) {{ trans('rinvex/fort::frontend/forms.account.settings') }} @else {{ trans('rinvex/fort::frontend/forms.account.enable') }} @endif</a>
                                                             @if(array_get($twoFactor, 'totp.enabled'))
                                                                 <a class="btn btn-default btn-xs pull-right" href="{{ route('rinvex.fort.frontend.user.twofactor.totp.disable') }}">{{ trans('rinvex/fort::frontend/forms.account.disable') }}</a>
@@ -287,7 +287,7 @@
                                                             <h3 class="panel-title">
                                                                 {{ trans('rinvex/fort::frontend/forms.account.twofactor_totp_head') }}
                                                             </h3>
-                                                        </div>
+                                                        </header>
                                                         <div class="panel-body">
                                                             {{ trans('rinvex/fort::frontend/forms.account.twofactor_totp_body') }}
                                                         </div>
@@ -298,7 +298,7 @@
                                                 @if(in_array('phone', config('rinvex.fort.twofactor.providers')))
 
                                                     <div class="panel panel-primary">
-                                                        <div class="panel-heading">
+                                                        <header class="panel-heading">
                                                             @if(array_get($twoFactor, 'phone.enabled'))
                                                                 <a class="btn btn-default btn-xs pull-right" href="{{ route('rinvex.fort.frontend.user.twofactor.phone.disable') }}">{{ trans('rinvex/fort::frontend/forms.account.disable') }}</a>
                                                             @else
@@ -307,7 +307,7 @@
                                                             <h3 class="panel-title">
                                                                 {{ trans('rinvex/fort::frontend/forms.account.twofactor_phone_head') }}
                                                             </h3>
-                                                        </div>
+                                                        </header>
                                                         <div class="panel-body">
                                                             {{ trans('rinvex/fort::frontend/forms.account.twofactor_phone_body') }}
                                                         </div>

@@ -29,11 +29,11 @@
 
                     <div class="row">
                         <div class="col-md-8">
-                            <div class="panel panel-default">
-                                <div class="panel-heading">
+                            <section class="panel panel-default">
+                                <header class="panel-heading">
                                     {{ trans('rinvex/fort::backend/dashboard.recent.registered') }}
                                     <span class="pull-right"><a class="btn btn-xs btn-default" href="{{ route('rinvex.fort.backend.users.index') }}" role="button">{{ trans('rinvex/fort::backend/users.manage') }}</a></span>
-                                </div>
+                                </header>
                                 <div class="panel-body">
 
                                     <div class="table-responsive">
@@ -100,17 +100,17 @@
 
                                     </div>
                                 </div>
-                            </div>
+                            </section>
                         </div>
 
                         <div class="col-md-4">
 
                             <div class="row">
 
-                                <div class="panel panel-default">
-                                    <div class="panel-heading">
+                                <section class="panel panel-default">
+                                    <header class="panel-heading">
                                         <strong>{{ trans('rinvex/fort::backend/dashboard.statistics') }}</strong>
-                                    </div>
+                                    </header>
 
                                     <ul class="list-group" style="vertical-align: middle">
 
@@ -128,19 +128,19 @@
                                         @endforeach
                                     </ul>
 
-                                </div>
+                                </section>
 
                             </div>
 
                             <div class="row">
 
-                                <div class="panel panel-default">
-                                    <div class="panel-heading">
-                                        <strong>
+                                <section class="panel panel-default">
+                                    <header class="panel-heading">
+                                        <h4>
                                             {{ trans('rinvex/fort::backend/users.online', ['mins' => config('rinvex.fort.online.interval')]) }}
                                             <span class="pull-right">{{ $persistences->count() }}</span>
-                                        </strong>
-                                    </div>
+                                        </h4>
+                                    </header>
 
                                     <ul class="list-group" style="vertical-align: middle">
 
@@ -166,7 +166,7 @@
                                         @endforeach
                                     </ul>
 
-                                </div>
+                                </section>
 
                             </div>
 

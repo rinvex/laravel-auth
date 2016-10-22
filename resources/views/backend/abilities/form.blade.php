@@ -32,12 +32,12 @@
             {{ Form::model($ability, ['route' => ['rinvex.fort.backend.abilities.store']]) }}
         @endif
 
-            <div class="panel panel-default">
+            <section class="panel panel-default">
 
                 {{-- Heading --}}
-                <div class="panel-heading">
+                <header class="panel-heading">
                     <h4>
-                        <a href="{{ route('rinvex.fort.backend.abilities.index') }}">{{ trans('rinvex/fort::backend/abilities.heading') }}</a> / {{ trans('rinvex/fort::backend/abilities.'.$mode) }} @if($ability->exists) » {{ $ability->slug }} @endif
+                        <a href="{{ route('rinvex.fort.backend.abilities.index') }}">{{ trans('rinvex/fort::backend/abilities.heading') }}</a> » {{ trans('rinvex/fort::backend/abilities.'.$mode) }} @if($ability->exists) » {{ $ability->slug }} @endif
                         @if($ability->exists && $mode !== 'copy')
                             <span class="pull-right" style="margin-top: -7px">
                                 @can('view-ability', $ability) <a href="{{ route('rinvex.fort.backend.abilities.show', ['ability' => $ability]) }}" class="btn btn-default"><i class="fa fa-eye text-primary"></i></a> @endcan
@@ -47,7 +47,7 @@
                             </span>
                         @endif
                     </h4>
-                </div>
+                </header>
 
                 {{-- Data --}}
                 <div class="panel-body">
@@ -163,7 +163,7 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </section>
 
         {{ Form::close() }}
 

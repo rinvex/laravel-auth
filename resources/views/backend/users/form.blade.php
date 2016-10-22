@@ -32,12 +32,12 @@
             {{ Form::model($user, ['route' => ['rinvex.fort.backend.users.store']]) }}
         @endif
 
-            <div class="panel panel-default">
+            <section class="panel panel-default">
 
                 {{-- Heading --}}
-                <div class="panel-heading">
+                <header class="panel-heading">
                     <h4>
-                        <a href="{{ route('rinvex.fort.backend.users.index') }}">{{ trans('rinvex/fort::backend/users.heading') }}</a> / {{ trans('rinvex/fort::backend/users.'.$mode) }} @if($user->exists) » {{ $user->username }} @endif
+                        <a href="{{ route('rinvex.fort.backend.users.index') }}">{{ trans('rinvex/fort::backend/users.heading') }}</a> » {{ trans('rinvex/fort::backend/users.'.$mode) }} @if($user->exists) » {{ $user->username }} @endif
                         @if($user->exists && $mode !== 'copy')
                             <span class="pull-right" style="margin-top: -7px">
                                 @can('view-user', $user) <a href="{{ route('rinvex.fort.backend.users.show', ['user' => $user]) }}" class="btn btn-default"><i class="fa fa-eye text-primary"></i></a> @endcan
@@ -47,7 +47,7 @@
                             </span>
                         @endif
                     </h4>
-                </div>
+                </header>
 
                 {{-- Data --}}
                 <div class="panel-body">
@@ -333,7 +333,7 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </section>
 
         {{ Form::close() }}
 

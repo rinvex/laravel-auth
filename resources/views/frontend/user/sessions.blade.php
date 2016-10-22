@@ -32,7 +32,7 @@
 
                                 @foreach($currentUser->persistences as $persistence)
 
-                                    <div class="panel panel-default">
+                                    <section class="panel panel-default">
 
                                         <div class="panel-heading" role="tab" id="heading-{{ $persistence->token }}">
 
@@ -68,7 +68,7 @@
 
                                         @endif
 
-                                    </div>
+                                    </section>
 
                                     <!-- Modal: Confirm Single -->
                                     <div class="modal fade" id="confirmSingle-{{ $persistence->token }}" tabindex="-1" role="dialog" aria-labelledby="confirmSingleLabel{{ $persistence->token }}">

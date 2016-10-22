@@ -23,12 +23,12 @@
         @include('rinvex/fort::frontend/alerts.error')
         @include('rinvex/fort::backend/common.confirm-modal', ['type' => 'role'])
 
-        <div class="panel panel-default">
+        <section class="panel panel-default">
 
             {{-- Heading --}}
-            <div class="panel-heading">
+            <header class="panel-heading">
                 <h4>
-                    <a href="{{ route('rinvex.fort.backend.roles.index') }}">{{ trans('rinvex/fort::backend/roles.heading') }}</a> / {{ trans('rinvex/fort::backend/roles.view') }} » {{ $role->slug }}
+                    <a href="{{ route('rinvex.fort.backend.roles.index') }}">{{ trans('rinvex/fort::backend/roles.heading') }}</a> » {{ trans('rinvex/fort::backend/roles.view') }} » {{ $role->slug }}
                     <span class="pull-right" style="margin-top: -7px">
                         @can('update-user', $role) <a href="{{ route('rinvex.fort.backend.roles.edit', ['role' => $role]) }}" class="btn btn-default"><i class="fa fa-pencil text-primary"></i></a> @endcan
                         @can('create-role') <a href="{{ route('rinvex.fort.backend.roles.copy', ['role' => $role]) }}" class="btn btn-default"><i class="fa fa-copy text-success"></i></a> @endcan
@@ -36,7 +36,7 @@
                         @can('create-role') <a href="{{ route('rinvex.fort.backend.roles.create') }}" class="btn btn-default"><i class="fa fa-plus"></i></a> @endcan
                     </span>
                 </h4>
-            </div>
+            </header>
 
             {{-- Data --}}
             <div class="panel-body">
@@ -126,7 +126,7 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </section>
 
     </div>
 

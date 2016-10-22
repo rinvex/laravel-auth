@@ -23,10 +23,10 @@
         @include('rinvex/fort::frontend/alerts.error')
         @include('rinvex/fort::backend/common.confirm-modal', ['type' => 'ability'])
 
-        <div class="panel panel-default">
+        <section class="panel panel-default">
 
             {{-- Heading --}}
-            <div class="panel-heading">
+            <header class="panel-heading">
                 <h4>
                     {{ trans('rinvex/fort::backend/abilities.heading') }}
                     @can('create-ability')
@@ -35,7 +35,7 @@
                         </span>
                     @endcan
                 </h4>
-            </div>
+            </header>
 
             {{-- Data --}}
             <div class="panel-body">
@@ -101,7 +101,7 @@
             {{-- Pagination --}}
             @include('rinvex/fort::backend/common.pagination', ['resource' => $abilities])
 
-        </div>
+        </section>
 
     </div>
 

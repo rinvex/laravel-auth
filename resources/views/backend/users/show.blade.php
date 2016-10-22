@@ -23,12 +23,12 @@
         @include('rinvex/fort::frontend/alerts.error')
         @include('rinvex/fort::backend/common.confirm-modal', ['type' => 'user'])
 
-        <div class="panel panel-default">
+        <section class="panel panel-default">
 
             {{-- Heading --}}
-            <div class="panel-heading">
+            <header class="panel-heading">
                 <h4>
-                    <a href="{{ route('rinvex.fort.backend.users.index') }}">{{ trans('rinvex/fort::backend/users.heading') }}</a> / {{ trans('rinvex/fort::backend/users.view') }} » {{ $user->username }}
+                    <a href="{{ route('rinvex.fort.backend.users.index') }}">{{ trans('rinvex/fort::backend/users.heading') }}</a> » {{ trans('rinvex/fort::backend/users.view') }} » {{ $user->username }}
                     <span class="pull-right" style="margin-top: -7px">
                         @can('update-user', $user) <a href="{{ route('rinvex.fort.backend.users.edit', ['user' => $user]) }}" class="btn btn-default"><i class="fa fa-pencil text-primary"></i></a> @endcan
                         @can('create-user') <a href="{{ route('rinvex.fort.backend.users.copy', ['user' => $user]) }}" class="btn btn-default"><i class="fa fa-copy text-primary"></i></a> @endcan
@@ -36,7 +36,7 @@
                         @can('create-user') <a href="{{ route('rinvex.fort.backend.users.create') }}" class="btn btn-default"><i class="fa fa-plus"></i></a> @endcan
                     </span>
                 </h4>
-            </div>
+            </header>
 
             {{-- Data --}}
             <div class="panel-body">
@@ -161,7 +161,7 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </section>
 
     </div>
 
