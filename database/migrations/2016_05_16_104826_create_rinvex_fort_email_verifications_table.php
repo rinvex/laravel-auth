@@ -28,15 +28,15 @@ class CreateRinvexFortEmailVerificationsTable extends Migration
     {
         Schema::create(config('rinvex.fort.tables.emailverifications'), function (Blueprint $table) {
             // Columns
-            $table->string('email');
             $table->string('token');
+            $table->string('email');
             $table->string('agent')->nullable();
             $table->string('ip')->nullable();
             $table->timestamp('created_at');
 
             // Indexes
+            $table->primary('token');
             $table->index('email');
-            $table->index('token');
 
             // Engine
             $table->engine = 'InnoDB';

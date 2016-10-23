@@ -35,7 +35,6 @@ class CreateRinvexFortSocialiteTable extends Migration
             $table->timestamps();
 
             // Indexes
-            $table->index('user_id');
             $table->unique([
                 'provider',
                 'provider_uid',

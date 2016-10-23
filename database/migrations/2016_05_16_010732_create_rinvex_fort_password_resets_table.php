@@ -17,7 +17,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateRinvexFortResetsTable extends Migration
+class CreateRinvexFortPasswordResetsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -28,15 +28,15 @@ class CreateRinvexFortResetsTable extends Migration
     {
         Schema::create(config('rinvex.fort.tables.passwordresets'), function (Blueprint $table) {
             // Columns
-            $table->string('email');
             $table->string('token');
+            $table->string('email');
             $table->string('agent')->nullable();
             $table->string('ip')->nullable();
             $table->timestamp('created_at');
 
             // Indexes
+            $table->primary('token');
             $table->index('email');
-            $table->index('token');
 
             // Engine
             $table->engine = 'InnoDB';

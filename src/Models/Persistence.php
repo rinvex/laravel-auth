@@ -22,6 +22,16 @@ class Persistence extends Model
     /**
      * {@inheritdoc}
      */
+    protected $primaryKey = 'token';
+
+    /**
+     * {@inheritdoc}
+     */
+    public $incrementing = false;
+
+    /**
+     * {@inheritdoc}
+     */
     protected $fillable = [
         'user_id',
         'token',
