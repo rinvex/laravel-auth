@@ -98,9 +98,6 @@
                             </div>
 
                         </div>
-                    </div>
-
-                    <div class="row">
                         <div class="col-md-4">
 
                             {{-- Username --}}
@@ -161,9 +158,6 @@
                             </div>
 
                         </div>
-                    </div>
-
-                    <div class="row">
                         <div class="col-md-4">
 
                             {{-- Email --}}
@@ -223,9 +217,6 @@
                             </div>
 
                         </div>
-                    </div>
-
-                    <div class="row">
                         <div class="col-md-4">
 
                             {{-- Gender --}}
@@ -271,9 +262,6 @@
                             </div>
 
                         </div>
-                    </div>
-
-                    <div class="row">
                         <div class="col-md-4">
 
                             {{-- Roles --}}

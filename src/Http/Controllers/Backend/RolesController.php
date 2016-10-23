@@ -76,9 +76,9 @@ class RolesController extends AuthorizedController
      */
     public function show(Role $role)
     {
-        $actions   = ['view', 'create', 'edit', 'delete', 'import', 'export'];
         $resources = app('rinvex.fort.ability')->findAll()->groupBy('resource');
-        $columns   = ['resource', 'view', 'create', 'edit', 'delete', 'import', 'export', 'other'];
+        $actions   = ['list', 'view', 'create', 'update', 'delete', 'import', 'export'];
+        $columns   = ['resource', 'list', 'view', 'create', 'update', 'delete', 'import', 'export', 'other'];
 
         return view('rinvex/fort::backend/roles.show', compact('role', 'resources', 'actions', 'columns'));
     }
