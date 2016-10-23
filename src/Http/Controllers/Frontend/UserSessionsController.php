@@ -34,7 +34,7 @@ class UserSessionsController extends AuthenticatedController
     /**
      * Flush the given session.
      *
-     * @param string $token
+     * @param string|null $token
      *
      * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse
      */

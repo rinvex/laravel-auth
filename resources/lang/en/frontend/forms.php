@@ -16,15 +16,17 @@
 return [
 
     'common' => [
+        'close'  => 'Close',
         'reset'  => 'Reset',
         'logout' => 'Logout',
+        'warning' => 'Warning',
     ],
 
     'sessions' => [
-        'flush_single'        => 'Flush Selected Session',
-        'flush_single_notice' => '<strong>Warning:</strong> Selected session will be flushed, and thus re-login again will be required on effected device.',
-        'flush_all'           => 'Flush All Sessions',
-        'flush_all_notice'    => '<strong>Warning:</strong> All active sessions of your account, including this one will be flushed, and you\'ll be forced to re-login again!',
+        'flush_single_heading' => 'Flush Selected Session',
+        'flush_single_body'    => 'Selected session will be flushed, and thus re-login again will be required on effected device.',
+        'flush_all_heading'    => 'Flush All Sessions',
+        'flush_all_body'       => 'All active sessions of your account, including this one will be flushed, and you will be forced to re-login again!',
     ],
 
     'register' => [

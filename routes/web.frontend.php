@@ -91,7 +91,7 @@ Route::group([
         */
 
         Route::get('sessions', ['as' => 'sessions', 'uses' => 'UserSessionsController@index']);
-        Route::post('sessions', ['as' => 'sessions.flush', 'uses' => 'UserSessionsController@flush']);
+        Route::delete('sessions/{token?}', ['as' => 'sessions.flush', 'uses' => 'UserSessionsController@flush']);
 
         /*
         |--------------------------------------------------------------------------
