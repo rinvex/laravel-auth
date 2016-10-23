@@ -49,7 +49,7 @@ class UserRepository extends EloquentRepository implements UserRepositoryContrac
     /**
      * {@inheritdoc}
      */
-    public function findByToken($identifier, $token)
+    public function findByRememberToken($identifier, $token)
     {
         return $this->where($this->getAuthIdentifierName(), $identifier)
                     ->where($this->getRememberTokenName(), $token)

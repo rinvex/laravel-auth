@@ -310,7 +310,7 @@ class SessionGuard implements StatefulGuardContract, SupportsBasicAuth
 
             list($id, $token) = explode('|', $recaller, 2);
 
-            $this->viaRemember = ! is_null($user = $this->provider->findByToken($id, $token));
+            $this->viaRemember = ! is_null($user = $this->provider->findByRememberToken($id, $token));
 
             return $user;
         }

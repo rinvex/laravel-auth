@@ -28,7 +28,7 @@ interface UserRepositoryContract extends RepositoryContract, CacheableContract
      *
      * @return \Rinvex\Fort\Contracts\AuthenticatableContract|null
      */
-    public function findByToken($identifier, $token);
+    public function findByRememberToken($identifier, $token);
 
     /**
      * Find a user by the given credentials.
