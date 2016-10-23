@@ -27,7 +27,7 @@ class RolesController extends AuthorizedController
     /**
      * {@inheritdoc}
      */
-    protected $resource = 'role';
+    protected $resource = 'roles';
 
     /**
      * {@inheritdoc}

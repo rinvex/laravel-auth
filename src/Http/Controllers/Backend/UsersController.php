@@ -28,7 +28,7 @@ class UsersController extends AuthorizedController
     /**
      * {@inheritdoc}
      */
-    protected $resource = 'user';
+    protected $resource = 'users';
 
     /**
      * {@inheritdoc}

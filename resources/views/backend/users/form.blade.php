@@ -40,10 +40,10 @@
                         <a href="{{ route('rinvex.fort.backend.users.index') }}">{{ trans('rinvex/fort::backend/users.heading') }}</a> » {{ trans('rinvex/fort::backend/users.'.$mode) }} @if($user->exists) » {{ $user->username }} @endif
                         @if($user->exists && $mode !== 'copy')
                             <span class="pull-right" style="margin-top: -7px">
-                                @can('view-user', $user) <a href="{{ route('rinvex.fort.backend.users.show', ['user' => $user]) }}" class="btn btn-default"><i class="fa fa-eye text-primary"></i></a> @endcan
-                                @can('create-user') <a href="{{ route('rinvex.fort.backend.users.copy', ['user' => $user]) }}" class="btn btn-default"><i class="fa fa-copy text-success"></i></a> @endcan
-                                @can('delete-user', $user) <a href="#" class="btn btn-default" data-toggle="modal" data-target="#delete-confirmation" data-item-href="{{ route('rinvex.fort.backend.users.delete', ['user' => $user]) }}" data-item-name="{{ $user->username }}"><i class="fa fa-trash-o text-danger"></i></a> @endcan
-                                @can('create-user') <a href="{{ route('rinvex.fort.backend.users.create') }}" class="btn btn-default"><i class="fa fa-plus"></i></a> @endcan
+                                @can('view-users', $user) <a href="{{ route('rinvex.fort.backend.users.show', ['user' => $user]) }}" class="btn btn-default"><i class="fa fa-eye text-primary"></i></a> @endcan
+                                @can('create-users') <a href="{{ route('rinvex.fort.backend.users.copy', ['user' => $user]) }}" class="btn btn-default"><i class="fa fa-copy text-success"></i></a> @endcan
+                                @can('delete-users', $user) <a href="#" class="btn btn-default" data-toggle="modal" data-target="#delete-confirmation" data-item-href="{{ route('rinvex.fort.backend.users.delete', ['user' => $user]) }}" data-item-name="{{ $user->username }}"><i class="fa fa-trash-o text-danger"></i></a> @endcan
+                                @can('create-users') <a href="{{ route('rinvex.fort.backend.users.create') }}" class="btn btn-default"><i class="fa fa-plus"></i></a> @endcan
                             </span>
                         @endif
                     </h4>

@@ -30,10 +30,10 @@
                 <h4>
                     <a href="{{ route('rinvex.fort.backend.abilities.index') }}">{{ trans('rinvex/fort::backend/abilities.heading') }}</a> » {{ trans('rinvex/fort::backend/abilities.view') }} » {{ $ability->slug }}
                     <span class="pull-right" style="margin-top: -7px">
-                        @can('update-ability', $ability) <a href="{{ route('rinvex.fort.backend.abilities.edit', ['ability' => $ability]) }}" class="btn btn-default"><i class="fa fa-pencil text-primary"></i></a> @endcan
-                        @can('create-ability') <a href="{{ route('rinvex.fort.backend.abilities.copy', ['ability' => $ability->id]) }}" class="btn btn-default"><i class="fa fa-copy text-success"></i></a> @endcan
-                        @can('delete-ability', $ability) <a href="#" class="btn btn-default" data-toggle="modal" data-target="#delete-confirmation" data-item-href="{{ route('rinvex.fort.backend.abilities.delete', ['ability' => $ability]) }}" data-item-name="{{ $ability->slug }}"><i class="fa fa-trash-o text-danger"></i></a> @endcan
-                        @can('create-ability') <a href="{{ route('rinvex.fort.backend.abilities.create') }}" class="btn btn-default"><i class="fa fa-plus"></i></a> @endcan
+                        @can('update-abilities', $ability) <a href="{{ route('rinvex.fort.backend.abilities.edit', ['ability' => $ability]) }}" class="btn btn-default"><i class="fa fa-pencil text-primary"></i></a> @endcan
+                        @can('create-abilities') <a href="{{ route('rinvex.fort.backend.abilities.copy', ['ability' => $ability->id]) }}" class="btn btn-default"><i class="fa fa-copy text-success"></i></a> @endcan
+                        @can('delete-abilities', $ability) <a href="#" class="btn btn-default" data-toggle="modal" data-target="#delete-confirmation" data-item-href="{{ route('rinvex.fort.backend.abilities.delete', ['ability' => $ability]) }}" data-item-name="{{ $ability->slug }}"><i class="fa fa-trash-o text-danger"></i></a> @endcan
+                        @can('create-abilities') <a href="{{ route('rinvex.fort.backend.abilities.create') }}" class="btn btn-default"><i class="fa fa-plus"></i></a> @endcan
                     </span>
                 </h4>
             </header>
@@ -68,7 +68,7 @@
                     <div class="col-md-12">
                         <strong>{{ trans('rinvex/fort::backend/abilities.roles') }}</strong>:
                         @forelse($ability->roles->pluck('title', 'id') as $roleId => $role)
-                            @can('view-role', $role) <a href="{{ route('rinvex.fort.backend.roles.show', ['role' => $roleId]) }}" class="label btn-xs label-info">{{ $role }}</a> @else {{ $role }} @endcan
+                            @can('view-roles', $role) <a href="{{ route('rinvex.fort.backend.roles.show', ['role' => $roleId]) }}" class="label btn-xs label-info">{{ $role }}</a> @else {{ $role }} @endcan
                         @empty
                             <span>N/A</span>
                         @endforelse

@@ -29,7 +29,7 @@
             <header class="panel-heading">
                 <h4>
                     {{ trans('rinvex/fort::backend/abilities.heading') }}
-                    @can('create-ability')
+                    @can('create-abilities')
                         <span class="pull-right" style="margin-top: -7px">
                             <a href="{{ route('rinvex.fort.backend.abilities.create') }}" class="btn btn-default"><i class="fa fa-plus"></i></a>
                         </span>
@@ -59,10 +59,10 @@
 
                                 <tr>
                                     <td>
-                                        @can('view-ability', $ability) <a href="{{ route('rinvex.fort.backend.abilities.show', ['ability' => $ability]) }}"> @endcan
+                                        @can('view-abilities', $ability) <a href="{{ route('rinvex.fort.backend.abilities.show', ['ability' => $ability]) }}"> @endcan
                                             <strong>{{ $ability->title }}</strong> <small>({{ $ability->action }})</small>
                                             <div class="small ">{{ $ability->policy }}</div>
-                                        @can('view-ability', $ability) </a> @endcan
+                                        @can('view-abilities', $ability) </a> @endcan
                                     </td>
 
                                     <td>
@@ -83,8 +83,8 @@
                                     </td>
 
                                     <td class="text-right">
-                                        @can('update-ability', $ability) <a href="{{ route('rinvex.fort.backend.abilities.edit', ['ability' => $ability]) }}" class="btn btn-xs btn-default"><i class="fa fa-pencil text-primary"></i></a> @endcan
-                                        @can('delete-ability', $ability) <a href="#" class="btn btn-xs btn-default" data-toggle="modal" data-target="#delete-confirmation" data-item-href="{{ route('rinvex.fort.backend.abilities.delete', ['ability' => $ability]) }}" data-item-name="{{ $ability->slug }}"><i class="fa fa-trash-o text-danger"></i></a> @endcan
+                                        @can('update-abilities', $ability) <a href="{{ route('rinvex.fort.backend.abilities.edit', ['ability' => $ability]) }}" class="btn btn-xs btn-default"><i class="fa fa-pencil text-primary"></i></a> @endcan
+                                        @can('delete-abilities', $ability) <a href="#" class="btn btn-xs btn-default" data-toggle="modal" data-target="#delete-confirmation" data-item-href="{{ route('rinvex.fort.backend.abilities.delete', ['ability' => $ability]) }}" data-item-name="{{ $ability->slug }}"><i class="fa fa-trash-o text-danger"></i></a> @endcan
                                     </td>
                                 </tr>
 

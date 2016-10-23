@@ -29,7 +29,7 @@
             <header class="panel-heading">
                 <h4>
                     {{ trans('rinvex/fort::backend/roles.heading') }}
-                    @can('create-role')
+                    @can('create-roles')
                         <span class="pull-right" style="margin-top: -7px">
                             <a href="{{ route('rinvex.fort.backend.roles.create') }}" class="btn btn-default"><i class="fa fa-plus"></i></a>
                         </span>
@@ -59,10 +59,10 @@
 
                                 <tr>
                                     <td>
-                                        @can('view-role', $role) <a href="{{ route('rinvex.fort.backend.roles.show', ['role' => $role]) }}"> @endcan
+                                        @can('view-roles', $role) <a href="{{ route('rinvex.fort.backend.roles.show', ['role' => $role]) }}"> @endcan
                                             <strong>{{ $role->title }}</strong>
                                             <div class="small ">{{ $role->slug }}</div>
-                                        @can('view-role', $role) </a> @endcan
+                                        @can('view-roles', $role) </a> @endcan
                                     </td>
 
                                     <td>
@@ -83,8 +83,8 @@
                                     </td>
 
                                     <td class="text-right">
-                                        @can('update-user', $role) <a href="{{ route('rinvex.fort.backend.roles.edit', ['role' => $role]) }}" class="btn btn-xs btn-default"><i class="fa fa-pencil text-primary"></i></a> @endcan
-                                        @can('delete-role', $role) <a href="#" class="btn btn-xs btn-default" data-toggle="modal" data-target="#delete-confirmation" data-item-href="{{ route('rinvex.fort.backend.roles.delete', ['role' => $role]) }}" data-item-name="{{ $role->slug }}"><i class="fa fa-trash-o text-danger"></i></a> @endcan
+                                        @can('update-users', $role) <a href="{{ route('rinvex.fort.backend.roles.edit', ['role' => $role]) }}" class="btn btn-xs btn-default"><i class="fa fa-pencil text-primary"></i></a> @endcan
+                                        @can('delete-roles', $role) <a href="#" class="btn btn-xs btn-default" data-toggle="modal" data-target="#delete-confirmation" data-item-href="{{ route('rinvex.fort.backend.roles.delete', ['role' => $role]) }}" data-item-name="{{ $role->slug }}"><i class="fa fa-trash-o text-danger"></i></a> @endcan
                                     </td>
                                 </tr>
 

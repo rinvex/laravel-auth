@@ -12,163 +12,163 @@
     },
     {
         "action": "list",
-        "resource": "ability",
+        "resource": "abilities",
         "policy": "Rinvex\\Fort\\Policies\\AbilityPolicy@list",
         "title": "Can List Existing Abilities"
     },
     {
         "action": "view",
-        "resource": "ability",
+        "resource": "abilities",
         "policy": "Rinvex\\Fort\\Policies\\AbilityPolicy@view",
         "title": "Can View Existing Abilities"
     },
     {
         "action": "create",
-        "resource": "ability",
+        "resource": "abilities",
         "policy": "Rinvex\\Fort\\Policies\\AbilityPolicy@create",
         "title": "Can Create New Abilities"
     },
     {
         "action": "update",
-        "resource": "ability",
+        "resource": "abilities",
         "policy": "Rinvex\\Fort\\Policies\\AbilityPolicy@update",
         "title": "Can Update Existing Abilities"
     },
     {
         "action": "delete",
-        "resource": "ability",
+        "resource": "abilities",
         "policy": "Rinvex\\Fort\\Policies\\AbilityPolicy@delete",
         "title": "Can Delete Existing Abilities"
     },
     {
         "action": "import",
-        "resource": "ability",
+        "resource": "abilities",
         "policy": "Rinvex\\Fort\\Policies\\AbilityPolicy@import",
         "title": "Can Import New Abilities"
     },
     {
         "action": "export",
-        "resource": "ability",
+        "resource": "abilities",
         "policy": "Rinvex\\Fort\\Policies\\AbilityPolicy@export",
         "title": "Can Export Existing Abilities"
     },
     {
         "action": "give",
-        "resource": "ability",
+        "resource": "abilities",
         "policy": "Rinvex\\Fort\\Policies\\AbilityPolicy@give",
         "title": "Can Give Abilities To Users"
     },
     {
         "action": "revoke",
-        "resource": "ability",
+        "resource": "abilities",
         "policy": "Rinvex\\Fort\\Policies\\AbilityPolicy@revoke",
         "title": "Can Revoke Abilities From Users"
     },
     {
         "action": "list",
-        "resource": "role",
+        "resource": "roles",
         "policy": "Rinvex\\Fort\\Policies\\RolePolicy@list",
         "title": "Can List Existing Roles"
     },
     {
         "action": "view",
-        "resource": "role",
+        "resource": "roles",
         "policy": "Rinvex\\Fort\\Policies\\RolePolicy@view",
         "title": "Can View Existing Roles"
     },
     {
         "action": "create",
-        "resource": "role",
+        "resource": "roles",
         "policy": "Rinvex\\Fort\\Policies\\RolePolicy@create",
         "title": "Can Create New Roles"
     },
     {
         "action": "update",
-        "resource": "role",
+        "resource": "roles",
         "policy": "Rinvex\\Fort\\Policies\\RolePolicy@update",
         "title": "Can Update Existing Roles"
     },
     {
         "action": "delete",
-        "resource": "role",
+        "resource": "roles",
         "policy": "Rinvex\\Fort\\Policies\\RolePolicy@delete",
         "title": "Can Delete Existing Roles"
     },
     {
         "action": "import",
-        "resource": "role",
+        "resource": "roles",
         "policy": "Rinvex\\Fort\\Policies\\RolePolicy@import",
         "title": "Can Import New Roles"
     },
     {
         "action": "export",
-        "resource": "role",
+        "resource": "roles",
         "policy": "Rinvex\\Fort\\Policies\\RolePolicy@export",
         "title": "Can Export Existing Roles"
     },
     {
         "action": "assign",
-        "resource": "role",
+        "resource": "roles",
         "policy": "Rinvex\\Fort\\Policies\\RolePolicy@assign",
         "title": "Can Assign Roles To Users"
     },
     {
         "action": "remove",
-        "resource": "role",
+        "resource": "roles",
         "policy": "Rinvex\\Fort\\Policies\\RolePolicy@remove",
         "title": "Can Remove Roles From Users"
     },
     {
         "action": "list",
-        "resource": "user",
+        "resource": "users",
         "policy": "Rinvex\\Fort\\Policies\\UserPolicy@list",
         "title": "Can List Existing Users"
     },
     {
         "action": "view",
-        "resource": "user",
+        "resource": "users",
         "policy": "Rinvex\\Fort\\Policies\\UserPolicy@view",
         "title": "Can View Existing Users"
     },
     {
         "action": "create",
-        "resource": "user",
+        "resource": "users",
         "policy": "Rinvex\\Fort\\Policies\\UserPolicy@create",
         "title": "Can Create New Users"
     },
     {
         "action": "update",
-        "resource": "user",
+        "resource": "users",
         "policy": "Rinvex\\Fort\\Policies\\UserPolicy@update",
         "title": "Can Update Existing Users"
     },
     {
         "action": "delete",
-        "resource": "user",
+        "resource": "users",
         "policy": "Rinvex\\Fort\\Policies\\UserPolicy@delete",
         "title": "Can Delete Existing Users"
     },
     {
         "action": "import",
-        "resource": "user",
+        "resource": "users",
         "policy": "Rinvex\\Fort\\Policies\\UserPolicy@import",
         "title": "Can Import New Users"
     },
     {
         "action": "export",
-        "resource": "user",
+        "resource": "users",
         "policy": "Rinvex\\Fort\\Policies\\UserPolicy@export",
         "title": "Can Export Existing Users"
     },
     {
         "action": "activate",
-        "resource": "user",
+        "resource": "users",
         "policy": "Rinvex\\Fort\\Policies\\UserPolicy@activate",
         "title": "Can activate Users"
     },
     {
         "action": "deactivate",
-        "resource": "user",
+        "resource": "users",
         "policy": "Rinvex\\Fort\\Policies\\UserPolicy@deactivate",
         "title": "Can De-activate Users"
     }

@@ -16,9 +16,6 @@
 return [
 
     'profile' => [
-        'index'    => 'Users',
-        'create'   => 'Create',
-        'delete'   => 'Delete',
         'account'  => 'Account',
         'sessions' => 'Sessions',
         'page'     => 'Profile',

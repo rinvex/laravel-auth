@@ -69,19 +69,14 @@
                                 </a>
 
                                 <ul class="dropdown-menu" role="menu">
-                                    <li class="disabled">
-                                        <a href="#"><i class="fa fa-user"></i> {{ trans('rinvex/fort::frontend/menus.profile.account') }}
-                                        </a></li>
-                                    <li>
-                                        <a href="{{ route('rinvex.fort.frontend.user.settings') }}"><i class="fa fa-user"></i> {{ trans('rinvex/fort::frontend/menus.profile.page') }}
-                                        </a></li>
-                                    <li>
-                                        <a href="{{ route('rinvex.fort.frontend.user.sessions') }}"><i class="fa fa-check-square-o"></i> {{ trans('rinvex/fort::frontend/menus.profile.sessions') }}
-                                        </a></li>
+                                    <li class="disabled"><a href="#"><i class="fa fa-user"></i> {{ trans('rinvex/fort::frontend/menus.profile.account') }}</a></li>
+                                    <li><a href="{{ route('rinvex.fort.frontend.user.settings') }}"><i class="fa fa-user"></i> {{ trans('rinvex/fort::frontend/menus.profile.page') }}</a></li>
+                                    <li><a href="{{ route('rinvex.fort.frontend.user.sessions') }}"><i class="fa fa-check-square-o"></i> {{ trans('rinvex/fort::frontend/menus.profile.sessions') }}</a></li>
                                     <li role="separator" class="divider"></li>
-                                    <li class="disabled">
-                                        <a href="{{ route('rinvex.fort.backend.dashboard.home') }}"><i class="fa fa-dashboard"></i> {{ trans('rinvex/fort::frontend/menus.dashboard.home') }}
-                                        </a></li>
+                                    @can('access-dashboard') <li class="disabled"><a href="{{ route('rinvex.fort.backend.dashboard.home') }}"><i class="fa fa-dashboard"></i> {{ trans('rinvex/fort::frontend/menus.dashboard.home') }}</a></li> @endcan
+                                    @can('list-abilities') <li><a href="{{ route('rinvex.fort.backend.abilities.index') }}"><i class="fa fa-arrow-right"></i> {{ trans('rinvex/fort::backend/abilities.heading') }}</a></li> @endcan
+                                    @can('list-roles') <li><a href="{{ route('rinvex.fort.backend.roles.index') }}"><i class="fa fa-arrow-right"></i> {{ trans('rinvex/fort::backend/roles.heading') }}</a></li> @endcan
+                                    @can('list-users') <li><a href="{{ route('rinvex.fort.backend.users.index') }}"><i class="fa fa-arrow-right"></i> {{ trans('rinvex/fort::backend/users.heading') }}</a></li> @endcan
                                     <li role="separator" class="divider"></li>
                                     <li>
                                         <a href="{{ route('rinvex.fort.frontend.auth.logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();"><i class="fa fa-sign-out"></i> {{ trans('rinvex/fort::frontend/forms.common.logout') }}</a>
