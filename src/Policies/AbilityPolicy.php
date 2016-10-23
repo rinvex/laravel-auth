@@ -142,22 +142,4 @@ class AbilityPolicy
                && ! $resourced->isSuperadmin()                                  // RESOURCED user is NOT superadmin
                && ! $resourced->isProtected();                                  // RESOURCED user is NOT protected
     }
-
-    /**
-     * Determine whether the user can revoke the given ability from the given user.
-     *
-     * @param string                      $ability
-     * @param \Rinvex\Fort\Models\User    $user
-     * @param \Rinvex\Fort\Models\Ability $resource
-     * @param \Rinvex\Fort\Models\User    $resourced
-     *
-     * @return bool
-     */
-    public function revoke($ability, User $user, Ability $resource, User $resourced)
-    {
-        return $user->allAbilities->pluck('slug')->contains($ability)           // User can revoke abilities
-               && $user->allAbilities->pluck('slug')->contains($resource->slug) // User already have RESOURCE ability
-               && ! $resourced->isSuperadmin()                                  // RESOURCED user is NOT superadmin
-               && ! $resourced->isProtected();                                  // RESOURCED user is NOT protected
-    }
 }

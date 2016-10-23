@@ -142,22 +142,4 @@ class RolePolicy
                && ! $resourced->isSuperadmin()                                  // RESOURCED user is NOT superadmin
                && ! $resourced->isProtected();                                  // RESOURCED user is NOT protected
     }
-
-    /**
-     * Determine whether the user can remove the given role from the given user.
-     *
-     * @param string                   $ability
-     * @param \Rinvex\Fort\Models\User $user
-     * @param \Rinvex\Fort\Models\Role $resource
-     * @param \Rinvex\Fort\Models\User $resourced
-     *
-     * @return bool
-     */
-    public function remove($ability, User $user, Role $resource, User $resourced)
-    {
-        return $user->allAbilities->pluck('slug')->contains($ability)           // User can remove roles
-               && $user->allAbilities->pluck('slug')->contains($resource->slug) // User already have RESOURCE role
-               && ! $resourced->isSuperadmin()                                  // RESOURCED user is NOT superadmin
-               && ! $resourced->isProtected();                                  // RESOURCED user is NOT protected
-    }
 }
