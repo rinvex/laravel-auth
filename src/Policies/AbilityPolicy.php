@@ -126,7 +126,7 @@ class AbilityPolicy
     }
 
     /**
-     * Determine whether the user can assign the ability.
+     * Determine whether the user can grant the given ability to the given user.
      *
      * @param string                      $ability
      * @param \Rinvex\Fort\Models\User    $user
@@ -135,16 +135,16 @@ class AbilityPolicy
      *
      * @return bool
      */
-    public function assign($ability, User $user, Ability $resource, User $resourced)
+    public function grant($ability, User $user, Ability $resource, User $resourced)
     {
-        return $user->allAbilities->pluck('slug')->contains($ability)           // User can assign abilities
+        return $user->allAbilities->pluck('slug')->contains($ability)           // User can grant abilities
                && $user->allAbilities->pluck('slug')->contains($resource->slug) // User already have RESOURCE ability
                && ! $resourced->isSuperadmin()                                  // RESOURCED user is NOT superadmin
                && ! $resourced->isProtected();                                  // RESOURCED user is NOT protected
     }
 
     /**
-     * Determine whether the user can revoke the ability.
+     * Determine whether the user can revoke the given ability from the given user.
      *
      * @param string                      $ability
      * @param \Rinvex\Fort\Models\User    $user

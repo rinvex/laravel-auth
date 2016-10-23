@@ -126,7 +126,7 @@ class RolePolicy
     }
 
     /**
-     * Determine whether the user can give the role.
+     * Determine whether the user can assign the given role to the given user.
      *
      * @param string                   $ability
      * @param \Rinvex\Fort\Models\User $user
@@ -135,16 +135,16 @@ class RolePolicy
      *
      * @return bool
      */
-    public function give($ability, User $user, Role $resource, User $resourced)
+    public function assign($ability, User $user, Role $resource, User $resourced)
     {
-        return $user->allAbilities->pluck('slug')->contains($ability)           // User can give roles
+        return $user->allAbilities->pluck('slug')->contains($ability)           // User can assign roles
                && $user->allAbilities->pluck('slug')->contains($resource->slug) // User already have RESOURCE role
                && ! $resourced->isSuperadmin()                                  // RESOURCED user is NOT superadmin
                && ! $resourced->isProtected();                                  // RESOURCED user is NOT protected
     }
 
     /**
-     * Determine whether the user can remove the role.
+     * Determine whether the user can remove the given role from the given user.
      *
      * @param string                   $ability
      * @param \Rinvex\Fort\Models\User $user

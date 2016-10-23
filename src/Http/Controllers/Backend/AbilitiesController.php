@@ -32,7 +32,7 @@ class AbilitiesController extends AuthorizedController
     /**
      * {@inheritdoc}
      */
-    protected $resourceActionWhitelist = ['give', 'revoke'];
+    protected $resourceActionWhitelist = ['grant', 'revoke'];
 
     /**
      * The ability repository instance.

@@ -20,14 +20,14 @@ use Rinvex\Fort\Models\Ability;
 trait HasAbilities
 {
     /**
-     * Give the given ability to the entity.
+     * Grant the given ability to the entity.
      *
      * @param string|array $action
      * @param string|array $resource
      *
      * @return $this
      */
-    public function giveAbilityTo($action, $resource)
+    public function grantAbilityTo($action, $resource)
     {
         // Fire the ability giving event
         static::$dispatcher->fire('rinvex.fort.ability.giving', [$this, $action, $resource]);

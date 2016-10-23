@@ -53,10 +53,10 @@
         "title": "Can Export Existing Abilities"
     },
     {
-        "action": "give",
+        "action": "grant",
         "resource": "abilities",
-        "policy": "Rinvex\\Fort\\Policies\\AbilityPolicy@give",
-        "title": "Can Give Abilities To Users"
+        "policy": "Rinvex\\Fort\\Policies\\AbilityPolicy@grant",
+        "title": "Can Grant Abilities To Users"
     },
     {
         "action": "revoke",
