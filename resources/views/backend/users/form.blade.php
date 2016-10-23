@@ -262,6 +262,7 @@
                             </div>
 
                         </div>
+                        @can('assign-roles')
                         <div class="col-md-4">
 
                             {{-- Roles --}}
@@ -277,6 +278,8 @@
                             </div>
 
                         </div>
+                        @endcan
+                        @can('grant-abilities')
                         <div class="col-md-4">
 
                             {{-- Abilities --}}
@@ -292,6 +295,7 @@
                             </div>
 
                         </div>
+                        @endcan
                     </div>
 
                 </div>

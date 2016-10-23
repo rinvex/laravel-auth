@@ -219,7 +219,7 @@ class RolesController extends AuthorizedController
     {
         // Prepare required input fields
         $input     = $request->except(['_method', '_token', 'id']);
-        $abilities = ['abilities' => array_pull($input, 'abilityList')];
+        $abilities = $request->user($this->getGuard())->can('grant-abilities') ? ['abilities' => array_pull($input, 'abilityList')] : [];
 
         // Store data into the entity
         $result = $this->roleRepository->store($role, $input + $abilities);

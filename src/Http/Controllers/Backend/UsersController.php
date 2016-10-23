@@ -222,8 +222,8 @@ class UsersController extends AuthorizedController
     {
         // Prepare required input fields
         $input     = $request->except(['_method', '_token', 'id']);
-        $roles     = ['roles' => array_pull($input, 'roleList')];
-        $abilities = ['abilities' => array_pull($input, 'abilityList')];
+        $roles     = $request->user($this->getGuard())->can('assign-roles') ? ['roles' => array_pull($input, 'roleList')] : [];
+        $abilities = $request->user($this->getGuard())->can('grant-abilities') ? ['abilities' => array_pull($input, 'abilityList')] : [];
 
         // Store data into the entity
         $result = $this->userRepository->store($user, $input + $roles + $abilities);
