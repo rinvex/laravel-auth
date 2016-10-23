@@ -159,17 +159,5 @@
         "resource": "users",
         "policy": "Rinvex\\Fort\\Policies\\UserPolicy@export",
         "title": "Can Export Existing Users"
-    },
-    {
-        "action": "activate",
-        "resource": "users",
-        "policy": "Rinvex\\Fort\\Policies\\UserPolicy@activate",
-        "title": "Can activate Users"
-    },
-    {
-        "action": "deactivate",
-        "resource": "users",
-        "policy": "Rinvex\\Fort\\Policies\\UserPolicy@deactivate",
-        "title": "Can De-activate Users"
     }
 ]

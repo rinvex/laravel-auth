@@ -120,38 +120,4 @@ class UserPolicy
     {
         return $user->allAbilities->pluck('slug')->contains($ability);
     }
-
-    /**
-     * Determine whether the user can activate the user.
-     *
-     * @param string                   $ability
-     * @param \Rinvex\Fort\Models\User $user
-     * @param \Rinvex\Fort\Models\User $resource
-     *
-     * @return bool
-     */
-    public function activate($ability, User $user, User $resource)
-    {
-        return $user->allAbilities->pluck('slug')->contains($ability)   // User can activate users
-               && $resource->id !== $user->id                           // User can NOT activate himself
-               && ! $resource->isSuperadmin()                           // RESOURCE user is NOT superadmin
-               && ! $resource->isProtected();                           // RESOURCE user is NOT protected
-    }
-
-    /**
-     * Determine whether the user can deactivate the user.
-     *
-     * @param string                   $ability
-     * @param \Rinvex\Fort\Models\User $user
-     * @param \Rinvex\Fort\Models\User $resource
-     *
-     * @return bool
-     */
-    public function deactivate($ability, User $user, User $resource)
-    {
-        return $user->allAbilities->pluck('slug')->contains($ability)   // User can de-activate users
-               && $resource->id !== $user->id                           // User can NOT de-activate himself
-               && ! $resource->isSuperadmin()                           // RESOURCE user is NOT superadmin
-               && ! $resource->isProtected();                           // RESOURCE user is NOT protected
-    }
 }

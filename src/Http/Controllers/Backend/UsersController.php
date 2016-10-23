@@ -31,14 +31,6 @@ class UsersController extends AuthorizedController
     protected $resource = 'users';
 
     /**
-     * {@inheritdoc}
-     */
-    protected $resourceAbilityMap = [
-        'activate'   => 'activate',
-        'deactivate' => 'deactivate',
-    ];
-
-    /**
      * The user repository instance.
      *
      * @var \Rinvex\Fort\Contracts\UserRepositoryContract
