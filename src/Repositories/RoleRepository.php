@@ -15,15 +15,12 @@
 
 namespace Rinvex\Fort\Repositories;
 
-use Rinvex\Fort\Traits\HasAbilities;
 use Illuminate\Contracts\Foundation\Application;
 use Rinvex\Fort\Contracts\RoleRepositoryContract;
 use Rinvex\Repository\Repositories\EloquentRepository;
 
 class RoleRepository extends EloquentRepository implements RoleRepositoryContract
 {
-    use HasAbilities;
-
     /**
      * create a new role repository instance.
      *

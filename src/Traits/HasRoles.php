@@ -17,154 +17,131 @@ namespace Rinvex\Fort\Traits;
 
 use Rinvex\Fort\Models\Role;
 use Illuminate\Support\Collection;
-use Illuminate\Database\Eloquent\Model;
 
 trait HasRoles
 {
     use HasAbilities;
 
     /**
-     * Assign the given role to the given entity.
+     * Assign the given role(s) to the entity.
      *
-     * @param int|\Illuminate\Database\Eloquent\Model                              $id
-     * @param string|array|\Rinvex\Fort\Models\Role|\Illuminate\Support\Collection $role
+     * @param mixed $roles
      *
      * @return $this
      */
-    public function assignRole($id, $role)
+    public function assignRoles($roles)
     {
-        // Find the given instance
-        $instance = $id instanceof Model ?: $this->find($id);
-
-        if ($instance) {
-            $origRole = $role;
-
-            // Fire the role given event
-            event('rinvex.fort.role.assigning', [$instance, $origRole]);
-
-            // Single role slug
-            if (is_string($role)) {
-                $role = app('rinvex.fort.role')->findBy('slug', $role);
-            }
-
-            // Single role model
-            if ($role instanceof Role) {
-                if ($this->hasRole($instance, $role)) {
-                    return $this;
-                }
-
-                $instance->roles()->attach($role);
-            }
-
-            // Array of role slugs
-            if (is_array($role)) {
-                $role = app('rinvex.fort.role')->findWhereIn(['slug', $role]);
-            }
-
-            // Collection of role models
-            if ($role instanceof Collection) {
-                $role = $role->map(function ($role) {
-                    return $role instanceof Role ? $role->id : $role;
-                })->toArray();
-
-                $instance->roles()->syncWithoutDetaching($role);
-            }
-
-            // Fire the role given event
-            event('rinvex.fort.role.assigned', [$instance, $origRole]);
+        // Role slug(s)
+        if (is_string($roles) || (is_array($roles) && is_string($roles[0]))) {
+            $roles = Role::whereIn('slug', (array) $roles)->get();
         }
+
+        // Single role model
+        if ($roles instanceof Role) {
+            $roles = [$roles->id];
+        }
+
+        // Fire the role assigning event
+        static::$dispatcher->fire('rinvex.fort.role.assigning', [$this, $roles]);
+
+        // Assign roles
+        $this->roles()->syncWithoutDetaching((array) $roles);
+
+        // Fire the role assigned event
+        static::$dispatcher->fire('rinvex.fort.role.assigned', [$this, $roles]);
 
         return $this;
     }
 
     /**
-     * Remove the given role from the given entity.
+     * Sync the given role(s) to the entity.
      *
-     * @param int|\Illuminate\Database\Eloquent\Model                              $id
-     * @param string|array|\Rinvex\Fort\Models\Role|\Illuminate\Support\Collection $role
+     * @param mixed $roles
      *
      * @return $this
      */
-    public function removeRole($id, $role)
+    public function syncRoles($roles)
     {
-        // Find the given instance
-        $instance = $id instanceof Model ?: $this->find($id);
-
-        if ($instance) {
-            $origRole = $role;
-
-            // Fire the role removed event
-            event('rinvex.fort.role.removing', [$instance, $origRole]);
-
-            // Single role slug
-            if (is_string($role)) {
-                $role = $instance->roles->contains('slug', $role);
-            }
-
-            // Single role model
-            if ($role instanceof Role) {
-                if (! $this->hasRole($instance, $role)) {
-                    return $this;
-                }
-
-                $instance->roles()->detach($role);
-            }
-
-            // Array of role slugs
-            if (is_array($role)) {
-                $role = app('rinvex.fort.role')->findWhereIn(['slug', $role]);
-            }
-
-            // Collection of role models
-            if ($role instanceof Collection) {
-                $current = $instance->roles()->getRelatedIds()->toArray();
-                $remove  = $role->map(function ($role) {
-                    return $role instanceof Role ? $role->id : $role;
-                })->toArray();
-
-                $instance->roles()->sync(array_diff($current, $remove));
-            }
-
-            // Fire the role removed event
-            event('rinvex.fort.role.removed', [$instance, $origRole]);
+        // Role slug(s)
+        if (is_string($roles) || (is_array($roles) && is_string($roles[0]))) {
+            $roles = Role::whereIn('slug', (array) $roles)->get();
         }
+
+        // Single role model
+        if ($roles instanceof Role) {
+            $roles = [$roles->id];
+        }
+
+        // Fire the role assigning event
+        static::$dispatcher->fire('rinvex.fort.role.assigning', [$this, $roles]);
+
+        // Assign roles
+        $this->roles()->sync((array) $roles);
+
+        // Fire the role assigned event
+        static::$dispatcher->fire('rinvex.fort.role.assigned', [$this, $roles]);
 
         return $this;
     }
 
     /**
-     * Determine if the given entity has (one of) the given roles.
+     * Remove the given role(s) from the entity.
      *
-     * @param int|\Illuminate\Database\Eloquent\Model                              $id
-     * @param string|array|\Rinvex\Fort\Models\Role|\Illuminate\Support\Collection $role
+     * @param mixed $roles
+     *
+     * @return $this
+     */
+    public function removeRoles($roles)
+    {
+        // Array of role slugs
+        if (is_string($roles) || (is_array($roles) && is_string($roles[0]))) {
+            $roles = Role::whereIn('slug', (array) $roles)->get();
+        }
+
+        // Fire the role removed event
+        static::$dispatcher->fire('rinvex.fort.role.removing', [$this, $roles]);
+
+        // Detach roles
+        $this->roles()->detach((array) $roles);
+
+        // Fire the role removed event
+        static::$dispatcher->fire('rinvex.fort.role.removed', [$this, $roles]);
+
+        return $this;
+    }
+
+    /**
+     * Determine if the entity has (one of) the given roles.
+     *
+     * @param mixed $roles
      *
      * @return bool
      */
-    public function hasRole($id, $role)
+    public function hasRole($roles)
     {
-        // Find the given instance
-        $instance = $id instanceof Model ?: $this->find($id);
+        // Single role slug
+        if (is_string($roles)) {
+            return $this->roles->contains('slug', $roles);
+        }
 
-        if ($instance) {
-            // Single role slug
-            if (is_string($role)) {
-                return $instance->roles->contains('slug', $role);
-            }
+        // Single role model
+        if ($roles instanceof Role) {
+            return $this->roles->contains('slug', $roles->slug);
+        }
 
-            // Single role model
-            if ($role instanceof Role) {
-                return $instance->roles->contains('slug', $role->slug);
-            }
+        // Array of role slugs
+        if (is_array($roles) && is_string($roles[0])) {
+            return $this->roles->pluck('slug')->intersect($roles)->isEmpty();
+        }
 
-            // Array of role slugs
-            if (is_array($role)) {
-                $role = app('rinvex.fort.role')->findWhereIn(['slug', $role]);
-            }
+        // Array of role Ids
+        if (is_array($roles) && is_int($roles[0])) {
+            return $this->roles->pluck('id')->intersect($roles)->isEmpty();
+        }
 
-            // Collection of role models
-            if ($role instanceof Collection) {
-                return ! $role->intersect($instance->roles)->isEmpty();
-            }
+        // Collection of role models
+        if ($roles instanceof Collection) {
+            return ! $roles->intersect($this->roles->pluck('slug'))->isEmpty();
         }
 
         return false;
@@ -173,51 +150,41 @@ trait HasRoles
     /**
      * Alias for `hasRole` method.
      *
-     * @param int|\Illuminate\Database\Eloquent\Model                              $id
-     * @param string|array|\Rinvex\Fort\Models\Role|\Illuminate\Support\Collection $role
+     * @param mixed $roles
      *
      * @return bool
      */
-    public function hasAnyRole($id, $role)
+    public function hasAnyRole($roles)
     {
-        return $this->hasRole($id, $role);
+        return $this->hasRole($roles);
     }
 
     /**
      * Determine if the given entity has all of the given roles.
      *
-     * @param int|\Illuminate\Database\Eloquent\Model                              $id
-     * @param string|array|\Rinvex\Fort\Models\Role|\Illuminate\Support\Collection $role
+     * @param mixed $roles
      *
      * @return bool
      */
-    public function hasAllRoles($id, $role)
+    public function hasAllRoles($roles)
     {
-        // Find the given instance
-        $instance = $id instanceof Model ?: $this->find($id);
-
-        if ($instance) {
-            // Single role slug
-            if (is_string($role)) {
-                return $instance->roles->contains('slug', $role);
-            }
-
-            // Single role model
-            if ($role instanceof Role) {
-                return $instance->roles->contains('slug', $role->slug);
-            }
-
-            // Array of role slugs
-            if (is_array($role)) {
-                $role = app('rinvex.fort.role')->findWhereIn(['slug', $role]);
-            }
-
-            // Collection of role models
-            if ($role instanceof Collection) {
-                return $instance->roles->toArray() == $role->toArray();
-            }
+        // Single role slug
+        if (is_string($roles)) {
+            return $this->roles->contains('slug', $roles);
         }
 
-        return false;
+        // Single role model
+        if ($roles instanceof Role) {
+            return $this->roles->contains('slug', $roles->slug);
+        }
+
+        // Array of role slugs OR Collection of role models
+        if ($roles instanceof Collection || (is_array($roles) && is_string($roles[0]))) {
+            return $this->roles->pluck('slug')->count() == count($roles)
+                   && $this->roles->pluck('slug')->diff($roles)->isEmpty();
+        }
+
+        return $this->roles->pluck('id')->count() == count($roles)
+               && $this->roles->pluck('id')->diff($roles)->isEmpty();
     }
 }

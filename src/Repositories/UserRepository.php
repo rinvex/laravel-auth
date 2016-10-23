@@ -16,7 +16,6 @@
 namespace Rinvex\Fort\Repositories;
 
 use Illuminate\Support\Str;
-use Rinvex\Fort\Traits\HasRoles;
 use Illuminate\Contracts\Hashing\Hasher;
 use Illuminate\Contracts\Foundation\Application;
 use Rinvex\Fort\Contracts\UserRepositoryContract;
@@ -25,8 +24,6 @@ use Rinvex\Repository\Repositories\EloquentRepository;
 
 class UserRepository extends EloquentRepository implements UserRepositoryContract
 {
-    use HasRoles;
-
     /**
      * The hasher implementation.
      *

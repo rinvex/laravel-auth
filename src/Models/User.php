@@ -15,6 +15,7 @@
 
 namespace Rinvex\Fort\Models;
 
+use Rinvex\Fort\Traits\HasRoles;
 use Rinvex\Fort\Traits\CanVerifyEmail;
 use Rinvex\Fort\Traits\CanVerifyPhone;
 use Rinvex\Fort\Traits\Authenticatable;
@@ -32,7 +33,7 @@ use Illuminate\Contracts\Auth\Access\Authorizable as AuthorizableContract;
 
 class User extends Model implements AuthenticatableContract, AuthorizableContract, CanResetPasswordContract, CanVerifyEmailContract, CanVerifyPhoneContract
 {
-    use Notifiable, Authenticatable, Authorizable, CanResetPassword, CanVerifyEmail, CanVerifyPhone, SoftDeletes;
+    use Notifiable, Authenticatable, Authorizable, CanResetPassword, CanVerifyEmail, CanVerifyPhone, HasRoles, SoftDeletes;
 
     /**
      * {@inheritdoc}
