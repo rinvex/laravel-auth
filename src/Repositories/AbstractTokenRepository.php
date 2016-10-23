@@ -43,7 +43,7 @@ abstract class AbstractTokenRepository
     protected $hashKey;
 
     /**
-     * The number of seconds a token should last.
+     * The number of minutes a token should last.
      *
      * @var int
      */
@@ -63,7 +63,7 @@ abstract class AbstractTokenRepository
     {
         $this->table      = $table;
         $this->hashKey    = $hashKey;
-        $this->expires    = $expires * 60;
+        $this->expires    = $expires;
         $this->connection = $connection;
     }
 
@@ -97,7 +97,7 @@ abstract class AbstractTokenRepository
      */
     protected function tokenExpired($token)
     {
-        $expiresAt = Carbon::parse($token['created_at'])->addSeconds($this->expires);
+        $expiresAt = Carbon::parse($token['created_at'])->addMinutes($this->expires);
 
         return $expiresAt->isPast();
     }
@@ -121,7 +121,7 @@ abstract class AbstractTokenRepository
      */
     public function deleteExpired()
     {
-        $expiredAt = Carbon::now()->subSeconds($this->expires);
+        $expiredAt = Carbon::now()->subMinutes($this->expires);
 
         $this->getTable()->where('created_at', '<', $expiredAt)->delete();
     }
@@ -157,7 +157,7 @@ abstract class AbstractTokenRepository
     }
 
     /**
-     * Get the token expiration in seconds.
+     * Get the token expiration in minutes.
      *
      * @return int
      */

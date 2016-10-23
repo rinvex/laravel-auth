@@ -73,7 +73,7 @@ class EmailVerificationBroker implements EmailVerificationBrokerContract
         // to this user with a link for verification. We will then redirect back to
         // the current URI having nothing set in the session to indicate errors.
         $token      = $this->tokens->getData($user, $this->tokens->create($user));
-        $expiration = $this->tokens->getExpiration() / 60;
+        $expiration = $this->tokens->getExpiration();
 
         $user->sendEmailVerificationNotification($token, $expiration);
 

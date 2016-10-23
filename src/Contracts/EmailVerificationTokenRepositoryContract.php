@@ -53,7 +53,7 @@ interface EmailVerificationTokenRepositoryContract
     public function deleteExpired();
 
     /**
-     * Get the token expiration in seconds.
+     * Get the token expiration in minutes.
      *
      * @return int
      */

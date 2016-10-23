@@ -69,12 +69,12 @@ class EmailVerificationRequestNotification extends Notification
     {
         return (new MailMessage())
             ->subject(trans('rinvex/fort::frontend/emails.verification.email.subject'))
-            ->line(trans('rinvex/fort::frontend/emails.verification.email.intro'))
+            ->line(trans('rinvex/fort::frontend/emails.verification.email.intro', ['expire' => $this->expiration]))
             ->action(trans('rinvex/fort::frontend/emails.verification.email.action'), route('rinvex.fort.frontend.verification.email.verify').'?token='.$this->token['token'].'&email='.$this->token['email'])
             ->line(trans('rinvex/fort::frontend/emails.verification.email.outro', [
-                'created_at' => $this->token['created_at'],
                 'ip'         => $this->token['ip'],
                 'agent'      => $this->token['agent'],
+                'created_at' => $this->token['created_at'],
             ]));
     }
 }
