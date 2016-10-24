@@ -66,9 +66,6 @@ class EmailVerificationBroker implements EmailVerificationBrokerContract
             return static::INVALID_USER;
         }
 
-        // Fire the email verification request start event
-        event('rinvex.fort.verification.email.request.start', [$user]);
-
         // Once we have the verification token, we are ready to send the message out
         // to this user with a link for verification. We will then redirect back to
         // the current URI having nothing set in the session to indicate errors.
@@ -76,9 +73,6 @@ class EmailVerificationBroker implements EmailVerificationBrokerContract
         $expiration = $this->tokens->getExpiration();
 
         $user->sendEmailVerificationNotification($token, $expiration);
-
-        // Fire the email verification request success event
-        event('rinvex.fort.verification.email.request.success', [$user]);
 
         return static::LINK_SENT;
     }
@@ -100,7 +94,7 @@ class EmailVerificationBroker implements EmailVerificationBrokerContract
         }
 
         // Fire the email verification start event
-        event('rinvex.fort.verification.email.verify.start', [$user]);
+        event('rinvex.fort.emailverification.start', [$user]);
 
         // Verify email
         app('rinvex.fort.user')->update($user, [
@@ -118,7 +112,7 @@ class EmailVerificationBroker implements EmailVerificationBrokerContract
         $this->deleteToken($credentials['token']);
 
         // Fire the email verification success event
-        event('rinvex.fort.verification.email.verify.success', [$user]);
+        event('rinvex.fort.emailverification.success', [$user]);
 
         return static::EMAIL_VERIFIED;
     }

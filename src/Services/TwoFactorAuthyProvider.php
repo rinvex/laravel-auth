@@ -134,7 +134,7 @@ class TwoFactorAuthyProvider implements TwoFactorProviderContract
         // Authy API returns 'true' as a string, not boolean only at this endpoint
         if (! isset($response['success']) || $response['success'] != 'true') {
             // Fire the Two-Factor verify failed event
-            event('rinvex.fort.twofactor.phone.verify.failed', [$user, $response]);
+            event('rinvex.fort.twofactor.phone.verify.failed', [$user, $token, $response]);
 
             // Invalid token
             return false;

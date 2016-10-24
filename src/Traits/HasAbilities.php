@@ -29,11 +29,11 @@ trait HasAbilities
      */
     public function grantAbilityTo($action, $resource)
     {
-        // Fire the ability giving event
-        static::$dispatcher->fire('rinvex.fort.ability.giving', [$this, $action, $resource]);
-
         // Ability model
         $model = Ability::query();
+
+        // Fire the ability granting event
+        static::$dispatcher->fire('rinvex.fort.ability.granting', [$this, $action, $resource]);
 
         if (is_string($action) && $action !== '*') {
             $model->where('action', $action);
@@ -57,8 +57,8 @@ trait HasAbilities
         // Sync abilities
         $this->abilities()->syncWithoutDetaching($abilities);
 
-        // Fire the ability given event
-        static::$dispatcher->fire('rinvex.fort.ability.given', [$this, $action, $resource]);
+        // Fire the ability granted event
+        static::$dispatcher->fire('rinvex.fort.ability.granted', [$this, $action, $resource]);
 
         return $this;
     }
@@ -73,11 +73,11 @@ trait HasAbilities
      */
     public function revokeAbilityTo($action, $resource)
     {
-        // Fire the ability giving event
-        static::$dispatcher->fire('rinvex.fort.ability.revoking', [$this, $action, $resource]);
-
         // Ability model
         $model = Ability::query();
+
+        // Fire the ability revoking event
+        static::$dispatcher->fire('rinvex.fort.ability.revoking', [$this, $action, $resource]);
 
         if (is_string($action) && $action !== '*') {
             $model->where('action', $action);
@@ -101,7 +101,7 @@ trait HasAbilities
         // Sync abilities
         $this->abilities()->detach($abilities);
 
-        // Fire the ability given event
+        // Fire the ability revoked event
         static::$dispatcher->fire('rinvex.fort.ability.revoked', [$this, $action, $resource]);
 
         return $this;
