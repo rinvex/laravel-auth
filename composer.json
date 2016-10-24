@@ -54,7 +54,7 @@
         "rinvex/country": "dev-develop",
         "rinvex/repository": "dev-develop",
         "christian-riesen/base32": "1.3.*",
-        "laravel-notification-channels/authy": "dev-develop",
+        "laravel-notification-channels/authy": "dev-develop"
     },
     "autoload": {
         "classmap": [

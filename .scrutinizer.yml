@@ -111,6 +111,7 @@ checks:
 
 filter:
     excluded_paths:
+        - 'build/*'
         - 'tests/*'
         - 'vendor/*'
 
@@ -133,6 +134,7 @@ tools:
             standard:         PSR2
         filter:
             excluded_paths:
+                - 'build/*'
                 - 'tests/*'
                 - 'vendor/*'
 
@@ -141,6 +143,7 @@ tools:
     php_cpd:
         enabled:              true
         excluded_dirs:
+            - 'build'
             - 'tests'
             - 'vendor'
 
@@ -149,6 +152,7 @@ tools:
     php_loc:
         enabled:              true
         excluded_dirs:
+            - 'build'
             - 'tests'
             - 'vendor'
 
@@ -165,6 +169,7 @@ tools:
                 - controversial
         filter:
             excluded_paths:
+                - 'build/*'
                 - 'tests/*'
                 - 'vendor/*'
 
@@ -173,6 +178,7 @@ tools:
     php_pdepend:
         enabled:              true
         excluded_dirs:
+            - 'build'
             - 'tests'
             - 'vendor'
 
