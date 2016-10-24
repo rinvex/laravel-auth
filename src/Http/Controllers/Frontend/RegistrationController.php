@@ -17,7 +17,6 @@ namespace Rinvex\Fort\Http\Controllers\Frontend;
 
 use Rinvex\Fort\Contracts\UserRepositoryContract;
 use Rinvex\Fort\Http\Controllers\AbstractController;
-use Rinvex\Fort\Contracts\EmailVerificationBrokerContract;
 use Rinvex\Fort\Http\Requests\Frontend\UserRegistrationRequest;
 
 class RegistrationController extends AbstractController

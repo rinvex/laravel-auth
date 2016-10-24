@@ -15,8 +15,8 @@
 
 namespace Rinvex\Fort\Http\Controllers\Frontend;
 
-use Rinvex\Fort\Contracts\PasswordResetBrokerContract;
 use Rinvex\Fort\Http\Controllers\AbstractController;
+use Rinvex\Fort\Contracts\PasswordResetBrokerContract;
 use Rinvex\Fort\Http\Requests\Frontend\PasswordResetRequest;
 use Rinvex\Fort\Http\Requests\Frontend\PasswordResetSendRequest;
 

@@ -16,7 +16,6 @@
 namespace Rinvex\Fort\Http\Controllers\Frontend;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Rinvex\Fort\Http\Controllers\AuthenticatedController;
 
 class UserSessionsController extends AuthenticatedController
