@@ -22,13 +22,6 @@ use NotificationChannels\Authy\AuthyMessage;
 class PhoneVerificationRequestNotification extends Notification
 {
     /**
-     * Determine whether to force the notification over cellphone network.
-     *
-     * @var bool
-     */
-    public $force;
-
-    /**
      * The notification method (sms/call).
      *
      * @var string
@@ -36,17 +29,24 @@ class PhoneVerificationRequestNotification extends Notification
     public $method;
 
     /**
+     * Determine whether to force the notification over cellphone network.
+     *
+     * @var bool
+     */
+    public $force;
+
+    /**
      * Create a notification instance.
      *
-     * @param bool   $force
      * @param string $method
+     * @param bool   $force
      *
      * @return void
      */
-    public function __construct($force, $method)
+    public function __construct($method = 'sms', $force = false)
     {
-        $this->force  = $force;
         $this->method = $method;
+        $this->force  = $force;
     }
 
     /**
@@ -68,6 +68,12 @@ class PhoneVerificationRequestNotification extends Notification
      */
     public function toAuthy()
     {
-        return AuthyMessage::create()->method($this->method)->force($this->force);
+        $message = AuthyMessage::create()->method($this->method);
+
+        if ($this->force) {
+            $message->force();
+        }
+
+        return $message;
     }
 }
