@@ -52,7 +52,7 @@ class UserSettingsController extends AuthenticatedController
     public function edit(Request $request)
     {
         $countries = array_map(function ($country) {
-            return $country['name'];
+            return $country->getName();
         }, Loader::countries());
         $twoFactor = $request->user($this->getGuard())->getTwoFactor();
 
