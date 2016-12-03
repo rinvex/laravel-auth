@@ -15,6 +15,7 @@
 
 namespace Rinvex\Fort\Http\Controllers\Frontend;
 
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Rinvex\Fort\Guards\SessionGuard;
 use Rinvex\Fort\Http\Controllers\AbstractController;
@@ -89,6 +90,12 @@ class PhoneVerificationController extends AbstractController
 
         switch ($result) {
             case SessionGuard::AUTH_PHONE_VERIFIED:
+                // Update user account
+                app('rinvex.fort.user')->update($user, [
+                    'phone_verified'    => true,
+                    'phone_verified_at' => new Carbon(),
+                ]);
+
                 return intend([
                     'route' => 'rinvex.fort.frontend.user.settings',
                     'with'  => ['rinvex.fort.alert.success' => trans($result)],
