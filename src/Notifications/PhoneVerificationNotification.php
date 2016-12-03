@@ -19,7 +19,7 @@ use Illuminate\Notifications\Notification;
 use NotificationChannels\Authy\AuthyChannel;
 use NotificationChannels\Authy\AuthyMessage;
 
-class PhoneVerificationRequestNotification extends Notification
+class PhoneVerificationNotification extends Notification
 {
     /**
      * The notification method (sms/call).
@@ -40,8 +40,6 @@ class PhoneVerificationRequestNotification extends Notification
      *
      * @param string $method
      * @param bool   $force
-     *
-     * @return void
      */
     public function __construct($method = 'sms', $force = false)
     {

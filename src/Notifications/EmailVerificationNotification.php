@@ -18,10 +18,10 @@ namespace Rinvex\Fort\Notifications;
 use Illuminate\Notifications\Notification;
 use Illuminate\Notifications\Messages\MailMessage;
 
-class PasswordResetRequestNotification extends Notification
+class EmailVerificationNotification extends Notification
 {
     /**
-     * The password reset token.
+     * The email verification token.
      *
      * @var string
      */
@@ -39,8 +39,6 @@ class PasswordResetRequestNotification extends Notification
      *
      * @param array  $token
      * @param string $expiration
-     *
-     * @return void
      */
     public function __construct(array $token, $expiration)
     {
@@ -68,10 +66,10 @@ class PasswordResetRequestNotification extends Notification
     public function toMail()
     {
         return (new MailMessage())
-            ->subject(trans('rinvex/fort::frontend/emails.passwordreset.request.subject'))
-            ->line(trans('rinvex/fort::frontend/emails.passwordreset.request.intro', ['expire' => $this->expiration]))
-            ->action(trans('rinvex/fort::frontend/emails.passwordreset.request.action'), route('rinvex.fort.frontend.passwordreset.reset').'?token='.$this->token['token'].'&email='.$this->token['email'])
-            ->line(trans('rinvex/fort::frontend/emails.passwordreset.request.outro', [
+            ->subject(trans('rinvex/fort::frontend/emails.verification.email.subject'))
+            ->line(trans('rinvex/fort::frontend/emails.verification.email.intro', ['expire' => $this->expiration]))
+            ->action(trans('rinvex/fort::frontend/emails.verification.email.action'), route('rinvex.fort.frontend.verification.email.verify').'?token='.$this->token['token'].'&email='.$this->token['email'])
+            ->line(trans('rinvex/fort::frontend/emails.verification.email.outro', [
                 'ip'         => $this->token['ip'],
                 'agent'      => $this->token['agent'],
                 'created_at' => $this->token['created_at'],

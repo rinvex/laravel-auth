@@ -15,7 +15,7 @@
 
 namespace Rinvex\Fort\Traits;
 
-use Rinvex\Fort\Notifications\PasswordResetRequestNotification;
+use Rinvex\Fort\Notifications\PasswordResetNotification;
 
 trait CanResetPassword
 {
@@ -39,6 +39,6 @@ trait CanResetPassword
      */
     public function sendPasswordResetNotification(array $token, $expiration)
     {
-        $this->notify(new PasswordResetRequestNotification($token, $expiration));
+        $this->notify(new PasswordResetNotification($token, $expiration));
     }
 }
