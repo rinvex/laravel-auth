@@ -31,8 +31,6 @@ class VerificationSuccessNotification extends Notification
      * Create a notification instance.
      *
      * @param bool $social
-     *
-     * @return void
      */
     public function __construct($active = false)
     {

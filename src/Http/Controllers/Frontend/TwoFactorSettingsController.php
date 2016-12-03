@@ -37,8 +37,6 @@ class TwoFactorSettingsController extends AuthenticatedController
      * Create a new Two-Factor update controller instance.
      *
      * @param \Rinvex\Fort\Contracts\UserRepositoryContract $userRepository
-     *
-     * @return void
      */
     public function __construct(UserRepositoryContract $userRepository)
     {

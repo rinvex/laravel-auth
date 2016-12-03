@@ -33,8 +33,6 @@ class UserSettingsController extends AuthenticatedController
      * Create a new profile update controller instance.
      *
      * @param \Rinvex\Fort\Contracts\UserRepositoryContract $userRepository
-     *
-     * @return void
      */
     public function __construct(UserRepositoryContract $userRepository)
     {

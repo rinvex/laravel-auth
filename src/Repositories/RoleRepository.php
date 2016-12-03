@@ -25,8 +25,6 @@ class RoleRepository extends EloquentRepository implements RoleRepositoryContrac
      * create a new role repository instance.
      *
      * @param \Illuminate\Contracts\Foundation\Application $app
-     *
-     * @return void
      */
     public function __construct(Application $app)
     {

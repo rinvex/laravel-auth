@@ -45,8 +45,6 @@ class EmailVerificationBroker implements EmailVerificationBrokerContract
      *
      * @param \Rinvex\Fort\Contracts\EmailVerificationTokenRepositoryContract $tokens
      * @param \Rinvex\Fort\Contracts\UserRepositoryContract                   $userRepository
-     *
-     * @return void
      */
     public function __construct(EmailVerificationTokenRepositoryContract $tokens, UserRepositoryContract $userRepository)
     {

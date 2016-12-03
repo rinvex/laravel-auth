@@ -179,8 +179,6 @@ class SessionGuard implements StatefulGuardContract, SupportsBasicAuth
      * @param \Rinvex\Fort\Contracts\UserRepositoryContract $provider
      * @param \Illuminate\Session\SessionInterface          $session
      * @param \Illuminate\Http\Request                      $request
-     *
-     * @return void
      */
     public function __construct($name, UserRepositoryContract $provider, SessionInterface $session, Request $request = null)
     {

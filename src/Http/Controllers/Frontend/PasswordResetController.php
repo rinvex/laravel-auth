@@ -24,8 +24,6 @@ class PasswordResetController extends AbstractController
 {
     /**
      * Create a new password reset controller instance.
-     *
-     * @return void
      */
     public function __construct()
     {

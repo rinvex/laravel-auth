@@ -52,8 +52,6 @@ class PasswordResetBroker implements PasswordResetBrokerContract
      *
      * @param \Rinvex\Fort\Contracts\PasswordResetTokenRepositoryContract $tokens
      * @param \Rinvex\Fort\Contracts\UserRepositoryContract               $userRepository
-     *
-     * @return void
      */
     public function __construct(PasswordResetTokenRepositoryContract $tokens, UserRepositoryContract $userRepository)
     {

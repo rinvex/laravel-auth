@@ -45,8 +45,6 @@ class FortEventListener
      * Create a new fort event listener instance.
      *
      * @param \Illuminate\Contracts\Container\Container $app
-     *
-     * @return void
      */
     public function __construct(Container $app)
     {

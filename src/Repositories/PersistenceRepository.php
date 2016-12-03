@@ -33,8 +33,6 @@ class PersistenceRepository extends EloquentRepository implements PersistenceRep
      * create a new persistence repository instance.
      *
      * @param \Illuminate\Contracts\Foundation\Application $app
-     *
-     * @return void
      */
     public function __construct(Application $app)
     {

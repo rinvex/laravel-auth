@@ -43,8 +43,6 @@ class AbilitiesController extends AuthorizedController
 
     /**
      * Create a new abilities controller instance.
-     *
-     * @return void
      */
     public function __construct(AbilityRepositoryContract $abilityRepository)
     {

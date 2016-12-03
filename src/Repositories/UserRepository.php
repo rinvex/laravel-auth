@@ -35,8 +35,6 @@ class UserRepository extends EloquentRepository implements UserRepositoryContrac
      * create a new user repository instance.
      *
      * @param \Illuminate\Contracts\Foundation\Application $app
-     *
-     * @return void
      */
     public function __construct(Application $app, Hasher $hasher)
     {

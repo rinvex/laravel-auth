@@ -56,8 +56,6 @@ abstract class AbstractTokenRepository
      * @param string                                   $table
      * @param string                                   $hashKey
      * @param int                                      $expires
-     *
-     * @return void
      */
     public function __construct(ConnectionInterface $connection, $table, $hashKey, $expires = 60)
     {

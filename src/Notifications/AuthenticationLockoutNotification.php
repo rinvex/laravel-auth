@@ -33,8 +33,6 @@ class AuthenticationLockoutNotification extends Notification
      * Create a notification instance.
      *
      * @param \Illuminate\Http\Request $request
-     *
-     * @return void
      */
     public function __construct(Request $request)
     {

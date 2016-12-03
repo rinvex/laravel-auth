@@ -25,8 +25,6 @@ class AbilityRepository extends EloquentRepository implements AbilityRepositoryC
      * create a new ability repository instance.
      *
      * @param \Illuminate\Contracts\Foundation\Application $app
-     *
-     * @return void
      */
     public function __construct(Application $app)
     {

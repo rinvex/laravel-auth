@@ -23,8 +23,6 @@ class RegistrationController extends AbstractController
 {
     /**
      * Create a new registration controller instance.
-     *
-     * @return void
      */
     public function __construct()
     {

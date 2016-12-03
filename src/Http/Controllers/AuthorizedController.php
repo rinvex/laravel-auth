@@ -45,8 +45,6 @@ class AuthorizedController extends AuthenticatedController
      * Create a new manage persistence controller instance.
      *
      * @throws \Rinvex\Fort\Exceptions\AuthorizationException
-     *
-     * @return void
      */
     public function __construct()
     {

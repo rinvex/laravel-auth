@@ -45,8 +45,6 @@ class RolesController extends AuthorizedController
      * Create a new users controller instance.
      *
      * @param \Rinvex\Fort\Contracts\RoleRepositoryContract $roleRepository
-     *
-     * @return void
      */
     public function __construct(RoleRepositoryContract $roleRepository)
     {

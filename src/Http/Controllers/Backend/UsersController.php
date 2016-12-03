@@ -38,8 +38,6 @@ class UsersController extends AuthorizedController
 
     /**
      * Create a new users controller instance.
-     *
-     * @return void
      */
     public function __construct(UserRepositoryContract $userRepository)
     {

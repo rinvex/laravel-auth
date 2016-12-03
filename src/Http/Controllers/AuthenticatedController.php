@@ -19,8 +19,6 @@ class AuthenticatedController extends AbstractController
 {
     /**
      * Create a new manage persistence controller instance.
-     *
-     * @return void
      */
     public function __construct()
     {

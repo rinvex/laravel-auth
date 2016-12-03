@@ -39,8 +39,6 @@ class AuthorizationException extends Exception
      * @param string $message
      * @param string $ability
      * @param array  $arguments
-     *
-     * @return void
      */
     public function __construct($message = 'This action is unauthorized.', $ability = null, $arguments = [])
     {

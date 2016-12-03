@@ -47,8 +47,6 @@ class BrokerManager implements BrokerManagerContract
      *
      * @param \Illuminate\Foundation\Application $app
      * @param string                             $type
-     *
-     * @return void
      */
     public function __construct($app, $type)
     {
