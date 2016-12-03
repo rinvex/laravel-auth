@@ -43,9 +43,9 @@ Route::group([
         |--------------------------------------------------------------------------
         */
 
-        Route::get('login', ['as' => 'login', 'uses' => 'AuthenticationController@showLogin']);
-        Route::post('login', ['as' => 'login.post', 'uses' => 'AuthenticationController@processLogin']);
-        Route::post('logout', ['as' => 'logout', 'uses' => 'AuthenticationController@logout']);
+        Route::get('login')->name('login')->uses('AuthenticationController@showLogin');
+        Route::post('login')->name('login')->uses('AuthenticationController@processLogin');
+        Route::post('logout')->name('logout')->uses('AuthenticationController@logout');
 
         /*
         |--------------------------------------------------------------------------
@@ -53,8 +53,8 @@ Route::group([
         |--------------------------------------------------------------------------
         */
 
-        Route::get('register', ['as' => 'register', 'uses' => 'RegistrationController@showRegisteration']);
-        Route::post('register', ['as' => 'register.post', 'uses' => 'RegistrationController@processRegisteration']);
+        Route::get('register')->name('register')->uses('RegistrationController@showRegisteration');
+        Route::post('register')->name('register.post')->uses('RegistrationController@processRegisteration');
 
         /*
         |--------------------------------------------------------------------------
@@ -62,8 +62,8 @@ Route::group([
         |--------------------------------------------------------------------------
         */
 
-        Route::get('github', ['as' => 'social.github', 'uses' => 'SocialAuthenticationController@redirectToGithub']);
-        Route::get('github/callback', ['as' => 'social.github.callback', 'uses' => 'SocialAuthenticationController@handleGithubCallback']);
+        Route::get('github')->name('social.github')->uses('SocialAuthenticationController@redirectToGithub');
+        Route::get('github/callback')->name('social.github.callback')->uses('SocialAuthenticationController@handleGithubCallback');
     });
 
 
@@ -81,8 +81,8 @@ Route::group([
         |--------------------------------------------------------------------------
         */
 
-        Route::get('settings', ['as' => 'settings', 'uses' => 'UserSettingsController@edit']);
-        Route::post('settings', ['as' => 'settings.update', 'uses' => 'UserSettingsController@update']);
+        Route::get('settings')->name('settings')->uses('UserSettingsController@edit');
+        Route::post('settings')->name('settings.update')->uses('UserSettingsController@update');
 
         /*
         |--------------------------------------------------------------------------
@@ -90,8 +90,8 @@ Route::group([
         |--------------------------------------------------------------------------
         */
 
-        Route::get('sessions', ['as' => 'sessions', 'uses' => 'UserSessionsController@index']);
-        Route::delete('sessions/{token?}', ['as' => 'sessions.flush', 'uses' => 'UserSessionsController@flush']);
+        Route::get('sessions')->name('sessions')->uses('UserSessionsController@index');
+        Route::delete('sessions/{token?}')->name('sessions.flush')->uses('UserSessionsController@flush');
 
         /*
         |--------------------------------------------------------------------------
@@ -108,10 +108,10 @@ Route::group([
             */
 
             Route::group(['as' => 'totp.', 'prefix' => 'totp'], function () {
-                Route::get('enable', ['as' => 'enable', 'uses' => 'TwoFactorSettingsController@enableTotp']);
-                Route::post('update', ['as' => 'update', 'uses' => 'TwoFactorSettingsController@updateTotp']);
-                Route::get('disable', ['as' => 'disable', 'uses' => 'TwoFactorSettingsController@disableTotp']);
-                Route::get('backup', ['as' => 'backup', 'uses' => 'TwoFactorSettingsController@backupTotp']);
+                Route::get('enable')->name('enable')->uses('TwoFactorSettingsController@enableTotp');
+                Route::post('update')->name('update')->uses('TwoFactorSettingsController@updateTotp');
+                Route::get('disable')->name('disable')->uses('TwoFactorSettingsController@disableTotp');
+                Route::get('backup')->name('backup')->uses('TwoFactorSettingsController@backupTotp');
             });
 
             /*
@@ -121,8 +121,8 @@ Route::group([
             */
 
             Route::group(['as' => 'phone.', 'prefix' => 'phone'], function () {
-                Route::get('enable', ['as' => 'enable', 'uses' => 'TwoFactorSettingsController@enablePhone']);
-                Route::get('disable', ['as' => 'disable', 'uses' => 'TwoFactorSettingsController@disablePhone']);
+                Route::get('enable')->name('enable')->uses('TwoFactorSettingsController@enablePhone');
+                Route::get('disable')->name('disable')->uses('TwoFactorSettingsController@disablePhone');
             });
         });
     });
@@ -135,10 +135,10 @@ Route::group([
     */
 
     Route::group(['as' => 'passwordreset.', 'prefix' => 'passwordreset'], function () {
-        Route::get('request', ['as' => 'request', 'uses' => 'PasswordResetController@request']);
-        Route::post('send', ['as' => 'send', 'uses' => 'PasswordResetController@send']);
-        Route::get('reset', ['as' => 'reset', 'uses' => 'PasswordResetController@reset']);
-        Route::post('process', ['as' => 'process', 'uses' => 'PasswordResetController@process']);
+        Route::get('request')->name('request')->uses('PasswordResetController@request');
+        Route::post('send')->name('send')->uses('PasswordResetController@send');
+        Route::get('reset')->name('reset')->uses('PasswordResetController@reset');
+        Route::post('process')->name('process')->uses('PasswordResetController@process');
     });
 
 
@@ -157,10 +157,10 @@ Route::group([
         */
 
         Route::group(['as' => 'phone.', 'prefix' => 'phone'], function () {
-            Route::get('request', ['as' => 'request', 'uses' => 'PhoneVerificationController@request']);
-            Route::post('send', ['as' => 'send', 'uses' => 'PhoneVerificationController@send']);
-            Route::get('verify', ['as' => 'verify', 'uses' => 'PhoneVerificationController@verify']);
-            Route::post('process', ['as' => 'process', 'uses' => 'PhoneVerificationController@process']);
+            Route::get('request')->name('request')->uses('PhoneVerificationController@request');
+            Route::post('send')->name('send')->uses('PhoneVerificationController@send');
+            Route::get('verify')->name('verify')->uses('PhoneVerificationController@verify');
+            Route::post('process')->name('process')->uses('PhoneVerificationController@process');
         });
 
         /*
@@ -170,9 +170,9 @@ Route::group([
         */
 
         Route::group(['as' => 'email.', 'prefix' => 'email'], function () {
-            Route::get('request', ['as' => 'request', 'uses' => 'EmailVerificationController@request']);
-            Route::post('send', ['as' => 'send', 'uses' => 'EmailVerificationController@send']);
-            Route::get('verify', ['as' => 'verify', 'uses' => 'EmailVerificationController@verify']);
+            Route::get('request')->name('request')->uses('EmailVerificationController@request');
+            Route::post('send')->name('send')->uses('EmailVerificationController@send');
+            Route::get('verify')->name('verify')->uses('EmailVerificationController@verify');
         });
     });
 });
