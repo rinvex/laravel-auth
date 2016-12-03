@@ -15,7 +15,6 @@
 
 namespace Rinvex\Fort\Http\Controllers\Frontend;
 
-use Rinvex\Country\Loader;
 use Illuminate\Http\Request;
 use Rinvex\Fort\Contracts\UserRepositoryContract;
 use Rinvex\Fort\Http\Controllers\AuthenticatedController;
@@ -53,7 +52,7 @@ class UserSettingsController extends AuthenticatedController
     {
         $countries = array_map(function ($country) {
             return $country['name'];
-        }, Loader::countries());
+        }, countries());
         $twoFactor = $request->user($this->getGuard())->getTwoFactor();
 
         return view('rinvex/fort::frontend/user.settings', compact('twoFactor', 'countries'));

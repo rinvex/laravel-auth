@@ -15,7 +15,6 @@
 
 namespace Rinvex\Fort\Http\Controllers\Backend;
 
-use Rinvex\Country\Loader;
 use Illuminate\Http\Request;
 use Rinvex\Fort\Models\User;
 use Rinvex\Fort\Contracts\UserRepositoryContract;
@@ -73,7 +72,7 @@ class UsersController extends AuthorizedController
         $resources   = app('rinvex.fort.ability')->findAll()->groupBy('resource');
         $actions     = ['list', 'view', 'create', 'update', 'delete', 'import', 'export'];
         $columns     = ['resource', 'list', 'view', 'create', 'update', 'delete', 'import', 'export', 'other'];
-        $userCountry = Loader::country($user->country);
+        $userCountry = country($user->country);
         $country     = ! empty($userCountry) ? $userCountry->getName().' '.$userCountry->getEmoji() : null;
         $phone       = ! empty($userCountry) ? $userCountry->getCallingCode().$user->phone : null;
 

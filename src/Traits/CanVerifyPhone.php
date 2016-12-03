@@ -15,7 +15,6 @@
 
 namespace Rinvex\Fort\Traits;
 
-use Rinvex\Country\Loader;
 use Rinvex\Fort\Notifications\PhoneVerificationRequestNotification;
 
 trait CanVerifyPhone
@@ -37,7 +36,7 @@ trait CanVerifyPhone
      */
     public function getCountryForVerification()
     {
-        $country = Loader::country($this->country);
+        $country = country($this->country);
 
         return $country ? $country->getCallingCode() : null;
     }
