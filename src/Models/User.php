@@ -23,7 +23,6 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
 use Rinvex\Fort\Traits\CanResetPassword;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Rinvex\Fort\Services\TwoFactorAuthyProvider;
 use Rinvex\Fort\Contracts\CanVerifyEmailContract;
 use Rinvex\Fort\Contracts\CanVerifyPhoneContract;
 use Rinvex\Fort\Contracts\AuthenticatableContract;
@@ -223,6 +222,22 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
      */
     public function routeNotificationForAuthy()
     {
-        return array_get($this->getTwoFactor(), 'phone.authy_id') ?: app(TwoFactorAuthyProvider::class)->register($this);
+        if (! $authyId = array_get($this->getTwoFactor(), 'phone.authy_id')) {
+            $result = app('rinvex.authy.user')->register($this->getEmailForVerification(), preg_replace('/[^0-9]/', '', $this->getPhoneForVerification()), $this->getCountryForVerification());
+            $authyId = $result->get('user')['id'];
+
+            // Prepare required variables
+            $settings = $this->getTwoFactor();
+
+            // Update user account
+            array_set($settings, 'phone', [
+                'enabled'  => true,
+                'authy_id' => $authyId,
+            ]);
+
+            app('rinvex.fort.user')->update($this, ['two_factor' => $settings]);
+        }
+
+        return $authyId;
     }
 }

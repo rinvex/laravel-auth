@@ -581,28 +581,6 @@ return [
 
         ],
 
-        /*
-        |--------------------------------------------------------------------------
-        | Two-Factor Providers
-        |--------------------------------------------------------------------------
-        |
-        | Here you may configure as many Two-Factor "providers" as you wish, and you
-        | may even configure multiple providers of the same provider. Defaults have
-        | been setup for each provider as an example of the required options.
-        |
-        */
-
-        'authy' => [
-
-            'mode' => env('AUTHY_MODE', 'live'),
-
-            'keys' => [
-                'live'    => env('AUTHY_KEYS_LIVE', ''),
-                'sandbox' => env('AUTHY_KEYS_SANDBOX', ''),
-            ],
-
-        ],
-
     ],
 
     /*

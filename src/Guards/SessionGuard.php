@@ -25,7 +25,6 @@ use Rinvex\Fort\Traits\ThrottlesLogins;
 use Illuminate\Session\SessionInterface;
 use Illuminate\Contracts\Events\Dispatcher;
 use Rinvex\Fort\Services\TwoFactorTotpProvider;
-use Rinvex\Fort\Services\TwoFactorAuthyProvider;
 use Rinvex\Fort\Contracts\StatefulGuardContract;
 use Illuminate\Contracts\Auth\SupportsBasicAuth;
 use Rinvex\Fort\Contracts\UserRepositoryContract;
@@ -1085,9 +1084,10 @@ class SessionGuard implements StatefulGuardContract, SupportsBasicAuth
      */
     protected function isValidTwoFactorPhone(AuthenticatableContract $user, $token)
     {
-        $authy = app(TwoFactorAuthyProvider::class);
+        $settings = $user->getTwoFactor();
+        $authyId  = array_get($settings, 'phone.authy_id');
 
-        return strlen($token) === 7 && $authy->tokenIsValid($user, $token);
+        return strlen($token) === 7 && app('rinvex.authy.token')->verify($token, $authyId);
     }
 
     /**
