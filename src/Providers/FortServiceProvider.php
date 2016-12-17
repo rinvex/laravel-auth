@@ -30,11 +30,11 @@ use Rinvex\Fort\Repositories\UserRepository;
 use Rinvex\Fort\Repositories\RoleRepository;
 use Laravel\Socialite\SocialiteServiceProvider;
 use Rinvex\Fort\Repositories\AbilityRepository;
-use Rinvex\Support\Providers\BaseServiceProvider;
 use Rinvex\Fort\Repositories\PersistenceRepository;
 use Illuminate\Contracts\Auth\Access\Gate as GateContract;
+use Rinvex\Repository\Providers\RepositoryServiceProvider;
 
-class FortServiceProvider extends BaseServiceProvider
+class FortServiceProvider extends RepositoryServiceProvider
 {
     /**
      * {@inheritdoc}
