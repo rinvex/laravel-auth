@@ -31,10 +31,8 @@ trait HasRoles
      */
     public function assignRoles($roles)
     {
-        // Role slug(s)
-        if (is_string($roles) || (is_array($roles) && is_string($roles[0]))) {
-            $roles = Role::whereIn('slug', (array) $roles)->get();
-        }
+        // Array of role slugs
+        $roles = $this->hydrateIfString($roles);
 
         // Single role model
         if ($roles instanceof Role) {
@@ -45,7 +43,7 @@ trait HasRoles
         static::$dispatcher->fire('rinvex.fort.role.assigning', [$this, $roles]);
 
         // Assign roles
-        $this->roles()->syncWithoutDetaching((array) $roles);
+        $this->roles()->syncWithoutDetaching($roles);
 
         // Fire the role assigned event
         static::$dispatcher->fire('rinvex.fort.role.assigned', [$this, $roles]);
@@ -62,24 +60,22 @@ trait HasRoles
      */
     public function syncRoles($roles)
     {
-        // Role slug(s)
-        if (is_string($roles) || (is_array($roles) && is_string($roles[0]))) {
-            $roles = Role::whereIn('slug', (array) $roles)->get();
-        }
+        // Array of role slugs
+        $roles = $this->hydrateIfString($roles);
 
         // Single role model
         if ($roles instanceof Role) {
             $roles = [$roles->id];
         }
 
-        // Fire the role assigning event
-        static::$dispatcher->fire('rinvex.fort.role.assigning', [$this, $roles]);
+        // Fire the role syncing event
+        static::$dispatcher->fire('rinvex.fort.role.syncing', [$this, $roles]);
 
         // Assign roles
-        $this->roles()->sync((array) $roles);
+        $this->roles()->sync($roles);
 
-        // Fire the role assigned event
-        static::$dispatcher->fire('rinvex.fort.role.assigned', [$this, $roles]);
+        // Fire the role synced event
+        static::$dispatcher->fire('rinvex.fort.role.synced', [$this, $roles]);
 
         return $this;
     }
@@ -94,15 +90,13 @@ trait HasRoles
     public function removeRoles($roles)
     {
         // Array of role slugs
-        if (is_string($roles) || (is_array($roles) && is_string($roles[0]))) {
-            $roles = Role::whereIn('slug', (array) $roles)->get();
-        }
+        $roles = $this->hydrateIfString($roles);
 
         // Fire the role removed event
         static::$dispatcher->fire('rinvex.fort.role.removing', [$this, $roles]);
 
         // Detach roles
-        $this->roles()->detach((array) $roles);
+        $this->roles()->detach($roles);
 
         // Fire the role removed event
         static::$dispatcher->fire('rinvex.fort.role.removed', [$this, $roles]);
@@ -186,5 +180,18 @@ trait HasRoles
 
         return $this->roles->pluck('id')->count() == count($roles)
                && $this->roles->pluck('id')->diff($roles)->isEmpty();
+    }
+
+    /**
+     * Hydrate roles if it's string based.
+     *
+     * @param $roles
+     *
+     * @return array
+     */
+    protected function hydrateIfString($roles)
+    {
+        return is_string($roles) || (is_array($roles) && is_string($roles[0]))
+            ? Role::whereIn('slug', (array) $roles)->get() : $roles;
     }
 }
