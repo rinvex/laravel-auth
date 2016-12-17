@@ -141,10 +141,10 @@ class FortServiceProvider extends RepositoryServiceProvider
      */
     protected function registerRepositories()
     {
-        $this->bindAndAlias('rinvex.fort.role', RoleRepository::class);
-        $this->bindAndAlias('rinvex.fort.user', UserRepository::class);
-        $this->bindAndAlias('rinvex.fort.ability', AbilityRepository::class);
-        $this->bindAndAlias('rinvex.fort.persistence', PersistenceRepository::class);
+        $this->bindRepository('rinvex.fort.role', RoleRepository::class);
+        $this->bindRepository('rinvex.fort.user', UserRepository::class);
+        $this->bindRepository('rinvex.fort.ability', AbilityRepository::class);
+        $this->bindRepository('rinvex.fort.persistence', PersistenceRepository::class);
     }
 
     /**
