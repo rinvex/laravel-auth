@@ -44,7 +44,7 @@ class AuthorizationException extends Exception
     {
         parent::__construct($message);
 
-        $this->ability   = $ability;
+        $this->ability = $ability;
         $this->arguments = $arguments;
     }
 }

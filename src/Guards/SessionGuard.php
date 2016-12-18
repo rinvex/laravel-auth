@@ -181,9 +181,9 @@ class SessionGuard implements StatefulGuardContract, SupportsBasicAuth
      */
     public function __construct($name, UserRepositoryContract $provider, SessionInterface $session, Request $request = null)
     {
-        $this->name     = $name;
-        $this->session  = $session;
-        $this->request  = $request;
+        $this->name = $name;
+        $this->session = $session;
+        $this->request = $request;
         $this->provider = $provider;
     }
 
@@ -220,7 +220,7 @@ class SessionGuard implements StatefulGuardContract, SupportsBasicAuth
         }
 
         $userBySession = $this->getUserBySession();
-        $userByCookie  = $this->getUserByCookie();
+        $userByCookie = $this->getUserByCookie();
 
         // First we will try to load the user using the identifier in the session if
         // one exists. Otherwise we will check for a "remember me" cookie in this
@@ -516,7 +516,7 @@ class SessionGuard implements StatefulGuardContract, SupportsBasicAuth
                 return static::AUTH_UNVERIFIED;
             }
 
-            $totp  = array_get($user->getTwoFactor(), 'totp.enabled');
+            $totp = array_get($user->getTwoFactor(), 'totp.enabled');
             $phone = array_get($user->getTwoFactor(), 'phone.enabled');
 
             // Enforce Two-Factor authentication
@@ -1006,7 +1006,7 @@ class SessionGuard implements StatefulGuardContract, SupportsBasicAuth
     protected function updatePersistence($id, $token, $attempt)
     {
         $agent = request()->server('HTTP_USER_AGENT');
-        $ip    = request()->ip();
+        $ip = request()->ip();
 
         // Delete previous user persistence
         app('rinvex.fort.persistence')->delete($token);
@@ -1062,7 +1062,7 @@ class SessionGuard implements StatefulGuardContract, SupportsBasicAuth
     protected function invalidateTwoFactorBackup(AuthenticatableContract $user, $token)
     {
         $settings = $user->getTwoFactor();
-        $backup   = array_get($settings, 'totp.backup');
+        $backup = array_get($settings, 'totp.backup');
 
         unset($backup[array_search($token, $backup)]);
 
@@ -1085,7 +1085,7 @@ class SessionGuard implements StatefulGuardContract, SupportsBasicAuth
     protected function isValidTwoFactorPhone(AuthenticatableContract $user, $token)
     {
         $settings = $user->getTwoFactor();
-        $authyId  = array_get($settings, 'phone.authy_id');
+        $authyId = array_get($settings, 'phone.authy_id');
 
         return strlen($token) === 7 && app('rinvex.authy.token')->verify($token, $authyId);
     }
@@ -1127,7 +1127,7 @@ class SessionGuard implements StatefulGuardContract, SupportsBasicAuth
      */
     protected function isValidTwoFactorTotp(AuthenticatableContract $user, $token)
     {
-        $totp   = app(TwoFactorTotpProvider::class);
+        $totp = app(TwoFactorTotpProvider::class);
         $secret = array_get($user->getTwoFactor(), 'totp.secret');
 
         return strlen($token) === 6 && isset($this->session->get('rinvex.fort.twofactor.methods')['totp']) && $totp->verifyKey($secret, $token);

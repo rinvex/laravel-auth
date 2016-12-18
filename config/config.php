@@ -189,7 +189,6 @@ return [
 
         'role_user' => 'rinvex_fort_role_user',
 
-
         /*
         |--------------------------------------------------------------------------
         | Role Abilities Table
