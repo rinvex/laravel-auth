@@ -64,7 +64,7 @@ class UserUpdateCommand extends Command
 
         ], [
             $this,
-            'filter'
+            'filter',
         ]);
 
         // Get required argument
@@ -73,7 +73,7 @@ class UserUpdateCommand extends Command
         // Find single user
         if (intval($field)) {
             $user = $this->laravel['rinvex.fort.user']->find($field);
-        } else if (filter_var($field, FILTER_VALIDATE_EMAIL)) {
+        } elseif (filter_var($field, FILTER_VALIDATE_EMAIL)) {
             $user = $this->laravel['rinvex.fort.user']->findWhere(['email' => $field])->first();
         } else {
             $user = $this->laravel['rinvex.fort.user']->findWhere(['username' => $field])->first();
@@ -90,16 +90,16 @@ class UserUpdateCommand extends Command
 
         if (! empty($data)) {
             $validator = app(Factory::class)->make($data, $rules);
-    
+
             if ($validator->fails()) {
                 $this->error('Errors:');
-    
+
                 foreach ($validator->errors()->getMessages() as $key => $messages) {
                     $this->error('- '.$key.': '.$messages[0]);
                 }
             } else {
                 $user->update($data);
-    
+
                 $this->info(Lang::get('rinvex.fort::artisan.user.updated').' ['.Lang::get('rinvex.fort::artisan.user.id').': '.$user->id.', '.Lang::get('rinvex.fort::artisan.user.email').': '.$user->email.', '.Lang::get('rinvex.fort::artisan.user.username').': '.$user->username.']');
             }
         } else {
@@ -116,6 +116,6 @@ class UserUpdateCommand extends Command
      */
     protected function filter($value)
     {
-        return ($value !== null && $value !== '');
+        return $value !== null && $value !== '';
     }
 }

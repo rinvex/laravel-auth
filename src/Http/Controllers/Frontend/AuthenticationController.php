@@ -59,8 +59,8 @@ class AuthenticationController extends AbstractController
     public function processLogin(UserAuthenticationRequest $request)
     {
         // Prepare variables
-        $remember    = $request->has('remember');
-        $loginField  = get_login_field($request->get('loginfield'));
+        $remember = $request->has('remember');
+        $loginField = get_login_field($request->get('loginfield'));
         $credentials = [
             $loginField => $request->input('loginfield'),
             'password'  => $request->input('password'),

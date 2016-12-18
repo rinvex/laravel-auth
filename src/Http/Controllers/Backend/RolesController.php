@@ -75,8 +75,8 @@ class RolesController extends AuthorizedController
     public function show(Role $role)
     {
         $resources = app('rinvex.fort.ability')->findAll()->groupBy('resource');
-        $actions   = ['list', 'view', 'create', 'update', 'delete', 'import', 'export'];
-        $columns   = ['resource', 'list', 'view', 'create', 'update', 'delete', 'import', 'export', 'other'];
+        $actions = ['list', 'view', 'create', 'update', 'delete', 'import', 'export'];
+        $columns = ['resource', 'list', 'view', 'create', 'update', 'delete', 'import', 'export', 'other'];
 
         return view('rinvex/fort::backend/roles.show', compact('role', 'resources', 'actions', 'columns'));
     }
@@ -216,7 +216,7 @@ class RolesController extends AuthorizedController
     protected function process(Request $request, Role $role = null)
     {
         // Prepare required input fields
-        $input     = $request->except(['_method', '_token', 'id']);
+        $input = $request->except(['_method', '_token', 'id']);
         $abilities = $request->user($this->getGuard())->can('grant-abilities') ? ['abilities' => array_pull($input, 'abilityList')] : [];
 
         // Store data into the entity

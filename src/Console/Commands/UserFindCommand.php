@@ -47,9 +47,9 @@ class UserFindCommand extends Command
         if ($field = $this->argument('field')) {
             if (intval($field) && $user = $this->laravel['rinvex.fort.user']->find($field, $columns)) {
                 return $this->table($columns, [$user->toArray()]);
-            } else if (filter_var($field, FILTER_VALIDATE_EMAIL) && $user = $this->laravel['rinvex.fort.user']->findWhere(['email' => $field], $columns)->first()) {
+            } elseif (filter_var($field, FILTER_VALIDATE_EMAIL) && $user = $this->laravel['rinvex.fort.user']->findWhere(['email' => $field], $columns)->first()) {
                 return $this->table($columns, [$user->toArray()]);
-            } else if ($user = $this->laravel['rinvex.fort.user']->findWhere(['username' => $field], $columns)->first()) {
+            } elseif ($user = $this->laravel['rinvex.fort.user']->findWhere(['username' => $field], $columns)->first()) {
                 return $this->table($columns, $user->toArray());
             }
 
@@ -57,10 +57,10 @@ class UserFindCommand extends Command
         }
 
         // Find multiple users
-        $field    = $this->anticipate(Lang::get('rinvex.fort::artisan.user.field'), ['id', 'email', 'username'], 'id');
+        $field = $this->anticipate(Lang::get('rinvex.fort::artisan.user.field'), ['id', 'email', 'username'], 'id');
         $operator = $this->anticipate(Lang::get('rinvex.fort::artisan.user.operator'), ['=', '<', '>', '<=', '>=', '<>', '!=', 'like', 'like binary', 'not like', 'between', 'ilike', '&', '|', '^', '<<', '>>', 'rlike', 'regexp', 'not regexp', '~', '~*', '!~', '!~*', 'similar to', 'not similar to'], '=');
-        $value    = $this->ask(Lang::get('rinvex.fort::artisan.user.value'));
-        $results  = $this->laravel['rinvex.fort.user']->where($field, $operator, $value)->get($columns);
+        $value = $this->ask(Lang::get('rinvex.fort::artisan.user.value'));
+        $results = $this->laravel['rinvex.fort.user']->where($field, $operator, $value)->get($columns);
 
         return $this->table($columns, $results->toArray());
     }
