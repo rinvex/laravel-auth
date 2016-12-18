@@ -21,6 +21,15 @@ use Rinvex\Repository\Contracts\RepositoryContract;
 interface UserRepositoryContract extends RepositoryContract, CacheableContract
 {
     /**
+     * Find a user by the given credentials.
+     *
+     * @param array $credentials
+     *
+     * @return \Rinvex\Fort\Contracts\AuthenticatableContract|null
+     */
+    public function findByCredentials(array $credentials);
+
+    /**
      * Find a user by their unique identifier and "remember me" token.
      *
      * @param mixed  $identifier
@@ -29,15 +38,6 @@ interface UserRepositoryContract extends RepositoryContract, CacheableContract
      * @return \Rinvex\Fort\Contracts\AuthenticatableContract|null
      */
     public function findByRememberToken($identifier, $token);
-
-    /**
-     * Find a user by the given credentials.
-     *
-     * @param array $credentials
-     *
-     * @return \Rinvex\Fort\Contracts\AuthenticatableContract|null
-     */
-    public function findByCredentials(array $credentials);
 
     /**
      * Update the "remember me" token for the given user in storage.

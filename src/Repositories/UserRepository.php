@@ -47,16 +47,6 @@ class UserRepository extends EloquentRepository implements UserRepositoryContrac
     /**
      * {@inheritdoc}
      */
-    public function findByRememberToken($identifier, $token)
-    {
-        return $this->where($this->getAuthIdentifierName(), $identifier)
-                    ->where($this->getRememberTokenName(), $token)
-                    ->findFirst();
-    }
-
-    /**
-     * {@inheritdoc}
-     */
     public function findByCredentials(array $credentials)
     {
         if (empty($credentials)) {
@@ -75,6 +65,16 @@ class UserRepository extends EloquentRepository implements UserRepositoryContrac
         }
 
         return $model->findFirst();
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function findByRememberToken($identifier, $token)
+    {
+        return $this->where($this->getAuthIdentifierName(), $identifier)
+                    ->where($this->getRememberTokenName(), $token)
+                    ->findFirst();
     }
 
     /**
