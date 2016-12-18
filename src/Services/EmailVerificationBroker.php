@@ -48,7 +48,7 @@ class EmailVerificationBroker implements EmailVerificationBrokerContract
      */
     public function __construct(EmailVerificationTokenRepositoryContract $tokens, UserRepositoryContract $userRepository)
     {
-        $this->tokens         = $tokens;
+        $this->tokens = $tokens;
         $this->userRepository = $userRepository;
     }
 
@@ -67,7 +67,7 @@ class EmailVerificationBroker implements EmailVerificationBrokerContract
         // Once we have the verification token, we are ready to send the message out
         // to this user with a link for verification. We will then redirect back to
         // the current URI having nothing set in the session to indicate errors.
-        $token      = $this->tokens->getData($user, $this->tokens->create($user));
+        $token = $this->tokens->getData($user, $this->tokens->create($user));
         $expiration = $this->tokens->getExpiration();
 
         $user->sendEmailVerificationNotification($token, $expiration);

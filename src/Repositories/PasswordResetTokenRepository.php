@@ -27,7 +27,7 @@ class PasswordResetTokenRepository extends AbstractTokenRepository implements Pa
     {
         $email = $user->getEmailForPasswordReset();
         $agent = request()->server('HTTP_USER_AGENT');
-        $ip    = request()->ip();
+        $ip = request()->ip();
 
         $this->deleteExisting($user);
 

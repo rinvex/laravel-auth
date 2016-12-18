@@ -44,7 +44,7 @@ class PhoneVerificationNotification extends Notification
     public function __construct($method = 'sms', $force = false)
     {
         $this->method = $method;
-        $this->force  = $force;
+        $this->force = $force;
     }
 
     /**

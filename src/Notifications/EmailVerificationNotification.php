@@ -42,7 +42,7 @@ class EmailVerificationNotification extends Notification
      */
     public function __construct(array $token, $expiration)
     {
-        $this->token      = $token;
+        $this->token = $token;
         $this->expiration = $expiration;
     }
 

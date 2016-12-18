@@ -186,7 +186,7 @@ class TwoFactorTotpProvider
     public function oathTruncate($hash)
     {
         $offset = ord($hash[19]) & 0xf;
-        $temp   = unpack('N', substr($hash, $offset, 4));
+        $temp = unpack('N', substr($hash, $offset, 4));
 
         return substr($temp[1] & 0x7fffffff, -static::OPT_LENGTH);
     }
@@ -223,7 +223,7 @@ class TwoFactorTotpProvider
         $renderer->setHeight($size);
 
         $writer = new Writer($renderer);
-        $data   = $writer->writeString($url, $encoding);
+        $data = $writer->writeString($url, $encoding);
 
         return 'data:image/png;base64,'.base64_encode($data);
     }

@@ -57,7 +57,7 @@ class PersistenceRepository extends EloquentRepository implements PersistenceRep
      */
     public function deleteByUser($id)
     {
-        $deleted  = false;
+        $deleted = false;
 
         // Find the given instance
         $entity = $id instanceof Model ? $id : app('rinvex.fort.user')->find($id);
