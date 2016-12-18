@@ -48,6 +48,7 @@
     "require": {
         "php": "^7.0.0",
         "rinvex/country": "^3.0.0",
+        "rinvex/support": "^1.0.0",
         "laravel/framework": "^5.3.0",
         "laravel/socialite": "^2.0.0",
         "bacon/bacon-qr-code": "1.0.*",
