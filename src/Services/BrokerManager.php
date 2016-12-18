@@ -50,7 +50,7 @@ class BrokerManager implements BrokerManagerContract
      */
     public function __construct($app, $type)
     {
-        $this->app  = $app;
+        $this->app = $app;
         $this->type = $type;
     }
 
@@ -75,7 +75,7 @@ class BrokerManager implements BrokerManagerContract
      */
     protected function resolve($name)
     {
-        $config      = $this->getConfig($name);
+        $config = $this->getConfig($name);
         $brokerClass = "Rinvex\\Fort\\Services\\{$this->type}Broker";
 
         if (is_null($config)) {
@@ -97,8 +97,8 @@ class BrokerManager implements BrokerManagerContract
      */
     protected function createTokenRepository(array $config)
     {
-        $key        = $this->app['config']['app.key'];
-        $table      = str_plural(strtolower($this->type));
+        $key = $this->app['config']['app.key'];
+        $table = str_plural(strtolower($this->type));
         $tokenClass = "Rinvex\\Fort\\Repositories\\{$this->type}TokenRepository";
         $connection = isset($config['connection']) ? $config['connection'] : null;
 

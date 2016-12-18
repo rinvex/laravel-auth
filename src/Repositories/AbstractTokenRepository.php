@@ -59,9 +59,9 @@ abstract class AbstractTokenRepository
      */
     public function __construct(ConnectionInterface $connection, $table, $hashKey, $expires = 60)
     {
-        $this->table      = $table;
-        $this->hashKey    = $hashKey;
-        $this->expires    = $expires;
+        $this->table = $table;
+        $this->hashKey = $hashKey;
+        $this->expires = $expires;
         $this->connection = $connection;
     }
 

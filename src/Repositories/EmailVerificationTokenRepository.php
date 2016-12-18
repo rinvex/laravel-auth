@@ -27,7 +27,7 @@ class EmailVerificationTokenRepository extends AbstractTokenRepository implement
     {
         $email = $user->getEmailForVerification();
         $agent = request()->server('HTTP_USER_AGENT');
-        $ip    = request()->ip();
+        $ip = request()->ip();
 
         $this->deleteExisting($user);
 

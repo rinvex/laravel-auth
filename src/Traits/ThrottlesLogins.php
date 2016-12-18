@@ -30,9 +30,9 @@ trait ThrottlesLogins
      */
     protected function hasTooManyLoginAttempts(Request $request)
     {
-        $throttleKey      = $this->throttleKey($request);
+        $throttleKey = $this->throttleKey($request);
         $throttleAttempts = config('rinvex.fort.throttle.max_login_attempts', 5);
-        $throttleTimeout  = config('rinvex.fort.throttle.lockout_time', 1);
+        $throttleTimeout = config('rinvex.fort.throttle.lockout_time', 1);
 
         return $this->limiter()->tooManyAttempts($throttleKey, $throttleAttempts, $throttleTimeout);
     }

@@ -55,7 +55,7 @@ class PasswordResetBroker implements PasswordResetBrokerContract
      */
     public function __construct(PasswordResetTokenRepositoryContract $tokens, UserRepositoryContract $userRepository)
     {
-        $this->tokens         = $tokens;
+        $this->tokens = $tokens;
         $this->userRepository = $userRepository;
     }
 
@@ -74,7 +74,7 @@ class PasswordResetBroker implements PasswordResetBrokerContract
         // Once we have the reset password token, we are ready to send the message out
         // to this user with a link for password. We will then redirect back to the
         // current URI having nothing set in the session to indicate errors.
-        $token      = $this->tokens->getData($user, $this->tokens->create($user));
+        $token = $this->tokens->getData($user, $this->tokens->create($user));
         $expiration = $this->tokens->getExpiration();
 
         $user->sendPasswordResetNotification($token, $expiration);

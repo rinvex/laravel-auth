@@ -26,8 +26,8 @@ class AccessGate extends Gate
     /**
      * Determine if the given ability should be granted for the current user.
      *
-     * @param  string      $ability
-     * @param  array|mixed $arguments
+     * @param string      $ability
+     * @param array|mixed $arguments
      *
      * @throws \Rinvex\Fort\Exceptions\AuthorizationException
      *
@@ -55,8 +55,8 @@ class AccessGate extends Gate
     /**
      * Define a new ability.
      *
-     * @param  string          $ability
-     * @param  callable|string $callback
+     * @param string          $ability
+     * @param callable|string $callback
      *
      * @throws \InvalidArgumentException
      *
@@ -78,7 +78,7 @@ class AccessGate extends Gate
     /**
      * Create the ability callback for a callback string.
      *
-     * @param  string $callback
+     * @param string $callback
      *
      * @return \Closure
      */
