@@ -16,9 +16,9 @@
 return [
 
     'common' => [
-        'close'  => 'Close',
-        'reset'  => 'Reset',
-        'logout' => 'Logout',
+        'close'   => 'Close',
+        'reset'   => 'Reset',
+        'logout'  => 'Logout',
         'warning' => 'Warning',
     ],
 

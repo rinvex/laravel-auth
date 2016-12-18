@@ -15,7 +15,6 @@
 
 namespace Rinvex\Fort\Console\Commands;
 
-use Illuminate\Mail\Message;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Lang;
 
@@ -49,7 +48,7 @@ class UserRemindCommand extends Command
 
         if (intval($userField)) {
             $user = $this->laravel['rinvex.fort.user']->find($userField);
-        } else if (filter_var($userField, FILTER_VALIDATE_EMAIL)) {
+        } elseif (filter_var($userField, FILTER_VALIDATE_EMAIL)) {
             $user = $this->laravel['rinvex.fort.user']->findWhere(['email' => $userField])->first();
         } else {
             $user = $this->laravel['rinvex.fort.user']->findWhere(['username' => $userField])->first();
@@ -59,17 +58,18 @@ class UserRemindCommand extends Command
             return $this->error(Lang::get('rinvex.fort::artisan.user.invalid', ['field' => $userField]));
         }
 
-
         $actionField = $this->argument('action') ?: $this->anticipate(Lang::get('rinvex.fort::artisan.user.action'), ['resetpassword', 'verification']);
 
         switch ($actionField) {
             case 'resetpassword':
                 $this->laravel['rinvex.fort.resetter']->broker($this->argument('broker'))->sendResetLink(['email' => $user->email]);
+
                 return $this->info(Lang::get('rinvex.fort::artisan.user.resetpassword'));
                 break;
 
             case 'verification':
                 $this->laravel['rinvex.fort.verifier']->broker($this->argument('broker'))->sendVerificationLink(['email' => $user->email]);
+
                 return $this->info(Lang::get('rinvex.fort::artisan.user.verification'));
                 break;
         }

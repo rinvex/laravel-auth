@@ -56,11 +56,11 @@ class TwoFactorSettingsController extends AuthenticatedController
     public function enableTotp(TwoFactorTotpUpdateRequest $request, TwoFactorTotpProvider $totpProvider)
     {
         $currentUser = $request->user($this->getGuard());
-        $settings    = $currentUser->getTwoFactor();
+        $settings = $currentUser->getTwoFactor();
 
         if (array_get($settings, 'totp.enabled') && ! session()->get('rinvex.fort.alert.success') && ! session()->get('errors')) {
             $messageBag = new MessageBag([trans('rinvex/fort::frontend/messages.verification.twofactor.totp.already')]);
-            $errors     = (new ViewErrorBag())->put('default', $messageBag);
+            $errors = (new ViewErrorBag())->put('default', $messageBag);
         }
 
         if (! $secret = array_get($settings, 'totp.secret')) {
@@ -88,10 +88,10 @@ class TwoFactorSettingsController extends AuthenticatedController
     public function updateTotp(TwoFactorTotpUpdateRequest $request, TwoFactorTotpProvider $totpProvider)
     {
         $currentUser = $request->user($this->getGuard());
-        $settings    = $currentUser->getTwoFactor();
-        $secret      = array_get($settings, 'totp.secret');
-        $backup      = array_get($settings, 'totp.backup');
-        $backupAt    = array_get($settings, 'totp.backup_at');
+        $settings = $currentUser->getTwoFactor();
+        $secret = array_get($settings, 'totp.secret');
+        $backup = array_get($settings, 'totp.backup');
+        $backupAt = array_get($settings, 'totp.backup_at');
 
         if ($totpProvider->verifyKey($secret, $request->get('token'))) {
             array_set($settings, 'totp.enabled', true);
@@ -126,7 +126,7 @@ class TwoFactorSettingsController extends AuthenticatedController
     public function disableTotp(TwoFactorTotpUpdateRequest $request)
     {
         $currentUser = $request->user($this->getGuard());
-        $settings    = $currentUser->getTwoFactor();
+        $settings = $currentUser->getTwoFactor();
 
         array_set($settings, 'totp', []);
 
@@ -182,7 +182,7 @@ class TwoFactorSettingsController extends AuthenticatedController
     public function disablePhone(TwoFactorPhoneUpdateRequest $request)
     {
         $currentUser = $request->user($this->getGuard());
-        $settings    = $currentUser->getTwoFactor();
+        $settings = $currentUser->getTwoFactor();
 
         array_set($settings, 'phone.enabled', false);
 
@@ -206,7 +206,7 @@ class TwoFactorSettingsController extends AuthenticatedController
     public function backupTotp(TwoFactorTotpUpdateRequest $request)
     {
         $currentUser = $request->user($this->getGuard());
-        $settings    = $currentUser->getTwoFactor();
+        $settings = $currentUser->getTwoFactor();
 
         if (! array_get($settings, 'totp.enabled')) {
             return intend([

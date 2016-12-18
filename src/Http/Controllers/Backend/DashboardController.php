@@ -15,7 +15,6 @@
 
 namespace Rinvex\Fort\Http\Controllers\Backend;
 
-
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use Rinvex\Fort\Http\Controllers\AuthorizedController;
@@ -40,8 +39,8 @@ class DashboardController extends AuthorizedController
     public function home()
     {
         $abilityRepository = app('rinvex.fort.ability');
-        $roleRepository    = app('rinvex.fort.role');
-        $userRepository    = app('rinvex.fort.user');
+        $roleRepository = app('rinvex.fort.role');
+        $userRepository = app('rinvex.fort.user');
 
         // Get recent registered users
         $limit = config('rinvex.fort.backend.items_per_dashboard');
@@ -56,7 +55,7 @@ class DashboardController extends AuthorizedController
 
         // Get online users
         $onlineInterval = Carbon::now()->subMinutes(config('rinvex.fort.online.interval'));
-        $persistences   = app('rinvex.fort.persistence')
+        $persistences = app('rinvex.fort.persistence')
             ->groupBy(['user_id'])
             ->with(['user'])
             ->where('attempt', '=', 0)

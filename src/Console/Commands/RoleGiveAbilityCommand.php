@@ -55,7 +55,6 @@ class RoleGiveAbilityCommand extends Command
             return $this->error(Lang::get('rinvex.fort::artisan.role.invalid', ['field' => $roleField]));
         }
 
-
         $abilityField = $this->argument('ability') ?: $this->anticipate(Lang::get('rinvex.fort::artisan.role.ability'), $this->laravel['rinvex.fort.ability']->findAll()->lists('slug', 'id')->toArray());
 
         if (intval($abilityField)) {
