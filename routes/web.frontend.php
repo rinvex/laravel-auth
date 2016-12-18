@@ -66,7 +66,6 @@ Route::group([
         Route::get('github/callback')->name('social.github.callback')->uses('SocialAuthenticationController@handleGithubCallback');
     });
 
-
     /*
     |--------------------------------------------------------------------------
     | User Account Routes
@@ -127,7 +126,6 @@ Route::group([
         });
     });
 
-
     /*
     |--------------------------------------------------------------------------
     | Password Reset Routes
@@ -140,7 +138,6 @@ Route::group([
         Route::get('reset')->name('reset')->uses('PasswordResetController@reset');
         Route::post('process')->name('process')->uses('PasswordResetController@process');
     });
-
 
     /*
     |--------------------------------------------------------------------------

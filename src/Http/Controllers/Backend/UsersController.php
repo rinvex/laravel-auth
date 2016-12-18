@@ -67,12 +67,12 @@ class UsersController extends AuthorizedController
      */
     public function show(User $user)
     {
-        $resources   = app('rinvex.fort.ability')->findAll()->groupBy('resource');
-        $actions     = ['list', 'view', 'create', 'update', 'delete', 'import', 'export'];
-        $columns     = ['resource', 'list', 'view', 'create', 'update', 'delete', 'import', 'export', 'other'];
+        $resources = app('rinvex.fort.ability')->findAll()->groupBy('resource');
+        $actions = ['list', 'view', 'create', 'update', 'delete', 'import', 'export'];
+        $columns = ['resource', 'list', 'view', 'create', 'update', 'delete', 'import', 'export', 'other'];
         $userCountry = country($user->country);
-        $country     = ! empty($userCountry) ? $userCountry->getName().' '.$userCountry->getEmoji() : null;
-        $phone       = ! empty($userCountry) ? $userCountry->getCallingCode().$user->phone : null;
+        $country = ! empty($userCountry) ? $userCountry->getName().' '.$userCountry->getEmoji() : null;
+        $phone = ! empty($userCountry) ? $userCountry->getCallingCode().$user->phone : null;
 
         return view('rinvex/fort::backend/users.show', compact('user', 'resources', 'actions', 'columns', 'country', 'phone'));
     }
@@ -218,8 +218,8 @@ class UsersController extends AuthorizedController
     protected function process(Request $request, User $user = null)
     {
         // Prepare required input fields
-        $input     = $request->except(['_method', '_token', 'id']);
-        $roles     = $request->user($this->getGuard())->can('assign-roles') ? ['roles' => array_pull($input, 'roleList')] : [];
+        $input = $request->except(['_method', '_token', 'id']);
+        $roles = $request->user($this->getGuard())->can('assign-roles') ? ['roles' => array_pull($input, 'roleList')] : [];
         $abilities = $request->user($this->getGuard())->can('grant-abilities') ? ['abilities' => array_pull($input, 'abilityList')] : [];
 
         // Store data into the entity

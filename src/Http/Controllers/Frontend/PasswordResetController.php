@@ -77,8 +77,8 @@ class PasswordResetController extends AbstractController
      */
     public function reset(PasswordResetRequest $request)
     {
-        $email  = $request->get('email');
-        $token  = $request->get('token');
+        $email = $request->get('email');
+        $token = $request->get('token');
         $result = app('rinvex.fort.passwordreset')->broker($this->getBroker())->validateReset($request->except(['_token']));
 
         switch ($result) {

@@ -47,7 +47,7 @@ class UserAssignRoleCommand extends Command
 
         if (intval($userField)) {
             $user = $this->laravel['rinvex.fort.user']->find($userField);
-        } else if (filter_var($userField, FILTER_VALIDATE_EMAIL)) {
+        } elseif (filter_var($userField, FILTER_VALIDATE_EMAIL)) {
             $user = $this->laravel['rinvex.fort.user']->findWhere(['email' => $userField])->first();
         } else {
             $user = $this->laravel['rinvex.fort.user']->findWhere(['username' => $userField])->first();
@@ -56,7 +56,6 @@ class UserAssignRoleCommand extends Command
         if (! $user) {
             return $this->error(Lang::get('rinvex.fort::artisan.user.invalid', ['field' => $userField]));
         }
-
 
         $roleField = $this->argument('role') ?: $this->anticipate(Lang::get('rinvex.fort::artisan.user.role'), $this->laravel['rinvex.fort.role']->findAll()->lists('slug', 'id')->toArray());
 

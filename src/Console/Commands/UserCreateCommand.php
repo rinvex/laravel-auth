@@ -66,7 +66,7 @@ class UserCreateCommand extends Command
 
         ], [
             $this,
-            'filter'
+            'filter',
         ]);
 
         $rules = [
@@ -98,6 +98,6 @@ class UserCreateCommand extends Command
      */
     protected function filter($value)
     {
-        return ($value !== null && $value !== '');
+        return $value !== null && $value !== '';
     }
 }
