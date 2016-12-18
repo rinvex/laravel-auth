@@ -62,17 +62,17 @@ class AuthorizedController extends AuthenticatedController
     /**
      * Authorize a resource action based on the incoming request.
      *
-     * @param  string                        $resource
-     * @param  string|null                   $parameter
-     * @param  array                         $options
-     * @param  \Illuminate\Http\Request|null $request
+     * @param string                        $resource
+     * @param string|null                   $parameter
+     * @param array                         $options
+     * @param \Illuminate\Http\Request|null $request
      *
      * @return void
      */
     public function authorizeResource($resource, $parameter = null, array $options = [], $request = null)
     {
         $middleware = [];
-        $parameter  = $parameter ?: $resource;
+        $parameter = $parameter ?: $resource;
 
         // Prepare middleware
         foreach ($this->mapResourceAbilities() as $method => $ability) {

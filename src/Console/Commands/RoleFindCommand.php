@@ -47,7 +47,7 @@ class RoleFindCommand extends Command
         if ($field = $this->argument('field')) {
             if (intval($field) && $role = $this->laravel['rinvex.fort.role']->find($field, $columns)) {
                 return $this->table($columns, [$role->toArray()]);
-            } else if ($role = $this->laravel['rinvex.fort.role']->findWhere(['slug' => $field], $columns)->first()) {
+            } elseif ($role = $this->laravel['rinvex.fort.role']->findWhere(['slug' => $field], $columns)->first()) {
                 return $this->table($columns, $role->toArray());
             }
 
@@ -55,14 +55,14 @@ class RoleFindCommand extends Command
         }
 
         // Find multiple roles
-        $field    = $this->anticipate(Lang::get('rinvex.fort::artisan.role.field'), ['id', 'slug'], 'id');
+        $field = $this->anticipate(Lang::get('rinvex.fort::artisan.role.field'), ['id', 'slug'], 'id');
         $operator = $this->anticipate(Lang::get('rinvex.fort::artisan.role.operator'), ['=', '<', '>', '<=', '>=', '<>', '!=', 'like', 'like binary', 'not like', 'between', 'ilike', '&', '|', '^', '<<', '>>', 'rlike', 'regexp', 'not regexp', '~', '~*', '!~', '!~*', 'similar to', 'not similar to'], '=');
-        $value    = $this->ask(Lang::get('rinvex.fort::artisan.role.value'));
-        $results  = $this->laravel['rinvex.fort.role']->where($field, $operator, $value)->get($columns);
+        $value = $this->ask(Lang::get('rinvex.fort::artisan.role.value'));
+        $results = $this->laravel['rinvex.fort.role']->where($field, $operator, $value)->get($columns);
 
         return $this->table($columns, $results->toArray());
     }
-    
+
     /**
      * Register the related console commands.
      *

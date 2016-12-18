@@ -60,7 +60,6 @@ Route::group([
         Route::delete('{ability}')->name('delete')->uses('AbilitiesController@delete')->where('ability', '[0-9]+');
     });
 
-
     /*
     |--------------------------------------------------------------------------
     | Roles Routes
@@ -89,7 +88,6 @@ Route::group([
 
         Route::delete('{role}')->name('delete')->uses('RolesController@delete')->where('role', '[0-9]+');
     });
-
 
     /*
     |--------------------------------------------------------------------------

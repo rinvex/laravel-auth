@@ -210,7 +210,7 @@ class AbilitiesController extends AuthorizedController
 
         // Repository `store` method returns false if no attributes
         // updated, happens save button clicked without chaning anything
-        $with   = ! is_null($ability)
+        $with = ! is_null($ability)
             ? ($result === false
                 ? ['rinvex.fort.alert.warning' => trans('rinvex/fort::backend/messages.ability.nothing_updated', ['abilityId' => $ability->id])]
                 : ['rinvex.fort.alert.success' => trans('rinvex/fort::backend/messages.ability.updated', ['abilityId' => $result->id])])

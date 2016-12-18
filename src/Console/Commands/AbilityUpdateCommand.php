@@ -55,7 +55,7 @@ class AbilityUpdateCommand extends Command
 
         ], [
             $this,
-            'filter'
+            'filter',
         ]);
 
         // Get required argument
@@ -105,6 +105,6 @@ class AbilityUpdateCommand extends Command
      */
     protected function filter($value)
     {
-        return ($value !== null && $value !== '');
+        return $value !== null && $value !== '';
     }
 }

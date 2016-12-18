@@ -52,7 +52,7 @@ class RegistrationController extends AbstractController
     public function processRegisteration(UserRegistrationRequest $request, UserRepositoryContract $userRepository)
     {
         // Prepare registration data
-        $input  = $request->except(['_method', '_token']);
+        $input = $request->except(['_method', '_token']);
         $active = ['active' => ! config('rinvex.fort.registration.moderated')];
 
         // Fire the register start event

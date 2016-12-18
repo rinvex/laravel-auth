@@ -55,7 +55,7 @@ class RoleUpdateCommand extends Command
 
         ], [
             $this,
-            'filter'
+            'filter',
         ]);
 
         // Get required argument
@@ -90,7 +90,7 @@ class RoleUpdateCommand extends Command
                 $role->update($data);
 
                 $this->info(Lang::get('rinvex.fort::artisan.role.updated').' ['.Lang::get('rinvex.fort::artisan.role.id').': '.$role->id.', '.Lang::get('rinvex.fort::artisan.role.name').': '.$role->name.', '.Lang::get('rinvex.fort::artisan.role.slug').': '.$role->slug.']');
-            }            
+            }
         } else {
             $this->info(Lang::get('rinvex.fort::artisan.role.nothing'));
         }
@@ -105,6 +105,6 @@ class RoleUpdateCommand extends Command
      */
     protected function filter($value)
     {
-        return ($value !== null && $value !== '');
+        return $value !== null && $value !== '';
     }
 }
