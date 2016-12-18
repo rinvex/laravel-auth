@@ -26,7 +26,7 @@ class CreateRinvexFortPasswordResetsTable extends Migration
      */
     public function up()
     {
-        Schema::create(config('rinvex.fort.tables.passwordresets'), function (Blueprint $table) {
+        Schema::create(config('rinvex.fort.tables.password_resets'), function (Blueprint $table) {
             // Columns
             $table->string('token');
             $table->string('email');
@@ -50,6 +50,6 @@ class CreateRinvexFortPasswordResetsTable extends Migration
      */
     public function down()
     {
-        Schema::drop(config('rinvex.fort.tables.passwordresets'));
+        Schema::drop(config('rinvex.fort.tables.password_resets'));
     }
 }

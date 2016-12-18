@@ -26,7 +26,7 @@ class CreateRinvexFortEmailVerificationsTable extends Migration
      */
     public function up()
     {
-        Schema::create(config('rinvex.fort.tables.emailverifications'), function (Blueprint $table) {
+        Schema::create(config('rinvex.fort.tables.email_verifications'), function (Blueprint $table) {
             // Columns
             $table->string('token');
             $table->string('email');
@@ -50,6 +50,6 @@ class CreateRinvexFortEmailVerificationsTable extends Migration
      */
     public function down()
     {
-        Schema::drop(config('rinvex.fort.tables.emailverifications'));
+        Schema::drop(config('rinvex.fort.tables.email_verifications'));
     }
 }

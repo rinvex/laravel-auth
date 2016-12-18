@@ -206,31 +206,31 @@ return [
 
         /*
         |--------------------------------------------------------------------------
-        | Verifications Table
+        | Email Verifications Table
         |--------------------------------------------------------------------------
         |
         | Specify database table name that should be used to store the
-        | verification tokens. You may use whatever you like.
+        | email verification tokens. You may use whatever you like.
         |
         | Default: "rinvex_fort_verifications"
         |
         */
 
-        'emailverifications' => 'rinvex_fort_email_verifications',
+        'email_verifications' => 'rinvex_fort_email_verifications',
 
         /*
         |--------------------------------------------------------------------------
-        | Reset Password Tokens Table
+        | Password Reset Tokens Table
         |--------------------------------------------------------------------------
         |
         | Specify database table name that should be used to store the
-        | reset password tokens. You may use whatever you like.
+        | password reset tokens. You may use whatever you like.
         |
         | Default: "rinvex_fort_resets"
         |
         */
 
-        'passwordresets' => 'rinvex_fort_password_resets',
+        'password_resets' => 'rinvex_fort_password_resets',
 
         /*
         |--------------------------------------------------------------------------
@@ -642,38 +642,6 @@ return [
 
         ],
 
-    ],
-
-    /*
-     |--------------------------------------------------------------------------
-     | Online Users Options
-     |--------------------------------------------------------------------------
-     */
-
-    'online' => [
-
-        /*
-        |--------------------------------------------------------------------------
-        | Online Users Activity Interval (minutes)
-        |--------------------------------------------------------------------------
-        |
-        | Minutes that indicates an active user, to be considered an online user.
-        |
-        */
-
-        'interval' => 15,
-
-    ],
-
-    /*
-     |--------------------------------------------------------------------------
-     | Backend Options
-     |--------------------------------------------------------------------------
-     */
-
-    'backend' => [
-        'items_per_page'      => 2,
-        'items_per_dashboard' => 2,
     ],
 
     /*
