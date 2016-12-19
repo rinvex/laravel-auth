@@ -20,9 +20,12 @@ use Collective\Html\FormFacade;
 use Collective\Html\HtmlFacade;
 use Illuminate\Support\Facades\Auth;
 use Rinvex\Fort\Guards\SessionGuard;
+use Rinvex\Fort\Guards\TokenGuard;
 use Rinvex\Fort\Services\AccessGate;
 use Illuminate\Foundation\AliasLoader;
+use Rinvex\Repository\Traits\Bindable;
 use Rinvex\Fort\Services\BrokerManager;
+use Illuminate\Support\ServiceProvider;
 use Collective\Html\HtmlServiceProvider;
 use Rinvex\Fort\Listeners\FortEventListener;
 use Illuminate\View\Compilers\BladeCompiler;
@@ -32,10 +35,11 @@ use Laravel\Socialite\SocialiteServiceProvider;
 use Rinvex\Fort\Repositories\AbilityRepository;
 use Rinvex\Fort\Repositories\PersistenceRepository;
 use Illuminate\Contracts\Auth\Access\Gate as GateContract;
-use Rinvex\Repository\Providers\RepositoryServiceProvider;
 
-class FortServiceProvider extends RepositoryServiceProvider
+class FortServiceProvider extends ServiceProvider
 {
+    use Bindable;
+
     /**
      * {@inheritdoc}
      */
@@ -113,6 +117,9 @@ class FortServiceProvider extends RepositoryServiceProvider
 
         // Override session guard
         $this->overrideSessionGuard();
+
+        // Override token guard
+        $this->overrideTokenGuard();
 
         // Share current user instance with all views
         $this->app['view']->composer('*', function ($view) {
@@ -275,7 +282,7 @@ class FortServiceProvider extends RepositoryServiceProvider
     }
 
     /**
-     * Add custom session guard.
+     * Override session guard.
      *
      * @return void
      */
@@ -301,6 +308,29 @@ class FortServiceProvider extends RepositoryServiceProvider
             if (method_exists($guard, 'setRequest')) {
                 $guard->setRequest($this->app->refresh('request', $guard, 'setRequest'));
             }
+
+            return $guard;
+        });
+    }
+
+    /**
+     * Override Token guard.
+     *
+     * @return void
+     */
+    protected function overrideTokenGuard()
+    {
+        // Add custom session guard
+        $this->app['auth']->extend('token', function ($app, $name, array $config) {
+            // The token guard implements a basic API token based guard implementation
+            // that takes an API token field from the request and matches it to the
+            // user in the database or another persistence layer where users are.
+            $guard = new TokenGuard(
+                $app['auth']->createUserProvider($config['provider']),
+                $app['request']
+            );
+
+            $app->refresh('request', $guard, 'setRequest');
 
             return $guard;
         });

@@ -154,6 +154,8 @@ class FortEventListener
         $dispatcher->listen('rinvex.fort.persistence.entity.updated', __CLASS__.'@persistenceUpdated');
         $dispatcher->listen('rinvex.fort.persistence.entity.deleting', __CLASS__.'@persistenceDeleting');
         $dispatcher->listen('rinvex.fort.persistence.entity.deleted', __CLASS__.'@persistenceDeleted');
+        $dispatcher->listen('rinvex.fort.persistence.entity.deleting.all', __CLASS__.'@persistenceDeletingAll');
+        $dispatcher->listen('rinvex.fort.persistence.entity.deleted.all', __CLASS__.'@persistenceDeletedAll');
     }
 
     /**
@@ -1067,6 +1069,33 @@ class FortEventListener
      * @return void
      */
     public function persistenceDeleted(PersistenceRepositoryContract $repository, Persistence $model)
+    {
+        $this->app['rinvex.fort.persistence']->forgetCache();
+        $this->app['rinvex.fort.user']->forgetCache();
+    }
+
+    /**
+     * Listen to the all persistence being deleted.
+     *
+     * @param \Rinvex\Fort\Contracts\UserRepositoryContract $repository
+     * @param \Rinvex\Fort\Models\User                      $model
+     *
+     * @return void
+     */
+    public function persistenceDeletingAll(PersistenceRepositoryContract $repository, User $model)
+    {
+        //
+    }
+
+    /**
+     * Listen to the all persistence deleted.
+     *
+     * @param \Rinvex\Fort\Contracts\UserRepositoryContract $repository
+     * @param \Rinvex\Fort\Models\User                      $model
+     *
+     * @return void
+     */
+    public function persistenceDeletedAll(PersistenceRepositoryContract $repository, User $model)
     {
         $this->app['rinvex.fort.persistence']->forgetCache();
         $this->app['rinvex.fort.user']->forgetCache();

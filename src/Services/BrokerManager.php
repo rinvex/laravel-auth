@@ -98,7 +98,7 @@ class BrokerManager implements BrokerManagerContract
     protected function createTokenRepository(array $config)
     {
         $key = $this->app['config']['app.key'];
-        $table = str_plural(strtolower($this->type));
+        $table = str_plural(strtolower(snake_case($this->type)));
         $tokenClass = "Rinvex\\Fort\\Repositories\\{$this->type}TokenRepository";
         $connection = isset($config['connection']) ? $config['connection'] : null;
 

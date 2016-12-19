@@ -64,13 +64,13 @@ class PersistenceRepository extends EloquentRepository implements PersistenceRep
 
         if ($entity) {
             // Fire the deleted event
-            $this->getContainer('events')->fire($this->getRepositoryId().'.entity.deleting', [$this, $entity]);
+            $this->getContainer('events')->fire($this->getRepositoryId().'.entity.deleting.all', [$this, $entity]);
 
             // Delete the instance
             $deleted = app('rinvex.fort.persistence')->whereUserId($entity->id)->delete();
 
             // Fire the deleted event
-            $this->getContainer('events')->fire($this->getRepositoryId().'.entity.deleted', [$this, $entity]);
+            $this->getContainer('events')->fire($this->getRepositoryId().'.entity.deleted.all', [$this, $entity]);
         }
 
         return $deleted ? $entity : $deleted;
