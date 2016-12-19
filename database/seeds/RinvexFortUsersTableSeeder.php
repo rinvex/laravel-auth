@@ -36,6 +36,9 @@ class RinvexFortUsersTableSeeder extends Seeder
             app('rinvex.fort.user')->create($user);
         }
 
+        // Assign roles to users
+        app('rinvex.fort.user')->findBy('email', 'help@rinvex.com')->assignRoles('admin');
+
         DB::statement('SET FOREIGN_KEY_CHECKS=1;');
     }
 }
