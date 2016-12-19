@@ -49,7 +49,7 @@ class UserSettingsController extends AuthenticatedController
     public function edit(Request $request)
     {
         $countries = array_map(function ($country) {
-            return $country->getName();
+            return $country['name'];
         }, countries());
         $twoFactor = $request->user($this->getGuard())->getTwoFactor();
 

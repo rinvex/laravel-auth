@@ -15,7 +15,6 @@
 
 namespace Rinvex\Fort\Http\Controllers\Backend;
 
-use Rinvex\Country\Loader;
 use Illuminate\Http\Request;
 use Rinvex\Fort\Models\User;
 use Rinvex\Fort\Contracts\UserRepositoryContract;
@@ -196,8 +195,8 @@ class UsersController extends AuthorizedController
     protected function form($mode, $action, User $user)
     {
         $countries = array_map(function ($country) {
-            return $country->getName();
-        }, Loader::countries());
+            return $country['name'];
+        }, countries());
 
         $abilityList = app('rinvex.fort.ability')->findAll()->groupBy('resource')->map(function ($item) {
             return $item->pluck('title', 'id');
