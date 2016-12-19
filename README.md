@@ -1,4 +1,4 @@
-# Rinvex Fort [WIP]
+# Rinvex Fort
 
 **Rinvex Fort** is a powerful authentication, authorization and verification package built on top of Laravel. It provides developers with Role Based Access Control, Two-Factor Authentication, Social Authentication, compatible with Laravel’s standard API and fully featured all-in-one solution out of the box.
 
@@ -11,136 +11,103 @@
 [![License](https://img.shields.io/packagist/l/rinvex/fort.svg?label=License&style=flat-square)](https://github.com/rinvex/fort/blob/develop/LICENSE)
 
 
-## Awesomeness Level
+## Table Of Contents
 
-// Comparison table here
-
-
-## Screebshots
-
-We know how true is the idiom saying **A picture is worth a thousand words**, and thus we've captured almost every possible feature in a neat screenshot just for your eyes :wink:, give it a look.
-
-
-## Examples
-
-Once installed, you'll be able to do stuff like this:
-
-```php
-// Create a new user
-app('rinvex.fort.user')->create([
-    'username' => 'Tester',
-    'email'    => 'test@example.com',
-    'password' => 'Very.Strong.Password',
-]);
-
-// Update existing user
-
-```
-
-
-## Features
-
-- **Default Laravel API**
-- Multiple login columns
-- Single/Multiple sessions
-- Create Users, Roles, Abilities
-- Request password reset via email
-- Grant/Revoke Abilities to Users/Roles
-- Assign/Remove Roles to Users (multiple roles allowed)
-- Request phone verification via SMS or automated phone call
-- Alert messages with every completed action (success/warning/failure)
-- Complete Solution out of the box, views, routes, controllers, migrations, ..etc
-- Listen to any triggered events at any process (with almost 65+ listened to events)
-- Use any of Google Authenticator, Duo Mobile, Authy, or Windows Phone Authenticator for Two-Factor TOTP Authentication
-- Social login using Facebook, Google, Twitter, LinkedIn, Github, Bitbucket
-- Automatically logout user if his session has been tampered
-- Customizable table database table and model names
-- Database stored role based access control
-- Uses Laravel 5.3 Notifications System
-
-- Registration
-    - Require email verification
-    - Enable/Disable registrations
-    - Set default role for new registrations
-    - Moderate new registrations
-
-- Authentication
-    - **Uses default Laravel authentication mechanisms**
-    - Login using username or email
-    - Simple registration process
-    - Two-Factor Authentication
-    - Login throttling
-    - Social Authentication via Socialite
-    - Time-based One-time Password Authentication
-    - SMS based Two-Factor Authentication via Authy/Twilio
-
-- Authorization
-    - **Uses default Laravel Abilities & Gate authorization**
-    - Role Based Access Control (RBAC)
-    - Assign Abilities to Roles and/or Users
-    - Restrict access for certain areas to specific roles/users/abilities
-
-- Verification
-    - Email Verification through email message
-    - Phone Verification through SMS or automated phone call
-
-- Email Notifications
-    - Send welcome email after registration
-    - Send success email after verification
-    - Send notification email after lockout
-
-- User Profile
-    - Manage account active sessions through persistence managment console
-    - Manage profile data (first name, middle name, last name, username, email, country, phone, ..etc)
-
-
-## Usage Notes
-
-### Authentication
-
-While this package complies almost in every way with default Laravel authentication techniques, and considered to be fully compatible with the standard API, it provides some extra features on top of it which we'll spot the light on here, but first we must review [Laravel Authentication Documentation](https://laravel.com/docs/5.3/authentication) as it's the core foundation.
-
-- This package overrides the default `session` guard with another instance in the **same name**, that's why it's done automatically behind scenes without changing any config or code manually.
-- Also this package overrides the default eloquent user provider with a custom `eloquent` provider, again with the **same name** so it's been replaced implicitely to take effect on default Laravel installations.
-- The new `session` guard shipped with this package checks user's state, if it's moderated then it won't be able to login. Reference: `\Rinvex\Fort\Guards\SessionGuard::login`
-- You've two persistence modes, `single` and `multiple` that you can set in the config options. If it's `single` then users won't be able to login through multiple devices at the same time, since the last login will invalidate all other active sessions.
-- Every login attempt is checked for verified email address, if it's not verified then it fails. Also it checks if Two-Factor authentication is enabled or not, if enabled it will redirect back to Two-Factor authentication form that's required before proceeding.
-
-### Authorization
-
-Just like authentication, the authorization part is almost identical to the default Laravel one with an extra layer of additional features builds on the standard API, so it's mandatory to review first [Laravel Authorization Documentation](https://laravel.com/docs/5.3/authorization) as it's the core foundation.
-
-- This package extends Laravel's gate to allow you to save abilities and roles in a database, and thus you get full benefit of using the intutive and powerful Laravel authorization techniches while still having the luxury of saving your ACL dynamically in a database.
-- While Laravel doesn't provide the concept of user roles out of the box, this package adds this important dimention to the equation for a better user management system through a proper Role Based Access Control.
-- You can create abilities, which is stored in the database, grant these abilities to roles, or to users directly, assign roles to users, and set certain level or access on specific areas so that users that don't have appropriate abilities to access it, won't be able to go through.
-
-### Verification
-
-#### Email Verification
-
-- Email verification could be enabled or disabled through config options, and when enabled users must verify their emails before being able to login.
-- If the user changed email address, the previous email verification will be invalidated, and another validation process has to be gone though; Otherwise it won't be possible to re-login again after session expires without such email re-verification.
-
-#### Phone Verification
-
-- Phone verification is optional unless the user wants to activate Two-Factor phone authentication, in such case it's required and mandatory.
-- If the user changed profile's country or phone number, the Two-Factor phone authentication will be automatically disabled, and his previous phone verification will be invalidated, so it's required to verify phone again, and re-enable Two-Factor phone authentication manually.
-
-
-## Notifications Sent
-
-- Email Verification
-- Authentication Lockout
-- Email Verification Success
-- Password Reset Request
-- Registration Success
-
-
-## Inspired By
-
-- 
-- 
-- 
+- [Documentation](https://github.com/rinvex/fort/wiki)
+    - [Features](https://github.com/rinvex/fort/wiki#features)
+    - [Authentication and Authorization](https://github.com/rinvex/fort/wiki#authentication-and-authorization)
+    - [Role Based Access Control](https://github.com/rinvex/fort/wiki#role-based-access-control)
+    - [A Sense Of Security](https://github.com/rinvex/fort/wiki#a-sense-of-security)
+- [1) Installation](https://github.com/rinvex/fort/wiki/1\)-Installation)
+- [2) Screenshots](https://github.com/rinvex/fort/wiki/2\)-Screenshots)
+- [3) Config Options](https://github.com/rinvex/fort/wiki/3\)-Config-Options)
+- [4) Authentication](https://github.com/rinvex/fort/wiki/4\)-Authentication)
+    - [Introduction](https://github.com/rinvex/fort/wiki/4\)-Authentication#introduction)
+    - [Database Considerations](https://github.com/rinvex/fort/wiki/4\)-Authentication#database-considerations)
+    - [Authentication Quickstart](https://github.com/rinvex/fort/wiki/4\)-Authentication#authentication-quickstart)
+        - [Database](https://github.com/rinvex/fort/wiki/4\)-Authentication#database)
+        - [Routing](https://github.com/rinvex/fort/wiki/4\)-Authentication#routing)
+        - [Views](https://github.com/rinvex/fort/wiki/4\)-Authentication#views)
+        - [Language Phrases](https://github.com/rinvex/fort/wiki/4\)-Authentication#language-phrases)
+        - [Authenticating](https://github.com/rinvex/fort/wiki/4\)-Authentication#authenticating)
+            - [Username Identification](https://github.com/rinvex/fort/wiki/4\)-Authentication#username-identification)
+            - [Guard Customization](https://github.com/rinvex/fort/wiki/4\)-Authentication#guard-customization)
+            - [Broker Customization](https://github.com/rinvex/fort/wiki/4\)-Authentication#broker-customization)
+            - [Validation Rules](https://github.com/rinvex/fort/wiki/4\)-Authentication#validation-rules)
+            - [Validation and Storage Customization](https://github.com/rinvex/fort/wiki/4\)-Authentication#validation-and-storage-customization)
+        - [Retrieving The Authenticated User](https://github.com/rinvex/fort/wiki/4\)-Authentication#retrieving-the-authenticated-user)
+            - [Determining If The Current User Is Authenticated](https://github.com/rinvex/fort/wiki/4\)-Authentication#determining-if-the-current-user-is-authenticated)
+        - [Protecting Routes](https://github.com/rinvex/fort/wiki/4\)-Authentication#protecting-routes)
+            - [Specifying A Guard](https://github.com/rinvex/fort/wiki/4\)-Authentication#specifying-a-guard)
+        - [Remembering Users](https://github.com/rinvex/fort/wiki/4\)-Authentication#remembering-users)
+        - [Login Throttling](https://github.com/rinvex/fort/wiki/4\)-Authentication#login-throttling)
+        - [Logging Out](https://github.com/rinvex/fort/wiki/4\)-Authentication#logging-out)
+    - [Manually Authenticating Users](https://github.com/rinvex/fort/wiki/4\)-Authentication#manually-authenticating-users)
+        - [Specifying Additional Conditions](https://github.com/rinvex/fort/wiki/4\)-Authentication#specifying-additional-conditions)
+        - [Accessing Specific Guard Instances](https://github.com/rinvex/fort/wiki/4\)-Authentication#accessing-specific-guard-instances)
+        - [Other Authentication Methods](https://github.com/rinvex/fort/wiki/4\)-Authentication#other-authentication-methods)
+            - [Authenticate A User Instance](https://github.com/rinvex/fort/wiki/4\)-Authentication#authenticate-a-user-instance)
+            - [Authenticate A User By ID](https://github.com/rinvex/fort/wiki/4\)-Authentication#authenticate-a-user-by-id)
+            - [Authenticate A User Once](https://github.com/rinvex/fort/wiki/4\)-Authentication#authenticate-a-user-once)
+    - [HTTP Basic Authentication](https://github.com/rinvex/fort/wiki/4\)-Authentication#http-basic-authentication)
+        - [Stateless HTTP Basic Authentication](https://github.com/rinvex/fort/wiki/4\)-Authentication#stateless-http-basic-authentication)
+    - [Adding Custom Guards](https://github.com/rinvex/fort/wiki/4\)-Authentication#adding-custom-guards)
+    - [Adding Custom User Providers](https://github.com/rinvex/fort/wiki/4\)-Authentication#adding-custom-user-providers)
+        - [The User Provider Contract](https://github.com/rinvex/fort/wiki/4\)-Authentication#the user provider contract)
+        - [The AuthenticatableContract Interface](https://github.com/rinvex/fort/wiki/4\)-Authentication#the-authenticatablecontract-interface)
+- [5) Authorization](https://github.com/rinvex/fort/wiki/5\)-Authorization)
+    - [Introduction](https://github.com/rinvex/fort/wiki/5\)-Authorization#introduction)
+    - [Gates](https://github.com/rinvex/fort/wiki/5\)-Authorization#gates)
+        - [Writing Gates](https://github.com/rinvex/fort/wiki/5\)-Authorization#writing-gates)
+        - [Authorizing Actions](https://github.com/rinvex/fort/wiki/5\)-Authorization#authorizing-actions)
+    - [Abilities](https://github.com/rinvex/fort/wiki/5\)-Authorization#abilities)
+        - [Creating abilities](https://github.com/rinvex/fort/wiki/5\)-Authorization#creating-abilities)
+        - [Granting and Revoking Abilities](https://github.com/rinvex/fort/wiki/5\)-Authorization#granting-and-revoking-abilities)
+    - [Roles](https://github.com/rinvex/fort/wiki/5\)-Authorization#roles)
+        - [Creating Roles](https://github.com/rinvex/fort/wiki/5\)-Authorization#creating-roles)
+        - [Assigning and Removing Roles](https://github.com/rinvex/fort/wiki/5\)-Authorization#assigning-and-removing-roles)
+        - [Check Has Role](https://github.com/rinvex/fort/wiki/5\)-Authorization#check-has-role)
+        - [Check Has Role via Blade](https://github.com/rinvex/fort/wiki/5\)-Authorization#check-has-role-via-blade)
+    - [Creating Policies](https://github.com/rinvex/fort/wiki/5\)-Authorization#creating-policies)
+        - [Generating Policies](https://github.com/rinvex/fort/wiki/5\)-Authorization#generating-policies)
+        - [Registering Policies](https://github.com/rinvex/fort/wiki/5\)-Authorization#registering-policies)
+    - [Writing Policies](https://github.com/rinvex/fort/wiki/5\)-Authorization#writing-policies)
+        - [Policy Methods](https://github.com/rinvex/fort/wiki/5\)-Authorization#policy-methods)
+        - [Methods Without Models](https://github.com/rinvex/fort/wiki/5\)-Authorization#methods-without-models)
+        - [Policy Filters](https://github.com/rinvex/fort/wiki/5\)-Authorization#policy-filters)
+    - [Authorizing Actions Using Policies](https://github.com/rinvex/fort/wiki/5\)-Authorization#authorizing-actions-using-policies)
+        - [Via The User Model](https://github.com/rinvex/fort/wiki/5\)-Authorization#via-the-user-model)
+        - [Via Middleware](https://github.com/rinvex/fort/wiki/5\)-Authorization#via-middleware)
+        - [Via Controller Helpers](https://github.com/rinvex/fort/wiki/5\)-Authorization#via-controller-helpers)
+        - [Via Blade Templates](https://github.com/rinvex/fort/wiki/5\)-Authorization#via-blade-templates)
+- [6) Email Verification](https://github.com/rinvex/fort/wiki/6\)-Email-Verification)
+    - [Introduction](https://github.com/rinvex/fort/wiki/6\)-Email-Verification#introduction)
+    - [Database Considerations](https://github.com/rinvex/fort/wiki/6\)-Email-Verification#database-considerations)
+    - [Routing](https://github.com/rinvex/fort/wiki/6\)-Email-Verification#routing)
+    - [Views](https://github.com/rinvex/fort/wiki/6\)-Email-Verification#views)
+    - [After Verifying Emails](https://github.com/rinvex/fort/wiki/6\)-Email-Verification#after-verifying-emails)
+    - [Customization](https://github.com/rinvex/fort/wiki/6\)-Email-Verification#customization)
+        - [Email Verifier Broker Customization](https://github.com/rinvex/fort/wiki/6\)-Email-Verification#email-verifier-broker-customization)
+        - [Reset Email Customization](https://github.com/rinvex/fort/wiki/6\)-Email-Verification#reset-email-customization)
+- [7) Phone Verification](https://github.com/rinvex/fort/wiki/7\)-Phone-Verification)
+    - [Introduction](https://github.com/rinvex/fort/wiki/7\)-Phone-Verification#introduction)
+    - [Database Considerations](https://github.com/rinvex/fort/wiki/7\)-Phone-Verification#database-considerations)
+    - [Usage](https://github.com/rinvex/fort/wiki/7\)-Phone-Verification#usage)
+    - [Routing](https://github.com/rinvex/fort/wiki/7\)-Phone-Verification#routing)
+    - [Views](https://github.com/rinvex/fort/wiki/7\)-Phone-Verification#views)
+    - [After Verifying Phones](https://github.com/rinvex/fort/wiki/7\)-Phone-Verification#after-verifying-phones)
+    - [Customization](https://github.com/rinvex/fort/wiki/7\)-Phone-Verification#customization)
+        - [Phone Verification Notification Customization](https://github.com/rinvex/fort/wiki/7\)-Phone-Verification#phone-verification-notification-customization)
+- [8) Password Reset](https://github.com/rinvex/fort/wiki/8\)-Password-Reset)
+    - [Introduction](https://github.com/rinvex/fort/wiki/8\)-Password-Reset#introduction)
+    - [Database Considerations](https://github.com/rinvex/fort/wiki/8\)-Password-Reset#database-considerations)
+    - [Routing](https://github.com/rinvex/fort/wiki/8\)-Password-Reset#routing)
+    - [Views](https://github.com/rinvex/fort/wiki/8\)-Password-Reset#views)
+    - [After Resetting Passwords](https://github.com/rinvex/fort/wiki/8\)-Password-Reset#after-resetting-passwords)
+    - [Customization](https://github.com/rinvex/fort/wiki/8\)-Password-Reset#customization)
+        - [Password Broker Customization](https://github.com/rinvex/fort/wiki/8\)-Password-Reset#password-broker-customization)
+        - [Reset Email Customization](https://github.com/rinvex/fort/wiki/8\)-Password-Reset#reset-email-customization)
+- [9) Fired Events](https://github.com/rinvex/fort/wiki/9\)-Fired-Events)
 
 
 ## Changelog
@@ -164,14 +131,19 @@ Thank you for considering contributing to this project! The contribution guide c
 Bug reports, feature requests, and pull requests are very welcome.
 
 - [Versioning](CONTRIBUTING.md#versioning)
-- [Support Policy](CONTRIBUTING.md#support-policy)
-- [Coding Standards](CONTRIBUTING.md#coding-standards)
 - [Pull Requests](CONTRIBUTING.md#pull-requests)
+- [Coding Standards](CONTRIBUTING.md#coding-standards)
+- [Feature Requests](CONTRIBUTING.md#feature-requests)
+- [Git Flow](CONTRIBUTING.md#git-flow)
 
 
 ## Security Vulnerabilities
 
-If you discover a security vulnerability within this project, please send an e-mail to help@rinvex.com. All security vulnerabilities will be promptly addressed.
+We want to ensure that this package is secure for everyone. If you've discovered a security vulnerability in this package, we appreciate your help in disclosing it to us in a [responsible manner](https://en.wikipedia.org/wiki/Responsible_disclosure).
+
+Publicly disclosing a vulnerability can put the entire community at risk. If you've discovered a security concern, please email us at [security@rinvex.com](mailto:security@rinvex.com). We'll work with you to make sure that we understand the scope of the issue, and that we fully address your concern. We consider correspondence sent to [security@rinvex.com](mailto:security@rinvex.com) our highest priority, and work to address any issues that arise as quickly as possible.
+
+After a security vulnerability has been corrected, a security hotfix release will be deployed as soon as possible.
 
 
 ## About Rinvex
@@ -183,4 +155,4 @@ Rinvex is a software solutions startup, specialized in integrated enterprise sol
 
 This software is released under [The MIT License (MIT)](LICENSE).
 
-(c) 2016 Rinvex LLC, Some rights reserved.
+(c) 2016-2017 Rinvex LLC, Some rights reserved.
