@@ -36,6 +36,9 @@ class RinvexFortRolesTableSeeder extends Seeder
             app('rinvex.fort.role')->create($role);
         }
 
+        // Grant abilities to roles
+        app('rinvex.fort.role')->findBy('slug', 'admin')->grantAbilityTo('superadmin', 'global');
+
         DB::statement('SET FOREIGN_KEY_CHECKS=1;');
     }
 }
