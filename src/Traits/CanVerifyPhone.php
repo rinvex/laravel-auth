@@ -54,13 +54,13 @@ trait CanVerifyPhone
     /**
      * Send the phone verification notification.
      *
-     * @param bool   $force
      * @param string $method
+     * @param bool   $force
      *
      * @return void
      */
-    public function sendPhoneVerificationNotification($force, $method)
+    public function sendPhoneVerificationNotification($method, $force)
     {
-        $this->notify(new PhoneVerificationNotification($force, $method));
+        $this->notify(new PhoneVerificationNotification($method, $force));
     }
 }

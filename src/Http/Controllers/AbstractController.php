@@ -33,7 +33,7 @@ abstract class AbstractController extends Controller
     protected $middlewareWhitelist = [];
 
     /**
-     * The password broker.
+     * The broker name.
      *
      * @var string
      */

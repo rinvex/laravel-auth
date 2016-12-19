@@ -41,10 +41,10 @@ interface CanVerifyPhoneContract
     /**
      * Send the phone verification notification.
      *
-     * @param bool   $force
      * @param string $method
+     * @param bool   $force
      *
      * @return void
      */
-    public function sendPhoneVerificationNotification($force, $method);
+    public function sendPhoneVerificationNotification($method, $force);
 }
