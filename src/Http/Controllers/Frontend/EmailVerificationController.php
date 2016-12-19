@@ -47,8 +47,8 @@ class EmailVerificationController extends AbstractController
         switch ($result) {
             case EmailVerificationBrokerContract::LINK_SENT:
                 return intend([
-                    'intended' => url('/'),
-                    'with'     => ['rinvex.fort.alert.success' => trans($result)],
+                    'url'  => '/',
+                    'with' => ['rinvex.fort.alert.success' => trans($result)],
                 ]);
 
             default:
@@ -74,8 +74,8 @@ class EmailVerificationController extends AbstractController
         switch ($result) {
             case EmailVerificationBrokerContract::EMAIL_VERIFIED:
                 return intend([
-                    'intended' => url('/'),
-                    'with'     => ['rinvex.fort.alert.success' => trans($result)],
+                    'url'  => '/',
+                    'with' => ['rinvex.fort.alert.success' => trans($result)],
                 ]);
 
             case EmailVerificationBrokerContract::INVALID_USER:

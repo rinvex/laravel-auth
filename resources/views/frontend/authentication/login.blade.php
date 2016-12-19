@@ -77,7 +77,7 @@
                             <div class="row">
                                 <div class="col-md-12 col-sm-12 col-xs-12 text-center">
                                     {{ Form::button('<i class="fa fa-sign-in"></i> '.trans('rinvex/fort::frontend/forms.login.submit'), ['class' => 'btn btn-primary', 'type' => 'submit']) }}
-                                    {{ Form::button(trans('rinvex/fort::frontend/forms.login.forgot_password'), ['class' => 'btn btn-link']) }}
+                                    {{ Html::link(route('rinvex.fort.frontend.passwordreset.request'), trans('rinvex/fort::frontend/forms.login.forgot_password'), ['class' => 'btn btn-link']) }}
                                 </div>
                             </div>
 

@@ -43,8 +43,8 @@ Route::group([
         |--------------------------------------------------------------------------
         */
 
-        Route::get('login')->name('login')->uses('AuthenticationController@showLogin');
-        Route::post('login')->name('login.process')->uses('AuthenticationController@processLogin');
+        Route::get('login')->name('login')->uses('AuthenticationController@form');
+        Route::post('login')->name('login.process')->uses('AuthenticationController@login');
         Route::post('logout')->name('logout')->uses('AuthenticationController@logout');
 
         /*
@@ -53,8 +53,8 @@ Route::group([
         |--------------------------------------------------------------------------
         */
 
-        Route::get('register')->name('register')->uses('RegistrationController@showRegisteration');
-        Route::post('register')->name('register.post')->uses('RegistrationController@processRegisteration');
+        Route::get('register')->name('register')->uses('RegistrationController@form');
+        Route::post('register')->name('register.post')->uses('RegistrationController@register');
 
         /*
         |--------------------------------------------------------------------------

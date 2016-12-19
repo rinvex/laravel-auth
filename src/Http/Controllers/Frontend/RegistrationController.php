@@ -36,7 +36,7 @@ class RegistrationController extends AbstractController
      *
      * @return \Illuminate\Http\Response
      */
-    public function showRegisteration(UserRegistrationRequest $request)
+    public function form(UserRegistrationRequest $request)
     {
         return view('rinvex/fort::frontend/authentication.register');
     }
@@ -49,7 +49,7 @@ class RegistrationController extends AbstractController
      *
      * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse
      */
-    public function processRegisteration(UserRegistrationRequest $request, UserRepositoryContract $userRepository)
+    public function register(UserRegistrationRequest $request, UserRepositoryContract $userRepository)
     {
         // Prepare registration data
         $input = $request->except(['_method', '_token']);

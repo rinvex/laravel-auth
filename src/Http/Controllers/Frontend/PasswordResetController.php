@@ -54,8 +54,8 @@ class PasswordResetController extends AbstractController
         switch ($result) {
             case PasswordResetBrokerContract::LINK_SENT:
                 return intend([
-                    'intended' => url('/'),
-                    'with'     => ['rinvex.fort.alert.success' => trans($result)],
+                    'url'  => '/',
+                    'with' => ['rinvex.fort.alert.success' => trans($result)],
                 ]);
 
             case PasswordResetBrokerContract::INVALID_USER:
@@ -110,8 +110,8 @@ class PasswordResetController extends AbstractController
         switch ($result) {
             case PasswordResetBrokerContract::RESET_SUCCESS:
                 return intend([
-                    'intended' => url('/'),
-                    'with'     => ['rinvex.fort.alert.success' => trans($result)],
+                    'route' => 'rinvex.fort.frontend.auth.login',
+                    'with'  => ['rinvex.fort.alert.success' => trans($result)],
                 ]);
 
             case PasswordResetBrokerContract::INVALID_USER:

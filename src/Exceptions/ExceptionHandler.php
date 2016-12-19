@@ -47,7 +47,7 @@ class ExceptionHandler extends BaseExceptionHandler
             ]);
         } elseif ($exception instanceof AuthorizationException) {
             return intend([
-                'intended'   => url('/'),
+                'url'        => '/',
                 'withErrors' => ['rinvex.fort.unauthorized' => $exception->getMessage()],
             ], 403);
         }
