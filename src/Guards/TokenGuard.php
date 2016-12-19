@@ -48,8 +48,9 @@ class TokenGuard implements Guard
     /**
      * Create a new authentication guard.
      *
-     * @param  \Rinvex\Fort\Contracts\UserRepositoryContract  $provider
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Rinvex\Fort\Contracts\UserRepositoryContract $provider
+     * @param \Illuminate\Http\Request                      $request
+     *
      * @return void
      */
     public function __construct(UserRepositoryContract $provider, Request $request)
@@ -114,7 +115,8 @@ class TokenGuard implements Guard
     /**
      * Validate a user's credentials.
      *
-     * @param  array  $credentials
+     * @param array $credentials
+     *
      * @return bool
      */
     public function validate(array $credentials = [])
@@ -135,7 +137,8 @@ class TokenGuard implements Guard
     /**
      * Set the current request instance.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
+     *
      * @return $this
      */
     public function setRequest(Request $request)
