@@ -44,7 +44,7 @@ Route::group([
         */
 
         Route::get('login')->name('login')->uses('AuthenticationController@showLogin');
-        Route::post('login')->name('login')->uses('AuthenticationController@processLogin');
+        Route::post('login')->name('login.process')->uses('AuthenticationController@processLogin');
         Route::post('logout')->name('logout')->uses('AuthenticationController@logout');
 
         /*
