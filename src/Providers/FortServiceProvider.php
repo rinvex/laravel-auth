@@ -22,7 +22,9 @@ use Illuminate\Support\Facades\Auth;
 use Rinvex\Fort\Guards\SessionGuard;
 use Rinvex\Fort\Services\AccessGate;
 use Illuminate\Foundation\AliasLoader;
+use Rinvex\Repository\Traits\Bindable;
 use Rinvex\Fort\Services\BrokerManager;
+use Illuminate\Support\ServiceProvider;
 use Collective\Html\HtmlServiceProvider;
 use Rinvex\Fort\Listeners\FortEventListener;
 use Illuminate\View\Compilers\BladeCompiler;
@@ -32,10 +34,11 @@ use Laravel\Socialite\SocialiteServiceProvider;
 use Rinvex\Fort\Repositories\AbilityRepository;
 use Rinvex\Fort\Repositories\PersistenceRepository;
 use Illuminate\Contracts\Auth\Access\Gate as GateContract;
-use Rinvex\Repository\Providers\RepositoryServiceProvider;
 
-class FortServiceProvider extends RepositoryServiceProvider
+class FortServiceProvider extends ServiceProvider
 {
+    use Bindable;
+
     /**
      * {@inheritdoc}
      */
