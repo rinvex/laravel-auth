@@ -15,6 +15,7 @@
 
 namespace Rinvex\Fort\Http\Controllers\Backend;
 
+use Rinvex\Country\Loader;
 use Illuminate\Http\Request;
 use Rinvex\Fort\Models\User;
 use Rinvex\Fort\Contracts\UserRepositoryContract;
