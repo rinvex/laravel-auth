@@ -256,7 +256,7 @@ class SessionGuard implements StatefulGuardContract, SupportsBasicAuth
             $this->logout();
 
             // Fire the automatic logout event
-            $this->events->fire('rinvex.fort.auth.autologout', $userBySession || $userByCookie);
+            $this->events->fire('rinvex.fort.auth.autologout', $userBySession ?: $userByCookie);
 
             // Throw invalid persistence exception
             throw new InvalidPersistenceException();
