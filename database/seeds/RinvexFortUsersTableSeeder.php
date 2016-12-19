@@ -33,7 +33,12 @@ class RinvexFortUsersTableSeeder extends Seeder
 
         // Create new users
         foreach ($users as $user) {
+            $user['password'] = str_random();
             app('rinvex.fort.user')->create($user);
+
+            if (isset($this->command)) {
+                $this->command->getOutput()->writeln("<comment>Username</comment>: {$user['username']} / <comment>Password</comment>: {$user['password']}");
+            }
         }
 
         // Assign roles to users
