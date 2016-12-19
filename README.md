@@ -13,15 +13,15 @@
 
 ## Table Of Contents
 
-- [Documentation](https://github.com/rinvex/fort/wiki)
+- **[Documentation](https://github.com/rinvex/fort/wiki)**
     - [Features](https://github.com/rinvex/fort/wiki#features)
     - [Authentication and Authorization](https://github.com/rinvex/fort/wiki#authentication-and-authorization)
     - [Role Based Access Control](https://github.com/rinvex/fort/wiki#role-based-access-control)
     - [A Sense Of Security](https://github.com/rinvex/fort/wiki#a-sense-of-security)
-- [1) Installation](https://github.com/rinvex/fort/wiki/1\)-Installation)
-- [2) Screenshots](https://github.com/rinvex/fort/wiki/2\)-Screenshots)
-- [3) Config Options](https://github.com/rinvex/fort/wiki/3\)-Config-Options)
-- [4) Authentication](https://github.com/rinvex/fort/wiki/4\)-Authentication)
+- **[1) Installation](https://github.com/rinvex/fort/wiki/1\)-Installation)**
+- **[2) Screenshots](https://github.com/rinvex/fort/wiki/2\)-Screenshots)**
+- **[3) Config Options](https://github.com/rinvex/fort/wiki/3\)-Config-Options)**
+- **[4) Authentication](https://github.com/rinvex/fort/wiki/4\)-Authentication)**
     - [Introduction](https://github.com/rinvex/fort/wiki/4\)-Authentication#introduction)
     - [Database Considerations](https://github.com/rinvex/fort/wiki/4\)-Authentication#database-considerations)
     - [Authentication Quickstart](https://github.com/rinvex/fort/wiki/4\)-Authentication#authentication-quickstart)
@@ -55,7 +55,7 @@
     - [Adding Custom User Providers](https://github.com/rinvex/fort/wiki/4\)-Authentication#adding-custom-user-providers)
         - [The User Provider Contract](https://github.com/rinvex/fort/wiki/4\)-Authentication#the user provider contract)
         - [The AuthenticatableContract Interface](https://github.com/rinvex/fort/wiki/4\)-Authentication#the-authenticatablecontract-interface)
-- [5) Authorization](https://github.com/rinvex/fort/wiki/5\)-Authorization)
+- **[5) Authorization](https://github.com/rinvex/fort/wiki/5\)-Authorization)**
     - [Introduction](https://github.com/rinvex/fort/wiki/5\)-Authorization#introduction)
     - [Gates](https://github.com/rinvex/fort/wiki/5\)-Authorization#gates)
         - [Writing Gates](https://github.com/rinvex/fort/wiki/5\)-Authorization#writing-gates)
@@ -80,7 +80,7 @@
         - [Via Middleware](https://github.com/rinvex/fort/wiki/5\)-Authorization#via-middleware)
         - [Via Controller Helpers](https://github.com/rinvex/fort/wiki/5\)-Authorization#via-controller-helpers)
         - [Via Blade Templates](https://github.com/rinvex/fort/wiki/5\)-Authorization#via-blade-templates)
-- [6) Email Verification](https://github.com/rinvex/fort/wiki/6\)-Email-Verification)
+- **[6) Email Verification](https://github.com/rinvex/fort/wiki/6\)-Email-Verification)**
     - [Introduction](https://github.com/rinvex/fort/wiki/6\)-Email-Verification#introduction)
     - [Database Considerations](https://github.com/rinvex/fort/wiki/6\)-Email-Verification#database-considerations)
     - [Routing](https://github.com/rinvex/fort/wiki/6\)-Email-Verification#routing)
@@ -89,7 +89,7 @@
     - [Customization](https://github.com/rinvex/fort/wiki/6\)-Email-Verification#customization)
         - [Email Verifier Broker Customization](https://github.com/rinvex/fort/wiki/6\)-Email-Verification#email-verifier-broker-customization)
         - [Reset Email Customization](https://github.com/rinvex/fort/wiki/6\)-Email-Verification#reset-email-customization)
-- [7) Phone Verification](https://github.com/rinvex/fort/wiki/7\)-Phone-Verification)
+- **[7) Phone Verification](https://github.com/rinvex/fort/wiki/7\)-Phone-Verification)**
     - [Introduction](https://github.com/rinvex/fort/wiki/7\)-Phone-Verification#introduction)
     - [Database Considerations](https://github.com/rinvex/fort/wiki/7\)-Phone-Verification#database-considerations)
     - [Usage](https://github.com/rinvex/fort/wiki/7\)-Phone-Verification#usage)
@@ -98,7 +98,7 @@
     - [After Verifying Phones](https://github.com/rinvex/fort/wiki/7\)-Phone-Verification#after-verifying-phones)
     - [Customization](https://github.com/rinvex/fort/wiki/7\)-Phone-Verification#customization)
         - [Phone Verification Notification Customization](https://github.com/rinvex/fort/wiki/7\)-Phone-Verification#phone-verification-notification-customization)
-- [8) Password Reset](https://github.com/rinvex/fort/wiki/8\)-Password-Reset)
+- **[8) Password Reset](https://github.com/rinvex/fort/wiki/8\)-Password-Reset)**
     - [Introduction](https://github.com/rinvex/fort/wiki/8\)-Password-Reset#introduction)
     - [Database Considerations](https://github.com/rinvex/fort/wiki/8\)-Password-Reset#database-considerations)
     - [Routing](https://github.com/rinvex/fort/wiki/8\)-Password-Reset#routing)
@@ -107,7 +107,7 @@
     - [Customization](https://github.com/rinvex/fort/wiki/8\)-Password-Reset#customization)
         - [Password Broker Customization](https://github.com/rinvex/fort/wiki/8\)-Password-Reset#password-broker-customization)
         - [Reset Email Customization](https://github.com/rinvex/fort/wiki/8\)-Password-Reset#reset-email-customization)
-- [9) Fired Events](https://github.com/rinvex/fort/wiki/9\)-Fired-Events)
+- **[9) Fired Events](https://github.com/rinvex/fort/wiki/9\)-Fired-Events)**
 
 
 ## Changelog
