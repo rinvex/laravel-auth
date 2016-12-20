@@ -74,8 +74,8 @@ class EmailVerificationController extends AbstractController
         switch ($result) {
             case EmailVerificationBrokerContract::EMAIL_VERIFIED:
                 return intend([
-                    'url'  => '/',
-                    'with' => ['rinvex.fort.alert.success' => trans($result)],
+                    'route' => $request->user() ? 'rinvex.fort.frontend.auth.login' : 'rinvex.fort.frontend.user.settings',
+                    'with'  => ['rinvex.fort.alert.success' => trans($result)],
                 ]);
 
             case EmailVerificationBrokerContract::INVALID_USER:
