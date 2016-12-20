@@ -38,6 +38,7 @@ use Rinvex\Fort\Console\Commands\UserRemindCommand;
 use Rinvex\Fort\Console\Commands\UserUpdateCommand;
 use Rinvex\Fort\Console\Commands\AbilityFindCommand;
 use Rinvex\Fort\Console\Commands\AbilityCreateCommand;
+use Rinvex\Fort\Console\Commands\AbilityUpdateCommand;
 use Rinvex\Fort\Console\Commands\UserAssignRoleCommand;
 use Rinvex\Fort\Console\Commands\UserRemoveRoleCommand;
 use Rinvex\Fort\Console\Commands\UserGiveAbilityCommand;
@@ -47,7 +48,6 @@ use Rinvex\Fort\Console\Commands\RoleRevokeAbilityCommand;
 use Rinvex\Fort\Console\Commands\UserRevokeAbilityCommand;
 use Rinvex\Fort\Console\Commands\PasswordTokenClearCommand;
 use Rinvex\Fort\Console\Commands\VerificationTokenClearCommand;
-use Rinvex\Fort\Console\Commands\AbilityUpdateCommand\AbilityUpdateCommand;
 
 class FortDeferredServiceProvider extends ServiceProvider
 {
