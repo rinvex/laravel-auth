@@ -13,10 +13,12 @@
  * Link:    https://rinvex.com
  */
 
+namespace Rinvex\Fort\Seeds;
+
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
-class RinvexFortUsersTableSeeder extends Seeder
+class UsersSeeder extends Seeder
 {
     /**
      * Run the database seeds.

@@ -13,10 +13,12 @@
  * Link:    https://rinvex.com
  */
 
+namespace Rinvex\Fort\Seeds;
+
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
-class RinvexFortRolesTableSeeder extends Seeder
+class AbilitiesSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -26,18 +28,15 @@ class RinvexFortRolesTableSeeder extends Seeder
     public function run()
     {
         DB::statement('SET FOREIGN_KEY_CHECKS=0;');
-        DB::table(config('rinvex.fort.tables.roles'))->truncate();
+        DB::table(config('rinvex.fort.tables.abilities'))->truncate();
 
-        // Get roles data
-        $roles = json_decode(file_get_contents(__DIR__.'/../../resources/data/roles.json'), true);
+        // Get abilities data
+        $abilities = json_decode(file_get_contents(__DIR__.'/../../resources/data/abilities.json'), true);
 
-        // Create new roles
-        foreach ($roles as $role) {
-            app('rinvex.fort.role')->create($role);
+        // Create new abilities
+        foreach ($abilities as $ability) {
+            app('rinvex.fort.ability')->create($ability);
         }
-
-        // Grant abilities to roles
-        app('rinvex.fort.role')->findBy('slug', 'admin')->grantAbilityTo('superadmin', 'global');
 
         DB::statement('SET FOREIGN_KEY_CHECKS=1;');
     }

@@ -13,10 +13,12 @@
  * Link:    https://rinvex.com
  */
 
+namespace Rinvex\Fort\Seeds;
+
 use Illuminate\Database\Seeder;
 use Illuminate\Database\Eloquent\Model;
 
-class RinvexFortDatabaseSeeder extends Seeder
+class DatabaseSeeder extends Seeder
 {
     /**
      * {@inheritdoc}
@@ -25,9 +27,9 @@ class RinvexFortDatabaseSeeder extends Seeder
     {
         Model::unguard();
 
-        $this->call(RinvexFortAbilitiesTableSeeder::class);
-        $this->call(RinvexFortRolesTableSeeder::class);
-        $this->call(RinvexFortUsersTableSeeder::class);
+        $this->call(AbilitiesSeeder::class);
+        $this->call(RolesSeeder::class);
+        $this->call(UsersSeeder::class);
 
         Model::reguard();
     }
