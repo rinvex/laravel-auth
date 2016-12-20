@@ -39,8 +39,20 @@ class EmailVerificationRequest extends FormRequest
         return $this->isMethod('post') ? [
             'email' => 'required|email|max:255',
         ] : [
-            'email' => 'required|email|max:255',
             'token' => 'required|regex:/^[0-9a-zA-Z]+$/',
+            'email' => 'required|email|max:255|exists:'.config('rinvex.fort.tables.users').',email',
         ];
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    protected function getRedirectUrl()
+    {
+        if ($this->isMethod('post')) {
+            return parent::getRedirectUrl();
+        }
+
+        return route('rinvex.fort.frontend.verification.email.request');
     }
 }
