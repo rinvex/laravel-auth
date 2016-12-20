@@ -69,17 +69,17 @@ class UserSettingsController extends AuthenticatedController
         $data = $request->except(['_token', 'id']);
         $twoFactor = $currentUser->getTwoFactor();
 
-        $emailVerification = $data['email'] != $currentUser->email ? [
+        $emailVerification = array_get($data, 'email') != $currentUser->email ? [
             'email_verified'    => false,
             'email_verified_at' => null,
         ] : [];
 
-        $phoneVerification = $data['phone'] != $currentUser->phone ? [
+        $phoneVerification = array_get($data, 'phone') != $currentUser->phone ? [
             'phone_verified'    => false,
             'phone_verified_at' => null,
         ] : [];
 
-        $countryVerification = $data['country'] !== $currentUser->country;
+        $countryVerification = array_get($data, 'country') !== $currentUser->country;
 
         if ($twoFactor && ($phoneVerification || $countryVerification)) {
             array_set($twoFactor, 'two_factor.phone.enabled', false);
