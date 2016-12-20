@@ -16,11 +16,11 @@
 
         <!-- Styles -->
         <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
-    {{-- <link href="{{ elixir('css/app.css') }}" rel="stylesheet"> --}}
+        {{-- <link href="{{ elixir('css/app.css') }}" rel="stylesheet"> --}}
 
-    @yield('styles')
+        @yield('styles')
 
-    <!-- Scripts -->
+        <!-- Scripts -->
         <script>
             window.Laravel = <?php echo json_encode([
                 'csrfToken' => csrf_token(),

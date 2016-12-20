@@ -77,7 +77,9 @@
                                     @can('list-abilities') <li><a href="{{ route('rinvex.fort.backend.abilities.index') }}"><i class="fa fa-arrow-right"></i> {{ trans('rinvex/fort::backend/abilities.heading') }}</a></li> @endcan
                                     @can('list-roles') <li><a href="{{ route('rinvex.fort.backend.roles.index') }}"><i class="fa fa-arrow-right"></i> {{ trans('rinvex/fort::backend/roles.heading') }}</a></li> @endcan
                                     @can('list-users') <li><a href="{{ route('rinvex.fort.backend.users.index') }}"><i class="fa fa-arrow-right"></i> {{ trans('rinvex/fort::backend/users.heading') }}</a></li> @endcan
-                                    <li role="separator" class="divider"></li>
+                                    @if(Auth::user()->can('access-dashboard') || Auth::user()->can('list-abilities') || Auth::user()->can('list-roles') || Auth::user()->can('list-users'))
+                                        <li role="separator" class="divider"></li>
+                                    @endif
                                     <li>
                                         <a href="{{ route('rinvex.fort.frontend.auth.logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();"><i class="fa fa-sign-out"></i> {{ trans('rinvex/fort::frontend/forms.common.logout') }}</a>
                                         {{ Form::open(['route' => 'rinvex.fort.frontend.auth.logout', 'id' => 'logout-form', 'style' => 'display: none;']) }}
