@@ -270,7 +270,7 @@
                                                 </a>
                                             </div>
 
-                                            <div class="collapse" id="collapseTwoFactor">
+                                            <div class="collapse col-md-10 col-md-offset-1" id="collapseTwoFactor">
 
                                                 <hr />
                                                 <p class="text-justify">{{ trans('rinvex/fort::frontend/forms.account.two_factor_notice') }}</p>
@@ -289,7 +289,7 @@
                                                             </h3>
                                                         </header>
                                                         <div class="panel-body">
-                                                            {{ trans('rinvex/fort::frontend/forms.account.twofactor_totp_body') }}
+                                                            {!! trans('rinvex/fort::frontend/forms.account.twofactor_totp_body') !!}
                                                         </div>
                                                     </div>
 
