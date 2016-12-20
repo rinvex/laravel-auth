@@ -73,7 +73,7 @@ class PasswordResetController extends AbstractController
      *
      * @param \Rinvex\Fort\Http\Requests\Frontend\PasswordResetRequest $request
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\Response|\Illuminate\View\View
      */
     public function reset(PasswordResetRequest $request)
     {

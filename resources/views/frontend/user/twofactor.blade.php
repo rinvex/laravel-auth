@@ -148,7 +148,7 @@
                             <div class="row">
                                 <div class="col-md-12 col-sm-12 col-xs-12 text-center">
                                     {{ Form::button('<i class="fa fa-cog"></i> '.trans('rinvex/fort::frontend/forms.twofactor.submit'), ['class' => 'btn btn-primary', 'type' => 'submit']) }}
-                                    {{ Form::button(trans('rinvex/fort::frontend/forms.common.reset'), ['class' => 'btn btn-default']) }}
+                                    {{ Form::reset(trans('rinvex/fort::frontend/forms.common.reset'), ['class' => 'btn btn-default']) }}
                                 </div>
                             </div>
 
