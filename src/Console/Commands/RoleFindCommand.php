@@ -71,7 +71,7 @@ class RoleFindCommand extends Command
     protected function registerCommands()
     {
         foreach ($this->commands as $commandKey => $commandClass) {
-            $this->app->singleton($commandKey, function ($app) use ($commandClass) {
+            $this->app->singleton($commandKey, function () use ($commandClass) {
                 return new $commandClass();
             });
         }

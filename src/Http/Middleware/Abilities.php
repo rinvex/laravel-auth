@@ -28,11 +28,10 @@ class Abilities
      *
      * @param \Illuminate\Http\Request $request
      * @param \Closure                 $next
-     * @param string|null              $guard
      *
      * @return mixed
      */
-    public function handle(Request $request, Closure $next, $guard = null)
+    public function handle(Request $request, Closure $next)
     {
         // Bypass authorization check if superadmin
         Gate::before(function (User $user) {
