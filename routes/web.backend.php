@@ -25,7 +25,7 @@
 
 Route::group([
     'prefix'     => 'backend',
-    'middleware' => ['rinvex.fort.backend', 'can:access-dashboard'],
+    'middleware' => ['web', 'abilities', 'can:access-dashboard'],
     'as'         => 'rinvex.fort.backend.',
     'namespace'  => 'Rinvex\Fort\Http\Controllers\Backend',
 ], function () {

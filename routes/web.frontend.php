@@ -24,7 +24,7 @@
 */
 
 Route::group([
-    'middleware' => 'web',
+    'middleware' => ['web', 'abilities'],
     'as'         => 'rinvex.fort.frontend.',
     'namespace'  => 'Rinvex\Fort\Http\Controllers\Frontend',
 ], function () {
