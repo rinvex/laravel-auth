@@ -26,7 +26,7 @@ class EmailVerificationController extends AbstractController
      *
      * @return \Illuminate\Http\Response
      */
-    public function request()
+    public function request(EmailVerificationRequest $request)
     {
         return view('rinvex/fort::frontend/verification.email.request');
     }

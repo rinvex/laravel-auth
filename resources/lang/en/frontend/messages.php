@@ -60,6 +60,7 @@ return [
     'verification' => [
 
         'email' => [
+            'already'       => 'Your email already verified!',
             'verified'      => 'Your email has been verified!',
             'link_sent'     => 'Email verification request has been sent to you!',
             'invalid_token' => 'This verification token is invalid.',

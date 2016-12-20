@@ -26,7 +26,18 @@ class EmailVerificationRequest extends FormRequest
      */
     public function authorize()
     {
-        return true;
+        return ! (bool) array_get(app('rinvex.fort.user')->findBy('email', $this->get('email', $this->user()->email)), 'email_verified');
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function forbiddenResponse()
+    {
+        return intend([
+            'url'  => '/',
+            'with' => ['rinvex.fort.alert.warning' => trans('rinvex/fort::frontend/messages.verification.email.already')],
+        ]);
     }
 
     /**
@@ -36,8 +47,13 @@ class EmailVerificationRequest extends FormRequest
      */
     public function rules()
     {
+        // Skip validation rules for request validation form
+        if ($this->route()->getName() == 'rinvex.fort.frontend.verification.email.request') {
+            return [];
+        }
+
         return $this->isMethod('post') ? [
-            'email' => 'required|email|max:255',
+            'email' => 'required|email|max:255|exists:'.config('rinvex.fort.tables.users').',email',
         ] : [
             'token' => 'required|regex:/^[0-9a-zA-Z]+$/',
             'email' => 'required|email|max:255|exists:'.config('rinvex.fort.tables.users').',email',
