@@ -81,8 +81,8 @@ class UserSettingsController extends AuthenticatedController
 
         $countryVerification = $data['country'] !== $currentUser->country;
 
-        if ($phoneVerification || $countryVerification) {
-            array_set($twoFactor, 'phone.enabled', false);
+        if ($twoFactor && ($phoneVerification || $countryVerification)) {
+            array_set($twoFactor, 'two_factor.phone.enabled', false);
         }
 
         $this->userRepository->update($request->get('id'), $data + $emailVerification + $phoneVerification + $twoFactor);
