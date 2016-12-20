@@ -45,4 +45,16 @@ class PasswordResetRequest extends FormRequest
             'email' => 'required|email|max:255|exists:'.config('rinvex.fort.tables.users').',email',
         ];
     }
+
+    /**
+     * {@inheritdoc}
+     */
+    protected function getRedirectUrl()
+    {
+        if ($this->isMethod('post')) {
+            return parent::getRedirectUrl();
+        }
+
+        return route('rinvex.fort.frontend.passwordreset.request');
+    }
 }
