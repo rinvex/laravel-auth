@@ -87,7 +87,7 @@ class FortDeferredServiceProvider extends ServiceProvider
         'command.rinvex.fort.user.revokeability' => UserRevokeAbilityCommand::class,
 
         'command.rinvex.fort.verification.clear'  => VerificationTokenClearCommand::class,
-        'command.rinvex.fort.reset.clear' => PasswordTokenClearCommand::class,
+        'command.rinvex.fort.reset.clear'         => PasswordTokenClearCommand::class,
 
     ];
 
