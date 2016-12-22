@@ -50,8 +50,16 @@ class FortServiceProvider extends ServiceProvider
         // Publish Resources
         $this->publishResources();
 
-        // Add middleware group on the fly
-        $router->middlewareGroup('abilities', [Abilities::class]);
+        // Override "web" middleware group on the fly
+        $router->middlewareGroup('web', [
+            \App\Http\Middleware\EncryptCookies::class,
+            \Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse::class,
+            \Illuminate\Session\Middleware\StartSession::class,
+            \Illuminate\View\Middleware\ShareErrorsFromSession::class,
+            \App\Http\Middleware\VerifyCsrfToken::class,
+            \Illuminate\Routing\Middleware\SubstituteBindings::class,
+            \Rinvex\Fort\Http\Middleware\Abilities::class,
+        ]);
 
         // Override route middleware on the fly
         $router->middleware('auth', Authenticate::class);
