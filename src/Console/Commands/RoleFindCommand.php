@@ -62,20 +62,4 @@ class RoleFindCommand extends Command
 
         return $this->table($columns, $results->toArray());
     }
-
-    /**
-     * Register the related console commands.
-     *
-     * @return void
-     */
-    protected function registerCommands()
-    {
-        foreach ($this->commands as $commandKey => $commandClass) {
-            $this->app->singleton($commandKey, function () use ($commandClass) {
-                return new $commandClass();
-            });
-        }
-
-        $this->commands(array_keys($this->commands));
-    }
 }
