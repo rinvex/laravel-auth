@@ -125,12 +125,12 @@ class FortEventListener
         $dispatcher->listen('rinvex.fort.ability.entity.deleted', __CLASS__.'@abilityDeleted');
 
         // Roles events
-        $dispatcher->listen('rinvex.fort.role.assigning', __CLASS__.'@roleAssigning');
-        $dispatcher->listen('rinvex.fort.role.assigned', __CLASS__.'@roleAssigned');
+        $dispatcher->listen('rinvex.fort.role.attaching', __CLASS__.'@roleAttaching');
+        $dispatcher->listen('rinvex.fort.role.attached', __CLASS__.'@roleAttached');
         $dispatcher->listen('rinvex.fort.role.syncing', __CLASS__.'@roleSyncing');
         $dispatcher->listen('rinvex.fort.role.synced', __CLASS__.'@roleSynced');
-        $dispatcher->listen('rinvex.fort.role.removing', __CLASS__.'@roleRemoving');
-        $dispatcher->listen('rinvex.fort.role.removed', __CLASS__.'@roleRemoved');
+        $dispatcher->listen('rinvex.fort.role.detaching', __CLASS__.'@roleDetaching');
+        $dispatcher->listen('rinvex.fort.role.detached', __CLASS__.'@roleDetached');
 
         $dispatcher->listen('rinvex.fort.role.entity.creating', __CLASS__.'@roleCreating');
         $dispatcher->listen('rinvex.fort.role.entity.created', __CLASS__.'@roleCreated');
@@ -743,27 +743,27 @@ class FortEventListener
     }
 
     /**
-     * Listen to the role assigning.
+     * Listen to the role attaching.
      *
      * @param \Illuminate\Database\Eloquent\Model $model
      * @param mixed                               $role
      *
      * @return void
      */
-    public function roleAssigning(Model $model, $role)
+    public function roleAttaching(Model $model, $role)
     {
         //
     }
 
     /**
-     * Listen to the role assigned.
+     * Listen to the role attached.
      *
      * @param \Illuminate\Database\Eloquent\Model $model
      * @param mixed                               $role
      *
      * @return void
      */
-    public function roleAssigned(Model $model, $role)
+    public function roleAttached(Model $model, $role)
     {
         $this->app['rinvex.fort.role']->forgetCache();
         $this->app['rinvex.fort.user']->forgetCache();
@@ -797,27 +797,27 @@ class FortEventListener
     }
 
     /**
-     * Listen to the role removing.
+     * Listen to the role detaching.
      *
      * @param \Illuminate\Database\Eloquent\Model $model
      * @param mixed                               $role
      *
      * @return void
      */
-    public function roleRemoving(Model $model, $role)
+    public function roleDetaching(Model $model, $role)
     {
         //
     }
 
     /**
-     * Listen to the role removed.
+     * Listen to the role detached.
      *
      * @param \Illuminate\Database\Eloquent\Model $model
      * @param mixed                               $role
      *
      * @return void
      */
-    public function roleRemoved(Model $model, $role)
+    public function roleDetached(Model $model, $role)
     {
         $this->app['rinvex.fort.role']->forgetCache();
         $this->app['rinvex.fort.user']->forgetCache();
