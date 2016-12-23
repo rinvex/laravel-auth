@@ -20,7 +20,6 @@ use Rinvex\Fort\Guards\TokenGuard;
 use Illuminate\Support\Facades\Auth;
 use Rinvex\Fort\Guards\SessionGuard;
 use Illuminate\Support\ServiceProvider;
-use Rinvex\Fort\Http\Middleware\Abilities;
 use Rinvex\Fort\Listeners\FortEventListener;
 use Rinvex\Fort\Http\Middleware\Authenticate;
 use Rinvex\Fort\Http\Middleware\RedirectIfAuthenticated;
@@ -47,9 +46,6 @@ class FortServiceProvider extends ServiceProvider
      */
     public function boot(Router $router)
     {
-        // Publish Resources
-        $this->publishResources();
-
         // Override "web" middleware group on the fly
         $router->middlewareGroup('web', [
             \App\Http\Middleware\EncryptCookies::class,
@@ -74,8 +70,13 @@ class FortServiceProvider extends ServiceProvider
         // Load language phrases
         $this->loadTranslationsFrom(__DIR__.'/../../resources/lang', 'rinvex/fort');
 
-        // Load migrations
-        $this->loadMigrationsFrom(__DIR__.'/../../database/migrations');
+        if ($this->app->runningInConsole()) {
+            // Load migrations
+            $this->loadMigrationsFrom(__DIR__.'/../../database/migrations');
+
+            // Publish Resources
+            $this->publishResources();
+        }
 
         // Subscribe the registered event listener
         $this->app['events']->subscribe('rinvex.fort.listener');
