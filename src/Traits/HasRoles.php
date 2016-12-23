@@ -80,7 +80,6 @@ trait HasRoles
         // Hydrate Roles
         $roles = static::hydrateRoles($roles)->pluck('id')->toArray();
 
-
         // Fire the role syncing event
         static::$dispatcher->fire("rinvex.fort.role.{$event}ing", [$this, $roles]);
 
