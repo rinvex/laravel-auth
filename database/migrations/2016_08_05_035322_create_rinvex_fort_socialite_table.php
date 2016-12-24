@@ -26,7 +26,7 @@ class CreateRinvexFortSocialiteTable extends Migration
      */
     public function up()
     {
-        Schema::create(config('rinvex.fort.tables.socialite'), function (Blueprint $table) {
+        Schema::create(config('rinvex.fort.tables.socialites'), function (Blueprint $table) {
             // Columns
             $table->increments('id');
             $table->integer('user_id')->unsigned();
@@ -57,6 +57,6 @@ class CreateRinvexFortSocialiteTable extends Migration
      */
     public function down()
     {
-        Schema::drop(config('rinvex.fort.tables.socialite'));
+        Schema::drop(config('rinvex.fort.tables.socialites'));
     }
 }

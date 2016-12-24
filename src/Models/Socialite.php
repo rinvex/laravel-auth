@@ -37,7 +37,7 @@ class Socialite extends Model
     {
         parent::__construct($attributes);
 
-        $this->setTable(config('rinvex.fort.tables.socialite'));
+        $this->setTable(config('rinvex.fort.tables.socialites'));
     }
 
     /**

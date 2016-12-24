@@ -247,17 +247,17 @@ return [
 
         /*
         |--------------------------------------------------------------------------
-        | Socialite Table
+        | Socialites Table
         |--------------------------------------------------------------------------
         |
         | Specify database table name that should be used to store the
         | user social accounts. You may use whatever you like.
         |
-        | Default: "rinvex_fort_socialite"
+        | Default: "rinvex_fort_socialites"
         |
         */
 
-        'socialite' => 'rinvex_fort_socialite',
+        'socialites' => 'rinvex_fort_socialites',
 
     ],
 
