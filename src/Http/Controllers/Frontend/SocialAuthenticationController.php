@@ -19,6 +19,7 @@ use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Laravel\Socialite\Facades\Socialite;
+use Illuminate\Database\Eloquent\Builder;
 use Rinvex\Fort\Contracts\UserRepositoryContract;
 
 class SocialAuthenticationController extends AuthenticationController
@@ -51,7 +52,7 @@ class SocialAuthenticationController extends AuthenticationController
             ]);
         }
 
-        $user = app('rinvex.fort.user')->whereHas('socialites', function ($query) use ($githubUser) {
+        $user = app('rinvex.fort.user')->whereHas('socialites', function (Builder $query) use ($githubUser) {
             $query->where('provider', 'github')->where('provider_uid', $githubUser->id);
         })->first();
 
