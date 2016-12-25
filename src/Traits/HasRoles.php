@@ -31,7 +31,7 @@ trait HasRoles
      */
     public function assignRoles($roles)
     {
-        static::setRoles('syncWithoutDetaching', $roles);
+        static::setRoles($roles, 'syncWithoutDetaching');
 
         return $this;
     }
@@ -45,7 +45,7 @@ trait HasRoles
      */
     public function syncRoles($roles)
     {
-        static::setRoles('sync', $roles);
+        static::setRoles($roles, 'sync');
 
         return $this;
     }
@@ -59,7 +59,7 @@ trait HasRoles
      */
     public function removeRoles($roles)
     {
-        static::setRoles('detach', $roles);
+        static::setRoles($roles, 'detach');
 
         return $this;
     }
