@@ -16,7 +16,6 @@
 return [
 
     'pages'      => 'Showing :count out of :total items',
-    'created_at' => 'Showing :count out of :total items',
     'cancel'     => 'Cancel',
     'reset'      => 'Reset',
     'submit'     => 'Submit',
