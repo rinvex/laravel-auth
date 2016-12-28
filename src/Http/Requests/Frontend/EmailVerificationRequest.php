@@ -26,7 +26,11 @@ class EmailVerificationRequest extends FormRequest
      */
     public function authorize()
     {
-        return ! (bool) array_get(app('rinvex.fort.user')->findBy('email', $this->get('email', $this->user()->email)), 'email_verified');
+        if ((($user = $this->user()) && $user->email_verified) || ($this->get('email') && array_get(app('rinvex.fort.user')->findBy('email', $this->get('email')), 'email_verified'))) {
+            return false;
+        }
+
+        return true;
     }
 
     /**
