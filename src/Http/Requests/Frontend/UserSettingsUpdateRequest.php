@@ -42,7 +42,7 @@ class UserSettingsUpdateRequest extends FormRequest
             unset($data['password'], $data['password_confirmation']);
         }
 
-        return array_filter(array_map('trim', $data));
+        return array_filter_recursive(array_trim_recursive($data));
     }
 
     /**
