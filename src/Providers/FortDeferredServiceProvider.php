@@ -67,27 +67,27 @@ class FortDeferredServiceProvider extends ServiceProvider
      */
     protected $commands = [
 
-        'command.rinvex.fort.ability.find'   => AbilityFindCommand::class,
-        'command.rinvex.fort.ability.update' => AbilityUpdateCommand::class,
-        'command.rinvex.fort.ability.create' => AbilityCreateCommand::class,
+        AbilityFindCommand::class,
+        AbilityUpdateCommand::class,
+        AbilityCreateCommand::class,
 
-        'command.rinvex.fort.role.find'          => RoleFindCommand::class,
-        'command.rinvex.fort.role.update'        => RoleUpdateCommand::class,
-        'command.rinvex.fort.role.create'        => RoleCreateCommand::class,
-        'command.rinvex.fort.role.giveability'   => RoleGiveAbilityCommand::class,
-        'command.rinvex.fort.role.revokeability' => RoleRevokeAbilityCommand::class,
+        RoleFindCommand::class,
+        RoleUpdateCommand::class,
+        RoleCreateCommand::class,
+        RoleGiveAbilityCommand::class,
+        RoleRevokeAbilityCommand::class,
 
-        'command.rinvex.fort.user.find'          => UserFindCommand::class,
-        'command.rinvex.fort.user.create'        => UserCreateCommand::class,
-        'command.rinvex.fort.user.update'        => UserUpdateCommand::class,
-        'command.rinvex.fort.user.reminder'      => UserRemindCommand::class,
-        'command.rinvex.fort.user.assignrole'    => UserAssignRoleCommand::class,
-        'command.rinvex.fort.user.removerole'    => UserRemoveRoleCommand::class,
-        'command.rinvex.fort.user.giveability'   => UserGiveAbilityCommand::class,
-        'command.rinvex.fort.user.revokeability' => UserRevokeAbilityCommand::class,
+        UserFindCommand::class,
+        UserCreateCommand::class,
+        UserUpdateCommand::class,
+        UserRemindCommand::class,
+        UserAssignRoleCommand::class,
+        UserRemoveRoleCommand::class,
+        UserGiveAbilityCommand::class,
+        UserRevokeAbilityCommand::class,
 
-        'command.rinvex.fort.verification.clear'  => VerificationTokenClearCommand::class,
-        'command.rinvex.fort.reset.clear'         => PasswordTokenClearCommand::class,
+        VerificationTokenClearCommand::class,
+        PasswordTokenClearCommand::class,
 
     ];
 
@@ -99,8 +99,10 @@ class FortDeferredServiceProvider extends ServiceProvider
         // Merge config
         $this->mergeConfigFrom(realpath(__DIR__.'/../../config/config.php'), 'rinvex.fort');
 
+        // Register artisan commands
+        $this->commands($this->commands);
+
         // Register bindings
-        $this->registerCommands();
         $this->registerAccessGate();
         $this->registerRepositories();
         $this->registerBrokerManagers();
@@ -121,22 +123,6 @@ class FortDeferredServiceProvider extends ServiceProvider
         // Alias the LaravelCollective Form & HTML Facades
         AliasLoader::getInstance()->alias('Form', FormFacade::class);
         AliasLoader::getInstance()->alias('Html', HtmlFacade::class);
-    }
-
-    /**
-     * Register the console commands.
-     *
-     * @return void
-     */
-    protected function registerCommands()
-    {
-        foreach ($this->commands as $commandKey => $commandClass) {
-            $this->app->singleton($commandKey, function () use ($commandClass) {
-                return new $commandClass();
-            });
-        }
-
-        $this->commands(array_keys($this->commands));
     }
 
     /**
