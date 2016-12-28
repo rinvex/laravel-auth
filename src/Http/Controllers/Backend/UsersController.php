@@ -70,7 +70,7 @@ class UsersController extends AuthorizedController
         $resources = app('rinvex.fort.ability')->findAll()->groupBy('resource');
         $actions = ['list', 'view', 'create', 'update', 'delete', 'import', 'export'];
         $columns = ['resource', 'list', 'view', 'create', 'update', 'delete', 'import', 'export', 'other'];
-        $userCountry = country($user->country);
+        $userCountry = $user->country ? country($user->country) : null;
         $country = ! empty($userCountry) ? $userCountry->getName().' '.$userCountry->getEmoji() : null;
         $phone = ! empty($userCountry) ? $userCountry->getCallingCode().$user->phone : null;
 
