@@ -30,21 +30,22 @@ class UsersSeeder extends Seeder
         DB::statement('SET FOREIGN_KEY_CHECKS=0;');
         DB::table(config('rinvex.fort.tables.users'))->truncate();
 
-        // Get users data
-        $users = json_decode(file_get_contents(__DIR__.'/../../resources/data/users.json'), true);
+        $user = [
+            'username' => 'Fort',
+            'email' => 'help@rinvex.com',
+            'email_verified' => true,
+            'remember_token' => str_random(10),
+            'password' => $password = str_random(),
+        ];
 
-        // Create new users
-        foreach ($users as $user) {
-            $user['password'] = str_random();
-            app('rinvex.fort.user')->create($user);
+        $user = app('rinvex.fort.user')->create($user);
 
-            if (isset($this->command)) {
-                $this->command->getOutput()->writeln("<comment>Username</comment>: {$user['username']} / <comment>Password</comment>: {$user['password']}");
-            }
+        if (isset($this->command)) {
+            $this->command->getOutput()->writeln("<comment>Username</comment>: {$user['username']} / <comment>Password</comment>: {$password}");
         }
 
         // Assign roles to users
-        app('rinvex.fort.user')->findBy('email', 'help@rinvex.com')->assignRoles('admin');
+        $user->assignRoles('admin');
 
         DB::statement('SET FOREIGN_KEY_CHECKS=1;');
     }
