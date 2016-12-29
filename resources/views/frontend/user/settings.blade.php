@@ -35,7 +35,7 @@
                                     <div class="col-md-8">
                                         {{ Form::email('email', null, ['class' => 'form-control', 'placeholder' => trans('rinvex/fort::frontend/forms.passwordreset.email'), 'required' => 'required', 'autofocus' => 'autofocus']) }}
 
-                                        @if ($currentUser->email_verified && $currentUser->email_verified_at)
+                                        @if ($currentUser->email_verified)
                                             <small class="text-success">{!! trans('rinvex/fort::frontend/forms.account.email_verified', ['date' => $currentUser->email_verified_at]) !!}</small>
                                         @else
                                             <small class="text-danger">{!! trans('rinvex/fort::frontend/forms.account.email_unverified', ['href' => route('rinvex.fort.frontend.verification.email.request')]) !!}</small>
@@ -201,7 +201,7 @@
                                     <div class="col-md-8">
                                         {{ Form::text('phone', null, ['class' => 'form-control', 'placeholder' => $currentUser->phone ?: trans('rinvex/fort::frontend/forms.account.phone')]) }}
 
-                                        @if ($currentUser->phone_verified && $currentUser->phone_verified_at)
+                                        @if ($currentUser->phone_verified)
                                             <small class="text-success">{!! trans('rinvex/fort::frontend/forms.account.phone_verified', ['date' => $currentUser->phone_verified_at]) !!}</small>
                                         @else
                                             <small class="text-danger">{!! trans('rinvex/fort::frontend/forms.account.phone_unverified', ['href' => route('rinvex.fort.frontend.verification.phone.request')]) !!}</small>

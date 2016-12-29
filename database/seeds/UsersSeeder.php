@@ -15,6 +15,7 @@
 
 namespace Rinvex\Fort\Seeds;
 
+use Carbon\Carbon;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
@@ -31,11 +32,12 @@ class UsersSeeder extends Seeder
         DB::table(config('rinvex.fort.tables.users'))->truncate();
 
         $user = [
-            'username' => 'Fort',
-            'email' => 'help@rinvex.com',
+            'username'       => 'Fort',
+            'email'          => 'help@rinvex.com',
             'email_verified' => true,
+            'email_verified_at' => Carbon::now(),
             'remember_token' => str_random(10),
-            'password' => $password = str_random(),
+            'password'       => $password = str_random(),
         ];
 
         $user = app('rinvex.fort.user')->create($user);
