@@ -61,7 +61,7 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
         'first_name',
         'middle_name',
         'last_name',
-        'sufix',
+        'suffix',
         'job_title',
         'country',
         'birthdate',
