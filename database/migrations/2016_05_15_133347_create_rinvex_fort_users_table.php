@@ -42,7 +42,7 @@ class CreateRinvexFortUsersTable extends Migration
             $table->string('first_name')->nullable();
             $table->string('middle_name')->nullable();
             $table->string('last_name')->nullable();
-            $table->string('suffix')->nullable();
+            $table->string('sufix')->nullable();
             $table->string('job_title')->nullable();
             $table->string('country', 2)->nullable();
             $table->text('two_factor')->nullable();
