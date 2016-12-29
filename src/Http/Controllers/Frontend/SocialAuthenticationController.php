@@ -52,9 +52,10 @@ class SocialAuthenticationController extends AuthenticationController
             ]);
         }
 
-        $user = app('rinvex.fort.user')->whereHas('socialites', function (Builder $query) use ($githubUser) {
-            $query->where('provider', 'github')->where('provider_uid', $githubUser->id);
-        })->first();
+        $user = app('rinvex.fort.user')->findWhereHas(['socialites', function ($query) use ($githubUser) {
+			$query->where('provider', 'github');
+			$query->where('provider_uid', $githubUser->id);
+		}])->first();
 
         if (! $user) {
             // Prepare registration data
