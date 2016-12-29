@@ -37,6 +37,9 @@ class FortServiceProvider extends ServiceProvider
         // Register the event listener
         $this->app->bind('rinvex.fort.listener', FortEventListener::class);
 
+        // Override Exception Handler
+        $this->overrideExceptionHandler();
+
         // Register the deferred Fort Service Provider
         $this->app->register(FortDeferredServiceProvider::class);
     }
@@ -46,20 +49,8 @@ class FortServiceProvider extends ServiceProvider
      */
     public function boot(Router $router)
     {
-        // Override "web" middleware group on the fly
-        $router->middlewareGroup('web', [
-            \App\Http\Middleware\EncryptCookies::class,
-            \Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse::class,
-            \Illuminate\Session\Middleware\StartSession::class,
-            \Illuminate\View\Middleware\ShareErrorsFromSession::class,
-            \App\Http\Middleware\VerifyCsrfToken::class,
-            \Illuminate\Routing\Middleware\SubstituteBindings::class,
-            \Rinvex\Fort\Http\Middleware\Abilities::class,
-        ]);
-
-        // Override route middleware on the fly
-        $router->middleware('auth', Authenticate::class);
-        $router->middleware('guest', RedirectIfAuthenticated::class);
+        // Override middlware
+        $this->overrideMiddleware($router);
 
         // Load routes
         $this->loadRoutes($router);
@@ -215,5 +206,31 @@ class FortServiceProvider extends ServiceProvider
 
             return $guard;
         });
+    }
+
+    protected function overrideMiddleware(Router $router)
+    {
+        // Override "web" middleware group on the fly
+        $router->middlewareGroup('web', [
+            \App\Http\Middleware\EncryptCookies::class,
+            \Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse::class,
+            \Illuminate\Session\Middleware\StartSession::class,
+            \Illuminate\View\Middleware\ShareErrorsFromSession::class,
+            \App\Http\Middleware\VerifyCsrfToken::class,
+            \Illuminate\Routing\Middleware\SubstituteBindings::class,
+            \Rinvex\Fort\Http\Middleware\Abilities::class,
+        ]);
+
+        // Override route middleware on the fly
+        $router->middleware('auth', Authenticate::class);
+        $router->middleware('guest', RedirectIfAuthenticated::class);
+    }
+
+    protected function overrideExceptionHandler()
+    {
+        $this->app->singleton(
+            \Illuminate\Contracts\Debug\ExceptionHandler::class,
+            \Rinvex\Fort\Exceptions\ExceptionHandler::class
+        );
     }
 }

@@ -108,12 +108,6 @@ class FortDeferredServiceProvider extends ServiceProvider
         $this->registerBrokerManagers();
         $this->registerBladeExtensions();
 
-        // Override exception handler
-        $this->app->singleton(
-            \Illuminate\Contracts\Debug\ExceptionHandler::class,
-            \Rinvex\Fort\Exceptions\ExceptionHandler::class
-        );
-
         // Register the Socialite Service Provider
         $this->app->register(SocialiteServiceProvider::class);
 
