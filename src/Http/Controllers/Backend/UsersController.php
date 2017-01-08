@@ -149,7 +149,7 @@ class UsersController extends AuthorizedController
 
         return intend([
             'route' => 'rinvex.fort.backend.users.index',
-            'with'  => ['rinvex.fort.alert.warning' => trans('rinvex/fort::backend/messages.user.deleted', ['userId' => $result->id])],
+            'with'  => ['warning' => trans('rinvex/fort::backend/messages.user.deleted', ['userId' => $result->id])],
         ]);
     }
 
@@ -229,9 +229,9 @@ class UsersController extends AuthorizedController
         // updated, happens save button clicked without chaning anything
         $message = ! is_null($user)
             ? ($result === false
-                ? ['rinvex.fort.alert.warning' => trans('rinvex/fort::backend/messages.user.nothing_updated', ['userId' => $user->id])]
-                : ['rinvex.fort.alert.success' => trans('rinvex/fort::backend/messages.user.updated', ['userId' => $result->id])])
-            : ['rinvex.fort.alert.success' => trans('rinvex/fort::backend/messages.user.created', ['userId' => $result->id])];
+                ? ['warning' => trans('rinvex/fort::backend/messages.user.nothing_updated', ['userId' => $user->id])]
+                : ['success' => trans('rinvex/fort::backend/messages.user.updated', ['userId' => $result->id])])
+            : ['success' => trans('rinvex/fort::backend/messages.user.created', ['userId' => $result->id])];
 
         return intend([
             'route' => 'rinvex.fort.backend.users.index',

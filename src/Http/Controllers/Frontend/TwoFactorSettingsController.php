@@ -58,7 +58,7 @@ class TwoFactorSettingsController extends AuthenticatedController
         $currentUser = $request->user($this->getGuard());
         $settings = $currentUser->getTwoFactor();
 
-        if (array_get($settings, 'totp.enabled') && ! session()->get('rinvex.fort.alert.success') && ! session()->get('errors')) {
+        if (array_get($settings, 'totp.enabled') && ! session()->get('success') && ! session()->get('errors')) {
             $messageBag = new MessageBag([trans('rinvex/fort::frontend/messages.verification.twofactor.totp.already')]);
             $errors = (new ViewErrorBag())->put('default', $messageBag);
         }
@@ -106,7 +106,7 @@ class TwoFactorSettingsController extends AuthenticatedController
 
             return intend([
                 'back' => true,
-                'with' => ['rinvex.fort.alert.success' => trans('rinvex/fort::frontend/messages.verification.twofactor.totp.enabled')],
+                'with' => ['success' => trans('rinvex/fort::frontend/messages.verification.twofactor.totp.enabled')],
             ]);
         }
 
@@ -136,7 +136,7 @@ class TwoFactorSettingsController extends AuthenticatedController
 
         return intend([
             'route' => 'rinvex.fort.frontend.user.settings',
-            'with'  => ['rinvex.fort.alert.success' => trans('rinvex/fort::frontend/messages.verification.twofactor.totp.disabled')],
+            'with'  => ['success' => trans('rinvex/fort::frontend/messages.verification.twofactor.totp.disabled')],
         ]);
     }
 
@@ -168,7 +168,7 @@ class TwoFactorSettingsController extends AuthenticatedController
 
         return intend([
             'route' => 'rinvex.fort.frontend.user.settings',
-            'with'  => ['rinvex.fort.alert.success' => trans('rinvex/fort::frontend/messages.verification.twofactor.phone.enabled')],
+            'with'  => ['success' => trans('rinvex/fort::frontend/messages.verification.twofactor.phone.enabled')],
         ]);
     }
 
@@ -192,7 +192,7 @@ class TwoFactorSettingsController extends AuthenticatedController
 
         return intend([
             'route' => 'rinvex.fort.frontend.user.settings',
-            'with'  => ['rinvex.fort.alert.success' => trans('rinvex/fort::frontend/messages.verification.twofactor.phone.disabled')],
+            'with'  => ['success' => trans('rinvex/fort::frontend/messages.verification.twofactor.phone.disabled')],
         ]);
     }
 
@@ -224,7 +224,7 @@ class TwoFactorSettingsController extends AuthenticatedController
 
         return intend([
             'back' => true,
-            'with' => ['rinvex.fort.alert.success' => trans('rinvex/fort::frontend/messages.verification.twofactor.totp.rebackup')],
+            'with' => ['success' => trans('rinvex/fort::frontend/messages.verification.twofactor.totp.rebackup')],
         ]);
     }
 

@@ -82,7 +82,7 @@ class AuthenticationController extends AbstractController
 
         return intend([
             'url'  => '/',
-            'with' => ['rinvex.fort.alert.warning' => trans($result)],
+            'with' => ['warning' => trans($result)],
         ]);
     }
 
@@ -128,7 +128,7 @@ class AuthenticationController extends AbstractController
 
                 return intend([
                     'route' => $route,
-                    'with'  => ['rinvex.fort.alert.warning' => trans($result)],
+                    'with'  => ['warning' => trans($result)],
                 ]);
 
             // Login successful and everything is fine!
@@ -136,7 +136,7 @@ class AuthenticationController extends AbstractController
             default:
                 return intend([
                     'intended' => url('/'),
-                    'with'     => ['rinvex.fort.alert.success' => trans($result)],
+                    'with'     => ['success' => trans($result)],
                 ]);
         }
     }

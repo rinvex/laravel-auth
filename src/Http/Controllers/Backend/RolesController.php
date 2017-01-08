@@ -153,7 +153,7 @@ class RolesController extends AuthorizedController
 
         return intend([
             'route' => 'rinvex.fort.backend.roles.index',
-            'with'  => ['rinvex.fort.alert.warning' => trans('rinvex/fort::backend/messages.role.deleted', ['roleId' => $result->id])],
+            'with'  => ['warning' => trans('rinvex/fort::backend/messages.role.deleted', ['roleId' => $result->id])],
         ]);
     }
 
@@ -226,9 +226,9 @@ class RolesController extends AuthorizedController
         // updated, happens save button clicked without chaning anything
         $message = ! is_null($role)
             ? ($result === false
-                ? ['rinvex.fort.alert.warning' => trans('rinvex/fort::backend/messages.role.nothing_updated', ['roleId' => $role->id])]
-                : ['rinvex.fort.alert.success' => trans('rinvex/fort::backend/messages.role.updated', ['roleId' => $result->id])])
-            : ['rinvex.fort.alert.success' => trans('rinvex/fort::backend/messages.role.created', ['roleId' => $result->id])];
+                ? ['warning' => trans('rinvex/fort::backend/messages.role.nothing_updated', ['roleId' => $role->id])]
+                : ['success' => trans('rinvex/fort::backend/messages.role.updated', ['roleId' => $result->id])])
+            : ['success' => trans('rinvex/fort::backend/messages.role.created', ['roleId' => $result->id])];
 
         return intend([
             'route' => 'rinvex.fort.backend.roles.index',

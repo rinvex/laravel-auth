@@ -90,8 +90,8 @@ class UserSettingsController extends AuthenticatedController
         return intend([
             'back' => true,
             'with' => [
-                          'rinvex.fort.alert.success' => trans('rinvex/fort::frontend/messages.account.'.(! empty($emailVerification) ? 'reverify' : 'updated')),
-                      ] + ($twoFactor !== $currentUser->getTwoFactor() ? ['rinvex.fort.alert.warning' => trans('rinvex/fort::frontend/messages.verification.twofactor.phone.auto_disabled')] : []),
+                          'success' => trans('rinvex/fort::frontend/messages.account.'.(! empty($emailVerification) ? 'reverify' : 'updated')),
+                      ] + ($twoFactor !== $currentUser->getTwoFactor() ? ['warning' => trans('rinvex/fort::frontend/messages.verification.twofactor.phone.auto_disabled')] : []),
         ]);
     }
 }

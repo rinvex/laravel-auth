@@ -1,7 +1,7 @@
-@if (session('rinvex.fort.alert.warning'))
+@if (session('warning'))
 
     <div class="alert alert-warning">
-        {{ session('rinvex.fort.alert.warning') }}
+        {{ session('warning') }}
     </div>
 
 @endif

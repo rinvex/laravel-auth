@@ -147,7 +147,7 @@ class AbilitiesController extends AuthorizedController
 
         return intend([
             'route' => 'rinvex.fort.backend.abilities.index',
-            'with'  => ['rinvex.fort.alert.warning' => trans('rinvex/fort::backend/messages.ability.deleted', ['abilityId' => $result->id])],
+            'with'  => ['warning' => trans('rinvex/fort::backend/messages.ability.deleted', ['abilityId' => $result->id])],
         ]);
     }
 
@@ -212,9 +212,9 @@ class AbilitiesController extends AuthorizedController
         // updated, happens save button clicked without chaning anything
         $with = ! is_null($ability)
             ? ($result === false
-                ? ['rinvex.fort.alert.warning' => trans('rinvex/fort::backend/messages.ability.nothing_updated', ['abilityId' => $ability->id])]
-                : ['rinvex.fort.alert.success' => trans('rinvex/fort::backend/messages.ability.updated', ['abilityId' => $result->id])])
-            : ['rinvex.fort.alert.success' => trans('rinvex/fort::backend/messages.ability.created', ['abilityId' => $result->id])];
+                ? ['warning' => trans('rinvex/fort::backend/messages.ability.nothing_updated', ['abilityId' => $ability->id])]
+                : ['success' => trans('rinvex/fort::backend/messages.ability.updated', ['abilityId' => $result->id])])
+            : ['success' => trans('rinvex/fort::backend/messages.ability.created', ['abilityId' => $result->id])];
 
         return intend([
             'route' => 'rinvex.fort.backend.abilities.index',

@@ -53,7 +53,7 @@ class PhoneVerificationController extends AbstractController
 
         return intend([
             'route' => 'rinvex.fort.frontend.verification.phone.verify',
-            'with'  => ['rinvex.fort.alert.success' => trans('rinvex/fort::frontend/messages.verification.phone.sent')],
+            'with'  => ['success' => trans('rinvex/fort::frontend/messages.verification.phone.sent')],
         ]);
     }
 
@@ -98,7 +98,7 @@ class PhoneVerificationController extends AbstractController
 
                 return intend([
                     'route' => 'rinvex.fort.frontend.user.settings',
-                    'with'  => ['rinvex.fort.alert.success' => trans($result)],
+                    'with'  => ['success' => trans($result)],
                 ]);
 
             case SessionGuard::AUTH_LOGIN:
@@ -106,7 +106,7 @@ class PhoneVerificationController extends AbstractController
 
                 return intend([
                     'intended' => url('/'),
-                    'with'     => ['rinvex.fort.alert.success' => trans($result)],
+                    'with'     => ['success' => trans($result)],
                 ]);
 
             case SessionGuard::AUTH_TWOFACTOR_FAILED:

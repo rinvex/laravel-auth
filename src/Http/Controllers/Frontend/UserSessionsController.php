@@ -51,7 +51,7 @@ class UserSessionsController extends AuthenticatedController
 
         return intend([
             'back' => true,
-            'with' => ['rinvex.fort.alert.warning' => $status],
+            'with' => ['warning' => $status],
         ]);
     }
 }
