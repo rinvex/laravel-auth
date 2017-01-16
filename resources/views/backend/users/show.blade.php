@@ -94,7 +94,7 @@
 
                     {{-- Roles --}}
                     <div class="col-md-12">
-                        <strong>{{ trans('rinvex/fort::backend/users.roles.title') }}</strong>:
+                        <strong>{{ trans('rinvex/fort::backend/users.roles.name') }}</strong>:
                         @forelse($user->roles->pluck('title', 'id') as $roleId => $role)
                             @can('view-roles', $role) <a href="{{ route('rinvex.fort.backend.roles.show', ['role' => $roleId]) }}" class="label btn-xs label-info">{{ $role }}</a> @else {{ $role }} @endcan
                         @empty

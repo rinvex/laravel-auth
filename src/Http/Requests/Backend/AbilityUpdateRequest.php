@@ -39,7 +39,7 @@ class AbilityUpdateRequest extends FormRequest
         return [
             'action'   => 'required|unique:'.config('rinvex.fort.tables.abilities').',action,'.$this->get('id').',id,resource,'.$this->get('resource'),
             'resource' => 'required|unique:'.config('rinvex.fort.tables.abilities').',resource,'.$this->get('id').',id,action,'.$this->get('action'),
-            'title'    => 'required',
+            'name'    => 'required',
         ];
     }
 

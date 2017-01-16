@@ -34,7 +34,7 @@ class Ability extends Model
         'action',
         'resource',
         'policy',
-        'title',
+        'name',
         'description',
     ];
 

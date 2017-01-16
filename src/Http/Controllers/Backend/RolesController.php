@@ -199,7 +199,7 @@ class RolesController extends AuthorizedController
     protected function form($mode, $action, Role $role)
     {
         $abilityList = app('rinvex.fort.ability')->findAll()->groupBy('resource')->map(function ($ability) {
-            return $ability->pluck('title', 'id');
+            return $ability->pluck('name', 'id');
         })->toArray();
 
         return view('rinvex/fort::backend/roles.form', compact('role', 'abilityList', 'mode', 'action'));

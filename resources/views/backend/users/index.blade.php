@@ -48,7 +48,7 @@
                             <tr>
                                 <th style="width: 20%">{{ trans('rinvex/fort::backend/users.name') }}</th>
                                 <th style="width: 20%">{{ trans('rinvex/fort::backend/users.contact') }}</th>
-                                <th style="width: 20%">{{ trans('rinvex/fort::backend/users.roles.title') }}</th>
+                                <th style="width: 20%">{{ trans('rinvex/fort::backend/users.roles.name') }}</th>
                                 <th style="width: 15%">{{ trans('rinvex/fort::backend/users.status.title') }}</th>
                                 <th style="width: 15%">{{ trans('rinvex/fort::backend/users.dates') }}</th>
                                 <th style="width: 10%" class="text-right">{{ trans('rinvex/fort::backend/users.actions') }}</th>

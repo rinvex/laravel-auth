@@ -43,7 +43,7 @@
 
                 <div class="row">
                     <div class="col-md-4">
-                        <strong>{{ trans('rinvex/fort::backend/roles.title') }}</strong>: @if($role->title) {{ $role->title }} @else N/A @endif
+                        <strong>{{ trans('rinvex/fort::backend/roles.name') }}</strong>: @if($role->name) {{ $role->name }} @else N/A @endif
                     </div>
                     <div class="col-md-4">
                         <strong>{{ trans('rinvex/fort::backend/roles.slug') }}</strong>: @if($role->slug) {{ $role->slug }} @else N/A @endif

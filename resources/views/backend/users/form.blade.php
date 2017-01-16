@@ -267,7 +267,7 @@
 
                             {{-- Roles --}}
                             <div class="form-group{{ $errors->has('roles') ? ' has-error' : '' }}">
-                                {{ Form::label('roleList[]', trans('rinvex/fort::backend/users.roles.title'), ['class' => 'control-label']) }}
+                                {{ Form::label('roleList[]', trans('rinvex/fort::backend/users.roles.name'), ['class' => 'control-label']) }}
                                 {{ Form::select('roleList[]', $roleList, null, ['class' => 'form-control', 'placeholder' => trans('rinvex/fort::backend/users.roles.select'), 'multiple' => 'multiple', 'size' => 4]) }}
 
                                 @if ($errors->has('roles'))
@@ -284,7 +284,7 @@
 
                             {{-- Abilities --}}
                             <div class="form-group{{ $errors->has('abilityList[]') ? ' has-error' : '' }}">
-                                {{ Form::label('abilityList[]', trans('rinvex/fort::backend/users.abilities.title'), ['class' => 'control-label']) }}
+                                {{ Form::label('abilityList[]', trans('rinvex/fort::backend/users.abilities.name'), ['class' => 'control-label']) }}
                                 {{ Form::select('abilityList[]', $abilityList, null, ['class' => 'form-control', 'placeholder' => trans('rinvex/fort::backend/users.abilities.select'), 'multiple' => 'multiple', 'size' => 4]) }}
 
                                 @if ($errors->has('abilities'))

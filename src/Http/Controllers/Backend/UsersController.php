@@ -199,10 +199,10 @@ class UsersController extends AuthorizedController
         }, countries());
 
         $abilityList = app('rinvex.fort.ability')->findAll()->groupBy('resource')->map(function ($item) {
-            return $item->pluck('title', 'id');
+            return $item->pluck('name', 'id');
         })->toArray();
 
-        $roleList = app('rinvex.fort.role')->findAll()->pluck('title', 'id')->toArray();
+        $roleList = app('rinvex.fort.role')->findAll()->pluck('name', 'id')->toArray();
 
         return view('rinvex/fort::backend/users.form', compact('user', 'abilityList', 'roleList', 'countries', 'mode', 'action'));
     }

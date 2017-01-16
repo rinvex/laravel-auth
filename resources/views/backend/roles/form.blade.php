@@ -55,14 +55,14 @@
                     <div class="row">
                         <div class="col-md-8">
 
-                            {{-- Title --}}
-                            <div class="form-group{{ $errors->has('title') ? ' has-error' : '' }}">
-                                {{ Form::label('title', trans('rinvex/fort::backend/roles.title'), ['class' => 'control-label']) }}
-                                {{ Form::text('title', null, ['class' => 'form-control', 'placeholder' => trans('rinvex/fort::backend/roles.title'), 'required' => 'required', 'autofocus' => 'autofocus']) }}
+                            {{-- Name --}}
+                            <div class="form-group{{ $errors->has('name') ? ' has-error' : '' }}">
+                                {{ Form::label('name', trans('rinvex/fort::backend/roles.name'), ['class' => 'control-label']) }}
+                                {{ Form::text('name', null, ['class' => 'form-control', 'placeholder' => trans('rinvex/fort::backend/roles.name'), 'required' => 'required', 'autofocus' => 'autofocus']) }}
 
-                                @if ($errors->has('title'))
+                                @if ($errors->has('name'))
                                     <span class="help-block">
-                                        <strong>{{ $errors->first('title') }}</strong>
+                                        <strong>{{ $errors->first('name') }}</strong>
                                     </span>
                                 @endif
                             </div>

@@ -32,7 +32,7 @@ class CreateRinvexFortAbilitiesTable extends Migration
             $table->string('action');
             $table->string('resource');
             $table->string('policy')->nullable();
-            $table->string('title');
+            $table->string('name');
             $table->text('description')->nullable();
             $table->timestamps();
             $table->softDeletes();

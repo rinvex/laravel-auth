@@ -30,7 +30,7 @@ class CreateRinvexFortRolesTable extends Migration
             // Columns
             $table->increments('id');
             $table->string('slug');
-            $table->string('title');
+            $table->string('name');
             $table->text('description')->nullable();
             $table->timestamps();
             $table->softDeletes();

@@ -39,7 +39,7 @@ class AbilityStoreRequest extends FormRequest
         return [
             'action'   => 'required|unique:'.config('rinvex.fort.tables.abilities').',action,NULL,id,resource,'.$this->get('resource'),
             'resource' => 'required|unique:'.config('rinvex.fort.tables.abilities').',resource,NULL,id,action,'.$this->get('action'),
-            'title'    => 'required',
+            'name'    => 'required',
         ];
     }
 

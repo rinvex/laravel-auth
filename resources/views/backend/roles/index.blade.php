@@ -46,7 +46,7 @@
 
                         <thead>
                             <tr>
-                                <th style="width: 30%">{{ trans('rinvex/fort::backend/roles.title') }}</th>
+                                <th style="width: 30%">{{ trans('rinvex/fort::backend/roles.name') }}</th>
                                 <th style="width: 40%">{{ trans('rinvex/fort::backend/roles.description') }}</th>
                                 <th style="width: 20%">{{ trans('rinvex/fort::backend/roles.dates') }}</th>
                                 <th style="width: 10%" class="text-right">{{ trans('rinvex/fort::backend/roles.actions') }}</th>
@@ -60,7 +60,7 @@
                                 <tr>
                                     <td>
                                         @can('view-roles', $role) <a href="{{ route('rinvex.fort.backend.roles.show', ['role' => $role]) }}"> @endcan
-                                            <strong>{{ $role->title }}</strong>
+                                            <strong>{{ $role->name }}</strong>
                                             <div class="small ">{{ $role->slug }}</div>
                                         @can('view-roles', $role) </a> @endcan
                                     </td>

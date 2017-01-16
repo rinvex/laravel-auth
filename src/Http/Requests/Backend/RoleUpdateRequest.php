@@ -38,7 +38,7 @@ class RoleUpdateRequest extends FormRequest
     {
         return [
             'slug'  => 'required|unique:'.config('rinvex.fort.tables.roles').',slug,'.$this->get('id'),
-            'title' => 'required',
+            'name' => 'required',
         ];
     }
 }

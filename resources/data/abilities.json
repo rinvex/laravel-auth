@@ -2,150 +2,150 @@
     {
         "action": "superadmin",
         "resource": "global",
-        "title": "Super Administrator"
+        "name": "Super Administrator"
     },
     {
         "action": "access",
         "resource": "dashboard",
         "policy": "Rinvex\\Fort\\Policies\\DashboardPolicy@access",
-        "title": "Access Dashboard"
+        "name": "Access Dashboard"
     },
     {
         "action": "list",
         "resource": "abilities",
         "policy": "Rinvex\\Fort\\Policies\\AbilityPolicy@list",
-        "title": "Can List Existing Abilities"
+        "name": "Can List Existing Abilities"
     },
     {
         "action": "view",
         "resource": "abilities",
         "policy": "Rinvex\\Fort\\Policies\\AbilityPolicy@view",
-        "title": "Can View Existing Abilities"
+        "name": "Can View Existing Abilities"
     },
     {
         "action": "create",
         "resource": "abilities",
         "policy": "Rinvex\\Fort\\Policies\\AbilityPolicy@create",
-        "title": "Can Create New Abilities"
+        "name": "Can Create New Abilities"
     },
     {
         "action": "update",
         "resource": "abilities",
         "policy": "Rinvex\\Fort\\Policies\\AbilityPolicy@update",
-        "title": "Can Update Existing Abilities"
+        "name": "Can Update Existing Abilities"
     },
     {
         "action": "delete",
         "resource": "abilities",
         "policy": "Rinvex\\Fort\\Policies\\AbilityPolicy@delete",
-        "title": "Can Delete Existing Abilities"
+        "name": "Can Delete Existing Abilities"
     },
     {
         "action": "import",
         "resource": "abilities",
         "policy": "Rinvex\\Fort\\Policies\\AbilityPolicy@import",
-        "title": "Can Import New Abilities"
+        "name": "Can Import New Abilities"
     },
     {
         "action": "export",
         "resource": "abilities",
         "policy": "Rinvex\\Fort\\Policies\\AbilityPolicy@export",
-        "title": "Can Export Existing Abilities"
+        "name": "Can Export Existing Abilities"
     },
     {
         "action": "grant",
         "resource": "abilities",
         "policy": "Rinvex\\Fort\\Policies\\AbilityPolicy@grant",
-        "title": "Can Grant/Revoke Abilities To Users"
+        "name": "Can Grant/Revoke Abilities To Users"
     },
     {
         "action": "list",
         "resource": "roles",
         "policy": "Rinvex\\Fort\\Policies\\RolePolicy@list",
-        "title": "Can List Existing Roles"
+        "name": "Can List Existing Roles"
     },
     {
         "action": "view",
         "resource": "roles",
         "policy": "Rinvex\\Fort\\Policies\\RolePolicy@view",
-        "title": "Can View Existing Roles"
+        "name": "Can View Existing Roles"
     },
     {
         "action": "create",
         "resource": "roles",
         "policy": "Rinvex\\Fort\\Policies\\RolePolicy@create",
-        "title": "Can Create New Roles"
+        "name": "Can Create New Roles"
     },
     {
         "action": "update",
         "resource": "roles",
         "policy": "Rinvex\\Fort\\Policies\\RolePolicy@update",
-        "title": "Can Update Existing Roles"
+        "name": "Can Update Existing Roles"
     },
     {
         "action": "delete",
         "resource": "roles",
         "policy": "Rinvex\\Fort\\Policies\\RolePolicy@delete",
-        "title": "Can Delete Existing Roles"
+        "name": "Can Delete Existing Roles"
     },
     {
         "action": "import",
         "resource": "roles",
         "policy": "Rinvex\\Fort\\Policies\\RolePolicy@import",
-        "title": "Can Import New Roles"
+        "name": "Can Import New Roles"
     },
     {
         "action": "export",
         "resource": "roles",
         "policy": "Rinvex\\Fort\\Policies\\RolePolicy@export",
-        "title": "Can Export Existing Roles"
+        "name": "Can Export Existing Roles"
     },
     {
         "action": "assign",
         "resource": "roles",
         "policy": "Rinvex\\Fort\\Policies\\RolePolicy@assign",
-        "title": "Can Assign/Remove Roles To Users"
+        "name": "Can Assign/Remove Roles To Users"
     },
     {
         "action": "list",
         "resource": "users",
         "policy": "Rinvex\\Fort\\Policies\\UserPolicy@list",
-        "title": "Can List Existing Users"
+        "name": "Can List Existing Users"
     },
     {
         "action": "view",
         "resource": "users",
         "policy": "Rinvex\\Fort\\Policies\\UserPolicy@view",
-        "title": "Can View Existing Users"
+        "name": "Can View Existing Users"
     },
     {
         "action": "create",
         "resource": "users",
         "policy": "Rinvex\\Fort\\Policies\\UserPolicy@create",
-        "title": "Can Create New Users"
+        "name": "Can Create New Users"
     },
     {
         "action": "update",
         "resource": "users",
         "policy": "Rinvex\\Fort\\Policies\\UserPolicy@update",
-        "title": "Can Update Existing Users"
+        "name": "Can Update Existing Users"
     },
     {
         "action": "delete",
         "resource": "users",
         "policy": "Rinvex\\Fort\\Policies\\UserPolicy@delete",
-        "title": "Can Delete Existing Users"
+        "name": "Can Delete Existing Users"
     },
     {
         "action": "import",
         "resource": "users",
         "policy": "Rinvex\\Fort\\Policies\\UserPolicy@import",
-        "title": "Can Import New Users"
+        "name": "Can Import New Users"
     },
     {
         "action": "export",
         "resource": "users",
         "policy": "Rinvex\\Fort\\Policies\\UserPolicy@export",
-        "title": "Can Export Existing Users"
+        "name": "Can Export Existing Users"
     }
 ]

@@ -15,7 +15,7 @@
 
 return [
 
-    'title'       => 'Title',
+    'name'        => 'Name',
     'description' => 'Description',
     'dates'       => 'Dates',
     'actions'     => 'Actions',

@@ -44,7 +44,7 @@
 
                 <div class="row">
                     <div class="col-md-4">
-                        <strong>{{ trans('rinvex/fort::backend/abilities.title') }}</strong>: @if($ability->title) {{ $ability->title }} @else N/A @endif
+                        <strong>{{ trans('rinvex/fort::backend/abilities.name') }}</strong>: @if($ability->name) {{ $ability->name }} @else N/A @endif
                     </div>
                     <div class="col-md-4">
                         <strong>{{ trans('rinvex/fort::backend/abilities.slug') }}</strong>: @if($ability->slug) {{ $ability->slug }} @else N/A @endif
@@ -67,7 +67,7 @@
                 <div class="row">
                     <div class="col-md-12">
                         <strong>{{ trans('rinvex/fort::backend/abilities.roles') }}</strong>:
-                        @forelse($ability->roles->pluck('title', 'id') as $roleId => $role)
+                        @forelse($ability->roles->pluck('name', 'id') as $roleId => $role)
                             @can('view-roles', $role) <a href="{{ route('rinvex.fort.backend.roles.show', ['role' => $roleId]) }}" class="label btn-xs label-info">{{ $role }}</a> @else {{ $role }} @endcan
                         @empty
                             <span>N/A</span>
