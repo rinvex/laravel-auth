@@ -220,13 +220,10 @@ class SessionGuard implements StatefulGuardContract, SupportsBasicAuth
             return $this->user;
         }
 
-        $userBySession = $this->getUserBySession();
-        $userByCookie = $this->getUserByCookie();
-
         // First we will try to load the user using the identifier in the session if
         // one exists. Otherwise we will check for a "remember me" cookie in this
         // request, and if one exists, attempt to retrieve the user using that.
-        if ($userBySession) {
+        if ($userBySession = $this->getUserBySession()) {
             // Fire the authenticated event
             $this->events->fire('rinvex.fort.auth.user', [$userBySession]);
         }
@@ -234,7 +231,7 @@ class SessionGuard implements StatefulGuardContract, SupportsBasicAuth
         // If the user is null, but we decrypt a "recaller" cookie we can attempt to
         // pull the user data on that cookie which serves as a remember cookie on
         // the application. Once we have a user we can return it to the caller.
-        if (is_null($userBySession) && $userByCookie) {
+        if (is_null($userBySession) && $userByCookie = $this->getUserByCookie()) {
             // The `updateSession` method changes session ID,
             // and we need old session ID for later usage.
             $oldSession = $this->session->getId();
@@ -247,6 +244,8 @@ class SessionGuard implements StatefulGuardContract, SupportsBasicAuth
 
             // Fire the authentication login event
             $this->events->fire('rinvex.fort.auth.login', [$userByCookie, true]);
+        } else {
+            $userByCookie = null;
         }
 
         // Prepare current persistence instance

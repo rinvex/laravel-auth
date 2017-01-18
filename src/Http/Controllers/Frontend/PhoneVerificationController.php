@@ -105,8 +105,8 @@ class PhoneVerificationController extends AbstractController
                 Auth::guard($guard)->login($user, session('rinvex.fort.twofactor.remember'), session('rinvex.fort.twofactor.persistence'));
 
                 return intend([
-                    'intended' => url('/'),
-                    'with'     => ['success' => trans($result)],
+                    'url' => '/',
+                    'with' => ['success' => trans($result)],
                 ]);
 
             case SessionGuard::AUTH_TWOFACTOR_FAILED:

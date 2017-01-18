@@ -22,7 +22,6 @@
 
                     <div class="panel-body">
                         {{ Form::model($currentUser, ['route' => 'rinvex.fort.frontend.user.settings.update', 'class' => 'form-horizontal']) }}
-                            {{ Form::hidden('id') }}
 
                             @include('rinvex/fort::frontend/alerts.success')
                             @include('rinvex/fort::frontend/alerts.warning')

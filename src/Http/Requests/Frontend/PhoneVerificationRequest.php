@@ -64,7 +64,7 @@ class PhoneVerificationRequest extends FormRequest
         $user = $this->user() ?: Auth::guard()->attemptUser();
         $providers = config('rinvex.fort.twofactor.providers');
 
-        return ! $user || ! $user->country || ! in_array('phone', $providers) ? false : true;
+        return ! $user || (! isset(session('rinvex.fort.twofactor.methods')['totp']) && (! $user->country || ! in_array('phone', $providers))) ? false : true;
     }
 
     /**
