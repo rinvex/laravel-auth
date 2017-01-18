@@ -59,7 +59,7 @@ class Ability extends Model
      */
     public function roles()
     {
-        return $this->belongsToMany(config('rinvex.fort.models.role'), config('rinvex.fort.tables.ability_role'))
+        return $this->belongsToMany(config('rinvex.fort.models.role'), config('rinvex.fort.tables.ability_role'), 'ability_id', 'role_id')
                     ->withTimestamps();
     }
 
@@ -70,7 +70,7 @@ class Ability extends Model
      */
     public function users()
     {
-        return $this->belongsToMany(config('rinvex.fort.models.user'), config('rinvex.fort.tables.ability_user'))
+        return $this->belongsToMany(config('rinvex.fort.models.user'), config('rinvex.fort.tables.ability_user'), 'ability_id', 'user_id')
                     ->withTimestamps();
     }
 

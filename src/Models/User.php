@@ -122,7 +122,8 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
      */
     public function abilities()
     {
-        return $this->belongsToMany(config('rinvex.fort.models.ability'), config('rinvex.fort.tables.ability_user'))->withTimestamps();
+        return $this->belongsToMany(config('rinvex.fort.models.ability'), config('rinvex.fort.tables.ability_user'), 'user_id', 'ability_id')
+                    ->withTimestamps();
     }
 
     /**
@@ -132,7 +133,8 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
      */
     public function roles()
     {
-        return $this->belongsToMany(config('rinvex.fort.models.role'), config('rinvex.fort.tables.role_user'))->withTimestamps();
+        return $this->belongsToMany(config('rinvex.fort.models.role'), config('rinvex.fort.tables.role_user'), 'user_id', 'role_id')
+                    ->withTimestamps();
     }
 
     /**
@@ -142,7 +144,7 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
      */
     public function persistences()
     {
-        return $this->hasMany(config('rinvex.fort.models.persistence'));
+        return $this->hasMany(config('rinvex.fort.models.persistence'), 'user_id', 'id');
     }
 
     /**
@@ -152,7 +154,7 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
      */
     public function socialites()
     {
-        return $this->hasMany(config('rinvex.fort.models.socialite'));
+        return $this->hasMany(config('rinvex.fort.models.socialite'), 'user_id', 'id');
     }
 
     /**
