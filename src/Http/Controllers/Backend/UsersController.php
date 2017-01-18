@@ -68,7 +68,7 @@ class UsersController extends AuthorizedController
      */
     public function create()
     {
-        return $this->form('create', 'store', new User);
+        return $this->form('create', 'store', new User());
     }
 
     /**

@@ -204,6 +204,7 @@ class SessionGuard implements StatefulGuardContract, SupportsBasicAuth
      * Get the currently authenticated user.
      *
      * @throws \Rinvex\Fort\Exceptions\InvalidPersistenceException
+     *
      * @return null|\Rinvex\Fort\Contracts\AuthenticatableContract
      */
     public function user()
@@ -794,6 +795,7 @@ class SessionGuard implements StatefulGuardContract, SupportsBasicAuth
      * Get the cookie creator instance used by the guard.
      *
      * @throws \RuntimeException
+     *
      * @return \Illuminate\Contracts\Cookie\QueueingFactory
      */
     public function getCookieJar()
@@ -862,7 +864,7 @@ class SessionGuard implements StatefulGuardContract, SupportsBasicAuth
     /**
      * Set the user provider used by the guard.
      *
-     * @param  \Illuminate\Contracts\Auth\UserProvider $provider
+     * @param \Illuminate\Contracts\Auth\UserProvider $provider
      *
      * @return void
      */
