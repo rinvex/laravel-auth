@@ -52,8 +52,8 @@ class UsersController extends AuthorizedController
     public function show(User $user)
     {
         $resources = Ability::all()->groupBy('resource');
-        $actions = ['list', 'view', 'create', 'update', 'delete', 'import', 'export'];
-        $columns = ['resource', 'list', 'view', 'create', 'update', 'delete', 'import', 'export', 'other'];
+        $actions = ['list', 'view', 'create', 'update', 'delete'];
+        $columns = ['resource', 'list', 'view', 'create', 'update', 'delete', 'other'];
         $userCountry = $user->country ? country($user->country) : null;
         $country = ! empty($userCountry) ? $userCountry->getName().' '.$userCountry->getEmoji() : null;
         $phone = ! empty($userCountry) ? $userCountry->getCallingCode().$user->phone : null;
@@ -135,36 +135,6 @@ class UsersController extends AuthorizedController
             'route' => 'rinvex.fort.backend.users.index',
             'with'  => ['warning' => trans('rinvex/fort::backend/messages.user.deleted', ['userId' => $result->id])],
         ]);
-    }
-
-    /**
-     * Import the given resources into storage.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function import()
-    {
-        //
-    }
-
-    /**
-     * Export the given resources from storage.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function export()
-    {
-        //
-    }
-
-    /**
-     * Bulk control the given resources.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function bulk()
-    {
-        //
     }
 
     /**

@@ -39,10 +39,6 @@ Route::group([
 
     Route::group(['as' => 'abilities.', 'prefix' => 'abilities'], function () {
         Route::get('/')->name('index')->uses('AbilitiesController@index');
-        Route::put('/')->name('bulk')->uses('AbilitiesController@bulk');
-
-        Route::post('import')->name('import')->uses('AbilitiesController@import');
-        Route::post('export')->name('export')->uses('AbilitiesController@export');
 
         Route::get('{ability}')->name('show')->uses('AbilitiesController@show')->where('ability', '[0-9]+');
 
@@ -64,10 +60,6 @@ Route::group([
 
     Route::group(['as' => 'roles.', 'prefix' => 'roles'], function () {
         Route::get('/')->name('index')->uses('RolesController@index');
-        Route::put('/')->name('bulk')->uses('RolesController@bulk');
-
-        Route::post('import')->name('import')->uses('RolesController@import');
-        Route::post('export')->name('export')->uses('RolesController@export');
 
         Route::get('{role}')->name('show')->uses('RolesController@show')->where('role', '[0-9]+');
 
@@ -89,10 +81,6 @@ Route::group([
 
     Route::group(['as' => 'users.', 'prefix' => 'users'], function () {
         Route::get('/')->name('index')->uses('UsersController@index');
-        Route::put('/')->name('bulk')->uses('UsersController@bulk');
-
-        Route::post('import')->name('import')->uses('UsersController@import');
-        Route::post('export')->name('export')->uses('UsersController@export');
 
         Route::get('{user}')->name('show')->uses('UsersController@show')->where('user', '[0-9]+');
 

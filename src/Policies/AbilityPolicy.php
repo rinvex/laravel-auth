@@ -100,32 +100,6 @@ class AbilityPolicy
     }
 
     /**
-     * Determine whether the user can import the abilities.
-     *
-     * @param string                   $ability
-     * @param \Rinvex\Fort\Models\User $user
-     *
-     * @return bool
-     */
-    public function import($ability, User $user)
-    {
-        return $user->allAbilities->pluck('slug')->contains($ability);
-    }
-
-    /**
-     * Determine whether the user can export the abilities.
-     *
-     * @param string                   $ability
-     * @param \Rinvex\Fort\Models\User $user
-     *
-     * @return bool
-     */
-    public function export($ability, User $user)
-    {
-        return $user->allAbilities->pluck('slug')->contains($ability);
-    }
-
-    /**
      * Determine whether the user can grant the given ability to the given user.
      *
      * @param string                      $ability

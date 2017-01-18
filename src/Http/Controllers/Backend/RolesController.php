@@ -56,8 +56,8 @@ class RolesController extends AuthorizedController
     public function show(Role $role)
     {
         $resources = Ability::all()->groupBy('resource');
-        $actions = ['list', 'view', 'create', 'update', 'delete', 'import', 'export'];
-        $columns = ['resource', 'list', 'view', 'create', 'update', 'delete', 'import', 'export', 'other'];
+        $actions = ['list', 'view', 'create', 'update', 'delete'];
+        $columns = ['resource', 'list', 'view', 'create', 'update', 'delete', 'other'];
 
         return view('rinvex/fort::backend/roles.show', compact('role', 'resources', 'actions', 'columns'));
     }
@@ -136,36 +136,6 @@ class RolesController extends AuthorizedController
             'route' => 'rinvex.fort.backend.roles.index',
             'with'  => ['warning' => trans('rinvex/fort::backend/messages.role.deleted', ['roleId' => $result->id])],
         ]);
-    }
-
-    /**
-     * Import the given resources into storage.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function import()
-    {
-        //
-    }
-
-    /**
-     * Export the given resources from storage.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function export()
-    {
-        //
-    }
-
-    /**
-     * Bulk control the given resources.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function bulk()
-    {
-        //
     }
 
     /**

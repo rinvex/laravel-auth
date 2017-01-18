@@ -41,18 +41,6 @@
         "name": "Can Delete Existing Abilities"
     },
     {
-        "action": "import",
-        "resource": "abilities",
-        "policy": "Rinvex\\Fort\\Policies\\AbilityPolicy@import",
-        "name": "Can Import New Abilities"
-    },
-    {
-        "action": "export",
-        "resource": "abilities",
-        "policy": "Rinvex\\Fort\\Policies\\AbilityPolicy@export",
-        "name": "Can Export Existing Abilities"
-    },
-    {
         "action": "grant",
         "resource": "abilities",
         "policy": "Rinvex\\Fort\\Policies\\AbilityPolicy@grant",
@@ -89,18 +77,6 @@
         "name": "Can Delete Existing Roles"
     },
     {
-        "action": "import",
-        "resource": "roles",
-        "policy": "Rinvex\\Fort\\Policies\\RolePolicy@import",
-        "name": "Can Import New Roles"
-    },
-    {
-        "action": "export",
-        "resource": "roles",
-        "policy": "Rinvex\\Fort\\Policies\\RolePolicy@export",
-        "name": "Can Export Existing Roles"
-    },
-    {
         "action": "assign",
         "resource": "roles",
         "policy": "Rinvex\\Fort\\Policies\\RolePolicy@assign",
@@ -135,17 +111,5 @@
         "resource": "users",
         "policy": "Rinvex\\Fort\\Policies\\UserPolicy@delete",
         "name": "Can Delete Existing Users"
-    },
-    {
-        "action": "import",
-        "resource": "users",
-        "policy": "Rinvex\\Fort\\Policies\\UserPolicy@import",
-        "name": "Can Import New Users"
-    },
-    {
-        "action": "export",
-        "resource": "users",
-        "policy": "Rinvex\\Fort\\Policies\\UserPolicy@export",
-        "name": "Can Export Existing Users"
     }
 ]

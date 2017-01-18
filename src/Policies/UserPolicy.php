@@ -94,30 +94,4 @@ class UserPolicy
                && ! $resource->isSuperadmin()                           // RESOURCE user is NOT superadmin
                && ! $resource->isProtected();                           // RESOURCE user is NOT protected
     }
-
-    /**
-     * Determine whether the user can import the users.
-     *
-     * @param string                   $ability
-     * @param \Rinvex\Fort\Models\User $user
-     *
-     * @return bool
-     */
-    public function import($ability, User $user)
-    {
-        return $user->allAbilities->pluck('slug')->contains($ability);
-    }
-
-    /**
-     * Determine whether the user can export the users.
-     *
-     * @param string                   $ability
-     * @param \Rinvex\Fort\Models\User $user
-     *
-     * @return bool
-     */
-    public function export($ability, User $user)
-    {
-        return $user->allAbilities->pluck('slug')->contains($ability);
-    }
 }

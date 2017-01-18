@@ -134,36 +134,6 @@ class AbilitiesController extends AuthorizedController
     }
 
     /**
-     * Import the given resources into storage.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function import()
-    {
-        //
-    }
-
-    /**
-     * Export the given resources from storage.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function export()
-    {
-        //
-    }
-
-    /**
-     * Bulk control the given resources.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function bulk()
-    {
-        //
-    }
-
-    /**
      * Show the form for create/edit/copy of the given resource.
      *
      * @param string                      $mode
