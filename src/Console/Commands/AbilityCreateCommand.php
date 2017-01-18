@@ -19,6 +19,7 @@ use Illuminate\Support\Str;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Lang;
 use Illuminate\Contracts\Validation\Factory;
+use Rinvex\Fort\Models\Ability;
 
 class AbilityCreateCommand extends Command
 {
@@ -71,7 +72,7 @@ class AbilityCreateCommand extends Command
                 $this->error('- '.$key.': '.$messages[0]);
             }
         } else {
-            $ability = $this->laravel['rinvex.fort.ability']->create($data);
+            $ability = Ability::create($data);
 
             $this->info(Lang::get('rinvex.fort::artisan.ability.created').' ['.Lang::get('rinvex.fort::artisan.ability.id').': '.$ability->id.', '.Lang::get('rinvex.fort::artisan.ability.name').': '.$ability->name.', '.Lang::get('rinvex.fort::artisan.ability.slug').': '.$ability->slug.']');
         }

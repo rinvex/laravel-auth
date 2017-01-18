@@ -19,7 +19,7 @@ use Closure;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
 use UnexpectedValueException;
-use Rinvex\Fort\Contracts\UserRepositoryContract;
+use Illuminate\Contracts\Auth\UserProvider;
 use Rinvex\Fort\Contracts\CanResetPasswordContract;
 use Rinvex\Fort\Contracts\PasswordResetBrokerContract;
 use Rinvex\Fort\Contracts\PasswordResetTokenRepositoryContract;
@@ -36,9 +36,9 @@ class PasswordResetBroker implements PasswordResetBrokerContract
     /**
      * The user provider implementation.
      *
-     * @var \Rinvex\Fort\Contracts\UserRepositoryContract
+     * @var \Illuminate\Contracts\Auth\UserProvider
      */
-    protected $userRepository;
+    protected $userProvider;
 
     /**
      * The custom password validator callback.
@@ -51,12 +51,12 @@ class PasswordResetBroker implements PasswordResetBrokerContract
      * Create a new password broker instance.
      *
      * @param \Rinvex\Fort\Contracts\PasswordResetTokenRepositoryContract $tokens
-     * @param \Rinvex\Fort\Contracts\UserRepositoryContract               $userRepository
+     * @param \Illuminate\Contracts\Auth\UserProvider                     $userProvider
      */
-    public function __construct(PasswordResetTokenRepositoryContract $tokens, UserRepositoryContract $userRepository)
+    public function __construct(PasswordResetTokenRepositoryContract $tokens, UserProvider $userProvider)
     {
         $this->tokens = $tokens;
-        $this->userRepository = $userRepository;
+        $this->userProvider = $userProvider;
     }
 
     /**
@@ -106,7 +106,7 @@ class PasswordResetBroker implements PasswordResetBrokerContract
         event('rinvex.fort.passwordreset.start', [$user]);
 
         // Update user password
-        app('rinvex.fort.user')->update($user, [
+        $user->update([
             'password'       => $credentials['password'],
             'remember_token' => Str::random(60),
         ]);
@@ -181,7 +181,7 @@ class PasswordResetBroker implements PasswordResetBrokerContract
     {
         $credentials = Arr::except($credentials, ['token']);
 
-        $user = $this->userRepository->findByCredentials($credentials);
+        $user = $this->userProvider->retrieveByCredentials($credentials);
 
         if ($user && ! $user instanceof CanResetPasswordContract) {
             throw new UnexpectedValueException('User must implement CanResetPasswordContract interface.');

@@ -19,32 +19,12 @@ use Carbon\Carbon;
 use Illuminate\Support\MessageBag;
 use Illuminate\Support\ViewErrorBag;
 use Rinvex\Fort\Services\TwoFactorTotpProvider;
-use Rinvex\Fort\Contracts\UserRepositoryContract;
 use Rinvex\Fort\Http\Controllers\AuthenticatedController;
 use Rinvex\Fort\Http\Requests\Frontend\TwoFactorTotpUpdateRequest;
 use Rinvex\Fort\Http\Requests\Frontend\TwoFactorPhoneUpdateRequest;
 
 class TwoFactorSettingsController extends AuthenticatedController
 {
-    /**
-     * The user repository instance.
-     *
-     * @var \Rinvex\Fort\Contracts\UserRepositoryContract
-     */
-    protected $userRepository;
-
-    /**
-     * Create a new Two-Factor update controller instance.
-     *
-     * @param \Rinvex\Fort\Contracts\UserRepositoryContract $userRepository
-     */
-    public function __construct(UserRepositoryContract $userRepository)
-    {
-        parent::__construct();
-
-        $this->userRepository = $userRepository;
-    }
-
     /**
      * Show the Two-Factor TOTP enable form.
      *
@@ -67,7 +47,7 @@ class TwoFactorSettingsController extends AuthenticatedController
             array_set($settings, 'totp.enabled', false);
             array_set($settings, 'totp.secret', $secret = $totpProvider->generateSecretKey());
 
-            $this->userRepository->update($currentUser, [
+            $currentUser->update([
                 'two_factor' => $settings,
             ]);
         }
@@ -100,7 +80,7 @@ class TwoFactorSettingsController extends AuthenticatedController
             array_set($settings, 'totp.backup_at', $backupAt ?: (new Carbon())->toDateTimeString());
 
             // Update Two-Factor settings
-            $this->userRepository->update($currentUser, [
+            $currentUser->update([
                 'two_factor' => $settings,
             ]);
 
@@ -130,7 +110,7 @@ class TwoFactorSettingsController extends AuthenticatedController
 
         array_set($settings, 'totp', []);
 
-        $this->userRepository->update($currentUser, [
+        $currentUser->update([
             'two_factor' => $settings,
         ]);
 
@@ -162,7 +142,7 @@ class TwoFactorSettingsController extends AuthenticatedController
 
         array_set($settings, 'phone.enabled', true);
 
-        $this->userRepository->update($currentUser, [
+        $currentUser->update([
             'two_factor' => $settings,
         ]);
 
@@ -186,7 +166,7 @@ class TwoFactorSettingsController extends AuthenticatedController
 
         array_set($settings, 'phone.enabled', false);
 
-        $this->userRepository->update($currentUser, [
+        $currentUser->update([
             'two_factor' => $settings,
         ]);
 
@@ -218,7 +198,7 @@ class TwoFactorSettingsController extends AuthenticatedController
         array_set($settings, 'totp.backup', $this->generateTotpBackups());
         array_set($settings, 'totp.backup_at', (new Carbon())->toDateTimeString());
 
-        $this->userRepository->update($currentUser, [
+        $currentUser->update([
             'two_factor' => $settings,
         ]);
 

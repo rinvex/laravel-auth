@@ -15,6 +15,7 @@
 
 namespace Rinvex\Fort\Seeds;
 
+use Rinvex\Fort\Models\Role;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
@@ -35,11 +36,11 @@ class RolesSeeder extends Seeder
 
         // Create new roles
         foreach ($roles as $role) {
-            app('rinvex.fort.role')->create($role);
+            Role::create($role);
         }
 
         // Grant abilities to roles
-        app('rinvex.fort.role')->findBy('slug', 'admin')->grantAbilityTo('superadmin', 'global');
+        Role::where('slug', 'admin')->first()->grantAbilityTo('superadmin', 'global');
 
         DB::statement('SET FOREIGN_KEY_CHECKS=1;');
     }

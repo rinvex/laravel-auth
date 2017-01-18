@@ -235,7 +235,7 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
                 'authy_id' => $authyId,
             ]);
 
-            app('rinvex.fort.user')->update($this, ['two_factor' => $settings]);
+            $this->update(['two_factor' => $settings]);
         }
 
         return $authyId;

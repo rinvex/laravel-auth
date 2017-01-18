@@ -17,6 +17,7 @@ namespace Rinvex\Fort\Console\Commands;
 
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Lang;
+use Rinvex\Fort\Models\User;
 
 class UserFindCommand extends Command
 {
@@ -45,11 +46,11 @@ class UserFindCommand extends Command
 
         // Find single user
         if ($field = $this->argument('field')) {
-            if (intval($field) && $user = $this->laravel['rinvex.fort.user']->find($field, $columns)) {
+            if (intval($field) && $user = User::find($field, $columns)) {
                 return $this->table($columns, [$user->toArray()]);
-            } elseif (filter_var($field, FILTER_VALIDATE_EMAIL) && $user = $this->laravel['rinvex.fort.user']->findWhere(['email' => $field], $columns)->first()) {
+            } elseif (filter_var($field, FILTER_VALIDATE_EMAIL) && $user = User::where(['email' => $field], $columns)->first()) {
                 return $this->table($columns, [$user->toArray()]);
-            } elseif ($user = $this->laravel['rinvex.fort.user']->findWhere(['username' => $field], $columns)->first()) {
+            } elseif ($user = User::where(['username' => $field], $columns)->first()) {
                 return $this->table($columns, $user->toArray());
             }
 
@@ -60,7 +61,7 @@ class UserFindCommand extends Command
         $field = $this->anticipate(Lang::get('rinvex.fort::artisan.user.field'), ['id', 'email', 'username'], 'id');
         $operator = $this->anticipate(Lang::get('rinvex.fort::artisan.user.operator'), ['=', '<', '>', '<=', '>=', '<>', '!=', 'like', 'like binary', 'not like', 'between', 'ilike', '&', '|', '^', '<<', '>>', 'rlike', 'regexp', 'not regexp', '~', '~*', '!~', '!~*', 'similar to', 'not similar to'], '=');
         $value = $this->ask(Lang::get('rinvex.fort::artisan.user.value'));
-        $results = $this->laravel['rinvex.fort.user']->where($field, $operator, $value)->get($columns);
+        $results = User::where($field, $operator, $value)->get($columns);
 
         return $this->table($columns, $results->toArray());
     }

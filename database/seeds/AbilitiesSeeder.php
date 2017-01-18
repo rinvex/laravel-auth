@@ -15,6 +15,7 @@
 
 namespace Rinvex\Fort\Seeds;
 
+use Rinvex\Fort\Models\Ability;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
@@ -35,7 +36,7 @@ class AbilitiesSeeder extends Seeder
 
         // Create new abilities
         foreach ($abilities as $ability) {
-            app('rinvex.fort.ability')->create($ability);
+            Ability::create($ability);
         }
 
         DB::statement('SET FOREIGN_KEY_CHECKS=1;');

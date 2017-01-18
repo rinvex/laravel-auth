@@ -17,7 +17,6 @@ namespace Rinvex\Fort\Http\Controllers\Backend;
 
 use Illuminate\Http\Request;
 use Rinvex\Fort\Models\Ability;
-use Rinvex\Fort\Contracts\AbilityRepositoryContract;
 use Rinvex\Fort\Http\Controllers\AuthorizedController;
 use Rinvex\Fort\Http\Requests\Backend\AbilityStoreRequest;
 use Rinvex\Fort\Http\Requests\Backend\AbilityUpdateRequest;
@@ -35,30 +34,13 @@ class AbilitiesController extends AuthorizedController
     protected $resourceActionWhitelist = ['grant'];
 
     /**
-     * The ability repository instance.
-     *
-     * @var \Rinvex\Fort\Contracts\AbilityRepositoryContract
-     */
-    protected $abilityRepository;
-
-    /**
-     * Create a new abilities controller instance.
-     */
-    public function __construct(AbilityRepositoryContract $abilityRepository)
-    {
-        parent::__construct();
-
-        $this->abilityRepository = $abilityRepository;
-    }
-
-    /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
     public function index()
     {
-        $abilities = $this->abilityRepository->paginate(config('rinvex.fort.backend.items_per_page'));
+        $abilities = Ability::paginate(config('rinvex.fort.backend.items_per_page'));
 
         return view('rinvex/fort::backend/abilities.index', compact('abilities'));
     }
@@ -82,7 +64,7 @@ class AbilitiesController extends AuthorizedController
      */
     public function create()
     {
-        return $this->form('create', 'store', $this->abilityRepository->createModel());
+        return $this->form('create', 'store', new Ability);
     }
 
     /**
@@ -143,7 +125,7 @@ class AbilitiesController extends AuthorizedController
      */
     public function delete(Ability $ability)
     {
-        $result = $this->abilityRepository->delete($ability);
+        $result = $ability->delete();
 
         return intend([
             'route' => 'rinvex.fort.backend.abilities.index',
@@ -206,7 +188,7 @@ class AbilitiesController extends AuthorizedController
     protected function process(Request $request, Ability $ability = null)
     {
         // Store data into the entity
-        $result = $this->abilityRepository->store($ability, $request->except(['_method', '_token', 'id']));
+        $result = is_null($ability) ? Ability::create($request->except(['_method', '_token', 'id'])) : $ability->update($request->except(['_method', '_token', 'id']));
 
         // Repository `store` method returns false if no attributes
         // updated, happens save button clicked without chaning anything

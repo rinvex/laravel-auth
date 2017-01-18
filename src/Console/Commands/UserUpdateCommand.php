@@ -18,6 +18,7 @@ namespace Rinvex\Fort\Console\Commands;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Lang;
 use Illuminate\Contracts\Validation\Factory;
+use Rinvex\Fort\Models\User;
 
 class UserUpdateCommand extends Command
 {
@@ -72,11 +73,11 @@ class UserUpdateCommand extends Command
 
         // Find single user
         if (intval($field)) {
-            $user = $this->laravel['rinvex.fort.user']->find($field);
+            $user = User::find($field);
         } elseif (filter_var($field, FILTER_VALIDATE_EMAIL)) {
-            $user = $this->laravel['rinvex.fort.user']->findWhere(['email' => $field])->first();
+            $user = User::where(['email' => $field])->first();
         } else {
-            $user = $this->laravel['rinvex.fort.user']->findWhere(['username' => $field])->first();
+            $user = User::where(['username' => $field])->first();
         }
 
         if (! $user) {

@@ -16,31 +16,12 @@
 namespace Rinvex\Fort\Http\Controllers\Frontend;
 
 use Illuminate\Http\Request;
-use Rinvex\Fort\Contracts\UserRepositoryContract;
+use Rinvex\Fort\Models\User;
 use Rinvex\Fort\Http\Controllers\AuthenticatedController;
 use Rinvex\Fort\Http\Requests\Frontend\UserSettingsUpdateRequest;
 
 class UserSettingsController extends AuthenticatedController
 {
-    /**
-     * The user repository instance.
-     *
-     * @var \Rinvex\Fort\Contracts\UserRepositoryContract
-     */
-    protected $userRepository;
-
-    /**
-     * Create a new profile update controller instance.
-     *
-     * @param \Rinvex\Fort\Contracts\UserRepositoryContract $userRepository
-     */
-    public function __construct(UserRepositoryContract $userRepository)
-    {
-        parent::__construct();
-
-        $this->userRepository = $userRepository;
-    }
-
     /**
      * Show the account update form.
      *
@@ -66,7 +47,7 @@ class UserSettingsController extends AuthenticatedController
     public function update(UserSettingsUpdateRequest $request)
     {
         $currentUser = $request->user($this->getGuard());
-        $data = $request->except(['_token', 'id']);
+        $data = $request->except(['_token']);
         $twoFactor = $currentUser->getTwoFactor();
 
         $emailVerification = array_get($data, 'email') != $currentUser->email ? [
@@ -85,7 +66,7 @@ class UserSettingsController extends AuthenticatedController
             array_set($twoFactor, 'two_factor.phone.enabled', false);
         }
 
-        $this->userRepository->update($request->get('id'), $data + $emailVerification + $phoneVerification + $twoFactor);
+        $currentUser->update($data + $emailVerification + $phoneVerification + $twoFactor);
 
         return intend([
             'back' => true,

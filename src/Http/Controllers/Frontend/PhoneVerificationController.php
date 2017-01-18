@@ -91,7 +91,7 @@ class PhoneVerificationController extends AbstractController
         switch ($result) {
             case SessionGuard::AUTH_PHONE_VERIFIED:
                 // Update user account
-                app('rinvex.fort.user')->update($user, [
+                $user->update([
                     'phone_verified'    => true,
                     'phone_verified_at' => new Carbon(),
                 ]);

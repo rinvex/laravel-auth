@@ -18,6 +18,7 @@ namespace Rinvex\Fort\Console\Commands;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Lang;
 use Illuminate\Contracts\Validation\Factory;
+use Rinvex\Fort\Models\User;
 
 class UserCreateCommand extends Command
 {
@@ -83,7 +84,7 @@ class UserCreateCommand extends Command
                 $this->error('- '.$key.': '.$messages[0]);
             }
         } else {
-            $user = $this->laravel['rinvex.fort.user']->create($data);
+            $user = User::create($data);
 
             $this->info(Lang::get('rinvex.fort::artisan.user.created').' ['.Lang::get('rinvex.fort::artisan.user.id').': '.$user->id.', '.Lang::get('rinvex.fort::artisan.user.email').': '.$user->email.', '.Lang::get('rinvex.fort::artisan.user.username').': '.$user->username.']');
         }

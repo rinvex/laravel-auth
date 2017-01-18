@@ -16,7 +16,6 @@
 namespace Rinvex\Fort\Providers;
 
 use Illuminate\Routing\Router;
-use Rinvex\Fort\Guards\TokenGuard;
 use Illuminate\Support\Facades\Auth;
 use Rinvex\Fort\Guards\SessionGuard;
 use Illuminate\Support\ServiceProvider;
@@ -72,14 +71,8 @@ class FortServiceProvider extends ServiceProvider
         // Subscribe the registered event listener
         $this->app['events']->subscribe('rinvex.fort.listener');
 
-        // Override user provider
-        $this->overrideUserProvider();
-
         // Override session guard
         $this->overrideSessionGuard();
-
-        // Override token guard
-        $this->overrideTokenGuard();
 
         // Share current user instance with all views
         $this->app['view']->composer('*', function ($view) {
@@ -141,19 +134,6 @@ class FortServiceProvider extends ServiceProvider
     }
 
     /**
-     * Add custom user provider.
-     *
-     * @return void
-     */
-    protected function overrideUserProvider()
-    {
-        $this->app['auth']->provider('eloquent', function ($app, array $config) {
-            // Return an instance of Rinvex\Fort\Contracts\UserRepositoryContract
-            return $this->app['rinvex.fort.user'];
-        });
-    }
-
-    /**
      * Override session guard.
      *
      * @return void
@@ -180,29 +160,6 @@ class FortServiceProvider extends ServiceProvider
             if (method_exists($guard, 'setRequest')) {
                 $guard->setRequest($this->app->refresh('request', $guard, 'setRequest'));
             }
-
-            return $guard;
-        });
-    }
-
-    /**
-     * Override Token guard.
-     *
-     * @return void
-     */
-    protected function overrideTokenGuard()
-    {
-        // Add custom session guard
-        $this->app['auth']->extend('token', function ($app, $name, array $config) {
-            // The token guard implements a basic API token based guard implementation
-            // that takes an API token field from the request and matches it to the
-            // user in the database or another persistence layer where users are.
-            $guard = new TokenGuard(
-                $app['auth']->createUserProvider($config['provider']),
-                $app['request']
-            );
-
-            $app->refresh('request', $guard, 'setRequest');
 
             return $guard;
         });

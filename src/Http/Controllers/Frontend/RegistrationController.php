@@ -15,7 +15,7 @@
 
 namespace Rinvex\Fort\Http\Controllers\Frontend;
 
-use Rinvex\Fort\Contracts\UserRepositoryContract;
+use Rinvex\Fort\Models\User;
 use Rinvex\Fort\Http\Controllers\AbstractController;
 use Rinvex\Fort\Http\Requests\Frontend\UserRegistrationRequest;
 
@@ -45,11 +45,11 @@ class RegistrationController extends AbstractController
      * Process the registration form.
      *
      * @param \Rinvex\Fort\Http\Requests\Frontend\UserRegistrationRequest $request
-     * @param \Rinvex\Fort\Contracts\UserRepositoryContract               $userRepository
+     * @param \Rinvex\Fort\Models\User                                    $user
      *
      * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse
      */
-    public function register(UserRegistrationRequest $request, UserRepositoryContract $userRepository)
+    public function register(UserRegistrationRequest $request, User $user)
     {
         // Prepare registration data
         $input = $request->except(['_method', '_token']);
@@ -58,7 +58,7 @@ class RegistrationController extends AbstractController
         // Fire the register start event
         event('rinvex.fort.register.start', [$input + $active]);
 
-        $result = $userRepository->create($input + $active);
+        $result = $user->create($input + $active);
 
         // Fire the register success event
         event('rinvex.fort.register.success', [$result]);

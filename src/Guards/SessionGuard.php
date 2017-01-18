@@ -21,13 +21,14 @@ use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Auth\GuardHelpers;
+use Rinvex\Fort\Models\Persistence;
 use Rinvex\Fort\Traits\ThrottlesLogins;
 use Illuminate\Session\SessionInterface;
+use Illuminate\Contracts\Auth\UserProvider;
 use Illuminate\Contracts\Events\Dispatcher;
 use Rinvex\Fort\Services\TwoFactorTotpProvider;
 use Rinvex\Fort\Contracts\StatefulGuardContract;
 use Illuminate\Contracts\Auth\SupportsBasicAuth;
-use Rinvex\Fort\Contracts\UserRepositoryContract;
 use Rinvex\Fort\Contracts\AuthenticatableContract;
 use Rinvex\Fort\Exceptions\InvalidPersistenceException;
 use Illuminate\Contracts\Cookie\QueueingFactory as CookieJar;
@@ -175,11 +176,11 @@ class SessionGuard implements StatefulGuardContract, SupportsBasicAuth
      * Create a new authentication guard.
      *
      * @param string                                        $name
-     * @param \Rinvex\Fort\Contracts\UserRepositoryContract $provider
+     * @param \Illuminate\Contracts\Auth\UserProvider       $provider
      * @param \Illuminate\Session\SessionInterface          $session
      * @param \Illuminate\Http\Request                      $request
      */
-    public function __construct($name, UserRepositoryContract $provider, SessionInterface $session, Request $request = null)
+    public function __construct($name, UserProvider $provider, SessionInterface $session, Request $request = null)
     {
         $this->name = $name;
         $this->session = $session;
@@ -195,7 +196,7 @@ class SessionGuard implements StatefulGuardContract, SupportsBasicAuth
     public function attemptUser()
     {
         if (! empty($session = $this->session->get('rinvex.fort.twofactor.persistence')) && $persistence = $this->getPersistenceByToken($session)) {
-            return $this->provider->find($persistence->user_id);
+            return $this->provider->retrieveById($persistence->user_id);
         }
     }
 
@@ -307,7 +308,7 @@ class SessionGuard implements StatefulGuardContract, SupportsBasicAuth
 
             list($id, $token) = explode('|', $recaller, 2);
 
-            $this->viaRemember = ! is_null($user = $this->provider->findByRememberToken($id, $token));
+            $this->viaRemember = ! is_null($user = $this->provider->retrieveByToken($id, $token));
 
             return $user;
         }
@@ -488,7 +489,7 @@ class SessionGuard implements StatefulGuardContract, SupportsBasicAuth
         // Fire the authentication attempt event
         $this->events->fire('rinvex.fort.auth.attempt', [$credentials, $remember, $login]);
 
-        $this->lastAttempted = $user = $this->provider->findByCredentials($credentials);
+        $this->lastAttempted = $user = $this->provider->retrieveByCredentials($credentials);
 
         // Login throttling
         $throttles = config('rinvex.fort.throttle.enabled');
@@ -606,8 +607,8 @@ class SessionGuard implements StatefulGuardContract, SupportsBasicAuth
             $user->persistences()->delete();
         }
 
-        // Update user last login datetime
-        $this->provider->update($user, ['login_at' => new Carbon()]);
+        // Update user last login timestamp
+        $user->update(['login_at' => new Carbon()]);
 
         // Update user persistence
         $this->updatePersistence($user->id, $persistence ?: $this->session->getId(), false);
@@ -652,7 +653,7 @@ class SessionGuard implements StatefulGuardContract, SupportsBasicAuth
      */
     public function loginUsingId($id, $remember = false)
     {
-        $user = $this->provider->find($id);
+        $user = $this->provider->retrieveById($id);
 
         if (! is_null($user)) {
             $this->login($user, $remember);
@@ -672,7 +673,7 @@ class SessionGuard implements StatefulGuardContract, SupportsBasicAuth
      */
     public function onceUsingId($id)
     {
-        $user = $this->provider->find($id);
+        $user = $this->provider->retrieveById($id);
 
         if (! is_null($user)) {
             $this->setUser($user);
@@ -730,7 +731,9 @@ class SessionGuard implements StatefulGuardContract, SupportsBasicAuth
         }
 
         // Delete user persistence
-        app('rinvex.fort.persistence')->delete($this->session->getId());
+        if ($persistence = Persistence::find($this->session->getId())) {
+            $persistence->delete();
+        }
 
         // Fire the authentication logout event
         $this->events->fire('rinvex.fort.auth.logout', [$user]);
@@ -852,7 +855,7 @@ class SessionGuard implements StatefulGuardContract, SupportsBasicAuth
     /**
      * Get the user provider used by the guard.
      *
-     * @return \Rinvex\Fort\Contracts\UserRepositoryContract
+     * @return \Illuminate\Contracts\Auth\UserProvider
      */
     public function getProvider()
     {
@@ -862,11 +865,11 @@ class SessionGuard implements StatefulGuardContract, SupportsBasicAuth
     /**
      * Set the user provider used by the guard.
      *
-     * @param \Rinvex\Fort\Contracts\UserRepositoryContract $provider
+     * @param  \Illuminate\Contracts\Auth\UserProvider  $provider
      *
      * @return void
      */
-    public function setProvider(UserRepositoryContract $provider)
+    public function setProvider(UserProvider $provider)
     {
         $this->provider = $provider;
     }
@@ -1009,10 +1012,12 @@ class SessionGuard implements StatefulGuardContract, SupportsBasicAuth
         $ip = request()->ip();
 
         // Delete previous user persistence
-        app('rinvex.fort.persistence')->delete($token);
+        if ($persistence = Persistence::find($token)) {
+            $persistence->delete();
+        }
 
         // Create new user persistence
-        app('rinvex.fort.persistence')->create([
+        Persistence::create([
             'user_id'    => $id,
             'token'      => $this->session->getId(),
             'attempt'    => $attempt,
@@ -1069,7 +1074,7 @@ class SessionGuard implements StatefulGuardContract, SupportsBasicAuth
         array_set($settings, 'totp.backup', $backup);
 
         // Update Two-Factor OTP backup codes
-        $this->provider->update($user, [
+        $user->update([
             'two_factor' => $settings,
         ]);
     }
@@ -1136,11 +1141,13 @@ class SessionGuard implements StatefulGuardContract, SupportsBasicAuth
     /**
      * Pull a persistence from the repository by its token.
      *
-     * @return \Rinvex\Fort\Repositories\PersistenceRepository
+     * @param string $token
+     *
+     * @return \Rinvex\Fort\Models\Persistence
      */
     public function getPersistenceByToken($token)
     {
-        return app('rinvex.fort.persistence')->findBy('token', $token);
+        return Persistence::where('token', $token)->first();
     }
 
     /**
@@ -1150,7 +1157,7 @@ class SessionGuard implements StatefulGuardContract, SupportsBasicAuth
      */
     protected function getUserBySession()
     {
-        return ! is_null($id = $this->session->get($this->getName())) ? $this->provider->find($id) : null;
+        return ! is_null($id = $this->session->get($this->getName())) ? $this->provider->retrieveById($id) : null;
     }
 
     /**

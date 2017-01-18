@@ -15,6 +15,7 @@
 
 namespace Rinvex\Fort\Http\Requests\Frontend;
 
+use Rinvex\Fort\Models\User;
 use Rinvex\Support\Http\Requests\FormRequest;
 
 class EmailVerificationRequest extends FormRequest
@@ -26,7 +27,7 @@ class EmailVerificationRequest extends FormRequest
      */
     public function authorize()
     {
-        if ((($user = $this->user()) && $user->email_verified) || ($this->get('email') && array_get(app('rinvex.fort.user')->findBy('email', $this->get('email')), 'email_verified'))) {
+        if ((($user = $this->user()) && $user->email_verified) || ($this->get('email') && array_get(User::where('email', $this->get('email'))->get(), 'email_verified'))) {
             return false;
         }
 

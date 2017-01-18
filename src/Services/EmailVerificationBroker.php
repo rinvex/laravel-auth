@@ -19,7 +19,7 @@ use Closure;
 use Carbon\Carbon;
 use Illuminate\Support\Arr;
 use UnexpectedValueException;
-use Rinvex\Fort\Contracts\UserRepositoryContract;
+use Illuminate\Contracts\Auth\UserProvider;
 use Rinvex\Fort\Contracts\CanVerifyEmailContract;
 use Rinvex\Fort\Contracts\EmailVerificationBrokerContract;
 use Rinvex\Fort\Contracts\EmailVerificationTokenRepositoryContract;
@@ -36,20 +36,20 @@ class EmailVerificationBroker implements EmailVerificationBrokerContract
     /**
      * The user provider implementation.
      *
-     * @var \Rinvex\Fort\Contracts\UserRepositoryContract
+     * @var \Illuminate\Contracts\Auth\UserProvider
      */
-    protected $userRepository;
+    protected $userProvider;
 
     /**
      * Create a new verification broker instance.
      *
      * @param \Rinvex\Fort\Contracts\EmailVerificationTokenRepositoryContract $tokens
-     * @param \Rinvex\Fort\Contracts\UserRepositoryContract                   $userRepository
+     * @param \Illuminate\Contracts\Auth\UserProvider                         $userProvider
      */
-    public function __construct(EmailVerificationTokenRepositoryContract $tokens, UserRepositoryContract $userRepository)
+    public function __construct(EmailVerificationTokenRepositoryContract $tokens, UserProvider $userProvider)
     {
         $this->tokens = $tokens;
-        $this->userRepository = $userRepository;
+        $this->userProvider = $userProvider;
     }
 
     /**
@@ -95,7 +95,7 @@ class EmailVerificationBroker implements EmailVerificationBrokerContract
         event('rinvex.fort.emailverification.start', [$user]);
 
         // Verify email
-        app('rinvex.fort.user')->update($user, [
+        $user->update([
             'email_verified'    => true,
             'email_verified_at' => new Carbon(),
         ]);
@@ -128,7 +128,7 @@ class EmailVerificationBroker implements EmailVerificationBrokerContract
     {
         $credentials = Arr::except($credentials, ['token']);
 
-        $user = $this->userRepository->findByCredentials($credentials);
+        $user = $this->userProvider->retrieveByCredentials($credentials);
 
         if ($user && ! $user instanceof CanVerifyEmailContract) {
             throw new UnexpectedValueException('User must implement CanVerifyEmailContract interface.');

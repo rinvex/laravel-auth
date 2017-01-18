@@ -23,11 +23,7 @@ use Rinvex\Fort\Models\Persistence;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Contracts\Events\Dispatcher;
 use Illuminate\Contracts\Container\Container;
-use Rinvex\Fort\Contracts\RoleRepositoryContract;
-use Rinvex\Fort\Contracts\UserRepositoryContract;
 use Rinvex\Fort\Contracts\AuthenticatableContract;
-use Rinvex\Fort\Contracts\AbilityRepositoryContract;
-use Rinvex\Fort\Contracts\PersistenceRepositoryContract;
 use Rinvex\Fort\Notifications\RegistrationSuccessNotification;
 use Rinvex\Fort\Notifications\VerificationSuccessNotification;
 use Rinvex\Fort\Notifications\AuthenticationLockoutNotification;
@@ -206,7 +202,7 @@ class FortEventListener
     public function authLockout(Request $request)
     {
         if (config('rinvex.fort.throttle.lockout_email')) {
-            $user = get_login_field($loginfield = $request->get('loginfield')) == 'email' ? $this->app['rinvex.fort.user']->findBy('email', $loginfield) : $this->app['rinvex.fort.user']->findBy('username', $loginfield);
+            $user = get_login_field($loginfield = $request->get('loginfield')) == 'email' ? User::where('email', $loginfield)->first() : User::where('username', $loginfield)->first();
 
             $user->notify(new AuthenticationLockoutNotification($request));
         }
@@ -510,7 +506,7 @@ class FortEventListener
 
         // Attach default role to the registered user
         if ($default = $this->app['config']->get('rinvex.fort.registration.default_role')) {
-            if ($role = $this->app['rinvex.fort.role']->findBy('slug', $default)) {
+            if ($role = Role::where('slug', $default)->first()) {
                 $user->roles()->attach($role);
             }
         }
@@ -544,7 +540,7 @@ class FortEventListener
 
         // Attach default role to the registered user
         if ($default = $this->app['config']->get('rinvex.fort.registration.default_role')) {
-            if ($role = $this->app['rinvex.fort.role']->findBy('slug', $default)) {
+            if ($role = Role::where('slug', $default)->first()) {
                 $user->roles()->attach($role);
             }
         }
@@ -625,9 +621,9 @@ class FortEventListener
      */
     public function abilityGranted(Model $model, $action, $resource)
     {
-        $this->app['rinvex.fort.ability']->forgetCache();
-        $this->app['rinvex.fort.role']->forgetCache();
-        $this->app['rinvex.fort.user']->forgetCache();
+        Ability::forgetCache();
+        Role::forgetCache();
+        User::forgetCache();
     }
 
     /**
@@ -655,9 +651,9 @@ class FortEventListener
      */
     public function abilityRevoked(Model $model, $action, $resource)
     {
-        $this->app['rinvex.fort.ability']->forgetCache();
-        $this->app['rinvex.fort.role']->forgetCache();
-        $this->app['rinvex.fort.user']->forgetCache();
+        Ability::forgetCache();
+        Role::forgetCache();
+        User::forgetCache();
     }
 
     /**
@@ -683,7 +679,7 @@ class FortEventListener
      */
     public function abilityCreated(AbilityRepositoryContract $repository, Ability $ability)
     {
-        $this->app['rinvex.fort.ability']->forgetCache();
+        Ability::forgetCache();
     }
 
     /**
@@ -709,9 +705,9 @@ class FortEventListener
      */
     public function abilityUpdated(AbilityRepositoryContract $repository, Ability $ability)
     {
-        $this->app['rinvex.fort.ability']->forgetCache();
-        $this->app['rinvex.fort.role']->forgetCache();
-        $this->app['rinvex.fort.user']->forgetCache();
+        Ability::forgetCache();
+        Role::forgetCache();
+        User::forgetCache();
     }
 
     /**
@@ -737,9 +733,9 @@ class FortEventListener
      */
     public function abilityDeleted(AbilityRepositoryContract $repository, Ability $ability)
     {
-        $this->app['rinvex.fort.ability']->forgetCache();
-        $this->app['rinvex.fort.role']->forgetCache();
-        $this->app['rinvex.fort.user']->forgetCache();
+        Ability::forgetCache();
+        Role::forgetCache();
+        User::forgetCache();
     }
 
     /**
@@ -765,8 +761,8 @@ class FortEventListener
      */
     public function roleAttached(Model $model, $role)
     {
-        $this->app['rinvex.fort.role']->forgetCache();
-        $this->app['rinvex.fort.user']->forgetCache();
+        Role::forgetCache();
+        User::forgetCache();
     }
 
     /**
@@ -792,8 +788,8 @@ class FortEventListener
      */
     public function roleSynced(Model $model, $role)
     {
-        $this->app['rinvex.fort.role']->forgetCache();
-        $this->app['rinvex.fort.user']->forgetCache();
+        Role::forgetCache();
+        User::forgetCache();
     }
 
     /**
@@ -819,8 +815,8 @@ class FortEventListener
      */
     public function roleDetached(Model $model, $role)
     {
-        $this->app['rinvex.fort.role']->forgetCache();
-        $this->app['rinvex.fort.user']->forgetCache();
+        Role::forgetCache();
+        User::forgetCache();
     }
 
     /**
@@ -846,8 +842,8 @@ class FortEventListener
      */
     public function roleCreated(RoleRepositoryContract $repository, Role $model)
     {
-        $this->app['rinvex.fort.ability']->forgetCache();
-        $this->app['rinvex.fort.role']->forgetCache();
+        Ability::forgetCache();
+        Role::forgetCache();
     }
 
     /**
@@ -873,9 +869,9 @@ class FortEventListener
      */
     public function roleUpdated(RoleRepositoryContract $repository, Role $model)
     {
-        $this->app['rinvex.fort.ability']->forgetCache();
-        $this->app['rinvex.fort.role']->forgetCache();
-        $this->app['rinvex.fort.user']->forgetCache();
+        Ability::forgetCache();
+        Role::forgetCache();
+        User::forgetCache();
     }
 
     /**
@@ -901,9 +897,9 @@ class FortEventListener
      */
     public function roleDeleted(RoleRepositoryContract $repository, Role $model)
     {
-        $this->app['rinvex.fort.ability']->forgetCache();
-        $this->app['rinvex.fort.role']->forgetCache();
-        $this->app['rinvex.fort.user']->forgetCache();
+        Ability::forgetCache();
+        Role::forgetCache();
+        User::forgetCache();
     }
 
     /**
@@ -929,10 +925,10 @@ class FortEventListener
      */
     public function userCreated(UserRepositoryContract $repository, User $model)
     {
-        $this->app['rinvex.fort.ability']->forgetCache();
-        $this->app['rinvex.fort.role']->forgetCache();
-        $this->app['rinvex.fort.user']->forgetCache();
-        $this->app['rinvex.fort.persistence']->forgetCache();
+        Ability::forgetCache();
+        Role::forgetCache();
+        User::forgetCache();
+        Persistence::forgetCache();
     }
 
     /**
@@ -958,10 +954,10 @@ class FortEventListener
      */
     public function userUpdated(UserRepositoryContract $repository, User $model)
     {
-        $this->app['rinvex.fort.ability']->forgetCache();
-        $this->app['rinvex.fort.role']->forgetCache();
-        $this->app['rinvex.fort.user']->forgetCache();
-        $this->app['rinvex.fort.persistence']->forgetCache();
+        Ability::forgetCache();
+        Role::forgetCache();
+        User::forgetCache();
+        Persistence::forgetCache();
     }
 
     /**
@@ -987,10 +983,10 @@ class FortEventListener
      */
     public function userDeleted(UserRepositoryContract $repository, User $model)
     {
-        $this->app['rinvex.fort.ability']->forgetCache();
-        $this->app['rinvex.fort.role']->forgetCache();
-        $this->app['rinvex.fort.user']->forgetCache();
-        $this->app['rinvex.fort.persistence']->forgetCache();
+        Ability::forgetCache();
+        Role::forgetCache();
+        User::forgetCache();
+        Persistence::forgetCache();
     }
 
     /**
@@ -1016,8 +1012,8 @@ class FortEventListener
      */
     public function persistenceCreated(PersistenceRepositoryContract $repository, Persistence $model)
     {
-        $this->app['rinvex.fort.persistence']->forgetCache();
-        $this->app['rinvex.fort.user']->forgetCache();
+        Persistence::forgetCache();
+        User::forgetCache();
     }
 
     /**
@@ -1043,8 +1039,8 @@ class FortEventListener
      */
     public function persistenceUpdated(PersistenceRepositoryContract $repository, Persistence $model)
     {
-        $this->app['rinvex.fort.persistence']->forgetCache();
-        $this->app['rinvex.fort.user']->forgetCache();
+        Persistence::forgetCache();
+        User::forgetCache();
     }
 
     /**
@@ -1070,8 +1066,8 @@ class FortEventListener
      */
     public function persistenceDeleted(PersistenceRepositoryContract $repository, Persistence $model)
     {
-        $this->app['rinvex.fort.persistence']->forgetCache();
-        $this->app['rinvex.fort.user']->forgetCache();
+        Persistence::forgetCache();
+        User::forgetCache();
     }
 
     /**
@@ -1097,7 +1093,7 @@ class FortEventListener
      */
     public function persistenceDeletedAll(PersistenceRepositoryContract $repository, User $model)
     {
-        $this->app['rinvex.fort.persistence']->forgetCache();
-        $this->app['rinvex.fort.user']->forgetCache();
+        Persistence::forgetCache();
+        User::forgetCache();
     }
 }

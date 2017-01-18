@@ -19,20 +19,15 @@ use Collective\Html\FormFacade;
 use Collective\Html\HtmlFacade;
 use Rinvex\Fort\Services\AccessGate;
 use Illuminate\Foundation\AliasLoader;
-use Rinvex\Repository\Traits\Bindable;
 use Rinvex\Fort\Services\BrokerManager;
 use Illuminate\Support\ServiceProvider;
 use Collective\Html\HtmlServiceProvider;
 use Illuminate\View\Compilers\BladeCompiler;
-use Rinvex\Fort\Repositories\RoleRepository;
-use Rinvex\Fort\Repositories\UserRepository;
-use Rinvex\Fort\Repositories\AbilityRepository;
 use Laravel\Socialite\SocialiteServiceProvider;
 use Rinvex\Fort\Console\Commands\UserFindCommand;
 use Rinvex\Fort\Console\Commands\RoleFindCommand;
 use Rinvex\Fort\Console\Commands\RoleCreateCommand;
 use Rinvex\Fort\Console\Commands\RoleUpdateCommand;
-use Rinvex\Fort\Repositories\PersistenceRepository;
 use Rinvex\Fort\Console\Commands\UserCreateCommand;
 use Rinvex\Fort\Console\Commands\UserRemindCommand;
 use Rinvex\Fort\Console\Commands\UserUpdateCommand;
@@ -51,8 +46,6 @@ use Rinvex\Fort\Console\Commands\VerificationTokenClearCommand;
 
 class FortDeferredServiceProvider extends ServiceProvider
 {
-    use Bindable;
-
     /**
      * Indicates if loading of the provider is deferred.
      *
@@ -104,7 +97,6 @@ class FortDeferredServiceProvider extends ServiceProvider
 
         // Register bindings
         $this->registerAccessGate();
-        $this->registerRepositories();
         $this->registerBrokerManagers();
         $this->registerBladeExtensions();
 
@@ -131,19 +123,6 @@ class FortDeferredServiceProvider extends ServiceProvider
                 return call_user_func($app['auth']->userResolver());
             });
         });
-    }
-
-    /**
-     * Bind the repositories into the IoC.
-     *
-     * @return void
-     */
-    protected function registerRepositories()
-    {
-        $this->bindRepository('rinvex.fort.role', RoleRepository::class);
-        $this->bindRepository('rinvex.fort.user', UserRepository::class);
-        $this->bindRepository('rinvex.fort.ability', AbilityRepository::class);
-        $this->bindRepository('rinvex.fort.persistence', PersistenceRepository::class);
     }
 
     /**
@@ -216,10 +195,6 @@ class FortDeferredServiceProvider extends ServiceProvider
     {
         return array_keys($this->commands) + [
                 GateContract::class,
-                'rinvex.fort.role',
-                'rinvex.fort.user',
-                'rinvex.fort.ability',
-                'rinvex.fort.persistence',
                 'rinvex.fort.passwordreset',
                 'rinvex.fort.emailverification',
                 \Illuminate\Contracts\Debug\ExceptionHandler::class,

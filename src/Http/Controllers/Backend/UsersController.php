@@ -16,8 +16,9 @@
 namespace Rinvex\Fort\Http\Controllers\Backend;
 
 use Illuminate\Http\Request;
+use Rinvex\Fort\Models\Role;
 use Rinvex\Fort\Models\User;
-use Rinvex\Fort\Contracts\UserRepositoryContract;
+use Rinvex\Fort\Models\Ability;
 use Rinvex\Fort\Http\Controllers\AuthorizedController;
 use Rinvex\Fort\Http\Requests\Backend\UserStoreRequest;
 use Rinvex\Fort\Http\Requests\Backend\UserUpdateRequest;
@@ -30,30 +31,13 @@ class UsersController extends AuthorizedController
     protected $resource = 'users';
 
     /**
-     * The user repository instance.
-     *
-     * @var \Rinvex\Fort\Contracts\UserRepositoryContract
-     */
-    protected $userRepository;
-
-    /**
-     * Create a new users controller instance.
-     */
-    public function __construct(UserRepositoryContract $userRepository)
-    {
-        parent::__construct();
-
-        $this->userRepository = $userRepository;
-    }
-
-    /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
     public function index()
     {
-        $users = $this->userRepository->paginate(config('rinvex.fort.backend.items_per_page'));
+        $users = User::paginate(config('rinvex.fort.backend.items_per_page'));
 
         return view('rinvex/fort::backend/users.index', compact('users'));
     }
@@ -67,7 +51,7 @@ class UsersController extends AuthorizedController
      */
     public function show(User $user)
     {
-        $resources = app('rinvex.fort.ability')->findAll()->groupBy('resource');
+        $resources = Ability::all()->groupBy('resource');
         $actions = ['list', 'view', 'create', 'update', 'delete', 'import', 'export'];
         $columns = ['resource', 'list', 'view', 'create', 'update', 'delete', 'import', 'export', 'other'];
         $userCountry = $user->country ? country($user->country) : null;
@@ -84,7 +68,7 @@ class UsersController extends AuthorizedController
      */
     public function create()
     {
-        return $this->form('create', 'store', $this->userRepository->createModel());
+        return $this->form('create', 'store', new User);
     }
 
     /**
@@ -145,7 +129,7 @@ class UsersController extends AuthorizedController
      */
     public function delete(User $user)
     {
-        $result = $this->userRepository->delete($user);
+        $result = $user->delete();
 
         return intend([
             'route' => 'rinvex.fort.backend.users.index',
@@ -198,11 +182,11 @@ class UsersController extends AuthorizedController
             return $country['name'];
         }, countries());
 
-        $abilityList = app('rinvex.fort.ability')->findAll()->groupBy('resource')->map(function ($item) {
+        $abilityList = Ability::all()->groupBy('resource')->map(function ($item) {
             return $item->pluck('name', 'id');
         })->toArray();
 
-        $roleList = app('rinvex.fort.role')->findAll()->pluck('name', 'id')->toArray();
+        $roleList = Role::all()->pluck('name', 'id')->toArray();
 
         return view('rinvex/fort::backend/users.form', compact('user', 'abilityList', 'roleList', 'countries', 'mode', 'action'));
     }
@@ -223,7 +207,7 @@ class UsersController extends AuthorizedController
         $abilities = $request->user($this->getGuard())->can('grant-abilities') ? ['abilities' => array_pull($input, 'abilityList')] : [];
 
         // Store data into the entity
-        $result = $this->userRepository->store($user, $input + $roles + $abilities);
+        $result = is_null($user) ? Role::create($input + $roles + $abilities) : $user->update($input + $roles + $abilities);
 
         // Repository `store` method returns false if no attributes
         // updated, happens save button clicked without chaning anything

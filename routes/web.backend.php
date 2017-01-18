@@ -37,10 +37,6 @@ Route::group([
     |--------------------------------------------------------------------------
     */
 
-    Route::bind('ability', function ($id) {
-        return app('rinvex.fort.ability')->findOrFail($id);
-    });
-
     Route::group(['as' => 'abilities.', 'prefix' => 'abilities'], function () {
         Route::get('/')->name('index')->uses('AbilitiesController@index');
         Route::put('/')->name('bulk')->uses('AbilitiesController@bulk');
@@ -66,10 +62,6 @@ Route::group([
     |--------------------------------------------------------------------------
     */
 
-    Route::bind('role', function ($id) {
-        return app('rinvex.fort.role')->findOrFail($id);
-    });
-
     Route::group(['as' => 'roles.', 'prefix' => 'roles'], function () {
         Route::get('/')->name('index')->uses('RolesController@index');
         Route::put('/')->name('bulk')->uses('RolesController@bulk');
@@ -94,10 +86,6 @@ Route::group([
     | Users Routes
     |--------------------------------------------------------------------------
     */
-
-    Route::bind('user', function ($id) {
-        return app('rinvex.fort.user')->findOrFail($id);
-    });
 
     Route::group(['as' => 'users.', 'prefix' => 'users'], function () {
         Route::get('/')->name('index')->uses('UsersController@index');

@@ -18,7 +18,7 @@ namespace Rinvex\Fort\Exceptions;
 use Exception;
 use Illuminate\Auth\AuthenticationException;
 use App\Exceptions\Handler as BaseExceptionHandler;
-use Rinvex\Repository\Exceptions\EntityNotFoundException;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class ExceptionHandler extends BaseExceptionHandler
 {
@@ -37,7 +37,7 @@ class ExceptionHandler extends BaseExceptionHandler
                 'route'      => 'rinvex.fort.frontend.auth.login',
                 'withErrors' => ['rinvex.fort.session.expired' => trans('rinvex/fort::frontend/messages.auth.session.expired')],
             ], 401);
-        } elseif ($exception instanceof EntityNotFoundException) {
+        } elseif ($exception instanceof ModelNotFoundException) {
             $single = strtolower(trim(strrchr($exception->getModel(), '\\'), '\\'));
             $plural = str_plural($single);
 

@@ -16,10 +16,10 @@
 namespace Rinvex\Fort\Http\Controllers\Frontend;
 
 use Exception;
+use Rinvex\Fort\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Laravel\Socialite\Facades\Socialite;
-use Rinvex\Fort\Contracts\UserRepositoryContract;
 
 class SocialAuthenticationController extends AuthenticationController
 {
@@ -36,12 +36,12 @@ class SocialAuthenticationController extends AuthenticationController
     /**
      * Handle Github authentication callback.
      *
-     * @param \Illuminate\Http\Request                      $request
-     * @param \Rinvex\Fort\Contracts\UserRepositoryContract $userRepository
+     * @param \Illuminate\Http\Request $request
+     * @param \Rinvex\Fort\Models\User $user
      *
      * @return \Illuminate\Http\Response
      */
-    public function handleGithubCallback(Request $request, UserRepositoryContract $userRepository)
+    public function handleGithubCallback(Request $request, User $user)
     {
         try {
             $githubUser = Socialite::driver('github')->user();
@@ -51,12 +51,12 @@ class SocialAuthenticationController extends AuthenticationController
             ]);
         }
 
-        $user = app('rinvex.fort.user')->findWhereHas(['socialites', function ($query) use ($githubUser) {
+        $model = User::whereHas(['socialites', function ($query) use ($githubUser) {
             $query->where('provider', 'github');
             $query->where('provider_uid', $githubUser->id);
         }])->first();
 
-        if (! $user) {
+        if (! $model) {
             // Prepare registration data
             $input = $request->except(['_method', '_token']) + [
                 'email'    => $githubUser->email,
@@ -69,19 +69,19 @@ class SocialAuthenticationController extends AuthenticationController
             $result = event('rinvex.fort.register.social.start', [$input]);
 
             // Create user
-            $user = $userRepository->create($input);
+            $model = $user->create($input);
 
             // Fire the register success event
             event('rinvex.fort.register.social.success', [$result]);
 
-            $user->socialites()->create([
+            $model->socialites()->create([
                 'user_id'      => 'github',
                 'provider'     => 'github',
                 'provider_uid' => $githubUser->id,
             ]);
         }
 
-        $result = Auth::guard($this->getGuard())->login($user, true);
+        $result = Auth::guard($this->getGuard())->login($model, true);
 
         return $this->getLoginResponse($request, $result);
     }
