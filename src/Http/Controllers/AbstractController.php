@@ -21,7 +21,8 @@ use Illuminate\Foundation\Bus\DispatchesJobs;
 
 abstract class AbstractController extends Controller
 {
-    use DispatchesJobs, GetsMiddleware;
+    use GetsMiddleware;
+    use DispatchesJobs;
 
     /**
      * Whitelisted methods.

@@ -33,7 +33,14 @@ use Illuminate\Contracts\Auth\Access\Authorizable as AuthorizableContract;
 
 class User extends Model implements AuthenticatableContract, AuthorizableContract, CanResetPasswordContract, CanVerifyEmailContract, CanVerifyPhoneContract
 {
-    use Notifiable, Authenticatable, Authorizable, CanResetPassword, CanVerifyEmail, CanVerifyPhone, HasRoles, SoftDeletes;
+    use HasRoles;
+    use Notifiable;
+    use SoftDeletes;
+    use Authorizable;
+    use CanVerifyEmail;
+    use CanVerifyPhone;
+    use Authenticatable;
+    use CanResetPassword;
     use CacheableEloquent;
 
     /**
@@ -115,8 +122,7 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
      */
     public function abilities()
     {
-        return $this->belongsToMany(config('rinvex.fort.models.ability'), config('rinvex.fort.tables.ability_user'))
-                    ->withTimestamps();
+        return $this->belongsToMany(config('rinvex.fort.models.ability'), config('rinvex.fort.tables.ability_user'))->withTimestamps();
     }
 
     /**
@@ -126,8 +132,7 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
      */
     public function roles()
     {
-        return $this->belongsToMany(config('rinvex.fort.models.role'), config('rinvex.fort.tables.role_user'))
-                    ->withTimestamps();
+        return $this->belongsToMany(config('rinvex.fort.models.role'), config('rinvex.fort.tables.role_user'))->withTimestamps();
     }
 
     /**
@@ -199,10 +204,7 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
      */
     public function isSuperadmin()
     {
-        return $this->getAllAbilitiesAttribute()
-                    ->where('resource', 'global')
-                    ->where('policy', null)
-                    ->contains('action', 'superadmin');
+        return $this->getAllAbilitiesAttribute()->where('resource', 'global')->where('policy', null)->contains('action', 'superadmin');
     }
 
     /**
@@ -243,7 +245,7 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
 
             // Update user account
             array_set($settings, 'phone', [
-                'enabled'  => true,
+                'enabled' => true,
                 'authy_id' => $authyId,
             ]);
 

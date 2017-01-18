@@ -22,7 +22,8 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Role extends Model
 {
-    use HasAbilities, SoftDeletes;
+    use SoftDeletes;
+    use HasAbilities;
     use CacheableEloquent;
 
     /**

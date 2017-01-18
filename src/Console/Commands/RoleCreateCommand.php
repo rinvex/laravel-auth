@@ -16,10 +16,10 @@
 namespace Rinvex\Fort\Console\Commands;
 
 use Illuminate\Support\Str;
+use Rinvex\Fort\Models\Role;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Lang;
 use Illuminate\Contracts\Validation\Factory;
-use Rinvex\Fort\Models\Role;
 
 class RoleCreateCommand extends Command
 {

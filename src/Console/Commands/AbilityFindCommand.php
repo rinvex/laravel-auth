@@ -15,9 +15,9 @@
 
 namespace Rinvex\Fort\Console\Commands;
 
+use Rinvex\Fort\Models\Ability;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Lang;
-use Rinvex\Fort\Models\Ability;
 
 class AbilityFindCommand extends Command
 {

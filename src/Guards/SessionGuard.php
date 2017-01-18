@@ -35,7 +35,8 @@ use Illuminate\Contracts\Cookie\QueueingFactory as CookieJar;
 
 class SessionGuard implements StatefulGuardContract, SupportsBasicAuth
 {
-    use GuardHelpers, ThrottlesLogins;
+    use GuardHelpers;
+    use ThrottlesLogins;
 
     /**
      * Constant representing a successful login.
@@ -102,7 +103,6 @@ class SessionGuard implements StatefulGuardContract, SupportsBasicAuth
 
     /**
      * The name of the Guard. Typically "session".
-     *
      * Corresponds to driver name in authentication configuration.
      *
      * @var string
@@ -175,10 +175,10 @@ class SessionGuard implements StatefulGuardContract, SupportsBasicAuth
     /**
      * Create a new authentication guard.
      *
-     * @param string                                        $name
-     * @param \Illuminate\Contracts\Auth\UserProvider       $provider
-     * @param \Illuminate\Session\SessionInterface          $session
-     * @param \Illuminate\Http\Request                      $request
+     * @param string                                  $name
+     * @param \Illuminate\Contracts\Auth\UserProvider $provider
+     * @param \Illuminate\Session\SessionInterface    $session
+     * @param \Illuminate\Http\Request                $request
      */
     public function __construct($name, UserProvider $provider, SessionInterface $session, Request $request = null)
     {
@@ -204,7 +204,6 @@ class SessionGuard implements StatefulGuardContract, SupportsBasicAuth
      * Get the currently authenticated user.
      *
      * @throws \Rinvex\Fort\Exceptions\InvalidPersistenceException
-     *
      * @return null|\Rinvex\Fort\Contracts\AuthenticatableContract
      */
     public function user()
@@ -455,7 +454,7 @@ class SessionGuard implements StatefulGuardContract, SupportsBasicAuth
     protected function getBasicCredentials(Request $request, $field)
     {
         return [
-            $field     => $request->getUser(),
+            $field => $request->getUser(),
             'password' => $request->getPassword(),
         ];
     }
@@ -795,7 +794,6 @@ class SessionGuard implements StatefulGuardContract, SupportsBasicAuth
      * Get the cookie creator instance used by the guard.
      *
      * @throws \RuntimeException
-     *
      * @return \Illuminate\Contracts\Cookie\QueueingFactory
      */
     public function getCookieJar()
@@ -864,7 +862,7 @@ class SessionGuard implements StatefulGuardContract, SupportsBasicAuth
     /**
      * Set the user provider used by the guard.
      *
-     * @param  \Illuminate\Contracts\Auth\UserProvider  $provider
+     * @param  \Illuminate\Contracts\Auth\UserProvider $provider
      *
      * @return void
      */
@@ -1017,11 +1015,11 @@ class SessionGuard implements StatefulGuardContract, SupportsBasicAuth
 
         // Create new user persistence
         Persistence::create([
-            'user_id'    => $id,
-            'token'      => $this->session->getId(),
-            'attempt'    => $attempt,
-            'agent'      => $agent,
-            'ip'         => $ip,
+            'user_id' => $id,
+            'token' => $this->session->getId(),
+            'attempt' => $attempt,
+            'agent' => $agent,
+            'ip' => $ip,
         ]);
     }
 

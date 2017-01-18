@@ -15,10 +15,10 @@
 
 namespace Rinvex\Fort\Console\Commands;
 
-use Illuminate\Console\Command;
-use Illuminate\Support\Facades\Lang;
 use Rinvex\Fort\Models\Role;
 use Rinvex\Fort\Models\User;
+use Illuminate\Console\Command;
+use Illuminate\Support\Facades\Lang;
 
 class UserRemoveRoleCommand extends Command
 {

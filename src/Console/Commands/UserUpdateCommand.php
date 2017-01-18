@@ -15,10 +15,10 @@
 
 namespace Rinvex\Fort\Console\Commands;
 
+use Rinvex\Fort\Models\User;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Lang;
 use Illuminate\Contracts\Validation\Factory;
-use Rinvex\Fort\Models\User;
 
 class UserUpdateCommand extends Command
 {
