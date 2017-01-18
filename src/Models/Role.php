@@ -57,6 +57,16 @@ class Role extends Model
     }
 
     /**
+     * Get the route key for the model.
+     *
+     * @return string
+     */
+    public function getRouteKeyName()
+    {
+        return 'slug';
+    }
+
+    /**
      * A role may be given various abilities.
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
