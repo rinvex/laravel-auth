@@ -621,9 +621,9 @@ class FortEventListener
      */
     public function abilityGranted(Model $model, $action, $resource)
     {
-        Ability::forgetCache();
-        Role::forgetCache();
-        User::forgetCache();
+        (new Ability)->forgetCache();
+        (new Role)->forgetCache();
+        (new User)->forgetCache();
     }
 
     /**
@@ -651,9 +651,9 @@ class FortEventListener
      */
     public function abilityRevoked(Model $model, $action, $resource)
     {
-        Ability::forgetCache();
-        Role::forgetCache();
-        User::forgetCache();
+        (new Ability)->forgetCache();
+        (new Role)->forgetCache();
+        (new User)->forgetCache();
     }
 
     /**
@@ -679,7 +679,7 @@ class FortEventListener
      */
     public function abilityCreated(AbilityRepositoryContract $repository, Ability $ability)
     {
-        Ability::forgetCache();
+        (new Ability)->forgetCache();
     }
 
     /**
@@ -705,9 +705,9 @@ class FortEventListener
      */
     public function abilityUpdated(AbilityRepositoryContract $repository, Ability $ability)
     {
-        Ability::forgetCache();
-        Role::forgetCache();
-        User::forgetCache();
+        (new Ability)->forgetCache();
+        (new Role)->forgetCache();
+        (new User)->forgetCache();
     }
 
     /**
@@ -733,9 +733,9 @@ class FortEventListener
      */
     public function abilityDeleted(AbilityRepositoryContract $repository, Ability $ability)
     {
-        Ability::forgetCache();
-        Role::forgetCache();
-        User::forgetCache();
+        (new Ability)->forgetCache();
+        (new Role)->forgetCache();
+        (new User)->forgetCache();
     }
 
     /**
@@ -761,8 +761,8 @@ class FortEventListener
      */
     public function roleAttached(Model $model, $role)
     {
-        Role::forgetCache();
-        User::forgetCache();
+        (new Role)->forgetCache();
+        (new User)->forgetCache();
     }
 
     /**
@@ -788,8 +788,8 @@ class FortEventListener
      */
     public function roleSynced(Model $model, $role)
     {
-        Role::forgetCache();
-        User::forgetCache();
+        (new Role)->forgetCache();
+        (new User)->forgetCache();
     }
 
     /**
@@ -815,8 +815,8 @@ class FortEventListener
      */
     public function roleDetached(Model $model, $role)
     {
-        Role::forgetCache();
-        User::forgetCache();
+        (new Role)->forgetCache();
+        (new User)->forgetCache();
     }
 
     /**
@@ -842,8 +842,8 @@ class FortEventListener
      */
     public function roleCreated(RoleRepositoryContract $repository, Role $model)
     {
-        Ability::forgetCache();
-        Role::forgetCache();
+        (new Ability)->forgetCache();
+        (new Role)->forgetCache();
     }
 
     /**
@@ -869,9 +869,9 @@ class FortEventListener
      */
     public function roleUpdated(RoleRepositoryContract $repository, Role $model)
     {
-        Ability::forgetCache();
-        Role::forgetCache();
-        User::forgetCache();
+        (new Ability)->forgetCache();
+        (new Role)->forgetCache();
+        (new User)->forgetCache();
     }
 
     /**
@@ -897,9 +897,9 @@ class FortEventListener
      */
     public function roleDeleted(RoleRepositoryContract $repository, Role $model)
     {
-        Ability::forgetCache();
-        Role::forgetCache();
-        User::forgetCache();
+        (new Ability)->forgetCache();
+        (new Role)->forgetCache();
+        (new User)->forgetCache();
     }
 
     /**
@@ -925,10 +925,10 @@ class FortEventListener
      */
     public function userCreated(UserRepositoryContract $repository, User $model)
     {
-        Ability::forgetCache();
-        Role::forgetCache();
-        User::forgetCache();
-        Persistence::forgetCache();
+        (new Ability)->forgetCache();
+        (new Role)->forgetCache();
+        (new User)->forgetCache();
+        (new Persistence)->forgetCache();
     }
 
     /**
@@ -954,10 +954,10 @@ class FortEventListener
      */
     public function userUpdated(UserRepositoryContract $repository, User $model)
     {
-        Ability::forgetCache();
-        Role::forgetCache();
-        User::forgetCache();
-        Persistence::forgetCache();
+        (new Ability)->forgetCache();
+        (new Role)->forgetCache();
+        (new User)->forgetCache();
+        (new Persistence)->forgetCache();
     }
 
     /**
@@ -983,10 +983,10 @@ class FortEventListener
      */
     public function userDeleted(UserRepositoryContract $repository, User $model)
     {
-        Ability::forgetCache();
-        Role::forgetCache();
-        User::forgetCache();
-        Persistence::forgetCache();
+        (new Ability)->forgetCache();
+        (new Role)->forgetCache();
+        (new User)->forgetCache();
+        (new Persistence)->forgetCache();
     }
 
     /**
@@ -1012,8 +1012,8 @@ class FortEventListener
      */
     public function persistenceCreated(PersistenceRepositoryContract $repository, Persistence $model)
     {
-        Persistence::forgetCache();
-        User::forgetCache();
+        (new Persistence)->forgetCache();
+        (new User)->forgetCache();
     }
 
     /**
@@ -1039,8 +1039,8 @@ class FortEventListener
      */
     public function persistenceUpdated(PersistenceRepositoryContract $repository, Persistence $model)
     {
-        Persistence::forgetCache();
-        User::forgetCache();
+        (new Persistence)->forgetCache();
+        (new User)->forgetCache();
     }
 
     /**
@@ -1066,8 +1066,8 @@ class FortEventListener
      */
     public function persistenceDeleted(PersistenceRepositoryContract $repository, Persistence $model)
     {
-        Persistence::forgetCache();
-        User::forgetCache();
+        (new Persistence)->forgetCache();
+        (new User)->forgetCache();
     }
 
     /**
@@ -1093,7 +1093,7 @@ class FortEventListener
      */
     public function persistenceDeletedAll(PersistenceRepositoryContract $repository, User $model)
     {
-        Persistence::forgetCache();
-        User::forgetCache();
+        (new Persistence)->forgetCache();
+        (new User)->forgetCache();
     }
 }

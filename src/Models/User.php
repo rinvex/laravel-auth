@@ -19,6 +19,7 @@ use Rinvex\Fort\Traits\HasRoles;
 use Rinvex\Fort\Traits\CanVerifyEmail;
 use Rinvex\Fort\Traits\CanVerifyPhone;
 use Rinvex\Fort\Traits\Authenticatable;
+use Rinvex\Cacheable\CacheableEloquent;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
 use Rinvex\Fort\Traits\CanResetPassword;
@@ -33,6 +34,7 @@ use Illuminate\Contracts\Auth\Access\Authorizable as AuthorizableContract;
 class User extends Model implements AuthenticatableContract, AuthorizableContract, CanResetPasswordContract, CanVerifyEmailContract, CanVerifyPhoneContract
 {
     use Notifiable, Authenticatable, Authorizable, CanResetPassword, CanVerifyEmail, CanVerifyPhone, HasRoles, SoftDeletes;
+    use CacheableEloquent;
 
     /**
      * {@inheritdoc}

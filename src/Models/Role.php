@@ -16,12 +16,14 @@
 namespace Rinvex\Fort\Models;
 
 use Rinvex\Fort\Traits\HasAbilities;
+use Rinvex\Cacheable\CacheableEloquent;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Role extends Model
 {
     use HasAbilities, SoftDeletes;
+    use CacheableEloquent;
 
     /**
      * {@inheritdoc}
