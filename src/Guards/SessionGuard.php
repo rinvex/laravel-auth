@@ -175,10 +175,10 @@ class SessionGuard implements StatefulGuardContract, SupportsBasicAuth
     /**
      * Create a new authentication guard.
      *
-     * @param string                                        $name
-     * @param \Illuminate\Contracts\Auth\UserProvider       $provider
-     * @param \Illuminate\Session\SessionInterface          $session
-     * @param \Illuminate\Http\Request                      $request
+     * @param string                                  $name
+     * @param \Illuminate\Contracts\Auth\UserProvider $provider
+     * @param \Illuminate\Session\SessionInterface    $session
+     * @param \Illuminate\Http\Request                $request
      */
     public function __construct($name, UserProvider $provider, SessionInterface $session, Request $request = null)
     {
@@ -864,7 +864,7 @@ class SessionGuard implements StatefulGuardContract, SupportsBasicAuth
     /**
      * Set the user provider used by the guard.
      *
-     * @param  \Illuminate\Contracts\Auth\UserProvider  $provider
+     * @param \Illuminate\Contracts\Auth\UserProvider $provider
      *
      * @return void
      */

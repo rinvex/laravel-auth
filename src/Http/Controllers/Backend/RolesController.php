@@ -69,7 +69,7 @@ class RolesController extends AuthorizedController
      */
     public function create()
     {
-        return $this->form('create', 'store', new Role);
+        return $this->form('create', 'store', new Role());
     }
 
     /**
