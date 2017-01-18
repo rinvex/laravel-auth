@@ -64,7 +64,7 @@ class AbilitiesController extends AuthorizedController
      */
     public function create()
     {
-        return $this->form('create', 'store', new Ability);
+        return $this->form('create', 'store', new Ability());
     }
 
     /**
