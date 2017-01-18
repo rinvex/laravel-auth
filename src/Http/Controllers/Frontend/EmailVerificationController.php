@@ -42,7 +42,7 @@ class EmailVerificationController extends AbstractController
     {
         $result = app('rinvex.fort.emailverification')
             ->broker($this->getBroker())
-            ->send($request->except('_token'));
+            ->send($request->only('email'));
 
         switch ($result) {
             case EmailVerificationBrokerContract::LINK_SENT:
@@ -69,7 +69,7 @@ class EmailVerificationController extends AbstractController
      */
     public function verify(EmailVerificationRequest $request)
     {
-        $result = app('rinvex.fort.emailverification')->broker($this->getBroker())->verify($request->except('_token'));
+        $result = app('rinvex.fort.emailverification')->broker($this->getBroker())->verify($request->only(['email', 'token']));
 
         switch ($result) {
             case EmailVerificationBrokerContract::EMAIL_VERIFIED:

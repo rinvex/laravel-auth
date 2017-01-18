@@ -158,7 +158,8 @@ class AbilitiesController extends AuthorizedController
     protected function process(Request $request, Ability $ability = null)
     {
         // Store data into the entity
-        $result = is_null($ability) ? Ability::create($request->except(['_method', '_token', 'id'])) : $ability->update($request->except(['_method', '_token', 'id']));
+        $input = $request->only($ability->getFillable());
+        $result = is_null($ability) ? Ability::create($input) : $ability->update($input);
 
         // Repository `store` method returns false if no attributes
         // updated, happens save button clicked without chaning anything

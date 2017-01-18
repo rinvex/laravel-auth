@@ -58,7 +58,7 @@ class SocialAuthenticationController extends AuthenticationController
 
         if (! $model) {
             // Prepare registration data
-            $input = $request->except(['_method', '_token']) + [
+            $input = [
                 'email'    => $githubUser->email,
                 'username' => $githubUser->username,
                 'password' => str_random(),

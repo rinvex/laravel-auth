@@ -167,7 +167,7 @@ class RolesController extends AuthorizedController
     protected function process(Request $request, Role $role = null)
     {
         // Prepare required input fields
-        $input = $request->except(['_method', '_token', 'id']);
+        $input = $request->only($role->getFillable());
         $abilities = $request->user($this->getGuard())->can('grant-abilities') ? ['abilities' => array_pull($input, 'abilityList')] : [];
 
         // Store data into the entity

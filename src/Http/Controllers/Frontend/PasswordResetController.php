@@ -49,7 +49,7 @@ class PasswordResetController extends AbstractController
      */
     public function send(PasswordResetSendRequest $request)
     {
-        $result = app('rinvex.fort.passwordreset')->broker($this->getBroker())->send($request->except(['_token']));
+        $result = app('rinvex.fort.passwordreset')->broker($this->getBroker())->send($request->only('email'));
 
         switch ($result) {
             case PasswordResetBrokerContract::LINK_SENT:
@@ -79,7 +79,9 @@ class PasswordResetController extends AbstractController
     {
         $email = $request->get('email');
         $token = $request->get('token');
-        $result = app('rinvex.fort.passwordreset')->broker($this->getBroker())->validateReset($request->except(['_token']));
+        $result = app('rinvex.fort.passwordreset')
+            ->broker($this->getBroker())
+            ->validateReset($request->only(['email', 'token']));
 
         switch ($result) {
             case PasswordResetBrokerContract::INVALID_USER:
@@ -105,7 +107,9 @@ class PasswordResetController extends AbstractController
      */
     public function process(PasswordResetRequest $request)
     {
-        $result = app('rinvex.fort.passwordreset')->broker($this->getBroker())->reset($request->except(['_token']));
+        $result = app('rinvex.fort.passwordreset')
+            ->broker($this->getBroker())
+            ->reset($request->only(['email', 'token', 'password', 'password_confirmation']));
 
         switch ($result) {
             case PasswordResetBrokerContract::RESET_SUCCESS:
