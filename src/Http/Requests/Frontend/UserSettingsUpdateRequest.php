@@ -53,9 +53,9 @@ class UserSettingsUpdateRequest extends FormRequest
     public function rules()
     {
         return [
-            'email'    => 'required|email|max:255|unique:'.config('rinvex.fort.tables.users').',email,'.$this->get('email'),
-            'username' => 'required|max:255|unique:'.config('rinvex.fort.tables.users').',username,'.$this->get('email'),
-            'phone'    => 'required|numeric|unique:'.config('rinvex.fort.tables.users').',phone,'.$this->get('email'),
+            'email'    => 'required|email|max:255|unique:'.config('rinvex.fort.tables.users').',email,'.$this->get('email').',email',
+            'username' => 'required|max:255|unique:'.config('rinvex.fort.tables.users').',username,'.$this->get('email').',email',
+            'phone'    => 'required|numeric|unique:'.config('rinvex.fort.tables.users').',phone,'.$this->get('email').',email',
             'password' => 'sometimes|required|min:6|confirmed',
         ];
     }
