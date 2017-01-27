@@ -46,7 +46,7 @@ class UserSettingsController extends AuthenticatedController
     public function update(UserSettingsUpdateRequest $request)
     {
         $currentUser = $request->user($this->getGuard());
-        $data = $request->only($currentUser->getFillable());
+        $data = $request->only(array_intersect(array_keys($request->all()), $currentUser->getFillable()));
         $twoFactor = $currentUser->getTwoFactor();
 
         $emailVerification = array_get($data, 'email') != $currentUser->email ? [
