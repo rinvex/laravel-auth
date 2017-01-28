@@ -19,6 +19,7 @@ use Carbon\Carbon;
 use Rinvex\Fort\Models\Persistence;
 use Rinvex\Fort\Traits\ThrottlesLogins;
 use Rinvex\Fort\Services\TwoFactorTotpProvider;
+use Illuminate\Auth\Events\Logout as LogoutEvent;
 use Illuminate\Auth\SessionGuard as BaseSessionGuard;
 use Rinvex\Fort\Exceptions\InvalidPersistenceException;
 use Rinvex\Fort\Contracts\AuthenticatableTwoFactorContract;
@@ -27,13 +28,6 @@ use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 class SessionGuard extends BaseSessionGuard
 {
     use ThrottlesLogins;
-
-    /**
-     * Constant representing a successful login.
-     *
-     * @var string
-     */
-    const AUTH_VALID = 'rinvex/fort::frontend/messages.auth.valid';
 
     /**
      * Constant representing a successful login.
@@ -153,12 +147,11 @@ class SessionGuard extends BaseSessionGuard
             }
         }
 
+        $persistence = null;
+
         // Check if we've a valid persistence
         if ($user && ! $this->logoutAttempted && ! ($persistence = $this->getPersistenceByToken($this->session->getId()))) {
             $this->logout();
-
-            // Fire the automatic logout event
-            $this->events->fire('rinvex.fort.auth.autologout', $user);
 
             // Throw invalid persistence exception
             throw new InvalidPersistenceException();
@@ -196,7 +189,7 @@ class SessionGuard extends BaseSessionGuard
         if ($throttles && $lockedOut) {
             // Fire the authentication lockout event (only if user exists)
             if ($user) {
-                $this->events->fire('rinvex.fort.auth.lockout', [$this->getRequest()]);
+                $this->fireLockoutEvent($this->getRequest());
             }
 
             return static::AUTH_LOCKED_OUT;
@@ -237,16 +230,6 @@ class SessionGuard extends BaseSessionGuard
             // If Two-Factor enabled, `attempt` method always returns false,
             // use `login` or `loginUsingId` methods to login users in such case.
             return $this->login($user, $remember);
-
-            // Valid credentials, clear login attempts
-            if ($throttles) {
-                $this->clearLoginAttempts($this->getRequest());
-            }
-
-            // Fire the authentication valid event
-            $this->events->fire('rinvex.fort.auth.valid', [$credentials, $remember]);
-
-            return static::AUTH_VALID;
         }
 
         // Invalid credentials, increment login attempts
@@ -256,7 +239,6 @@ class SessionGuard extends BaseSessionGuard
 
         // Clear Two-Factor authentication attempts
         $this->clearTwoFactor();
-
 
         // If the authentication attempt fails we will fire an event so that the user
         // may be notified of any suspicious attempts to access their account from
@@ -269,9 +251,9 @@ class SessionGuard extends BaseSessionGuard
     /**
      * Log a user into the application.
      *
-     * @param  \Illuminate\Contracts\Auth\Authenticatable  $user
-     * @param bool                                           $remember
-     * @param string                                         $persistence
+     * @param  \Illuminate\Contracts\Auth\Authenticatable $user
+     * @param bool                                        $remember
+     * @param string                                      $persistence
      *
      * @return string
      */
@@ -307,8 +289,10 @@ class SessionGuard extends BaseSessionGuard
         // Clear Two-Factor authentication attempts
         $this->clearTwoFactor();
 
-        // Fire the authentication login event
-        $this->events->fire('rinvex.fort.auth.login', [$user, $remember]);
+        // If we have an event dispatcher instance set we will fire an event so that
+        // any listeners will hook into the authentication events and run actions
+        // based on the login and logout events fired from the guard instances.
+        $this->fireLoginEvent($user, $remember);
 
         $this->setUser($user);
 
@@ -340,8 +324,9 @@ class SessionGuard extends BaseSessionGuard
             $persistence->delete();
         }
 
-        // Fire the authentication logout event
-        $this->events->fire('rinvex.fort.auth.logout', [$user]);
+        if (isset($this->events)) {
+            $this->events->fire(new LogoutEvent($user));
+        }
 
         // Once we have fired the logout event we will clear the users out of memory
         // so they are no longer available as the user is no longer considered as
@@ -511,21 +496,9 @@ class SessionGuard extends BaseSessionGuard
      */
     protected function isValidTwoFactorBackup(AuthenticatableTwoFactorContract $user, $token)
     {
-        // Fire the Two-Factor TOTP backup verify start event
-        $this->events->fire('rinvex.fort.twofactor.backup.verify.start', [$user, $token]);
-
         $backup = array_get($user->getTwoFactor(), 'totp.backup', []);
-        $result = strlen($token) === 10 && in_array($token, $backup);
 
-        if ($result) {
-            // Fire the Two-Factor TOTP backup verify success event
-            $this->events->fire('rinvex.fort.twofactor.backup.verify.success', [$user, $token]);
-        } else {
-            // Fire the Two-Factor TOTP backup verify failed event
-            $this->events->fire('rinvex.fort.twofactor.backup.verify.failed', [$user, $token]);
-        }
-
-        return $result;
+        return strlen($token) === 10 && in_array($token, $backup);
     }
 
     /**

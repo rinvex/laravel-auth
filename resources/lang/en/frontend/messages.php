@@ -38,7 +38,6 @@ return [
         'failed'       => 'These credentials do not match our records.',
         'lockout'      => 'Too many login attempts. Please try again in :seconds seconds.',
         'login'        => 'You have successfully logged in!',
-        'valid'        => 'User credentials valid!',
         'logout'       => 'You have successfully logged out!',
         'already'      => 'You are already authenticated!',
         'session'      => [
