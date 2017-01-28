@@ -40,7 +40,7 @@ class RolesSeeder extends Seeder
         }
 
         // Grant abilities to roles
-        Role::where('slug', 'admin')->first()->grantAbilityTo('superadmin', 'global');
+        Role::where('slug', 'admin')->first()->grantAbilities('superadmin', 'global');
 
         DB::statement('SET FOREIGN_KEY_CHECKS=1;');
     }

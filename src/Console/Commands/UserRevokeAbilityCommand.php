@@ -71,7 +71,7 @@ class UserRevokeAbilityCommand extends Command
         }
 
         // Revoke user ability to..
-        $user->revokeAbilityTo($ability);
+        $user->revokeAbilities($ability);
 
         $this->info(Lang::get('rinvex.fort::artisan.user.abilityrevoked', ['user' => $user->id, 'ability' => $ability->id]));
     }

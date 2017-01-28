@@ -70,7 +70,7 @@ class RoleRevokeAbilityCommand extends Command
         }
 
         // Revoke role ability to..
-        $role->revokeAbilityTo($ability);
+        $role->revokeAbilities($ability);
 
         $this->info(Lang::get('rinvex.fort::artisan.role.abilityrevoked', ['role' => $role->id, 'ability' => $ability->id]));
     }

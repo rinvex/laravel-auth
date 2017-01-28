@@ -23,7 +23,7 @@ trait HasRoles
     use HasAbilities;
 
     /**
-     * Attach the given role(s) to the model.
+     * Attach the given roles to the model.
      *
      * @param int|string|array|\ArrayAccess|\Rinvex\Fort\Models\Role $roles
      *
@@ -31,13 +31,13 @@ trait HasRoles
      */
     public function assignRoles($roles)
     {
-        static::setRoles($roles, 'syncWithoutDetaching');
+        $this->setRoles($roles, 'syncWithoutDetaching');
 
         return $this;
     }
 
     /**
-     * Sync the given role(s) to the model.
+     * Sync the given roles to the model.
      *
      * @param int|string|array|\ArrayAccess|\Rinvex\Fort\Models\Role $roles
      *
@@ -45,13 +45,13 @@ trait HasRoles
      */
     public function syncRoles($roles)
     {
-        static::setRoles($roles, 'sync');
+        $this->setRoles($roles, 'sync');
 
         return $this;
     }
 
     /**
-     * Detach the given role(s) from the model.
+     * Detach the given roles from the model.
      *
      * @param int|string|array|\ArrayAccess|\Rinvex\Fort\Models\Role $roles
      *
@@ -59,7 +59,7 @@ trait HasRoles
      */
     public function removeRoles($roles)
     {
-        static::setRoles($roles, 'detach');
+        $this->setRoles($roles, 'detach');
 
         return $this;
     }
@@ -68,26 +68,32 @@ trait HasRoles
      * Set the given role(s) to the model.
      *
      * @param int|string|array|\ArrayAccess|\Rinvex\Fort\Models\Role $roles
-     * @param string                                                 $action
+     * @param string                                                 $process
      *
-     * @return void
+     * @return bool
      */
-    protected function setRoles($roles, string $action)
+    protected function setRoles($roles, string $process)
     {
-        // Fix exceptional event name
-        $event = $action == 'syncWithoutDetaching' ? 'attach' : $action;
+        // Guess event name
+        $event = $process == 'syncWithoutDetaching' ? 'attach' : $process;
+
+        // If the "attaching/syncing/detaching" event returns false we'll cancel this operation and
+        // return false, indicating that the attaching/syncing/detaching failed. This provides a
+        // chance for any listeners to cancel save operations if validations fail or whatever.
+        if ($this->fireModelEvent($event.'ing') === false) {
+            return false;
+        }
 
         // Hydrate Roles
-        $roles = static::hydrateRoles($roles)->pluck('id')->toArray();
-
-        // Fire the role syncing event
-        static::$dispatcher->fire("rinvex.fort.role.{$event}ing", [$this, $roles]);
+        $roles = $this->hydrateRoles($roles)->pluck('id')->toArray();
 
         // Set roles
-        $this->roles()->$action($roles);
+        $this->roles()->$process($roles);
 
-        // Fire the role synced event
-        static::$dispatcher->fire("rinvex.fort.role.{$event}ed", [$this, $roles]);
+        // Fire the roles attached/synced/detached event
+        $this->fireModelEvent($event.'ed', false);
+
+        return true;
     }
 
     /**
@@ -197,8 +203,8 @@ trait HasRoles
      */
     protected function hydrateRoles($roles)
     {
-        $isRolesStringBased = static::isRolesStringBased($roles);
-        $isRolesIntBased = static::isRolesIntBased($roles);
+        $isRolesStringBased = $this->isRolesStringBased($roles);
+        $isRolesIntBased = $this->isRolesIntBased($roles);
         $field = $isRolesStringBased ? 'slug' : 'id';
 
         return $isRolesStringBased || $isRolesIntBased ? Role::whereIn($field, (array) $roles)->get() : collect($roles);
