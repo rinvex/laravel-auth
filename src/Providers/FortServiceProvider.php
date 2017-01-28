@@ -179,8 +179,8 @@ class FortServiceProvider extends ServiceProvider
         ]);
 
         // Override route middleware on the fly
-        $router->middleware('auth', Authenticate::class);
-        $router->middleware('guest', RedirectIfAuthenticated::class);
+        $router->aliasMiddleware('auth', Authenticate::class);
+        $router->aliasMiddleware('guest', RedirectIfAuthenticated::class);
     }
 
     protected function overrideExceptionHandler()
