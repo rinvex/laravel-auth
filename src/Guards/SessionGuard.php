@@ -251,9 +251,9 @@ class SessionGuard extends BaseSessionGuard
     /**
      * Log a user into the application.
      *
-     * @param  \Illuminate\Contracts\Auth\Authenticatable $user
-     * @param bool                                        $remember
-     * @param string                                      $persistence
+     * @param \Illuminate\Contracts\Auth\Authenticatable $user
+     * @param bool                                       $remember
+     * @param string                                     $persistence
      *
      * @return string
      */
@@ -338,14 +338,6 @@ class SessionGuard extends BaseSessionGuard
         return static::AUTH_LOGOUT;
     }
 
-
-
-
-
-
-
-
-
     /**
      * Return login attempt user.
      *
@@ -421,7 +413,7 @@ class SessionGuard extends BaseSessionGuard
      * Verify Two-Factor authentication.
      *
      * @param \Illuminate\Contracts\Auth\Authenticatable $user
-     * @param string                                         $token
+     * @param string                                     $token
      *
      * @return string
      */
@@ -451,7 +443,7 @@ class SessionGuard extends BaseSessionGuard
      * Invalidate given backup code for the given user.
      *
      * @param \Rinvex\Fort\Contracts\AuthenticatableTwoFactorContract $user
-     * @param                                                $token
+     * @param                                                         $token
      *
      * @return void
      */
@@ -474,7 +466,7 @@ class SessionGuard extends BaseSessionGuard
      * Determine if the given token is a valid Two-Factor Phone token.
      *
      * @param \Rinvex\Fort\Contracts\AuthenticatableTwoFactorContract $user
-     * @param                                                $token
+     * @param                                                         $token
      *
      * @return bool
      */
@@ -490,7 +482,7 @@ class SessionGuard extends BaseSessionGuard
      * Determine if the given token is a valid Two-Factor Backup code.
      *
      * @param \Rinvex\Fort\Contracts\AuthenticatableTwoFactorContract $user
-     * @param                                                $token
+     * @param                                                         $token
      *
      * @return bool
      */
@@ -505,7 +497,7 @@ class SessionGuard extends BaseSessionGuard
      * Determine if the given token is a valid Two-Factor TOTP token.
      *
      * @param \Rinvex\Fort\Contracts\AuthenticatableTwoFactorContract $user
-     * @param                                                $token
+     * @param                                                         $token
      *
      * @return bool
      */
