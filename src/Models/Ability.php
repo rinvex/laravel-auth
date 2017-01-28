@@ -56,7 +56,7 @@ class Ability extends Model
     /**
      * Register an attaching ability event with the dispatcher.
      *
-     * @param  \Closure|string  $callback
+     * @param \Closure|string $callback
      *
      * @return void
      */
@@ -68,7 +68,7 @@ class Ability extends Model
     /**
      * Register an attached ability event with the dispatcher.
      *
-     * @param  \Closure|string  $callback
+     * @param \Closure|string $callback
      *
      * @return void
      */
@@ -80,7 +80,7 @@ class Ability extends Model
     /**
      * Register a detaching ability event with the dispatcher.
      *
-     * @param  \Closure|string  $callback
+     * @param \Closure|string $callback
      *
      * @return void
      */
@@ -92,7 +92,7 @@ class Ability extends Model
     /**
      * Register a detached ability event with the dispatcher.
      *
-     * @param  \Closure|string  $callback
+     * @param \Closure|string $callback
      *
      * @return void
      */
