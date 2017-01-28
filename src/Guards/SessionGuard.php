@@ -202,7 +202,7 @@ class SessionGuard extends BaseSessionGuard
             // Check if unverified
             if (config('rinvex.fort.emailverification.required') && ! $user->isEmailVerified()) {
                 // Fire the authentication unverified event
-                $this->events->fire('rinvex.fort.auth.unverified', [$user]);
+                $this->events->dispatch('rinvex.fort.auth.unverified', [$user]);
 
                 // Verification required
                 return static::AUTH_UNVERIFIED;
@@ -222,7 +222,7 @@ class SessionGuard extends BaseSessionGuard
                 $this->session->flash('rinvex.fort.twofactor.methods', ['totp' => $totp, 'phone' => $phone]);
 
                 // Fire the Two-Factor authentication required event
-                $this->events->fire('rinvex.fort.twofactor.required', [$user]);
+                $this->events->dispatch('rinvex.fort.twofactor.required', [$user]);
 
                 return static::AUTH_TWOFACTOR_REQUIRED;
             }
@@ -265,7 +265,7 @@ class SessionGuard extends BaseSessionGuard
         // queue a permanent cookie that contains the encrypted copy of the user
         // identifier. We will then decrypt this later to retrieve the users.
         if ($remember) {
-            $this->createRememberTokenIfDoesntExist($user);
+            $this->ensureRememberTokenIsSet($user);
 
             $this->queueRecallerCookie($user);
         }
@@ -316,7 +316,7 @@ class SessionGuard extends BaseSessionGuard
         $this->clearUserDataFromStorage();
 
         if (! is_null($this->user)) {
-            $this->refreshRememberToken($user);
+            $this->cycleRememberToken($user);
         }
 
         // Delete user persistence
@@ -325,7 +325,7 @@ class SessionGuard extends BaseSessionGuard
         }
 
         if (isset($this->events)) {
-            $this->events->fire(new LogoutEvent($user));
+            $this->events->dispatch(new LogoutEvent($user));
         }
 
         // Once we have fired the logout event we will clear the users out of memory
