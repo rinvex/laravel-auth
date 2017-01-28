@@ -55,6 +55,79 @@ class Role extends Model
         parent::__construct($attributes);
 
         $this->setTable(config('rinvex.fort.tables.roles'));
+        $this->addObservableEvents(['attaching', 'attached', 'syncing', 'synced', 'detaching', 'detached']);
+    }
+
+    /**
+     * Register an attaching role event with the dispatcher.
+     *
+     * @param \Closure|string $callback
+     *
+     * @return void
+     */
+    public static function attaching($callback)
+    {
+        static::registerModelEvent('attaching', $callback);
+    }
+
+    /**
+     * Register an attached role event with the dispatcher.
+     *
+     * @param \Closure|string $callback
+     *
+     * @return void
+     */
+    public static function attached($callback)
+    {
+        static::registerModelEvent('attached', $callback);
+    }
+
+    /**
+     * Register a syncing role event with the dispatcher.
+     *
+     * @param \Closure|string $callback
+     *
+     * @return void
+     */
+    public static function syncing($callback)
+    {
+        static::registerModelEvent('syncing', $callback);
+    }
+
+    /**
+     * Register a synced role event with the dispatcher.
+     *
+     * @param \Closure|string $callback
+     *
+     * @return void
+     */
+    public static function synced($callback)
+    {
+        static::registerModelEvent('synced', $callback);
+    }
+
+    /**
+     * Register a detaching role event with the dispatcher.
+     *
+     * @param \Closure|string $callback
+     *
+     * @return void
+     */
+    public static function detaching($callback)
+    {
+        static::registerModelEvent('detaching', $callback);
+    }
+
+    /**
+     * Register a detached role event with the dispatcher.
+     *
+     * @param \Closure|string $callback
+     *
+     * @return void
+     */
+    public static function detached($callback)
+    {
+        static::registerModelEvent('detached', $callback);
     }
 
     /**

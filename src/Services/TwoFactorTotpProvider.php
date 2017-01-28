@@ -150,9 +150,6 @@ class TwoFactorTotpProvider
      **/
     public function verifyKey($b32seed, $key, $window = 1, $useTimeStamp = true)
     {
-        // Fire the Two-Factor TOTP verify start event
-        event('rinvex.fort.twofactor.totp.verify.start', [$b32seed, $key]);
-
         $timeStamp = $this->getTimestamp();
 
         if ($useTimeStamp !== true) {
@@ -163,15 +160,9 @@ class TwoFactorTotpProvider
 
         for ($ts = $timeStamp - $window; $ts <= $timeStamp + $window; $ts++) {
             if (hash_equals($this->oathHotp($binarySeed, $ts), $key)) {
-                // Fire the Two-Factor TOTP verify success event
-                event('rinvex.fort.twofactor.totp.verify.success', [$b32seed, $key]);
-
                 return true;
             }
         }
-
-        // Fire the Two-Factor TOTP verify failed event
-        event('rinvex.fort.twofactor.totp.verify.failed', [$b32seed, $key]);
 
         return false;
     }

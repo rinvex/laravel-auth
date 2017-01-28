@@ -50,6 +50,55 @@ class Ability extends Model
         parent::__construct($attributes);
 
         $this->setTable(config('rinvex.fort.tables.abilities'));
+        $this->addObservableEvents(['attaching', 'attached', 'detaching', 'detached']);
+    }
+
+    /**
+     * Register an attaching ability event with the dispatcher.
+     *
+     * @param  \Closure|string  $callback
+     *
+     * @return void
+     */
+    public static function attaching($callback)
+    {
+        static::registerModelEvent('attaching', $callback);
+    }
+
+    /**
+     * Register an attached ability event with the dispatcher.
+     *
+     * @param  \Closure|string  $callback
+     *
+     * @return void
+     */
+    public static function attached($callback)
+    {
+        static::registerModelEvent('attached', $callback);
+    }
+
+    /**
+     * Register a detaching ability event with the dispatcher.
+     *
+     * @param  \Closure|string  $callback
+     *
+     * @return void
+     */
+    public static function detaching($callback)
+    {
+        static::registerModelEvent('detaching', $callback);
+    }
+
+    /**
+     * Register a detached ability event with the dispatcher.
+     *
+     * @param  \Closure|string  $callback
+     *
+     * @return void
+     */
+    public static function detached($callback)
+    {
+        static::registerModelEvent('detached', $callback);
     }
 
     /**

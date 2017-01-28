@@ -19,9 +19,17 @@ use Illuminate\Routing\Router;
 use Illuminate\Support\Facades\Auth;
 use Rinvex\Fort\Guards\SessionGuard;
 use Illuminate\Support\ServiceProvider;
-use Rinvex\Fort\Listeners\FortEventListener;
+use Rinvex\Fort\Handlers\AbilityHandler;
+use Rinvex\Fort\Handlers\GenericHandler;
+use Rinvex\Fort\Handlers\PersistenceHandler;
+use Rinvex\Fort\Handlers\RoleHandler;
+use Rinvex\Fort\Handlers\UserHandler;
 use Rinvex\Fort\Http\Middleware\Authenticate;
 use Rinvex\Fort\Http\Middleware\RedirectIfAuthenticated;
+use Rinvex\Fort\Models\Ability;
+use Rinvex\Fort\Models\Persistence;
+use Rinvex\Fort\Models\Role;
+use Rinvex\Fort\Models\User;
 
 class FortServiceProvider extends ServiceProvider
 {
@@ -32,9 +40,6 @@ class FortServiceProvider extends ServiceProvider
     {
         // Merge config
         $this->mergeConfigFrom(realpath(__DIR__.'/../../config/config.php'), 'rinvex.fort');
-
-        // Register the event listener
-        $this->app->bind('rinvex.fort.listener', FortEventListener::class);
 
         // Override Exception Handler
         $this->overrideExceptionHandler();
@@ -68,8 +73,12 @@ class FortServiceProvider extends ServiceProvider
             $this->publishResources();
         }
 
-        // Subscribe the registered event listener
-        $this->app['events']->subscribe('rinvex.fort.listener');
+        // Register event handlers
+        Role::observe(RoleHandler::class);
+        User::observe(UserHandler::class);
+        Ability::observe(AbilityHandler::class);
+        Persistence::observe(PersistenceHandler::class);
+        $this->app['events']->subscribe(GenericHandler::class);
 
         // Override session guard
         $this->overrideSessionGuard();
