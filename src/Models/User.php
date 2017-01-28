@@ -16,22 +16,24 @@
 namespace Rinvex\Fort\Models;
 
 use Rinvex\Fort\Traits\HasRoles;
+use Illuminate\Auth\Authenticatable;
 use Rinvex\Fort\Traits\CanVerifyEmail;
 use Rinvex\Fort\Traits\CanVerifyPhone;
-use Rinvex\Fort\Traits\Authenticatable;
 use Rinvex\Cacheable\CacheableEloquent;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
 use Rinvex\Fort\Traits\CanResetPassword;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Rinvex\Fort\Traits\AuthenticatableTwoFactor;
 use Rinvex\Fort\Contracts\CanVerifyEmailContract;
 use Rinvex\Fort\Contracts\CanVerifyPhoneContract;
-use Rinvex\Fort\Contracts\AuthenticatableContract;
-use Illuminate\Foundation\Auth\Access\Authorizable;
 use Rinvex\Fort\Contracts\CanResetPasswordContract;
+use Illuminate\Foundation\Auth\Access\Authorizable;
+use Rinvex\Fort\Contracts\AuthenticatableTwoFactorContract;
+use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 use Illuminate\Contracts\Auth\Access\Authorizable as AuthorizableContract;
 
-class User extends Model implements AuthenticatableContract, AuthorizableContract, CanResetPasswordContract, CanVerifyEmailContract, CanVerifyPhoneContract
+class User extends Model implements AuthenticatableContract, AuthenticatableTwoFactorContract, AuthorizableContract, CanResetPasswordContract, CanVerifyEmailContract, CanVerifyPhoneContract
 {
     use HasRoles;
     use Notifiable;
@@ -42,6 +44,7 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
     use Authenticatable;
     use CanResetPassword;
     use CacheableEloquent;
+    use AuthenticatableTwoFactor;
 
     /**
      * {@inheritdoc}

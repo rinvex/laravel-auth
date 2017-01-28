@@ -15,12 +15,8 @@
 
 namespace Rinvex\Fort\Traits;
 
-use Illuminate\Auth\Authenticatable as BaseAuthenticatable;
-
-trait Authenticatable
+trait AuthenticatableTwoFactor
 {
-    use BaseAuthenticatable;
-
     /**
      * Get the Two-Factor options.
      *

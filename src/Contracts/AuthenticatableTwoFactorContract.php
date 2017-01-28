@@ -15,9 +15,7 @@
 
 namespace Rinvex\Fort\Contracts;
 
-use Illuminate\Contracts\Auth\Authenticatable as BaseAuthenticatable;
-
-interface AuthenticatableContract extends BaseAuthenticatable
+interface AuthenticatableTwoFactorContract
 {
     /**
      * Get the Two-Factor options.
