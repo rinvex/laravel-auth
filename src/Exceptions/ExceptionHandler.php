@@ -43,7 +43,7 @@ class ExceptionHandler extends BaseExceptionHandler
 
             return intend([
                 'route'      => 'rinvex.fort.backend.'.$plural.'.index',
-                'withErrors' => ['rinvex.fort.'.$single.'.not_found' => trans('rinvex/fort::backend/messages.'.$single.'.not_found', [$single.'Id' => $exception->getId()])],
+                'withErrors' => ['rinvex.fort.'.$single.'.not_found' => trans('rinvex/fort::backend/messages.'.$single.'.not_found')],
             ]);
         } elseif ($exception instanceof AuthorizationException) {
             return intend([

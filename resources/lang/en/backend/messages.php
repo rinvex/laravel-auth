@@ -16,7 +16,7 @@
 return [
 
     'ability' => [
-        'not_found'       => 'Sorry! Ability [:abilityId] not found!',
+        'not_found'       => 'Sorry! Requested ability not found!',
         'created'         => 'Congrats! Ability [:abilityId] created successfully.',
         'updated'         => 'Congrats! Ability [:abilityId] updated successfully.',
         'deleted'         => 'Done! Ability [:abilityId] deleted successfully.',
@@ -24,7 +24,7 @@ return [
     ],
 
     'role' => [
-        'not_found'       => 'Sorry! Role [:roleId] not found!',
+        'not_found'       => 'Sorry! Requested role not found!',
         'created'         => 'Congrats! Role [:roleId] created successfully.',
         'updated'         => 'Congrats! Role [:roleId] updated successfully.',
         'deleted'         => 'Done! Role [:roleId] deleted successfully.',
@@ -32,7 +32,7 @@ return [
     ],
 
     'user' => [
-        'not_found'       => 'Sorry! User [:userId] not found!',
+        'not_found'       => 'Sorry! Requested user not found!',
         'created'         => 'Congrats! User [:userId] created successfully.',
         'updated'         => 'Congrats! User [:userId] updated successfully.',
         'deleted'         => 'Done! User [:userId] deleted successfully.',
