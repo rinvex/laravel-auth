@@ -104,7 +104,7 @@ class UsersController extends AuthorizedController
      */
     public function store(UserStoreRequest $request)
     {
-        return $this->process($request);
+        return $this->process($request, new User());
     }
 
     /**
@@ -169,7 +169,7 @@ class UsersController extends AuthorizedController
      *
      * @return \Illuminate\Http\Response
      */
-    protected function process(Request $request, User $user = null)
+    protected function process(Request $request, User $user)
     {
         // Prepare required input fields
         $input = $request->only(array_intersect(array_keys($request->all()), $user->getFillable()));
@@ -177,11 +177,11 @@ class UsersController extends AuthorizedController
         $abilities = $request->user($this->getGuard())->can('grant-abilities') ? ['abilities' => array_pull($input, 'abilityList')] : [];
 
         // Store data into the entity
-        $result = is_null($user) ? Role::create($input + $roles + $abilities) : $user->update($input + $roles + $abilities);
+        $result = ! $user->exists ? Role::create($input + $roles + $abilities) : $user->update($input + $roles + $abilities);
 
         // Repository `store` method returns false if no attributes
         // updated, happens save button clicked without chaning anything
-        $message = ! is_null($user)
+        $message = $user->exists
             ? ($result === false
                 ? ['warning' => trans('rinvex/fort::backend/messages.user.nothing_updated', ['userId' => $user->id])]
                 : ['success' => trans('rinvex/fort::backend/messages.user.updated', ['userId' => $result->id])])

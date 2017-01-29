@@ -100,7 +100,7 @@ class AbilitiesController extends AuthorizedController
      */
     public function store(AbilityStoreRequest $request)
     {
-        return $this->process($request);
+        return $this->process($request, new Ability());
     }
 
     /**
@@ -155,15 +155,15 @@ class AbilitiesController extends AuthorizedController
      *
      * @return \Illuminate\Http\Response
      */
-    protected function process(Request $request, Ability $ability = null)
+    protected function process(Request $request, Ability $ability)
     {
         // Store data into the entity
         $input = $request->only(array_intersect(array_keys($request->all()), $ability->getFillable()));
-        $result = is_null($ability) ? Ability::create($input) : $ability->update($input);
+        $result = ! $ability->exists ? Ability::create($input) : $ability->update($input);
 
         // Repository `store` method returns false if no attributes
         // updated, happens save button clicked without chaning anything
-        $with = ! is_null($ability)
+        $with = $ability->exists
             ? ($result === false
                 ? ['warning' => trans('rinvex/fort::backend/messages.ability.nothing_updated', ['abilityId' => $ability->id])]
                 : ['success' => trans('rinvex/fort::backend/messages.ability.updated', ['abilityId' => $result->id])])

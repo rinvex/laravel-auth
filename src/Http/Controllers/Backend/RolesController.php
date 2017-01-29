@@ -105,7 +105,7 @@ class RolesController extends AuthorizedController
      */
     public function store(RoleStoreRequest $request)
     {
-        return $this->process($request);
+        return $this->process($request, new Role());
     }
 
     /**
@@ -164,18 +164,18 @@ class RolesController extends AuthorizedController
      *
      * @return \Illuminate\Http\Response
      */
-    protected function process(Request $request, Role $role = null)
+    protected function process(Request $request, Role $role)
     {
         // Prepare required input fields
         $input = $request->only(array_intersect(array_keys($request->all()), $role->getFillable()));
         $abilities = $request->user($this->getGuard())->can('grant-abilities') ? ['abilities' => array_pull($input, 'abilityList')] : [];
 
         // Store data into the entity
-        $result = is_null($role) ? Role::create($input + $abilities) : $role->update($input + $abilities);
+        $result = ! $role->exists ? Role::create($input + $abilities) : $role->update($input + $abilities);
 
         // Repository `store` method returns false if no attributes
         // updated, happens save button clicked without chaning anything
-        $message = ! is_null($role)
+        $message = $role->exists
             ? ($result === false
                 ? ['warning' => trans('rinvex/fort::backend/messages.role.nothing_updated', ['roleId' => $role->id])]
                 : ['success' => trans('rinvex/fort::backend/messages.role.updated', ['roleId' => $result->id])])
