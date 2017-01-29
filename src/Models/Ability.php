@@ -17,7 +17,6 @@ namespace Rinvex\Fort\Models;
 
 use Rinvex\Cacheable\CacheableEloquent;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
  * Rinvex\Fort\Models\Ability.
@@ -48,7 +47,6 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  */
 class Ability extends Model
 {
-    use SoftDeletes;
     use CacheableEloquent;
 
     /**

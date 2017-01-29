@@ -23,7 +23,6 @@ use Rinvex\Cacheable\CacheableEloquent;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
 use Rinvex\Fort\Traits\CanResetPassword;
-use Illuminate\Database\Eloquent\SoftDeletes;
 use Rinvex\Fort\Traits\AuthenticatableTwoFactor;
 use Rinvex\Fort\Contracts\CanVerifyEmailContract;
 use Rinvex\Fort\Contracts\CanVerifyPhoneContract;
@@ -104,7 +103,6 @@ class User extends Model implements AuthenticatableContract, AuthenticatableTwoF
 {
     use HasRoles;
     use Notifiable;
-    use SoftDeletes;
     use Authorizable;
     use CanVerifyEmail;
     use CanVerifyPhone;
