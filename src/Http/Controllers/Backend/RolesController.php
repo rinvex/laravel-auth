@@ -173,8 +173,8 @@ class RolesController extends AuthorizedController
         // Store data into the entity
         $result = ! $role->exists ? Role::create($input + $abilities) : $role->update($input + $abilities);
 
-        // Repository `store` method returns false if no attributes
-        // updated, happens save button clicked without chaning anything
+        // Model `update` method returns false if no attributes updated,
+        // this happens save button clicked without chaning anything
         $message = $role->exists
             ? ($result === false
                 ? ['warning' => trans('rinvex/fort::backend/messages.role.nothing_updated', ['roleId' => $role->id])]

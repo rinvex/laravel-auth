@@ -161,8 +161,8 @@ class AbilitiesController extends AuthorizedController
         $input = $request->only(array_intersect(array_keys($request->all()), $ability->getFillable()));
         $result = ! $ability->exists ? Ability::create($input) : $ability->update($input);
 
-        // Repository `store` method returns false if no attributes
-        // updated, happens save button clicked without chaning anything
+        // Model `update` method returns false if no attributes updated,
+        // this happens save button clicked without chaning anything
         $with = $ability->exists
             ? ($result === false
                 ? ['warning' => trans('rinvex/fort::backend/messages.ability.nothing_updated', ['abilityId' => $ability->id])]

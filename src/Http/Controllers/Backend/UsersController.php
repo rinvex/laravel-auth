@@ -179,8 +179,8 @@ class UsersController extends AuthorizedController
         // Store data into the entity
         $result = ! $user->exists ? Role::create($input + $roles + $abilities) : $user->update($input + $roles + $abilities);
 
-        // Repository `store` method returns false if no attributes
-        // updated, happens save button clicked without chaning anything
+        // Model `update` method returns false if no attributes updated,
+        // this happens save button clicked without chaning anything
         $message = $user->exists
             ? ($result === false
                 ? ['warning' => trans('rinvex/fort::backend/messages.user.nothing_updated', ['userId' => $user->id])]
