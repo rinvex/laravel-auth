@@ -29,9 +29,9 @@ class CreateRolesTable extends Migration
         Schema::create(config('rinvex.fort.tables.roles'), function (Blueprint $table) {
             // Columns
             $table->increments('id');
+            $table->json('name');
             $table->string('slug');
-            $table->string('name');
-            $table->text('description')->nullable();
+            $table->json('description')->nullable();
             $table->timestamps();
             $table->softDeletes();
 

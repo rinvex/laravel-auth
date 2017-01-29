@@ -15,9 +15,12 @@
 
 namespace Rinvex\Fort\Models;
 
+use Spatie\Sluggable\HasSlug;
+use Spatie\Sluggable\SlugOptions;
 use Rinvex\Fort\Traits\HasAbilities;
 use Rinvex\Cacheable\CacheableEloquent;
 use Illuminate\Database\Eloquent\Model;
+use Spatie\Translatable\HasTranslations;
 
 /**
  * Rinvex\Fort\Models\Role.
@@ -44,7 +47,9 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Role extends Model
 {
+    use HasSlug;
     use HasAbilities;
+    use HasTranslations;
     use CacheableEloquent;
 
     /**
@@ -65,6 +70,16 @@ class Role extends Model
      * {@inheritdoc}
      */
     protected $with = ['abilities'];
+
+    /**
+     * The attributes that are translatable.
+     *
+     * @var array
+     */
+    public $translatable = [
+        'name',
+        'description',
+    ];
 
     /**
      * Create a new Eloquent model instance.
@@ -201,5 +216,17 @@ class Role extends Model
     public function isProtected()
     {
         return in_array($this->id, config('rinvex.fort.protected.roles'));
+    }
+
+    /**
+     * Get the options for generating the slug.
+     *
+     * @return \Spatie\Sluggable\SlugOptions
+     */
+    public function getSlugOptions(): SlugOptions
+    {
+        return SlugOptions::create()
+                          ->generateSlugsFrom('name')
+                          ->saveSlugsTo('slug');
     }
 }
