@@ -125,11 +125,11 @@ class AbilitiesController extends AuthorizedController
      */
     public function delete(Ability $ability)
     {
-        $result = $ability->delete();
+        $ability->delete();
 
         return intend([
             'route' => 'rinvex.fort.backend.abilities.index',
-            'with'  => ['warning' => trans('rinvex/fort::backend/messages.ability.deleted', ['abilityId' => $result->id])],
+            'with'  => ['warning' => trans('rinvex/fort::backend/messages.ability.deleted', ['abilityId' => $ability->id])],
         ]);
     }
 
