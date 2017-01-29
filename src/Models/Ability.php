@@ -20,7 +20,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
- * Rinvex\Fort\Models\Ability
+ * Rinvex\Fort\Models\Ability.
  *
  * @property int $id
  * @property string $action
@@ -34,6 +34,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property-read \Illuminate\Database\Eloquent\Collection|\Rinvex\Fort\Models\Role[] $roles
  * @property-read \Illuminate\Database\Eloquent\Collection|\Rinvex\Fort\Models\User[] $users
  * @property-read bool $slug
+ *
  * @method static \Illuminate\Database\Query\Builder|\Rinvex\Fort\Models\Ability whereId($value)
  * @method static \Illuminate\Database\Query\Builder|\Rinvex\Fort\Models\Ability whereAction($value)
  * @method static \Illuminate\Database\Query\Builder|\Rinvex\Fort\Models\Ability whereResource($value)
