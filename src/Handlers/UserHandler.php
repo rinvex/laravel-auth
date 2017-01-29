@@ -54,7 +54,6 @@ class UserHandler
      */
     public function deleted(User $user)
     {
-        Ability::forgetCache();
-        Role::forgetCache();
+        //
     }
 }

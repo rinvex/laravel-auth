@@ -15,21 +15,20 @@
 
 namespace Rinvex\Fort\Providers;
 
+use Rinvex\Fort\Models\Role;
+use Rinvex\Fort\Models\User;
 use Illuminate\Routing\Router;
+use Rinvex\Fort\Models\Ability;
+use Rinvex\Fort\Models\Persistence;
 use Illuminate\Support\Facades\Auth;
 use Rinvex\Fort\Guards\SessionGuard;
+use Rinvex\Fort\Handlers\RoleHandler;
+use Rinvex\Fort\Handlers\UserHandler;
 use Illuminate\Support\ServiceProvider;
 use Rinvex\Fort\Handlers\AbilityHandler;
 use Rinvex\Fort\Handlers\GenericHandler;
-use Rinvex\Fort\Handlers\PersistenceHandler;
-use Rinvex\Fort\Handlers\RoleHandler;
-use Rinvex\Fort\Handlers\UserHandler;
 use Rinvex\Fort\Http\Middleware\Authenticate;
 use Rinvex\Fort\Http\Middleware\RedirectIfAuthenticated;
-use Rinvex\Fort\Models\Ability;
-use Rinvex\Fort\Models\Persistence;
-use Rinvex\Fort\Models\Role;
-use Rinvex\Fort\Models\User;
 
 class FortServiceProvider extends ServiceProvider
 {
@@ -77,7 +76,6 @@ class FortServiceProvider extends ServiceProvider
         Role::observe(RoleHandler::class);
         User::observe(UserHandler::class);
         Ability::observe(AbilityHandler::class);
-        Persistence::observe(PersistenceHandler::class);
         $this->app['events']->subscribe(GenericHandler::class);
 
         // Override session guard
