@@ -51,25 +51,9 @@ class GenericHandler
      */
     public function subscribe(Dispatcher $dispatcher)
     {
-        // Authentication events
         $dispatcher->listen(Lockout::class, __CLASS__.'@authLockout');
-        $dispatcher->listen('rinvex.fort.auth.unverified', __CLASS__.'@authUnverified');
-
-        // Two-Factor required events
-        $dispatcher->listen('rinvex.fort.twofactor.required', __CLASS__.'@twoFactorRequired');
-
-        // Registration events
-        $dispatcher->listen('rinvex.fort.register.start', __CLASS__.'@registerStart');
         $dispatcher->listen('rinvex.fort.register.success', __CLASS__.'@registerSuccess');
-        $dispatcher->listen('rinvex.fort.register.social.start', __CLASS__.'@registerSocialStart');
         $dispatcher->listen('rinvex.fort.register.social.success', __CLASS__.'@registerSocialSuccess');
-
-        // Reset password events
-        $dispatcher->listen('rinvex.fort.passwordreset.start', __CLASS__.'@passwordResetStart');
-        $dispatcher->listen('rinvex.fort.passwordreset.success', __CLASS__.'@passwordResetSuccess');
-
-        // Email verification events
-        $dispatcher->listen('rinvex.fort.emailverification.start', __CLASS__.'@emailVerificationStart');
         $dispatcher->listen('rinvex.fort.emailverification.success', __CLASS__.'@emailVerificationSuccess');
     }
 
