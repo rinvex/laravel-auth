@@ -174,16 +174,6 @@ class User extends Model implements AuthenticatableContract, AuthenticatableTwoF
     }
 
     /**
-     * Get the route key for the model.
-     *
-     * @return string
-     */
-    public function getRouteKeyName()
-    {
-        return 'username';
-    }
-
-    /**
      * A user may have multiple direct abilities.
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany

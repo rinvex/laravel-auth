@@ -56,13 +56,13 @@ Route::group([
 
     Route::group(['as' => 'roles.', 'prefix' => 'roles'], function () {
         Route::get('/')->name('index')->uses('RolesController@index');
-        Route::get('{role}')->name('show')->uses('RolesController@show')->where('role', '[a-z0-9_-]+');
-        Route::get('{role}/copy')->name('copy')->uses('RolesController@copy')->where('role', '[a-z0-9_-]+');
+        Route::get('{role}')->name('show')->uses('RolesController@show')->where('role', '[0-9]+');
+        Route::get('{role}/copy')->name('copy')->uses('RolesController@copy')->where('role', '[0-9]+');
         Route::get('create')->name('create')->uses('RolesController@create');
         Route::post('create')->name('store')->uses('RolesController@store');
-        Route::get('{role}/edit')->name('edit')->uses('RolesController@edit')->where('role', '[a-z0-9_-]+');
-        Route::put('{role}/edit')->name('update')->uses('RolesController@update')->where('role', '[a-z0-9_-]+');
-        Route::delete('{role}')->name('delete')->uses('RolesController@delete')->where('role', '[a-z0-9_-]+');
+        Route::get('{role}/edit')->name('edit')->uses('RolesController@edit')->where('role', '[0-9]+');
+        Route::put('{role}/edit')->name('update')->uses('RolesController@update')->where('role', '[0-9]+');
+        Route::delete('{role}')->name('delete')->uses('RolesController@delete')->where('role', '[0-9]+');
     });
 
     /*
@@ -73,12 +73,12 @@ Route::group([
 
     Route::group(['as' => 'users.', 'prefix' => 'users'], function () {
         Route::get('/')->name('index')->uses('UsersController@index');
-        Route::get('{user}')->name('show')->uses('UsersController@show')->where('user', '[a-zA-Z0-9_-]+');
-        Route::get('{user}/copy')->name('copy')->uses('UsersController@copy')->where('user', '[a-zA-Z0-9_-]+');
+        Route::get('{user}')->name('show')->uses('UsersController@show')->where('user', '[0-9]+');
+        Route::get('{user}/copy')->name('copy')->uses('UsersController@copy')->where('user', '[0-9]+');
         Route::get('create')->name('create')->uses('UsersController@create');
         Route::post('create')->name('store')->uses('UsersController@store');
-        Route::get('{user}/edit')->name('edit')->uses('UsersController@edit')->where('user', '[a-zA-Z0-9_-]+');
-        Route::put('{user}/edit')->name('update')->uses('UsersController@update')->where('user', '[a-zA-Z0-9_-]+');
-        Route::delete('{user}')->name('delete')->uses('UsersController@delete')->where('user', '[a-zA-Z0-9_-]+');
+        Route::get('{user}/edit')->name('edit')->uses('UsersController@edit')->where('user', '[0-9]+');
+        Route::put('{user}/edit')->name('update')->uses('UsersController@update')->where('user', '[0-9]+');
+        Route::delete('{user}')->name('delete')->uses('UsersController@delete')->where('user', '[0-9]+');
     });
 });
