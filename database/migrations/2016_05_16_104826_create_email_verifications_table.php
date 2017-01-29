@@ -17,7 +17,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateRinvexFortSocialiteTable extends Migration
+class CreateEmailVerificationsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -26,24 +26,17 @@ class CreateRinvexFortSocialiteTable extends Migration
      */
     public function up()
     {
-        Schema::create(config('rinvex.fort.tables.socialites'), function (Blueprint $table) {
+        Schema::create(config('rinvex.fort.tables.email_verifications'), function (Blueprint $table) {
             // Columns
-            $table->increments('id');
-            $table->integer('user_id')->unsigned();
-            $table->string('provider');
-            $table->integer('provider_uid')->unsigned();
-            $table->timestamps();
+            $table->string('token');
+            $table->string('email');
+            $table->string('agent')->nullable();
+            $table->string('ip')->nullable();
+            $table->timestamp('created_at');
 
             // Indexes
-            $table->unique([
-                'provider',
-                'provider_uid',
-            ]);
-            $table->foreign('user_id')
-                  ->references('id')
-                  ->on(config('rinvex.fort.tables.users'))
-                  ->onDelete('cascade')
-                  ->onUpdate('cascade');
+            $table->primary('token');
+            $table->index('email');
 
             // Engine
             $table->engine = 'InnoDB';
@@ -57,6 +50,6 @@ class CreateRinvexFortSocialiteTable extends Migration
      */
     public function down()
     {
-        Schema::drop(config('rinvex.fort.tables.socialites'));
+        Schema::drop(config('rinvex.fort.tables.email_verifications'));
     }
 }

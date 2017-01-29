@@ -17,7 +17,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateRinvexFortEmailVerificationsTable extends Migration
+class CreateRolesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -26,17 +26,17 @@ class CreateRinvexFortEmailVerificationsTable extends Migration
      */
     public function up()
     {
-        Schema::create(config('rinvex.fort.tables.email_verifications'), function (Blueprint $table) {
+        Schema::create(config('rinvex.fort.tables.roles'), function (Blueprint $table) {
             // Columns
-            $table->string('token');
-            $table->string('email');
-            $table->string('agent')->nullable();
-            $table->string('ip')->nullable();
-            $table->timestamp('created_at');
+            $table->increments('id');
+            $table->string('slug');
+            $table->string('name');
+            $table->text('description')->nullable();
+            $table->timestamps();
+            $table->softDeletes();
 
             // Indexes
-            $table->primary('token');
-            $table->index('email');
+            $table->unique('slug');
 
             // Engine
             $table->engine = 'InnoDB';
@@ -50,6 +50,6 @@ class CreateRinvexFortEmailVerificationsTable extends Migration
      */
     public function down()
     {
-        Schema::drop(config('rinvex.fort.tables.email_verifications'));
+        Schema::drop(config('rinvex.fort.tables.roles'));
     }
 }

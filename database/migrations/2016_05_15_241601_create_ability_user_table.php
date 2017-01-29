@@ -17,7 +17,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateRinvexFortRoleUserTable extends Migration
+class CreateAbilityUserTable extends Migration
 {
     /**
      * Run the migrations.
@@ -26,20 +26,20 @@ class CreateRinvexFortRoleUserTable extends Migration
      */
     public function up()
     {
-        Schema::create(config('rinvex.fort.tables.role_user'), function (Blueprint $table) {
+        Schema::create(config('rinvex.fort.tables.ability_user'), function (Blueprint $table) {
             // Columns
-            $table->integer('role_id')->unsigned();
+            $table->integer('ability_id')->unsigned();
             $table->integer('user_id')->unsigned();
             $table->timestamps();
 
             // Indexes
             $table->primary([
-                'role_id',
+                'ability_id',
                 'user_id',
             ]);
-            $table->foreign('role_id')
+            $table->foreign('ability_id')
                   ->references('id')
-                  ->on(config('rinvex.fort.tables.roles'))
+                  ->on(config('rinvex.fort.tables.abilities'))
                   ->onDelete('cascade')
                   ->onUpdate('cascade');
             $table->foreign('user_id')
@@ -60,6 +60,6 @@ class CreateRinvexFortRoleUserTable extends Migration
      */
     public function down()
     {
-        Schema::drop(config('rinvex.fort.tables.role_user'));
+        Schema::drop(config('rinvex.fort.tables.ability_user'));
     }
 }

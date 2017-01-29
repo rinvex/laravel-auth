@@ -17,7 +17,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateRinvexFortRolesTable extends Migration
+class CreateAbilitiesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -26,17 +26,19 @@ class CreateRinvexFortRolesTable extends Migration
      */
     public function up()
     {
-        Schema::create(config('rinvex.fort.tables.roles'), function (Blueprint $table) {
+        Schema::create(config('rinvex.fort.tables.abilities'), function (Blueprint $table) {
             // Columns
             $table->increments('id');
-            $table->string('slug');
+            $table->string('action');
+            $table->string('resource');
+            $table->string('policy')->nullable();
             $table->string('name');
             $table->text('description')->nullable();
             $table->timestamps();
             $table->softDeletes();
 
             // Indexes
-            $table->unique('slug');
+            $table->unique(['action', 'resource']);
 
             // Engine
             $table->engine = 'InnoDB';
@@ -50,6 +52,6 @@ class CreateRinvexFortRolesTable extends Migration
      */
     public function down()
     {
-        Schema::drop(config('rinvex.fort.tables.roles'));
+        Schema::drop(config('rinvex.fort.tables.abilities'));
     }
 }

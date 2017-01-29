@@ -17,7 +17,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateRinvexFortPersistencesTable extends Migration
+class CreateSocialitesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -26,17 +26,19 @@ class CreateRinvexFortPersistencesTable extends Migration
      */
     public function up()
     {
-        Schema::create(config('rinvex.fort.tables.persistences'), function (Blueprint $table) {
+        Schema::create(config('rinvex.fort.tables.socialites'), function (Blueprint $table) {
             // Columns
-            $table->string('token');
+            $table->increments('id');
             $table->integer('user_id')->unsigned();
-            $table->string('agent')->nullable();
-            $table->string('ip')->nullable();
-            $table->boolean('attempt')->default(0);
+            $table->string('provider');
+            $table->integer('provider_uid')->unsigned();
             $table->timestamps();
 
             // Indexes
-            $table->primary('token');
+            $table->unique([
+                'provider',
+                'provider_uid',
+            ]);
             $table->foreign('user_id')
                   ->references('id')
                   ->on(config('rinvex.fort.tables.users'))
@@ -55,6 +57,6 @@ class CreateRinvexFortPersistencesTable extends Migration
      */
     public function down()
     {
-        Schema::drop(config('rinvex.fort.tables.persistences'));
+        Schema::drop(config('rinvex.fort.tables.socialites'));
     }
 }
