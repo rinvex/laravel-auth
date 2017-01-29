@@ -15,9 +15,7 @@
 
 namespace Rinvex\Fort\Handlers;
 
-use Rinvex\Fort\Models\Role;
 use Rinvex\Fort\Models\User;
-use Rinvex\Fort\Models\Ability;
 
 class UserHandler
 {

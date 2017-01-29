@@ -19,7 +19,6 @@ use Rinvex\Fort\Models\Role;
 use Rinvex\Fort\Models\User;
 use Illuminate\Routing\Router;
 use Rinvex\Fort\Models\Ability;
-use Rinvex\Fort\Models\Persistence;
 use Illuminate\Support\Facades\Auth;
 use Rinvex\Fort\Guards\SessionGuard;
 use Rinvex\Fort\Handlers\RoleHandler;
