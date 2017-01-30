@@ -169,6 +169,11 @@ class RolesController extends AuthorizedController
         // Prepare required input fields
         $input = $request->only(array_intersect(array_keys($request->all()), $role->getFillable()));
         $abilities = $request->user($this->getGuard())->can('grant-abilities') ? ['abilities' => array_pull($input, 'abilityList')] : [];
+        $input['name'] = [app()->getLocale() => $input['name']];
+
+        if (isset($input['description'])) {
+            $input['description'] = [app()->getLocale() => $input['description']];
+        }
 
         // Store data into the entity
         $result = ! $role->exists ? Role::create($input + $abilities) : $role->update($input + $abilities);
@@ -178,8 +183,8 @@ class RolesController extends AuthorizedController
         $message = $role->exists
             ? ($result === false
                 ? ['warning' => trans('rinvex/fort::backend/messages.role.nothing_updated', ['roleId' => $role->id])]
-                : ['success' => trans('rinvex/fort::backend/messages.role.updated', ['roleId' => $result->id])])
-            : ['success' => trans('rinvex/fort::backend/messages.role.created', ['roleId' => $result->id])];
+                : ['success' => trans('rinvex/fort::backend/messages.role.updated', ['roleId' => $role->id])])
+            : ['success' => trans('rinvex/fort::backend/messages.role.created', ['roleId' => $role->id])];
 
         return intend([
             'route' => 'rinvex.fort.backend.roles.index',

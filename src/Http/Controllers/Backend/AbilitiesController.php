@@ -157,8 +157,15 @@ class AbilitiesController extends AuthorizedController
      */
     protected function process(Request $request, Ability $ability)
     {
-        // Store data into the entity
+        // Prepare required input fields
         $input = $request->only(array_intersect(array_keys($request->all()), $ability->getFillable()));
+        $input['name'] = [app()->getLocale() => $input['name']];
+
+        if (isset($input['description'])) {
+            $input['description'] = [app()->getLocale() => $input['description']];
+        }
+
+        // Store data into the entity
         $result = ! $ability->exists ? Ability::create($input) : $ability->update($input);
 
         // Model `update` method returns false if no attributes updated,
@@ -166,8 +173,8 @@ class AbilitiesController extends AuthorizedController
         $with = $ability->exists
             ? ($result === false
                 ? ['warning' => trans('rinvex/fort::backend/messages.ability.nothing_updated', ['abilityId' => $ability->id])]
-                : ['success' => trans('rinvex/fort::backend/messages.ability.updated', ['abilityId' => $result->id])])
-            : ['success' => trans('rinvex/fort::backend/messages.ability.created', ['abilityId' => $result->id])];
+                : ['success' => trans('rinvex/fort::backend/messages.ability.updated', ['abilityId' => $ability->id])])
+            : ['success' => trans('rinvex/fort::backend/messages.ability.created', ['abilityId' => $ability->id])];
 
         return intend([
             'route' => 'rinvex.fort.backend.abilities.index',

@@ -184,8 +184,8 @@ class UsersController extends AuthorizedController
         $message = $user->exists
             ? ($result === false
                 ? ['warning' => trans('rinvex/fort::backend/messages.user.nothing_updated', ['userId' => $user->id])]
-                : ['success' => trans('rinvex/fort::backend/messages.user.updated', ['userId' => $result->id])])
-            : ['success' => trans('rinvex/fort::backend/messages.user.created', ['userId' => $result->id])];
+                : ['success' => trans('rinvex/fort::backend/messages.user.updated', ['userId' => $user->id])])
+            : ['success' => trans('rinvex/fort::backend/messages.user.created', ['userId' => $user->id])];
 
         return intend([
             'route' => 'rinvex.fort.backend.users.index',
