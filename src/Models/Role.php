@@ -225,7 +225,7 @@ class Role extends Model
     /**
      * Enforce clean slugs.
      *
-     * @param  string  $value
+     * @param string $value
      *
      * @return void
      */
