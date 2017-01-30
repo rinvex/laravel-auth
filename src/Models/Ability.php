@@ -17,6 +17,7 @@ namespace Rinvex\Fort\Models;
 
 use Rinvex\Cacheable\CacheableEloquent;
 use Illuminate\Database\Eloquent\Model;
+use Spatie\Translatable\HasTranslations;
 
 /**
  * Rinvex\Fort\Models\Ability.
@@ -47,6 +48,7 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Ability extends Model
 {
+    use HasTranslations;
     use CacheableEloquent;
 
     /**
@@ -61,6 +63,16 @@ class Ability extends Model
         'action',
         'resource',
         'policy',
+        'name',
+        'description',
+    ];
+
+    /**
+     * The attributes that are translatable.
+     *
+     * @var array
+     */
+    public $translatable = [
         'name',
         'description',
     ];

@@ -2,114 +2,152 @@
     {
         "action": "superadmin",
         "resource": "global",
-        "name": "Super Administrator"
+        "name": {
+            "en": "Super Administrator"
+        }
     },
     {
         "action": "access",
         "resource": "dashboard",
         "policy": "Rinvex\\Fort\\Policies\\DashboardPolicy@access",
-        "name": "Access Dashboard"
+        "name": {
+            "en": "Access Dashboard"
+        }
     },
     {
         "action": "list",
         "resource": "abilities",
         "policy": "Rinvex\\Fort\\Policies\\AbilityPolicy@list",
-        "name": "Can List Existing Abilities"
+        "name": {
+            "en": "Can List Existing Abilities"
+        }
     },
     {
         "action": "view",
         "resource": "abilities",
         "policy": "Rinvex\\Fort\\Policies\\AbilityPolicy@view",
-        "name": "Can View Existing Abilities"
+        "name": {
+            "en": "Can View Existing Abilities"
+        }
     },
     {
         "action": "create",
         "resource": "abilities",
         "policy": "Rinvex\\Fort\\Policies\\AbilityPolicy@create",
-        "name": "Can Create New Abilities"
+        "name": {
+            "en": "Can Create New Abilities"
+        }
     },
     {
         "action": "update",
         "resource": "abilities",
         "policy": "Rinvex\\Fort\\Policies\\AbilityPolicy@update",
-        "name": "Can Update Existing Abilities"
+        "name": {
+            "en": "Can Update Existing Abilities"
+        }
     },
     {
         "action": "delete",
         "resource": "abilities",
         "policy": "Rinvex\\Fort\\Policies\\AbilityPolicy@delete",
-        "name": "Can Delete Existing Abilities"
+        "name": {
+            "en": "Can Delete Existing Abilities"
+        }
     },
     {
         "action": "grant",
         "resource": "abilities",
         "policy": "Rinvex\\Fort\\Policies\\AbilityPolicy@grant",
-        "name": "Can Grant/Revoke Abilities To Users"
+        "name": {
+            "en": "Can Grant/Revoke Abilities To Users"
+        }
     },
     {
         "action": "list",
         "resource": "roles",
         "policy": "Rinvex\\Fort\\Policies\\RolePolicy@list",
-        "name": "Can List Existing Roles"
+        "name": {
+            "en": "Can List Existing Roles"
+        }
     },
     {
         "action": "view",
         "resource": "roles",
         "policy": "Rinvex\\Fort\\Policies\\RolePolicy@view",
-        "name": "Can View Existing Roles"
+        "name": {
+            "en": "Can View Existing Roles"
+        }
     },
     {
         "action": "create",
         "resource": "roles",
         "policy": "Rinvex\\Fort\\Policies\\RolePolicy@create",
-        "name": "Can Create New Roles"
+        "name": {
+            "en": "Can Create New Roles"
+        }
     },
     {
         "action": "update",
         "resource": "roles",
         "policy": "Rinvex\\Fort\\Policies\\RolePolicy@update",
-        "name": "Can Update Existing Roles"
+        "name": {
+            "en": "Can Update Existing Roles"
+        }
     },
     {
         "action": "delete",
         "resource": "roles",
         "policy": "Rinvex\\Fort\\Policies\\RolePolicy@delete",
-        "name": "Can Delete Existing Roles"
+        "name": {
+            "en": "Can Delete Existing Roles"
+        }
     },
     {
         "action": "assign",
         "resource": "roles",
         "policy": "Rinvex\\Fort\\Policies\\RolePolicy@assign",
-        "name": "Can Assign/Remove Roles To Users"
+        "name": {
+            "en": "Can Assign/Remove Roles To Users"
+        }
     },
     {
         "action": "list",
         "resource": "users",
         "policy": "Rinvex\\Fort\\Policies\\UserPolicy@list",
-        "name": "Can List Existing Users"
+        "name": {
+            "en": "Can List Existing Users"
+        }
     },
     {
         "action": "view",
         "resource": "users",
         "policy": "Rinvex\\Fort\\Policies\\UserPolicy@view",
-        "name": "Can View Existing Users"
+        "name": {
+            "en": "Can View Existing Users"
+        }
     },
     {
         "action": "create",
         "resource": "users",
         "policy": "Rinvex\\Fort\\Policies\\UserPolicy@create",
-        "name": "Can Create New Users"
+        "name": {
+            "en": "Can Create New Users"
+        }
     },
     {
         "action": "update",
         "resource": "users",
         "policy": "Rinvex\\Fort\\Policies\\UserPolicy@update",
-        "name": "Can Update Existing Users"
+        "name": {
+            "en": "Can Update Existing Users"
+        }
     },
     {
         "action": "delete",
         "resource": "users",
         "policy": "Rinvex\\Fort\\Policies\\UserPolicy@delete",
-        "name": "Can Delete Existing Users"
+        "name": {
+            "en": "Can Delete Existing Users"
+        }
     }
 ]
