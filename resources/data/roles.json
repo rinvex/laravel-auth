@@ -4,13 +4,17 @@
         "name": {
             "en": "Administrator"
         },
-        "description": "Fully privileged administrative role."
+        "description": {
+            "en": "Fully privileged administrative role."
+        }
     },
     {
         "slug": "registered",
         "name": {
             "en": "Registered"
         },
-        "description": "Default role for registered users."
+        "description": {
+            "en": "Default role for registered users."
+        }
     }
 ]
