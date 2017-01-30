@@ -23,14 +23,6 @@
         }
     },
     {
-        "action": "view",
-        "resource": "abilities",
-        "policy": "Rinvex\\Fort\\Policies\\AbilityPolicy@view",
-        "name": {
-            "en": "Can View Existing Abilities"
-        }
-    },
-    {
         "action": "create",
         "resource": "abilities",
         "policy": "Rinvex\\Fort\\Policies\\AbilityPolicy@create",
@@ -71,14 +63,6 @@
         }
     },
     {
-        "action": "view",
-        "resource": "roles",
-        "policy": "Rinvex\\Fort\\Policies\\RolePolicy@view",
-        "name": {
-            "en": "Can View Existing Roles"
-        }
-    },
-    {
         "action": "create",
         "resource": "roles",
         "policy": "Rinvex\\Fort\\Policies\\RolePolicy@create",
@@ -116,14 +100,6 @@
         "policy": "Rinvex\\Fort\\Policies\\UserPolicy@list",
         "name": {
             "en": "Can List Existing Users"
-        }
-    },
-    {
-        "action": "view",
-        "resource": "users",
-        "policy": "Rinvex\\Fort\\Policies\\UserPolicy@view",
-        "name": {
-            "en": "Can View Existing Users"
         }
     },
     {

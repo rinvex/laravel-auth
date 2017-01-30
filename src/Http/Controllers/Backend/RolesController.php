@@ -47,22 +47,6 @@ class RolesController extends AuthorizedController
     }
 
     /**
-     * Display the specified resource.
-     *
-     * @param \Rinvex\Fort\Models\Role $role
-     *
-     * @return \Illuminate\Http\Response|\Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse
-     */
-    public function show(Role $role)
-    {
-        $resources = Ability::all()->groupBy('resource');
-        $actions = ['list', 'view', 'create', 'update', 'delete'];
-        $columns = ['resource', 'list', 'view', 'create', 'update', 'delete', 'other'];
-
-        return view('rinvex/fort::backend/roles.show', compact('role', 'resources', 'actions', 'columns'));
-    }
-
-    /**
      * Show the form for creating a new resource.
      *
      * @return \Illuminate\Http\Response
@@ -70,18 +54,6 @@ class RolesController extends AuthorizedController
     public function create()
     {
         return $this->form('create', 'store', new Role());
-    }
-
-    /**
-     * Show the form for copying the given resource.
-     *
-     * @param \Rinvex\Fort\Models\Role $role
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function copy(Role $role)
-    {
-        return $this->form('copy', 'store', $role);
     }
 
     /**
@@ -139,7 +111,7 @@ class RolesController extends AuthorizedController
     }
 
     /**
-     * Show the form for create/edit/copy of the given resource.
+     * Show the form for create/update of the given resource.
      *
      * @param string                   $mode
      * @param string                   $action

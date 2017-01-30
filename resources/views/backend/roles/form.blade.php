@@ -38,10 +38,8 @@
                 <header class="panel-heading">
                     <h4>
                         <a href="{{ route('rinvex.fort.backend.roles.index') }}">{{ trans('rinvex/fort::backend/roles.heading') }}</a> » {{ trans('rinvex/fort::backend/roles.'.$mode) }} @if($role->exists) » {{ $role->slug }} @endif
-                        @if($role->exists && $mode !== 'copy')
+                        @if($role->exists)
                             <span class="pull-right" style="margin-top: -7px">
-                                @can('view-roles', $role) <a href="{{ route('rinvex.fort.backend.roles.show', ['role' => $role]) }}" class="btn btn-default"><i class="fa fa-eye text-primary"></i></a> @endcan
-                                @can('create-roles') <a href="{{ route('rinvex.fort.backend.roles.copy', ['role' => $role]) }}" class="btn btn-default"><i class="fa fa-copy text-success"></i></a> @endcan
                                 @can('delete-roles', $role) <a href="#" class="btn btn-default" data-toggle="modal" data-target="#delete-confirmation" data-item-href="{{ route('rinvex.fort.backend.roles.delete', ['role' => $role]) }}" data-item-name="{{ $role->slug }}"><i class="fa fa-trash-o text-danger"></i></a> @endcan
                                 @can('create-roles') <a href="{{ route('rinvex.fort.backend.roles.create') }}" class="btn btn-default"><i class="fa fa-plus"></i></a> @endcan
                             </span>
@@ -126,12 +124,15 @@
                     <div class="row">
                         <div class="col-md-12">
 
-                            @if($mode !== 'copy')
+                            @if($role->exists)
                                 @if($role->created_at)
                                     <small><strong>{{ trans('rinvex/fort::backend/roles.created_at') }}:</strong>
                                         <time datetime="{{ $role->created_at }}">{{ $role->created_at->format('Y-m-d') }}</time>
                                     </small>
                                 @endif
+
+                                @if($role->created_at && $role->updated_at) | @endif
+
                                 @if($role->updated_at)
                                     <small><strong>{{ trans('rinvex/fort::backend/roles.updated_at') }}:</strong>
                                         <time datetime="{{ $role->updated_at }}">{{ $role->updated_at->format('Y-m-d') }}</time>

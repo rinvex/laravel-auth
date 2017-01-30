@@ -25,8 +25,6 @@ return [
     'heading'     => 'Abilities',
     'create'      => 'Create Ability',
     'edit'        => 'Edit Ability',
-    'view'        => 'View Ability',
-    'copy'        => 'Copy Ability',
     'delete'      => 'Delete Ability',
     'slug'        => 'Slug',
     'action'      => 'Action',

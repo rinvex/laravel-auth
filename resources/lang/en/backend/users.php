@@ -63,8 +63,6 @@ return [
     'birthdate'   => 'Birthdate',
     'create'      => 'Create User',
     'edit'        => 'Edit User',
-    'view'        => 'View User',
-    'copy'        => 'Copy User',
     'delete'      => 'Delete User',
 
 ];

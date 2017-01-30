@@ -59,10 +59,10 @@
 
                                 <tr>
                                     <td>
-                                        @can('view-abilities', $ability) <a href="{{ route('rinvex.fort.backend.abilities.show', ['ability' => $ability]) }}"> @endcan
+                                        @can('update-abilities', $ability) <a href="{{ route('rinvex.fort.backend.abilities.edit', ['ability' => $ability]) }}"> @endcan
                                             <strong>{{ $ability->name }}</strong> <small>({{ $ability->action }})</small>
                                             <div class="small ">{{ $ability->policy }}</div>
-                                        @can('view-abilities', $ability) </a> @endcan
+                                        @can('update-abilities', $ability) </a> @endcan
                                     </td>
 
                                     <td>

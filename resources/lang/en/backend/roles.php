@@ -26,8 +26,6 @@ return [
     'slug'        => 'Slug',
     'create'      => 'Create Role',
     'edit'        => 'Edit Role',
-    'view'        => 'View Role',
-    'copy'        => 'Copy Role',
     'delete'      => 'Delete Role',
     'abilities'   => 'Abilities',
 

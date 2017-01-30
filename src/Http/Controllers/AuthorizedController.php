@@ -123,11 +123,9 @@ class AuthorizedController extends AuthenticatedController
     protected function resourceAbilityMap()
     {
         return $this->resourceAbilityMap + [
-            'show'  => 'view',
             'index' => 'list',
             'store' => 'create',
-            'copy'  => 'create',
-            'edit'  => 'update',
+            'edit' => 'update',
         ];
     }
 }

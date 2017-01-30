@@ -37,20 +37,6 @@ class AbilityPolicy
     }
 
     /**
-     * Determine whether the user can view the ability.
-     *
-     * @param string                      $ability
-     * @param \Rinvex\Fort\Models\User    $user
-     * @param \Rinvex\Fort\Models\Ability $resource
-     *
-     * @return bool
-     */
-    public function view($ability, User $user, Ability $resource)
-    {
-        return $user->allAbilities->pluck('slug')->contains($ability);
-    }
-
-    /**
      * Determine whether the user can create abilities.
      *
      * @param string                   $ability

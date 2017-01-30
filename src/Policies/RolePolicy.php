@@ -37,20 +37,6 @@ class RolePolicy
     }
 
     /**
-     * Determine whether the user can view the role.
-     *
-     * @param string                   $ability
-     * @param \Rinvex\Fort\Models\User $user
-     * @param \Rinvex\Fort\Models\Role $resource
-     *
-     * @return bool
-     */
-    public function view($ability, User $user, Role $resource)
-    {
-        return $user->allAbilities->pluck('slug')->contains($ability);
-    }
-
-    /**
      * Determine whether the user can create roles.
      *
      * @param string                   $ability

@@ -43,25 +43,6 @@ class UsersController extends AuthorizedController
     }
 
     /**
-     * Display the specified resource.
-     *
-     * @param \Rinvex\Fort\Models\User $user
-     *
-     * @return \Illuminate\Http\Response|\Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse
-     */
-    public function show(User $user)
-    {
-        $resources = Ability::all()->groupBy('resource');
-        $actions = ['list', 'view', 'create', 'update', 'delete'];
-        $columns = ['resource', 'list', 'view', 'create', 'update', 'delete', 'other'];
-        $userCountry = $user->country ? country($user->country) : null;
-        $country = ! empty($userCountry) ? $userCountry->getName().' '.$userCountry->getEmoji() : null;
-        $phone = ! empty($userCountry) ? $userCountry->getCallingCode().$user->phone : null;
-
-        return view('rinvex/fort::backend/users.show', compact('user', 'resources', 'actions', 'columns', 'country', 'phone'));
-    }
-
-    /**
      * Show the form for creating a new resource.
      *
      * @return \Illuminate\Http\Response
@@ -69,18 +50,6 @@ class UsersController extends AuthorizedController
     public function create()
     {
         return $this->form('create', 'store', new User());
-    }
-
-    /**
-     * Show the form for copying the given resource.
-     *
-     * @param \Rinvex\Fort\Models\User $user
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function copy(User $user)
-    {
-        return $this->form('copy', 'store', $user);
     }
 
     /**
@@ -138,7 +107,7 @@ class UsersController extends AuthorizedController
     }
 
     /**
-     * Show the form for create/edit/copy of the given resource.
+     * Show the form for create/update of the given resource.
      *
      * @param string                   $mode
      * @param string                   $action

@@ -61,7 +61,7 @@
 
                                 <tr>
                                     <td>
-                                        @can('view-users', $user) <a href="{{ route('rinvex.fort.backend.users.show', ['user' => $user]) }}"> @endcan
+                                        @can('update-users', $user) <a href="{{ route('rinvex.fort.backend.users.edit', ['user' => $user]) }}"> @endcan
                                             <strong>
                                                 @if($user->first_name)
                                                     {{ $user->first_name }} {{ $user->middle_name }} {{ $user->last_name }}
@@ -70,7 +70,7 @@
                                                 @endif
                                             </strong>
                                             <div class="small ">{{ $user->job_title }}</div>
-                                        @can('view-users', $user) </a> @endcan
+                                        @can('update-users', $user) </a> @endcan
                                     </td>
 
                                     <td>
@@ -84,7 +84,7 @@
 
                                     <td>
                                         @foreach($user->roles->pluck('title', 'id') as $roleId => $role)
-                                            @can('view-roles', $role) <a href="{{ route('rinvex.fort.backend.roles.show', ['role' => $roleId]) }}" class="label btn-xs label-info">{{ $role }}</a> @else {{ $role }} @endcan
+                                            @can('update-roles', $role) <a href="{{ route('rinvex.fort.backend.roles.edit', ['role' => $roleId]) }}" class="label btn-xs label-info">{{ $role }}</a> @else {{ $role }} @endcan
                                         @endforeach
                                     </td>
 

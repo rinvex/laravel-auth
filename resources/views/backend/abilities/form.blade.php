@@ -38,10 +38,8 @@
                 <header class="panel-heading">
                     <h4>
                         <a href="{{ route('rinvex.fort.backend.abilities.index') }}">{{ trans('rinvex/fort::backend/abilities.heading') }}</a> » {{ trans('rinvex/fort::backend/abilities.'.$mode) }} @if($ability->exists) » {{ $ability->slug }} @endif
-                        @if($ability->exists && $mode !== 'copy')
+                        @if($ability->exists)
                             <span class="pull-right" style="margin-top: -7px">
-                                @can('view-abilities', $ability) <a href="{{ route('rinvex.fort.backend.abilities.show', ['ability' => $ability]) }}" class="btn btn-default"><i class="fa fa-eye text-primary"></i></a> @endcan
-                                @can('create-abilities') <a href="{{ route('rinvex.fort.backend.abilities.copy', ['ability' => $ability]) }}" class="btn btn-default"><i class="fa fa-copy text-success"></i></a> @endcan
                                 @can('delete-abilities', $ability) <a href="#" class="btn btn-default" data-toggle="modal" data-target="#delete-confirmation" data-item-href="{{ route('rinvex.fort.backend.abilities.delete', ['ability' => $ability]) }}" data-item-name="{{ $ability->slug }}"><i class="fa fa-trash-o text-danger"></i></a> @endcan
                                 @can('create-abilities') <a href="{{ route('rinvex.fort.backend.abilities.create') }}" class="btn btn-default"><i class="fa fa-plus"></i></a> @endcan
                             </span>
@@ -142,12 +140,15 @@
                     <div class="row">
                         <div class="col-md-12">
 
-                            @if($mode !== 'copy')
+                            @if($ability->exists)
                                 @if($ability->created_at)
                                     <small><strong>{{ trans('rinvex/fort::backend/abilities.created_at') }}:</strong>
                                         <time datetime="{{ $ability->created_at }}">{{ $ability->created_at->format('Y-m-d') }}</time>
                                     </small>
                                 @endif
+
+                                @if($ability->created_at && $ability->updated_at) | @endif
+
                                 @if($ability->updated_at)
                                     <small><strong>{{ trans('rinvex/fort::backend/abilities.updated_at') }}:</strong>
                                         <time datetime="{{ $ability->updated_at }}">{{ $ability->updated_at->format('Y-m-d') }}</time>

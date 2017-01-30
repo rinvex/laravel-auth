@@ -46,18 +46,6 @@ class AbilitiesController extends AuthorizedController
     }
 
     /**
-     * Display the specified resource.
-     *
-     * @param \Rinvex\Fort\Models\Ability $ability
-     *
-     * @return \Illuminate\Http\Response|\Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse
-     */
-    public function show(Ability $ability)
-    {
-        return view('rinvex/fort::backend/abilities.show', compact('ability'));
-    }
-
-    /**
      * Show the form for creating a new resource.
      *
      * @return \Illuminate\Http\Response
@@ -65,18 +53,6 @@ class AbilitiesController extends AuthorizedController
     public function create()
     {
         return $this->form('create', 'store', new Ability());
-    }
-
-    /**
-     * Show the form for copying the given resource.
-     *
-     * @param \Rinvex\Fort\Models\Ability $ability
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function copy(Ability $ability)
-    {
-        return $this->form('copy', 'store', $ability);
     }
 
     /**
@@ -134,7 +110,7 @@ class AbilitiesController extends AuthorizedController
     }
 
     /**
-     * Show the form for create/edit/copy of the given resource.
+     * Show the form for create/update of the given resource.
      *
      * @param string                      $mode
      * @param string                      $action
