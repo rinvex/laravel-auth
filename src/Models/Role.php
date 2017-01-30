@@ -199,6 +199,42 @@ class Role extends Model
     }
 
     /**
+     * Set the translatable name attribute.
+     *
+     * @param string $value
+     *
+     * @return void
+     */
+    public function setNameAttribute($value)
+    {
+        $this->attributes['name'] = json_encode(! is_array($value) ? [app()->getLocale() => $value] : $value);
+    }
+
+    /**
+     * Set the translatable description attribute.
+     *
+     * @param string $value
+     *
+     * @return void
+     */
+    public function setDescriptionAttribute($value)
+    {
+        $this->attributes['description'] = json_encode(! is_array($value) ? [app()->getLocale() => $value] : $value);
+    }
+
+    /**
+     * Enforce clean slugs.
+     *
+     * @param  string  $value
+     *
+     * @return void
+     */
+    public function setSlugAttribute($value)
+    {
+        $this->attributes['slug'] = str_slug($value);
+    }
+
+    /**
      * Determine if the role is super admin.
      *
      * @return bool

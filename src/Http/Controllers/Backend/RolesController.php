@@ -169,11 +169,6 @@ class RolesController extends AuthorizedController
         // Prepare required input fields
         $input = $request->only(array_intersect(array_keys($request->all()), $role->getFillable()));
         $abilities = $request->user($this->getGuard())->can('grant-abilities') ? ['abilities' => array_pull($input, 'abilityList')] : [];
-        $input['name'] = [app()->getLocale() => $input['name']];
-
-        if (isset($input['description'])) {
-            $input['description'] = [app()->getLocale() => $input['description']];
-        }
 
         // Store data into the entity
         $result = ! $role->exists ? Role::create($input + $abilities) : $role->update($input + $abilities);

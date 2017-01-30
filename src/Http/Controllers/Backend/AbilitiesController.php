@@ -159,11 +159,6 @@ class AbilitiesController extends AuthorizedController
     {
         // Prepare required input fields
         $input = $request->only(array_intersect(array_keys($request->all()), $ability->getFillable()));
-        $input['name'] = [app()->getLocale() => $input['name']];
-
-        if (isset($input['description'])) {
-            $input['description'] = [app()->getLocale() => $input['description']];
-        }
 
         // Store data into the entity
         $result = ! $ability->exists ? Ability::create($input) : $ability->update($input);
