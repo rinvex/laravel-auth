@@ -23,11 +23,7 @@
 |
 */
 
-Route::group([
-    'middleware' => ['web'],
-    'as'         => 'rinvex.fort.frontend.',
-    'namespace'  => 'Rinvex\Fort\Http\Controllers\Frontend',
-], function () {
+Route::namespace('Rinvex\Fort\Http\Controllers\Frontend')->name('rinvex.fort.frontend.')->middleware('web')->group(function () {
 
     /*
     |--------------------------------------------------------------------------
@@ -35,7 +31,7 @@ Route::group([
     |--------------------------------------------------------------------------
     */
 
-    Route::group(['as' => 'auth.', 'prefix' => 'auth'], function () {
+    Route::name('auth.')->prefix('auth')->group(function () {
 
         /*
         |--------------------------------------------------------------------------
@@ -72,7 +68,7 @@ Route::group([
     |--------------------------------------------------------------------------
     */
 
-    Route::group(['as' => 'user.', 'prefix' => 'user'], function () {
+    Route::name('user.')->prefix('user')->group(function () {
 
         /*
         |--------------------------------------------------------------------------
@@ -98,7 +94,7 @@ Route::group([
         |--------------------------------------------------------------------------
         */
 
-        Route::group(['as' => 'twofactor.', 'prefix' => 'twofactor'], function () {
+        Route::name('twofactor.')->prefix('twofactor')->group(function () {
 
             /*
             |--------------------------------------------------------------------------
@@ -106,7 +102,7 @@ Route::group([
             |--------------------------------------------------------------------------
             */
 
-            Route::group(['as' => 'totp.', 'prefix' => 'totp'], function () {
+            Route::name('totp.')->prefix('totp')->group(function () {
                 Route::get('enable')->name('enable')->uses('TwoFactorSettingsController@enableTotp');
                 Route::post('update')->name('update')->uses('TwoFactorSettingsController@updateTotp');
                 Route::get('disable')->name('disable')->uses('TwoFactorSettingsController@disableTotp');
@@ -119,7 +115,7 @@ Route::group([
             |--------------------------------------------------------------------------
             */
 
-            Route::group(['as' => 'phone.', 'prefix' => 'phone'], function () {
+            Route::name('phone.')->prefix('phone')->group(function () {
                 Route::get('enable')->name('enable')->uses('TwoFactorSettingsController@enablePhone');
                 Route::get('disable')->name('disable')->uses('TwoFactorSettingsController@disablePhone');
             });
@@ -132,7 +128,7 @@ Route::group([
     |--------------------------------------------------------------------------
     */
 
-    Route::group(['as' => 'passwordreset.', 'prefix' => 'passwordreset'], function () {
+    Route::name('passwordreset.')->prefix('passwordreset')->group(function () {
         Route::get('request')->name('request')->uses('PasswordResetController@request');
         Route::post('send')->name('send')->uses('PasswordResetController@send');
         Route::get('reset')->name('reset')->uses('PasswordResetController@reset');
@@ -145,7 +141,7 @@ Route::group([
     |--------------------------------------------------------------------------
     */
 
-    Route::group(['as' => 'verification.', 'prefix' => 'verification'], function () {
+    Route::name('verification.')->prefix('verification')->group(function () {
 
         /*
         |--------------------------------------------------------------------------
@@ -153,7 +149,7 @@ Route::group([
         |--------------------------------------------------------------------------
         */
 
-        Route::group(['as' => 'phone.', 'prefix' => 'phone'], function () {
+        Route::name('phone.')->prefix('phone')->group(function () {
             Route::get('request')->name('request')->uses('PhoneVerificationController@request');
             Route::post('send')->name('send')->uses('PhoneVerificationController@send');
             Route::get('verify')->name('verify')->uses('PhoneVerificationController@verify');
@@ -166,7 +162,7 @@ Route::group([
         |--------------------------------------------------------------------------
         */
 
-        Route::group(['as' => 'email.', 'prefix' => 'email'], function () {
+        Route::name('email.')->prefix('email')->group(function () {
             Route::get('request')->name('request')->uses('EmailVerificationController@request');
             Route::post('send')->name('send')->uses('EmailVerificationController@send');
             Route::get('verify')->name('verify')->uses('EmailVerificationController@verify');

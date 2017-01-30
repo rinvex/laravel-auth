@@ -23,12 +23,7 @@
 |
 */
 
-Route::group([
-    'prefix'     => 'backend',
-    'middleware' => ['web', 'can:access-dashboard'],
-    'as'         => 'rinvex.fort.backend.',
-    'namespace'  => 'Rinvex\Fort\Http\Controllers\Backend',
-], function () {
+Route::namespace('Rinvex\Fort\Http\Controllers\Backend')->name('rinvex.fort.backend.')->prefix('backend')->middleware(['web', 'can:access-dashboard'])->group(function () {
     Route::get('/')->name('dashboard.home')->uses('DashboardController@home');
 
     /*
@@ -37,7 +32,7 @@ Route::group([
     |--------------------------------------------------------------------------
     */
 
-    Route::group(['as' => 'abilities.', 'prefix' => 'abilities'], function () {
+    Route::name('abilities.')->prefix('abilities')->group(function () {
         Route::get('/')->name('index')->uses('AbilitiesController@index');
         Route::get('create')->name('create')->uses('AbilitiesController@create');
         Route::post('create')->name('store')->uses('AbilitiesController@store');
@@ -52,7 +47,7 @@ Route::group([
     |--------------------------------------------------------------------------
     */
 
-    Route::group(['as' => 'roles.', 'prefix' => 'roles'], function () {
+    Route::name('roles.')->prefix('roles')->group(function () {
         Route::get('/')->name('index')->uses('RolesController@index');
         Route::get('create')->name('create')->uses('RolesController@create');
         Route::post('create')->name('store')->uses('RolesController@store');
@@ -67,7 +62,7 @@ Route::group([
     |--------------------------------------------------------------------------
     */
 
-    Route::group(['as' => 'users.', 'prefix' => 'users'], function () {
+    Route::name('users.')->prefix('users')->group(function () {
         Route::get('/')->name('index')->uses('UsersController@index');
         Route::get('create')->name('create')->uses('UsersController@create');
         Route::post('create')->name('store')->uses('UsersController@store');
