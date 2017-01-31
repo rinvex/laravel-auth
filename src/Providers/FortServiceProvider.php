@@ -26,6 +26,7 @@ use Rinvex\Fort\Handlers\UserHandler;
 use Illuminate\Support\ServiceProvider;
 use Rinvex\Fort\Handlers\AbilityHandler;
 use Rinvex\Fort\Handlers\GenericHandler;
+use Rinvex\Fort\Http\Middleware\Abilities;
 use Rinvex\Fort\Http\Middleware\Authenticate;
 use Rinvex\Fort\Http\Middleware\RedirectIfAuthenticated;
 
@@ -171,24 +172,28 @@ class FortServiceProvider extends ServiceProvider
         });
     }
 
+    /**
+     * Override middleware.
+     *
+     * @param \Illuminate\Routing\Router $router
+     *
+     * @return void
+     */
     protected function overrideMiddleware(Router $router)
     {
-        // Override "web" middleware group on the fly
-        $router->middlewareGroup('web', [
-            \App\Http\Middleware\EncryptCookies::class,
-            \Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse::class,
-            \Illuminate\Session\Middleware\StartSession::class,
-            \Illuminate\View\Middleware\ShareErrorsFromSession::class,
-            \App\Http\Middleware\VerifyCsrfToken::class,
-            \Illuminate\Routing\Middleware\SubstituteBindings::class,
-            \Rinvex\Fort\Http\Middleware\Abilities::class,
-        ]);
+        // Append abilities middleware to the 'web' middlware group
+        $router->pushMiddlewareToGroup('web', Abilities::class);
 
         // Override route middleware on the fly
         $router->aliasMiddleware('auth', Authenticate::class);
         $router->aliasMiddleware('guest', RedirectIfAuthenticated::class);
     }
 
+    /**
+     * Override exception handler.
+     *
+     * @return void
+     */
     protected function overrideExceptionHandler()
     {
         $this->app->singleton(
