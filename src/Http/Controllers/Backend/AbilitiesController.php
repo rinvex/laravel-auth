@@ -18,8 +18,6 @@ namespace Rinvex\Fort\Http\Controllers\Backend;
 use Illuminate\Http\Request;
 use Rinvex\Fort\Models\Ability;
 use Rinvex\Fort\Http\Controllers\AuthorizedController;
-use Rinvex\Fort\Http\Requests\Backend\AbilityStoreRequest;
-use Rinvex\Fort\Http\Requests\Backend\AbilityUpdateRequest;
 
 class AbilitiesController extends AuthorizedController
 {
@@ -70,11 +68,11 @@ class AbilitiesController extends AuthorizedController
     /**
      * Store a newly created resource in storage.
      *
-     * @param \Rinvex\Fort\Http\Requests\Backend\AbilityStoreRequest $request
+     * @param \Illuminate\Http\Request $request
      *
      * @return \Illuminate\Http\Response
      */
-    public function store(AbilityStoreRequest $request)
+    public function store(Request $request)
     {
         return $this->process($request, new Ability());
     }
@@ -82,12 +80,12 @@ class AbilitiesController extends AuthorizedController
     /**
      * Update the given resource in storage.
      *
-     * @param \Rinvex\Fort\Http\Requests\Backend\AbilityUpdateRequest $request
-     * @param \Rinvex\Fort\Models\Ability                             $ability
+     * @param \Illuminate\Http\Request    $request
+     * @param \Rinvex\Fort\Models\Ability $ability
      *
      * @return \Illuminate\Http\Response
      */
-    public function update(AbilityUpdateRequest $request, Ability $ability)
+    public function update(Request $request, Ability $ability)
     {
         return $this->process($request, $ability);
     }
@@ -133,23 +131,12 @@ class AbilitiesController extends AuthorizedController
      */
     protected function process(Request $request, Ability $ability)
     {
-        // Prepare required input fields
-        $input = $request->only(array_intersect(array_keys($request->all()), $ability->getFillable()));
-
-        // Store data into the entity
-        $result = ! $ability->exists ? Ability::create($input) : $ability->update($input);
-
-        // Model `update` method returns false if no attributes updated,
-        // this happens save button clicked without chaning anything
-        $with = $ability->exists
-            ? ($result === false
-                ? ['warning' => trans('rinvex/fort::backend/messages.ability.nothing_updated', ['abilityId' => $ability->id])]
-                : ['success' => trans('rinvex/fort::backend/messages.ability.updated', ['abilityId' => $ability->id])])
-            : ['success' => trans('rinvex/fort::backend/messages.ability.created', ['abilityId' => $ability->id])];
+        // Save ability
+        $ability->exists ? $ability->create($request->all()) : $ability->update($request->all());
 
         return intend([
             'route' => 'rinvex.fort.backend.abilities.index',
-            'with'  => $with,
+            'with'  => ['success' => trans('rinvex/fort::backend/messages.ability.saved', ['abilityId' => $ability->id])],
         ]);
     }
 }

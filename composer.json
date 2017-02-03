@@ -50,6 +50,7 @@
         "laravelcollective/html": "~5.4.0",
         "laravel/framework": "~5.4.0",
         "laravel/socialite": "^3.0.0",
+        "watson/validating": "^3.0.1",
         "bacon/bacon-qr-code": "1.0.*",
         "rinvex/country": "dev-develop",
         "rinvex/support": "dev-develop",

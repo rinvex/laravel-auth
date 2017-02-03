@@ -15,6 +15,7 @@
 
 namespace Rinvex\Fort\Models;
 
+use Watson\Validating\ValidatingTrait;
 use Rinvex\Cacheable\CacheableEloquent;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\Translatable\HasTranslations;
@@ -49,6 +50,7 @@ use Spatie\Translatable\HasTranslations;
 class Ability extends Model
 {
     use HasTranslations;
+    use ValidatingTrait;
     use CacheableEloquent;
 
     /**
@@ -78,6 +80,28 @@ class Ability extends Model
     ];
 
     /**
+     * The default rules that the model will validate against.
+     *
+     * @var array
+     */
+    protected $rules = [];
+
+    /**
+     * {@inheritdoc}
+     */
+    protected $validationMessages = [
+        'action.unique'   => 'The combination of (action & resource) fields has already been taken.',
+        'resource.unique' => 'The combination of (action & resource) fields has already been taken.',
+    ];
+
+    /**
+     * Whether the model should throw a ValidationException if it fails validation.
+     *
+     * @var boolean
+     */
+    protected $throwValidationExceptions = true;
+
+    /**
      * Create a new Eloquent model instance.
      *
      * @param array $attributes
@@ -88,6 +112,11 @@ class Ability extends Model
 
         $this->setTable(config('rinvex.fort.tables.abilities'));
         $this->addObservableEvents(['attaching', 'attached', 'detaching', 'detached']);
+        $this->setRules([
+            'name'    => 'required',
+            'action'   => 'required|unique:'.config('rinvex.fort.tables.abilities').',action,NULL,id,resource,'.$this->resource,
+            'resource' => 'required|unique:'.config('rinvex.fort.tables.abilities').',resource,NULL,id,action,'.$this->action,
+        ]);
     }
 
     /**

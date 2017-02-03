@@ -18,6 +18,7 @@ namespace Rinvex\Fort\Models;
 use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
 use Rinvex\Fort\Traits\HasAbilities;
+use Watson\Validating\ValidatingTrait;
 use Rinvex\Cacheable\CacheableEloquent;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\Translatable\HasTranslations;
@@ -49,6 +50,7 @@ class Role extends Model
 {
     use HasSlug;
     use HasAbilities;
+    use ValidatingTrait;
     use HasTranslations;
     use CacheableEloquent;
 
@@ -82,6 +84,20 @@ class Role extends Model
     ];
 
     /**
+     * The default rules that the model will validate against.
+     *
+     * @var array
+     */
+    protected $rules = [];
+
+    /**
+     * Whether the model should throw a ValidationException if it fails validation.
+     *
+     * @var boolean
+     */
+    protected $throwValidationExceptions = true;
+
+    /**
      * Create a new Eloquent model instance.
      *
      * @param array $attributes
@@ -92,6 +108,10 @@ class Role extends Model
 
         $this->setTable(config('rinvex.fort.tables.roles'));
         $this->addObservableEvents(['attaching', 'attached', 'syncing', 'synced', 'detaching', 'detached']);
+        $this->setRules([
+            'name' => 'required',
+            'slug'  => 'required|unique:'.config('rinvex.fort.tables.roles').',slug',
+        ]);
     }
 
     /**

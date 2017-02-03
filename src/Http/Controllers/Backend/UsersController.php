@@ -20,8 +20,6 @@ use Rinvex\Fort\Models\Role;
 use Rinvex\Fort\Models\User;
 use Rinvex\Fort\Models\Ability;
 use Rinvex\Fort\Http\Controllers\AuthorizedController;
-use Rinvex\Fort\Http\Requests\Backend\UserStoreRequest;
-use Rinvex\Fort\Http\Requests\Backend\UserUpdateRequest;
 
 class UsersController extends AuthorizedController
 {
@@ -67,11 +65,11 @@ class UsersController extends AuthorizedController
     /**
      * Store a newly created resource in storage.
      *
-     * @param \Rinvex\Fort\Http\Requests\Backend\UserStoreRequest $request
+     * @param \Illuminate\Http\Request $request
      *
      * @return \Illuminate\Http\Response
      */
-    public function store(UserStoreRequest $request)
+    public function store(Request $request)
     {
         return $this->process($request, new User());
     }
@@ -79,12 +77,12 @@ class UsersController extends AuthorizedController
     /**
      * Update the given resource in storage.
      *
-     * @param \Rinvex\Fort\Http\Requests\Backend\UserUpdateRequest $request
-     * @param \Rinvex\Fort\Models\User                             $user
+     * @param \Illuminate\Http\Request $request
+     * @param \Rinvex\Fort\Models\User $user
      *
      * @return \Illuminate\Http\Response
      */
-    public function update(UserUpdateRequest $request, User $user)
+    public function update(Request $request, User $user)
     {
         return $this->process($request, $user);
     }
@@ -141,24 +139,16 @@ class UsersController extends AuthorizedController
     protected function process(Request $request, User $user)
     {
         // Prepare required input fields
-        $input = $request->only(array_intersect(array_keys($request->all()), $user->getFillable()));
+        $input = $request->all();
         $roles = $request->user($this->getGuard())->can('assign-roles') ? ['roles' => array_pull($input, 'roleList')] : [];
         $abilities = $request->user($this->getGuard())->can('grant-abilities') ? ['abilities' => array_pull($input, 'abilityList')] : [];
 
-        // Store data into the entity
-        $result = ! $user->exists ? Role::create($input + $roles + $abilities) : $user->update($input + $roles + $abilities);
-
-        // Model `update` method returns false if no attributes updated,
-        // this happens save button clicked without chaning anything
-        $message = $user->exists
-            ? ($result === false
-                ? ['warning' => trans('rinvex/fort::backend/messages.user.nothing_updated', ['userId' => $user->id])]
-                : ['success' => trans('rinvex/fort::backend/messages.user.updated', ['userId' => $user->id])])
-            : ['success' => trans('rinvex/fort::backend/messages.user.created', ['userId' => $user->id])];
+        // Save user
+        ! $user->exists ? $user->create($input + $roles + $abilities) : $user->update($input + $roles + $abilities);
 
         return intend([
             'route' => 'rinvex.fort.backend.users.index',
-            'with'  => $message,
+            'with'  => ['success' => trans('rinvex/fort::backend/messages.user.saved', ['userId' => $user->id])],
         ]);
     }
 }

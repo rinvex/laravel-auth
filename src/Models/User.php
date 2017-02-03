@@ -17,6 +17,7 @@ namespace Rinvex\Fort\Models;
 
 use Rinvex\Fort\Traits\HasRoles;
 use Illuminate\Auth\Authenticatable;
+use Watson\Validating\ValidatingTrait;
 use Rinvex\Fort\Traits\CanVerifyEmail;
 use Rinvex\Fort\Traits\CanVerifyPhone;
 use Rinvex\Cacheable\CacheableEloquent;
@@ -107,6 +108,7 @@ class User extends Model implements AuthenticatableContract, AuthenticatableTwoF
     use CanVerifyEmail;
     use CanVerifyPhone;
     use Authenticatable;
+    use ValidatingTrait;
     use CanResetPassword;
     use CacheableEloquent;
     use AuthenticatableTwoFactor;
@@ -162,6 +164,20 @@ class User extends Model implements AuthenticatableContract, AuthenticatableTwoF
     protected $with = ['abilities', 'roles'];
 
     /**
+     * The default rules that the model will validate against.
+     *
+     * @var array
+     */
+    protected $rules = [];
+
+    /**
+     * Whether the model should throw a ValidationException if it fails validation.
+     *
+     * @var boolean
+     */
+    protected $throwValidationExceptions = true;
+
+    /**
      * Create a new Eloquent model instance.
      *
      * @param array $attributes
@@ -171,6 +187,12 @@ class User extends Model implements AuthenticatableContract, AuthenticatableTwoF
         parent::__construct($attributes);
 
         $this->setTable(config('rinvex.fort.tables.users'));
+        $this->setRules([
+            'username' => 'required|alpha_dash|max:255|unique:'.config('rinvex.fort.tables.users').',username',
+            'email'    => 'required|email|max:255|unique:'.config('rinvex.fort.tables.users').',email',
+            'password' => 'sometimes|required|min:'.config('rinvex.fort.passwordreset.minimum_characters'),
+            'gender'   => 'nullable|in:male,female,undisclosed',
+        ]);
     }
 
     /**

@@ -19,8 +19,6 @@ use Illuminate\Http\Request;
 use Rinvex\Fort\Models\Role;
 use Rinvex\Fort\Models\Ability;
 use Rinvex\Fort\Http\Controllers\AuthorizedController;
-use Rinvex\Fort\Http\Requests\Backend\RoleStoreRequest;
-use Rinvex\Fort\Http\Requests\Backend\RoleUpdateRequest;
 
 class RolesController extends AuthorizedController
 {
@@ -71,11 +69,11 @@ class RolesController extends AuthorizedController
     /**
      * Store a newly created resource in storage.
      *
-     * @param \Rinvex\Fort\Http\Requests\Backend\RoleStoreRequest $request
+     * @param \Illuminate\Http\Request $request
      *
      * @return \Illuminate\Http\Response
      */
-    public function store(RoleStoreRequest $request)
+    public function store(Request $request)
     {
         return $this->process($request, new Role());
     }
@@ -83,12 +81,12 @@ class RolesController extends AuthorizedController
     /**
      * Update the given resource in storage.
      *
-     * @param \Rinvex\Fort\Http\Requests\Backend\RoleUpdateRequest $request
-     * @param \Rinvex\Fort\Models\Role                             $role
+     * @param \Illuminate\Http\Request $request
+     * @param \Rinvex\Fort\Models\Role $role
      *
      * @return \Illuminate\Http\Response
      */
-    public function update(RoleUpdateRequest $request, Role $role)
+    public function update(Request $request, Role $role)
     {
         return $this->process($request, $role);
     }
@@ -139,23 +137,15 @@ class RolesController extends AuthorizedController
     protected function process(Request $request, Role $role)
     {
         // Prepare required input fields
-        $input = $request->only(array_intersect(array_keys($request->all()), $role->getFillable()));
+        $input = $request->all();
         $abilities = $request->user($this->getGuard())->can('grant-abilities') ? ['abilities' => array_pull($input, 'abilityList')] : [];
 
-        // Store data into the entity
-        $result = ! $role->exists ? Role::create($input + $abilities) : $role->update($input + $abilities);
-
-        // Model `update` method returns false if no attributes updated,
-        // this happens save button clicked without chaning anything
-        $message = $role->exists
-            ? ($result === false
-                ? ['warning' => trans('rinvex/fort::backend/messages.role.nothing_updated', ['roleId' => $role->id])]
-                : ['success' => trans('rinvex/fort::backend/messages.role.updated', ['roleId' => $role->id])])
-            : ['success' => trans('rinvex/fort::backend/messages.role.created', ['roleId' => $role->id])];
+        // Save role
+        ! $role->exists ? $role->create($input + $abilities) : $role->update($input + $abilities);
 
         return intend([
             'route' => 'rinvex.fort.backend.roles.index',
-            'with'  => $message,
+            'with'  => ['success' => trans('rinvex/fort::backend/messages.role.saved', ['roleId' => $role->id])],
         ]);
     }
 }
