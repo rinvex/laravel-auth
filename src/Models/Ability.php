@@ -97,7 +97,7 @@ class Ability extends Model
     /**
      * Whether the model should throw a ValidationException if it fails validation.
      *
-     * @var boolean
+     * @var bool
      */
     protected $throwValidationExceptions = true;
 
