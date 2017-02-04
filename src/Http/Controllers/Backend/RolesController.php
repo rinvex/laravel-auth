@@ -141,7 +141,10 @@ class RolesController extends AuthorizedController
         $abilities = $request->user($this->getGuard())->can('grant-abilities') ? ['abilities' => array_pull($input, 'abilityList')] : [];
 
         // Save role
-        ! $role->exists ? $role->create($input + $abilities) : $role->update($input + $abilities);
+        ! $role->exists ? $role->create($input) : $role->update($input);
+
+        // Sync abilities
+        $role->abilities()->sync($abilities);
 
         return intend([
             'route' => 'rinvex.fort.backend.roles.index',
