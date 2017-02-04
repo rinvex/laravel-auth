@@ -109,8 +109,9 @@ class Role extends Model
         $this->setTable(config('rinvex.fort.tables.roles'));
         $this->addObservableEvents(['attaching', 'attached', 'syncing', 'synced', 'detaching', 'detached']);
         $this->setRules([
-            'name' => 'required',
-            'slug'  => 'required|unique:'.config('rinvex.fort.tables.roles').',slug',
+            'name' => 'required|string',
+            'description' => 'nullable|string',
+            'slug'  => 'required|alpha_dash|unique:'.config('rinvex.fort.tables.roles').',slug',
         ]);
     }
 
