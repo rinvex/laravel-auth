@@ -131,8 +131,20 @@ class AbilitiesController extends AuthorizedController
      */
     protected function process(Request $request, Ability $ability)
     {
+        // Prepare required input fields
+        $input = $request->all();
+
+        // Verify valid policy
+        if (($class = strstr($input['policy'], '@', true)) === false || ! method_exists($class, str_replace('@', '', strstr($input['policy'], '@')))) {
+            return intend([
+                'back' => true,
+                'withInput'  => $request->all(),
+                'withErrors'  => ['policy' => trans('rinvex/fort::backend/messages.ability.invalid_policy')],
+            ]);
+        }
+
         // Save ability
-        ! $ability->exists ? $ability = $ability->create($request->all()) : $ability->update($request->all());
+        ! $ability->exists ? $ability = $ability->create($input) : $ability->update($input);
 
         return intend([
             'route' => 'rinvex.fort.backend.abilities.index',

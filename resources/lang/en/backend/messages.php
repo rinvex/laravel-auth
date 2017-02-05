@@ -19,6 +19,7 @@ return [
         'not_found' => 'Sorry! Requested ability not found!',
         'saved' => 'Congrats! Ability [:abilityId] saved successfully!',
         'deleted' => 'Done! Ability [:abilityId] deleted successfully!',
+        'invalid_policy' => 'The policy must be a valid class method.',
     ],
 
     'role' => [
