@@ -74,9 +74,9 @@
                                     <li><a href="{{ route('rinvex.fort.frontend.user.sessions') }}"><i class="fa fa-check-square-o"></i> {{ trans('rinvex/fort::frontend/menus.profile.sessions') }}</a></li>
                                     <li role="separator" class="divider"></li>
                                     @can('access-dashboard') <li class="disabled"><a href="{{ route('rinvex.fort.backend.dashboard.home') }}"><i class="fa fa-dashboard"></i> {{ trans('rinvex/fort::frontend/menus.dashboard.home') }}</a></li> @endcan
-                                    @can('list-abilities') <li><a href="{{ route('rinvex.fort.backend.abilities.index') }}"><i class="fa fa-arrow-right"></i> {{ trans('rinvex/fort::backend/abilities.heading') }}</a></li> @endcan
-                                    @can('list-roles') <li><a href="{{ route('rinvex.fort.backend.roles.index') }}"><i class="fa fa-arrow-right"></i> {{ trans('rinvex/fort::backend/roles.heading') }}</a></li> @endcan
-                                    @can('list-users') <li><a href="{{ route('rinvex.fort.backend.users.index') }}"><i class="fa fa-arrow-right"></i> {{ trans('rinvex/fort::backend/users.heading') }}</a></li> @endcan
+                                    @can('list-abilities') <li><a href="{{ route('rinvex.fort.backend.abilities.index') }}"><i class="fa fa-arrow-right"></i> {{ trans('rinvex/fort::backend/forms.heading.abilities') }}</a></li> @endcan
+                                    @can('list-roles') <li><a href="{{ route('rinvex.fort.backend.roles.index') }}"><i class="fa fa-arrow-right"></i> {{ trans('rinvex/fort::backend/forms.heading.roles') }}</a></li> @endcan
+                                    @can('list-users') <li><a href="{{ route('rinvex.fort.backend.users.index') }}"><i class="fa fa-arrow-right"></i> {{ trans('rinvex/fort::backend/forms.heading.users') }}</a></li> @endcan
                                     @if(Auth::user()->can('access-dashboard') || Auth::user()->can('list-abilities') || Auth::user()->can('list-roles') || Auth::user()->can('list-users'))
                                         <li role="separator" class="divider"></li>
                                     @endif

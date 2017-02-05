@@ -3,7 +3,7 @@
 
 {{-- Page Title --}}
 @section('title')
-    {{ config('app.name') }} » {{ trans('rinvex/fort::backend/forms.roles.heading') }}
+    {{ config('app.name') }} » {{ trans('rinvex/fort::backend/forms.heading.roles') }}
 @stop
 
 {{-- Main Content --}}
@@ -27,7 +27,7 @@
             {{-- Heading --}}
             <header class="panel-heading">
                 <h4>
-                    {{ trans('rinvex/fort::backend/roles.heading') }}
+                    {{ trans('rinvex/fort::backend/forms.heading.roles') }}
                     @can('create-roles')
                         <span class="pull-right" style="margin-top: -7px">
                             <a href="{{ route('rinvex.fort.backend.roles.create') }}" class="btn btn-default"><i class="fa fa-plus"></i></a>
@@ -45,10 +45,10 @@
 
                         <thead>
                             <tr>
-                                <th style="width: 30%">{{ trans('rinvex/fort::backend/roles.name') }}</th>
-                                <th style="width: 40%">{{ trans('rinvex/fort::backend/roles.description') }}</th>
-                                <th style="width: 20%">{{ trans('rinvex/fort::backend/roles.dates') }}</th>
-                                <th style="width: 10%" class="text-right">{{ trans('rinvex/fort::backend/roles.actions') }}</th>
+                                <th style="width: 30%">{{ trans('rinvex/fort::backend/forms.common.name') }}</th>
+                                <th style="width: 40%">{{ trans('rinvex/fort::backend/forms.common.description') }}</th>
+                                <th style="width: 15%">{{ trans('rinvex/fort::backend/forms.common.created_at') }}</th>
+                                <th style="width: 15%">{{ trans('rinvex/fort::backend/forms.common.updated_at') }}</th>
                             </tr>
                         </thead>
 
@@ -71,12 +71,12 @@
                                     <td class="small">
                                         @if($role->created_at)
                                             <div>
-                                                {{ trans('rinvex/fort::backend/roles.created_at') }}: <time datetime="{{ $role->created_at }}">{{ $role->created_at->format('Y-m-d') }}</time>
+                                                {{ trans('rinvex/fort::backend/forms.common.created_at') }}: <time datetime="{{ $role->created_at }}">{{ $role->created_at->format('Y-m-d') }}</time>
                                             </div>
                                         @endif
                                         @if($role->updated_at)
                                             <div>
-                                                {{ trans('rinvex/fort::backend/roles.updated_at') }}: <time datetime="{{ $role->updated_at }}">{{ $role->updated_at->format('Y-m-d') }}</time>
+                                                {{ trans('rinvex/fort::backend/forms.common.updated_at') }}: <time datetime="{{ $role->updated_at }}">{{ $role->updated_at->format('Y-m-d') }}</time>
                                             </div>
                                         @endif
                                     </td>

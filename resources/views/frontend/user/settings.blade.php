@@ -152,14 +152,14 @@
 
                             <div class="row">
                                 <div class="form-group{{ $errors->has('gender') ? ' has-error' : '' }}">
-                                    {{ Form::label('gender', trans('rinvex/fort::frontend/forms.account.gender.title'), ['class' => 'col-md-3 control-label']) }}
+                                    {{ Form::label('gender', trans('rinvex/fort::frontend/forms.common.gender'), ['class' => 'col-md-3 control-label']) }}
 
                                     <div class="col-md-8">
                                         <select id="gender" name="gender" class="form-control">
-                                            <option value="" disabled selected>{{ trans('rinvex/fort::frontend/forms.account.gender.select') }}</option>
-                                            <option value="male" @if(old('gender', $currentUser->gender) === 'male') selected @endif>{{ trans('rinvex/fort::frontend/forms.account.gender.male') }}</option>
-                                            <option value="female" @if(old('gender', $currentUser->gender) === 'female') selected @endif>{{ trans('rinvex/fort::frontend/forms.account.gender.female') }}</option>
-                                            <option value="undisclosed" @if(old('gender', $currentUser->gender) === 'undisclosed') selected @endif>{{ trans('rinvex/fort::frontend/forms.account.gender.undisclosed') }}</option>
+                                            <option value="" disabled selected>{{ trans('rinvex/fort::frontend/forms.common.select') }}</option>
+                                            <option value="male" @if(old('gender', $currentUser->gender) === 'male') selected @endif>{{ trans('rinvex/fort::frontend/forms.common.male') }}</option>
+                                            <option value="female" @if(old('gender', $currentUser->gender) === 'female') selected @endif>{{ trans('rinvex/fort::frontend/forms.common.female') }}</option>
+                                            <option value="undisclosed" @if(old('gender', $currentUser->gender) === 'undisclosed') selected @endif>{{ trans('rinvex/fort::frontend/forms.common.undisclosed') }}</option>
                                         </select>
 
                                         @if ($errors->has('gender'))
@@ -173,11 +173,11 @@
 
                             <div class="row">
                                 <div class="form-group{{ $errors->has('country') ? ' has-error' : '' }}">
-                                    {{ Form::label('country', trans('rinvex/fort::frontend/forms.account.country.title'), ['class' => 'col-md-3 control-label']) }}
+                                    {{ Form::label('country', trans('rinvex/fort::frontend/forms.common.country'), ['class' => 'col-md-3 control-label']) }}
 
                                     <div class="col-md-8">
                                         <select id="country" name="country" class="form-control">
-                                            <option value="" disabled selected>{{ trans('rinvex/fort::frontend/forms.account.country.select') }}</option>
+                                            <option value="" disabled selected>{{ trans('rinvex/fort::frontend/forms.common.select') }}</option>
                                             @foreach($countries as $code => $country)
                                                 <option value="{{ $code }}" @if(old('country', $currentUser->country) === $code) selected="selected" @endif>{{ $country }}</option>
                                             @endforeach

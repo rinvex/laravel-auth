@@ -3,7 +3,7 @@
 
 {{-- Page Title --}}
 @section('title')
-    {{ config('app.name') }} » {{ trans('rinvex/fort::backend/forms.dashboard.heading') }}
+    {{ config('app.name') }} » {{ trans('rinvex/fort::backend/forms.heading.dashboard') }}
 @stop
 
 {{-- Main Content --}}
@@ -24,14 +24,13 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="jumbotron">
-                    <h1><i class="fa fa-dashboard"></i> {{ trans('rinvex/fort::backend/dashboard.heading') }}</h1>
+                    <h1><i class="fa fa-dashboard"></i> {{ trans('rinvex/fort::backend/forms.heading.dashboard') }}</h1>
 
                     <div class="row">
                         <div class="col-md-8">
                             <section class="panel panel-default">
                                 <header class="panel-heading">
-                                    {{ trans('rinvex/fort::backend/dashboard.recent.registered') }}
-                                    <span class="pull-right"><a class="btn btn-xs btn-default" href="{{ route('rinvex.fort.backend.users.index') }}" role="button">{{ trans('rinvex/fort::backend/users.manage') }}</a></span>
+                                    <a class="btn btn-xs btn-default" href="{{ route('rinvex.fort.backend.users.index') }}" role="button">{{ trans('rinvex/fort::backend/forms.common.recent_registered') }}</a>
                                 </header>
                                 <div class="panel-body">
 
@@ -41,10 +40,10 @@
 
                                             <thead>
                                                 <tr>
-                                                    <th style="width: 20%">{{ trans('rinvex/fort::backend/users.name') }}</th>
-                                                    <th style="width: 20%">{{ trans('rinvex/fort::backend/users.contact') }}</th>
-                                                    <th style="width: 15%">{{ trans('rinvex/fort::backend/users.status.title') }}</th>
-                                                    <th style="width: 15%">{{ trans('rinvex/fort::backend/users.created_at') }}</th>
+                                                    <th style="width: 20%">{{ trans('rinvex/fort::backend/forms.common.name') }}</th>
+                                                    <th style="width: 20%">{{ trans('rinvex/fort::backend/forms.common.contact') }}</th>
+                                                    <th style="width: 15%">{{ trans('rinvex/fort::backend/forms.common.status') }}</th>
+                                                    <th style="width: 15%">{{ trans('rinvex/fort::backend/forms.common.created_at') }}</th>
                                                 </tr>
                                             </thead>
 
@@ -67,19 +66,25 @@
                                                         </td>
 
                                                         <td>
-                                                            <div>{{ $user->email }} @if($user->email_verified)
-                                                                    <span title="{{ $user->email_verified_at }}"><i class="fa text-success fa-check"></i></span> @endif
+                                                            <div>
+                                                                {{ $user->email }}
+                                                                @if($user->email_verified)
+                                                                    <span title="{{ $user->email_verified_at }}"><i class="fa text-success fa-check"></i></span>
+                                                                @endif
                                                             </div>
-                                                            <div>{{ $user->phone }} @if($user->phone_verified)
-                                                                    <span title="{{ $user->phone_verified_at }}"><i class="fa text-success fa-check"></i></span> @endif
+                                                            <div>
+                                                                {{ $user->phone }}
+                                                                @if($user->phone_verified)
+                                                                    <span title="{{ $user->phone_verified_at }}"><i class="fa text-success fa-check"></i></span>
+                                                                @endif
                                                             </div>
                                                         </td>
 
                                                         <td>
                                                             @if($user->active)
-                                                                <span class="label label-success">{{ trans('rinvex/fort::backend/users.status.active') }}</span>
+                                                                <span class="label label-success">{{ trans('rinvex/fort::backend/forms.common.active') }}</span>
                                                             @else
-                                                                <span class="label label-warning">{{ trans('rinvex/fort::backend/users.status.inactive') }}</span>
+                                                                <span class="label label-warning">{{ trans('rinvex/fort::backend/forms.common.inactive') }}</span>
                                                             @endif
                                                         </td>
 
@@ -108,7 +113,7 @@
 
                                 <section class="panel panel-default">
                                     <header class="panel-heading">
-                                        <strong>{{ trans('rinvex/fort::backend/dashboard.statistics') }}</strong>
+                                        <strong>{{ trans('rinvex/fort::backend/forms.common.statistics') }}</strong>
                                     </header>
 
                                     <ul class="list-group" style="vertical-align: middle">
@@ -136,7 +141,7 @@
                                 <section class="panel panel-default">
                                     <header class="panel-heading">
                                         <h4>
-                                            {{ trans('rinvex/fort::backend/users.online', ['mins' => config('rinvex.fort.online.interval')]) }}
+                                            {{ trans('rinvex/fort::backend/forms.common.online_users', ['mins' => config('rinvex.fort.online.interval')]) }}
                                             <span class="pull-right">{{ $persistences->count() }}</span>
                                         </h4>
                                     </header>
@@ -147,7 +152,7 @@
 
                                             <li class="list-group-item" style="vertical-align: middle">
                                                 <span class="pull-right">
-                                                    @if($persistence->user_id == $currentUser->id)<span class="label label-info">{{ trans('rinvex/fort::backend/dashboard.you') }}</span> @endif
+                                                    @if($persistence->user_id == $currentUser->id)<span class="label label-info">{{ trans('rinvex/fort::backend/forms.common.you') }}</span> @endif
                                                     <span class="badge">{{ $persistence->updated_at->diffForHumans() }}</span>
                                                 </span>
                                                 @can('update-users', $user) <a href="{{ route('rinvex.fort.backend.users.edit', ['user' => $persistence->user_id]) }}"> @endcan
