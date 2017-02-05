@@ -140,7 +140,7 @@ class RolesController extends AuthorizedController
         $input = $request->all();
 
         // Save role
-        $role = ! $role->exists ? $role->create($input) : $role->update($input);
+        ! $role->exists ? $role = $role->create($input) : $role->update($input);
 
         // Sync abilities
         if ($request->user($this->getGuard())->can('grant-abilities') && $abilities = array_pull($input, 'abilityList')) {

@@ -142,7 +142,7 @@ class UsersController extends AuthorizedController
         $input = $request->all();
 
         // Save user
-        $user = ! $user->exists ? $user->create($input) : $user->update($input);
+        ! $user->exists ? $user = $user->create($input) : $user->update($input);
 
         // Sync abilities
         if ($request->user($this->getGuard())->can('grant-abilities') && $abilities = array_pull($input, 'abilityList')) {
