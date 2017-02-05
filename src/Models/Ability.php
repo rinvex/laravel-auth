@@ -198,7 +198,7 @@ class Ability extends Model
      */
     public function setNameAttribute($value)
     {
-        $this->attributes['name'] = ! is_array($value) ? json_encode([app()->getLocale() => $value]) : $value;
+        $this->attributes['name'] = json_encode(! is_array($value) ? [app()->getLocale() => $value] : $value);
     }
 
     /**
@@ -210,7 +210,7 @@ class Ability extends Model
      */
     public function setDescriptionAttribute($value)
     {
-        $this->attributes['description'] = ! is_array($value) && ! is_null($value) ? json_encode([app()->getLocale() => $value]) : $value;
+        $this->attributes['description'] = ! empty($value) ? json_encode(! is_array($value) ? [app()->getLocale() => $value] : $value) : null;
     }
 
     /**
