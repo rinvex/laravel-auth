@@ -247,8 +247,8 @@ class Ability extends Model
      * Prepare a unique rule, adding the table name, column and model indetifier
      * if required.
      *
-     * @param  array  $parameters
-     * @param  string $field
+     * @param array  $parameters
+     * @param string $field
      *
      * @return string
      */
@@ -282,7 +282,7 @@ class Ability extends Model
 
             foreach ($parameters as $key => $parameter) {
                 if (strtolower($parameter) === 'null') {
-                    $parameters[$key] = $this->getModel()->{$parameters[$key-1]};
+                    $parameters[$key] = $this->getModel()->{$parameters[$key - 1]};
                 }
             }
         }
