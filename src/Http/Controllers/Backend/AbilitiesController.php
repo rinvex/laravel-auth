@@ -135,7 +135,7 @@ class AbilitiesController extends AuthorizedController
         $input = $request->all();
 
         // Verify valid policy
-        if (($class = strstr($input['policy'], '@', true)) === false || ! method_exists($class, str_replace('@', '', strstr($input['policy'], '@')))) {
+        if (! empty($input['policy']) && (($class = strstr($input['policy'], '@', true)) === false || ! method_exists($class, str_replace('@', '', strstr($input['policy'], '@'))))) {
             return intend([
                 'back' => true,
                 'withInput'  => $request->all(),
