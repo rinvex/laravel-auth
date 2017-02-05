@@ -132,7 +132,7 @@ class AbilitiesController extends AuthorizedController
     protected function process(Request $request, Ability $ability)
     {
         // Save ability
-        $ability->exists ? $ability->create($request->all()) : $ability->update($request->all());
+        $ability = $ability->exists ? $ability->create($request->all()) : $ability->update($request->all());
 
         return intend([
             'route' => 'rinvex.fort.backend.abilities.index',

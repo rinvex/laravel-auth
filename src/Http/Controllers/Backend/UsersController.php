@@ -140,17 +140,19 @@ class UsersController extends AuthorizedController
     {
         // Prepare required input fields
         $input = $request->all();
-        $roles = $request->user($this->getGuard())->can('assign-roles') ? ['roles' => array_pull($input, 'roleList')] : [];
-        $abilities = $request->user($this->getGuard())->can('grant-abilities') ? ['abilities' => array_pull($input, 'abilityList')] : [];
 
         // Save user
-        ! $user->exists ? $user->create($input) : $user->update($input);
+        $user = ! $user->exists ? $user->create($input) : $user->update($input);
 
         // Sync abilities
-        $user->abilities()->sync($abilities);
+        if ($request->user($this->getGuard())->can('grant-abilities') && $abilities = array_pull($input, 'abilityList')) {
+            $user->abilities()->sync($abilities);
+        }
 
         // Sync roles
-        $user->roles()->sync($roles);
+        if ($request->user($this->getGuard())->can('assign-roles') && $roles = array_pull($input, 'roleList')) {
+            $user->roles()->sync($roles);
+        }
 
         return intend([
             'route' => 'rinvex.fort.backend.users.index',
