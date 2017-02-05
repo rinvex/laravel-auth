@@ -3,8 +3,7 @@
 
 {{-- Page Title --}}
 @section('title')
-    @parent
-    » {{ trans('rinvex/fort::frontend/forms.verification.phone.verify.heading') }}
+    {{ config('app.name') }} » {{ trans('rinvex/fort::frontend/forms.verification.phone.verify.heading') }}
 @stop
 
 {{-- Main Content --}}

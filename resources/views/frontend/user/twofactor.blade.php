@@ -3,8 +3,7 @@
 
 {{-- Page Title --}}
 @section('title')
-    @parent
-    » {{ trans('rinvex/fort::frontend/forms.twofactor.heading') }}
+    {{ config('app.name') }} » {{ trans('rinvex/fort::frontend/forms.twofactor.heading') }}
 @stop
 
 {{-- Main Content --}}

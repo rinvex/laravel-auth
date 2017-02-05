@@ -3,8 +3,7 @@
 
 {{-- Page Title --}}
 @section('title')
-    @parent
-    » {{ trans('rinvex/fort::frontend/forms.account.active_sessions') }}
+    {{ config('app.name') }} » {{ trans('rinvex/fort::frontend/forms.account.active_sessions') }}
 @stop
 
 {{-- Main Content --}}

@@ -3,8 +3,7 @@
 
 {{-- Page Title --}}
 @section('title')
-    @parent
-    » {{ trans('rinvex/fort::backend/users.heading') }}
+    » {{ trans('rinvex/fort::backend/forms.users.heading') }}
 @stop
 
 {{-- Main Content --}}

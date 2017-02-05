@@ -3,8 +3,7 @@
 
 {{-- Page Title --}}
 @section('title')
-    @parent
-    » {{ trans('rinvex/fort::backend/dashboard.heading') }}
+    {{ config('app.name') }} » {{ trans('rinvex/fort::backend/forms.dashboard.heading') }}
 @stop
 
 {{-- Main Content --}}

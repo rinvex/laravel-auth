@@ -3,8 +3,7 @@
 
 {{-- Page Title --}}
 @section('title')
-    @parent
-    » {{ trans('rinvex/fort::backend/roles.heading') }}
+    {{ config('app.name') }} » {{ trans('rinvex/fort::backend/forms.roles.heading') }}
 @stop
 
 {{-- Main Content --}}

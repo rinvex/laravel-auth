@@ -3,8 +3,7 @@
 
 {{-- Page Title --}}
 @section('title')
-    @parent
-    » {{ trans('rinvex/fort::backend/abilities.heading') }} » {{ trans('rinvex/fort::backend/abilities.'.$mode) }} @if($ability->exists) » {{ $ability->slug }} @endif
+    {{ config('app.name') }} » {{ trans('rinvex/fort::backend/forms.abilities.heading') }} » {{ trans('rinvex/fort::backend/forms.common.'.$mode) }} @if($ability->exists) {{ $ability->slug }} @endif
 @stop
 
 {{-- Main Content --}}

@@ -3,8 +3,7 @@
 
 {{-- Page Title --}}
 @section('title')
-    @parent
-    » {{ trans('rinvex/fort::frontend/forms.passwordreset.reset.heading') }}
+    {{ config('app.name') }} » {{ trans('rinvex/fort::frontend/forms.passwordreset.reset.heading') }}
 @stop
 
 {{-- Main Content --}}

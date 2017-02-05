@@ -3,8 +3,7 @@
 
 {{-- Page Title --}}
 @section('title')
-    @parent
-    » {{ trans('rinvex/fort::backend/users.heading') }} » {{ trans('rinvex/fort::backend/users.'.$mode) }} @if($user->exists) » {{ $user->username }} @endif
+    {{ config('app.name') }} » {{ trans('rinvex/fort::backend/forms.users.heading') }} » {{ trans('rinvex/fort::backend/forms.common.'.$mode) }} @if($user->exists) {{ $user->username }} @endif
 @stop
 
 {{-- Main Content --}}
