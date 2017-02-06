@@ -145,13 +145,13 @@ class UsersController extends AuthorizedController
         ! $user->exists ? $user = $user->create($input) : $user->update($input);
 
         // Sync abilities
-        if ($request->user($this->getGuard())->can('grant-abilities') && $abilities = array_pull($input, 'abilityList')) {
-            $user->abilities()->sync($abilities);
+        if ($request->user($this->getGuard())->can('grant-abilities')) {
+            $user->abilities()->sync((array) array_pull($input, 'abilityList'));
         }
 
         // Sync roles
-        if ($request->user($this->getGuard())->can('assign-roles') && $roles = array_pull($input, 'roleList')) {
-            $user->roles()->sync($roles);
+        if ($request->user($this->getGuard())->can('assign-roles')) {
+            $user->roles()->sync((array) array_pull($input, 'roleList'));
         }
 
         return intend([
