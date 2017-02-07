@@ -191,8 +191,8 @@ class User extends Model implements AuthenticatableContract, AuthenticatableTwoF
             'username' => 'required|alpha_dash|max:255|unique:'.config('rinvex.fort.tables.users').',username',
             'email' => 'required|email|max:255|unique:'.config('rinvex.fort.tables.users').',email',
             'password' => 'sometimes|required|min:'.config('rinvex.fort.passwordreset.minimum_characters'),
-            'gender' => 'nullable|in:male,female,undisclosed',
-            'active' => 'required|boolean',
+            'gender' => 'in:male,female,undisclosed',
+            'active' => 'boolean',
             'email_verified' => 'boolean',
             'phone_verified' => 'boolean',
         ]);
