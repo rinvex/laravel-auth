@@ -219,7 +219,7 @@
                             {{-- Gender --}}
                             <div class="form-group{{ $errors->has('gender') ? ' has-error' : '' }}">
                                 {{ Form::label('gender', trans('rinvex/fort::backend/forms.common.gender'), ['class' => 'control-label']) }}
-                                {{ Form::select('gender', ['male' => trans('rinvex/fort::backend/forms.common.male'), 'female' => trans('rinvex/fort::backend/forms.common.female'), 'undisclosed' => trans('rinvex/fort::backend/forms.common.undisclosed')], $action !== 'update' ? 'undisclosed' : null, ['class' => 'form-control', 'placeholder' => trans('rinvex/fort::backend/forms.common.select')]) }}
+                                {{ Form::select('gender', ['male' => trans('rinvex/fort::backend/forms.common.male'), 'female' => trans('rinvex/fort::backend/forms.common.female'), 'undisclosed' => trans('rinvex/fort::backend/forms.common.undisclosed')], $action !== 'update' ? 'undisclosed' : null, ['class' => 'form-control']) }}
 
                                 @if ($errors->has('gender'))
                                     <span class="help-block">
@@ -280,6 +280,29 @@
 
                         </div>
                         @endcan
+
+                        <div class="col-md-4">
+
+                            {{-- Birthdate --}}
+                            <div class="form-group{{ $errors->has('birthdate') ? ' has-error' : '' }}">
+                                {{ Form::label('birthdate', trans('rinvex/fort::backend/forms.common.birthdate'), ['class' => 'control-label']) }}
+                                <div class="input-group date">
+                                    <div class="input-group-addon">
+                                        <i class="fa fa-calendar"></i>
+                                    </div>
+
+                                    {{ Form::text('birthdate', null, ['class' => 'form-control']) }}
+                                </div>
+
+                                @if ($errors->has('birthdate'))
+                                    <span class="help-block">
+                                        <strong>{{ $errors->first('birthdate') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+
+                        </div>
+
                         @can('grant-abilities')
                         <div class="col-md-4">
 
