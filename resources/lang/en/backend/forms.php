@@ -43,6 +43,7 @@ return [
         'undisclosed' => 'Undisclosed',
         'active' => 'Active',
         'inactive' => 'Inactive',
+        'verified' => 'Verified',
         'created_at' => 'Created At',
         'updated_at' => 'Updated At',
         'deleted_at' => 'Deleted At',
