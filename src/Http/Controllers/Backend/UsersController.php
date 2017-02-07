@@ -140,6 +140,13 @@ class UsersController extends AuthorizedController
     {
         // Prepare required input fields
         $input = $request->all();
+        $input['email_verified'] = isset($input['email_verified']);
+        $input['phone_verified'] = isset($input['phone_verified']);
+
+        // Remove empty password fields
+        if (! $input['password']) {
+            unset($input['password']);
+        }
 
         // Save user
         ! $user->exists ? $user = $user->create($input) : $user->update($input);

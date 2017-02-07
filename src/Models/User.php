@@ -36,43 +36,42 @@ use Illuminate\Contracts\Auth\Access\Authorizable as AuthorizableContract;
 /**
  * Rinvex\Fort\Models\User.
  *
- * @property int $id
- * @property string $username
- * @property string $password
- * @property string $remember_token
- * @property string $email
- * @property bool $email_verified
- * @property \Carbon\Carbon $email_verified_at
- * @property string $phone
- * @property bool $phone_verified
- * @property string $phone_verified_at
- * @property string $prefix
- * @property string $first_name
- * @property string $middle_name
- * @property string $last_name
- * @property string $sufix
- * @property string $job_title
- * @property string $country
- * @property array $two_factor
- * @property \Carbon\Carbon $birthdate
- * @property string $gender
- * @property bool $active
- * @property \Carbon\Carbon $login_at
- * @property \Carbon\Carbon $created_at
- * @property \Carbon\Carbon $updated_at
- * @property \Carbon\Carbon $deleted_at
- * @property-read \Illuminate\Database\Eloquent\Collection|\Rinvex\Fort\Models\Ability[] $abilities
- * @property-read \Illuminate\Database\Eloquent\Collection|\Rinvex\Fort\Models\Role[] $roles
- * @property-read \Illuminate\Database\Eloquent\Collection|\Rinvex\Fort\Models\Persistence[] $persistences
- * @property-read \Illuminate\Database\Eloquent\Collection|\Rinvex\Fort\Models\Socialite[] $socialites
- * @property-read string $name
- * @property-read \Illuminate\Support\Collection $all_abilities
- * @property-read array $ability_list
- * @property-read array $role_list
+ * @property int                                                                                                            $id
+ * @property string                                                                                                         $username
+ * @property string                                                                                                         $password
+ * @property string                                                                                                         $remember_token
+ * @property string                                                                                                         $email
+ * @property bool                                                                                                           $email_verified
+ * @property \Carbon\Carbon                                                                                                 $email_verified_at
+ * @property string                                                                                                         $phone
+ * @property bool                                                                                                           $phone_verified
+ * @property string                                                                                                         $phone_verified_at
+ * @property string                                                                                                         $prefix
+ * @property string                                                                                                         $first_name
+ * @property string                                                                                                         $middle_name
+ * @property string                                                                                                         $last_name
+ * @property string                                                                                                         $sufix
+ * @property string                                                                                                         $job_title
+ * @property string                                                                                                         $country
+ * @property array                                                                                                          $two_factor
+ * @property \Carbon\Carbon                                                                                                 $birthdate
+ * @property string                                                                                                         $gender
+ * @property bool                                                                                                           $active
+ * @property \Carbon\Carbon                                                                                                 $login_at
+ * @property \Carbon\Carbon                                                                                                 $created_at
+ * @property \Carbon\Carbon                                                                                                 $updated_at
+ * @property \Carbon\Carbon                                                                                                 $deleted_at
+ * @property-read \Illuminate\Database\Eloquent\Collection|\Rinvex\Fort\Models\Ability[]                                    $abilities
+ * @property-read \Illuminate\Database\Eloquent\Collection|\Rinvex\Fort\Models\Role[]                                       $roles
+ * @property-read \Illuminate\Database\Eloquent\Collection|\Rinvex\Fort\Models\Persistence[]                                $persistences
+ * @property-read \Illuminate\Database\Eloquent\Collection|\Rinvex\Fort\Models\Socialite[]                                  $socialites
+ * @property-read string                                                                                                    $name
+ * @property-read \Illuminate\Support\Collection                                                                            $all_abilities
+ * @property-read array                                                                                                     $ability_list
+ * @property-read array                                                                                                     $role_list
  * @property-read \Illuminate\Notifications\DatabaseNotificationCollection|\Illuminate\Notifications\DatabaseNotification[] $notifications
  * @property-read \Illuminate\Notifications\DatabaseNotificationCollection|\Illuminate\Notifications\DatabaseNotification[] $readNotifications
  * @property-read \Illuminate\Notifications\DatabaseNotificationCollection|\Illuminate\Notifications\DatabaseNotification[] $unreadNotifications
- *
  * @method static \Illuminate\Database\Query\Builder|\Rinvex\Fort\Models\User whereId($value)
  * @method static \Illuminate\Database\Query\Builder|\Rinvex\Fort\Models\User whereUsername($value)
  * @method static \Illuminate\Database\Query\Builder|\Rinvex\Fort\Models\User wherePassword($value)
@@ -189,9 +188,12 @@ class User extends Model implements AuthenticatableContract, AuthenticatableTwoF
         $this->setTable(config('rinvex.fort.tables.users'));
         $this->setRules([
             'username' => 'required|alpha_dash|max:255|unique:'.config('rinvex.fort.tables.users').',username',
-            'email'    => 'required|email|max:255|unique:'.config('rinvex.fort.tables.users').',email',
+            'email' => 'required|email|max:255|unique:'.config('rinvex.fort.tables.users').',email',
             'password' => 'sometimes|required|min:'.config('rinvex.fort.passwordreset.minimum_characters'),
-            'gender'   => 'nullable|in:male,female,undisclosed',
+            'gender' => 'nullable|in:male,female,undisclosed',
+            'active' => 'required|boolean',
+            'email_verified' => 'boolean',
+            'phone_verified' => 'boolean',
         ]);
     }
 

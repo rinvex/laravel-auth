@@ -219,7 +219,7 @@
                             {{-- Gender --}}
                             <div class="form-group{{ $errors->has('gender') ? ' has-error' : '' }}">
                                 {{ Form::label('gender', trans('rinvex/fort::backend/forms.common.gender'), ['class' => 'control-label']) }}
-                                {{ Form::select('gender', ['male' => trans('rinvex/fort::backend/forms.common.male'), 'female' => trans('rinvex/fort::backend/forms.common.female'), 'undisclosed' => trans('rinvex/fort::backend/forms.common.undisclosed')], null, ['class' => 'form-control', 'placeholder' => trans('rinvex/fort::backend/forms.common.select')]) }}
+                                {{ Form::select('gender', ['male' => trans('rinvex/fort::backend/forms.common.male'), 'female' => trans('rinvex/fort::backend/forms.common.female'), 'undisclosed' => trans('rinvex/fort::backend/forms.common.undisclosed')], $action !== 'update' ? 'undisclosed' : null, ['class' => 'form-control', 'placeholder' => trans('rinvex/fort::backend/forms.common.select')]) }}
 
                                 @if ($errors->has('gender'))
                                     <span class="help-block">
@@ -233,8 +233,8 @@
 
                             {{-- Active --}}
                             <div class="form-group{{ $errors->has('active') ? ' has-error' : '' }}">
-                                {{ Form::label('active', trans('rinvex/fort::backend/forms.common.status'), ['class' => 'control-label']) }}
-                                {{ Form::select('active', [1 => trans('rinvex/fort::backend/forms.common.active'), 0 => trans('rinvex/fort::backend/forms.common.inactive')], null, ['class' => 'form-control', 'placeholder' => trans('rinvex/fort::backend/forms.common.select')]) }}
+                                {{ Form::label('active', trans('rinvex/fort::backend/forms.common.active'), ['class' => 'control-label']) }}
+                                {{ Form::select('active', [1 => trans('rinvex/fort::backend/forms.common.yes'), 0 => trans('rinvex/fort::backend/forms.common.no')], null, ['class' => 'form-control']) }}
 
                                 @if ($errors->has('active'))
                                     <span class="help-block">
@@ -249,7 +249,11 @@
                             {{-- Password --}}
                             <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">
                                 {{ Form::label('password', trans('rinvex/fort::backend/forms.common.password'), ['class' => 'control-label']) }}
-                                {{ Form::password('password', ['class' => 'form-control', 'placeholder' => trans('rinvex/fort::backend/forms.common.password'), 'required' => 'required']) }}
+                                @if ($action === 'update')
+                                    {{ Form::password('password', ['class' => 'form-control', 'placeholder' => trans('rinvex/fort::backend/forms.common.password')]) }}
+                                @else
+                                    {{ Form::password('password', ['class' => 'form-control', 'placeholder' => trans('rinvex/fort::backend/forms.common.password'), 'required' => 'required']) }}
+                                @endif
 
                                 @if ($errors->has('password'))
                                     <span class="help-block">

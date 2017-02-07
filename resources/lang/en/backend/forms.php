@@ -42,6 +42,8 @@ return [
         'female' => 'Female',
         'undisclosed' => 'Undisclosed',
         'active' => 'Active',
+        'yes' => 'Yes',
+        'no' => 'No',
         'inactive' => 'Inactive',
         'verified' => 'Verified',
         'created_at' => 'Created At',
