@@ -74,6 +74,11 @@ class Role extends Model
     protected $with = ['abilities'];
 
     /**
+     * {@inheritdoc}
+     */
+    protected $observables = ['validating', 'validated'];
+
+    /**
      * The attributes that are translatable.
      *
      * @var array
@@ -113,6 +118,27 @@ class Role extends Model
             'description' => 'nullable|string',
             'slug'  => 'required|alpha_dash|unique:'.config('rinvex.fort.tables.roles').',slug',
         ]);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public static function boot()
+    {
+        parent::boot();
+
+        if (isset(static::$dispatcher)) {
+            // Early auto generate slugs before validation
+            static::$dispatcher->listen('eloquent.validating: '.static::class, function ($model, $event) {
+                if (! $model->slug) {
+                    if ($model->exists) {
+                        $model->generateSlugOnCreate();
+                    } else {
+                        $model->generateSlugOnUpdate();
+                    }
+                }
+            });
+        }
     }
 
     /**
