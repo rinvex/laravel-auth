@@ -26,16 +26,16 @@ use Spatie\Translatable\HasTranslations;
 /**
  * Rinvex\Fort\Models\Role.
  *
- * @property int $id
- * @property string $slug
- * @property string $name
- * @property string $description
- * @property \Carbon\Carbon $created_at
- * @property \Carbon\Carbon $updated_at
- * @property \Carbon\Carbon $deleted_at
+ * @property int                                                                         $id
+ * @property string                                                                      $slug
+ * @property string                                                                      $name
+ * @property string                                                                      $description
+ * @property \Carbon\Carbon                                                              $created_at
+ * @property \Carbon\Carbon                                                              $updated_at
+ * @property \Carbon\Carbon                                                              $deleted_at
  * @property-read \Illuminate\Database\Eloquent\Collection|\Rinvex\Fort\Models\Ability[] $abilities
- * @property-read \Illuminate\Database\Eloquent\Collection|\Rinvex\Fort\Models\User[] $users
- * @property-read array $ability_list
+ * @property-read \Illuminate\Database\Eloquent\Collection|\Rinvex\Fort\Models\User[]    $users
+ * @property-read array                                                                  $ability_list
  *
  * @method static \Illuminate\Database\Query\Builder|\Rinvex\Fort\Models\Role whereId($value)
  * @method static \Illuminate\Database\Query\Builder|\Rinvex\Fort\Models\Role whereSlug($value)
@@ -53,11 +53,6 @@ class Role extends Model
     use ValidatingTrait;
     use HasTranslations;
     use CacheableEloquent;
-
-    /**
-     * {@inheritdoc}
-     */
-    protected $dates = ['deleted_at'];
 
     /**
      * {@inheritdoc}
@@ -116,7 +111,7 @@ class Role extends Model
         $this->setRules([
             'name' => 'required|string',
             'description' => 'nullable|string',
-            'slug'  => 'required|alpha_dash|unique:'.config('rinvex.fort.tables.roles').',slug',
+            'slug' => 'required|alpha_dash|unique:'.config('rinvex.fort.tables.roles').',slug',
         ]);
     }
 

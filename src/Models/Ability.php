@@ -23,18 +23,18 @@ use Spatie\Translatable\HasTranslations;
 /**
  * Rinvex\Fort\Models\Ability.
  *
- * @property int $id
- * @property string $action
- * @property string $resource
- * @property string $policy
- * @property string $name
- * @property string $description
- * @property \Carbon\Carbon $created_at
- * @property \Carbon\Carbon $updated_at
- * @property \Carbon\Carbon $deleted_at
+ * @property int                                                                      $id
+ * @property string                                                                   $action
+ * @property string                                                                   $resource
+ * @property string                                                                   $policy
+ * @property string                                                                   $name
+ * @property string                                                                   $description
+ * @property \Carbon\Carbon                                                           $created_at
+ * @property \Carbon\Carbon                                                           $updated_at
+ * @property \Carbon\Carbon                                                           $deleted_at
  * @property-read \Illuminate\Database\Eloquent\Collection|\Rinvex\Fort\Models\Role[] $roles
  * @property-read \Illuminate\Database\Eloquent\Collection|\Rinvex\Fort\Models\User[] $users
- * @property-read bool $slug
+ * @property-read bool                                                                $slug
  *
  * @method static \Illuminate\Database\Query\Builder|\Rinvex\Fort\Models\Ability whereId($value)
  * @method static \Illuminate\Database\Query\Builder|\Rinvex\Fort\Models\Ability whereAction($value)
@@ -52,11 +52,6 @@ class Ability extends Model
     use HasTranslations;
     use ValidatingTrait;
     use CacheableEloquent;
-
-    /**
-     * {@inheritdoc}
-     */
-    protected $dates = ['deleted_at'];
 
     /**
      * {@inheritdoc}
@@ -95,7 +90,7 @@ class Ability extends Model
      * {@inheritdoc}
      */
     protected $validationMessages = [
-        'action.unique'   => 'The combination of (action & resource) fields has already been taken.',
+        'action.unique' => 'The combination of (action & resource) fields has already been taken.',
         'resource.unique' => 'The combination of (action & resource) fields has already been taken.',
     ];
 
@@ -118,8 +113,8 @@ class Ability extends Model
         $this->setTable(config('rinvex.fort.tables.abilities'));
         $this->addObservableEvents(['attaching', 'attached', 'detaching', 'detached']);
         $this->setRules([
-            'name'    => 'required',
-            'action'   => 'required|unique:'.config('rinvex.fort.tables.abilities').',action,NULL,id,resource,'.$this->resource,
+            'name' => 'required',
+            'action' => 'required|unique:'.config('rinvex.fort.tables.abilities').',action,NULL,id,resource,'.$this->resource,
             'resource' => 'required|unique:'.config('rinvex.fort.tables.abilities').',resource,NULL,id,action,'.$this->action,
         ]);
     }
