@@ -164,6 +164,11 @@ class User extends Model implements AuthenticatableContract, AuthenticatableTwoF
     protected $with = ['abilities', 'roles'];
 
     /**
+     * {@inheritdoc}
+     */
+    protected $observables = ['validating', 'validated'];
+
+    /**
      * The default rules that the model will validate against.
      *
      * @var array

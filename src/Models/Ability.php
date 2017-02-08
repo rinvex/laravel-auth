@@ -70,6 +70,11 @@ class Ability extends Model
     ];
 
     /**
+     * {@inheritdoc}
+     */
+    protected $observables = ['validating', 'validated'];
+
+    /**
      * The attributes that are translatable.
      *
      * @var array
