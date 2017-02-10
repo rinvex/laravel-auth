@@ -3,7 +3,7 @@
 
 {{-- Page Title --}}
 @section('title')
-    {{ config('app.name') }} » {{ trans('rinvex/fort::forms.heading.users') }} » {{ trans('rinvex/fort::forms.common.'.$mode) }} @if($user->exists) {{ $user->username }} @endif
+    {{ config('app.name') }} » {{ trans('rinvex/fort::forms.common.users') }} » {{ trans('rinvex/fort::forms.common.'.$mode) }} @if($user->exists) {{ $user->username }} @endif
 @stop
 
 {{-- Main Content --}}
@@ -36,7 +36,7 @@
                 {{-- Heading --}}
                 <header class="panel-heading">
                     <h4>
-                        <a href="{{ route('rinvex.fort.backend.users.index') }}">{{ trans('rinvex/fort::forms.heading.users') }}</a> » {{ trans('rinvex/fort::forms.common.'.$mode) }} @if($user->exists) <strong>{{ $user->username }}</strong> @endif
+                        <a href="{{ route('rinvex.fort.backend.users.index') }}">{{ trans('rinvex/fort::forms.common.users') }}</a> » {{ trans('rinvex/fort::forms.common.'.$mode) }} @if($user->exists) <strong>{{ $user->username }}</strong> @endif
                         @if($user->exists)
                             <span class="pull-right" style="margin-top: -7px">
                                 @can('delete-users', $user) <a href="#" class="btn btn-default" data-toggle="modal" data-target="#delete-confirmation" data-item-href="{{ route('rinvex.fort.backend.users.delete', ['user' => $user]) }}" data-item-name="{{ $user->username }}"><i class="fa fa-trash-o text-danger"></i></a> @endcan

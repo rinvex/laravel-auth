@@ -3,7 +3,7 @@
 
 {{-- Page Title --}}
 @section('title')
-    {{ config('app.name') }} » {{ trans('rinvex/fort::forms.heading.abilities') }}
+    {{ config('app.name') }} » {{ trans('rinvex/fort::forms.common.abilities') }}
 @stop
 
 {{-- Main Content --}}
@@ -27,7 +27,7 @@
             {{-- Heading --}}
             <header class="panel-heading">
                 <h4>
-                    {{ trans('rinvex/fort::forms.heading.abilities') }}
+                    {{ trans('rinvex/fort::forms.common.abilities') }}
                     @can('create-abilities')
                         <span class="pull-right" style="margin-top: -7px">
                             <a href="{{ route('rinvex.fort.backend.abilities.create') }}" class="btn btn-default"><i class="fa fa-plus"></i></a>

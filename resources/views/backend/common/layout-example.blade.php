@@ -57,10 +57,10 @@
                         <!-- Authentication Links -->
                         @if (Auth::guest())
                             <li>
-                                <a href="{{ route('rinvex.fort.frontend.auth.login') }}"> {{ trans('rinvex/fort::forms.login.heading') }}</a>
+                                <a href="{{ route('rinvex.fort.frontend.auth.login') }}"> {{ trans('rinvex/fort::forms.common.login') }}</a>
                             </li>
                             <li>
-                                <a href="{{ route('rinvex.fort.frontend.auth.register') }}"> {{ trans('rinvex/fort::forms.register.heading') }}</a>
+                                <a href="{{ route('rinvex.fort.frontend.auth.register') }}"> {{ trans('rinvex/fort::forms.common.register') }}</a>
                             </li>
                         @else
                             <li class="dropdown">
@@ -74,9 +74,9 @@
                                     <li><a href="{{ route('rinvex.fort.frontend.user.sessions') }}"><i class="fa fa-check-square-o"></i> {{ trans('rinvex/fort::menus.profile.sessions') }}</a></li>
                                     <li role="separator" class="divider"></li>
                                     @can('access-dashboard') <li class="disabled"><a href="{{ route('rinvex.fort.backend.dashboard.home') }}"><i class="fa fa-dashboard"></i> {{ trans('rinvex/fort::menus.dashboard.home') }}</a></li> @endcan
-                                    @can('list-abilities') <li><a href="{{ route('rinvex.fort.backend.abilities.index') }}"><i class="fa fa-arrow-right"></i> {{ trans('rinvex/fort::forms.heading.abilities') }}</a></li> @endcan
-                                    @can('list-roles') <li><a href="{{ route('rinvex.fort.backend.roles.index') }}"><i class="fa fa-arrow-right"></i> {{ trans('rinvex/fort::forms.heading.roles') }}</a></li> @endcan
-                                    @can('list-users') <li><a href="{{ route('rinvex.fort.backend.users.index') }}"><i class="fa fa-arrow-right"></i> {{ trans('rinvex/fort::forms.heading.users') }}</a></li> @endcan
+                                    @can('list-abilities') <li><a href="{{ route('rinvex.fort.backend.abilities.index') }}"><i class="fa fa-arrow-right"></i> {{ trans('rinvex/fort::forms.common.abilities') }}</a></li> @endcan
+                                    @can('list-roles') <li><a href="{{ route('rinvex.fort.backend.roles.index') }}"><i class="fa fa-arrow-right"></i> {{ trans('rinvex/fort::forms.common.roles') }}</a></li> @endcan
+                                    @can('list-users') <li><a href="{{ route('rinvex.fort.backend.users.index') }}"><i class="fa fa-arrow-right"></i> {{ trans('rinvex/fort::forms.common.users') }}</a></li> @endcan
                                     @if(Auth::user()->can('access-dashboard') || Auth::user()->can('list-abilities') || Auth::user()->can('list-roles') || Auth::user()->can('list-users'))
                                         <li role="separator" class="divider"></li>
                                     @endif

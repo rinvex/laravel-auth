@@ -3,7 +3,7 @@
 
 {{-- Page Title --}}
 @section('title')
-    {{ config('app.name') }} » {{ trans('rinvex/fort::forms.heading.roles') }} » {{ trans('rinvex/fort::forms.common.'.$mode) }} @if($role->exists) {{ $role->slug }} @endif
+    {{ config('app.name') }} » {{ trans('rinvex/fort::forms.common.roles') }} » {{ trans('rinvex/fort::forms.common.'.$mode) }} @if($role->exists) {{ $role->slug }} @endif
 @stop
 
 {{-- Main Content --}}
@@ -36,7 +36,7 @@
                 {{-- Heading --}}
                 <header class="panel-heading">
                     <h4>
-                        <a href="{{ route('rinvex.fort.backend.roles.index') }}">{{ trans('rinvex/fort::forms.heading.roles') }}</a> » {{ trans('rinvex/fort::forms.common.'.$mode) }} @if($role->exists) <strong>{{ $role->slug }}</strong> @endif
+                        <a href="{{ route('rinvex.fort.backend.roles.index') }}">{{ trans('rinvex/fort::forms.common.roles') }}</a> » {{ trans('rinvex/fort::forms.common.'.$mode) }} @if($role->exists) <strong>{{ $role->slug }}</strong> @endif
                         @if($role->exists)
                             <span class="pull-right" style="margin-top: -7px">
                                 @can('delete-roles', $role) <a href="#" class="btn btn-default" data-toggle="modal" data-target="#delete-confirmation" data-item-href="{{ route('rinvex.fort.backend.roles.delete', ['role' => $role]) }}" data-item-name="{{ $role->slug }}"><i class="fa fa-trash-o text-danger"></i></a> @endcan

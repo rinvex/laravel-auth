@@ -3,7 +3,7 @@
 
 {{-- Page Title --}}
 @section('title')
-    » {{ trans('rinvex/fort::forms.heading.users') }}
+    » {{ trans('rinvex/fort::forms.common.users') }}
 @stop
 
 {{-- Main Content --}}
@@ -27,7 +27,7 @@
             {{-- Heading --}}
             <header class="panel-heading">
                 <h4>
-                    {{ trans('rinvex/fort::forms.heading.users') }}
+                    {{ trans('rinvex/fort::forms.common.users') }}
                     @can('create-users')
                         <span class="pull-right" style="margin-top: -7px">
                             <a href="{{ route('rinvex.fort.backend.users.create') }}" class="btn btn-default"><i class="fa fa-plus"></i></a>

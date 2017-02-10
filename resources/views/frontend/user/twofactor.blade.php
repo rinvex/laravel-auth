@@ -3,7 +3,7 @@
 
 {{-- Page Title --}}
 @section('title')
-    {{ config('app.name') }} » {{ trans('rinvex/fort::forms.twofactor.heading') }}
+    {{ config('app.name') }} » {{ trans('rinvex/fort::forms.twofactor.configure') }}
 @stop
 
 {{-- Main Content --}}
@@ -16,7 +16,7 @@
                 <section class="panel panel-default">
 
                     <header class="panel-heading">
-                        {{ trans('rinvex/fort::forms.twofactor.heading') }}
+                        {{ trans('rinvex/fort::forms.twofactor.configure') }}
                     </header>
 
                     <div class="panel-body">
@@ -85,7 +85,7 @@
                                 <div class="col-md-8 col-sm-8 col-xs-8">
                                     {!! trans('rinvex/fort::forms.twofactor.totp_apps_step3') !!}
                                     <p>
-                                        {{ Form::text('token', old('token'), ['class' => 'form-control', 'placeholder' => trans('rinvex/fort::forms.account.code'), 'required' => 'required', 'autofocus' => 'autofocus']) }}
+                                        {{ Form::text('token', old('token'), ['class' => 'form-control', 'placeholder' => trans('rinvex/fort::forms.common.authentication_code'), 'required' => 'required', 'autofocus' => 'autofocus']) }}
                                     </p>
                                 </div>
 
@@ -146,7 +146,7 @@
 
                             <div class="row">
                                 <div class="col-md-12 col-sm-12 col-xs-12 text-center">
-                                    {{ Form::button('<i class="fa fa-cog"></i> '.trans('rinvex/fort::forms.twofactor.submit'), ['class' => 'btn btn-primary', 'type' => 'submit']) }}
+                                    {{ Form::button('<i class="fa fa-cog"></i> '.trans('rinvex/fort::forms.twofactor.configure'), ['class' => 'btn btn-primary', 'type' => 'submit']) }}
                                     {{ Form::reset(trans('rinvex/fort::forms.common.reset'), ['class' => 'btn btn-default']) }}
                                 </div>
                             </div>

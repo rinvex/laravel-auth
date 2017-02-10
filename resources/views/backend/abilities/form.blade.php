@@ -3,7 +3,7 @@
 
 {{-- Page Title --}}
 @section('title')
-    {{ config('app.name') }} » {{ trans('rinvex/fort::forms.heading.abilities') }} » {{ trans('rinvex/fort::forms.common.'.$mode) }} @if($ability->exists) {{ $ability->slug }} @endif
+    {{ config('app.name') }} » {{ trans('rinvex/fort::forms.common.abilities') }} » {{ trans('rinvex/fort::forms.common.'.$mode) }} @if($ability->exists) {{ $ability->slug }} @endif
 @stop
 
 {{-- Main Content --}}
@@ -36,7 +36,7 @@
                 {{-- Heading --}}
                 <header class="panel-heading">
                     <h4>
-                        <a href="{{ route('rinvex.fort.backend.abilities.index') }}">{{ trans('rinvex/fort::forms.heading.abilities') }}</a> » {{ trans('rinvex/fort::forms.common.'.$mode) }} @if($ability->exists) <strong>{{ $ability->slug }}</strong> @endif
+                        <a href="{{ route('rinvex.fort.backend.abilities.index') }}">{{ trans('rinvex/fort::forms.common.abilities') }}</a> » {{ trans('rinvex/fort::forms.common.'.$mode) }} @if($ability->exists) <strong>{{ $ability->slug }}</strong> @endif
                         @if($ability->exists)
                             <span class="pull-right" style="margin-top: -7px">
                                 @can('delete-abilities', $ability) <a href="#" class="btn btn-default" data-toggle="modal" data-target="#delete-confirmation" data-item-href="{{ route('rinvex.fort.backend.abilities.delete', ['ability' => $ability]) }}" data-item-name="{{ $ability->slug }}"><i class="fa fa-trash-o text-danger"></i></a> @endcan

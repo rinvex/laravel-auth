@@ -3,7 +3,7 @@
 
 {{-- Page Title --}}
 @section('title')
-    {{ config('app.name') }} » {{ trans('rinvex/fort::forms.account.heading') }}
+    {{ config('app.name') }} » {{ trans('rinvex/fort::forms.common.account') }}
 @stop
 
 {{-- Main Content --}}
@@ -16,7 +16,7 @@
                 <section class="panel panel-default">
 
                     <header class="panel-heading">
-                        {{ trans('rinvex/fort::forms.account.heading') }}
+                        {{ trans('rinvex/fort::forms.common.account') }}
                     </header>
 
                     <div class="panel-body">
@@ -28,15 +28,15 @@
 
                             <div class="row">
                                 <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
-                                    {{ Form::label('email', trans('rinvex/fort::forms.account.email'), ['class' => 'col-md-3 control-label']) }}
+                                    {{ Form::label('email', trans('rinvex/fort::forms.common.email'), ['class' => 'col-md-3 control-label']) }}
 
                                     <div class="col-md-8">
-                                        {{ Form::email('email', null, ['class' => 'form-control', 'placeholder' => trans('rinvex/fort::forms.passwordreset.email'), 'required' => 'required', 'autofocus' => 'autofocus']) }}
+                                        {{ Form::email('email', null, ['class' => 'form-control', 'placeholder' => trans('rinvex/fort::forms.common.email'), 'required' => 'required', 'autofocus' => 'autofocus']) }}
 
                                         @if ($currentUser->email_verified)
-                                            <small class="text-success">{!! trans('rinvex/fort::forms.account.email_verified', ['date' => $currentUser->email_verified_at]) !!}</small>
+                                            <small class="text-success">{!! trans('rinvex/fort::forms.common.email_verified', ['date' => $currentUser->email_verified_at]) !!}</small>
                                         @else
-                                            <small class="text-danger">{!! trans('rinvex/fort::forms.account.email_unverified', ['href' => route('rinvex.fort.frontend.verification.email.request')]) !!}</small>
+                                            <small class="text-danger">{!! trans('rinvex/fort::forms.common.email_unverified', ['href' => route('rinvex.fort.frontend.verification.email.request')]) !!}</small>
                                         @endif
 
                                         @if ($errors->has('email'))
@@ -50,7 +50,7 @@
 
                             <div class="row">
                                 <div class="form-group{{ $errors->has('username') ? ' has-error' : '' }}">
-                                    {{ Form::label('username', trans('rinvex/fort::forms.account.username'), ['class' => 'col-md-3 control-label']) }}
+                                    {{ Form::label('username', trans('rinvex/fort::forms.common.username'), ['class' => 'col-md-3 control-label']) }}
 
                                     <div class="col-md-8">
                                         {{ Form::text('username', null, ['class' => 'form-control', 'placeholder' => $currentUser->username, 'required' => 'required']) }}
@@ -70,10 +70,10 @@
 
                             <div class="row">
                                 <div class="form-group{{ $errors->has('prefix') ? ' has-error' : '' }}">
-                                    {{ Form::label('prefix', trans('rinvex/fort::forms.account.prefix'), ['class' => 'col-md-3 control-label']) }}
+                                    {{ Form::label('prefix', trans('rinvex/fort::forms.common.prefix'), ['class' => 'col-md-3 control-label']) }}
 
                                     <div class="col-md-8">
-                                        {{ Form::text('prefix', null, ['class' => 'form-control', 'placeholder' => $currentUser->prefix ?: trans('rinvex/fort::forms.account.prefix')]) }}
+                                        {{ Form::text('prefix', null, ['class' => 'form-control', 'placeholder' => $currentUser->prefix ?: trans('rinvex/fort::forms.common.prefix')]) }}
 
                                         @if ($errors->has('prefix'))
                                             <span class="help-block">
@@ -86,10 +86,10 @@
 
                             <div class="row">
                                 <div class="form-group{{ $errors->has('first_name') ? ' has-error' : '' }}">
-                                    {{ Form::label('first_name', trans('rinvex/fort::forms.account.first_name'), ['class' => 'col-md-3 control-label']) }}
+                                    {{ Form::label('first_name', trans('rinvex/fort::forms.common.first_name'), ['class' => 'col-md-3 control-label']) }}
 
                                     <div class="col-md-8">
-                                        {{ Form::text('first_name', null, ['class' => 'form-control', 'placeholder' => $currentUser->first_name ?: trans('rinvex/fort::forms.account.first_name')]) }}
+                                        {{ Form::text('first_name', null, ['class' => 'form-control', 'placeholder' => $currentUser->first_name ?: trans('rinvex/fort::forms.common.first_name')]) }}
 
                                         @if ($errors->has('first_name'))
                                             <span class="help-block">
@@ -102,10 +102,10 @@
 
                             <div class="row">
                                 <div class="form-group{{ $errors->has('middle_name') ? ' has-error' : '' }}">
-                                    {{ Form::label('middle_name', trans('rinvex/fort::forms.account.middle_name'), ['class' => 'col-md-3 control-label']) }}
+                                    {{ Form::label('middle_name', trans('rinvex/fort::forms.common.middle_name'), ['class' => 'col-md-3 control-label']) }}
 
                                     <div class="col-md-8">
-                                        {{ Form::text('middle_name', null, ['class' => 'form-control', 'placeholder' => $currentUser->middle_name ?: trans('rinvex/fort::forms.account.middle_name')]) }}
+                                        {{ Form::text('middle_name', null, ['class' => 'form-control', 'placeholder' => $currentUser->middle_name ?: trans('rinvex/fort::forms.common.middle_name')]) }}
 
                                         @if ($errors->has('middle_name'))
                                             <span class="help-block">
@@ -118,10 +118,10 @@
 
                             <div class="row">
                                 <div class="form-group{{ $errors->has('last_name') ? ' has-error' : '' }}">
-                                    {{ Form::label('last_name', trans('rinvex/fort::forms.account.last_name'), ['class' => 'col-md-3 control-label']) }}
+                                    {{ Form::label('last_name', trans('rinvex/fort::forms.common.last_name'), ['class' => 'col-md-3 control-label']) }}
 
                                     <div class="col-md-8">
-                                        {{ Form::text('last_name', null, ['class' => 'form-control', 'placeholder' => $currentUser->last_name ?: trans('rinvex/fort::forms.account.last_name')]) }}
+                                        {{ Form::text('last_name', null, ['class' => 'form-control', 'placeholder' => $currentUser->last_name ?: trans('rinvex/fort::forms.common.last_name')]) }}
 
                                         @if ($errors->has('last_name'))
                                             <span class="help-block">
@@ -134,10 +134,10 @@
 
                             <div class="row">
                                 <div class="form-group{{ $errors->has('suffix') ? ' has-error' : '' }}">
-                                    {{ Form::label('suffix', trans('rinvex/fort::forms.account.suffix'), ['class' => 'col-md-3 control-label']) }}
+                                    {{ Form::label('suffix', trans('rinvex/fort::forms.common.suffix'), ['class' => 'col-md-3 control-label']) }}
 
                                     <div class="col-md-8">
-                                        {{ Form::text('suffix', null, ['class' => 'form-control', 'placeholder' => $currentUser->suffix ?: trans('rinvex/fort::forms.account.suffix')]) }}
+                                        {{ Form::text('suffix', null, ['class' => 'form-control', 'placeholder' => $currentUser->suffix ?: trans('rinvex/fort::forms.common.suffix')]) }}
 
                                         @if ($errors->has('suffix'))
                                             <span class="help-block">
@@ -194,15 +194,15 @@
 
                             <div class="row">
                                 <div class="form-group{{ $errors->has('phone') ? ' has-error' : '' }}">
-                                    {{ Form::label('phone', trans('rinvex/fort::forms.account.phone'), ['class' => 'col-md-3 control-label']) }}
+                                    {{ Form::label('phone', trans('rinvex/fort::forms.common.phone'), ['class' => 'col-md-3 control-label']) }}
 
                                     <div class="col-md-8">
-                                        {{ Form::text('phone', null, ['class' => 'form-control', 'placeholder' => $currentUser->phone ?: trans('rinvex/fort::forms.account.phone')]) }}
+                                        {{ Form::text('phone', null, ['class' => 'form-control', 'placeholder' => $currentUser->phone ?: trans('rinvex/fort::forms.common.phone')]) }}
 
                                         @if ($currentUser->phone_verified)
-                                            <small class="text-success">{!! trans('rinvex/fort::forms.account.phone_verified', ['date' => $currentUser->phone_verified_at]) !!}</small>
+                                            <small class="text-success">{!! trans('rinvex/fort::forms.common.phone_verified', ['date' => $currentUser->phone_verified_at]) !!}</small>
                                         @else
-                                            <small class="text-danger">{!! trans('rinvex/fort::forms.account.phone_unverified', ['href' => route('rinvex.fort.frontend.verification.phone.request')]) !!}</small>
+                                            <small class="text-danger">{!! trans('rinvex/fort::forms.common.phone_unverified', ['href' => route('rinvex.fort.frontend.verification.phone.request')]) !!}</small>
                                         @endif
 
                                         @if ($errors->has('phone'))
@@ -219,10 +219,10 @@
 
                             <div class="row">
                                 <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">
-                                    {{ Form::label('password', trans('rinvex/fort::forms.account.password'), ['class' => 'col-md-3 control-label']) }}
+                                    {{ Form::label('password', trans('rinvex/fort::forms.common.password'), ['class' => 'col-md-3 control-label']) }}
 
                                     <div class="col-md-8">
-                                        {{ Form::password('password', ['class' => 'form-control', 'placeholder' => trans('rinvex/fort::forms.account.password')]) }}
+                                        {{ Form::password('password', ['class' => 'form-control', 'placeholder' => trans('rinvex/fort::forms.common.password')]) }}
 
                                         @if ($errors->has('password'))
                                             <span class="help-block">
@@ -235,10 +235,10 @@
 
                             <div class="row">
                                 <div class="form-group{{ $errors->has('password_confirmation') ? ' has-error' : '' }}">
-                                    {{ Form::label('password_confirmation', trans('rinvex/fort::forms.account.password_confirmation'), ['class' => 'col-md-3 control-label']) }}
+                                    {{ Form::label('password_confirmation', trans('rinvex/fort::forms.common.password_confirmation'), ['class' => 'col-md-3 control-label']) }}
 
                                     <div class="col-md-8">
-                                        {{ Form::password('password_confirmation', ['class' => 'form-control', 'placeholder' => trans('rinvex/fort::forms.account.password_confirmation')]) }}
+                                        {{ Form::password('password_confirmation', ['class' => 'form-control', 'placeholder' => trans('rinvex/fort::forms.common.password_confirmation')]) }}
 
                                         @if ($errors->has('password_confirmation'))
                                             <span class="help-block">
@@ -261,9 +261,9 @@
                                             <div class="text-center">
                                                 <a class="btn btn-default text-center" role="button" data-toggle="collapse" href="#collapseTwoFactor" aria-expanded="false" aria-controls="collapseTwoFactor">
                                                     @if(array_get($twoFactor, 'totp.enabled') || array_get($twoFactor, 'phone.enabled'))
-                                                        {!! trans('rinvex/fort::forms.account.two_factor_active') !!}
+                                                        {!! trans('rinvex/fort::forms.twofactor.active') !!}
                                                     @else
-                                                        {!! trans('rinvex/fort::forms.account.two_factor_inactive') !!}
+                                                        {!! trans('rinvex/fort::forms.twofactor.inactive') !!}
                                                     @endif
                                                 </a>
                                             </div>
@@ -271,23 +271,23 @@
                                             <div class="collapse col-md-10 col-md-offset-1" id="collapseTwoFactor">
 
                                                 <hr />
-                                                <p class="text-justify">{{ trans('rinvex/fort::forms.account.two_factor_notice') }}</p>
+                                                <p class="text-justify">{{ trans('rinvex/fort::forms.twofactor.notice') }}</p>
                                                 <hr />
 
                                                 @if(in_array('totp', config('rinvex.fort.twofactor.providers')))
 
                                                     <div class="panel panel-primary">
                                                         <header class="panel-heading">
-                                                            <a class="btn btn-default btn-xs pull-right" style="margin-left: 10px" href="{{ route('rinvex.fort.frontend.user.twofactor.totp.enable') }}">@if(array_get($twoFactor, 'totp.enabled')) {{ trans('rinvex/fort::forms.account.settings') }} @else {{ trans('rinvex/fort::forms.account.enable') }} @endif</a>
+                                                            <a class="btn btn-default btn-xs pull-right" style="margin-left: 10px" href="{{ route('rinvex.fort.frontend.user.twofactor.totp.enable') }}">@if(array_get($twoFactor, 'totp.enabled')) {{ trans('rinvex/fort::forms.common.settings') }} @else {{ trans('rinvex/fort::forms.common.enable') }} @endif</a>
                                                             @if(array_get($twoFactor, 'totp.enabled'))
-                                                                <a class="btn btn-default btn-xs pull-right" href="{{ route('rinvex.fort.frontend.user.twofactor.totp.disable') }}">{{ trans('rinvex/fort::forms.account.disable') }}</a>
+                                                                <a class="btn btn-default btn-xs pull-right" href="{{ route('rinvex.fort.frontend.user.twofactor.totp.disable') }}">{{ trans('rinvex/fort::forms.common.disable') }}</a>
                                                             @endif
                                                             <h3 class="panel-title">
-                                                                {{ trans('rinvex/fort::forms.account.twofactor_totp_head') }}
+                                                                {{ trans('rinvex/fort::forms.twofactor.totp_head') }}
                                                             </h3>
                                                         </header>
                                                         <div class="panel-body">
-                                                            {!! trans('rinvex/fort::forms.account.twofactor_totp_body') !!}
+                                                            {!! trans('rinvex/fort::forms.twofactor.totp_body') !!}
                                                         </div>
                                                     </div>
 
@@ -298,16 +298,16 @@
                                                     <div class="panel panel-primary">
                                                         <header class="panel-heading">
                                                             @if(array_get($twoFactor, 'phone.enabled'))
-                                                                <a class="btn btn-default btn-xs pull-right" href="{{ route('rinvex.fort.frontend.user.twofactor.phone.disable') }}">{{ trans('rinvex/fort::forms.account.disable') }}</a>
+                                                                <a class="btn btn-default btn-xs pull-right" href="{{ route('rinvex.fort.frontend.user.twofactor.phone.disable') }}">{{ trans('rinvex/fort::forms.common.disable') }}</a>
                                                             @else
-                                                                <a class="btn btn-default btn-xs pull-right" href="{{ route('rinvex.fort.frontend.user.twofactor.phone.enable') }}">{{ trans('rinvex/fort::forms.account.enable') }}</a>
+                                                                <a class="btn btn-default btn-xs pull-right" href="{{ route('rinvex.fort.frontend.user.twofactor.phone.enable') }}">{{ trans('rinvex/fort::forms.common.enable') }}</a>
                                                             @endif
                                                             <h3 class="panel-title">
-                                                                {{ trans('rinvex/fort::forms.account.twofactor_phone_head') }}
+                                                                {{ trans('rinvex/fort::forms.twofactor.phone_head') }}
                                                             </h3>
                                                         </header>
                                                         <div class="panel-body">
-                                                            {{ trans('rinvex/fort::forms.account.twofactor_phone_body') }}
+                                                            {{ trans('rinvex/fort::forms.twofactor.phone_body') }}
                                                         </div>
                                                     </div>
 
@@ -322,7 +322,7 @@
 
                             <div class="row">
                                 <div class="col-md-12 col-sm-12 col-xs-12 text-center">
-                                    {{ Form::button('<i class="fa fa-user"></i> '.trans('rinvex/fort::forms.account.submit'), ['class' => 'btn btn-primary', 'type' => 'submit']) }}
+                                    {{ Form::button('<i class="fa fa-user"></i> '.trans('rinvex/fort::forms.common.account'), ['class' => 'btn btn-primary', 'type' => 'submit']) }}
                                     {{ Form::reset(trans('rinvex/fort::forms.common.reset'), ['class' => 'btn btn-default']) }}
                                 </div>
                             </div>

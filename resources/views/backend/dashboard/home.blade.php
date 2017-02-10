@@ -3,7 +3,7 @@
 
 {{-- Page Title --}}
 @section('title')
-    {{ config('app.name') }} » {{ trans('rinvex/fort::forms.heading.dashboard') }}
+    {{ config('app.name') }} » {{ trans('rinvex/fort::forms.common.dashboard') }}
 @stop
 
 {{-- Main Content --}}
@@ -24,7 +24,7 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="jumbotron">
-                    <h1><i class="fa fa-dashboard"></i> {{ trans('rinvex/fort::forms.heading.dashboard') }}</h1>
+                    <h1><i class="fa fa-dashboard"></i> {{ trans('rinvex/fort::forms.common.dashboard') }}</h1>
 
                     <div class="row">
                         <div class="col-md-8">

@@ -16,6 +16,11 @@ return [
         'close' => 'Close',
         'logout' => 'Logout',
         'warning' => 'Warning',
+        'register' => 'Register',
+        'login' => 'Login',
+        'password_reset' => 'Reset Password',
+        'password_reset_request' => 'Request Password Reset',
+        'remember_me' => 'Remember Me',
 
         // Fields
         'name' => 'Name',
@@ -24,8 +29,6 @@ return [
         'action' => 'Action',
         'resource' => 'Resource',
         'policy' => 'Policy',
-        'abilities' => 'Abilities',
-        'roles' => 'Roles',
         'first_name' => 'First Name',
         'middle_name' => 'Middle Name',
         'last_name' => 'Last Name',
@@ -35,6 +38,9 @@ return [
         'prefix' => 'Prefix',
         'suffix' => 'Suffix',
         'password' => 'Password',
+        'password_confirmation' => 'Password Confirmation',
+        'new_password' => 'New Password',
+        'new_password_confirmation' => 'New Password Confirmation',
         'email' => 'Email',
         'phone' => 'Phone',
         'status' => 'Status',
@@ -47,31 +53,43 @@ return [
         'active' => 'Active',
         'inactive' => 'Inactive',
         'verified' => 'Verified',
+        'verification_method' => 'Verification Method',
+        'authentication_code' => 'Authentication Code',
+        'loginfield' => 'Username / Email',
         'created_at' => 'Created At',
         'updated_at' => 'Updated At',
 
+        // Headings
+        'verification_email_request' => 'Request Email Verification',
+        'verification_phone_request' => 'Request Phone Verification',
+        'verify_phone' => 'Verify Phone',
+        'dashboard' => 'Dashboard',
+        'abilities' => 'Abilities',
+        'users' => 'Users',
+        'roles' => 'Roles',
+        'account' => 'Account',
+        'settings' => 'Settings',
+        'active_sessions' => 'Active Sessions',
+
         // Misc
-        'yes' => 'Yes',
         'no' => 'No',
+        'yes' => 'Yes',
         'you' => 'You',
+        'sms' => 'SMS',
+        'call' => 'Call',
         'statistics' => 'Statistics',
         'pages' => 'Showing :count out of :total items',
         'online_users' => 'Online Users (last :mins mins)',
         'recent_registered' => 'Recently Registered Users',
         'delete_confirmation' => 'Delete Confirmation',
-        'delete_confirmation_body'    => 'Are you sure you want to delete <strong class="item-name"></strong> :type?',
+        'delete_confirmation_body' => 'Are you sure you want to delete <strong class="item-name"></strong> :type?',
+        'email_verified' => 'Email verified at <date>:date</date>.',
+        'email_unverified' => 'Email not yet verified! <a href=":href">Verify Email</a>',
+        'phone_verified' => 'Phone verified at <date>:date</date>.',
+        'phone_unverified' => 'Phone not yet verified! <a href=":href">Verify Phone</a>',
+        'forgot_password' => 'Forgot Password',
 
     ],
-
-    'heading' => [
-
-        'abilities' => 'Abilities',
-        'dashboard' => 'Dashboard',
-        'users' => 'Users',
-        'roles' => 'Roles',
-
-    ],
-
 
     'sessions' => [
         'flush_single_heading' => 'Flush Selected Session',
@@ -80,105 +98,18 @@ return [
         'flush_all_body' => 'All active sessions of your account, including this one will be flushed, and you will be forced to re-login again!',
     ],
 
-    'register' => [
-        'heading' => 'Register',
-        'username' => 'Username',
-        'email' => 'Email Address',
-        'password' => 'Password',
-        'password_confirmation' => 'Password Confirmation',
-        'submit' => 'Register',
-    ],
-
-    'login' => [
-        'heading' => 'Login',
-        'loginfield' => 'Username / Email',
-        'password' => 'Password',
-        'forgot_password' => 'Forgot Password',
-        'remember' => 'Remember Me',
-        'submit' => 'Login',
-    ],
-
-    'passwordreset' => [
-        'email' => 'Email Address',
-        'password' => 'New Password',
-        'password_confirmation' => 'New Password Confirmation',
-
-        'request' => [
-            'heading' => 'Request Password Reset',
-            'submit' => 'Request Password Reset',
-        ],
-
-        'reset' => [
-            'heading' => 'Reset Password',
-            'submit' => 'Reset Password',
-        ],
-    ],
-
-    'verification' => [
-        'email' => [
-            'heading' => 'Request Email Verification',
-            'field' => 'Email Address',
-            'submit' => 'Request Email Verification',
-        ],
-
-        'phone' => [
-            'request' => [
-                'heading' => 'Request Phone Verification',
-                'phone' => 'Phone Number',
-                'method' => [
-                    'title' => 'Verification Method',
-                    'sms' => 'SMS',
-                    'call' => 'Call',
-                ],
-                'submit' => 'Request Phone Verification',
-            ],
-
-            'verify' => [
-                'heading' => 'Verify Phone',
-                'token' => 'Authentication Code',
-                'submit' => 'Verify Phone',
-                'backup' => 'Use backup codes.',
-                'backup_sms' => 'Use backup codes, or request <a href=":href">SMS code</a>.',
-                'backup_notice' => 'Problems with your verification app?',
-            ],
-        ],
-    ],
-
-    'account' => [
-        'heading' => 'Update Account',
-        'phone' => 'Phone',
-        'email' => 'Email',
-        'username' => 'Username',
-        'prefix' => 'Prefix',
-        'suffix' => 'Suffix',
-        'first_name' => 'First Name',
-        'middle_name' => 'Middle Name',
-        'last_name' => 'Last Name',
-        'password' => 'Password',
-        'password_confirmation' => 'Password Confirmation',
-        'active_sessions' => 'Active Sessions',
-        'submit' => 'Update Account',
-        'settings' => 'Settings',
-        'you' => 'You',
-        'enable' => 'Enable',
-        'disable' => 'Disable',
-        'code' => 'Authentication Code',
-        'email_verified' => 'Email verified at <date>:date</date>.',
-        'email_unverified' => 'Email not yet verified! <a href=":href">Verify Email</a>',
-        'phone_verified' => 'Phone verified at <date>:date</date>.',
-        'phone_unverified' => 'Phone not yet verified! <a href=":href">Verify Phone</a>',
-        'two_factor_notice' => 'Protect your account with an extra layer of security by requiring access to your phone. Once configured, you\'ll be required to enter both your password and an authentication code from your mobile phone in order to sign into your account.',
-        'two_factor_active' => 'Two-Factor Authentication currently <strong>active</strong>, click to activate!',
-        'two_factor_inactive' => 'Two-Factor Authentication currently <strong>inactive</strong>, click to de-activate!',
-        'twofactor_totp_head' => 'Use An App',
-        'twofactor_totp_body' => 'Retrieve codes from an authentication app on your device, like <a target="_blank" href="https://m.google.com/authenticator">Google Authenticator</a>, <a target="_blank" href="http://guide.duosecurity.com/">Duo Mobile</a>, <a target="_blank" href="https://www.authy.com/">Authy</a>, or <a target="_blank" href="https://www.windowsphone.com/en-us/store/app/authenticator/e7994dbc-2336-4950-91ba-ca22d653759b">Windows Phone Authenticator</a>.',
-        'twofactor_phone_head' => 'SMS Text Message / Automated Phone Call',
-        'twofactor_phone_body' => 'Receive a text message, or an automated phone call to your mobile device when signing in.',
-    ],
-
     'twofactor' => [
-        'heading' => 'Configure Two-Factor',
-        'submit' => 'Configure Two-Factor',
+        'configure' => 'Configure Two-Factor',
+        'notice' => 'Protect your account with an extra layer of security by requiring access to your phone. Once configured, you\'ll be required to enter both your password and an authentication code from your mobile phone in order to sign into your account.',
+        'active' => 'Two-Factor Authentication currently <strong>active</strong>, click to activate!',
+        'inactive' => 'Two-Factor Authentication currently <strong>inactive</strong>, click to de-activate!',
+        'backup_code' => 'Use backup codes.',
+        'backup_notice' => 'Problems with your verification app?',
+        'backup_sms' => 'Use backup codes, or request <a href=":href">SMS code</a>.',
+        'phone_head' => 'SMS Text Message / Automated Phone Call',
+        'phone_body' => 'Receive a text message, or an automated phone call to your mobile device when signing in.',
+        'totp_head' => 'Use An App',
+        'totp_body' => 'Retrieve codes from an authentication app on your device, like <a target="_blank" href="https://m.google.com/authenticator">Google Authenticator</a>, <a target="_blank" href="http://guide.duosecurity.com/">Duo Mobile</a>, <a target="_blank" href="https://www.authy.com/">Authy</a>, or <a target="_blank" href="https://www.windowsphone.com/en-us/store/app/authenticator/e7994dbc-2336-4950-91ba-ca22d653759b">Windows Phone Authenticator</a>.',
         'totp_apps' => 'Once configured, you will be required to enter a code created by the <a target="_blank" href="https://m.google.com/authenticator">Google Authenticator</a>, <a target="_blank" href="http://guide.duosecurity.com/">Duo Mobile</a>, <a target="_blank" href="https://www.authy.com/">Authy</a>, or <a target="_blank" href="https://www.windowsphone.com/en-us/store/app/authenticator/e7994dbc-2336-4950-91ba-ca22d653759b">Windows Phone Authenticator</a> apps in order to sign into your account.',
         'totp_apps_step1' => '<p>Step 1</p><p><strong>Get the App</strong></p><p>Download and install the<a target="_blank" href="https://m.google.com/authenticator">Google Authenticator</a>,<a target="_blank" href="http://guide.duosecurity.com/third-party-accounts">Duo Mobile</a>,<a target="_blank" href="https://www.authy.com/">Authy</a>, or <a target="_blank" href="https://www.windowsphone.com/en-us/store/app/authenticator/e7994dbc-2336-4950-91ba-ca22d653759b">Windows Phone Authenticator</a> app for your phone or tablet.</p>',
         'totp_apps_step2' => '<p>Step 2</p><p><strong>Scan this Barcode</strong></p><p>Open the authentication app and:</p><ul><li>Tap the "+" icon in the top-right of the app</li><li>Scan the image to the left, using your phone\'s camera</li></ul>',
