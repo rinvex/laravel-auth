@@ -17,7 +17,11 @@ return [
         'logout' => 'Logout',
         'warning' => 'Warning',
         'register' => 'Register',
+        'register_via_facebook' => 'Register via Facebook',
+        'register_via_gplus' => 'Register via Google+',
         'login' => 'Login',
+        'login_via_facebook' => 'Login via Facebook',
+        'login_via_gplus' => 'Login via Google+',
         'password_reset' => 'Reset Password',
         'password_reset_request' => 'Request Password Reset',
         'remember_me' => 'Remember Me',
@@ -87,7 +91,7 @@ return [
         'email_unverified' => 'Email not yet verified! <a href=":href">Verify Email</a>',
         'phone_verified' => 'Phone verified at <date>:date</date>.',
         'phone_unverified' => 'Phone not yet verified! <a href=":href">Verify Phone</a>',
-        'forgot_password' => 'Forgot Password',
+        'forgot_password' => 'I forgot my password',
 
     ],
 
