@@ -15,7 +15,7 @@
                 <section class="panel panel-default">
                     <header class="panel-heading">{{ trans('rinvex/fort::frontend/forms.register.heading') }}</header>
                     <div class="panel-body">
-                        {{ Form::open(['route' => 'rinvex.fort.frontend.auth.register.post', 'class' => 'form-horizontal']) }}
+                        {{ Form::open(['route' => 'rinvex.fort.frontend.auth.register.process', 'class' => 'form-horizontal']) }}
 
                             @include('rinvex/fort::frontend/alerts.success')
                             @include('rinvex/fort::frontend/alerts.warning')

@@ -50,7 +50,7 @@ Route::namespace('Rinvex\Fort\Http\Controllers\Frontend')->name('rinvex.fort.fro
         */
 
         Route::get('register')->name('register')->uses('RegistrationController@form');
-        Route::post('register')->name('register.post')->uses('RegistrationController@register');
+        Route::post('register')->name('register.process')->uses('RegistrationController@register');
 
         /*
         |--------------------------------------------------------------------------
