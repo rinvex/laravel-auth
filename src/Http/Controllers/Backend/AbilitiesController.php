@@ -103,7 +103,7 @@ class AbilitiesController extends AuthorizedController
 
         return intend([
             'route' => 'rinvex.fort.backend.abilities.index',
-            'with'  => ['warning' => trans('rinvex/fort::backend/messages.ability.deleted', ['abilityId' => $ability->id])],
+            'with'  => ['warning' => trans('rinvex/fort::messages.ability.deleted', ['abilityId' => $ability->id])],
         ]);
     }
 
@@ -139,7 +139,7 @@ class AbilitiesController extends AuthorizedController
             return intend([
                 'back' => true,
                 'withInput'  => $request->all(),
-                'withErrors'  => ['policy' => trans('rinvex/fort::backend/messages.ability.invalid_policy')],
+                'withErrors'  => ['policy' => trans('rinvex/fort::messages.ability.invalid_policy')],
             ]);
         }
 
@@ -148,7 +148,7 @@ class AbilitiesController extends AuthorizedController
 
         return intend([
             'route' => 'rinvex.fort.backend.abilities.index',
-            'with'  => ['success' => trans('rinvex/fort::backend/messages.ability.saved', ['abilityId' => $ability->id])],
+            'with'  => ['success' => trans('rinvex/fort::messages.ability.saved', ['abilityId' => $ability->id])],
         ]);
     }
 }

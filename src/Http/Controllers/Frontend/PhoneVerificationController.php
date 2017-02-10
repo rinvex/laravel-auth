@@ -53,7 +53,7 @@ class PhoneVerificationController extends AbstractController
 
         return intend([
             'route' => 'rinvex.fort.frontend.verification.phone.verify',
-            'with'  => ['success' => trans('rinvex/fort::frontend/messages.verification.phone.sent')],
+            'with'  => ['success' => trans('rinvex/fort::messages.verification.phone.sent')],
         ]);
     }
 

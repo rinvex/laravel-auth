@@ -41,7 +41,7 @@ class EmailVerificationRequest extends FormRequest
     {
         return intend([
             'url'  => '/',
-            'with' => ['warning' => trans('rinvex/fort::frontend/messages.verification.email.already')],
+            'with' => ['warning' => trans('rinvex/fort::messages.verification.email.already')],
         ]);
     }
 

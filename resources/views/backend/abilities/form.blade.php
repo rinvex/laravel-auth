@@ -3,7 +3,7 @@
 
 {{-- Page Title --}}
 @section('title')
-    {{ config('app.name') }} » {{ trans('rinvex/fort::backend/forms.heading.abilities') }} » {{ trans('rinvex/fort::backend/forms.common.'.$mode) }} @if($ability->exists) {{ $ability->slug }} @endif
+    {{ config('app.name') }} » {{ trans('rinvex/fort::forms.heading.abilities') }} » {{ trans('rinvex/fort::forms.common.'.$mode) }} @if($ability->exists) {{ $ability->slug }} @endif
 @stop
 
 {{-- Main Content --}}
@@ -36,7 +36,7 @@
                 {{-- Heading --}}
                 <header class="panel-heading">
                     <h4>
-                        <a href="{{ route('rinvex.fort.backend.abilities.index') }}">{{ trans('rinvex/fort::backend/forms.heading.abilities') }}</a> » {{ trans('rinvex/fort::backend/forms.common.'.$mode) }} @if($ability->exists) <strong>{{ $ability->slug }}</strong> @endif
+                        <a href="{{ route('rinvex.fort.backend.abilities.index') }}">{{ trans('rinvex/fort::forms.heading.abilities') }}</a> » {{ trans('rinvex/fort::forms.common.'.$mode) }} @if($ability->exists) <strong>{{ $ability->slug }}</strong> @endif
                         @if($ability->exists)
                             <span class="pull-right" style="margin-top: -7px">
                                 @can('delete-abilities', $ability) <a href="#" class="btn btn-default" data-toggle="modal" data-target="#delete-confirmation" data-item-href="{{ route('rinvex.fort.backend.abilities.delete', ['ability' => $ability]) }}" data-item-name="{{ $ability->slug }}"><i class="fa fa-trash-o text-danger"></i></a> @endcan
@@ -54,8 +54,8 @@
 
                             {{-- Name --}}
                             <div class="form-group{{ $errors->has('name') ? ' has-error' : '' }}">
-                                {{ Form::label('name', trans('rinvex/fort::backend/forms.common.name'), ['class' => 'control-label']) }}
-                                {{ Form::text('name', null, ['class' => 'form-control', 'placeholder' => trans('rinvex/fort::backend/forms.common.name'), 'required' => 'required', 'autofocus' => 'autofocus']) }}
+                                {{ Form::label('name', trans('rinvex/fort::forms.common.name'), ['class' => 'control-label']) }}
+                                {{ Form::text('name', null, ['class' => 'form-control', 'placeholder' => trans('rinvex/fort::forms.common.name'), 'required' => 'required', 'autofocus' => 'autofocus']) }}
 
                                 @if ($errors->has('name'))
                                     <span class="help-block">
@@ -69,8 +69,8 @@
 
                             {{-- Policy --}}
                             <div class="form-group{{ $errors->has('policy') ? ' has-error' : '' }}">
-                                {{ Form::label('policy', trans('rinvex/fort::backend/forms.common.policy'), ['class' => 'control-label']) }}
-                                {{ Form::text('policy', null, ['class' => 'form-control', 'placeholder' => trans('rinvex/fort::backend/forms.common.policy')]) }}
+                                {{ Form::label('policy', trans('rinvex/fort::forms.common.policy'), ['class' => 'control-label']) }}
+                                {{ Form::text('policy', null, ['class' => 'form-control', 'placeholder' => trans('rinvex/fort::forms.common.policy')]) }}
 
                                 @if ($errors->has('policy'))
                                     <span class="help-block">
@@ -87,8 +87,8 @@
 
                             {{-- Action --}}
                             <div class="form-group{{ $errors->has('action') ? ' has-error' : '' }}">
-                                {{ Form::label('action', trans('rinvex/fort::backend/forms.common.action'), ['class' => 'control-label']) }}
-                                {{ Form::text('action', null, ['class' => 'form-control', 'placeholder' => trans('rinvex/fort::backend/forms.common.action'), 'required' => 'required']) }}
+                                {{ Form::label('action', trans('rinvex/fort::forms.common.action'), ['class' => 'control-label']) }}
+                                {{ Form::text('action', null, ['class' => 'form-control', 'placeholder' => trans('rinvex/fort::forms.common.action'), 'required' => 'required']) }}
 
                                 @if ($errors->has('action'))
                                     <span class="help-block">
@@ -102,8 +102,8 @@
 
                             {{-- Resource --}}
                             <div class="form-group{{ $errors->has('resource') ? ' has-error' : '' }}">
-                                {{ Form::label('resource', trans('rinvex/fort::backend/forms.common.resource'), ['class' => 'control-label']) }}
-                                {{ Form::text('resource', null, ['class' => 'form-control', 'placeholder' => trans('rinvex/fort::backend/forms.common.resource'), 'required' => 'required']) }}
+                                {{ Form::label('resource', trans('rinvex/fort::forms.common.resource'), ['class' => 'control-label']) }}
+                                {{ Form::text('resource', null, ['class' => 'form-control', 'placeholder' => trans('rinvex/fort::forms.common.resource'), 'required' => 'required']) }}
 
                                 @if ($errors->has('resource'))
                                     <span class="help-block">
@@ -120,8 +120,8 @@
 
                             {{-- Description --}}
                             <div class="form-group{{ $errors->has('description') ? ' has-error' : '' }}">
-                                {{ Form::label('description', trans('rinvex/fort::backend/forms.common.description'), ['class' => 'control-label']) }}
-                                {{ Form::textarea('description', null, ['class' => 'form-control', 'placeholder' => trans('rinvex/fort::backend/forms.common.description'), 'rows' => 3]) }}
+                                {{ Form::label('description', trans('rinvex/fort::forms.common.description'), ['class' => 'control-label']) }}
+                                {{ Form::textarea('description', null, ['class' => 'form-control', 'placeholder' => trans('rinvex/fort::forms.common.description'), 'rows' => 3]) }}
 
                                 @if ($errors->has('description'))
                                     <span class="help-block">
@@ -141,7 +141,7 @@
 
                             @if($ability->exists)
                                 @if($ability->created_at)
-                                    <small><strong>{{ trans('rinvex/fort::backend/forms.common.created_at') }}:</strong>
+                                    <small><strong>{{ trans('rinvex/fort::forms.common.created_at') }}:</strong>
                                         <time datetime="{{ $ability->created_at }}">{{ $ability->created_at->format('Y-m-d') }}</time>
                                     </small>
                                 @endif
@@ -149,15 +149,15 @@
                                 @if($ability->created_at && $ability->updated_at) | @endif
 
                                 @if($ability->updated_at)
-                                    <small><strong>{{ trans('rinvex/fort::backend/forms.common.updated_at') }}:</strong>
+                                    <small><strong>{{ trans('rinvex/fort::forms.common.updated_at') }}:</strong>
                                         <time datetime="{{ $ability->updated_at }}">{{ $ability->updated_at->format('Y-m-d') }}</time>
                                     </small>
                                 @endif
                             @endif
 
                             <div class="pull-right">
-                                {{ Form::reset(trans('rinvex/fort::backend/forms.common.reset'), ['class' => 'btn btn-default']) }}
-                                {{ Form::submit(trans('rinvex/fort::backend/forms.common.submit'), ['class' => 'btn btn-primary']) }}
+                                {{ Form::reset(trans('rinvex/fort::forms.common.reset'), ['class' => 'btn btn-default']) }}
+                                {{ Form::submit(trans('rinvex/fort::forms.common.submit'), ['class' => 'btn btn-primary']) }}
                             </div>
 
                         </div>

@@ -34,56 +34,56 @@ class SessionGuard extends BaseSessionGuard
      *
      * @var string
      */
-    const AUTH_LOGIN = 'rinvex/fort::frontend/messages.auth.login';
+    const AUTH_LOGIN = 'rinvex/fort::messages.auth.login';
 
     /**
      * Constant representing a failed login.
      *
      * @var string
      */
-    const AUTH_FAILED = 'rinvex/fort::frontend/messages.auth.failed';
+    const AUTH_FAILED = 'rinvex/fort::messages.auth.failed';
 
     /**
      * Constant representing an unverified user.
      *
      * @var string
      */
-    const AUTH_UNVERIFIED = 'rinvex/fort::frontend/messages.auth.unverified';
+    const AUTH_UNVERIFIED = 'rinvex/fort::messages.auth.unverified';
 
     /**
      * Constant representing a locked out user.
      *
      * @var string
      */
-    const AUTH_LOCKED_OUT = 'rinvex/fort::frontend/messages.auth.lockout';
+    const AUTH_LOCKED_OUT = 'rinvex/fort::messages.auth.lockout';
 
     /**
      * Constant representing a user with Two-Factor authentication enabled.
      *
      * @var string
      */
-    const AUTH_TWOFACTOR_REQUIRED = 'rinvex/fort::frontend/messages.verification.twofactor.totp.required';
+    const AUTH_TWOFACTOR_REQUIRED = 'rinvex/fort::messages.verification.twofactor.totp.required';
 
     /**
      * Constant representing a user with Two-Factor failed authentication.
      *
      * @var string
      */
-    const AUTH_TWOFACTOR_FAILED = 'rinvex/fort::frontend/messages.verification.twofactor.invalid_token';
+    const AUTH_TWOFACTOR_FAILED = 'rinvex/fort::messages.verification.twofactor.invalid_token';
 
     /**
      * Constant representing a user with phone verified.
      *
      * @var string
      */
-    const AUTH_PHONE_VERIFIED = 'rinvex/fort::frontend/messages.verification.phone.verified';
+    const AUTH_PHONE_VERIFIED = 'rinvex/fort::messages.verification.phone.verified';
 
     /**
      * Constant representing a logged out user.
      *
      * @var string
      */
-    const AUTH_LOGOUT = 'rinvex/fort::frontend/messages.auth.logout';
+    const AUTH_LOGOUT = 'rinvex/fort::messages.auth.logout';
 
     /**
      * Indicates if there's logout attempt.

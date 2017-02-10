@@ -3,7 +3,7 @@
 
 {{-- Page Title --}}
 @section('title')
-    {{ config('app.name') }} » {{ trans('rinvex/fort::backend/forms.heading.roles') }} » {{ trans('rinvex/fort::backend/forms.common.'.$mode) }} @if($role->exists) {{ $role->slug }} @endif
+    {{ config('app.name') }} » {{ trans('rinvex/fort::forms.heading.roles') }} » {{ trans('rinvex/fort::forms.common.'.$mode) }} @if($role->exists) {{ $role->slug }} @endif
 @stop
 
 {{-- Main Content --}}
@@ -36,7 +36,7 @@
                 {{-- Heading --}}
                 <header class="panel-heading">
                     <h4>
-                        <a href="{{ route('rinvex.fort.backend.roles.index') }}">{{ trans('rinvex/fort::backend/forms.heading.roles') }}</a> » {{ trans('rinvex/fort::backend/forms.common.'.$mode) }} @if($role->exists) <strong>{{ $role->slug }}</strong> @endif
+                        <a href="{{ route('rinvex.fort.backend.roles.index') }}">{{ trans('rinvex/fort::forms.heading.roles') }}</a> » {{ trans('rinvex/fort::forms.common.'.$mode) }} @if($role->exists) <strong>{{ $role->slug }}</strong> @endif
                         @if($role->exists)
                             <span class="pull-right" style="margin-top: -7px">
                                 @can('delete-roles', $role) <a href="#" class="btn btn-default" data-toggle="modal" data-target="#delete-confirmation" data-item-href="{{ route('rinvex.fort.backend.roles.delete', ['role' => $role]) }}" data-item-name="{{ $role->slug }}"><i class="fa fa-trash-o text-danger"></i></a> @endcan
@@ -54,8 +54,8 @@
 
                             {{-- Name --}}
                             <div class="form-group{{ $errors->has('name') ? ' has-error' : '' }}">
-                                {{ Form::label('name', trans('rinvex/fort::backend/forms.common.name'), ['class' => 'control-label']) }}
-                                {{ Form::text('name', null, ['class' => 'form-control', 'placeholder' => trans('rinvex/fort::backend/forms.common.name'), 'required' => 'required', 'autofocus' => 'autofocus']) }}
+                                {{ Form::label('name', trans('rinvex/fort::forms.common.name'), ['class' => 'control-label']) }}
+                                {{ Form::text('name', null, ['class' => 'form-control', 'placeholder' => trans('rinvex/fort::forms.common.name'), 'required' => 'required', 'autofocus' => 'autofocus']) }}
 
                                 @if ($errors->has('name'))
                                     <span class="help-block">
@@ -69,8 +69,8 @@
 
                             {{-- Slug --}}
                             <div class="form-group{{ $errors->has('slug') ? ' has-error' : '' }}">
-                                {{ Form::label('slug', trans('rinvex/fort::backend/forms.common.slug'), ['class' => 'control-label']) }}
-                                {{ Form::text('slug', null, ['class' => 'form-control', 'placeholder' => trans('rinvex/fort::backend/forms.common.slug'), 'required' => 'required']) }}
+                                {{ Form::label('slug', trans('rinvex/fort::forms.common.slug'), ['class' => 'control-label']) }}
+                                {{ Form::text('slug', null, ['class' => 'form-control', 'placeholder' => trans('rinvex/fort::forms.common.slug'), 'required' => 'required']) }}
 
                                 @if ($errors->has('slug'))
                                     <span class="help-block">
@@ -87,8 +87,8 @@
 
                             {{-- Description --}}
                             <div class="form-group{{ $errors->has('description') ? ' has-error' : '' }}">
-                                {{ Form::label('description', trans('rinvex/fort::backend/forms.common.description'), ['class' => 'control-label']) }}
-                                {{ Form::textarea('description', null, ['class' => 'form-control', 'placeholder' => trans('rinvex/fort::backend/forms.common.description'), 'rows' => 3]) }}
+                                {{ Form::label('description', trans('rinvex/fort::forms.common.description'), ['class' => 'control-label']) }}
+                                {{ Form::textarea('description', null, ['class' => 'form-control', 'placeholder' => trans('rinvex/fort::forms.common.description'), 'rows' => 3]) }}
 
                                 @if ($errors->has('description'))
                                     <span class="help-block">
@@ -103,7 +103,7 @@
 
                             {{-- Abilities --}}
                             <div class="form-group{{ $errors->has('abilities') ? ' has-error' : '' }}">
-                                {{ Form::label('abilityList[]', trans('rinvex/fort::backend/forms.common.abilities'), ['class' => 'control-label']) }}
+                                {{ Form::label('abilityList[]', trans('rinvex/fort::forms.common.abilities'), ['class' => 'control-label']) }}
                                 {{ Form::select('abilityList[]', $abilityList, null, ['class' => 'form-control', 'multiple' => 'multiple', 'size' => 4]) }}
 
                                 @if ($errors->has('abilities'))
@@ -125,7 +125,7 @@
 
                             @if($role->exists)
                                 @if($role->created_at)
-                                    <small><strong>{{ trans('rinvex/fort::backend/forms.common.created_at') }}:</strong>
+                                    <small><strong>{{ trans('rinvex/fort::forms.common.created_at') }}:</strong>
                                         <time datetime="{{ $role->created_at }}">{{ $role->created_at->format('Y-m-d') }}</time>
                                     </small>
                                 @endif
@@ -133,15 +133,15 @@
                                 @if($role->created_at && $role->updated_at) | @endif
 
                                 @if($role->updated_at)
-                                    <small><strong>{{ trans('rinvex/fort::backend/forms.common.updated_at') }}:</strong>
+                                    <small><strong>{{ trans('rinvex/fort::forms.common.updated_at') }}:</strong>
                                         <time datetime="{{ $role->updated_at }}">{{ $role->updated_at->format('Y-m-d') }}</time>
                                     </small>
                                 @endif
                             @endif
 
                             <div class="pull-right">
-                                {{ Form::reset(trans('rinvex/fort::backend/forms.common.reset'), ['class' => 'btn btn-default']) }}
-                                {{ Form::submit(trans('rinvex/fort::backend/forms.common.submit'), ['class' => 'btn btn-primary']) }}
+                                {{ Form::reset(trans('rinvex/fort::forms.common.reset'), ['class' => 'btn btn-default']) }}
+                                {{ Form::submit(trans('rinvex/fort::forms.common.submit'), ['class' => 'btn btn-primary']) }}
                             </div>
 
                         </div>

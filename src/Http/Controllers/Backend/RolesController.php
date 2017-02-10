@@ -104,7 +104,7 @@ class RolesController extends AuthorizedController
 
         return intend([
             'route' => 'rinvex.fort.backend.roles.index',
-            'with'  => ['warning' => trans('rinvex/fort::backend/messages.role.deleted', ['roleId' => $role->id])],
+            'with'  => ['warning' => trans('rinvex/fort::messages.role.deleted', ['roleId' => $role->id])],
         ]);
     }
 
@@ -149,7 +149,7 @@ class RolesController extends AuthorizedController
 
         return intend([
             'route' => 'rinvex.fort.backend.roles.index',
-            'with'  => ['success' => trans('rinvex/fort::backend/messages.role.saved', ['roleId' => $role->id])],
+            'with'  => ['success' => trans('rinvex/fort::messages.role.saved', ['roleId' => $role->id])],
         ]);
     }
 }

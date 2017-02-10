@@ -3,7 +3,7 @@
 
 {{-- Page Title --}}
 @section('title')
-    {{ config('app.name') }} » {{ trans('rinvex/fort::frontend/forms.account.active_sessions') }}
+    {{ config('app.name') }} » {{ trans('rinvex/fort::forms.account.active_sessions') }}
 @stop
 
 {{-- Main Content --}}
@@ -16,7 +16,7 @@
                 <section class="panel panel-default">
 
                     <header class="panel-heading">
-                        {{ trans('rinvex/fort::frontend/forms.account.active_sessions') }}
+                        {{ trans('rinvex/fort::forms.account.active_sessions') }}
                     </header>
 
                     <div class="panel-body">
@@ -45,7 +45,7 @@
                                                         <div class="col-md-11 col-sm-11 col-xs-11">
 
                                                             <span class="label label-info">{{ $persistence->created_at->format('F d, Y - h:ia') }} <span style="background-color: #428bca; border-radius: 0 3px 3px 0; margin-right: -6px; padding: 2px 4px 3px;">{{ $persistence->created_at->diffForHumans() }}</span></span>
-                                                            @if ($persistence->token === request()->session()->getId())<span class="label label-success">{{ trans('rinvex/fort::frontend/forms.account.you') }}</span>@endif
+                                                            @if ($persistence->token === request()->session()->getId())<span class="label label-success">{{ trans('rinvex/fort::forms.account.you') }}</span>@endif
                                                             <span class="badge pull-right">{{ $persistence->ip }}</span>
 
                                                         </div>
@@ -82,7 +82,7 @@
                         <div class="row">
                             <div class="col-md-12 col-sm-12 col-xs-12 text-center">
 
-                                <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#delete-confirmation" data-item-href="{{ route('rinvex.fort.frontend.user.sessions.flush') }}" data-item-type="all"><i class="fa fa-remove"></i> {{ trans('rinvex/fort::frontend/forms.sessions.flush_all_heading') }}</button>
+                                <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#delete-confirmation" data-item-href="{{ route('rinvex.fort.frontend.user.sessions.flush') }}" data-item-type="all"><i class="fa fa-remove"></i> {{ trans('rinvex/fort::forms.sessions.flush_all_heading') }}</button>
 
                             </div>
                         </div>

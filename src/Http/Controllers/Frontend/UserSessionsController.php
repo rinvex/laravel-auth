@@ -44,10 +44,10 @@ class UserSessionsController extends AuthenticatedController
 
         if ($token) {
             Persistence::find($token)->delete();
-            $status = trans('rinvex/fort::frontend/messages.auth.session.flushed');
+            $status = trans('rinvex/fort::messages.auth.session.flushed');
         } elseif (request()->get('confirm')) {
             Persistence::where('user_id', $request->user($this->getGuard())->id)->delete();
-            $status = trans('rinvex/fort::frontend/messages.auth.session.flushedall');
+            $status = trans('rinvex/fort::messages.auth.session.flushedall');
         }
 
         return intend([

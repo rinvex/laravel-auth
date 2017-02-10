@@ -3,7 +3,7 @@
 
 {{-- Page Title --}}
 @section('title')
-    {{ config('app.name') }} » {{ trans('rinvex/fort::frontend/forms.twofactor.heading') }}
+    {{ config('app.name') }} » {{ trans('rinvex/fort::forms.twofactor.heading') }}
 @stop
 
 {{-- Main Content --}}
@@ -16,7 +16,7 @@
                 <section class="panel panel-default">
 
                     <header class="panel-heading">
-                        {{ trans('rinvex/fort::frontend/forms.twofactor.heading') }}
+                        {{ trans('rinvex/fort::forms.twofactor.heading') }}
                     </header>
 
                     <div class="panel-body">
@@ -27,7 +27,7 @@
                             @include('rinvex/fort::frontend/alerts.error')
 
                             <p class="text-justify">
-                                {!! trans('rinvex/fort::frontend/forms.twofactor.totp_apps') !!}
+                                {!! trans('rinvex/fort::forms.twofactor.totp_apps') !!}
                             </p>
 
                             <hr />
@@ -39,7 +39,7 @@
                                 </div>
 
                                 <div class="col-md-8 col-sm-8 col-xs-8">
-                                    {!! trans('rinvex/fort::frontend/forms.twofactor.totp_apps_step1') !!}
+                                    {!! trans('rinvex/fort::forms.twofactor.totp_apps_step1') !!}
                                 </div>
 
                             </div>
@@ -53,19 +53,19 @@
                                 </div>
 
                                 <div class="col-md-8 col-sm-8 col-xs-8">
-                                    {!! trans('rinvex/fort::frontend/forms.twofactor.totp_apps_step2') !!}
+                                    {!! trans('rinvex/fort::forms.twofactor.totp_apps_step2') !!}
 
                                     <a class="btn btn-default text-center" role="button" data-toggle="collapse" href="#collapseSecretKey" aria-expanded="false" aria-controls="collapseSecretKey">
-                                        {{ trans('rinvex/fort::frontend/forms.twofactor.totp_apps_step2_button') }}
+                                        {{ trans('rinvex/fort::forms.twofactor.totp_apps_step2_button') }}
                                     </a>
 
                                     <div class="collapse" id="collapseSecretKey">
                                         <hr />
                                         <div class="well">
 
-                                            <p class="small">{{ trans('rinvex/fort::frontend/forms.twofactor.totp_apps_step2_1') }}</p>
+                                            <p class="small">{{ trans('rinvex/fort::forms.twofactor.totp_apps_step2_1') }}</p>
                                             <code>{{ $secret }}</code>
-                                            <p class="small">{{ trans('rinvex/fort::frontend/forms.twofactor.totp_apps_step2_2') }}</p>
+                                            <p class="small">{{ trans('rinvex/fort::forms.twofactor.totp_apps_step2_2') }}</p>
 
                                         </div>
                                     </div>
@@ -83,9 +83,9 @@
                                 </div>
 
                                 <div class="col-md-8 col-sm-8 col-xs-8">
-                                    {!! trans('rinvex/fort::frontend/forms.twofactor.totp_apps_step3') !!}
+                                    {!! trans('rinvex/fort::forms.twofactor.totp_apps_step3') !!}
                                     <p>
-                                        {{ Form::text('token', old('token'), ['class' => 'form-control', 'placeholder' => trans('rinvex/fort::frontend/forms.account.code'), 'required' => 'required', 'autofocus' => 'autofocus']) }}
+                                        {{ Form::text('token', old('token'), ['class' => 'form-control', 'placeholder' => trans('rinvex/fort::forms.account.code'), 'required' => 'required', 'autofocus' => 'autofocus']) }}
                                     </p>
                                 </div>
 
@@ -101,7 +101,7 @@
 
                                             <div class="text-center">
                                                 <a class="btn btn-default text-center" role="button" data-toggle="collapse" href="#collapse2Example" aria-expanded="false" aria-controls="collapseSecretKey">
-                                                    {{ trans('rinvex/fort::frontend/forms.twofactor.totp_backup_button', ['count' => count(array_get($settings, 'totp.backup'))]) }}
+                                                    {{ trans('rinvex/fort::forms.twofactor.totp_backup_button', ['count' => count(array_get($settings, 'totp.backup'))]) }}
                                                 </a>
                                             </div>
 
@@ -112,14 +112,14 @@
                                                 @if(array_get($settings, 'totp.backup'))
                                                     <div class="panel panel-primary">
                                                         <header class="panel-heading">
-                                                            <a class="btn btn-default btn-xs pull-right" style="margin-left: 10px" href="{{ route('rinvex.fort.frontend.user.twofactor.totp.backup') }}">{{ trans('rinvex/fort::frontend/forms.twofactor.totp_backup_generate') }}</a>
-                                                            <h3 class="panel-title">{{ trans('rinvex/fort::frontend/forms.twofactor.totp_backup_head') }}</h3>
+                                                            <a class="btn btn-default btn-xs pull-right" style="margin-left: 10px" href="{{ route('rinvex.fort.frontend.user.twofactor.totp.backup') }}">{{ trans('rinvex/fort::forms.twofactor.totp_backup_generate') }}</a>
+                                                            <h3 class="panel-title">{{ trans('rinvex/fort::forms.twofactor.totp_backup_head') }}</h3>
                                                         </header>
                                                         <div class="panel-body">
-                                                            {{ trans('rinvex/fort::frontend/forms.twofactor.totp_backup_body') }}
+                                                            {{ trans('rinvex/fort::forms.twofactor.totp_backup_body') }}
                                                             <div>
 
-                                                                {!! trans('rinvex/fort::frontend/forms.twofactor.totp_backup_notice', ['backup_at' => array_get($settings, 'totp.backup_at')]) !!}
+                                                                {!! trans('rinvex/fort::forms.twofactor.totp_backup_notice', ['backup_at' => array_get($settings, 'totp.backup_at')]) !!}
 
                                                                 <ul class="list-group">
                                                                     @foreach(array_get($settings, 'totp.backup') as $backup)
@@ -131,7 +131,7 @@
                                                         </div>
                                                     </div>
                                                 @else
-                                                    {{ trans('rinvex/fort::frontend/forms.twofactor.totp_backup_none') }}
+                                                    {{ trans('rinvex/fort::forms.twofactor.totp_backup_none') }}
                                                 @endif
 
                                             </div>
@@ -146,8 +146,8 @@
 
                             <div class="row">
                                 <div class="col-md-12 col-sm-12 col-xs-12 text-center">
-                                    {{ Form::button('<i class="fa fa-cog"></i> '.trans('rinvex/fort::frontend/forms.twofactor.submit'), ['class' => 'btn btn-primary', 'type' => 'submit']) }}
-                                    {{ Form::reset(trans('rinvex/fort::frontend/forms.common.reset'), ['class' => 'btn btn-default']) }}
+                                    {{ Form::button('<i class="fa fa-cog"></i> '.trans('rinvex/fort::forms.twofactor.submit'), ['class' => 'btn btn-primary', 'type' => 'submit']) }}
+                                    {{ Form::reset(trans('rinvex/fort::forms.common.reset'), ['class' => 'btn btn-default']) }}
                                 </div>
                             </div>
 
