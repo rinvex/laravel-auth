@@ -51,28 +51,29 @@ class SocialAuthenticationController extends AuthenticationController
             ]);
         }
 
-        $model = User::whereHas(['socialites', function ($query) use ($githubUser) {
+        $model = User::whereHas('socialites', function ($query) use ($githubUser) {
             $query->where('provider', 'github');
             $query->where('provider_uid', $githubUser->id);
-        }])->first();
-
-        if (! $model) {
+        })->first();
+	    
+        if (!$model) {
+        	
             // Prepare registration data
             $input = [
                 'email'    => $githubUser->email,
-                'username' => $githubUser->username,
+                'username' => $githubUser->nickname,
                 'password' => str_random(),
                 'active'   => ! config('rinvex.fort.registration.moderated'),
             ];
 
             // Fire the register start event
             $result = event('rinvex.fort.register.social.start', [$input]);
-
+	        
             // Create user
             $model = $user->create($input);
-
+            
             // Fire the register success event
-            event('rinvex.fort.register.social.success', [$result]);
+            event('rinvex.fort.register.social.success', $model);
 
             $model->socialites()->create([
                 'user_id'      => 'github',
