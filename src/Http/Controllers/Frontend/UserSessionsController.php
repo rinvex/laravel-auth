@@ -16,6 +16,7 @@
 namespace Rinvex\Fort\Http\Controllers\Frontend;
 
 use Illuminate\Http\Request;
+use Rinvex\Fort\Models\Persistence;
 use Rinvex\Fort\Http\Controllers\AuthenticatedController;
 
 class UserSessionsController extends AuthenticatedController
@@ -42,16 +43,16 @@ class UserSessionsController extends AuthenticatedController
         $status = '';
 
         if ($token) {
-            app('rinvex.fort.persistence')->delete($token);
-            $status = trans('rinvex/fort::frontend/messages.auth.session.flushed');
+            Persistence::find($token)->delete();
+            $status = trans('rinvex/fort::messages.auth.session.flushed');
         } elseif (request()->get('confirm')) {
-            app('rinvex.fort.persistence')->deleteByUser($request->user($this->getGuard())->id);
-            $status = trans('rinvex/fort::frontend/messages.auth.session.flushedall');
+            Persistence::where('user_id', $request->user($this->getGuard())->id)->delete();
+            $status = trans('rinvex/fort::messages.auth.session.flushedall');
         }
 
         return intend([
             'back' => true,
-            'with' => ['rinvex.fort.alert.warning' => $status],
+            'with' => ['warning' => $status],
         ]);
     }
 }

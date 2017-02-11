@@ -63,9 +63,9 @@ class RoleUpdateCommand extends Command
 
         // Find single role
         if (intval($field)) {
-            $role = $this->laravel['rinvex.fort.role']->find($field);
+            $role = Role::find($field);
         } else {
-            $role = $this->laravel['rinvex.fort.role']->findWhere(['slug' => $field])->first();
+            $role = Role::where(['slug' => $field])->first();
         }
 
         if (! $role) {

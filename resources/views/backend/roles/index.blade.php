@@ -3,8 +3,7 @@
 
 {{-- Page Title --}}
 @section('title')
-    @parent
-    » {{ trans('rinvex/fort::backend/roles.heading') }}
+    {{ config('app.name') }} » {{ trans('rinvex/fort::forms.common.roles') }}
 @stop
 
 {{-- Main Content --}}
@@ -28,7 +27,7 @@
             {{-- Heading --}}
             <header class="panel-heading">
                 <h4>
-                    {{ trans('rinvex/fort::backend/roles.heading') }}
+                    {{ trans('rinvex/fort::forms.common.roles') }}
                     @can('create-roles')
                         <span class="pull-right" style="margin-top: -7px">
                             <a href="{{ route('rinvex.fort.backend.roles.create') }}" class="btn btn-default"><i class="fa fa-plus"></i></a>
@@ -46,10 +45,10 @@
 
                         <thead>
                             <tr>
-                                <th style="width: 30%">{{ trans('rinvex/fort::backend/roles.title') }}</th>
-                                <th style="width: 40%">{{ trans('rinvex/fort::backend/roles.description') }}</th>
-                                <th style="width: 20%">{{ trans('rinvex/fort::backend/roles.dates') }}</th>
-                                <th style="width: 10%" class="text-right">{{ trans('rinvex/fort::backend/roles.actions') }}</th>
+                                <th style="width: 30%">{{ trans('rinvex/fort::forms.common.name') }}</th>
+                                <th style="width: 40%">{{ trans('rinvex/fort::forms.common.description') }}</th>
+                                <th style="width: 15%">{{ trans('rinvex/fort::forms.common.created_at') }}</th>
+                                <th style="width: 15%">{{ trans('rinvex/fort::forms.common.updated_at') }}</th>
                             </tr>
                         </thead>
 
@@ -59,10 +58,10 @@
 
                                 <tr>
                                     <td>
-                                        @can('view-roles', $role) <a href="{{ route('rinvex.fort.backend.roles.show', ['role' => $role]) }}"> @endcan
-                                            <strong>{{ $role->title }}</strong>
+                                        @can('update-roles', $role) <a href="{{ route('rinvex.fort.backend.roles.edit', ['role' => $role]) }}"> @endcan
+                                            <strong>{{ $role->name }}</strong>
                                             <div class="small ">{{ $role->slug }}</div>
-                                        @can('view-roles', $role) </a> @endcan
+                                        @can('update-roles', $role) </a> @endcan
                                     </td>
 
                                     <td>
@@ -72,18 +71,18 @@
                                     <td class="small">
                                         @if($role->created_at)
                                             <div>
-                                                {{ trans('rinvex/fort::backend/roles.created_at') }}: <time datetime="{{ $role->created_at }}">{{ $role->created_at->format('Y-m-d') }}</time>
+                                                {{ trans('rinvex/fort::forms.common.created_at') }}: <time datetime="{{ $role->created_at }}">{{ $role->created_at->format('Y-m-d') }}</time>
                                             </div>
                                         @endif
                                         @if($role->updated_at)
                                             <div>
-                                                {{ trans('rinvex/fort::backend/roles.updated_at') }}: <time datetime="{{ $role->updated_at }}">{{ $role->updated_at->format('Y-m-d') }}</time>
+                                                {{ trans('rinvex/fort::forms.common.updated_at') }}: <time datetime="{{ $role->updated_at }}">{{ $role->updated_at->format('Y-m-d') }}</time>
                                             </div>
                                         @endif
                                     </td>
 
                                     <td class="text-right">
-                                        @can('update-users', $role) <a href="{{ route('rinvex.fort.backend.roles.edit', ['role' => $role]) }}" class="btn btn-xs btn-default"><i class="fa fa-pencil text-primary"></i></a> @endcan
+                                        @can('update-roles', $role) <a href="{{ route('rinvex.fort.backend.roles.edit', ['role' => $role]) }}" class="btn btn-xs btn-default"><i class="fa fa-pencil text-primary"></i></a> @endcan
                                         @can('delete-roles', $role) <a href="#" class="btn btn-xs btn-default" data-toggle="modal" data-target="#delete-confirmation" data-item-href="{{ route('rinvex.fort.backend.roles.delete', ['role' => $role]) }}" data-item-name="{{ $role->slug }}"><i class="fa fa-trash-o text-danger"></i></a> @endcan
                                     </td>
                                 </tr>

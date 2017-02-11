@@ -17,10 +17,8 @@ namespace Rinvex\Fort\Http\Controllers\Backend;
 
 use Illuminate\Http\Request;
 use Rinvex\Fort\Models\Role;
-use Rinvex\Fort\Contracts\RoleRepositoryContract;
+use Rinvex\Fort\Models\Ability;
 use Rinvex\Fort\Http\Controllers\AuthorizedController;
-use Rinvex\Fort\Http\Requests\Backend\RoleStoreRequest;
-use Rinvex\Fort\Http\Requests\Backend\RoleUpdateRequest;
 
 class RolesController extends AuthorizedController
 {
@@ -35,50 +33,15 @@ class RolesController extends AuthorizedController
     protected $resourceActionWhitelist = ['assign'];
 
     /**
-     * The role repository instance.
-     *
-     * @var \Rinvex\Fort\Contracts\RoleRepositoryContract
-     */
-    protected $roleRepository;
-
-    /**
-     * Create a new users controller instance.
-     *
-     * @param \Rinvex\Fort\Contracts\RoleRepositoryContract $roleRepository
-     */
-    public function __construct(RoleRepositoryContract $roleRepository)
-    {
-        parent::__construct();
-
-        $this->roleRepository = $roleRepository;
-    }
-
-    /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
     public function index()
     {
-        $roles = $this->roleRepository->paginate(config('rinvex.fort.backend.items_per_page'));
+        $roles = Role::paginate(config('rinvex.fort.backend.items_per_page'));
 
         return view('rinvex/fort::backend/roles.index', compact('roles'));
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param \Rinvex\Fort\Models\Role $role
-     *
-     * @return \Illuminate\Http\Response|\Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse
-     */
-    public function show(Role $role)
-    {
-        $resources = app('rinvex.fort.ability')->findAll()->groupBy('resource');
-        $actions = ['list', 'view', 'create', 'update', 'delete', 'import', 'export'];
-        $columns = ['resource', 'list', 'view', 'create', 'update', 'delete', 'import', 'export', 'other'];
-
-        return view('rinvex/fort::backend/roles.show', compact('role', 'resources', 'actions', 'columns'));
     }
 
     /**
@@ -88,19 +51,7 @@ class RolesController extends AuthorizedController
      */
     public function create()
     {
-        return $this->form('create', 'store', $this->roleRepository->createModel());
-    }
-
-    /**
-     * Show the form for copying the given resource.
-     *
-     * @param \Rinvex\Fort\Models\Role $role
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function copy(Role $role)
-    {
-        return $this->form('copy', 'store', $role);
+        return $this->form('create', 'store', new Role());
     }
 
     /**
@@ -118,24 +69,24 @@ class RolesController extends AuthorizedController
     /**
      * Store a newly created resource in storage.
      *
-     * @param \Rinvex\Fort\Http\Requests\Backend\RoleStoreRequest $request
+     * @param \Illuminate\Http\Request $request
      *
      * @return \Illuminate\Http\Response
      */
-    public function store(RoleStoreRequest $request)
+    public function store(Request $request)
     {
-        return $this->process($request);
+        return $this->process($request, new Role());
     }
 
     /**
      * Update the given resource in storage.
      *
-     * @param \Rinvex\Fort\Http\Requests\Backend\RoleUpdateRequest $request
-     * @param \Rinvex\Fort\Models\Role                             $role
+     * @param \Illuminate\Http\Request $request
+     * @param \Rinvex\Fort\Models\Role $role
      *
      * @return \Illuminate\Http\Response
      */
-    public function update(RoleUpdateRequest $request, Role $role)
+    public function update(Request $request, Role $role)
     {
         return $this->process($request, $role);
     }
@@ -149,46 +100,16 @@ class RolesController extends AuthorizedController
      */
     public function delete(Role $role)
     {
-        $result = $this->roleRepository->delete($role);
+        $role->delete();
 
         return intend([
             'route' => 'rinvex.fort.backend.roles.index',
-            'with'  => ['rinvex.fort.alert.warning' => trans('rinvex/fort::backend/messages.role.deleted', ['roleId' => $result->id])],
+            'with'  => ['warning' => trans('rinvex/fort::messages.role.deleted', ['roleId' => $role->id])],
         ]);
     }
 
     /**
-     * Import the given resources into storage.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function import()
-    {
-        //
-    }
-
-    /**
-     * Export the given resources from storage.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function export()
-    {
-        //
-    }
-
-    /**
-     * Bulk control the given resources.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function bulk()
-    {
-        //
-    }
-
-    /**
-     * Show the form for create/edit/copy of the given resource.
+     * Show the form for create/update of the given resource.
      *
      * @param string                   $mode
      * @param string                   $action
@@ -198,8 +119,8 @@ class RolesController extends AuthorizedController
      */
     protected function form($mode, $action, Role $role)
     {
-        $abilityList = app('rinvex.fort.ability')->findAll()->groupBy('resource')->map(function ($ability) {
-            return $ability->pluck('title', 'id');
+        $abilityList = Ability::all()->groupBy('resource')->map(function ($ability) {
+            return $ability->pluck('name', 'id');
         })->toArray();
 
         return view('rinvex/fort::backend/roles.form', compact('role', 'abilityList', 'mode', 'action'));
@@ -213,26 +134,22 @@ class RolesController extends AuthorizedController
      *
      * @return \Illuminate\Http\Response
      */
-    protected function process(Request $request, Role $role = null)
+    protected function process(Request $request, Role $role)
     {
         // Prepare required input fields
-        $input = $request->except(['_method', '_token', 'id']);
-        $abilities = $request->user($this->getGuard())->can('grant-abilities') ? ['abilities' => array_pull($input, 'abilityList')] : [];
+        $input = $request->all();
 
-        // Store data into the entity
-        $result = $this->roleRepository->store($role, $input + $abilities);
+        // Save role
+        ! $role->exists ? $role = $role->create($input) : $role->update($input);
 
-        // Repository `store` method returns false if no attributes
-        // updated, happens save button clicked without chaning anything
-        $message = ! is_null($role)
-            ? ($result === false
-                ? ['rinvex.fort.alert.warning' => trans('rinvex/fort::backend/messages.role.nothing_updated', ['roleId' => $role->id])]
-                : ['rinvex.fort.alert.success' => trans('rinvex/fort::backend/messages.role.updated', ['roleId' => $result->id])])
-            : ['rinvex.fort.alert.success' => trans('rinvex/fort::backend/messages.role.created', ['roleId' => $result->id])];
+        // Sync abilities
+        if ($request->user($this->getGuard())->can('grant-abilities')) {
+            $role->abilities()->sync((array) array_pull($input, 'abilityList'));
+        }
 
         return intend([
             'route' => 'rinvex.fort.backend.roles.index',
-            'with'  => $message,
+            'with'  => ['success' => trans('rinvex/fort::messages.role.saved', ['roleId' => $role->id])],
         ]);
     }
 }

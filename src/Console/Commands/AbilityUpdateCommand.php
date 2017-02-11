@@ -13,8 +13,9 @@
  * Link:    https://rinvex.com
  */
 
-namespace Rinvex\Fort\Console\Commands\AbilityUpdateCommand;
+namespace Rinvex\Fort\Console\Commands;
 
+use Rinvex\Fort\Models\Ability;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Lang;
 use Illuminate\Contracts\Validation\Factory;
@@ -63,9 +64,9 @@ class AbilityUpdateCommand extends Command
 
         // Find single ability
         if (intval($field)) {
-            $ability = $this->laravel['rinvex.fort.ability']->find($field);
+            $ability = Ability::find($field);
         } else {
-            $ability = $this->laravel['rinvex.fort.ability']->findWhere(['slug' => $field])->first();
+            $ability = Ability::where(['slug' => $field])->first();
         }
 
         if (! $ability) {

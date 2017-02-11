@@ -36,20 +36,6 @@ class UserPolicy
     }
 
     /**
-     * Determine whether the user can view the user.
-     *
-     * @param string                   $ability
-     * @param \Rinvex\Fort\Models\User $user
-     * @param \Rinvex\Fort\Models\User $resource
-     *
-     * @return bool
-     */
-    public function view($ability, User $user, User $resource)
-    {
-        return $user->allAbilities->pluck('slug')->contains($ability);
-    }
-
-    /**
      * Determine whether the user can create users.
      *
      * @param string                   $ability
@@ -93,31 +79,5 @@ class UserPolicy
                && $resource->id !== $user->id                           // User can NOT delete himself
                && ! $resource->isSuperadmin()                           // RESOURCE user is NOT superadmin
                && ! $resource->isProtected();                           // RESOURCE user is NOT protected
-    }
-
-    /**
-     * Determine whether the user can import the users.
-     *
-     * @param string                   $ability
-     * @param \Rinvex\Fort\Models\User $user
-     *
-     * @return bool
-     */
-    public function import($ability, User $user)
-    {
-        return $user->allAbilities->pluck('slug')->contains($ability);
-    }
-
-    /**
-     * Determine whether the user can export the users.
-     *
-     * @param string                   $ability
-     * @param \Rinvex\Fort\Models\User $user
-     *
-     * @return bool
-     */
-    public function export($ability, User $user)
-    {
-        return $user->allAbilities->pluck('slug')->contains($ability);
     }
 }

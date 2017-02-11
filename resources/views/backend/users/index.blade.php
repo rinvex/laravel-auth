@@ -3,8 +3,7 @@
 
 {{-- Page Title --}}
 @section('title')
-    @parent
-    » {{ trans('rinvex/fort::backend/users.heading') }}
+    » {{ trans('rinvex/fort::forms.common.users') }}
 @stop
 
 {{-- Main Content --}}
@@ -28,7 +27,7 @@
             {{-- Heading --}}
             <header class="panel-heading">
                 <h4>
-                    {{ trans('rinvex/fort::backend/users.heading') }}
+                    {{ trans('rinvex/fort::forms.common.users') }}
                     @can('create-users')
                         <span class="pull-right" style="margin-top: -7px">
                             <a href="{{ route('rinvex.fort.backend.users.create') }}" class="btn btn-default"><i class="fa fa-plus"></i></a>
@@ -46,12 +45,12 @@
 
                         <thead>
                             <tr>
-                                <th style="width: 20%">{{ trans('rinvex/fort::backend/users.name') }}</th>
-                                <th style="width: 20%">{{ trans('rinvex/fort::backend/users.contact') }}</th>
-                                <th style="width: 20%">{{ trans('rinvex/fort::backend/users.roles.title') }}</th>
-                                <th style="width: 15%">{{ trans('rinvex/fort::backend/users.status.title') }}</th>
-                                <th style="width: 15%">{{ trans('rinvex/fort::backend/users.dates') }}</th>
-                                <th style="width: 10%" class="text-right">{{ trans('rinvex/fort::backend/users.actions') }}</th>
+                                <th style="width: 20%">{{ trans('rinvex/fort::forms.common.name') }}</th>
+                                <th style="width: 20%">{{ trans('rinvex/fort::forms.common.contact') }}</th>
+                                <th style="width: 20%">{{ trans('rinvex/fort::forms.common.roles') }}</th>
+                                <th style="width: 10%">{{ trans('rinvex/fort::forms.common.status') }}</th>
+                                <th style="width: 15%">{{ trans('rinvex/fort::forms.common.created_at') }}</th>
+                                <th style="width: 15%">{{ trans('rinvex/fort::forms.common.updated_at') }}</th>
                             </tr>
                         </thead>
 
@@ -61,7 +60,7 @@
 
                                 <tr>
                                     <td>
-                                        @can('view-users', $user) <a href="{{ route('rinvex.fort.backend.users.show', ['user' => $user]) }}"> @endcan
+                                        @can('update-users', $user) <a href="{{ route('rinvex.fort.backend.users.edit', ['user' => $user]) }}"> @endcan
                                             <strong>
                                                 @if($user->first_name)
                                                     {{ $user->first_name }} {{ $user->middle_name }} {{ $user->last_name }}
@@ -70,7 +69,7 @@
                                                 @endif
                                             </strong>
                                             <div class="small ">{{ $user->job_title }}</div>
-                                        @can('view-users', $user) </a> @endcan
+                                        @can('update-users', $user) </a> @endcan
                                     </td>
 
                                     <td>
@@ -84,27 +83,27 @@
 
                                     <td>
                                         @foreach($user->roles->pluck('title', 'id') as $roleId => $role)
-                                            @can('view-roles', $role) <a href="{{ route('rinvex.fort.backend.roles.show', ['role' => $roleId]) }}" class="label btn-xs label-info">{{ $role }}</a> @else {{ $role }} @endcan
+                                            @can('update-roles', $role) <a href="{{ route('rinvex.fort.backend.roles.edit', ['role' => $roleId]) }}" class="label btn-xs label-info">{{ $role }}</a> @else {{ $role }} @endcan
                                         @endforeach
                                     </td>
 
                                     <td>
                                         @if($user->active)
-                                            <span class="label label-success">{{ trans('rinvex/fort::backend/users.status.active') }}</span>
+                                            <span class="label label-success">{{ trans('rinvex/fort::forms.common.active') }}</span>
                                         @else
-                                            <span class="label label-warning">{{ trans('rinvex/fort::backend/users.status.inactive') }}</span>
+                                            <span class="label label-warning">{{ trans('rinvex/fort::forms.common.inactive') }}</span>
                                         @endif
                                     </td>
 
                                     <td class="small">
                                         @if($user->created_at)
                                             <div>
-                                                {{ trans('rinvex/fort::backend/users.created_at') }}: <time datetime="{{ $user->created_at }}">{{ $user->created_at->format('Y-m-d') }}</time>
+                                                {{ trans('rinvex/fort::forms.common.created_at') }}: <time datetime="{{ $user->created_at }}">{{ $user->created_at->format('Y-m-d') }}</time>
                                             </div>
                                         @endif
                                         @if($user->updated_at)
                                             <div>
-                                                {{ trans('rinvex/fort::backend/users.updated_at') }}: <time datetime="{{ $user->updated_at }}">{{ $user->updated_at->format('Y-m-d') }}</time>
+                                                {{ trans('rinvex/fort::forms.common.updated_at') }}: <time datetime="{{ $user->updated_at }}">{{ $user->updated_at->format('Y-m-d') }}</time>
                                             </div>
                                         @endif
                                     </td>

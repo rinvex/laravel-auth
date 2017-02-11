@@ -13,7 +13,7 @@
          beStrictAboutChangesToGlobalState="true"
          beStrictAboutCoversAnnotation="true">
     <testsuites>
-        <testsuite name="Rinvex Category Unit Test Suite">
+        <testsuite name="Rinvex Fort Unit Test Suite">
             <directory>tests</directory>
         </testsuite>
     </testsuites>

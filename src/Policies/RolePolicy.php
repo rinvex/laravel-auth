@@ -37,20 +37,6 @@ class RolePolicy
     }
 
     /**
-     * Determine whether the user can view the role.
-     *
-     * @param string                   $ability
-     * @param \Rinvex\Fort\Models\User $user
-     * @param \Rinvex\Fort\Models\Role $resource
-     *
-     * @return bool
-     */
-    public function view($ability, User $user, Role $resource)
-    {
-        return $user->allAbilities->pluck('slug')->contains($ability);
-    }
-
-    /**
      * Determine whether the user can create roles.
      *
      * @param string                   $ability
@@ -97,32 +83,6 @@ class RolePolicy
                && $user->allAbilities->pluck('slug')->contains($resource->slug) // User already have RESOURCE role
                && ! $resource->isSuperadmin()                                   // RESOURCE role is NOT superadmin
                && ! $resource->isProtected();                                   // RESOURCE role is NOT protected
-    }
-
-    /**
-     * Determine whether the user can import the roles.
-     *
-     * @param string                   $ability
-     * @param \Rinvex\Fort\Models\User $user
-     *
-     * @return bool
-     */
-    public function import($ability, User $user)
-    {
-        return $user->allAbilities->pluck('slug')->contains($ability);
-    }
-
-    /**
-     * Determine whether the user can export the roles.
-     *
-     * @param string                   $ability
-     * @param \Rinvex\Fort\Models\User $user
-     *
-     * @return bool
-     */
-    public function export($ability, User $user)
-    {
-        return $user->allAbilities->pluck('slug')->contains($ability);
     }
 
     /**

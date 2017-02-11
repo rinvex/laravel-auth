@@ -26,7 +26,7 @@ class TwoFactorTotpUpdateRequest extends FormRequest
     {
         return intend([
             'route'      => 'rinvex.fort.frontend.user.settings',
-            'withErrors' => ['token' => trans('rinvex/fort::frontend/messages.verification.twofactor.totp.globaly_disabled')],
+            'withErrors' => ['token' => trans('rinvex/fort::messages.verification.twofactor.totp.globaly_disabled')],
         ]);
     }
 

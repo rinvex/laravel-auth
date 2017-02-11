@@ -15,6 +15,7 @@
 
 namespace Rinvex\Fort\Console\Commands;
 
+use Rinvex\Fort\Models\User;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Lang;
 use Illuminate\Contracts\Validation\Factory;
@@ -55,7 +56,7 @@ class UserCreateCommand extends Command
             // Required user attributes
             'email'          => $this->argument('email') ?: $this->ask(Lang::get('rinvex.fort::artisan.user.email')),
             'username'       => $this->argument('username') ?: $this->ask(Lang::get('rinvex.fort::artisan.user.username')),
-            'password'       => bcrypt($this->argument('password') ?: $this->secret(Lang::get('rinvex.fort::artisan.user.password'))),
+            'password'       => bcrypt($this->argument('password') ?: $this->secret(Lang::get('rinvex.fort::forms.common.password'))),
 
             // Optional user attributes
             'first_name'     => $this->argument('firstName'),
@@ -83,7 +84,7 @@ class UserCreateCommand extends Command
                 $this->error('- '.$key.': '.$messages[0]);
             }
         } else {
-            $user = $this->laravel['rinvex.fort.user']->create($data);
+            $user = User::create($data);
 
             $this->info(Lang::get('rinvex.fort::artisan.user.created').' ['.Lang::get('rinvex.fort::artisan.user.id').': '.$user->id.', '.Lang::get('rinvex.fort::artisan.user.email').': '.$user->email.', '.Lang::get('rinvex.fort::artisan.user.username').': '.$user->username.']');
         }

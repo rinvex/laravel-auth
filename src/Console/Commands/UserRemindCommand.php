@@ -15,6 +15,7 @@
 
 namespace Rinvex\Fort\Console\Commands;
 
+use Rinvex\Fort\Models\User;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Lang;
 
@@ -47,11 +48,11 @@ class UserRemindCommand extends Command
         $userField = $this->argument('user') ?: $this->ask(Lang::get('rinvex.fort::artisan.user.identifier'));
 
         if (intval($userField)) {
-            $user = $this->laravel['rinvex.fort.user']->find($userField);
+            $user = User::find($userField);
         } elseif (filter_var($userField, FILTER_VALIDATE_EMAIL)) {
-            $user = $this->laravel['rinvex.fort.user']->findWhere(['email' => $userField])->first();
+            $user = User::where(['email' => $userField])->first();
         } else {
-            $user = $this->laravel['rinvex.fort.user']->findWhere(['username' => $userField])->first();
+            $user = User::where(['username' => $userField])->first();
         }
 
         if (! $user) {

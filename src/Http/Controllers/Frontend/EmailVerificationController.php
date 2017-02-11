@@ -26,7 +26,7 @@ class EmailVerificationController extends AbstractController
      *
      * @return \Illuminate\Http\Response
      */
-    public function request()
+    public function request(EmailVerificationRequest $request)
     {
         return view('rinvex/fort::frontend/verification.email.request');
     }
@@ -42,13 +42,13 @@ class EmailVerificationController extends AbstractController
     {
         $result = app('rinvex.fort.emailverification')
             ->broker($this->getBroker())
-            ->send($request->except('_token'));
+            ->send($request->only('email'));
 
         switch ($result) {
             case EmailVerificationBrokerContract::LINK_SENT:
                 return intend([
-                    'intended' => url('/'),
-                    'with'     => ['rinvex.fort.alert.success' => trans($result)],
+                    'url'  => '/',
+                    'with' => ['success' => trans($result)],
                 ]);
 
             default:
@@ -69,13 +69,13 @@ class EmailVerificationController extends AbstractController
      */
     public function verify(EmailVerificationRequest $request)
     {
-        $result = app('rinvex.fort.emailverification')->broker($this->getBroker())->verify($request->except('_token'));
+        $result = app('rinvex.fort.emailverification')->broker($this->getBroker())->verify($request->only(['email', 'token']));
 
         switch ($result) {
             case EmailVerificationBrokerContract::EMAIL_VERIFIED:
                 return intend([
-                    'intended' => url('/'),
-                    'with'     => ['rinvex.fort.alert.success' => trans($result)],
+                    'route' => $request->user() ? 'rinvex.fort.frontend.auth.login' : 'rinvex.fort.frontend.user.settings',
+                    'with'  => ['success' => trans($result)],
                 ]);
 
             case EmailVerificationBrokerContract::INVALID_USER:

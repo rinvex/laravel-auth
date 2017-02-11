@@ -31,15 +31,15 @@ class PhoneVerificationRequest extends FormRequest
         return $user && ! $user->country ? intend([
             // Logged in user, no country, phone verification attempt (account update)
             'route'      => 'rinvex.fort.frontend.user.settings',
-            'withErrors' => ['country' => trans('rinvex/fort::frontend/messages.account.country_required')],
+            'withErrors' => ['country' => trans('rinvex/fort::messages.account.country_required')],
         ]) : ($attemptUser && ! $attemptUser->country ? intend([
             // Login attempt, no country, enabled Two-Factor
             'route'      => 'rinvex.fort.frontend.auth.login',
-            'withErrors' => ['rinvex.fort.auth.country' => trans('rinvex/fort::frontend/messages.verification.twofactor.phone.country_required')],
+            'withErrors' => ['rinvex.fort.auth.country' => trans('rinvex/fort::messages.verification.twofactor.phone.country_required')],
         ]) : intend([
             // No login attempt, no user instance, phone verification attempt
             'route'      => 'rinvex.fort.frontend.auth.login',
-            'withErrors' => ['rinvex.fort.auth.required' => trans('rinvex/fort::frontend/messages.auth.session.required')],
+            'withErrors' => ['rinvex.fort.auth.required' => trans('rinvex/fort::messages.auth.session.required')],
         ]));
     }
 
@@ -64,7 +64,7 @@ class PhoneVerificationRequest extends FormRequest
         $user = $this->user() ?: Auth::guard()->attemptUser();
         $providers = config('rinvex.fort.twofactor.providers');
 
-        return ! $user || ! $user->country || ! in_array('phone', $providers) ? false : true;
+        return ! $user || (! isset(session('rinvex.fort.twofactor.methods')['totp']) && (! $user->country || ! in_array('phone', $providers))) ? false : true;
     }
 
     /**

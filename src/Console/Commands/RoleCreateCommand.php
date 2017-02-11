@@ -16,6 +16,7 @@
 namespace Rinvex\Fort\Console\Commands;
 
 use Illuminate\Support\Str;
+use Rinvex\Fort\Models\Role;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Lang;
 use Illuminate\Contracts\Validation\Factory;
@@ -71,7 +72,7 @@ class RoleCreateCommand extends Command
                 $this->error('- '.$key.': '.$messages[0]);
             }
         } else {
-            $role = $this->laravel['rinvex.fort.role']->create($data);
+            $role = Role::create($data);
 
             $this->info(Lang::get('rinvex.fort::artisan.role.created').' ['.Lang::get('rinvex.fort::artisan.role.id').': '.$role->id.', '.Lang::get('rinvex.fort::artisan.role.name').': '.$role->name.', '.Lang::get('rinvex.fort::artisan.role.slug').': '.$role->slug.']');
         }

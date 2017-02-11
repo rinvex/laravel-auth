@@ -15,6 +15,8 @@
 
 namespace Rinvex\Fort\Console\Commands;
 
+use Rinvex\Fort\Models\Role;
+use Rinvex\Fort\Models\Ability;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Lang;
 
@@ -46,21 +48,21 @@ class RoleGiveAbilityCommand extends Command
         $roleField = $this->argument('role') ?: $this->ask(Lang::get('rinvex.fort::artisan.role.identifier'));
 
         if (intval($roleField)) {
-            $role = $this->laravel['rinvex.fort.role']->find($roleField);
+            $role = Role::find($roleField);
         } else {
-            $role = $this->laravel['rinvex.fort.role']->findWhere(['slug' => $roleField])->first();
+            $role = Role::where(['slug' => $roleField])->first();
         }
 
         if (! $role) {
             return $this->error(Lang::get('rinvex.fort::artisan.role.invalid', ['field' => $roleField]));
         }
 
-        $abilityField = $this->argument('ability') ?: $this->anticipate(Lang::get('rinvex.fort::artisan.role.ability'), $this->laravel['rinvex.fort.ability']->findAll()->lists('slug', 'id')->toArray());
+        $abilityField = $this->argument('ability') ?: $this->anticipate(Lang::get('rinvex.fort::artisan.role.ability'), Ability::all()->pluck('slug', 'id')->toArray());
 
         if (intval($abilityField)) {
-            $ability = $this->laravel['rinvex.fort.ability']->find($abilityField);
+            $ability = Ability::find($abilityField);
         } else {
-            $ability = $this->laravel['rinvex.fort.ability']->findWhere(['slug' => $abilityField])->first();
+            $ability = Ability::where(['slug' => $abilityField])->first();
         }
 
         if (! $ability) {

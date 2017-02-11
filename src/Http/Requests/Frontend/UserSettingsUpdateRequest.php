@@ -42,7 +42,7 @@ class UserSettingsUpdateRequest extends FormRequest
             unset($data['password'], $data['password_confirmation']);
         }
 
-        return array_filter(array_map('trim', $data));
+        return array_filter_recursive(array_trim_recursive($data));
     }
 
     /**
@@ -53,9 +53,9 @@ class UserSettingsUpdateRequest extends FormRequest
     public function rules()
     {
         return [
-            'email'    => 'required|email|max:255|unique:'.config('rinvex.fort.tables.users').',email,'.$this->get('id'),
-            'username' => 'required|max:255|unique:'.config('rinvex.fort.tables.users').',username,'.$this->get('id'),
-            'phone'    => 'required|numeric|unique:'.config('rinvex.fort.tables.users').',phone,'.$this->get('id'),
+            'email'    => 'required|email|max:255|unique:'.config('rinvex.fort.tables.users').',email,'.$this->user()->id,
+            'username' => 'required|max:255|unique:'.config('rinvex.fort.tables.users').',username,'.$this->user()->id,
+            'phone'    => 'required|numeric|unique:'.config('rinvex.fort.tables.users').',phone,'.$this->user()->id,
             'password' => 'sometimes|required|min:6|confirmed',
         ];
     }

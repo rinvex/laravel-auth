@@ -127,11 +127,11 @@ return [
         | Specify your database table name that should be used to store
         | your abilities. You may use whatever you like.
         |
-        | Default: "rinvex_fort_abilities"
+        | Default: "abilities"
         |
         */
 
-        'abilities' => 'rinvex_fort_abilities',
+        'abilities' => 'abilities',
 
         /*
         |--------------------------------------------------------------------------
@@ -141,11 +141,11 @@ return [
         | Specify database table name that should be used to store
         | your roles. You may use whatever you like.
         |
-        | Default: "rinvex_fort_roles"
+        | Default: "roles"
         |
         */
 
-        'roles' => 'rinvex_fort_roles',
+        'roles' => 'roles',
 
         /*
         |--------------------------------------------------------------------------
@@ -155,11 +155,11 @@ return [
         | Specify database table name that should be used to store
         | your users. You may use whatever you like.
         |
-        | Default: "rinvex_fort_users"
+        | Default: "users"
         |
         */
 
-        'users' => 'rinvex_fort_users',
+        'users' => 'users',
 
         /*
         |--------------------------------------------------------------------------
@@ -169,11 +169,11 @@ return [
         | Specify database table name that should be used to store the relation
         | between "users" and "abilities". You may use whatever you like.
         |
-        | Default: "rinvex_fort_ability_user"
+        | Default: "ability_user"
         |
         */
 
-        'ability_user' => 'rinvex_fort_ability_user',
+        'ability_user' => 'ability_user',
 
         /*
         |--------------------------------------------------------------------------
@@ -183,11 +183,11 @@ return [
         | Specify database table name that should be used to store the relation
         | between "users" and "roles". You may use whatever you like.
         |
-        | Default: "rinvex_fort_role_user"
+        | Default: "role_user"
         |
         */
 
-        'role_user' => 'rinvex_fort_role_user',
+        'role_user' => 'role_user',
 
         /*
         |--------------------------------------------------------------------------
@@ -197,11 +197,11 @@ return [
         | Specify database table name that should be used to store the relation
         | between "roles" and "abilities". You may use  whatever you like.
         |
-        | Default: "rinvex_fort_ability_role"
+        | Default: "ability_role"
         |
         */
 
-        'ability_role' => 'rinvex_fort_ability_role',
+        'ability_role' => 'ability_role',
 
         /*
         |--------------------------------------------------------------------------
@@ -211,11 +211,11 @@ return [
         | Specify database table name that should be used to store the
         | email verification tokens. You may use whatever you like.
         |
-        | Default: "rinvex_fort_verifications"
+        | Default: "email_verifications"
         |
         */
 
-        'email_verifications' => 'rinvex_fort_email_verifications',
+        'email_verifications' => 'email_verifications',
 
         /*
         |--------------------------------------------------------------------------
@@ -225,11 +225,11 @@ return [
         | Specify database table name that should be used to store the
         | password reset tokens. You may use whatever you like.
         |
-        | Default: "rinvex_fort_resets"
+        | Default: "password_resets"
         |
         */
 
-        'password_resets' => 'rinvex_fort_password_resets',
+        'password_resets' => 'password_resets',
 
         /*
         |--------------------------------------------------------------------------
@@ -239,25 +239,25 @@ return [
         | Specify database table name that should be used to store the
         | user persistences. You may use whatever you like.
         |
-        | Default: "rinvex_fort_persistences"
+        | Default: "persistences"
         |
         */
 
-        'persistences' => 'rinvex_fort_persistences',
+        'persistences' => 'persistences',
 
         /*
         |--------------------------------------------------------------------------
-        | Socialite Table
+        | Socialites Table
         |--------------------------------------------------------------------------
         |
         | Specify database table name that should be used to store the
         | user social accounts. You may use whatever you like.
         |
-        | Default: "rinvex_fort_socialite"
+        | Default: "socialites"
         |
         */
 
-        'socialite' => 'rinvex_fort_socialite',
+        'socialites' => 'socialites',
 
     ],
 

@@ -1,10 +1,9 @@
 {{-- Master Layout --}}
 @extends('rinvex/fort::backend/common.layout')
 
-{{-- Main Content --}}
+{{-- Page Title --}}
 @section('title')
-    @parent
-    » {{ trans('rinvex/fort::backend/abilities.heading') }}
+    {{ config('app.name') }} » {{ trans('rinvex/fort::forms.common.abilities') }}
 @stop
 
 {{-- Main Content --}}
@@ -28,7 +27,7 @@
             {{-- Heading --}}
             <header class="panel-heading">
                 <h4>
-                    {{ trans('rinvex/fort::backend/abilities.heading') }}
+                    {{ trans('rinvex/fort::forms.common.abilities') }}
                     @can('create-abilities')
                         <span class="pull-right" style="margin-top: -7px">
                             <a href="{{ route('rinvex.fort.backend.abilities.create') }}" class="btn btn-default"><i class="fa fa-plus"></i></a>
@@ -46,10 +45,10 @@
 
                         <thead>
                             <tr>
-                                <th style="width: 30%">{{ trans('rinvex/fort::backend/abilities.title') }}</th>
-                                <th style="width: 40%">{{ trans('rinvex/fort::backend/abilities.description') }}</th>
-                                <th style="width: 20%">{{ trans('rinvex/fort::backend/abilities.dates') }}</th>
-                                <th style="width: 10%" class="text-right">{{ trans('rinvex/fort::backend/abilities.actions') }}</th>
+                                <th style="width: 30%">{{ trans('rinvex/fort::forms.common.name') }}</th>
+                                <th style="width: 40%">{{ trans('rinvex/fort::forms.common.description') }}</th>
+                                <th style="width: 15%">{{ trans('rinvex/fort::forms.common.created_at') }}</th>
+                                <th style="width: 15%">{{ trans('rinvex/fort::forms.common.updated_at') }}</th>
                             </tr>
                         </thead>
 
@@ -59,10 +58,10 @@
 
                                 <tr>
                                     <td>
-                                        @can('view-abilities', $ability) <a href="{{ route('rinvex.fort.backend.abilities.show', ['ability' => $ability]) }}"> @endcan
-                                            <strong>{{ $ability->title }}</strong> <small>({{ $ability->action }})</small>
+                                        @can('update-abilities', $ability) <a href="{{ route('rinvex.fort.backend.abilities.edit', ['ability' => $ability]) }}"> @endcan
+                                            <strong>{{ $ability->name }}</strong> <small>({{ $ability->action }})</small>
                                             <div class="small ">{{ $ability->policy }}</div>
-                                        @can('view-abilities', $ability) </a> @endcan
+                                        @can('update-abilities', $ability) </a> @endcan
                                     </td>
 
                                     <td>
@@ -72,12 +71,12 @@
                                     <td class="small">
                                         @if($ability->created_at)
                                             <div>
-                                                {{ trans('rinvex/fort::backend/abilities.created_at') }}: <time datetime="{{ $ability->created_at }}">{{ $ability->created_at->format('Y-m-d') }}</time>
+                                                {{ trans('rinvex/fort::forms.common.created_at') }}: <time datetime="{{ $ability->created_at }}">{{ $ability->created_at->format('Y-m-d') }}</time>
                                             </div>
                                         @endif
                                         @if($ability->updated_at)
                                             <div>
-                                                {{ trans('rinvex/fort::backend/abilities.updated_at') }}: <time datetime="{{ $ability->updated_at }}">{{ $ability->updated_at->format('Y-m-d') }}</time>
+                                                {{ trans('rinvex/fort::forms.common.updated_at') }}: <time datetime="{{ $ability->updated_at }}">{{ $ability->updated_at->format('Y-m-d') }}</time>
                                             </div>
                                         @endif
                                     </td>

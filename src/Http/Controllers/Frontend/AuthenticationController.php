@@ -41,7 +41,7 @@ class AuthenticationController extends AbstractController
      *
      * @return \Illuminate\Http\Response
      */
-    public function showLogin()
+    public function form()
     {
         // Remember previous URL for later redirect back
         session()->put('url.intended', url()->previous());
@@ -56,7 +56,7 @@ class AuthenticationController extends AbstractController
      *
      * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse
      */
-    public function processLogin(UserAuthenticationRequest $request)
+    public function login(UserAuthenticationRequest $request)
     {
         // Prepare variables
         $remember = $request->has('remember');
@@ -81,8 +81,8 @@ class AuthenticationController extends AbstractController
         $result = Auth::guard($this->getGuard())->logout();
 
         return intend([
-            'intended' => url('/'),
-            'with'     => ['rinvex.fort.alert.warning' => trans($result)],
+            'url'  => '/',
+            'with' => ['warning' => trans($result)],
         ]);
     }
 
@@ -102,7 +102,7 @@ class AuthenticationController extends AbstractController
                 $seconds = Auth::guard($this->getGuard())->secondsRemainingOnLockout($request);
 
                 return intend([
-                    'intended'   => url('/'),
+                    'url'        => '/',
                     'withInput'  => $request->only('loginfield', 'remember'),
                     'withErrors' => ['loginfield' => trans($result, ['seconds' => $seconds])],
                 ]);
@@ -128,7 +128,7 @@ class AuthenticationController extends AbstractController
 
                 return intend([
                     'route' => $route,
-                    'with'  => ['rinvex.fort.alert.warning' => trans($result)],
+                    'with'  => ['warning' => trans($result)],
                 ]);
 
             // Login successful and everything is fine!
@@ -136,7 +136,7 @@ class AuthenticationController extends AbstractController
             default:
                 return intend([
                     'intended' => url('/'),
-                    'with'     => ['rinvex.fort.alert.success' => trans($result)],
+                    'with'     => ['success' => trans($result)],
                 ]);
         }
     }

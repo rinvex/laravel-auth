@@ -18,6 +18,7 @@ namespace Rinvex\Fort\Http\Middleware;
 use Closure;
 use Illuminate\Http\Request;
 use Rinvex\Fort\Models\User;
+use Rinvex\Fort\Models\Ability;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Database\Eloquent\Model;
 
@@ -28,11 +29,10 @@ class Abilities
      *
      * @param \Illuminate\Http\Request $request
      * @param \Closure                 $next
-     * @param string|null              $guard
      *
      * @return mixed
      */
-    public function handle(Request $request, Closure $next, $guard = null)
+    public function handle(Request $request, Closure $next)
     {
         // Bypass authorization check if superadmin
         Gate::before(function (User $user) {
@@ -40,7 +40,7 @@ class Abilities
         });
 
         // Define abilities and policies
-        app('rinvex.fort.ability')->findAll()->map(function ($ability) {
+        Ability::all()->map(function ($ability) {
             Gate::define($ability->slug, $ability->policy ?: function (User $user, Model $resource = null) use ($ability) {
                 return $user->allAbilities->pluck('slug')->contains($ability->slug);
             });

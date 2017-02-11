@@ -16,31 +16,109 @@
 namespace Rinvex\Fort\Models;
 
 use Rinvex\Fort\Traits\HasRoles;
+use Illuminate\Auth\Authenticatable;
+use Watson\Validating\ValidatingTrait;
 use Rinvex\Fort\Traits\CanVerifyEmail;
 use Rinvex\Fort\Traits\CanVerifyPhone;
-use Rinvex\Fort\Traits\Authenticatable;
+use Rinvex\Cacheable\CacheableEloquent;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
 use Rinvex\Fort\Traits\CanResetPassword;
-use Illuminate\Database\Eloquent\SoftDeletes;
+use Rinvex\Fort\Traits\AuthenticatableTwoFactor;
 use Rinvex\Fort\Contracts\CanVerifyEmailContract;
 use Rinvex\Fort\Contracts\CanVerifyPhoneContract;
-use Rinvex\Fort\Contracts\AuthenticatableContract;
-use Illuminate\Foundation\Auth\Access\Authorizable;
 use Rinvex\Fort\Contracts\CanResetPasswordContract;
+use Illuminate\Foundation\Auth\Access\Authorizable;
+use Rinvex\Fort\Contracts\AuthenticatableTwoFactorContract;
+use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 use Illuminate\Contracts\Auth\Access\Authorizable as AuthorizableContract;
 
-class User extends Model implements AuthenticatableContract, AuthorizableContract, CanResetPasswordContract, CanVerifyEmailContract, CanVerifyPhoneContract
+/**
+ * Rinvex\Fort\Models\User.
+ *
+ * @property int                                                                                                            $id
+ * @property string                                                                                                         $username
+ * @property string                                                                                                         $password
+ * @property string                                                                                                         $remember_token
+ * @property string                                                                                                         $email
+ * @property bool                                                                                                           $email_verified
+ * @property \Carbon\Carbon                                                                                                 $email_verified_at
+ * @property string                                                                                                         $phone
+ * @property bool                                                                                                           $phone_verified
+ * @property string                                                                                                         $phone_verified_at
+ * @property string                                                                                                         $prefix
+ * @property string                                                                                                         $first_name
+ * @property string                                                                                                         $middle_name
+ * @property string                                                                                                         $last_name
+ * @property string                                                                                                         $sufix
+ * @property string                                                                                                         $job_title
+ * @property string                                                                                                         $country
+ * @property array                                                                                                          $two_factor
+ * @property \Carbon\Carbon                                                                                                 $birthdate
+ * @property string                                                                                                         $gender
+ * @property bool                                                                                                           $active
+ * @property \Carbon\Carbon                                                                                                 $login_at
+ * @property \Carbon\Carbon                                                                                                 $created_at
+ * @property \Carbon\Carbon                                                                                                 $updated_at
+ * @property \Carbon\Carbon                                                                                                 $deleted_at
+ * @property-read \Illuminate\Database\Eloquent\Collection|\Rinvex\Fort\Models\Ability[]                                    $abilities
+ * @property-read \Illuminate\Database\Eloquent\Collection|\Rinvex\Fort\Models\Role[]                                       $roles
+ * @property-read \Illuminate\Database\Eloquent\Collection|\Rinvex\Fort\Models\Persistence[]                                $persistences
+ * @property-read \Illuminate\Database\Eloquent\Collection|\Rinvex\Fort\Models\Socialite[]                                  $socialites
+ * @property-read string                                                                                                    $name
+ * @property-read \Illuminate\Support\Collection                                                                            $all_abilities
+ * @property-read array                                                                                                     $ability_list
+ * @property-read array                                                                                                     $role_list
+ * @property-read \Illuminate\Notifications\DatabaseNotificationCollection|\Illuminate\Notifications\DatabaseNotification[] $notifications
+ * @property-read \Illuminate\Notifications\DatabaseNotificationCollection|\Illuminate\Notifications\DatabaseNotification[] $readNotifications
+ * @property-read \Illuminate\Notifications\DatabaseNotificationCollection|\Illuminate\Notifications\DatabaseNotification[] $unreadNotifications
+ *
+ * @method static \Illuminate\Database\Query\Builder|\Rinvex\Fort\Models\User whereId($value)
+ * @method static \Illuminate\Database\Query\Builder|\Rinvex\Fort\Models\User whereUsername($value)
+ * @method static \Illuminate\Database\Query\Builder|\Rinvex\Fort\Models\User wherePassword($value)
+ * @method static \Illuminate\Database\Query\Builder|\Rinvex\Fort\Models\User whereRememberToken($value)
+ * @method static \Illuminate\Database\Query\Builder|\Rinvex\Fort\Models\User whereEmail($value)
+ * @method static \Illuminate\Database\Query\Builder|\Rinvex\Fort\Models\User whereEmailVerified($value)
+ * @method static \Illuminate\Database\Query\Builder|\Rinvex\Fort\Models\User whereEmailVerifiedAt($value)
+ * @method static \Illuminate\Database\Query\Builder|\Rinvex\Fort\Models\User wherePhone($value)
+ * @method static \Illuminate\Database\Query\Builder|\Rinvex\Fort\Models\User wherePhoneVerified($value)
+ * @method static \Illuminate\Database\Query\Builder|\Rinvex\Fort\Models\User wherePhoneVerifiedAt($value)
+ * @method static \Illuminate\Database\Query\Builder|\Rinvex\Fort\Models\User wherePrefix($value)
+ * @method static \Illuminate\Database\Query\Builder|\Rinvex\Fort\Models\User whereFirstName($value)
+ * @method static \Illuminate\Database\Query\Builder|\Rinvex\Fort\Models\User whereMiddleName($value)
+ * @method static \Illuminate\Database\Query\Builder|\Rinvex\Fort\Models\User whereLastName($value)
+ * @method static \Illuminate\Database\Query\Builder|\Rinvex\Fort\Models\User whereSufix($value)
+ * @method static \Illuminate\Database\Query\Builder|\Rinvex\Fort\Models\User whereJobTitle($value)
+ * @method static \Illuminate\Database\Query\Builder|\Rinvex\Fort\Models\User whereCountry($value)
+ * @method static \Illuminate\Database\Query\Builder|\Rinvex\Fort\Models\User whereTwoFactor($value)
+ * @method static \Illuminate\Database\Query\Builder|\Rinvex\Fort\Models\User whereBirthdate($value)
+ * @method static \Illuminate\Database\Query\Builder|\Rinvex\Fort\Models\User whereGender($value)
+ * @method static \Illuminate\Database\Query\Builder|\Rinvex\Fort\Models\User whereActive($value)
+ * @method static \Illuminate\Database\Query\Builder|\Rinvex\Fort\Models\User whereLoginAt($value)
+ * @method static \Illuminate\Database\Query\Builder|\Rinvex\Fort\Models\User whereCreatedAt($value)
+ * @method static \Illuminate\Database\Query\Builder|\Rinvex\Fort\Models\User whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Query\Builder|\Rinvex\Fort\Models\User whereDeletedAt($value)
+ * @mixin \Illuminate\Database\Eloquent\Model
+ */
+class User extends Model implements AuthenticatableContract, AuthenticatableTwoFactorContract, AuthorizableContract, CanResetPasswordContract, CanVerifyEmailContract, CanVerifyPhoneContract
 {
-    use Notifiable, Authenticatable, Authorizable, CanResetPassword, CanVerifyEmail, CanVerifyPhone, HasRoles, SoftDeletes;
+    use HasRoles;
+    use Notifiable;
+    use Authorizable;
+    use CanVerifyEmail;
+    use CanVerifyPhone;
+    use Authenticatable;
+    use ValidatingTrait;
+    use CanResetPassword;
+    use CacheableEloquent;
+    use AuthenticatableTwoFactor;
 
     /**
      * {@inheritdoc}
      */
     protected $dates = [
         'email_verified_at',
-        'deleted_at',
-        'birthdate',
+        'phone_verified_at',
         'login_at',
     ];
 
@@ -61,7 +139,7 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
         'first_name',
         'middle_name',
         'last_name',
-        'sufix',
+        'suffix',
         'job_title',
         'country',
         'birthdate',
@@ -85,6 +163,25 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
     protected $with = ['abilities', 'roles'];
 
     /**
+     * {@inheritdoc}
+     */
+    protected $observables = ['validating', 'validated'];
+
+    /**
+     * The default rules that the model will validate against.
+     *
+     * @var array
+     */
+    protected $rules = [];
+
+    /**
+     * Whether the model should throw a ValidationException if it fails validation.
+     *
+     * @var bool
+     */
+    protected $throwValidationExceptions = true;
+
+    /**
      * Create a new Eloquent model instance.
      *
      * @param array $attributes
@@ -94,6 +191,15 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
         parent::__construct($attributes);
 
         $this->setTable(config('rinvex.fort.tables.users'));
+        $this->setRules([
+            'username' => 'required|alpha_dash|max:255|unique:'.config('rinvex.fort.tables.users').',username',
+            'email' => 'required|email|max:255|unique:'.config('rinvex.fort.tables.users').',email',
+            'password' => 'sometimes|required|min:'.config('rinvex.fort.passwordreset.minimum_characters'),
+            'gender' => 'in:male,female,undisclosed',
+            'active' => 'boolean',
+            'email_verified' => 'boolean',
+            'phone_verified' => 'boolean',
+        ]);
     }
 
     /**
@@ -103,7 +209,7 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
      */
     public function abilities()
     {
-        return $this->belongsToMany(config('rinvex.fort.models.ability'), config('rinvex.fort.tables.ability_user'))
+        return $this->belongsToMany(config('rinvex.fort.models.ability'), config('rinvex.fort.tables.ability_user'), 'user_id', 'ability_id')
                     ->withTimestamps();
     }
 
@@ -114,7 +220,7 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
      */
     public function roles()
     {
-        return $this->belongsToMany(config('rinvex.fort.models.role'), config('rinvex.fort.tables.role_user'))
+        return $this->belongsToMany(config('rinvex.fort.models.role'), config('rinvex.fort.tables.role_user'), 'user_id', 'role_id')
                     ->withTimestamps();
     }
 
@@ -125,7 +231,7 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
      */
     public function persistences()
     {
-        return $this->hasMany(config('rinvex.fort.models.persistence'));
+        return $this->hasMany(config('rinvex.fort.models.persistence'), 'user_id', 'id');
     }
 
     /**
@@ -135,7 +241,7 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
      */
     public function socialites()
     {
-        return $this->hasMany(config('rinvex.fort.models.socialite'));
+        return $this->hasMany(config('rinvex.fort.models.socialite'), 'user_id', 'id');
     }
 
     /**
@@ -187,10 +293,7 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
      */
     public function isSuperadmin()
     {
-        return $this->getAllAbilitiesAttribute()
-                    ->where('resource', 'global')
-                    ->where('policy', null)
-                    ->contains('action', 'superadmin');
+        return $this->getAllAbilitiesAttribute()->where('resource', 'global')->where('policy', null)->contains('action', 'superadmin');
     }
 
     /**
@@ -231,11 +334,11 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
 
             // Update user account
             array_set($settings, 'phone', [
-                'enabled'  => true,
+                'enabled' => true,
                 'authy_id' => $authyId,
             ]);
 
-            app('rinvex.fort.user')->update($this, ['two_factor' => $settings]);
+            $this->update(['two_factor' => $settings]);
         }
 
         return $authyId;

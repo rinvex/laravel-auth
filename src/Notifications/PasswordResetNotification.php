@@ -66,10 +66,10 @@ class PasswordResetNotification extends Notification
     public function toMail()
     {
         return (new MailMessage())
-            ->subject(trans('rinvex/fort::frontend/emails.passwordreset.request.subject'))
-            ->line(trans('rinvex/fort::frontend/emails.passwordreset.request.intro', ['expire' => $this->expiration]))
-            ->action(trans('rinvex/fort::frontend/emails.passwordreset.request.action'), route('rinvex.fort.frontend.passwordreset.reset').'?token='.$this->token['token'].'&email='.$this->token['email'])
-            ->line(trans('rinvex/fort::frontend/emails.passwordreset.request.outro', [
+            ->subject(trans('rinvex/fort::emails.passwordreset.request.subject'))
+            ->line(trans('rinvex/fort::emails.passwordreset.request.intro', ['expire' => $this->expiration]))
+            ->action(trans('rinvex/fort::emails.passwordreset.request.action'), route('rinvex.fort.frontend.passwordreset.reset').'?token='.$this->token['token'].'&email='.$this->token['email'])
+            ->line(trans('rinvex/fort::emails.passwordreset.request.outro', [
                 'ip'         => $this->token['ip'],
                 'agent'      => $this->token['agent'],
                 'created_at' => $this->token['created_at'],

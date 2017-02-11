@@ -1,7 +1,7 @@
-@if (session('rinvex.fort.alert.success'))
+@if (session('success'))
 
     <div class="alert alert-success">
-        {{ session('rinvex.fort.alert.success') }}
+        {{ session('success') }}
     </div>
 
 @endif

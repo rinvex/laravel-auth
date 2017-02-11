@@ -53,7 +53,7 @@ class PhoneVerificationController extends AbstractController
 
         return intend([
             'route' => 'rinvex.fort.frontend.verification.phone.verify',
-            'with'  => ['rinvex.fort.alert.success' => trans('rinvex/fort::frontend/messages.verification.phone.sent')],
+            'with'  => ['success' => trans('rinvex/fort::messages.verification.phone.sent')],
         ]);
     }
 
@@ -91,22 +91,22 @@ class PhoneVerificationController extends AbstractController
         switch ($result) {
             case SessionGuard::AUTH_PHONE_VERIFIED:
                 // Update user account
-                app('rinvex.fort.user')->update($user, [
+                $user->update([
                     'phone_verified'    => true,
                     'phone_verified_at' => new Carbon(),
                 ]);
 
                 return intend([
                     'route' => 'rinvex.fort.frontend.user.settings',
-                    'with'  => ['rinvex.fort.alert.success' => trans($result)],
+                    'with'  => ['success' => trans($result)],
                 ]);
 
             case SessionGuard::AUTH_LOGIN:
                 Auth::guard($guard)->login($user, session('rinvex.fort.twofactor.remember'), session('rinvex.fort.twofactor.persistence'));
 
                 return intend([
-                    'intended' => url('/'),
-                    'with'     => ['rinvex.fort.alert.success' => trans($result)],
+                    'url' => '/',
+                    'with' => ['success' => trans($result)],
                 ]);
 
             case SessionGuard::AUTH_TWOFACTOR_FAILED:

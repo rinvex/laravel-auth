@@ -25,8 +25,8 @@ class UserRegistrationRequest extends FormRequest
     public function forbiddenResponse()
     {
         return intend([
-            'intended'   => url('/'),
-            'withErrors' => ['rinvex.fort.registration.disabled' => trans('rinvex/fort::frontend/messages.register.disabled')],
+            'back'       => true,
+            'withErrors' => ['rinvex.fort.registration.disabled' => trans('rinvex/fort::messages.register.disabled')],
         ]);
     }
 

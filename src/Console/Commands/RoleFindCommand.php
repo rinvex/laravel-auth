@@ -15,6 +15,7 @@
 
 namespace Rinvex\Fort\Console\Commands;
 
+use Rinvex\Fort\Models\Role;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Lang;
 
@@ -45,9 +46,9 @@ class RoleFindCommand extends Command
 
         // Find single role
         if ($field = $this->argument('field')) {
-            if (intval($field) && $role = $this->laravel['rinvex.fort.role']->find($field, $columns)) {
+            if (intval($field) && $role = Role::find($field, $columns)) {
                 return $this->table($columns, [$role->toArray()]);
-            } elseif ($role = $this->laravel['rinvex.fort.role']->findWhere(['slug' => $field], $columns)->first()) {
+            } elseif ($role = Role::where(['slug' => $field], $columns)->first()) {
                 return $this->table($columns, $role->toArray());
             }
 
@@ -58,24 +59,8 @@ class RoleFindCommand extends Command
         $field = $this->anticipate(Lang::get('rinvex.fort::artisan.role.field'), ['id', 'slug'], 'id');
         $operator = $this->anticipate(Lang::get('rinvex.fort::artisan.role.operator'), ['=', '<', '>', '<=', '>=', '<>', '!=', 'like', 'like binary', 'not like', 'between', 'ilike', '&', '|', '^', '<<', '>>', 'rlike', 'regexp', 'not regexp', '~', '~*', '!~', '!~*', 'similar to', 'not similar to'], '=');
         $value = $this->ask(Lang::get('rinvex.fort::artisan.role.value'));
-        $results = $this->laravel['rinvex.fort.role']->where($field, $operator, $value)->get($columns);
+        $results = Role::where($field, $operator, $value)->get($columns);
 
         return $this->table($columns, $results->toArray());
-    }
-
-    /**
-     * Register the related console commands.
-     *
-     * @return void
-     */
-    protected function registerCommands()
-    {
-        foreach ($this->commands as $commandKey => $commandClass) {
-            $this->app->singleton($commandKey, function ($app) use ($commandClass) {
-                return new $commandClass();
-            });
-        }
-
-        $this->commands(array_keys($this->commands));
     }
 }

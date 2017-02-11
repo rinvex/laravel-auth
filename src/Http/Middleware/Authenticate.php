@@ -31,10 +31,10 @@ class Authenticate
      */
     public function handle($request, Closure $next, $guard = null)
     {
-        if ($guest = Auth::guard($guard)->guest()) {
+        if (Auth::guard($guard)->guest()) {
             return intend([
                 'route'      => 'rinvex.fort.frontend.auth.login',
-                'withErrors' => ['rinvex.fort.session.expired' => trans('rinvex/fort::frontend/messages.auth.session.required')],
+                'withErrors' => ['rinvex.fort.session.expired' => trans('rinvex/fort::messages.auth.session.required')],
             ], 401);
         }
 

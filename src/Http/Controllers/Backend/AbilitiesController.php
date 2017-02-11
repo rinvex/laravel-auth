@@ -17,10 +17,7 @@ namespace Rinvex\Fort\Http\Controllers\Backend;
 
 use Illuminate\Http\Request;
 use Rinvex\Fort\Models\Ability;
-use Rinvex\Fort\Contracts\AbilityRepositoryContract;
 use Rinvex\Fort\Http\Controllers\AuthorizedController;
-use Rinvex\Fort\Http\Requests\Backend\AbilityStoreRequest;
-use Rinvex\Fort\Http\Requests\Backend\AbilityUpdateRequest;
 
 class AbilitiesController extends AuthorizedController
 {
@@ -35,44 +32,15 @@ class AbilitiesController extends AuthorizedController
     protected $resourceActionWhitelist = ['grant'];
 
     /**
-     * The ability repository instance.
-     *
-     * @var \Rinvex\Fort\Contracts\AbilityRepositoryContract
-     */
-    protected $abilityRepository;
-
-    /**
-     * Create a new abilities controller instance.
-     */
-    public function __construct(AbilityRepositoryContract $abilityRepository)
-    {
-        parent::__construct();
-
-        $this->abilityRepository = $abilityRepository;
-    }
-
-    /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
     public function index()
     {
-        $abilities = $this->abilityRepository->paginate(config('rinvex.fort.backend.items_per_page'));
+        $abilities = Ability::paginate(config('rinvex.fort.backend.items_per_page'));
 
         return view('rinvex/fort::backend/abilities.index', compact('abilities'));
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param \Rinvex\Fort\Models\Ability $ability
-     *
-     * @return \Illuminate\Http\Response|\Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse
-     */
-    public function show(Ability $ability)
-    {
-        return view('rinvex/fort::backend/abilities.show', compact('ability'));
     }
 
     /**
@@ -82,19 +50,7 @@ class AbilitiesController extends AuthorizedController
      */
     public function create()
     {
-        return $this->form('create', 'store', $this->abilityRepository->createModel());
-    }
-
-    /**
-     * Show the form for copying the given resource.
-     *
-     * @param \Rinvex\Fort\Models\Ability $ability
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function copy(Ability $ability)
-    {
-        return $this->form('copy', 'store', $ability);
+        return $this->form('create', 'store', new Ability());
     }
 
     /**
@@ -112,24 +68,24 @@ class AbilitiesController extends AuthorizedController
     /**
      * Store a newly created resource in storage.
      *
-     * @param \Rinvex\Fort\Http\Requests\Backend\AbilityStoreRequest $request
+     * @param \Illuminate\Http\Request $request
      *
      * @return \Illuminate\Http\Response
      */
-    public function store(AbilityStoreRequest $request)
+    public function store(Request $request)
     {
-        return $this->process($request);
+        return $this->process($request, new Ability());
     }
 
     /**
      * Update the given resource in storage.
      *
-     * @param \Rinvex\Fort\Http\Requests\Backend\AbilityUpdateRequest $request
-     * @param \Rinvex\Fort\Models\Ability                             $ability
+     * @param \Illuminate\Http\Request    $request
+     * @param \Rinvex\Fort\Models\Ability $ability
      *
      * @return \Illuminate\Http\Response
      */
-    public function update(AbilityUpdateRequest $request, Ability $ability)
+    public function update(Request $request, Ability $ability)
     {
         return $this->process($request, $ability);
     }
@@ -143,46 +99,16 @@ class AbilitiesController extends AuthorizedController
      */
     public function delete(Ability $ability)
     {
-        $result = $this->abilityRepository->delete($ability);
+        $ability->delete();
 
         return intend([
             'route' => 'rinvex.fort.backend.abilities.index',
-            'with'  => ['rinvex.fort.alert.warning' => trans('rinvex/fort::backend/messages.ability.deleted', ['abilityId' => $result->id])],
+            'with'  => ['warning' => trans('rinvex/fort::messages.ability.deleted', ['abilityId' => $ability->id])],
         ]);
     }
 
     /**
-     * Import the given resources into storage.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function import()
-    {
-        //
-    }
-
-    /**
-     * Export the given resources from storage.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function export()
-    {
-        //
-    }
-
-    /**
-     * Bulk control the given resources.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function bulk()
-    {
-        //
-    }
-
-    /**
-     * Show the form for create/edit/copy of the given resource.
+     * Show the form for create/update of the given resource.
      *
      * @param string                      $mode
      * @param string                      $action
@@ -203,22 +129,26 @@ class AbilitiesController extends AuthorizedController
      *
      * @return \Illuminate\Http\Response
      */
-    protected function process(Request $request, Ability $ability = null)
+    protected function process(Request $request, Ability $ability)
     {
-        // Store data into the entity
-        $result = $this->abilityRepository->store($ability, $request->except(['_method', '_token', 'id']));
+        // Prepare required input fields
+        $input = $request->all();
 
-        // Repository `store` method returns false if no attributes
-        // updated, happens save button clicked without chaning anything
-        $with = ! is_null($ability)
-            ? ($result === false
-                ? ['rinvex.fort.alert.warning' => trans('rinvex/fort::backend/messages.ability.nothing_updated', ['abilityId' => $ability->id])]
-                : ['rinvex.fort.alert.success' => trans('rinvex/fort::backend/messages.ability.updated', ['abilityId' => $result->id])])
-            : ['rinvex.fort.alert.success' => trans('rinvex/fort::backend/messages.ability.created', ['abilityId' => $result->id])];
+        // Verify valid policy
+        if (! empty($input['policy']) && (($class = strstr($input['policy'], '@', true)) === false || ! method_exists($class, str_replace('@', '', strstr($input['policy'], '@'))))) {
+            return intend([
+                'back' => true,
+                'withInput'  => $request->all(),
+                'withErrors'  => ['policy' => trans('rinvex/fort::messages.ability.invalid_policy')],
+            ]);
+        }
+
+        // Save ability
+        ! $ability->exists ? $ability = $ability->create($input) : $ability->update($input);
 
         return intend([
             'route' => 'rinvex.fort.backend.abilities.index',
-            'with'  => $with,
+            'with'  => ['success' => trans('rinvex/fort::messages.ability.saved', ['abilityId' => $ability->id])],
         ]);
     }
 }
