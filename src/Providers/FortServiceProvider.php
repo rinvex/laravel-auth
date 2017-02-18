@@ -29,11 +29,14 @@ use Rinvex\Fort\Handlers\AbilityHandler;
 use Rinvex\Fort\Handlers\GenericHandler;
 use Rinvex\Fort\Http\Middleware\Abilities;
 use Rinvex\Fort\Http\Middleware\Authenticate;
+use Illuminate\Console\DetectsApplicationNamespace;
 use Rinvex\Fort\Http\Middleware\RedirectIfAuthenticated;
 use Illuminate\Contracts\Auth\Access\Gate as GateContract;
 
 class FortServiceProvider extends ServiceProvider
 {
+    use DetectsApplicationNamespace;
+
     /**
      * {@inheritdoc}
      */
@@ -73,9 +76,6 @@ class FortServiceProvider extends ServiceProvider
 
         // Load routes
         $this->loadRoutes($router);
-
-        // Load views
-        $this->loadViewsFrom(__DIR__.'/../../resources/views', 'rinvex/fort');
 
         // Load language phrases
         $this->loadTranslationsFrom(__DIR__.'/../../resources/lang', 'rinvex/fort');
@@ -124,11 +124,6 @@ class FortServiceProvider extends ServiceProvider
         $this->publishes([
             realpath(__DIR__.'/../../resources/lang') => resource_path('lang/vendor/rinvex/fort'),
         ], 'lang');
-
-        // Publish views
-        $this->publishes([
-            realpath(__DIR__.'/../../resources/views') => resource_path('views/vendor/rinvex/fort'),
-        ], 'views');
     }
 
     /**
@@ -141,14 +136,10 @@ class FortServiceProvider extends ServiceProvider
     public function loadRoutes(Router $router)
     {
         // Load routes
-        if ($this->app->routesAreCached()) {
-            $this->app->booted(function () {
-                require $this->app->getCachedRoutesPath();
-            });
-        } else {
-            // Load the application routes
-            require __DIR__.'/../../routes/web.backend.php';
-            require __DIR__.'/../../routes/web.frontend.php';
+        if (! $this->app->routesAreCached() && file_exists(base_path('routes/web.rinvex.fort.php'))) {
+            $router->middleware('web')
+                 ->namespace($this->getAppNamespace().'Http\Controllers')
+                 ->group(base_path('routes/web.rinvex.fort.php'));
 
             $this->app->booted(function () use ($router) {
                 $router->getRoutes()->refreshNameLookups();
