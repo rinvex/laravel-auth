@@ -43,8 +43,6 @@ class FortServiceProvider extends ServiceProvider
         // Override Exception Handler
         $this->overrideExceptionHandler();
 
-        // Register the deferred Fort Service Provider
-        $this->app->register(FortDeferredServiceProvider::class);
     }
 
     /**
