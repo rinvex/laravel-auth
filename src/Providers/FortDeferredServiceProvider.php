@@ -15,9 +15,6 @@
 
 namespace Rinvex\Fort\Providers;
 
-use Collective\Html\FormFacade;
-use Collective\Html\HtmlFacade;
-use Illuminate\Foundation\AliasLoader;
 use Rinvex\Fort\Services\BrokerManager;
 use Illuminate\Support\ServiceProvider;
 use Collective\Html\HtmlServiceProvider;
@@ -103,9 +100,6 @@ class FortDeferredServiceProvider extends ServiceProvider
         // Register the LaravelCollective HTML Service Provider
         $this->app->register(HtmlServiceProvider::class);
 
-        // Alias the LaravelCollective Form & HTML Facades
-        AliasLoader::getInstance()->alias('Form', FormFacade::class);
-        AliasLoader::getInstance()->alias('Html', HtmlFacade::class);
     }
 
     /**
