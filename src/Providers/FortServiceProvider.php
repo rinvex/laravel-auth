@@ -198,7 +198,7 @@ class FortServiceProvider extends ServiceProvider
     {
         $this->app->singleton(
             \Illuminate\Contracts\Debug\ExceptionHandler::class,
-            \Rinvex\Fort\Exceptions\ExceptionHandler::class
+            \Rinvex\Fort\Handlers\ExceptionHandler::class
         );
     }
 }

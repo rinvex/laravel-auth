@@ -13,7 +13,7 @@
  * Link:    https://rinvex.com
  */
 
-namespace Rinvex\Fort\Exceptions;
+namespace Rinvex\Fort\Handlers;
 
 use Exception;
 use Illuminate\Auth\AuthenticationException;
