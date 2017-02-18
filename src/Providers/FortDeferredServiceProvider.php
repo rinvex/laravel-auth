@@ -17,7 +17,6 @@ namespace Rinvex\Fort\Providers;
 
 use Collective\Html\FormFacade;
 use Collective\Html\HtmlFacade;
-use Rinvex\Fort\Services\AccessGate;
 use Illuminate\Foundation\AliasLoader;
 use Rinvex\Fort\Services\BrokerManager;
 use Illuminate\Support\ServiceProvider;
@@ -38,7 +37,6 @@ use Rinvex\Fort\Console\Commands\UserAssignRoleCommand;
 use Rinvex\Fort\Console\Commands\UserRemoveRoleCommand;
 use Rinvex\Fort\Console\Commands\UserGiveAbilityCommand;
 use Rinvex\Fort\Console\Commands\RoleGiveAbilityCommand;
-use Illuminate\Contracts\Auth\Access\Gate as GateContract;
 use Rinvex\Fort\Console\Commands\RoleRevokeAbilityCommand;
 use Rinvex\Fort\Console\Commands\UserRevokeAbilityCommand;
 use Rinvex\Fort\Console\Commands\PasswordTokenClearCommand;
@@ -96,7 +94,6 @@ class FortDeferredServiceProvider extends ServiceProvider
         $this->commands($this->commands);
 
         // Register bindings
-        $this->registerAccessGate();
         $this->registerBrokerManagers();
         $this->registerBladeExtensions();
 
@@ -109,20 +106,6 @@ class FortDeferredServiceProvider extends ServiceProvider
         // Alias the LaravelCollective Form & HTML Facades
         AliasLoader::getInstance()->alias('Form', FormFacade::class);
         AliasLoader::getInstance()->alias('Html', HtmlFacade::class);
-    }
-
-    /**
-     * Register the access gate service.
-     *
-     * @return void
-     */
-    protected function registerAccessGate()
-    {
-        $this->app->singleton(GateContract::class, function ($app) {
-            return new AccessGate($app, function () use ($app) {
-                return call_user_func($app['auth']->userResolver());
-            });
-        });
     }
 
     /**
@@ -194,7 +177,6 @@ class FortDeferredServiceProvider extends ServiceProvider
     public function provides()
     {
         return array_keys($this->commands) + [
-                GateContract::class,
                 'rinvex.fort.passwordreset',
                 'rinvex.fort.emailverification',
                 \Illuminate\Contracts\Debug\ExceptionHandler::class,

@@ -19,6 +19,7 @@ use Rinvex\Fort\Models\Role;
 use Rinvex\Fort\Models\User;
 use Illuminate\Routing\Router;
 use Rinvex\Fort\Models\Ability;
+use Rinvex\Fort\Services\AccessGate;
 use Illuminate\Support\Facades\Auth;
 use Rinvex\Fort\Guards\SessionGuard;
 use Rinvex\Fort\Handlers\RoleHandler;
@@ -29,6 +30,7 @@ use Rinvex\Fort\Handlers\GenericHandler;
 use Rinvex\Fort\Http\Middleware\Abilities;
 use Rinvex\Fort\Http\Middleware\Authenticate;
 use Rinvex\Fort\Http\Middleware\RedirectIfAuthenticated;
+use Illuminate\Contracts\Auth\Access\Gate as GateContract;
 
 class FortServiceProvider extends ServiceProvider
 {
@@ -43,6 +45,22 @@ class FortServiceProvider extends ServiceProvider
         // Override Exception Handler
         $this->overrideExceptionHandler();
 
+        // Register bindings
+        $this->registerAccessGate();
+    }
+
+    /**
+     * Register the access gate service.
+     *
+     * @return void
+     */
+    protected function registerAccessGate()
+    {
+        $this->app->singleton(GateContract::class, function ($app) {
+            return new AccessGate($app, function () use ($app) {
+                return call_user_func($app['auth']->userResolver());
+            });
+        });
     }
 
     /**
