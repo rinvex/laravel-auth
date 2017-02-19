@@ -106,8 +106,8 @@
                             <h3>This view is using an example blade layout view.</h3>
                             <div class="alert alert-warning">
                                 <strong>Rinvex Fort default layout view!</strong> This view:
-                                <code>rinvex/fort::frontend/common.layout</code> is extending a default stub layout
-                                <code>rinvex/fort::frontend/common.layout-example</code> which is a default layout to show
+                                <code>frontend.common.layout</code> is extending a default stub layout
+                                <code>frontend.common.layout-example</code> which is a default layout to show
                                 <highlight>Rinvex Fort</highlight> features, and that view needs overriding to your own custom layout.
                             </div>
 
@@ -122,7 +122,7 @@
                             <hr />
                             <p>
                                 Then open
-                                <code>"resources/views/vendor/rinvex/fort/frontend/common/layout.blade.php"</code> and change the extended layout view to the layout view you are using in your app eg:
+                                <code>"resources/views/frontend/common/layout.blade.php"</code> and change the extended layout view to the layout view you are using in your app eg:
                                 <code>"layouts.app"</code>. See
                                 <a href="https://laravel.com/docs/5.3/blade#extending-a-layout" target="_blank">Laravel Docs on Extending A Layout</a> for more info.
                             </p>

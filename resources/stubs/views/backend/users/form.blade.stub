@@ -1,5 +1,5 @@
 {{-- Master Layout --}}
-@extends('rinvex/fort::backend/common.layout')
+@extends('backend.common.layout')
 
 {{-- Page Title --}}
 @section('title')
@@ -17,11 +17,11 @@
 
     <div class="container">
 
-        @include('rinvex/fort::frontend/alerts.success')
-        @include('rinvex/fort::frontend/alerts.warning')
-        @include('rinvex/fort::frontend/alerts.error')
+        @include('frontend.alerts.success')
+        @include('frontend.alerts.warning')
+        @include('frontend.alerts.error')
         @if($user->exists)
-            @include('rinvex/fort::backend/common.confirm-modal', ['type' => 'user'])
+            @include('backend.common.confirm-modal', ['type' => 'user'])
         @endif
 
         @if ($action === 'update')

@@ -1,5 +1,5 @@
 {{-- Master Layout --}}
-@extends('rinvex/fort::frontend/common.layout')
+@extends('frontend.common.layout')
 
 {{-- Page Title --}}
 @section('title')
@@ -22,9 +22,9 @@
                     <div class="panel-body">
                         {{ Form::open(['route' => 'rinvex.fort.frontend.verification.phone.process', 'class' => 'form-horizontal']) }}
 
-                            @include('rinvex/fort::frontend/alerts.success')
-                            @include('rinvex/fort::frontend/alerts.warning')
-                            @include('rinvex/fort::frontend/alerts.error')
+                            @include('frontend.alerts.success')
+                            @include('frontend.alerts.warning')
+                            @include('frontend.alerts.error')
 
                             <div class="form-group{{ $errors->has('token') ? ' has-error' : '' }}">
                                 {{ Form::label('token', trans('rinvex/fort::forms.common.authentication_code'), ['class' => 'col-md-4 control-label']) }}
