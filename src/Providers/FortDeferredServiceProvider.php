@@ -17,9 +17,7 @@ namespace Rinvex\Fort\Providers;
 
 use Rinvex\Fort\Services\BrokerManager;
 use Illuminate\Support\ServiceProvider;
-use Collective\Html\HtmlServiceProvider;
 use Illuminate\View\Compilers\BladeCompiler;
-use Laravel\Socialite\SocialiteServiceProvider;
 use Rinvex\Fort\Console\Commands\MakeAuthCommand;
 use Rinvex\Fort\Console\Commands\UserFindCommand;
 use Rinvex\Fort\Console\Commands\RoleFindCommand;
@@ -89,12 +87,6 @@ class FortDeferredServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        // Register the Socialite Service Provider
-        $this->app->register(SocialiteServiceProvider::class);
-
-        // Register the LaravelCollective HTML Service Provider
-        $this->app->register(HtmlServiceProvider::class);
-
         // Register bindings
         $this->registerBrokerManagers();
         $this->registerBladeExtensions();

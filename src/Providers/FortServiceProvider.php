@@ -18,6 +18,8 @@ namespace Rinvex\Fort\Providers;
 use Rinvex\Fort\Models\Role;
 use Rinvex\Fort\Models\User;
 use Illuminate\Routing\Router;
+use Collective\Html\FormFacade;
+use Collective\Html\HtmlFacade;
 use Rinvex\Fort\Models\Ability;
 use Rinvex\Fort\Services\AccessGate;
 use Illuminate\Support\Facades\Auth;
@@ -26,18 +28,15 @@ use Rinvex\Fort\Handlers\RoleHandler;
 use Rinvex\Fort\Handlers\UserHandler;
 use Illuminate\Foundation\AliasLoader;
 use Illuminate\Support\ServiceProvider;
+use Collective\Html\HtmlServiceProvider;
 use Rinvex\Fort\Handlers\AbilityHandler;
 use Rinvex\Fort\Handlers\GenericHandler;
 use Rinvex\Fort\Http\Middleware\Abilities;
 use Rinvex\Fort\Http\Middleware\Authenticate;
+use Laravel\Socialite\SocialiteServiceProvider;
 use Illuminate\Console\DetectsApplicationNamespace;
 use Rinvex\Fort\Http\Middleware\RedirectIfAuthenticated;
 use Illuminate\Contracts\Auth\Access\Gate as GateContract;
-
-use Collective\Html\FormFacade;
-use Collective\Html\HtmlFacade;
-use Collective\Html\HtmlServiceProvider;
-use Laravel\Socialite\SocialiteServiceProvider;
 
 class FortServiceProvider extends ServiceProvider
 {
