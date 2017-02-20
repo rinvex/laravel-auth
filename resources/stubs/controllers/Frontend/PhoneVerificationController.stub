@@ -16,6 +16,7 @@
 namespace {{namespace}}Http\Controllers\Frontend;
 
 use Carbon\Carbon;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Rinvex\Fort\Guards\SessionGuard;
 use {{namespace}}Http\Controllers\AbstractController;
@@ -33,6 +34,10 @@ class PhoneVerificationController extends AbstractController
      */
     public function request(PhoneVerificationSendRequest $request)
     {
+        if ($type = $this->invalidity($request)) {
+            return $this->redirect($type);
+        }
+
         // If Two-Factor authentication failed, remember Two-Factor persistence
         Auth::guard($this->getGuard())->rememberTwoFactor();
 
@@ -48,6 +53,10 @@ class PhoneVerificationController extends AbstractController
      */
     public function send(PhoneVerificationSendRequest $request)
     {
+        if ($type = $this->invalidity($request)) {
+            return $this->redirect($type);
+        }
+
         // Send phone verification notification
         $request->user($this->getGuard())->sendPhoneVerificationNotification(false, $request->get('method'));
 
@@ -66,6 +75,10 @@ class PhoneVerificationController extends AbstractController
      */
     public function verify(PhoneVerificationRequest $request)
     {
+        if ($type = $this->invalidity($request)) {
+            return $this->redirect($type);
+        }
+
         // If Two-Factor authentication failed, remember Two-Factor persistence
         Auth::guard($this->getGuard())->rememberTwoFactor();
 
@@ -83,6 +96,10 @@ class PhoneVerificationController extends AbstractController
      */
     public function process(PhoneVerificationRequest $request)
     {
+        if ($type = $this->invalidity($request)) {
+            return $this->redirect($type);
+        }
+
         $guard = $this->getGuard();
         $token = $request->get('token');
         $user = session('rinvex.fort.twofactor.user') ?: $request->user($guard);
@@ -119,6 +136,82 @@ class PhoneVerificationController extends AbstractController
                     'withInput'  => $request->only(['token']),
                     'withErrors' => ['token' => trans($result)],
                 ]);
+        }
+    }
+
+    /**
+     * Check request validity.
+     *
+     * @param \Illuminate\Http\Request $request
+     *
+     * @return string|null
+     */
+    protected function invalidity(Request $request)
+    {
+        $user = $request->user($this->getGuard());
+        $attemptUser = Auth::guard($this->getGuard())->attemptUser();
+        $providers = config('rinvex.fort.twofactor.providers');
+
+        // Not logged in, No login attempt, Phone verification attempt
+        if (! $user && ! $attemptUser) {
+            return 'session';
+        }
+
+        // No login attempt, Logged in user, no country, Phone verification attempt (account update)
+        if ((! $attemptUser && $user && ! $user->country)) {
+            return ! in_array('phone', $providers) ? 'phone' : 'country';
+        }
+
+        // Not logged in, Login attempt, no country, TwoFactor TOTP disabled
+        if (! $user && $attemptUser && ! $attemptUser->country && ! isset(session('rinvex.fort.twofactor.methods')['totp'])) {
+            return 'home';
+        }
+
+        return null;
+    }
+
+    /**
+     * Return redirect response.
+     *
+     * @param string $type
+     *
+     * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse
+     */
+    protected function redirect($type)
+    {
+        switch ($type) {
+            // Logged in user, no country, phone verification attempt (account update)
+            case 'country':
+                return intend([
+                    'route' => 'rinvex.fort.frontend.user.settings',
+                    'withErrors' => ['country' => trans('rinvex/fort::messages.account.country_required')],
+                ]);
+                break;
+
+            // Logged in user, TwoFactor Phone disabled, phone verification attempt (account update)
+            case 'phone':
+                return intend([
+                    'route' => 'rinvex.fort.frontend.user.settings',
+                    'withErrors' => ['rinvex.fort.auth.twofactor.phone.disabled' => trans('rinvex/fort::messages.verification.twofactor.phone.disabled')],
+                ]);
+                break;
+
+            // No login attempt, no user instance, phone verification attempt
+            case 'session':
+                return intend([
+                    'route' => 'rinvex.fort.frontend.auth.login',
+                    'withErrors' => ['rinvex.fort.auth.required' => trans('rinvex/fort::messages.auth.session.required')],
+                ]);
+                break;
+
+            // Login attempt, no country, enabled Two-Factor
+            case 'home':
+            default:
+                return intend([
+                    'url' => '/',
+                    'withErrors' => ['rinvex.fort.auth.country' => trans('rinvex/fort::messages.verification.twofactor.phone.country_required')],
+                ]);
+                break;
         }
     }
 }

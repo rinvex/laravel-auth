@@ -15,8 +15,7 @@
 
 namespace {{namespace}}Http\Requests\Frontend;
 
-use Rinvex\Fort\Models\User;
-use Rinvex\Support\Http\Requests\FormRequest;
+use Illuminate\Foundation\Http\FormRequest;
 
 class EmailVerificationRequest extends FormRequest
 {
@@ -27,22 +26,7 @@ class EmailVerificationRequest extends FormRequest
      */
     public function authorize()
     {
-        if ((($user = $this->user()) && $user->email_verified) || ($this->get('email') && array_get(User::where('email', $this->get('email'))->get(), 'email_verified'))) {
-            return false;
-        }
-
         return true;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function forbiddenResponse()
-    {
-        return intend([
-            'url'  => '/',
-            'with' => ['warning' => trans('rinvex/fort::messages.verification.email.already')],
-        ]);
     }
 
     /**
@@ -74,6 +58,6 @@ class EmailVerificationRequest extends FormRequest
             return parent::getRedirectUrl();
         }
 
-        return route('rinvex.fort.frontend.verification.email.request');
+        return $this->redirector->getUrlGenerator()->route('rinvex.fort.frontend.verification.email.request');
     }
 }

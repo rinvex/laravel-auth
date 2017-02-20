@@ -16,25 +16,28 @@
 namespace {{namespace}}Http\Controllers\Frontend;
 
 use Carbon\Carbon;
+use Illuminate\Http\Request;
 use Illuminate\Support\MessageBag;
 use Illuminate\Support\ViewErrorBag;
 use Rinvex\Fort\Services\TwoFactorTotpProvider;
 use {{namespace}}Http\Controllers\AuthenticatedController;
-use {{namespace}}Http\Requests\Frontend\TwoFactorTotpUpdateRequest;
-use {{namespace}}Http\Requests\Frontend\TwoFactorPhoneUpdateRequest;
 
 class TwoFactorSettingsController extends AuthenticatedController
 {
     /**
      * Show the Two-Factor TOTP enable form.
      *
-     * @param \{{namespace}}Http\Requests\Frontend\TwoFactorTotpUpdateRequest $request
-     * @param \Rinvex\Fort\Services\TwoFactorTotpProvider                    $totpProvider
+     * @param \Illuminate\Http\Request                    $request
+     * @param \Rinvex\Fort\Services\TwoFactorTotpProvider $totpProvider
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\Response|\Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse
      */
-    public function enableTotp(TwoFactorTotpUpdateRequest $request, TwoFactorTotpProvider $totpProvider)
+    public function enableTotp(Request $request, TwoFactorTotpProvider $totpProvider)
     {
+        if (! in_array('totp', config('rinvex.fort.twofactor.providers'))) {
+            return $this->redirect('totp');
+        }
+
         $currentUser = $request->user($this->getGuard());
         $settings = $currentUser->getTwoFactor();
 
@@ -60,13 +63,17 @@ class TwoFactorSettingsController extends AuthenticatedController
     /**
      * Process the Two-Factor TOTP enable form.
      *
-     * @param \{{namespace}}Http\Requests\Frontend\TwoFactorTotpUpdateRequest $request
-     * @param \Rinvex\Fort\Services\TwoFactorTotpProvider                    $totpProvider
+     * @param \Illuminate\Http\Request                    $request
+     * @param \Rinvex\Fort\Services\TwoFactorTotpProvider $totpProvider
      *
      * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse
      */
-    public function updateTotp(TwoFactorTotpUpdateRequest $request, TwoFactorTotpProvider $totpProvider)
+    public function updateTotp(Request $request, TwoFactorTotpProvider $totpProvider)
     {
+        if (! in_array('totp', config('rinvex.fort.twofactor.providers'))) {
+            return $this->redirect('totp');
+        }
+
         $currentUser = $request->user($this->getGuard());
         $settings = $currentUser->getTwoFactor();
         $secret = array_get($settings, 'totp.secret');
@@ -99,12 +106,16 @@ class TwoFactorSettingsController extends AuthenticatedController
     /**
      * Process the Two-Factor TOTP disable.
      *
-     * @param \{{namespace}}Http\Requests\Frontend\TwoFactorTotpUpdateRequest $request
+     * @param \Illuminate\Http\Request $request
      *
      * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse
      */
-    public function disableTotp(TwoFactorTotpUpdateRequest $request)
+    public function disableTotp(Request $request)
     {
+        if (! in_array('totp', config('rinvex.fort.twofactor.providers'))) {
+            return $this->redirect('totp');
+        }
+
         $currentUser = $request->user($this->getGuard());
         $settings = $currentUser->getTwoFactor();
 
@@ -123,12 +134,16 @@ class TwoFactorSettingsController extends AuthenticatedController
     /**
      * Process the Two-Factor Phone enable.
      *
-     * @param \{{namespace}}Http\Requests\Frontend\TwoFactorPhoneUpdateRequest $request
+     * @param \Illuminate\Http\Request $request
      *
      * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse
      */
-    public function enablePhone(TwoFactorPhoneUpdateRequest $request)
+    public function enablePhone(Request $request)
     {
+        if (! in_array('phone', config('rinvex.fort.twofactor.providers'))) {
+            return $this->redirect('phone');
+        }
+
         $currentUser = $request->user($this->getGuard());
 
         if (! $currentUser->phone || ! $currentUser->phone_verified) {
@@ -155,12 +170,16 @@ class TwoFactorSettingsController extends AuthenticatedController
     /**
      * Process the Two-Factor Phone disable.
      *
-     * @param \{{namespace}}Http\Requests\Frontend\TwoFactorPhoneUpdateRequest $request
+     * @param \Illuminate\Http\Request $request
      *
      * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse
      */
-    public function disablePhone(TwoFactorPhoneUpdateRequest $request)
+    public function disablePhone(Request $request)
     {
+        if (! in_array('phone', config('rinvex.fort.twofactor.providers'))) {
+            return $this->redirect('phone');
+        }
+
         $currentUser = $request->user($this->getGuard());
         $settings = $currentUser->getTwoFactor();
 
@@ -179,12 +198,16 @@ class TwoFactorSettingsController extends AuthenticatedController
     /**
      * Process the Two-Factor OTP backup.
      *
-     * @param \{{namespace}}Http\Requests\Frontend\TwoFactorTotpUpdateRequest $request
+     * @param \Illuminate\Http\Request $request
      *
      * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse
      */
-    public function backupTotp(TwoFactorTotpUpdateRequest $request)
+    public function backupTotp(Request $request)
     {
+        if (! in_array('totp', config('rinvex.fort.twofactor.providers'))) {
+            return $this->redirect('totp');
+        }
+
         $currentUser = $request->user($this->getGuard());
         $settings = $currentUser->getTwoFactor();
 
@@ -222,5 +245,20 @@ class TwoFactorSettingsController extends AuthenticatedController
         }
 
         return $backup;
+    }
+
+    /**
+     * Return redirect response.
+     *
+     * @param string $twofactorProvider
+     *
+     * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse
+     */
+    protected function redirect($twofactorProvider)
+    {
+        return intend([
+            'route' => 'rinvex.fort.frontend.user.settings',
+            'withErrors' => ['token' => trans("rinvex/fort::messages.verification.twofactor.{$twofactorProvider}.globaly_disabled")],
+        ]);
     }
 }

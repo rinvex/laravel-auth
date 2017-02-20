@@ -15,7 +15,7 @@
 
 namespace {{namespace}}Http\Requests\Frontend;
 
-use Rinvex\Support\Http\Requests\FormRequest;
+use Illuminate\Foundation\Http\FormRequest;
 
 class UserAuthenticationRequest extends FormRequest
 {

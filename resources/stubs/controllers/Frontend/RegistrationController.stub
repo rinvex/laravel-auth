@@ -15,9 +15,9 @@
 
 namespace {{namespace}}Http\Controllers\Frontend;
 
+use Illuminate\Http\Request;
 use Rinvex\Fort\Models\User;
 use {{namespace}}Http\Controllers\AbstractController;
-use {{namespace}}Http\Requests\Frontend\UserRegistrationRequest;
 
 class RegistrationController extends AbstractController
 {
@@ -32,25 +32,33 @@ class RegistrationController extends AbstractController
     /**
      * Show the registration form.
      *
-     * @param \{{namespace}}Http\Requests\Frontend\UserRegistrationRequest $request
+     * @param \Illuminate\Http\Request $request
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\Response|\Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse
      */
-    public function form(UserRegistrationRequest $request)
+    public function form(Request $request)
     {
+        if (! config('rinvex.fort.registration.enabled')) {
+            return $this->redirect();
+        }
+
         return view('frontend.authentication.register');
     }
 
     /**
      * Process the registration form.
      *
-     * @param \{{namespace}}Http\Requests\Frontend\UserRegistrationRequest $request
-     * @param \Rinvex\Fort\Models\User                                    $user
+     * @param \Illuminate\Http\Request $request
+     * @param \Rinvex\Fort\Models\User $user
      *
      * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse
      */
-    public function register(UserRegistrationRequest $request, User $user)
+    public function register(Request $request, User $user)
     {
+        if (! config('rinvex.fort.registration.enabled')) {
+            return $this->redirect();
+        }
+
         // Prepare registration data
         $input = $request->only(['username', 'email', 'password', 'password_confirmation']);
         $active = ['active' => ! config('rinvex.fort.registration.moderated')];
@@ -78,6 +86,19 @@ class RegistrationController extends AbstractController
         return intend([
             'route' => 'rinvex.fort.frontend.auth.login',
             'with'  => ['success' => trans('rinvex/fort::messages.register.success')],
+        ]);
+    }
+
+    /**
+     * Return redirect response.
+     *
+     * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse
+     */
+    protected function redirect()
+    {
+        return intend([
+            'back' => true,
+            'withErrors' => ['rinvex.fort.registration.disabled' => trans('rinvex/fort::messages.register.disabled')],
         ]);
     }
 }

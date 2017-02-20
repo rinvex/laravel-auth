@@ -15,6 +15,8 @@
 
 namespace {{namespace}}Http\Controllers\Frontend;
 
+use Illuminate\Http\Request;
+use Rinvex\Fort\Models\User;
 use {{namespace}}Http\Controllers\AbstractController;
 use Rinvex\Fort\Contracts\EmailVerificationBrokerContract;
 use {{namespace}}Http\Requests\Frontend\EmailVerificationRequest;
@@ -24,10 +26,14 @@ class EmailVerificationController extends AbstractController
     /**
      * Show the email verification request form.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\Response|\Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse
      */
     public function request(EmailVerificationRequest $request)
     {
+        if (! $this->isValid($request)) {
+            return $this->redirect();
+        }
+
         return view('frontend.verification.email.request');
     }
 
@@ -40,6 +46,10 @@ class EmailVerificationController extends AbstractController
      */
     public function send(EmailVerificationRequest $request)
     {
+        if (! $this->isValid($request)) {
+            return $this->redirect();
+        }
+
         $result = app('rinvex.fort.emailverification')
             ->broker($this->getBroker())
             ->send($request->only('email'));
@@ -69,12 +79,16 @@ class EmailVerificationController extends AbstractController
      */
     public function verify(EmailVerificationRequest $request)
     {
+        if (! $this->isValid($request)) {
+            return $this->redirect();
+        }
+
         $result = app('rinvex.fort.emailverification')->broker($this->getBroker())->verify($request->only(['email', 'token']));
 
         switch ($result) {
             case EmailVerificationBrokerContract::EMAIL_VERIFIED:
                 return intend([
-                    'route' => $request->user() ? 'rinvex.fort.frontend.auth.login' : 'rinvex.fort.frontend.user.settings',
+                    'route' => $request->user($this->getGuard()) ? 'rinvex.fort.frontend.user.settings' : 'rinvex.fort.frontend.auth.login',
                     'with'  => ['success' => trans($result)],
                 ]);
 
@@ -87,5 +101,30 @@ class EmailVerificationController extends AbstractController
                     'withErrors' => ['token' => trans($result)],
                 ]);
         }
+    }
+
+    /**
+     * Check whether the given request is valid.
+     *
+     * @param \Illuminate\Http\Request $request
+     *
+     * @return bool
+     */
+    protected function isValid(Request $request)
+    {
+        return ! ((($user = $request->user($this->getGuard())) && $user->email_verified) || ($request->get('email') && array_get(User::where('email', $request->get('email'))->first(), 'email_verified')));
+    }
+
+    /**
+     * Return redirect response.
+     *
+     * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse
+     */
+    protected function redirect()
+    {
+        return intend([
+            'url' => '/',
+            'with' => ['warning' => trans('rinvex/fort::messages.verification.email.already')],
+        ]);
     }
 }
