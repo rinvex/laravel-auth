@@ -17,14 +17,14 @@ namespace Rinvex\Fort\Console\Commands;
 
 use Illuminate\Console\Command;
 
-class PasswordTokenClearCommand extends Command
+class ClearResetsCommand extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'fort:reset:clear {broker? : The name of the password broker}';
+    protected $signature = 'auth:clear-resets {name? : The name of the password broker}';
 
     /**
      * The console command description.
@@ -38,9 +38,9 @@ class PasswordTokenClearCommand extends Command
      *
      * @return void
      */
-    public function handle()
+    public function fire()
     {
-        $this->laravel['rinvex.fort.resetter']->broker($this->argument('broker'))->getRepository()->deleteExpired();
+        $this->laravel['auth.password']->broker($this->argument('name'))->getRepository()->deleteExpired();
 
         $this->info('Expired reset tokens cleared!');
     }

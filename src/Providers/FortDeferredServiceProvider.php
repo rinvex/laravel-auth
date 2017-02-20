@@ -78,7 +78,6 @@ class FortDeferredServiceProvider extends ServiceProvider
         'UserRevokeAbility' => 'command.rinvex.fort.user.revokeability',
 
         'VerificationTokenClear' => 'command.rinvex.fort.verification.tokenclear',
-        'PasswordresetTokenClear' => 'command.rinvex.fort.user.passwordreset.tokenclear',
 
     ];
 
@@ -88,8 +87,9 @@ class FortDeferredServiceProvider extends ServiceProvider
     public function register()
     {
         // Register bindings
-        $this->registerBrokerManagers();
+        $this->registerPasswordBroker();
         $this->registerBladeExtensions();
+        $this->registerVerificationBroker();
 
         // Register artisan commands
         foreach (array_keys($this->commands) as $command) {
@@ -97,6 +97,81 @@ class FortDeferredServiceProvider extends ServiceProvider
         }
 
         $this->commands(array_values($this->commands));
+    }
+
+    /**
+     * Register the verification broker.
+     *
+     * @return void
+     */
+    protected function registerVerificationBroker()
+    {
+        $this->app->singleton('rinvex.fort.emailverification', function ($app) {
+            return new BrokerManager($app, 'EmailVerification');
+        });
+
+        $this->app->bind('rinvex.fort.emailverification.broker', function ($app) {
+            return $app->make('rinvex.fort.emailverification')->broker();
+        });
+    }
+
+    /**
+     * Register the password broker.
+     *
+     * @return void
+     */
+    protected function registerPasswordBroker()
+    {
+        $this->app->singleton('auth.password', function ($app) {
+            return new BrokerManager($app, 'PasswordReset');
+        });
+
+        $this->app->bind('auth.password.broker', function ($app) {
+            return $app->make('auth.password')->broker();
+        });
+    }
+
+    /**
+     * Register the blade extensions.
+     *
+     * @return void
+     */
+    protected function registerBladeExtensions()
+    {
+        $this->app->afterResolving('blade.compiler', function (BladeCompiler $bladeCompiler) {
+
+            // @role('writer') / @hasrole(['writer', 'editor'])
+            $bladeCompiler->directive('role', function ($roles) {
+                return "<?php if(auth()->user()->hasRole({$roles})): ?>";
+            });
+            $bladeCompiler->directive('endrole', function () {
+                return '<?php endif; ?>';
+            });
+
+            // @hasrole('writer') / @hasrole(['writer', 'editor'])
+            $bladeCompiler->directive('hasrole', function ($roles) {
+                return "<?php if(auth()->user()->hasRole({$roles})): ?>";
+            });
+            $bladeCompiler->directive('endhasrole', function () {
+                return '<?php endif; ?>';
+            });
+
+            // @hasanyrole(['writer', 'editor'])
+            $bladeCompiler->directive('hasanyrole', function ($roles) {
+                return "<?php if(auth()->user()->hasAnyRole({$roles})): ?>";
+            });
+            $bladeCompiler->directive('endhasanyrole', function () {
+                return '<?php endif; ?>';
+            });
+
+            // @hasallroles(['writer', 'editor'])
+            $bladeCompiler->directive('hasallroles', function ($roles) {
+                return "<?php if(auth()->user()->hasAllRoles({$roles})): ?>";
+            });
+            $bladeCompiler->directive('endhasallroles', function () {
+                return '<?php endif; ?>';
+            });
+        });
     }
 
     /**
@@ -328,79 +403,6 @@ class FortDeferredServiceProvider extends ServiceProvider
     }
 
     /**
-     * Register clear password reset tokens command.
-     *
-     * @return void
-     */
-    protected function registerPasswordresetTokenClearCommand()
-    {
-        $this->app->singleton('command.rinvex.fort.user.passwordreset.tokenclear', function ($app) {
-            return new PasswordTokenClearCommand();
-        });
-    }
-
-    /**
-     * Register the broker managers.
-     *
-     * @return void
-     */
-    protected function registerBrokerManagers()
-    {
-        // Register reset broker manager
-        $this->app->singleton('rinvex.fort.passwordreset', function ($app) {
-            return new BrokerManager($app, 'PasswordReset');
-        });
-
-        // Register verification broker manager
-        $this->app->singleton('rinvex.fort.emailverification', function ($app) {
-            return new BrokerManager($app, 'EmailVerification');
-        });
-    }
-
-    /**
-     * Register the blade extensions.
-     *
-     * @return void
-     */
-    protected function registerBladeExtensions()
-    {
-        $this->app->afterResolving('blade.compiler', function (BladeCompiler $bladeCompiler) {
-
-            // @role('writer') / @hasrole(['writer', 'editor'])
-            $bladeCompiler->directive('role', function ($roles) {
-                return "<?php if(auth()->user()->hasRole({$roles})): ?>";
-            });
-            $bladeCompiler->directive('endrole', function () {
-                return '<?php endif; ?>';
-            });
-
-            // @hasrole('writer') / @hasrole(['writer', 'editor'])
-            $bladeCompiler->directive('hasrole', function ($roles) {
-                return "<?php if(auth()->user()->hasRole({$roles})): ?>";
-            });
-            $bladeCompiler->directive('endhasrole', function () {
-                return '<?php endif; ?>';
-            });
-
-            // @hasanyrole(['writer', 'editor'])
-            $bladeCompiler->directive('hasanyrole', function ($roles) {
-                return "<?php if(auth()->user()->hasAnyRole({$roles})): ?>";
-            });
-            $bladeCompiler->directive('endhasanyrole', function () {
-                return '<?php endif; ?>';
-            });
-
-            // @hasallroles(['writer', 'editor'])
-            $bladeCompiler->directive('hasallroles', function ($roles) {
-                return "<?php if(auth()->user()->hasAllRoles({$roles})): ?>";
-            });
-            $bladeCompiler->directive('endhasallroles', function () {
-                return '<?php endif; ?>';
-            });
-        });
-    }
-
-    /**
      * Get the services provided by the provider.
      *
      * @return array
@@ -408,7 +410,7 @@ class FortDeferredServiceProvider extends ServiceProvider
     public function provides()
     {
         return array_merge(array_values($this->commands), [
-            'rinvex.fort.passwordreset',
+            'auth.password',
             'rinvex.fort.emailverification',
             \Illuminate\Contracts\Debug\ExceptionHandler::class,
         ]);
