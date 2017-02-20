@@ -17,7 +17,9 @@ namespace Rinvex\Fort\Handlers;
 
 use Exception;
 use Illuminate\Auth\AuthenticationException;
+use Rinvex\Fort\Exceptions\AuthorizationException;
 use App\Exceptions\Handler as BaseExceptionHandler;
+use Rinvex\Fort\Exceptions\InvalidPersistenceException;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class ExceptionHandler extends BaseExceptionHandler
