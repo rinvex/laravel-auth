@@ -40,7 +40,7 @@ class PasswordTokenClearCommand extends Command
      */
     public function handle()
     {
-        $this->laravel['rinvex.fort.resetter']->broker($this->argument('broker'))->getTokenRepository()->deleteExpired();
+        $this->laravel['rinvex.fort.resetter']->broker($this->argument('broker'))->getRepository()->deleteExpired();
 
         $this->info('Expired reset tokens cleared!');
     }

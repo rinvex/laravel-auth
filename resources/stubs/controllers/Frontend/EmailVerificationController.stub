@@ -52,7 +52,7 @@ class EmailVerificationController extends AbstractController
 
         $result = app('rinvex.fort.emailverification')
             ->broker($this->getBroker())
-            ->send($request->only('email'));
+            ->sendVerificationLink($request->only(['email']));
 
         switch ($result) {
             case EmailVerificationBrokerContract::LINK_SENT:
@@ -64,7 +64,7 @@ class EmailVerificationController extends AbstractController
             default:
                 return intend([
                     'back'       => true,
-                    'withInput'  => $request->only('email'),
+                    'withInput'  => $request->only(['email']),
                     'withErrors' => ['email' => trans($result)],
                 ]);
         }
@@ -97,7 +97,7 @@ class EmailVerificationController extends AbstractController
             default:
                 return intend([
                     'route'      => 'rinvex.fort.frontend.verification.email.request',
-                    'withInput'  => $request->only('email'),
+                    'withInput'  => $request->only(['email']),
                     'withErrors' => ['token' => trans($result)],
                 ]);
         }

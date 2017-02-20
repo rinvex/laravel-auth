@@ -46,7 +46,7 @@ return [
         'email' => [
             'action'  => 'Verify Email',
             'subject' => 'Your Account Verification Link',
-            'intro'   => "You are receiving this email because account's email requires verification. Click the button below to verify your email address (link expires in :expire minutes)::",
+            'intro'   => "You are receiving this email because account's email requires verification. Click the button below to verify your email address (link expires in :expire minutes):",
             'outro'   => 'If you believe this is sent by mistake, no further action is required. Email verification request reference: Time: :created_at, IP Address: :ip, Agent: :agent.',
 
             'success' => [

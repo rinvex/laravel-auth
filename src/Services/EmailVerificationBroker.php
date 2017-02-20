@@ -55,7 +55,7 @@ class EmailVerificationBroker implements EmailVerificationBrokerContract
     /**
      * {@inheritdoc}
      */
-    public function send(array $credentials)
+    public function sendVerificationLink(array $credentials)
     {
         // First we will check to see if we found a user at the given credentials and
         // if we did not we will redirect back to this current URI with a piece of
@@ -167,7 +167,7 @@ class EmailVerificationBroker implements EmailVerificationBrokerContract
      *
      * @return \Rinvex\Fort\Contracts\EmailVerificationTokenRepositoryContract
      */
-    public function getTokenRepository()
+    public function getRepository()
     {
         return $this->tokens;
     }

@@ -40,7 +40,7 @@ class VerificationTokenClearCommand extends Command
      */
     public function handle()
     {
-        app('rinvex.fort.verifier')->broker($this->argument('broker'))->getTokenRepository()->deleteExpired();
+        app('rinvex.fort.verifier')->broker($this->argument('broker'))->getRepository()->deleteExpired();
 
         $this->info('Expired verification tokens cleared!');
     }

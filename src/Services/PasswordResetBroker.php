@@ -17,19 +17,18 @@ namespace Rinvex\Fort\Services;
 
 use Closure;
 use Illuminate\Support\Arr;
-use Illuminate\Support\Str;
 use UnexpectedValueException;
 use Illuminate\Contracts\Auth\UserProvider;
 use Rinvex\Fort\Contracts\CanResetPasswordContract;
-use Rinvex\Fort\Contracts\PasswordResetBrokerContract;
 use Rinvex\Fort\Contracts\PasswordResetTokenRepositoryContract;
+use Illuminate\Contracts\Auth\PasswordBroker as PasswordBrokerContract;
 
-class PasswordResetBroker implements PasswordResetBrokerContract
+class PasswordResetBroker implements PasswordBrokerContract
 {
     /**
-     * The reset password token repository.
+     * The password token repository.
      *
-     * @var \Rinvex\Fort\Contracts\PasswordResetTokenRepositoryContract
+     * @var \Illuminate\Auth\Passwords\TokenRepositoryInterface
      */
     protected $tokens;
 
@@ -38,7 +37,7 @@ class PasswordResetBroker implements PasswordResetBrokerContract
      *
      * @var \Illuminate\Contracts\Auth\UserProvider
      */
-    protected $userProvider;
+    protected $users;
 
     /**
      * The custom password validator callback.
@@ -56,13 +55,13 @@ class PasswordResetBroker implements PasswordResetBrokerContract
     public function __construct(PasswordResetTokenRepositoryContract $tokens, UserProvider $userProvider)
     {
         $this->tokens = $tokens;
-        $this->userProvider = $userProvider;
+        $this->users = $userProvider;
     }
 
     /**
      * {@inheritdoc}
      */
-    public function send(array $credentials)
+    public function sendResetLink(array $credentials)
     {
         // First we will check to see if we found a user at the given credentials and
         // if we did not we will redirect back to this current URI with a piece of
@@ -79,55 +78,44 @@ class PasswordResetBroker implements PasswordResetBrokerContract
 
         $user->sendPasswordResetNotification($token, $expiration);
 
-        return static::LINK_SENT;
+        return static::RESET_LINK_SENT;
     }
 
     /**
-     * {@inheritdoc}
+     * Reset the password for the given token.
+     *
+     * @param  array  $credentials
+     * @param  \Closure  $callback
+     * @return mixed
      */
-    public function reset(array $credentials, Closure $callback = null)
+    public function reset(array $credentials, Closure $callback)
     {
         // If the responses from the validate method is not a user instance, we will
         // assume that it is a redirect and simply return it from this method and
         // the user is properly redirected having an error message on the post.
-        if (is_null($user = $this->getUser($credentials))) {
-            return static::INVALID_USER;
+        $user = $this->validateReset($credentials);
+
+        if (! $user instanceof CanResetPasswordContract) {
+            return $user;
         }
 
-        if (! $this->tokenExists($user, $credentials['token'])) {
-            return static::INVALID_TOKEN;
-        }
+        $password = $credentials['password'];
 
-        if (! $this->validateNewPassword($credentials)) {
-            return static::INVALID_PASSWORD;
-        }
+        // Once the reset has been validated, we'll call the given callback with the
+        // new password. This gives the user an opportunity to store the password
+        // in their persistent storage. Then we'll delete the token and return.
+        $callback($user, $password);
 
-        // Fire the password reset start event
-        event('rinvex.fort.passwordreset.start', [$user]);
+        $this->tokens->delete($user);
 
-        // Update user password
-        $user->update([
-            'password'       => $credentials['password'],
-            'remember_token' => Str::random(60),
-        ]);
-
-        // Once we have called this callback, we will remove this token row from the
-        // table and return the response from this callback so the user gets sent
-        // to the destination given by the developers from the callback return.
-        if (! is_null($callback)) {
-            $callback($user, $credentials['password']);
-        }
-
-        $this->deleteToken($credentials['token']);
-
-        // Fire the password reset success event
-        event('rinvex.fort.passwordreset.success', [$user]);
-
-        return static::RESET_SUCCESS;
+        return static::PASSWORD_RESET;
     }
 
     /**
-     * {@inheritdoc}
+     * Set a custom password validator.
+     *
+     * @param  \Closure  $callback
+     * @return void
      */
     public function validator(Closure $callback)
     {
@@ -135,17 +123,22 @@ class PasswordResetBroker implements PasswordResetBrokerContract
     }
 
     /**
-     * {@inheritdoc}
+     * Determine if the passwords match for the request.
+     *
+     * @param  array  $credentials
+     * @return bool
      */
     public function validateNewPassword(array $credentials)
     {
-        list($password, $confirm) = [
-            $credentials['password'],
-            $credentials['password_confirmation'],
-        ];
-
         if (isset($this->passwordValidator)) {
-            return call_user_func($this->passwordValidator, $credentials) && $password === $confirm;
+            list($password, $confirm) = [
+                $credentials['password'],
+                $credentials['password_confirmation'],
+            ];
+
+            return call_user_func(
+                $this->passwordValidator, $credentials
+            ) && $password === $confirm;
         }
 
         return $this->validatePasswordWithDefaults($credentials);
@@ -154,8 +147,7 @@ class PasswordResetBroker implements PasswordResetBrokerContract
     /**
      * Determine if the passwords are valid for the request.
      *
-     * @param array $credentials
-     *
+     * @param  array  $credentials
      * @return bool
      */
     protected function validatePasswordWithDefaults(array $credentials)
@@ -171,7 +163,7 @@ class PasswordResetBroker implements PasswordResetBrokerContract
     /**
      * Get the user for the given credentials.
      *
-     * @param array $credentials
+     * @param  array  $credentials
      *
      * @throws \UnexpectedValueException
      *
@@ -181,20 +173,30 @@ class PasswordResetBroker implements PasswordResetBrokerContract
     {
         $credentials = Arr::except($credentials, ['token']);
 
-        $user = $this->userProvider->retrieveByCredentials($credentials);
+        $user = $this->users->retrieveByCredentials($credentials);
 
         if ($user && ! $user instanceof CanResetPasswordContract) {
-            throw new UnexpectedValueException('User must implement CanResetPasswordContract interface.');
+            throw new UnexpectedValueException('User must implement CanResetPassword interface.');
         }
 
         return $user;
     }
 
     /**
+     * Create a new password reset token for the given user.
+     *
+     * @param  CanResetPasswordContract $user
+     * @return string
+     */
+    public function createToken(CanResetPasswordContract $user)
+    {
+        return $this->tokens->create($user);
+    }
+
+    /**
      * Delete the given password reset token.
      *
-     * @param string $token
-     *
+     * @param  string  $token
      * @return void
      */
     public function deleteToken($token)
@@ -216,35 +218,36 @@ class PasswordResetBroker implements PasswordResetBrokerContract
     }
 
     /**
-     * Get the password reset token repository.
+     * Get the password reset token repository implementation.
      *
-     * @return \Rinvex\Fort\Contracts\PasswordResetTokenRepositoryContract
+     * @return \Illuminate\Auth\Passwords\TokenRepositoryInterface
      */
-    public function getTokenRepository()
+    public function getRepository()
     {
         return $this->tokens;
     }
 
     /**
-     * Validate the given password reset.
+     * Validate a password reset for the given credentials.
      *
-     * @param array $credentials
+     * @param  array  $credentials
      *
-     * @return string
+     * @return \Illuminate\Contracts\Auth\CanResetPassword|string
      */
-    public function validateReset(array $credentials)
+    protected function validateReset(array $credentials)
     {
-        // Check given user
-        if (is_null($user = $this->getUser(['email' => $credentials['email']]))) {
+        if (is_null($user = $this->getUser($credentials))) {
             return static::INVALID_USER;
         }
 
-        // Check given token
-        if (! $this->tokenExists($user, $credentials['token'])) {
+        if (! $this->validateNewPassword($credentials)) {
+            return static::INVALID_PASSWORD;
+        }
+
+        if (! $this->tokens->exists($user, $credentials['token'])) {
             return static::INVALID_TOKEN;
         }
 
-        // All is well, continue password reset
-        return static::VALID_TOKEN;
+        return $user;
     }
 }

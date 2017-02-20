@@ -103,7 +103,7 @@ class AuthenticationController extends AbstractController
 
                 return intend([
                     'url'        => '/',
-                    'withInput'  => $request->only('loginfield', 'remember'),
+                    'withInput'  => $request->only(['loginfield', 'remember']),
                     'withErrors' => ['loginfield' => trans($result, ['seconds' => $seconds])],
                 ]);
 
@@ -118,7 +118,7 @@ class AuthenticationController extends AbstractController
             case SessionGuard::AUTH_FAILED:
                 return intend([
                     'back'       => true,
-                    'withInput'  => $request->only('loginfield', 'remember'),
+                    'withInput'  => $request->only(['loginfield', 'remember']),
                     'withErrors' => ['loginfield' => trans($result)],
                 ]);
 

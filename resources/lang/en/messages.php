@@ -67,14 +67,6 @@ return [
         ],
     ],
 
-    'passwordreset' => [
-        'sent'             => 'Password reset request has been sent to you!',
-        'success'          => 'Your password has been reset!',
-        'invalid_password' => 'Passwords must be at least six characters and match the confirmation.',
-        'invalid_token'    => 'This password reset token is invalid.',
-        'invalid_user'     => 'We can not find a user with that e-mail address.',
-    ],
-
     'verification' => [
 
         'email' => [
