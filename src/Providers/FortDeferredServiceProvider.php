@@ -36,7 +36,6 @@ use Rinvex\Fort\Console\Commands\UserGiveAbilityCommand;
 use Rinvex\Fort\Console\Commands\RoleGiveAbilityCommand;
 use Rinvex\Fort\Console\Commands\RoleRevokeAbilityCommand;
 use Rinvex\Fort\Console\Commands\UserRevokeAbilityCommand;
-use Rinvex\Fort\Console\Commands\PasswordTokenClearCommand;
 use Rinvex\Fort\Console\Commands\VerificationTokenClearCommand;
 
 class FortDeferredServiceProvider extends ServiceProvider
