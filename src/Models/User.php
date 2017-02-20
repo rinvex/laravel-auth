@@ -192,14 +192,33 @@ class User extends Model implements AuthenticatableContract, AuthenticatableTwoF
 
         $this->setTable(config('rinvex.fort.tables.users'));
         $this->setRules([
-            'username' => 'required|alpha_dash|max:255|unique:'.config('rinvex.fort.tables.users').',username',
             'email' => 'required|email|max:255|unique:'.config('rinvex.fort.tables.users').',email',
+            'username' => 'required|alpha_dash|max:255|unique:'.config('rinvex.fort.tables.users').',username',
             'password' => 'sometimes|required|min:'.config('rinvex.fort.passwordreset.minimum_characters'),
             'gender' => 'in:male,female,undisclosed',
             'active' => 'boolean',
             'email_verified' => 'boolean',
             'phone_verified' => 'boolean',
         ]);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public static function boot()
+    {
+        parent::boot();
+
+        if (isset(static::$dispatcher)) {
+            // Auto hash password after validation passed/skipped
+            // Hashing in boot method rather than mutators is required
+            // to use raw value in validation, otherwise mutated value used
+            static::$dispatcher->listen('eloquent.validated: '.static::class, function ($model, $event) {
+                if ($model->isDirty('password') && in_array($event, ['passed', 'skipped'])) {
+                    $model->password = bcrypt($model->password);
+                }
+            });
+        }
     }
 
     /**
@@ -304,18 +323,6 @@ class User extends Model implements AuthenticatableContract, AuthenticatableTwoF
     public function isProtected()
     {
         return in_array($this->id, config('rinvex.fort.protected.users'));
-    }
-
-    /**
-     * Set the user's password.
-     *
-     * @param string $value
-     *
-     * @return void
-     */
-    public function setPasswordAttribute($value)
-    {
-        $this->attributes['password'] = bcrypt($value);
     }
 
     /**
