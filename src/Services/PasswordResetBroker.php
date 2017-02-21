@@ -208,6 +208,18 @@ class PasswordResetBroker implements PasswordBrokerContract
     }
 
     /**
+     * Delete password reset tokens of the given user.
+     *
+     * @param \Illuminate\Contracts\Auth\CanResetPassword $user
+     *
+     * @return void
+     */
+    public function deleteToken(CanResetPasswordContract $user)
+    {
+        $this->tokens->delete($user);
+    }
+
+    /**
      * Validate the given password reset token.
      *
      * @param \Rinvex\Fort\Contracts\CanResetPasswordContract $user

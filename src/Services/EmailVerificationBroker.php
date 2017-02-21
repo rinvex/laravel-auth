@@ -130,6 +130,30 @@ class EmailVerificationBroker implements EmailVerificationBrokerContract
     }
 
     /**
+     * Create a new email verification token for the given user.
+     *
+     * @param \Rinvex\Fort\Contracts\CanVerifyEmailContract $user
+     *
+     * @return string
+     */
+    public function createToken(CanVerifyEmailContract $user)
+    {
+        return $this->tokens->create($user);
+    }
+
+    /**
+     * Delete email verification tokens of the given user.
+     *
+     * @param \Rinvex\Fort\Contracts\CanVerifyEmailContract $user
+     *
+     * @return void
+     */
+    public function deleteToken(CanVerifyEmailContract $user)
+    {
+        $this->tokens->delete($user);
+    }
+
+    /**
      * Validate the given verification token.
      *
      * @param \Rinvex\Fort\Contracts\CanVerifyEmailContract $user
