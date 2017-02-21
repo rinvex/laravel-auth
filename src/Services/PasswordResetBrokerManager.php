@@ -49,7 +49,7 @@ class PasswordResetBrokerManager implements PasswordBrokerFactory
     /**
      * Attempt to get the broker from the local cache.
      *
-     * @param  string  $name
+     * @param string $name
      *
      * @return \Illuminate\Contracts\Auth\PasswordBroker
      */
