@@ -476,7 +476,7 @@ return [
         |
         */
 
-        'success_notification' => true,
+        'success_email' => true,
 
     ],
 
