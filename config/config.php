@@ -134,9 +134,6 @@ return [
 
     'passwordreset' => [
 
-        // Minimum Password Characters
-        'min_chars' => 8,
-
         // Password Reset Default Broker
         'broker' => 'users',
 
@@ -251,6 +248,14 @@ return [
         'users'     => [1],
 
     ],
+
+    /*
+    |--------------------------------------------------------------------------
+    | Minimum Passwords Characters
+    |--------------------------------------------------------------------------
+    */
+
+    'password_min_chars' => 8,
 
     /*
     |--------------------------------------------------------------------------
