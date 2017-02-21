@@ -49,7 +49,7 @@ class EmailVerificationBrokerManager implements EmailVerificationBrokerFactoryCo
     /**
      * Attempt to get the broker from the local cache.
      *
-     * @param  string  $name
+     * @param string $name
      *
      * @return \Illuminate\Contracts\Auth\PasswordBroker
      */
@@ -106,7 +106,7 @@ class EmailVerificationBrokerManager implements EmailVerificationBrokerFactoryCo
         return new EmailVerificationTokenRepository(
             $this->app['db']->connection($connection),
             $this->app['hash'],
-            $this->app['config']["rinvex.fort.tables.email_verifications"],
+            $this->app['config']['rinvex.fort.tables.email_verifications'],
             $key,
             $config['expire']
         );

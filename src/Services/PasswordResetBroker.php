@@ -61,7 +61,8 @@ class PasswordResetBroker implements PasswordBrokerContract
     /**
      * Send a password reset link to a user.
      *
-     * @param  array  $credentials
+     * @param array $credentials
+     *
      * @return string
      */
     public function sendResetLink(array $credentials)

@@ -61,7 +61,7 @@ abstract class AbstractTokenRepository
      * Create a new token repository instance.
      *
      * @param \Illuminate\Database\ConnectionInterface $connection
-     * @param  \Illuminate\Contracts\Hashing\Hasher    $hasher
+     * @param \Illuminate\Contracts\Hashing\Hasher     $hasher
      * @param string                                   $table
      * @param string                                   $hashKey
      * @param int                                      $expires
