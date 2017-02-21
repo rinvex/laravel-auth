@@ -25,11 +25,10 @@ class RoleHandler
      * Listen to the Role updated event.
      *
      * @param \Rinvex\Fort\Models\Role $role
-     * @param string                   $event
      *
      * @return void
      */
-    public function updated(Role $role, $event)
+    public function updated(Role $role)
     {
         Ability::forgetCache();
         User::forgetCache();
@@ -39,11 +38,10 @@ class RoleHandler
      * Listen to the Role deleted event.
      *
      * @param \Rinvex\Fort\Models\Role $role
-     * @param string                   $event
      *
      * @return void
      */
-    public function deleted(Role $role, $event)
+    public function deleted(Role $role)
     {
         Ability::forgetCache();
         User::forgetCache();
@@ -53,11 +51,10 @@ class RoleHandler
      * Listen to the Role attached event.
      *
      * @param \Rinvex\Fort\Models\Role $role
-     * @param string                   $event
      *
      * @return void
      */
-    public function attached(Role $role, $event)
+    public function attached(Role $role)
     {
         Ability::forgetCache();
         User::forgetCache();
@@ -67,11 +64,10 @@ class RoleHandler
      * Listen to the Role synced event.
      *
      * @param \Rinvex\Fort\Models\Role $role
-     * @param string                   $event
      *
      * @return void
      */
-    public function synced(Role $role, $event)
+    public function synced(Role $role)
     {
         Ability::forgetCache();
         User::forgetCache();
@@ -81,11 +77,10 @@ class RoleHandler
      * Listen to the Role detached event.
      *
      * @param \Rinvex\Fort\Models\Role $role
-     * @param string                   $event
      *
      * @return void
      */
-    public function detached(Role $role, $event)
+    public function detached(Role $role)
     {
         Ability::forgetCache();
         User::forgetCache();

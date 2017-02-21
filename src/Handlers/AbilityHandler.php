@@ -25,11 +25,10 @@ class AbilityHandler
      * Listen to the Ability updated event.
      *
      * @param \Rinvex\Fort\Models\Ability $ability
-     * @param string                      $event
      *
      * @return void
      */
-    public function updated(Ability $ability, $event)
+    public function updated(Ability $ability)
     {
         Role::forgetCache();
         User::forgetCache();
@@ -39,11 +38,10 @@ class AbilityHandler
      * Listen to the Ability deleted event.
      *
      * @param \Rinvex\Fort\Models\Ability $ability
-     * @param string                      $event
      *
      * @return void
      */
-    public function deleted(Ability $ability, $event)
+    public function deleted(Ability $ability)
     {
         Role::forgetCache();
         User::forgetCache();
@@ -53,11 +51,10 @@ class AbilityHandler
      * Listen to the Ability attached event.
      *
      * @param \Rinvex\Fort\Models\Ability $ability
-     * @param string                      $event
      *
      * @return void
      */
-    public function attached(Ability $ability, $event)
+    public function attached(Ability $ability)
     {
         Role::forgetCache();
         User::forgetCache();
@@ -67,11 +64,10 @@ class AbilityHandler
      * Listen to the Ability detached event.
      *
      * @param \Rinvex\Fort\Models\Ability $ability
-     * @param string                      $event
      *
      * @return void
      */
-    public function detached(Ability $ability, $event)
+    public function detached(Ability $ability)
     {
         Role::forgetCache();
         User::forgetCache();

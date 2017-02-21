@@ -227,25 +227,6 @@ class User extends Model implements AuthenticatableContract, AuthenticatableTwoF
     }
 
     /**
-     * {@inheritdoc}
-     */
-    public static function boot()
-    {
-        parent::boot();
-
-        if (isset(static::$dispatcher)) {
-            // Auto hash password after validation passed/skipped
-            // Hashing in boot method rather than mutators is required
-            // to use raw value in validation, otherwise mutated value used
-            static::$dispatcher->listen('eloquent.validated: '.static::class, function ($model, $event) {
-                if ($model->isDirty('password') && in_array($event, ['passed', 'skipped'])) {
-                    $model->password = bcrypt($model->password);
-                }
-            });
-        }
-    }
-
-    /**
      * A user may have multiple direct abilities.
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
