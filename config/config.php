@@ -583,67 +583,6 @@ return [
     ],
 
     /*
-    |--------------------------------------------------------------------------
-    | Social Authentication
-    |--------------------------------------------------------------------------
-    */
-
-    'social' => [
-
-        /*
-        |--------------------------------------------------------------------------
-        | Third Party Services
-        |--------------------------------------------------------------------------
-        |
-        | This section is for storing the credentials for third party authentication
-        | services such as Github, Facebook, Twitter, and others. This section
-        | provides a sane default location for this type of information.
-        |
-        */
-
-        'services' => [
-
-            'facebook' => [
-                'client_id'     => env('FACEBOOK_ID'),
-                'client_secret' => env('FACEBOOK_SECRET'),
-                'redirect'      => env('FACEBOOK_URL'),
-            ],
-
-            'google' => [
-                'client_id'     => env('GOOGLE_ID'),
-                'client_secret' => env('GOOGLE_SECRET'),
-                'redirect'      => env('GOOGLE_URL'),
-            ],
-
-            'linkedin' => [
-                'client_id'     => env('LINKEDIN_ID'),
-                'client_secret' => env('LINKEDIN_SECRET'),
-                'redirect'      => env('LINKEDIN_URL'),
-            ],
-
-            'twitter' => [
-                'client_id'     => env('TWITTER_ID'),
-                'client_secret' => env('TWITTER_SECRET'),
-                'redirect'      => env('TWITTER_URL'),
-            ],
-
-            'github' => [
-                'client_id'     => env('GITHUB_ID'),
-                'client_secret' => env('GITHUB_SECRET'),
-                'redirect'      => env('GITHUB_URL'),
-            ],
-
-            'bitbucket' => [
-                'client_id'     => env('BITBUCKET_ID'),
-                'client_secret' => env('BITBUCKET_SECRET'),
-                'redirect'      => env('BITBUCKET_URL'),
-            ],
-
-        ],
-
-    ],
-
-    /*
      |--------------------------------------------------------------------------
      | Protected Models
      |--------------------------------------------------------------------------
