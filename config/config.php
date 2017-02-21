@@ -550,18 +550,6 @@ return [
 
         /*
         |--------------------------------------------------------------------------
-        | Two-Factor authentication issuer
-        |--------------------------------------------------------------------------
-        |
-        | Every QR code generated for users enabling Two-Factor authentication via
-        | the app must have issuer name, which is company's or project's name.
-        |
-        */
-
-        'issuer' => 'Rinvex',
-
-        /*
-        |--------------------------------------------------------------------------
         | Default Two-Factor Providers
         |--------------------------------------------------------------------------
         |
