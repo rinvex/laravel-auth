@@ -100,22 +100,6 @@ class FortDeferredServiceProvider extends ServiceProvider
     }
 
     /**
-     * Register the verification broker.
-     *
-     * @return void
-     */
-    protected function registerVerificationBroker()
-    {
-        $this->app->singleton('rinvex.fort.emailverification', function ($app) {
-            return new EmailVerificationBrokerManager($app);
-        });
-
-        $this->app->bind('rinvex.fort.emailverification.broker', function ($app) {
-            return $app->make('rinvex.fort.emailverification')->broker();
-        });
-    }
-
-    /**
      * Register the password broker.
      *
      * @return void
@@ -128,6 +112,22 @@ class FortDeferredServiceProvider extends ServiceProvider
 
         $this->app->bind('auth.password.broker', function ($app) {
             return $app->make('auth.password')->broker();
+        });
+    }
+
+    /**
+     * Register the verification broker.
+     *
+     * @return void
+     */
+    protected function registerVerificationBroker()
+    {
+        $this->app->singleton('rinvex.fort.emailverification', function ($app) {
+            return new EmailVerificationBrokerManager($app);
+        });
+
+        $this->app->bind('rinvex.fort.emailverification.broker', function ($app) {
+            return $app->make('rinvex.fort.emailverification')->broker();
         });
     }
 

@@ -162,7 +162,7 @@ class PhoneVerificationController extends AbstractController
             return ! in_array('phone', $providers) ? 'phone' : 'country';
         }
 
-        // Not logged in, Login attempt, no country, TwoFactor TOTP disabled
+        // Not logged in, Login attempt, no country, Two-Factor TOTP disabled
         if (! $user && $attemptUser && ! $attemptUser->country && ! isset(session('rinvex.fort.twofactor.methods')['totp'])) {
             return 'home';
         }
@@ -188,7 +188,7 @@ class PhoneVerificationController extends AbstractController
                 ]);
                 break;
 
-            // Logged in user, TwoFactor Phone disabled, phone verification attempt (account update)
+            // Logged in user, Two-Factor Phone disabled, phone verification attempt (account update)
             case 'phone':
                 return intend([
                     'route' => 'rinvex.fort.frontend.user.settings',

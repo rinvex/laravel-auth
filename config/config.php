@@ -26,7 +26,7 @@ return [
     | must extend one of the default base models.
     |
     | Note: User model is defined in the default Laravel configuration file:
-    |       config/auth.php (Check 'model' key inside the providers array)
+    |       config/auth.php (Check 'model' key inside the 'providers' array)
     |
     | Defaults:
     | - Rinvex\Fort\Models\Ability::class
