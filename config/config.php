@@ -56,6 +56,9 @@ return [
     | you may use whatever you like. The table you want to use
     | must have the same structure as of the default ones.
     |
+    | Note: Password resets table is defined in the default Laravel configuration file:
+    |       config/auth.php (Check 'table' key inside the 'passwords' array)
+    |
     | Defaults:
     | - abilities
     | - roles
@@ -64,7 +67,6 @@ return [
     | - role_user
     | - ability_role
     | - email_verifications
-    | - password_resets
     | - persistences
     | - socialites
     |
@@ -79,7 +81,6 @@ return [
         'role_user' => 'role_user',
         'ability_role' => 'ability_role',
         'email_verifications' => 'email_verifications',
-        'password_resets' => 'password_resets',
         'persistences' => 'persistences',
         'socialites' => 'socialites',
 
