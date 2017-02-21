@@ -203,7 +203,7 @@ class User extends Model implements AuthenticatableContract, AuthenticatableTwoF
     }
 
     /**
-     * Register a validating ability event with the dispatcher.
+     * Register a validating user event with the dispatcher.
      *
      * @param \Closure|string $callback
      *
@@ -215,7 +215,7 @@ class User extends Model implements AuthenticatableContract, AuthenticatableTwoF
     }
 
     /**
-     * Register a validated ability event with the dispatcher.
+     * Register a validated user event with the dispatcher.
      *
      * @param \Closure|string $callback
      *

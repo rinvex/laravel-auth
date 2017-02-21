@@ -25,10 +25,11 @@ class AbilityHandler
      * Listen to the Ability created event.
      *
      * @param \Rinvex\Fort\Models\Ability $ability
+     * @param string                      $event
      *
      * @return void
      */
-    public function created(Ability $ability)
+    public function created(Ability $ability, $event)
     {
         //
     }
@@ -37,10 +38,11 @@ class AbilityHandler
      * Listen to the Ability updated event.
      *
      * @param \Rinvex\Fort\Models\Ability $ability
+     * @param string                      $event
      *
      * @return void
      */
-    public function updated(Ability $ability)
+    public function updated(Ability $ability, $event)
     {
         Role::forgetCache();
         User::forgetCache();
@@ -50,10 +52,11 @@ class AbilityHandler
      * Listen to the Ability deleted event.
      *
      * @param \Rinvex\Fort\Models\Ability $ability
+     * @param string                      $event
      *
      * @return void
      */
-    public function deleted(Ability $ability)
+    public function deleted(Ability $ability, $event)
     {
         Role::forgetCache();
         User::forgetCache();
@@ -63,10 +66,11 @@ class AbilityHandler
      * Listen to the Ability attached event.
      *
      * @param \Rinvex\Fort\Models\Ability $ability
+     * @param string                      $event
      *
      * @return void
      */
-    public function attached(Ability $ability)
+    public function attached(Ability $ability, $event)
     {
         Role::forgetCache();
         User::forgetCache();
@@ -76,12 +80,39 @@ class AbilityHandler
      * Listen to the Ability detached event.
      *
      * @param \Rinvex\Fort\Models\Ability $ability
+     * @param string                      $event
      *
      * @return void
      */
-    public function detached(Ability $ability)
+    public function detached(Ability $ability, $event)
     {
         Role::forgetCache();
         User::forgetCache();
+    }
+
+    /**
+     * Listen to the Ability validating event.
+     *
+     * @param \Rinvex\Fort\Models\Ability $ability
+     * @param string                      $event
+     *
+     * @return void
+     */
+    public function validating(Ability $ability, $event)
+    {
+        //
+    }
+
+    /**
+     * Listen to the Ability validated event.
+     *
+     * @param \Rinvex\Fort\Models\Ability $ability
+     * @param string                      $event
+     *
+     * @return void
+     */
+    public function validated(Ability $ability, $event)
+    {
+        //
     }
 }

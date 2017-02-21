@@ -25,10 +25,11 @@ class RoleHandler
      * Listen to the Role created event.
      *
      * @param \Rinvex\Fort\Models\Role $role
+     * @param string                   $event
      *
      * @return void
      */
-    public function created(Role $role)
+    public function created(Role $role, $event)
     {
         //
     }
@@ -37,10 +38,11 @@ class RoleHandler
      * Listen to the Role updated event.
      *
      * @param \Rinvex\Fort\Models\Role $role
+     * @param string                   $event
      *
      * @return void
      */
-    public function updated(Role $role)
+    public function updated(Role $role, $event)
     {
         Ability::forgetCache();
         User::forgetCache();
@@ -50,10 +52,11 @@ class RoleHandler
      * Listen to the Role deleted event.
      *
      * @param \Rinvex\Fort\Models\Role $role
+     * @param string                   $event
      *
      * @return void
      */
-    public function deleted(Role $role)
+    public function deleted(Role $role, $event)
     {
         Ability::forgetCache();
         User::forgetCache();
@@ -63,10 +66,11 @@ class RoleHandler
      * Listen to the Role attached event.
      *
      * @param \Rinvex\Fort\Models\Role $role
+     * @param string                   $event
      *
      * @return void
      */
-    public function attached(Role $role)
+    public function attached(Role $role, $event)
     {
         Ability::forgetCache();
         User::forgetCache();
@@ -76,10 +80,11 @@ class RoleHandler
      * Listen to the Role synced event.
      *
      * @param \Rinvex\Fort\Models\Role $role
+     * @param string                   $event
      *
      * @return void
      */
-    public function synced(Role $role)
+    public function synced(Role $role, $event)
     {
         Ability::forgetCache();
         User::forgetCache();
@@ -89,12 +94,46 @@ class RoleHandler
      * Listen to the Role detached event.
      *
      * @param \Rinvex\Fort\Models\Role $role
+     * @param string                   $event
      *
      * @return void
      */
-    public function detached(Role $role)
+    public function detached(Role $role, $event)
     {
         Ability::forgetCache();
         User::forgetCache();
+    }
+
+    /**
+     * Listen to the Role validating event.
+     *
+     * @param \Rinvex\Fort\Models\Role $role
+     * @param string                   $event
+     *
+     * @return void
+     */
+    public function validating(Role $role, $event)
+    {
+        if (! $role->slug) {
+            // Early auto generate slugs before validation, since it's required
+            if ($role->exists && $role->getSlugOptions()->generateSlugsOnUpdate) {
+                $role->generateSlug();
+            } else if ($role->getSlugOptions()->generateSlugsOnCreate) {
+                $role->generateSlug();
+            }
+        }
+    }
+
+    /**
+     * Listen to the Role validated event.
+     *
+     * @param \Rinvex\Fort\Models\Role $role
+     * @param string                   $event
+     *
+     * @return void
+     */
+    public function validated(Role $role, $event)
+    {
+        //
     }
 }

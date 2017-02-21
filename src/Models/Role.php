@@ -124,27 +124,6 @@ class Role extends Model
     }
 
     /**
-     * {@inheritdoc}
-     */
-    public static function boot()
-    {
-        parent::boot();
-
-        if (isset(static::$dispatcher)) {
-            // Early auto generate slugs before validation
-            static::$dispatcher->listen('eloquent.validating: '.static::class, function ($model, $event) {
-                if (! $model->slug) {
-                    if ($model->exists) {
-                        $model->generateSlugOnCreate();
-                    } else {
-                        $model->generateSlugOnUpdate();
-                    }
-                }
-            });
-        }
-    }
-
-    /**
      * Register an attaching role event with the dispatcher.
      *
      * @param \Closure|string $callback
@@ -217,7 +196,7 @@ class Role extends Model
     }
 
     /**
-     * Register a validating ability event with the dispatcher.
+     * Register a validating role event with the dispatcher.
      *
      * @param \Closure|string $callback
      *
@@ -229,7 +208,7 @@ class Role extends Model
     }
 
     /**
-     * Register a validated ability event with the dispatcher.
+     * Register a validated role event with the dispatcher.
      *
      * @param \Closure|string $callback
      *

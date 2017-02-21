@@ -23,6 +23,7 @@ class UserHandler
      * Listen to the User created event.
      *
      * @param \Rinvex\Fort\Models\User $user
+     * @param string                   $event
      *
      * @return void
      */
@@ -35,6 +36,7 @@ class UserHandler
      * Listen to the User updated event.
      *
      * @param \Rinvex\Fort\Models\User $user
+     * @param string                   $event
      *
      * @return void
      */
@@ -47,11 +49,43 @@ class UserHandler
      * Listen to the User deleted event.
      *
      * @param \Rinvex\Fort\Models\User $user
+     * @param string                   $event
      *
      * @return void
      */
     public function deleted(User $user)
     {
         //
+    }
+
+    /**
+     * Listen to the User validating event.
+     *
+     * @param \Rinvex\Fort\Models\User $user
+     * @param string                   $event
+     *
+     * @return void
+     */
+    public function validating(User $user)
+    {
+        //
+    }
+
+    /**
+     * Listen to the User validated event.
+     *
+     * @param \Rinvex\Fort\Models\User $user
+     * @param string                   $event
+     *
+     * @return void
+     */
+    public function validated(User $user, $event)
+    {
+        // Auto hash password after validation passed/skipped
+        // Hashing in boot method rather than mutators is required
+        // to use raw value in validation, otherwise mutated value used
+        if ($user->isDirty('password') && in_array($event, ['passed', 'skipped'])) {
+            $user->password = bcrypt($user->password);
+        }
     }
 }
