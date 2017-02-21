@@ -22,19 +22,6 @@ use Rinvex\Fort\Models\Ability;
 class RoleHandler
 {
     /**
-     * Listen to the Role created event.
-     *
-     * @param \Rinvex\Fort\Models\Role $role
-     * @param string                   $event
-     *
-     * @return void
-     */
-    public function created(Role $role, $event)
-    {
-        //
-    }
-
-    /**
      * Listen to the Role updated event.
      *
      * @param \Rinvex\Fort\Models\Role $role
@@ -122,18 +109,5 @@ class RoleHandler
                 $role->generateSlug();
             }
         }
-    }
-
-    /**
-     * Listen to the Role validated event.
-     *
-     * @param \Rinvex\Fort\Models\Role $role
-     * @param string                   $event
-     *
-     * @return void
-     */
-    public function validated(Role $role, $event)
-    {
-        //
     }
 }

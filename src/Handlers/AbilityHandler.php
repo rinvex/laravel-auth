@@ -22,19 +22,6 @@ use Rinvex\Fort\Models\Ability;
 class AbilityHandler
 {
     /**
-     * Listen to the Ability created event.
-     *
-     * @param \Rinvex\Fort\Models\Ability $ability
-     * @param string                      $event
-     *
-     * @return void
-     */
-    public function created(Ability $ability, $event)
-    {
-        //
-    }
-
-    /**
      * Listen to the Ability updated event.
      *
      * @param \Rinvex\Fort\Models\Ability $ability
@@ -88,31 +75,5 @@ class AbilityHandler
     {
         Role::forgetCache();
         User::forgetCache();
-    }
-
-    /**
-     * Listen to the Ability validating event.
-     *
-     * @param \Rinvex\Fort\Models\Ability $ability
-     * @param string                      $event
-     *
-     * @return void
-     */
-    public function validating(Ability $ability, $event)
-    {
-        //
-    }
-
-    /**
-     * Listen to the Ability validated event.
-     *
-     * @param \Rinvex\Fort\Models\Ability $ability
-     * @param string                      $event
-     *
-     * @return void
-     */
-    public function validated(Ability $ability, $event)
-    {
-        //
     }
 }

@@ -20,58 +20,6 @@ use Rinvex\Fort\Models\User;
 class UserHandler
 {
     /**
-     * Listen to the User created event.
-     *
-     * @param \Rinvex\Fort\Models\User $user
-     * @param string                   $event
-     *
-     * @return void
-     */
-    public function created(User $user)
-    {
-        //
-    }
-
-    /**
-     * Listen to the User updated event.
-     *
-     * @param \Rinvex\Fort\Models\User $user
-     * @param string                   $event
-     *
-     * @return void
-     */
-    public function updated(User $user)
-    {
-        //
-    }
-
-    /**
-     * Listen to the User deleted event.
-     *
-     * @param \Rinvex\Fort\Models\User $user
-     * @param string                   $event
-     *
-     * @return void
-     */
-    public function deleted(User $user)
-    {
-        //
-    }
-
-    /**
-     * Listen to the User validating event.
-     *
-     * @param \Rinvex\Fort\Models\User $user
-     * @param string                   $event
-     *
-     * @return void
-     */
-    public function validating(User $user)
-    {
-        //
-    }
-
-    /**
      * Listen to the User validated event.
      *
      * @param \Rinvex\Fort\Models\User $user
