@@ -185,7 +185,9 @@ class Ability extends Model
      */
     public function users()
     {
-        return $this->belongsToMany(config('rinvex.fort.models.user'), config('rinvex.fort.tables.ability_user'), 'ability_id', 'user_id')
+        $userModel = config('auth.providers.'.config('auth.guards.'.config('auth.defaults.guard').'.provider').'.model');
+
+        return $this->belongsToMany($userModel, config('rinvex.fort.tables.ability_user'), 'ability_id', 'user_id')
                     ->withTimestamps();
     }
 

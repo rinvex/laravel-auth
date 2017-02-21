@@ -47,6 +47,8 @@ class Socialite extends Model
      */
     public function user()
     {
-        return $this->belongsTo(config('rinvex.fort.models.user'), 'user_id', 'id');
+        $userModel = config('auth.providers.'.config('auth.guards.'.config('auth.defaults.guard').'.provider').'.model');
+
+        return $this->belongsTo($userModel, 'user_id', 'id');
     }
 }

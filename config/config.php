@@ -25,6 +25,9 @@ return [
     | you may use whatever you like. The model you want to use
     | must extend one of the default base models.
     |
+    | Note: User model is defined in the default Laravel configuration file:
+    |       config/auth.php (Check 'model' key inside the providers array)
+    |
     | Defaults:
     | - Rinvex\Fort\Models\Ability::class
     | - Rinvex\Fort\Models\Role::class
@@ -38,7 +41,6 @@ return [
 
         'ability' => Rinvex\Fort\Models\Ability::class,
         'role' => Rinvex\Fort\Models\Role::class,
-        'user' => Rinvex\Fort\Models\User::class,
         'persistence' => Rinvex\Fort\Models\Persistence::class,
         'socialite' => Rinvex\Fort\Models\Socialite::class,
 
