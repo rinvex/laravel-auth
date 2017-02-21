@@ -26,7 +26,6 @@
 
         @if ($action === 'update')
             {{ Form::model($user, ['route' => ['rinvex.fort.backend.users.update', $user], 'method' => 'put']) }}
-            {{ Form::hidden('id') }}
         @else
             {{ Form::model($user, ['route' => ['rinvex.fort.backend.users.store']]) }}
         @endif
