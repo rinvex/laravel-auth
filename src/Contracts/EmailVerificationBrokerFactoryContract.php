@@ -15,14 +15,14 @@
 
 namespace Rinvex\Fort\Contracts;
 
-interface BrokerManagerContract
+interface EmailVerificationBrokerFactoryContract
 {
     /**
      * Get a broker instance by name.
      *
      * @param string $name
      *
-     * @return \Illuminate\Contracts\Auth\PasswordBroker|\Rinvex\Fort\Contracts\EmailVerificationBrokerContract
+     * @return \Rinvex\Fort\Contracts\EmailVerificationBrokerContract
      */
     public function broker($name = null);
 }

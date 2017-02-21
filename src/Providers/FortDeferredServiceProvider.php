@@ -15,7 +15,6 @@
 
 namespace Rinvex\Fort\Providers;
 
-use Rinvex\Fort\Services\BrokerManager;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\View\Compilers\BladeCompiler;
 use Rinvex\Fort\Console\Commands\MakeAuthCommand;
@@ -26,6 +25,7 @@ use Rinvex\Fort\Console\Commands\RoleUpdateCommand;
 use Rinvex\Fort\Console\Commands\UserCreateCommand;
 use Rinvex\Fort\Console\Commands\UserRemindCommand;
 use Rinvex\Fort\Console\Commands\UserUpdateCommand;
+use Rinvex\Fort\Services\PasswordResetBrokerManager;
 use Rinvex\Fort\Console\Commands\ClearResetsCommand;
 use Rinvex\Fort\Console\Commands\AbilityFindCommand;
 use Rinvex\Fort\Console\Commands\AbilityCreateCommand;
@@ -34,6 +34,7 @@ use Rinvex\Fort\Console\Commands\UserAssignRoleCommand;
 use Rinvex\Fort\Console\Commands\UserRemoveRoleCommand;
 use Rinvex\Fort\Console\Commands\UserGiveAbilityCommand;
 use Rinvex\Fort\Console\Commands\RoleGiveAbilityCommand;
+use Rinvex\Fort\Services\EmailVerificationBrokerManager;
 use Rinvex\Fort\Console\Commands\RoleRevokeAbilityCommand;
 use Rinvex\Fort\Console\Commands\UserRevokeAbilityCommand;
 use Rinvex\Fort\Console\Commands\VerificationTokenClearCommand;
@@ -106,7 +107,7 @@ class FortDeferredServiceProvider extends ServiceProvider
     protected function registerVerificationBroker()
     {
         $this->app->singleton('rinvex.fort.emailverification', function ($app) {
-            return new BrokerManager($app, 'EmailVerification');
+            return new EmailVerificationBrokerManager($app);
         });
 
         $this->app->bind('rinvex.fort.emailverification.broker', function ($app) {
@@ -122,7 +123,7 @@ class FortDeferredServiceProvider extends ServiceProvider
     protected function registerPasswordBroker()
     {
         $this->app->singleton('auth.password', function ($app) {
-            return new BrokerManager($app, 'PasswordReset');
+            return new PasswordResetBrokerManager($app);
         });
 
         $this->app->bind('auth.password.broker', function ($app) {
