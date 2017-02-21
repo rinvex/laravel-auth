@@ -194,7 +194,7 @@ class User extends Model implements AuthenticatableContract, AuthenticatableTwoF
         $this->setRules([
             'email' => 'required|email|max:255|unique:'.config('rinvex.fort.tables.users').',email',
             'username' => 'required|alpha_dash|max:255|unique:'.config('rinvex.fort.tables.users').',username',
-            'password' => 'sometimes|required|min:'.config('rinvex.fort.passwordreset.minimum_characters'),
+            'password' => 'sometimes|required|min:'.config('rinvex.fort.passwordreset.min_chars'),
             'gender' => 'in:male,female,undisclosed',
             'active' => 'boolean',
             'email_verified' => 'boolean',
