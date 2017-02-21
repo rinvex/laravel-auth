@@ -203,6 +203,30 @@ class User extends Model implements AuthenticatableContract, AuthenticatableTwoF
     }
 
     /**
+     * Register a validating ability event with the dispatcher.
+     *
+     * @param \Closure|string $callback
+     *
+     * @return void
+     */
+    public static function validating($callback)
+    {
+        static::registerModelEvent('validating', $callback);
+    }
+
+    /**
+     * Register a validated ability event with the dispatcher.
+     *
+     * @param \Closure|string $callback
+     *
+     * @return void
+     */
+    public static function validated($callback)
+    {
+        static::registerModelEvent('validated', $callback);
+    }
+
+    /**
      * {@inheritdoc}
      */
     public static function boot()

@@ -71,7 +71,16 @@ class Role extends Model
     /**
      * {@inheritdoc}
      */
-    protected $observables = ['validating', 'validated'];
+    protected $observables = [
+        'attaching',
+        'attached',
+        'syncing',
+        'synced',
+        'detaching',
+        'detached',
+        'validating',
+        'validated',
+    ];
 
     /**
      * The attributes that are translatable.
@@ -107,7 +116,6 @@ class Role extends Model
         parent::__construct($attributes);
 
         $this->setTable(config('rinvex.fort.tables.roles'));
-        $this->addObservableEvents(['attaching', 'attached', 'syncing', 'synced', 'detaching', 'detached']);
         $this->setRules([
             'name' => 'required|string',
             'description' => 'nullable|string',
@@ -206,6 +214,30 @@ class Role extends Model
     public static function detached($callback)
     {
         static::registerModelEvent('detached', $callback);
+    }
+
+    /**
+     * Register a validating ability event with the dispatcher.
+     *
+     * @param \Closure|string $callback
+     *
+     * @return void
+     */
+    public static function validating($callback)
+    {
+        static::registerModelEvent('validating', $callback);
+    }
+
+    /**
+     * Register a validated ability event with the dispatcher.
+     *
+     * @param \Closure|string $callback
+     *
+     * @return void
+     */
+    public static function validated($callback)
+    {
+        static::registerModelEvent('validated', $callback);
     }
 
     /**
