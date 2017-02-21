@@ -57,7 +57,7 @@ class UserUpdateCommand extends Command
             // Required user attributes
             'email'       => $this->option('email'),
             'username'    => $this->option('username'),
-            'password'    => $this->option('password') ? bcrypt($this->option('password')) : null,
+            'password'    => $this->option('password') ? $this->option('password') : null,
             'first_name'  => $this->option('firstName'),
             'middle_name' => $this->option('middleName'),
             'last_name'   => $this->option('lastName'),

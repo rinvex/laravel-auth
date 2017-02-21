@@ -56,7 +56,7 @@ class UserCreateCommand extends Command
             // Required user attributes
             'email'          => $this->argument('email') ?: $this->ask(Lang::get('rinvex.fort::artisan.user.email')),
             'username'       => $this->argument('username') ?: $this->ask(Lang::get('rinvex.fort::artisan.user.username')),
-            'password'       => bcrypt($this->argument('password') ?: $this->secret(Lang::get('rinvex.fort::forms.common.password'))),
+            'password'       => $this->argument('password') ?: $this->secret(Lang::get('rinvex.fort::forms.common.password')),
 
             // Optional user attributes
             'first_name'     => $this->argument('firstName'),

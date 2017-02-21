@@ -16,7 +16,6 @@
 namespace Rinvex\Fort\Services;
 
 use Closure;
-use Carbon\Carbon;
 use Illuminate\Support\Arr;
 use UnexpectedValueException;
 use Illuminate\Contracts\Auth\UserProvider;
@@ -38,18 +37,18 @@ class EmailVerificationBroker implements EmailVerificationBrokerContract
      *
      * @var \Illuminate\Contracts\Auth\UserProvider
      */
-    protected $userProvider;
+    protected $users;
 
     /**
      * Create a new verification broker instance.
      *
      * @param \Rinvex\Fort\Contracts\EmailVerificationTokenRepositoryContract $tokens
-     * @param \Illuminate\Contracts\Auth\UserProvider                         $userProvider
+     * @param \Illuminate\Contracts\Auth\UserProvider                         $users
      */
-    public function __construct(EmailVerificationTokenRepositoryContract $tokens, UserProvider $userProvider)
+    public function __construct(EmailVerificationTokenRepositoryContract $tokens, UserProvider $users)
     {
+        $this->users = $users;
         $this->tokens = $tokens;
-        $this->userProvider = $userProvider;
     }
 
     /**
@@ -67,10 +66,14 @@ class EmailVerificationBroker implements EmailVerificationBrokerContract
         // Once we have the verification token, we are ready to send the message out
         // to this user with a link for verification. We will then redirect back to
         // the current URI having nothing set in the session to indicate errors.
-        $token = $this->tokens->getData($user, $this->tokens->create($user));
+        $data = $this->tokens->getData($user, $token = $this->tokens->create($user));
         $expiration = $this->tokens->getExpiration();
 
-        $user->sendEmailVerificationNotification($token, $expiration);
+        // Returned token is hashed, and we need the
+        // public token to be sent to the user
+        $data['token'] = $token;
+
+        $user->sendEmailVerificationNotification($data, $expiration);
 
         return static::LINK_SENT;
     }
@@ -78,36 +81,25 @@ class EmailVerificationBroker implements EmailVerificationBrokerContract
     /**
      * {@inheritdoc}
      */
-    public function verify(array $credentials, Closure $callback = null)
+    public function verify(array $credentials, Closure $callback)
     {
         // If the responses from the validate method is not a user instance, we will
         // assume that it is a redirect and simply return it from this method and
         // the user is properly redirected having an error message on the post.
-        if (is_null($user = $this->getUser($credentials))) {
-            return static::INVALID_USER;
-        }
+        $user = $this->validateVerification($credentials);
 
-        if (! $this->tokenExists($user, $credentials['token'])) {
-            return static::INVALID_TOKEN;
+        if (! $user instanceof CanVerifyEmailContract) {
+            return $user;
         }
 
         // Fire the email verification start event
         event('rinvex.fort.emailverification.start', [$user]);
 
-        // Verify email
-        $user->update([
-            'email_verified'    => true,
-            'email_verified_at' => new Carbon(),
-        ]);
+        // Once the email has been verified, we'll call the given
+        // callback, then we'll delete the token and return.
+        $callback($user);
 
-        // Once we have called this callback, we will remove this token row from the
-        // table and return the response from this callback so the user gets sent
-        // to the destination given by the developers from the callback return.
-        if (! is_null($callback)) {
-            $callback($user);
-        }
-
-        $this->deleteToken($credentials['token']);
+        $this->tokens->delete($user);
 
         // Fire the email verification success event
         event('rinvex.fort.emailverification.success', [$user]);
@@ -128,25 +120,13 @@ class EmailVerificationBroker implements EmailVerificationBrokerContract
     {
         $credentials = Arr::except($credentials, ['token']);
 
-        $user = $this->userProvider->retrieveByCredentials($credentials);
+        $user = $this->users->retrieveByCredentials($credentials);
 
         if ($user && ! $user instanceof CanVerifyEmailContract) {
             throw new UnexpectedValueException('User must implement CanVerifyEmailContract interface.');
         }
 
         return $user;
-    }
-
-    /**
-     * Delete the given verification token.
-     *
-     * @param string $token
-     *
-     * @return void
-     */
-    public function deleteToken($token)
-    {
-        $this->tokens->delete($token);
     }
 
     /**
@@ -170,5 +150,25 @@ class EmailVerificationBroker implements EmailVerificationBrokerContract
     public function getRepository()
     {
         return $this->tokens;
+    }
+
+    /**
+     * Validate an email verification for the given credentials.
+     *
+     * @param array $credentials
+     *
+     * @return \Rinvex\Fort\Contracts\CanVerifyEmailContract|string
+     */
+    protected function validateVerification(array $credentials)
+    {
+        if (is_null($user = $this->getUser($credentials))) {
+            return static::INVALID_USER;
+        }
+
+        if (! $this->tokens->exists($user, $credentials['token'])) {
+            return static::INVALID_TOKEN;
+        }
+
+        return $user;
     }
 }

@@ -64,5 +64,5 @@ interface EmailVerificationBrokerContract
      *
      * @return mixed
      */
-    public function verify(array $credentials, Closure $callback = null);
+    public function verify(array $credentials, Closure $callback);
 }

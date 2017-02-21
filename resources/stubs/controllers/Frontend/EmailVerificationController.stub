@@ -15,6 +15,7 @@
 
 namespace {{namespace}}Http\Controllers\Frontend;
 
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Rinvex\Fort\Models\User;
 use {{namespace}}Http\Controllers\AbstractController;
@@ -83,7 +84,12 @@ class EmailVerificationController extends AbstractController
             return $this->redirect();
         }
 
-        $result = app('rinvex.fort.emailverification')->broker($this->getBroker())->verify($request->only(['email', 'token']));
+        $result = app('rinvex.fort.emailverification')->broker($this->getBroker())->verify($request->only(['email', 'token']), function ($user) {
+            $user->forceFill([
+                'email_verified' => true,
+                'email_verified_at' => new Carbon(),
+            ])->save();
+        });
 
         switch ($result) {
             case EmailVerificationBrokerContract::EMAIL_VERIFIED:

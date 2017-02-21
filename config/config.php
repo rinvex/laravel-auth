@@ -144,7 +144,7 @@ return [
         // Email Verification Broker Configuration(s)
         'users' => [
             'provider' => 'users',
-            'expire'   => 60,
+            'expire' => 60,
         ],
 
         // Send Success Email Upon Verification
@@ -213,8 +213,8 @@ return [
     'protected' => [
 
         'abilities' => [1],
-        'roles'     => [1],
-        'users'     => [1],
+        'roles' => [1],
+        'users' => [1],
 
     ],
 
@@ -271,7 +271,7 @@ return [
      */
 
     'backend' => [
-        'items_per_page'      => 2,
+        'items_per_page' => 2,
         'items_per_dashboard' => 2,
     ],
 

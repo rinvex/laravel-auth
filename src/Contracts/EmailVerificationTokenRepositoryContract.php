@@ -37,13 +37,13 @@ interface EmailVerificationTokenRepositoryContract
     public function exists(CanVerifyEmailContract $user, $token);
 
     /**
-     * Delete a verification token record.
+     * Delete tokens of the given user.
      *
-     * @param string $token
+     * @param \Rinvex\Fort\Contracts\CanVerifyEmailContract $user
      *
      * @return void
      */
-    public function delete($token);
+    public function delete(CanVerifyEmailContract $user);
 
     /**
      * Delete expired verification tokens.
@@ -63,9 +63,8 @@ interface EmailVerificationTokenRepositoryContract
      * Get email verification token data.
      *
      * @param \Rinvex\Fort\Contracts\CanVerifyEmailContract $user
-     * @param string                                        $token
      *
      * @return array
      */
-    public function getData(CanVerifyEmailContract $user, $token);
+    public function getData(CanVerifyEmailContract $user);
 }

@@ -105,6 +105,7 @@ class EmailVerificationBrokerManager implements EmailVerificationBrokerFactoryCo
 
         return new EmailVerificationTokenRepository(
             $this->app['db']->connection($connection),
+            $this->app['hash'],
             $this->app['config']["rinvex.fort.tables.email_verifications"],
             $key,
             $config['expire']

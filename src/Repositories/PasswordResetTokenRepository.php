@@ -46,11 +46,25 @@ class PasswordResetTokenRepository extends AbstractTokenRepository implements Pa
      */
     public function exists(CanResetPasswordContract $user, $token)
     {
-        $email = $user->getEmailForPasswordReset();
+        $record = (array) $this->getTable()->where(
+            'email', $user->getEmailForPasswordReset()
+        )->first();
 
-        $token = (array) $this->getTable()->where('email', $email)->where('token', $token)->first();
+        return $record &&
+               ! $this->tokenExpired($record['created_at']) &&
+               $this->hasher->check($token, $record['token']);
+    }
 
-        return $token && ! $this->tokenExpired($token);
+    /**
+     * Delete tokens of the given user.
+     *
+     * @param \Rinvex\Fort\Contracts\CanResetPasswordContract $user
+     *
+     * @return void
+     */
+    public function delete(CanResetPasswordContract $user)
+    {
+        $this->deleteExisting($user);
     }
 
     /**
@@ -64,10 +78,8 @@ class PasswordResetTokenRepository extends AbstractTokenRepository implements Pa
     /**
      * {@inheritdoc}
      */
-    public function getData(CanResetPasswordContract $user, $token)
+    public function getData(CanResetPasswordContract $user)
     {
-        $email = $user->getEmailForPasswordReset();
-
-        return (array) $this->getTable()->where('email', $email)->where('token', $token)->first();
+        return (array) $this->getTable()->where('email', $user->getEmailForVerification())->first();
     }
 }

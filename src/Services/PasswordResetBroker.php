@@ -50,33 +50,42 @@ class PasswordResetBroker implements PasswordBrokerContract
      * Create a new password broker instance.
      *
      * @param \Rinvex\Fort\Contracts\PasswordResetTokenRepositoryContract $tokens
-     * @param \Illuminate\Contracts\Auth\UserProvider                     $userProvider
+     * @param \Illuminate\Contracts\Auth\UserProvider                     $users
      */
-    public function __construct(PasswordResetTokenRepositoryContract $tokens, UserProvider $userProvider)
+    public function __construct(PasswordResetTokenRepositoryContract $tokens, UserProvider $users)
     {
+        $this->users = $users;
         $this->tokens = $tokens;
-        $this->users = $userProvider;
     }
 
     /**
-     * {@inheritdoc}
+     * Send a password reset link to a user.
+     *
+     * @param  array  $credentials
+     * @return string
      */
     public function sendResetLink(array $credentials)
     {
         // First we will check to see if we found a user at the given credentials and
         // if we did not we will redirect back to this current URI with a piece of
         // "flash" data in the session to indicate to the developers the errors.
-        if (is_null($user = $this->getUser($credentials))) {
+        $user = $this->getUser($credentials);
+
+        if (is_null($user)) {
             return static::INVALID_USER;
         }
 
         // Once we have the reset password token, we are ready to send the message out
         // to this user with a link for password. We will then redirect back to the
         // current URI having nothing set in the session to indicate errors.
-        $token = $this->tokens->getData($user, $this->tokens->create($user));
+        $data = $this->tokens->getData($user, $token = $this->tokens->create($user));
         $expiration = $this->tokens->getExpiration();
 
-        $user->sendPasswordResetNotification($token, $expiration);
+        // Returned token is hashed, and we need the
+        // public token to be sent to the user
+        $data['token'] = $token;
+
+        $user->sendPasswordResetNotification($data, $expiration);
 
         return static::RESET_LINK_SENT;
     }
@@ -196,18 +205,6 @@ class PasswordResetBroker implements PasswordBrokerContract
     public function createToken(CanResetPasswordContract $user)
     {
         return $this->tokens->create($user);
-    }
-
-    /**
-     * Delete the given password reset token.
-     *
-     * @param string $token
-     *
-     * @return void
-     */
-    public function deleteToken($token)
-    {
-        $this->tokens->delete($token);
     }
 
     /**
