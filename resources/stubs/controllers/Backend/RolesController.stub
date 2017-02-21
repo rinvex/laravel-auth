@@ -103,7 +103,7 @@ class RolesController extends AuthorizedController
         $role->delete();
 
         return intend([
-            'route' => 'rinvex.fort.backend.roles.index',
+            'route' => 'backend.roles.index',
             'with'  => ['warning' => trans('rinvex/fort::messages.role.deleted', ['roleId' => $role->id])],
         ]);
     }
@@ -148,7 +148,7 @@ class RolesController extends AuthorizedController
         }
 
         return intend([
-            'route' => 'rinvex.fort.backend.roles.index',
+            'route' => 'backend.roles.index',
             'with'  => ['success' => trans('rinvex/fort::messages.role.saved', ['roleId' => $role->id])],
         ]);
     }

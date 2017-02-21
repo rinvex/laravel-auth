@@ -20,7 +20,7 @@
                     </header>
 
                     <div class="panel-body">
-                        {{ Form::open(['route' => 'rinvex.fort.frontend.verification.phone.process', 'class' => 'form-horizontal']) }}
+                        {{ Form::open(['route' => 'frontend.verification.phone.process', 'class' => 'form-horizontal']) }}
 
                             @include('frontend.alerts.success')
                             @include('frontend.alerts.warning')
@@ -34,7 +34,7 @@
                                     {{ trans('rinvex/fort::forms.twofactor.backup_notice') }}<br />
 
                                     @if ($methods['phone'])
-                                        <strong>{!! trans('rinvex/fort::forms.twofactor.backup_sms', ['href' => route('rinvex.fort.frontend.verification.phone.request')]) !!}</strong>
+                                        <strong>{!! trans('rinvex/fort::forms.twofactor.backup_sms', ['href' => route('frontend.verification.phone.request')]) !!}</strong>
                                     @else
                                         <strong>{{ trans('rinvex/fort::forms.twofactor.backup_code') }}</strong>
                                     @endif

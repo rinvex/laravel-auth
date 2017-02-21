@@ -37,7 +37,7 @@ class EmailVerificationRequest extends FormRequest
     public function rules()
     {
         // Skip validation rules for request validation form
-        if ($this->route()->getName() == 'rinvex.fort.frontend.verification.email.request') {
+        if ($this->route()->getName() == 'frontend.verification.email.request') {
             return [];
         }
 
@@ -58,6 +58,6 @@ class EmailVerificationRequest extends FormRequest
             return parent::getRedirectUrl();
         }
 
-        return $this->redirector->getUrlGenerator()->route('rinvex.fort.frontend.verification.email.request');
+        return $this->redirector->getUrlGenerator()->route('frontend.verification.email.request');
     }
 }

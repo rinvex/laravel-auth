@@ -25,9 +25,9 @@
         @endif
 
         @if ($action === 'update')
-            {{ Form::model($user, ['route' => ['rinvex.fort.backend.users.update', $user], 'method' => 'put']) }}
+            {{ Form::model($user, ['route' => ['backend.users.update', $user], 'method' => 'put']) }}
         @else
-            {{ Form::model($user, ['route' => ['rinvex.fort.backend.users.store']]) }}
+            {{ Form::model($user, ['route' => ['backend.users.store']]) }}
         @endif
 
             <section class="panel panel-default">
@@ -35,11 +35,11 @@
                 {{-- Heading --}}
                 <header class="panel-heading">
                     <h4>
-                        <a href="{{ route('rinvex.fort.backend.users.index') }}">{{ trans('rinvex/fort::forms.common.users') }}</a> » {{ trans('rinvex/fort::forms.common.'.$mode) }} @if($user->exists) <strong>{{ $user->username }}</strong> @endif
+                        <a href="{{ route('backend.users.index') }}">{{ trans('rinvex/fort::forms.common.users') }}</a> » {{ trans('rinvex/fort::forms.common.'.$mode) }} @if($user->exists) <strong>{{ $user->username }}</strong> @endif
                         @if($user->exists)
                             <span class="pull-right" style="margin-top: -7px">
-                                @can('delete-users', $user) <a href="#" class="btn btn-default" data-toggle="modal" data-target="#delete-confirmation" data-item-href="{{ route('rinvex.fort.backend.users.delete', ['user' => $user]) }}" data-item-name="{{ $user->username }}"><i class="fa fa-trash-o text-danger"></i></a> @endcan
-                                @can('create-users') <a href="{{ route('rinvex.fort.backend.users.create') }}" class="btn btn-default"><i class="fa fa-plus"></i></a> @endcan
+                                @can('delete-users', $user) <a href="#" class="btn btn-default" data-toggle="modal" data-target="#delete-confirmation" data-item-href="{{ route('backend.users.delete', ['user' => $user]) }}" data-item-name="{{ $user->username }}"><i class="fa fa-trash-o text-danger"></i></a> @endcan
+                                @can('create-users') <a href="{{ route('backend.users.create') }}" class="btn btn-default"><i class="fa fa-plus"></i></a> @endcan
                             </span>
                         @endif
                     </h4>

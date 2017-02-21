@@ -25,9 +25,9 @@
         @endif
 
         @if ($action === 'update')
-            {{ Form::model($role, ['route' => ['rinvex.fort.backend.roles.update', $role], 'method' => 'put']) }}
+            {{ Form::model($role, ['route' => ['backend.roles.update', $role], 'method' => 'put']) }}
         @else
-            {{ Form::model($role, ['route' => ['rinvex.fort.backend.roles.store']]) }}
+            {{ Form::model($role, ['route' => ['backend.roles.store']]) }}
         @endif
 
             <section class="panel panel-default">
@@ -35,11 +35,11 @@
                 {{-- Heading --}}
                 <header class="panel-heading">
                     <h4>
-                        <a href="{{ route('rinvex.fort.backend.roles.index') }}">{{ trans('rinvex/fort::forms.common.roles') }}</a> » {{ trans('rinvex/fort::forms.common.'.$mode) }} @if($role->exists) <strong>{{ $role->slug }}</strong> @endif
+                        <a href="{{ route('backend.roles.index') }}">{{ trans('rinvex/fort::forms.common.roles') }}</a> » {{ trans('rinvex/fort::forms.common.'.$mode) }} @if($role->exists) <strong>{{ $role->slug }}</strong> @endif
                         @if($role->exists)
                             <span class="pull-right" style="margin-top: -7px">
-                                @can('delete-roles', $role) <a href="#" class="btn btn-default" data-toggle="modal" data-target="#delete-confirmation" data-item-href="{{ route('rinvex.fort.backend.roles.delete', ['role' => $role]) }}" data-item-name="{{ $role->slug }}"><i class="fa fa-trash-o text-danger"></i></a> @endcan
-                                @can('create-roles') <a href="{{ route('rinvex.fort.backend.roles.create') }}" class="btn btn-default"><i class="fa fa-plus"></i></a> @endcan
+                                @can('delete-roles', $role) <a href="#" class="btn btn-default" data-toggle="modal" data-target="#delete-confirmation" data-item-href="{{ route('backend.roles.delete', ['role' => $role]) }}" data-item-name="{{ $role->slug }}"><i class="fa fa-trash-o text-danger"></i></a> @endcan
+                                @can('create-roles') <a href="{{ route('backend.roles.create') }}" class="btn btn-default"><i class="fa fa-plus"></i></a> @endcan
                             </span>
                         @endif
                     </h4>

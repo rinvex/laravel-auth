@@ -61,7 +61,7 @@ class PhoneVerificationController extends AbstractController
         $request->user($this->getGuard())->sendPhoneVerificationNotification(false, $request->get('method'));
 
         return intend([
-            'route' => 'rinvex.fort.frontend.verification.phone.verify',
+            'route' => 'frontend.verification.phone.verify',
             'with'  => ['success' => trans('rinvex/fort::messages.verification.phone.sent')],
         ]);
     }
@@ -114,7 +114,7 @@ class PhoneVerificationController extends AbstractController
                 ]);
 
                 return intend([
-                    'route' => 'rinvex.fort.frontend.user.settings',
+                    'route' => 'frontend.user.settings',
                     'with'  => ['success' => trans($result)],
                 ]);
 
@@ -183,7 +183,7 @@ class PhoneVerificationController extends AbstractController
             // Logged in user, no country, phone verification attempt (account update)
             case 'country':
                 return intend([
-                    'route' => 'rinvex.fort.frontend.user.settings',
+                    'route' => 'frontend.user.settings',
                     'withErrors' => ['country' => trans('rinvex/fort::messages.account.country_required')],
                 ]);
                 break;
@@ -191,7 +191,7 @@ class PhoneVerificationController extends AbstractController
             // Logged in user, Two-Factor Phone disabled, phone verification attempt (account update)
             case 'phone':
                 return intend([
-                    'route' => 'rinvex.fort.frontend.user.settings',
+                    'route' => 'frontend.user.settings',
                     'withErrors' => ['rinvex.fort.auth.twofactor.phone.disabled' => trans('rinvex/fort::messages.verification.twofactor.phone.disabled')],
                 ]);
                 break;
@@ -199,7 +199,7 @@ class PhoneVerificationController extends AbstractController
             // No login attempt, no user instance, phone verification attempt
             case 'session':
                 return intend([
-                    'route' => 'rinvex.fort.frontend.auth.login',
+                    'route' => 'frontend.auth.login',
                     'withErrors' => ['rinvex.fort.auth.required' => trans('rinvex/fort::messages.auth.session.required')],
                 ]);
                 break;

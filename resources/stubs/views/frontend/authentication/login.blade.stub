@@ -24,7 +24,7 @@
                 <section class="panel panel-default">
                     <header class="panel-heading">{{ trans('rinvex/fort::forms.common.login') }}</header>
                     <div class="panel-body">
-                        {{ Form::open(['route' => 'rinvex.fort.frontend.auth.login.process', 'class' => 'form-horizontal']) }}
+                        {{ Form::open(['route' => 'frontend.auth.login.process', 'class' => 'form-horizontal']) }}
 
                             @include('frontend.alerts.success')
                             @include('frontend.alerts.warning')
@@ -76,7 +76,7 @@
                             <div class="row">
                                 <div class="col-md-12 col-sm-12 col-xs-12 text-center">
                                     {{ Form::button('<i class="fa fa-sign-in"></i> '.trans('rinvex/fort::forms.common.login'), ['class' => 'btn btn-primary', 'type' => 'submit']) }}
-                                    {{ Html::link(route('rinvex.fort.frontend.passwordreset.request'), trans('rinvex/fort::forms.common.forgot_password'), ['class' => 'btn btn-link']) }}
+                                    {{ Html::link(route('frontend.passwordreset.request'), trans('rinvex/fort::forms.common.forgot_password'), ['class' => 'btn btn-link']) }}
                                 </div>
                             </div>
 

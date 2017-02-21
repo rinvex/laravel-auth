@@ -30,7 +30,7 @@
                         <div class="col-md-8">
                             <section class="panel panel-default">
                                 <header class="panel-heading">
-                                    <a class="btn btn-xs btn-default" href="{{ route('rinvex.fort.backend.users.index') }}" role="button">{{ trans('rinvex/fort::forms.common.recent_registered') }}</a>
+                                    <a class="btn btn-xs btn-default" href="{{ route('backend.users.index') }}" role="button">{{ trans('rinvex/fort::forms.common.recent_registered') }}</a>
                                 </header>
                                 <div class="panel-body">
 
@@ -53,7 +53,7 @@
 
                                                     <tr>
                                                         <td>
-                                                            @can('update-users', $user) <a href="{{ route('rinvex.fort.backend.users.edit', ['user' => $user]) }}"> @endcan
+                                                            @can('update-users', $user) <a href="{{ route('backend.users.edit', ['user' => $user]) }}"> @endcan
                                                                 <strong>
                                                                     @if($user->first_name)
                                                                         {{ $user->first_name }} {{ $user->middle_name }} {{ $user->last_name }}
@@ -122,7 +122,7 @@
 
                                             <li class="list-group-item" style="vertical-align: middle">
                                                 {{ Form::label('stats_number', $num, ['class' => 'pull-right badge']) }}
-                                                <a href="{{ route('rinvex.fort.backend.'.$key.'.index') }}">
+                                                <a href="{{ route('backend.'.$key.'.index') }}">
                                                     <strong>
                                                         {{ ucfirst($key) }}
                                                     </strong>
@@ -155,7 +155,7 @@
                                                     @if($persistence->user_id == $currentUser->id)<span class="label label-info">{{ trans('rinvex/fort::forms.common.you') }}</span> @endif
                                                     <span class="badge">{{ $persistence->updated_at->diffForHumans() }}</span>
                                                 </span>
-                                                @can('update-users', $user) <a href="{{ route('rinvex.fort.backend.users.edit', ['user' => $persistence->user_id]) }}"> @endcan
+                                                @can('update-users', $user) <a href="{{ route('backend.users.edit', ['user' => $persistence->user_id]) }}"> @endcan
                                                     <strong>
                                                         @if($persistence->user->first_name)
                                                             {{ $persistence->user->first_name }} {{ $persistence->user->middle_name }} {{ $persistence->user->last_name }}

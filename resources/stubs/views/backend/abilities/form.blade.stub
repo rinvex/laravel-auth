@@ -25,9 +25,9 @@
         @endif
 
         @if ($action === 'update')
-            {{ Form::model($ability, ['route' => ['rinvex.fort.backend.abilities.update', $ability], 'method' => 'put']) }}
+            {{ Form::model($ability, ['route' => ['backend.abilities.update', $ability], 'method' => 'put']) }}
         @else
-            {{ Form::model($ability, ['route' => ['rinvex.fort.backend.abilities.store']]) }}
+            {{ Form::model($ability, ['route' => ['backend.abilities.store']]) }}
         @endif
 
             <section class="panel panel-default">
@@ -35,11 +35,11 @@
                 {{-- Heading --}}
                 <header class="panel-heading">
                     <h4>
-                        <a href="{{ route('rinvex.fort.backend.abilities.index') }}">{{ trans('rinvex/fort::forms.common.abilities') }}</a> » {{ trans('rinvex/fort::forms.common.'.$mode) }} @if($ability->exists) <strong>{{ $ability->slug }}</strong> @endif
+                        <a href="{{ route('backend.abilities.index') }}">{{ trans('rinvex/fort::forms.common.abilities') }}</a> » {{ trans('rinvex/fort::forms.common.'.$mode) }} @if($ability->exists) <strong>{{ $ability->slug }}</strong> @endif
                         @if($ability->exists)
                             <span class="pull-right" style="margin-top: -7px">
-                                @can('delete-abilities', $ability) <a href="#" class="btn btn-default" data-toggle="modal" data-target="#delete-confirmation" data-item-href="{{ route('rinvex.fort.backend.abilities.delete', ['ability' => $ability]) }}" data-item-name="{{ $ability->slug }}"><i class="fa fa-trash-o text-danger"></i></a> @endcan
-                                @can('create-abilities') <a href="{{ route('rinvex.fort.backend.abilities.create') }}" class="btn btn-default"><i class="fa fa-plus"></i></a> @endcan
+                                @can('delete-abilities', $ability) <a href="#" class="btn btn-default" data-toggle="modal" data-target="#delete-confirmation" data-item-href="{{ route('backend.abilities.delete', ['ability' => $ability]) }}" data-item-name="{{ $ability->slug }}"><i class="fa fa-trash-o text-danger"></i></a> @endcan
+                                @can('create-abilities') <a href="{{ route('backend.abilities.create') }}" class="btn btn-default"><i class="fa fa-plus"></i></a> @endcan
                             </span>
                         @endif
                     </h4>

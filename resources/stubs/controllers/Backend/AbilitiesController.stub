@@ -102,7 +102,7 @@ class AbilitiesController extends AuthorizedController
         $ability->delete();
 
         return intend([
-            'route' => 'rinvex.fort.backend.abilities.index',
+            'route' => 'backend.abilities.index',
             'with'  => ['warning' => trans('rinvex/fort::messages.ability.deleted', ['abilityId' => $ability->id])],
         ]);
     }
@@ -147,7 +147,7 @@ class AbilitiesController extends AuthorizedController
         ! $ability->exists ? $ability = $ability->create($input) : $ability->update($input);
 
         return intend([
-            'route' => 'rinvex.fort.backend.abilities.index',
+            'route' => 'backend.abilities.index',
             'with'  => ['success' => trans('rinvex/fort::messages.ability.saved', ['abilityId' => $ability->id])],
         ]);
     }

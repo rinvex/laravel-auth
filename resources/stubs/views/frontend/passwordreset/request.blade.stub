@@ -16,7 +16,7 @@
                     <header class="panel-heading">{{ trans('rinvex/fort::forms.common.password_reset_request') }}</header>
 
                     <div class="panel-body">
-                        {{ Form::open(['route' => 'rinvex.fort.frontend.passwordreset.send', 'class' => 'form-horizontal']) }}
+                        {{ Form::open(['route' => 'frontend.passwordreset.send', 'class' => 'form-horizontal']) }}
 
                             @include('frontend.alerts.success')
                             @include('frontend.alerts.warning')

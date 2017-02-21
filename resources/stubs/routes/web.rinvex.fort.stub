@@ -23,7 +23,7 @@
 |
 */
 
-Route::namespace('Frontend')->name('rinvex.fort.frontend.')->middleware('web')->group(function () {
+Route::namespace('Frontend')->name('frontend.')->middleware('web')->group(function () {
 
     /*
     |--------------------------------------------------------------------------
@@ -171,7 +171,7 @@ Route::namespace('Frontend')->name('rinvex.fort.frontend.')->middleware('web')->
 });
 
 
-Route::namespace('Backend')->name('rinvex.fort.backend.')->prefix('backend')->middleware(['web', 'can:access-dashboard'])->group(function () {
+Route::namespace('Backend')->name('backend.')->prefix('backend')->middleware(['web', 'can:access-dashboard'])->group(function () {
     Route::get('/')->name('dashboard.home')->uses('DashboardController@home');
 
     /*

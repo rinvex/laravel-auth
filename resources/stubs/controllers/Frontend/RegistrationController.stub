@@ -84,7 +84,7 @@ class RegistrationController extends AbstractController
 
         // Registration completed successfully
         return intend([
-            'route' => 'rinvex.fort.frontend.auth.login',
+            'route' => 'frontend.auth.login',
             'with'  => ['success' => trans('rinvex/fort::messages.register.success')],
         ]);
     }
