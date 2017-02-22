@@ -68,7 +68,7 @@
                             <div class="row">
                                 <div class="col-md-12 col-sm-12 col-xs-12 text-center">
                                     {{ Form::button('<i class="fa fa-refresh"></i> '.trans('rinvex/fort::forms.common.password_reset'), ['class' => 'btn btn-primary', 'type' => 'submit']) }}
-                                    {{ Form::reset(trans('rinvex/fort::forms.common.reset'), ['class' => 'btn btn-default']) }}
+                                    {{ Form::button(trans('rinvex/fort::forms.common.reset'), ['class' => 'btn btn-default', 'type' => 'reset']) }}
                                 </div>
                             </div>
 
