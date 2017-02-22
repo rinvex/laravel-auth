@@ -111,7 +111,7 @@ trait HasRoles
         }
 
         // Single role id
-        if (is_string($roles)) {
+        if (is_int($roles)) {
             return $this->roles->contains('id', $roles);
         }
 
