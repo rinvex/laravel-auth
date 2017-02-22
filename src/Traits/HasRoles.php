@@ -17,6 +17,7 @@ namespace Rinvex\Fort\Traits;
 
 use Rinvex\Fort\Models\Role;
 use Illuminate\Support\Collection;
+use Illuminate\Database\Eloquent\Builder;
 
 trait HasRoles
 {
@@ -99,7 +100,7 @@ trait HasRoles
     /**
      * Determine if the entity has (one of) the given roles.
      *
-     * @param mixed $roles
+     * @param string|int|array|\Rinvex\Fort\Models\Role|\Illuminate\Support\Collection $roles
      *
      * @return bool
      */
@@ -141,7 +142,7 @@ trait HasRoles
     /**
      * Alias for `hasRole` method.
      *
-     * @param mixed $roles
+     * @param string|int|array|\Rinvex\Fort\Models\Role|\Illuminate\Support\Collection $roles
      *
      * @return bool
      */
@@ -153,7 +154,7 @@ trait HasRoles
     /**
      * Determine if the given entity has all of the given roles.
      *
-     * @param mixed $roles
+     * @param string|int|array|\Rinvex\Fort\Models\Role|\Illuminate\Support\Collection $roles
      *
      * @return bool
      */
@@ -192,6 +193,32 @@ trait HasRoles
         }
 
         return false;
+    }
+
+    /**
+     * Scope the user query to certain roles only.
+     *
+     * @param \Illuminate\Database\Eloquent\Builder            $query
+     * @param string|int|array|\Rinvex\Fort\Models\Role|\Illuminate\Support\Collection $roles
+     *
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeRole($query, $roles)
+    {
+        if (is_string($roles) || is_int($roles) || $roles instanceof Role) {
+            $roles = [$roles];
+        }
+
+        return $query->whereHas('roles', function (Builder $query) use ($roles) {
+            $query->where(function (Builder $query) use ($roles) {
+                foreach ($roles as $role) {
+                    $column = is_string($role) ? 'slug' : 'id';
+                    $value = $role instanceof Role ? $role->id : $role;
+
+                    $query->orWhere(config('rinvex.fort.tables.roles').'.'.$column, $value);
+                }
+            });
+        });
     }
 
     /**
