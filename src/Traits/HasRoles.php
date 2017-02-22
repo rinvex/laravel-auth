@@ -198,7 +198,7 @@ trait HasRoles
     /**
      * Scope the user query to certain roles only.
      *
-     * @param \Illuminate\Database\Eloquent\Builder            $query
+     * @param \Illuminate\Database\Eloquent\Builder                                    $query
      * @param string|int|array|\Rinvex\Fort\Models\Role|\Illuminate\Support\Collection $roles
      *
      * @return \Illuminate\Database\Eloquent\Builder
