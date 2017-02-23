@@ -16,13 +16,13 @@
 return [
 
     'profile' => [
-        'account'  => 'Account',
+        'account' => 'Account',
         'sessions' => 'Sessions',
-        'page'     => 'Profile',
+        'page' => 'Profile',
     ],
 
     'dashboard' => [
-        'home'    => 'Dashboard',
+        'home' => 'Dashboard',
     ],
 
 ];
