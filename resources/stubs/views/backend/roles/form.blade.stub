@@ -139,8 +139,8 @@
                             @endif
 
                             <div class="pull-right">
-                                {{ Form::button(trans('rinvex/fort::forms.common.submit'), ['class' => 'btn btn-primary', 'type' => 'submit']) }}
                                 {{ Form::button(trans('rinvex/fort::forms.common.reset'), ['class' => 'btn btn-default', 'type' => 'reset']) }}
+                                {{ Form::button(trans('rinvex/fort::forms.common.submit'), ['class' => 'btn btn-primary', 'type' => 'submit']) }}
                             </div>
 
                         </div>

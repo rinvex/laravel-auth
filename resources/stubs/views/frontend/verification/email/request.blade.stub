@@ -39,8 +39,8 @@
 
                             <div class="row">
                                 <div class="col-md-12 col-sm-12 col-xs-12 text-center">
-                                    {{ Form::button('<i class="fa fa-envelope"></i> '.trans('rinvex/fort::forms.common.verification_email_request'), ['class' => 'btn btn-primary', 'type' => 'submit']) }}
                                     {{ Form::button(trans('rinvex/fort::forms.common.reset'), ['class' => 'btn btn-default', 'type' => 'reset']) }}
+                                    {{ Form::button('<i class="fa fa-envelope"></i> '.trans('rinvex/fort::forms.common.verification_email_request'), ['class' => 'btn btn-primary', 'type' => 'submit']) }}
                                 </div>
                             </div>
 
