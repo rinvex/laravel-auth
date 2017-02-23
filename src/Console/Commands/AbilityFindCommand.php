@@ -17,7 +17,6 @@ namespace Rinvex\Fort\Console\Commands;
 
 use Rinvex\Fort\Models\Ability;
 use Illuminate\Console\Command;
-use Illuminate\Support\Facades\Lang;
 
 class AbilityFindCommand extends Command
 {
@@ -52,13 +51,13 @@ class AbilityFindCommand extends Command
                 return $this->table($columns, $ability->toArray());
             }
 
-            return $this->error(Lang::get('rinvex.fort::artisan.ability.invalid', ['field' => $field]));
+            return $this->error(trans('rinvex.fort::artisan.ability.invalid', ['field' => $field]));
         }
 
         // Find multiple abilities
-        $field = $this->anticipate(Lang::get('rinvex.fort::artisan.ability.field'), ['id', 'slug'], 'id');
-        $operator = $this->anticipate(Lang::get('rinvex.fort::artisan.ability.operator'), ['=', '<', '>', '<=', '>=', '<>', '!=', 'like', 'like binary', 'not like', 'between', 'ilike', '&', '|', '^', '<<', '>>', 'rlike', 'regexp', 'not regexp', '~', '~*', '!~', '!~*', 'similar to', 'not similar to'], '=');
-        $value = $this->ask(Lang::get('rinvex.fort::artisan.ability.value'));
+        $field = $this->anticipate(trans('rinvex.fort::artisan.ability.field'), ['id', 'slug'], 'id');
+        $operator = $this->anticipate(trans('rinvex.fort::artisan.ability.operator'), ['=', '<', '>', '<=', '>=', '<>', '!=', 'like', 'like binary', 'not like', 'between', 'ilike', '&', '|', '^', '<<', '>>', 'rlike', 'regexp', 'not regexp', '~', '~*', '!~', '!~*', 'similar to', 'not similar to'], '=');
+        $value = $this->ask(trans('rinvex.fort::artisan.ability.value'));
         $results = Ability::where($field, $operator, $value)->get($columns);
 
         return $this->table($columns, $results->toArray());

@@ -18,7 +18,6 @@ namespace Rinvex\Fort\Console\Commands;
 use Illuminate\Support\Str;
 use Rinvex\Fort\Models\Ability;
 use Illuminate\Console\Command;
-use Illuminate\Support\Facades\Lang;
 use Illuminate\Contracts\Validation\Factory;
 
 class AbilityCreateCommand extends Command
@@ -50,7 +49,7 @@ class AbilityCreateCommand extends Command
         $data = array_filter([
 
             // Required ability attributes
-            'name'        => $name = $this->argument('name') ?: $this->ask(Lang::get('rinvex.fort::artisan.ability.name')),
+            'name'        => $name = $this->argument('name') ?: $this->ask(trans('rinvex.fort::artisan.ability.name')),
             'slug'        => $this->argument('slug') ?: Str::slug($name),
 
             // Optional ability attributes
@@ -74,7 +73,7 @@ class AbilityCreateCommand extends Command
         } else {
             $ability = Ability::create($data);
 
-            $this->info(Lang::get('rinvex.fort::artisan.ability.created').' ['.Lang::get('rinvex.fort::artisan.ability.id').': '.$ability->id.', '.Lang::get('rinvex.fort::artisan.ability.name').': '.$ability->name.', '.Lang::get('rinvex.fort::artisan.ability.slug').': '.$ability->slug.']');
+            $this->info(trans('rinvex.fort::artisan.ability.created').' ['.trans('rinvex.fort::artisan.ability.id').': '.$ability->id.', '.trans('rinvex.fort::artisan.ability.name').': '.$ability->name.', '.trans('rinvex.fort::artisan.ability.slug').': '.$ability->slug.']');
         }
     }
 }

@@ -17,7 +17,6 @@ namespace Rinvex\Fort\Console\Commands;
 
 use Rinvex\Fort\Models\User;
 use Illuminate\Console\Command;
-use Illuminate\Support\Facades\Lang;
 
 class UserRemindCommand extends Command
 {
@@ -45,7 +44,7 @@ class UserRemindCommand extends Command
      */
     public function handle()
     {
-        $userField = $this->argument('user') ?: $this->ask(Lang::get('rinvex.fort::artisan.user.identifier'));
+        $userField = $this->argument('user') ?: $this->ask(trans('rinvex.fort::artisan.user.identifier'));
 
         if (intval($userField)) {
             $user = User::find($userField);
@@ -56,25 +55,25 @@ class UserRemindCommand extends Command
         }
 
         if (! $user) {
-            return $this->error(Lang::get('rinvex.fort::artisan.user.invalid', ['field' => $userField]));
+            return $this->error(trans('rinvex.fort::artisan.user.invalid', ['field' => $userField]));
         }
 
-        $actionField = $this->argument('action') ?: $this->anticipate(Lang::get('rinvex.fort::artisan.user.action'), ['resetpassword', 'verification']);
+        $actionField = $this->argument('action') ?: $this->anticipate(trans('rinvex.fort::artisan.user.action'), ['resetpassword', 'verification']);
 
         switch ($actionField) {
             case 'resetpassword':
                 $this->laravel['rinvex.fort.resetter']->broker($this->argument('broker'))->sendResetLink(['email' => $user->email]);
 
-                return $this->info(Lang::get('rinvex.fort::artisan.user.resetpassword'));
+                return $this->info(trans('rinvex.fort::artisan.user.resetpassword'));
                 break;
 
             case 'verification':
                 $this->laravel['rinvex.fort.verifier']->broker($this->argument('broker'))->sendVerificationLink(['email' => $user->email]);
 
-                return $this->info(Lang::get('rinvex.fort::artisan.user.verification'));
+                return $this->info(trans('rinvex.fort::artisan.user.verification'));
                 break;
         }
 
-        return $this->error(Lang::get('rinvex.fort::artisan.user.invalidaction'));
+        return $this->error(trans('rinvex.fort::artisan.user.invalidaction'));
     }
 }

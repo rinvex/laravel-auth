@@ -18,7 +18,6 @@ namespace Rinvex\Fort\Console\Commands;
 use Rinvex\Fort\Models\Role;
 use Rinvex\Fort\Models\User;
 use Illuminate\Console\Command;
-use Illuminate\Support\Facades\Lang;
 
 class UserRemoveRoleCommand extends Command
 {
@@ -45,7 +44,7 @@ class UserRemoveRoleCommand extends Command
      */
     public function handle()
     {
-        $userField = $this->argument('user') ?: $this->ask(Lang::get('rinvex.fort::artisan.user.identifier'));
+        $userField = $this->argument('user') ?: $this->ask(trans('rinvex.fort::artisan.user.identifier'));
 
         if (intval($userField)) {
             $user = User::find($userField);
@@ -56,10 +55,10 @@ class UserRemoveRoleCommand extends Command
         }
 
         if (! $user) {
-            return $this->error(Lang::get('rinvex.fort::artisan.user.invalid', ['field' => $userField]));
+            return $this->error(trans('rinvex.fort::artisan.user.invalid', ['field' => $userField]));
         }
 
-        $roleField = $this->argument('role') ?: $this->anticipate(Lang::get('rinvex.fort::artisan.user.role'), Role::all()->pluck('slug', 'id')->toArray());
+        $roleField = $this->argument('role') ?: $this->anticipate(trans('rinvex.fort::artisan.user.role'), Role::all()->pluck('slug', 'id')->toArray());
 
         if (intval($roleField)) {
             $role = Role::find($roleField);
@@ -68,12 +67,12 @@ class UserRemoveRoleCommand extends Command
         }
 
         if (! $role) {
-            return $this->error(Lang::get('rinvex.fort::artisan.role.invalid', ['field' => $roleField]));
+            return $this->error(trans('rinvex.fort::artisan.role.invalid', ['field' => $roleField]));
         }
 
         // Remove role to user
         $user->removeRole($role);
 
-        $this->info(Lang::get('rinvex.fort::artisan.user.roleremoved', ['user' => $user->id, 'role' => $role->id]));
+        $this->info(trans('rinvex.fort::artisan.user.roleremoved', ['user' => $user->id, 'role' => $role->id]));
     }
 }

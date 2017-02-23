@@ -17,7 +17,6 @@ namespace Rinvex\Fort\Console\Commands;
 
 use Rinvex\Fort\Models\Ability;
 use Illuminate\Console\Command;
-use Illuminate\Support\Facades\Lang;
 
 class UserRevokeAbilityCommand extends Command
 {
@@ -44,7 +43,7 @@ class UserRevokeAbilityCommand extends Command
      */
     public function handle()
     {
-        $userField = $this->argument('user') ?: $this->ask(Lang::get('rinvex.fort::artisan.user.identifier'));
+        $userField = $this->argument('user') ?: $this->ask(trans('rinvex.fort::artisan.user.identifier'));
 
         if (intval($userField)) {
             $user = User::find($userField);
@@ -55,10 +54,10 @@ class UserRevokeAbilityCommand extends Command
         }
 
         if (! $user) {
-            return $this->error(Lang::get('rinvex.fort::artisan.user.invalid', ['field' => $userField]));
+            return $this->error(trans('rinvex.fort::artisan.user.invalid', ['field' => $userField]));
         }
 
-        $abilityField = $this->argument('ability') ?: $this->anticipate(Lang::get('rinvex.fort::artisan.user.ability'), Ability::all()->pluck('slug', 'id')->toArray());
+        $abilityField = $this->argument('ability') ?: $this->anticipate(trans('rinvex.fort::artisan.user.ability'), Ability::all()->pluck('slug', 'id')->toArray());
 
         if (intval($abilityField)) {
             $ability = Ability::find($abilityField);
@@ -67,12 +66,12 @@ class UserRevokeAbilityCommand extends Command
         }
 
         if (! $ability) {
-            return $this->error(Lang::get('rinvex.fort::artisan.ability.invalid', ['field' => $abilityField]));
+            return $this->error(trans('rinvex.fort::artisan.ability.invalid', ['field' => $abilityField]));
         }
 
         // Revoke user ability to..
         $user->revokeAbilities($ability);
 
-        $this->info(Lang::get('rinvex.fort::artisan.user.abilityrevoked', ['user' => $user->id, 'ability' => $ability->id]));
+        $this->info(trans('rinvex.fort::artisan.user.abilityrevoked', ['user' => $user->id, 'ability' => $ability->id]));
     }
 }

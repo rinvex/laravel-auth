@@ -16,7 +16,6 @@
 namespace Rinvex\Fort\Console\Commands;
 
 use Illuminate\Console\Command;
-use Illuminate\Support\Facades\Lang;
 use Illuminate\Contracts\Validation\Factory;
 
 class RoleUpdateCommand extends Command
@@ -59,7 +58,7 @@ class RoleUpdateCommand extends Command
         ]);
 
         // Get required argument
-        $field = $this->argument('field') ?: $this->ask(Lang::get('rinvex.fort::artisan.user.invalid'));
+        $field = $this->argument('field') ?: $this->ask(trans('rinvex.fort::artisan.user.invalid'));
 
         // Find single role
         if (intval($field)) {
@@ -69,7 +68,7 @@ class RoleUpdateCommand extends Command
         }
 
         if (! $role) {
-            return $this->error(Lang::get('rinvex.fort::artisan.role.invalid', ['field' => $field]));
+            return $this->error(trans('rinvex.fort::artisan.role.invalid', ['field' => $field]));
         }
 
         $rules = [
@@ -89,10 +88,10 @@ class RoleUpdateCommand extends Command
             } else {
                 $role->update($data);
 
-                $this->info(Lang::get('rinvex.fort::artisan.role.updated').' ['.Lang::get('rinvex.fort::artisan.role.id').': '.$role->id.', '.Lang::get('rinvex.fort::artisan.role.name').': '.$role->name.', '.Lang::get('rinvex.fort::artisan.role.slug').': '.$role->slug.']');
+                $this->info(trans('rinvex.fort::artisan.role.updated').' ['.trans('rinvex.fort::artisan.role.id').': '.$role->id.', '.trans('rinvex.fort::artisan.role.name').': '.$role->name.', '.trans('rinvex.fort::artisan.role.slug').': '.$role->slug.']');
             }
         } else {
-            $this->info(Lang::get('rinvex.fort::artisan.role.nothing'));
+            $this->info(trans('rinvex.fort::artisan.role.nothing'));
         }
     }
 

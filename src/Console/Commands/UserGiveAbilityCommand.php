@@ -18,7 +18,6 @@ namespace Rinvex\Fort\Console\Commands;
 use Rinvex\Fort\Models\User;
 use Rinvex\Fort\Models\Ability;
 use Illuminate\Console\Command;
-use Illuminate\Support\Facades\Lang;
 
 class UserGiveAbilityCommand extends Command
 {
@@ -45,7 +44,7 @@ class UserGiveAbilityCommand extends Command
      */
     public function handle()
     {
-        $userField = $this->argument('user') ?: $this->ask(Lang::get('rinvex.fort::artisan.user.identifier'));
+        $userField = $this->argument('user') ?: $this->ask(trans('rinvex.fort::artisan.user.identifier'));
 
         if (intval($userField)) {
             $user = User::find($userField);
@@ -56,10 +55,10 @@ class UserGiveAbilityCommand extends Command
         }
 
         if (! $user) {
-            return $this->error(Lang::get('rinvex.fort::artisan.user.invalid', ['field' => $userField]));
+            return $this->error(trans('rinvex.fort::artisan.user.invalid', ['field' => $userField]));
         }
 
-        $abilityField = $this->argument('ability') ?: $this->anticipate(Lang::get('rinvex.fort::artisan.user.ability'), Ability::all()->pluck('slug', 'id')->toArray());
+        $abilityField = $this->argument('ability') ?: $this->anticipate(trans('rinvex.fort::artisan.user.ability'), Ability::all()->pluck('slug', 'id')->toArray());
 
         if (intval($abilityField)) {
             $ability = Ability::find($abilityField);
@@ -68,12 +67,12 @@ class UserGiveAbilityCommand extends Command
         }
 
         if (! $ability) {
-            return $this->error(Lang::get('rinvex.fort::artisan.ability.invalid', ['field' => $abilityField]));
+            return $this->error(trans('rinvex.fort::artisan.ability.invalid', ['field' => $abilityField]));
         }
 
         // Give user ability to..
         $user->giveAbilityTo($ability);
 
-        $this->info(Lang::get('rinvex.fort::artisan.user.abilitygived', ['user' => $user->id, 'ability' => $ability->id]));
+        $this->info(trans('rinvex.fort::artisan.user.abilitygived', ['user' => $user->id, 'ability' => $ability->id]));
     }
 }

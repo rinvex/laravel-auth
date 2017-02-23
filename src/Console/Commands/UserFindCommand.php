@@ -17,7 +17,6 @@ namespace Rinvex\Fort\Console\Commands;
 
 use Rinvex\Fort\Models\User;
 use Illuminate\Console\Command;
-use Illuminate\Support\Facades\Lang;
 
 class UserFindCommand extends Command
 {
@@ -54,13 +53,13 @@ class UserFindCommand extends Command
                 return $this->table($columns, $user->toArray());
             }
 
-            return $this->error(Lang::get('rinvex.fort::artisan.user.invalid', ['field' => $field]));
+            return $this->error(trans('rinvex.fort::artisan.user.invalid', ['field' => $field]));
         }
 
         // Find multiple users
-        $field = $this->anticipate(Lang::get('rinvex.fort::artisan.user.field'), ['id', 'email', 'username'], 'id');
-        $operator = $this->anticipate(Lang::get('rinvex.fort::artisan.user.operator'), ['=', '<', '>', '<=', '>=', '<>', '!=', 'like', 'like binary', 'not like', 'between', 'ilike', '&', '|', '^', '<<', '>>', 'rlike', 'regexp', 'not regexp', '~', '~*', '!~', '!~*', 'similar to', 'not similar to'], '=');
-        $value = $this->ask(Lang::get('rinvex.fort::artisan.user.value'));
+        $field = $this->anticipate(trans('rinvex.fort::artisan.user.field'), ['id', 'email', 'username'], 'id');
+        $operator = $this->anticipate(trans('rinvex.fort::artisan.user.operator'), ['=', '<', '>', '<=', '>=', '<>', '!=', 'like', 'like binary', 'not like', 'between', 'ilike', '&', '|', '^', '<<', '>>', 'rlike', 'regexp', 'not regexp', '~', '~*', '!~', '!~*', 'similar to', 'not similar to'], '=');
+        $value = $this->ask(trans('rinvex.fort::artisan.user.value'));
         $results = User::where($field, $operator, $value)->get($columns);
 
         return $this->table($columns, $results->toArray());

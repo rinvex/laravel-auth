@@ -17,7 +17,6 @@ namespace Rinvex\Fort\Console\Commands;
 
 use Rinvex\Fort\Models\User;
 use Illuminate\Console\Command;
-use Illuminate\Support\Facades\Lang;
 use Illuminate\Contracts\Validation\Factory;
 
 class UserUpdateCommand extends Command
@@ -69,7 +68,7 @@ class UserUpdateCommand extends Command
         ]);
 
         // Get required argument
-        $field = $this->argument('field') ?: $this->ask(Lang::get('rinvex.fort::artisan.user.invalid'));
+        $field = $this->argument('field') ?: $this->ask(trans('rinvex.fort::artisan.user.invalid'));
 
         // Find single user
         if (intval($field)) {
@@ -81,7 +80,7 @@ class UserUpdateCommand extends Command
         }
 
         if (! $user) {
-            return $this->error(Lang::get('rinvex.fort::artisan.user.invalid', ['field' => $field]));
+            return $this->error(trans('rinvex.fort::artisan.user.invalid', ['field' => $field]));
         }
 
         $rules = [
@@ -101,10 +100,10 @@ class UserUpdateCommand extends Command
             } else {
                 $user->update($data);
 
-                $this->info(Lang::get('rinvex.fort::artisan.user.updated').' ['.Lang::get('rinvex.fort::artisan.user.id').': '.$user->id.', '.Lang::get('rinvex.fort::artisan.user.email').': '.$user->email.', '.Lang::get('rinvex.fort::artisan.user.username').': '.$user->username.']');
+                $this->info(trans('rinvex.fort::artisan.user.updated').' ['.trans('rinvex.fort::artisan.user.id').': '.$user->id.', '.trans('rinvex.fort::artisan.user.email').': '.$user->email.', '.trans('rinvex.fort::artisan.user.username').': '.$user->username.']');
             }
         } else {
-            $this->info(Lang::get('rinvex.fort::artisan.user.nothing'));
+            $this->info(trans('rinvex.fort::artisan.user.nothing'));
         }
     }
 
