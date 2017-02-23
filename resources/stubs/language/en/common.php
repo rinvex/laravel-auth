@@ -3,6 +3,8 @@
 return [
 
     // Actions
+    'enable' => 'Enable',
+    'disable' => 'Disable',
     'edit' => 'Edit',
     'update' => 'Update',
     'create' => 'Create',
