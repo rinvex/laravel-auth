@@ -92,9 +92,6 @@ class FortServiceProvider extends ServiceProvider
         // Load routes
         $this->loadRoutes($router);
 
-        // Load language phrases
-        $this->loadTranslationsFrom(__DIR__.'/../../resources/lang', 'rinvex/fort');
-
         if ($this->app->runningInConsole()) {
             // Load migrations
             $this->loadMigrationsFrom(__DIR__.'/../../database/migrations');
@@ -134,11 +131,6 @@ class FortServiceProvider extends ServiceProvider
         $this->publishes([
             realpath(__DIR__.'/../../database/migrations') => database_path('migrations'),
         ], 'migrations');
-
-        // Publish language phrases
-        $this->publishes([
-            realpath(__DIR__.'/../../resources/lang') => resource_path('lang/vendor/rinvex/fort'),
-        ], 'lang');
     }
 
     /**

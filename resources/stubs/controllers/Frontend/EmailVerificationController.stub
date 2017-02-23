@@ -130,7 +130,7 @@ class EmailVerificationController extends AbstractController
     {
         return intend([
             'url' => '/',
-            'with' => ['warning' => trans('rinvex/fort::messages.verification.email.already')],
+            'with' => ['warning' => trans('messages.verification.email.already')],
         ]);
     }
 }

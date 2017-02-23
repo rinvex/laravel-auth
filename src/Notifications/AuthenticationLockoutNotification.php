@@ -59,12 +59,12 @@ class AuthenticationLockoutNotification extends Notification
     public function toMail()
     {
         return (new MailMessage())
-            ->subject(trans('rinvex/fort::emails.auth.lockout.subject'))
-            ->line(trans('rinvex/fort::emails.auth.lockout.intro', [
+            ->subject(trans('emails.auth.lockout.subject'))
+            ->line(trans('emails.auth.lockout.intro', [
                 'created_at' => new Carbon(),
                 'ip'         => $this->request->ip(),
                 'agent'      => $this->request->server('HTTP_USER_AGENT'),
             ]))
-            ->line(trans('rinvex/fort::emails.auth.lockout.outro'));
+            ->line(trans('emails.auth.lockout.outro'));
     }
 }

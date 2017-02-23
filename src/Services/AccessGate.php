@@ -45,8 +45,8 @@ class AccessGate extends Gate
             return $this->allow();
         } else {
             $message = $ability == 'null'
-                ? trans('rinvex/fort::messages.auth.authorize')
-                : trans('rinvex/fort::messages.auth.unauthorized');
+                ? trans('messages.auth.authorize')
+                : trans('messages.auth.unauthorized');
 
             throw new AuthorizationException($message, $ability, $arguments);
         }

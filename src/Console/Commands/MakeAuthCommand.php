@@ -119,6 +119,20 @@ class MakeAuthCommand extends Command
     ];
 
     /**
+     * The language files that need to be exported.
+     *
+     * @var array
+     */
+    protected $langs = [
+
+        'en/common.php',
+        'en/emails.php',
+        'en/messages.php',
+        'en/twofactor.php',
+
+    ];
+
+    /**
      * Execute the console command.
      *
      * @return void
@@ -126,6 +140,7 @@ class MakeAuthCommand extends Command
     public function fire()
     {
         $this->exportViews();
+        $this->exportLangs();
 
         if (! $this->option('views')) {
             $this->exportControllers();
@@ -144,7 +159,7 @@ class MakeAuthCommand extends Command
     protected function exportViews()
     {
         foreach ($this->views as $view) {
-            $viewFile = base_path('resources/views/'.$view.'.php');
+            $viewFile = resource_path('views/'.$view.'.php');
 
             if (! is_dir($viewDir = dirname($viewFile))) {
                 mkdir($viewDir, 0755, true);
@@ -153,6 +168,27 @@ class MakeAuthCommand extends Command
             copy(
                 __DIR__.'/../../../resources/stubs/views/'.$view.'.stub',
                 $viewFile
+            );
+        }
+    }
+
+    /**
+     * Export the language files.
+     *
+     * @return void
+     */
+    protected function exportLangs()
+    {
+        foreach ($this->langs as $lang) {
+            $langFile = resource_path('lang/'.$lang);
+
+            if (! is_dir($langDir = dirname($langFile))) {
+                mkdir($langDir, 0755, true);
+            }
+
+            copy(
+                __DIR__.'/../../../resources/stubs/language/'.$lang,
+                $langFile
             );
         }
     }

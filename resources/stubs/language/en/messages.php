@@ -17,6 +17,13 @@ return [
 
     'error' => '<strong>Whoops!</strong> There were some problems with your input.',
 
+    'sessions' => [
+        'flush_single_heading' => 'Flush Selected Session',
+        'flush_single_body' => 'Selected session will be flushed, and thus re-login again will be required on effected device.',
+        'flush_all_heading' => 'Flush All Sessions',
+        'flush_all_body' => 'All active sessions of your account, including this one will be flushed, and you will be forced to re-login again!',
+    ],
+
     'ability' => [
         'not_found' => 'Sorry! Requested ability not found!',
         'saved' => 'Congrats! Ability [:abilityId] saved successfully!',

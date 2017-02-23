@@ -58,24 +58,24 @@ class RegistrationSuccessNotification extends Notification
     {
         if ($this->social) {
             if (config('rinvex.fort.registration.moderated')) {
-                $phrase = trans('rinvex/fort::emails.register.welcome.intro_moderation');
+                $phrase = trans('emails.register.welcome.intro_moderation');
             } else {
-                $phrase = trans('rinvex/fort::emails.register.welcome.intro_default');
+                $phrase = trans('emails.register.welcome.intro_default');
             }
         } else {
             if (config('rinvex.fort.emailverification.required') && config('rinvex.fort.registration.moderated')) {
-                $phrase = trans('rinvex/fort::emails.register.welcome.intro_verification_moderation');
+                $phrase = trans('emails.register.welcome.intro_verification_moderation');
             } elseif (! config('rinvex.fort.emailverification.required') && config('rinvex.fort.registration.moderated')) {
-                $phrase = trans('rinvex/fort::emails.register.welcome.intro_moderation');
+                $phrase = trans('emails.register.welcome.intro_moderation');
             } elseif (config('rinvex.fort.emailverification.required') && ! config('rinvex.fort.registration.moderated')) {
-                $phrase = trans('rinvex/fort::emails.register.welcome.intro_verification');
+                $phrase = trans('emails.register.welcome.intro_verification');
             } else {
-                $phrase = trans('rinvex/fort::emails.register.welcome.intro_default');
+                $phrase = trans('emails.register.welcome.intro_default');
             }
         }
 
         return (new MailMessage())
-            ->subject(trans('rinvex/fort::emails.register.welcome.subject'))
+            ->subject(trans('emails.register.welcome.subject'))
             ->line($phrase);
     }
 }

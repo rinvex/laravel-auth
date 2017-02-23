@@ -3,7 +3,7 @@
 
 {{-- Page Title --}}
 @section('title')
-    {{ config('app.name') }} » {{ trans('rinvex/fort::forms.common.abilities') }}
+    {{ config('app.name') }} » {{ trans('common.abilities') }}
 @stop
 
 {{-- Main Content --}}
@@ -27,7 +27,7 @@
             {{-- Heading --}}
             <header class="panel-heading">
                 <h4>
-                    {{ trans('rinvex/fort::forms.common.abilities') }}
+                    {{ trans('common.abilities') }}
                     @can('create-abilities')
                         <span class="pull-right" style="margin-top: -7px">
                             <a href="{{ route('backend.abilities.create') }}" class="btn btn-default"><i class="fa fa-plus"></i></a>
@@ -45,10 +45,10 @@
 
                         <thead>
                             <tr>
-                                <th style="width: 30%">{{ trans('rinvex/fort::forms.common.name') }}</th>
-                                <th style="width: 40%">{{ trans('rinvex/fort::forms.common.description') }}</th>
-                                <th style="width: 15%">{{ trans('rinvex/fort::forms.common.created_at') }}</th>
-                                <th style="width: 15%">{{ trans('rinvex/fort::forms.common.updated_at') }}</th>
+                                <th style="width: 30%">{{ trans('common.name') }}</th>
+                                <th style="width: 40%">{{ trans('common.description') }}</th>
+                                <th style="width: 15%">{{ trans('common.created_at') }}</th>
+                                <th style="width: 15%">{{ trans('common.updated_at') }}</th>
                             </tr>
                         </thead>
 
@@ -71,12 +71,12 @@
                                     <td class="small">
                                         @if($ability->created_at)
                                             <div>
-                                                {{ trans('rinvex/fort::forms.common.created_at') }}: <time datetime="{{ $ability->created_at }}">{{ $ability->created_at->format('Y-m-d') }}</time>
+                                                {{ trans('common.created_at') }}: <time datetime="{{ $ability->created_at }}">{{ $ability->created_at->format('Y-m-d') }}</time>
                                             </div>
                                         @endif
                                         @if($ability->updated_at)
                                             <div>
-                                                {{ trans('rinvex/fort::forms.common.updated_at') }}: <time datetime="{{ $ability->updated_at }}">{{ $ability->updated_at->format('Y-m-d') }}</time>
+                                                {{ trans('common.updated_at') }}: <time datetime="{{ $ability->updated_at }}">{{ $ability->updated_at->format('Y-m-d') }}</time>
                                             </div>
                                         @endif
                                     </td>

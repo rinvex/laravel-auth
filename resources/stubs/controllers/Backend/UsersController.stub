@@ -100,7 +100,7 @@ class UsersController extends AuthorizedController
 
         return intend([
             'route' => 'backend.users.index',
-            'with'  => ['warning' => trans('rinvex/fort::messages.user.deleted', ['userId' => $user->id])],
+            'with'  => ['warning' => trans('messages.user.deleted', ['userId' => $user->id])],
         ]);
     }
 
@@ -163,7 +163,7 @@ class UsersController extends AuthorizedController
 
         return intend([
             'route' => 'backend.users.index',
-            'with'  => ['success' => trans('rinvex/fort::messages.user.saved', ['userId' => $user->id])],
+            'with'  => ['success' => trans('messages.user.saved', ['userId' => $user->id])],
         ]);
     }
 }

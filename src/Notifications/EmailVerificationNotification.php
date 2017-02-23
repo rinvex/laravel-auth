@@ -66,10 +66,10 @@ class EmailVerificationNotification extends Notification
     public function toMail()
     {
         return (new MailMessage())
-            ->subject(trans('rinvex/fort::emails.verification.email.subject'))
-            ->line(trans('rinvex/fort::emails.verification.email.intro', ['expire' => $this->expiration]))
-            ->action(trans('rinvex/fort::emails.verification.email.action'), route('frontend.verification.email.verify').'?token='.$this->token['token'].'&email='.$this->token['email'])
-            ->line(trans('rinvex/fort::emails.verification.email.outro', [
+            ->subject(trans('emails.verification.email.subject'))
+            ->line(trans('emails.verification.email.intro', ['expire' => $this->expiration]))
+            ->action(trans('emails.verification.email.action'), route('frontend.verification.email.verify').'?token='.$this->token['token'].'&email='.$this->token['email'])
+            ->line(trans('emails.verification.email.outro', [
                 'ip'         => $this->token['ip'],
                 'agent'      => $this->token['agent'],
                 'created_at' => $this->token['created_at'],

@@ -62,7 +62,7 @@ class PhoneVerificationController extends AbstractController
 
         return intend([
             'route' => 'frontend.verification.phone.verify',
-            'with'  => ['success' => trans('rinvex/fort::messages.verification.phone.sent')],
+            'with'  => ['success' => trans('messages.verification.phone.sent')],
         ]);
     }
 
@@ -184,7 +184,7 @@ class PhoneVerificationController extends AbstractController
             case 'country':
                 return intend([
                     'route' => 'frontend.user.settings',
-                    'withErrors' => ['country' => trans('rinvex/fort::messages.account.country_required')],
+                    'withErrors' => ['country' => trans('messages.account.country_required')],
                 ]);
                 break;
 
@@ -192,7 +192,7 @@ class PhoneVerificationController extends AbstractController
             case 'phone':
                 return intend([
                     'route' => 'frontend.user.settings',
-                    'withErrors' => ['rinvex.fort.auth.twofactor.phone.disabled' => trans('rinvex/fort::messages.verification.twofactor.phone.disabled')],
+                    'withErrors' => ['rinvex.fort.auth.twofactor.phone.disabled' => trans('messages.verification.twofactor.phone.disabled')],
                 ]);
                 break;
 
@@ -200,7 +200,7 @@ class PhoneVerificationController extends AbstractController
             case 'session':
                 return intend([
                     'route' => 'frontend.auth.login',
-                    'withErrors' => ['rinvex.fort.auth.required' => trans('rinvex/fort::messages.auth.session.required')],
+                    'withErrors' => ['rinvex.fort.auth.required' => trans('messages.auth.session.required')],
                 ]);
                 break;
 
@@ -209,7 +209,7 @@ class PhoneVerificationController extends AbstractController
             default:
                 return intend([
                     'url' => '/',
-                    'withErrors' => ['rinvex.fort.auth.country' => trans('rinvex/fort::messages.verification.twofactor.phone.country_required')],
+                    'withErrors' => ['rinvex.fort.auth.country' => trans('messages.verification.twofactor.phone.country_required')],
                 ]);
                 break;
         }
