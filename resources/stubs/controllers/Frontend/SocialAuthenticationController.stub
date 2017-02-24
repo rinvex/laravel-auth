@@ -52,12 +52,12 @@ class SocialAuthenticationController extends AuthenticationController
             ]);
         }
 
-        $model = User::whereHas(['socialites', function ($query) use ($githubUser) {
+        $result = User::whereHas(['socialites', function ($query) use ($githubUser) {
             $query->where('provider', 'github');
             $query->where('provider_uid', $githubUser->id);
         }])->first();
 
-        if (! $model) {
+        if (! $result) {
             // Prepare registration data
             $input = [
                 'email' => $githubUser->email,
@@ -67,29 +67,29 @@ class SocialAuthenticationController extends AuthenticationController
             ];
 
             // Fire the register start event
-            $result = event('rinvex.fort.register.social.start', [$input]);
+            event('rinvex.fort.register.social.start', [$input]);
 
             // Create user
-            $model = $user->create($input);
+            $result = $user->create($input);
 
             // Attach default role to the registered user
-            if ($default = config('rinvex.fort.registration.default_role')) {
-                if ($role = Role::where('slug', $default)->first()) {
-                    $user->roles()->attach($role);
+            if ($defaultRole = config('rinvex.fort.registration.default_role')) {
+                if ($defaultRole = Role::where('slug', $defaultRole)->first()) {
+                    $result->roles()->attach($defaultRole);
                 }
             }
 
             // Fire the register success event
             event('rinvex.fort.register.social.success', [$result]);
 
-            $model->socialites()->create([
+            $result->socialites()->create([
                 'user_id' => 'github',
                 'provider' => 'github',
                 'provider_uid' => $githubUser->id,
             ]);
         }
 
-        $result = Auth::guard($this->getGuard())->login($model, true);
+        $result = Auth::guard($this->getGuard())->login($result, true);
 
         return $this->getLoginResponse($request, $result);
     }

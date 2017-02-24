@@ -70,9 +70,9 @@ class RegistrationController extends AbstractController
         $result = $user->create($input + $active);
 
         // Attach default role to the registered user
-        if ($default = config('rinvex.fort.registration.default_role')) {
-            if ($role = Role::where('slug', $default)->first()) {
-                $user->roles()->attach($role);
+        if ($defaultRole = config('rinvex.fort.registration.default_role')) {
+            if ($defaultRole = Role::where('slug', $defaultRole)->first()) {
+                $result->roles()->attach($defaultRole);
             }
         }
 
