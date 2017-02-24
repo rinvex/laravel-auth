@@ -16,7 +16,6 @@
 namespace Rinvex\Fort\Handlers;
 
 use Illuminate\Http\Request;
-use Rinvex\Fort\Models\Role;
 use Rinvex\Fort\Models\User;
 use Illuminate\Auth\Events\Lockout;
 use Illuminate\Contracts\Events\Dispatcher;
