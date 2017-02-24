@@ -16,6 +16,7 @@
 namespace {{namespace}}Http\Controllers\Frontend;
 
 use Illuminate\Http\Request;
+use Rinvex\Fort\Models\Role;
 use Rinvex\Fort\Models\User;
 use {{namespace}}Http\Controllers\AbstractController;
 
@@ -67,6 +68,13 @@ class RegistrationController extends AbstractController
         event('rinvex.fort.register.start', [$input + $active]);
 
         $result = $user->create($input + $active);
+
+        // Attach default role to the registered user
+        if ($default = config('rinvex.fort.registration.default_role')) {
+            if ($role = Role::where('slug', $default)->first()) {
+                $user->roles()->attach($role);
+            }
+        }
 
         // Fire the register success event
         event('rinvex.fort.register.success', [$result]);

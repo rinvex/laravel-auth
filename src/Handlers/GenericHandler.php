@@ -87,13 +87,6 @@ class GenericHandler
         if (config('rinvex.fort.registration.welcome_email')) {
             $user->notify(new RegistrationSuccessNotification());
         }
-
-        // Attach default role to the registered user
-        if ($default = $this->app['config']->get('rinvex.fort.registration.default_role')) {
-            if ($role = Role::where('slug', $default)->first()) {
-                $user->roles()->attach($role);
-            }
-        }
     }
 
     /**
@@ -108,13 +101,6 @@ class GenericHandler
         // Send welcome email
         if (config('rinvex.fort.registration.welcome_email')) {
             $user->notify(new RegistrationSuccessNotification(true));
-        }
-
-        // Attach default role to the registered user
-        if ($default = $this->app['config']->get('rinvex.fort.registration.default_role')) {
-            if ($role = Role::where('slug', $default)->first()) {
-                $user->roles()->attach($role);
-            }
         }
     }
 
