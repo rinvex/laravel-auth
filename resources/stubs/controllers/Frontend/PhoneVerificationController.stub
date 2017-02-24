@@ -62,7 +62,7 @@ class PhoneVerificationController extends AbstractController
 
         return intend([
             'route' => 'frontend.verification.phone.verify',
-            'with'  => ['success' => trans('messages.verification.phone.sent')],
+            'with' => ['success' => trans('messages.verification.phone.sent')],
         ]);
     }
 
@@ -109,13 +109,13 @@ class PhoneVerificationController extends AbstractController
             case SessionGuard::AUTH_PHONE_VERIFIED:
                 // Update user account
                 $user->update([
-                    'phone_verified'    => true,
+                    'phone_verified' => true,
                     'phone_verified_at' => new Carbon(),
                 ]);
 
                 return intend([
                     'route' => 'frontend.user.settings',
-                    'with'  => ['success' => trans($result)],
+                    'with' => ['success' => trans($result)],
                 ]);
 
             case SessionGuard::AUTH_LOGIN:
@@ -132,8 +132,8 @@ class PhoneVerificationController extends AbstractController
                 Auth::guard($guard)->rememberTwoFactor();
 
                 return intend([
-                    'back'       => true,
-                    'withInput'  => $request->only(['token']),
+                    'back' => true,
+                    'withInput' => $request->only(['token']),
                     'withErrors' => ['token' => trans($result)],
                 ]);
         }

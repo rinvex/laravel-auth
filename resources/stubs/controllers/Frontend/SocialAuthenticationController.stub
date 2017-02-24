@@ -60,10 +60,10 @@ class SocialAuthenticationController extends AuthenticationController
         if (! $model) {
             // Prepare registration data
             $input = [
-                'email'    => $githubUser->email,
+                'email' => $githubUser->email,
                 'username' => $githubUser->username,
                 'password' => str_random(),
-                'active'   => ! config('rinvex.fort.registration.moderated'),
+                'active' => ! config('rinvex.fort.registration.moderated'),
             ];
 
             // Fire the register start event
@@ -83,8 +83,8 @@ class SocialAuthenticationController extends AuthenticationController
             event('rinvex.fort.register.social.success', [$result]);
 
             $model->socialites()->create([
-                'user_id'      => 'github',
-                'provider'     => 'github',
+                'user_id' => 'github',
+                'provider' => 'github',
                 'provider_uid' => $githubUser->id,
             ]);
         }

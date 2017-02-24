@@ -25,7 +25,6 @@ class AuthorizedController extends AuthenticatedController
 
     /**
      * Resource Ability Map.
-     *
      * Array of resource ability map.
      *
      * @var array
@@ -34,7 +33,6 @@ class AuthorizedController extends AuthenticatedController
 
     /**
      * Resource action whitelist.
-     *
      * Array of resource actions to skip mapping to abilities automatically.
      *
      * @var array
@@ -123,9 +121,9 @@ class AuthorizedController extends AuthenticatedController
     protected function resourceAbilityMap()
     {
         return $this->resourceAbilityMap + [
-            'index' => 'list',
-            'store' => 'create',
-            'edit' => 'update',
-        ];
+                'index' => 'list',
+                'store' => 'create',
+                'edit' => 'update',
+            ];
     }
 }

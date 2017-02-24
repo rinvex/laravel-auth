@@ -98,7 +98,7 @@ class TwoFactorSettingsController extends AuthenticatedController
         }
 
         return intend([
-            'back'       => true,
+            'back' => true,
             'withErrors' => ['token' => trans('messages.verification.twofactor.totp.invalid_token')],
         ]);
     }
@@ -127,7 +127,7 @@ class TwoFactorSettingsController extends AuthenticatedController
 
         return intend([
             'route' => 'frontend.user.settings',
-            'with'  => ['success' => trans('messages.verification.twofactor.totp.disabled')],
+            'with' => ['success' => trans('messages.verification.twofactor.totp.disabled')],
         ]);
     }
 
@@ -148,7 +148,7 @@ class TwoFactorSettingsController extends AuthenticatedController
 
         if (! $currentUser->phone || ! $currentUser->phone_verified) {
             return intend([
-                'route'      => 'frontend.user.settings',
+                'route' => 'frontend.user.settings',
                 'withErrors' => ['phone' => trans('messages.account.phone_required')],
             ]);
         }
@@ -163,7 +163,7 @@ class TwoFactorSettingsController extends AuthenticatedController
 
         return intend([
             'route' => 'frontend.user.settings',
-            'with'  => ['success' => trans('messages.verification.twofactor.phone.enabled')],
+            'with' => ['success' => trans('messages.verification.twofactor.phone.enabled')],
         ]);
     }
 
@@ -191,7 +191,7 @@ class TwoFactorSettingsController extends AuthenticatedController
 
         return intend([
             'route' => 'frontend.user.settings',
-            'with'  => ['success' => trans('messages.verification.twofactor.phone.disabled')],
+            'with' => ['success' => trans('messages.verification.twofactor.phone.disabled')],
         ]);
     }
 
@@ -213,7 +213,7 @@ class TwoFactorSettingsController extends AuthenticatedController
 
         if (! array_get($settings, 'totp.enabled')) {
             return intend([
-                'route'      => 'frontend.user.settings',
+                'route' => 'frontend.user.settings',
                 'withErrors' => ['rinvex.fort.verification.twofactor.totp.cant_backup' => trans('messages.verification.twofactor.totp.cant_backup')],
             ]);
         }

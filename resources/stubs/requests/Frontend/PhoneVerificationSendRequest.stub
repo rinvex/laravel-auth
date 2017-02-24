@@ -25,7 +25,7 @@ class PhoneVerificationSendRequest extends PhoneVerificationRequest
     public function rules()
     {
         return $this->isMethod('post') ? [
-            'phone'  => 'required|numeric|exists:'.config('rinvex.fort.tables.users').',phone',
+            'phone' => 'required|numeric|exists:'.config('rinvex.fort.tables.users').',phone',
             'method' => 'required',
         ] : [];
     }

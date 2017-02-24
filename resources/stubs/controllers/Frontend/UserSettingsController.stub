@@ -62,12 +62,12 @@ class UserSettingsController extends AuthenticatedController
         }
 
         $emailVerification = array_get($input, 'email') != $currentUser->email ? [
-            'email_verified'    => false,
+            'email_verified' => false,
             'email_verified_at' => null,
         ] : [];
 
         $phoneVerification = array_get($input, 'phone') != $currentUser->phone ? [
-            'phone_verified'    => false,
+            'phone_verified' => false,
             'phone_verified_at' => null,
         ] : [];
 

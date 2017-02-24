@@ -33,7 +33,7 @@ class DashboardController extends AuthorizedController
     /**
      * {@inheritdoc}
      */
-    protected $resourceAbilityMap = ['home'   => 'access'];
+    protected $resourceAbilityMap = ['home' => 'access'];
 
     /**
      * Show the dashboard home.
@@ -49,8 +49,8 @@ class DashboardController extends AuthorizedController
         // Get statistics
         $stats = [
             'abilities' => Ability::count(),
-            'roles'     => Role::count(),
-            'users'     => User::count(),
+            'roles' => Role::count(),
+            'users' => User::count(),
         ];
 
         // Get online users

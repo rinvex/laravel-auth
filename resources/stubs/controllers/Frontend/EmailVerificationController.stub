@@ -58,14 +58,14 @@ class EmailVerificationController extends AbstractController
         switch ($result) {
             case EmailVerificationBrokerContract::LINK_SENT:
                 return intend([
-                    'url'  => '/',
+                    'url' => '/',
                     'with' => ['success' => trans($result)],
                 ]);
 
             default:
                 return intend([
-                    'back'       => true,
-                    'withInput'  => $request->only(['email']),
+                    'back' => true,
+                    'withInput' => $request->only(['email']),
                     'withErrors' => ['email' => trans($result)],
                 ]);
         }
@@ -95,15 +95,15 @@ class EmailVerificationController extends AbstractController
             case EmailVerificationBrokerContract::EMAIL_VERIFIED:
                 return intend([
                     'route' => $request->user($this->getGuard()) ? 'frontend.user.settings' : 'frontend.auth.login',
-                    'with'  => ['success' => trans($result)],
+                    'with' => ['success' => trans($result)],
                 ]);
 
             case EmailVerificationBrokerContract::INVALID_USER:
             case EmailVerificationBrokerContract::INVALID_TOKEN:
             default:
                 return intend([
-                    'route'      => 'frontend.verification.email.request',
-                    'withInput'  => $request->only(['email']),
+                    'route' => 'frontend.verification.email.request',
+                    'withInput' => $request->only(['email']),
                     'withErrors' => ['token' => trans($result)],
                 ]);
         }

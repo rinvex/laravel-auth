@@ -38,7 +38,7 @@ class UserAuthenticationRequest extends FormRequest
     {
         return [
             'loginfield' => 'required',
-            'password'   => 'required',
+            'password' => 'required',
         ];
     }
 }

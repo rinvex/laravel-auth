@@ -26,7 +26,6 @@ abstract class AbstractController extends Controller
 
     /**
      * Whitelisted methods.
-     *
      * Array of whitelisted methods which do not need to go through middleware.
      *
      * @var array
