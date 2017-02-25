@@ -15,11 +15,15 @@
 
 namespace Rinvex\Fort\Notifications;
 
+use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Notification;
+use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 
-class RegistrationSuccessNotification extends Notification
+class RegistrationSuccessNotification extends Notification implements ShouldQueue
 {
+    use Queueable;
+
     /**
      * Indicates if this is social registration mode or not.
      *

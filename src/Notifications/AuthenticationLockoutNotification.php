@@ -17,11 +17,15 @@ namespace Rinvex\Fort\Notifications;
 
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Notification;
+use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 
-class AuthenticationLockoutNotification extends Notification
+class AuthenticationLockoutNotification extends Notification implements ShouldQueue
 {
+    use Queueable;
+
     /**
      * The request instance.
      *
