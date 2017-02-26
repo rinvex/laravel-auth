@@ -18,7 +18,7 @@ namespace {{namespace}}Http\Controllers\Frontend;
 use Illuminate\Http\Request;
 use {{namespace}}Http\Controllers\AuthenticatedController;
 
-class UserSettingsController extends AuthenticatedController
+class AccountSettingsController extends AuthenticatedController
 {
     /**
      * Show the account update form.

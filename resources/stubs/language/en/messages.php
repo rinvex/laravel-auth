@@ -50,8 +50,9 @@ return [
     ],
 
     'account' => [
-        'phone_required' => 'You must verify your phone first!',
+        'phone_verification_required' => 'You must verify your phone first!',
         'country_required' => 'You must select your country first!',
+        'phone_required' => 'You must update your phone first!',
         'reverify' => 'Since you updated your email, you must reverify your account again. You will not be able to login next time until you verify your account.',
         'updated' => 'You have successfully updated your profile!',
     ],

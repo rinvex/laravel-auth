@@ -157,9 +157,14 @@ class PhoneVerificationController extends AbstractController
             return 'session';
         }
 
-        // No login attempt, Logged in user, no country, Phone verification attempt (account update)
+        // Logged in user, No login attempt, no country, Phone verification attempt (account update)
         if ((! $attemptUser && $user && ! $user->country)) {
-            return ! in_array('phone', $providers) ? 'phone' : 'country';
+            return ! in_array('phone', $providers) ? 'disabled' : 'country';
+        }
+
+        // Logged in user, No login attempt, country exists, no phone, Phone verification attempt (account update)
+        if ((! $attemptUser && $user && $user->country && ! $user->phone)) {
+            return 'phone';
         }
 
         // Not logged in, Login attempt, no country, Two-Factor TOTP disabled
@@ -189,10 +194,18 @@ class PhoneVerificationController extends AbstractController
                 break;
 
             // Logged in user, Two-Factor Phone disabled, phone verification attempt (account update)
-            case 'phone':
+            case 'disabled':
                 return intend([
                     'route' => 'frontend.account.settings',
                     'withErrors' => ['rinvex.fort.auth.twofactor.phone.disabled' => trans('messages.verification.twofactor.phone.disabled')],
+                ]);
+                break;
+
+            // Logged in user, No login attempt, country exists, no phone, Phone verification attempt (account update)
+            case 'phone':
+                return intend([
+                    'route' => 'frontend.account.settings',
+                    'withErrors' => ['phone' => trans('messages.account.phone_required')],
                 ]);
                 break;
 

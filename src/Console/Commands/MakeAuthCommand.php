@@ -48,6 +48,8 @@ class MakeAuthCommand extends Command
         'Backend/RolesController',
         'Backend/UsersController',
 
+        'Frontend/AccountSettingsController',
+        'Frontend/AccountSessionsController',
         'Frontend/AuthenticationController',
         'Frontend/EmailVerificationController',
         'Frontend/PasswordResetController',
@@ -55,8 +57,6 @@ class MakeAuthCommand extends Command
         'Frontend/RegistrationController',
         'Frontend/SocialAuthenticationController',
         'Frontend/TwoFactorSettingsController',
-        'Frontend/UserSessionsController',
-        'Frontend/UserSettingsController',
 
         'AbstractController',
         'AuthenticatedController',

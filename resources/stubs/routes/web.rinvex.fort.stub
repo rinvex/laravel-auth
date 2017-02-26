@@ -76,8 +76,8 @@ Route::namespace('Frontend')->name('frontend.')->middleware('web')->group(functi
         |--------------------------------------------------------------------------
         */
 
-        Route::get('settings')->name('settings')->uses('UserSettingsController@edit');
-        Route::post('settings')->name('settings.update')->uses('UserSettingsController@update');
+        Route::get('settings')->name('settings')->uses('AccountSettingsController@edit');
+        Route::post('settings')->name('settings.update')->uses('AccountSettingsController@update');
 
         /*
         |--------------------------------------------------------------------------
@@ -85,8 +85,8 @@ Route::namespace('Frontend')->name('frontend.')->middleware('web')->group(functi
         |--------------------------------------------------------------------------
         */
 
-        Route::get('sessions')->name('sessions')->uses('UserSessionsController@index');
-        Route::delete('sessions/{token?}')->name('sessions.flush')->uses('UserSessionsController@flush');
+        Route::get('sessions')->name('sessions')->uses('AccountSessionsController@index');
+        Route::delete('sessions/{token?}')->name('sessions.flush')->uses('AccountSessionsController@flush');
 
         /*
         |--------------------------------------------------------------------------

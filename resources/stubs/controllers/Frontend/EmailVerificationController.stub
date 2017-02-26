@@ -129,7 +129,7 @@ class EmailVerificationController extends AbstractController
     protected function redirect()
     {
         return intend([
-            'url' => '/',
+            'route' => 'frontend.account.settings',
             'with' => ['warning' => trans('messages.verification.email.already')],
         ]);
     }

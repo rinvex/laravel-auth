@@ -19,7 +19,7 @@ use Illuminate\Http\Request;
 use Rinvex\Fort\Models\Persistence;
 use {{namespace}}Http\Controllers\AuthenticatedController;
 
-class UserSessionsController extends AuthenticatedController
+class AccountSessionsController extends AuthenticatedController
 {
     /**
      * Show the account sessions.

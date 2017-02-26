@@ -149,7 +149,7 @@ class TwoFactorSettingsController extends AuthenticatedController
         if (! $currentUser->phone || ! $currentUser->phone_verified) {
             return intend([
                 'route' => 'frontend.account.settings',
-                'withErrors' => ['phone' => trans('messages.account.phone_required')],
+                'withErrors' => ['phone' => trans('messages.account.phone_verification_required')],
             ]);
         }
 
