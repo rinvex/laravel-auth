@@ -99,6 +99,9 @@ class MakeAuthCommand extends Command
         'backend/users/form.blade',
         'backend/users/index.blade',
 
+        'frontend/account/sessions.blade',
+        'frontend/account/settings.blade',
+        'frontend/account/twofactor.blade',
         'frontend/alerts/error.blade',
         'frontend/alerts/success.blade',
         'frontend/alerts/warning.blade',
@@ -109,12 +112,9 @@ class MakeAuthCommand extends Command
         'frontend/common/layout-example.blade',
         'frontend/passwordreset/request.blade',
         'frontend/passwordreset/reset.blade',
-        'frontend/user/sessions.blade',
-        'frontend/user/settings.blade',
-        'frontend/user/twofactor.blade',
-        'frontend/verification/email/request.blade',
-        'frontend/verification/phone/request.blade',
-        'frontend/verification/phone/token.blade',
+        'frontend/verification/email-request.blade',
+        'frontend/verification/phone-request.blade',
+        'frontend/verification/phone-token.blade',
 
     ];
 
