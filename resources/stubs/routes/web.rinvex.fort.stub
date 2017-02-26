@@ -68,7 +68,7 @@ Route::namespace('Frontend')->name('frontend.')->middleware('web')->group(functi
     |--------------------------------------------------------------------------
     */
 
-    Route::name('user.')->prefix('user')->group(function () {
+    Route::name('account.')->prefix('account')->group(function () {
 
         /*
         |--------------------------------------------------------------------------

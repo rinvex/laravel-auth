@@ -35,7 +35,7 @@ class EmailVerificationController extends AbstractController
             return $this->redirect();
         }
 
-        return view('frontend.verification.email.request');
+        return view('frontend.verification.email-request');
     }
 
     /**
@@ -94,7 +94,7 @@ class EmailVerificationController extends AbstractController
         switch ($result) {
             case EmailVerificationBrokerContract::EMAIL_VERIFIED:
                 return intend([
-                    'route' => $request->user($this->getGuard()) ? 'frontend.user.settings' : 'frontend.auth.login',
+                    'route' => $request->user($this->getGuard()) ? 'frontend.account.settings' : 'frontend.auth.login',
                     'with' => ['success' => trans($result)],
                 ]);
 

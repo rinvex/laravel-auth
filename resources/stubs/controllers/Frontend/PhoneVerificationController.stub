@@ -41,7 +41,7 @@ class PhoneVerificationController extends AbstractController
         // If Two-Factor authentication failed, remember Two-Factor persistence
         Auth::guard($this->getGuard())->rememberTwoFactor();
 
-        return view('frontend.verification.phone.request');
+        return view('frontend.verification.phone-request');
     }
 
     /**
@@ -84,7 +84,7 @@ class PhoneVerificationController extends AbstractController
 
         $methods = session('rinvex.fort.twofactor.methods');
 
-        return view('frontend.verification.phone.token', compact('methods'));
+        return view('frontend.verification.phone-token', compact('methods'));
     }
 
     /**
@@ -114,7 +114,7 @@ class PhoneVerificationController extends AbstractController
                 ]);
 
                 return intend([
-                    'route' => 'frontend.user.settings',
+                    'route' => 'frontend.account.settings',
                     'with' => ['success' => trans($result)],
                 ]);
 
@@ -183,7 +183,7 @@ class PhoneVerificationController extends AbstractController
             // Logged in user, no country, phone verification attempt (account update)
             case 'country':
                 return intend([
-                    'route' => 'frontend.user.settings',
+                    'route' => 'frontend.account.settings',
                     'withErrors' => ['country' => trans('messages.account.country_required')],
                 ]);
                 break;
@@ -191,7 +191,7 @@ class PhoneVerificationController extends AbstractController
             // Logged in user, Two-Factor Phone disabled, phone verification attempt (account update)
             case 'phone':
                 return intend([
-                    'route' => 'frontend.user.settings',
+                    'route' => 'frontend.account.settings',
                     'withErrors' => ['rinvex.fort.auth.twofactor.phone.disabled' => trans('messages.verification.twofactor.phone.disabled')],
                 ]);
                 break;

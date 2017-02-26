@@ -20,7 +20,7 @@
                     </header>
 
                     <div class="panel-body">
-                        {{ Form::model($currentUser, ['route' => 'frontend.user.settings.update', 'class' => 'form-horizontal']) }}
+                        {{ Form::model($currentUser, ['route' => 'frontend.account.settings.update', 'class' => 'form-horizontal']) }}
 
                             @include('frontend.alerts.success')
                             @include('frontend.alerts.warning')
@@ -278,9 +278,9 @@
 
                                                     <div class="panel panel-primary">
                                                         <header class="panel-heading">
-                                                            <a class="btn btn-default btn-xs pull-right" style="margin-left: 10px" href="{{ route('frontend.user.twofactor.totp.enable') }}">@if(array_get($twoFactor, 'totp.enabled')) {{ trans('common.settings') }} @else {{ trans('common.enable') }} @endif</a>
+                                                            <a class="btn btn-default btn-xs pull-right" style="margin-left: 10px" href="{{ route('frontend.account.twofactor.totp.enable') }}">@if(array_get($twoFactor, 'totp.enabled')) {{ trans('common.settings') }} @else {{ trans('common.enable') }} @endif</a>
                                                             @if(array_get($twoFactor, 'totp.enabled'))
-                                                                <a class="btn btn-default btn-xs pull-right" href="{{ route('frontend.user.twofactor.totp.disable') }}">{{ trans('common.disable') }}</a>
+                                                                <a class="btn btn-default btn-xs pull-right" href="{{ route('frontend.account.twofactor.totp.disable') }}">{{ trans('common.disable') }}</a>
                                                             @endif
                                                             <h3 class="panel-title">
                                                                 {{ trans('twofactor.totp_head') }}
@@ -298,9 +298,9 @@
                                                     <div class="panel panel-primary">
                                                         <header class="panel-heading">
                                                             @if(array_get($twoFactor, 'phone.enabled'))
-                                                                <a class="btn btn-default btn-xs pull-right" href="{{ route('frontend.user.twofactor.phone.disable') }}">{{ trans('common.disable') }}</a>
+                                                                <a class="btn btn-default btn-xs pull-right" href="{{ route('frontend.account.twofactor.phone.disable') }}">{{ trans('common.disable') }}</a>
                                                             @else
-                                                                <a class="btn btn-default btn-xs pull-right" href="{{ route('frontend.user.twofactor.phone.enable') }}">{{ trans('common.enable') }}</a>
+                                                                <a class="btn btn-default btn-xs pull-right" href="{{ route('frontend.account.twofactor.phone.enable') }}">{{ trans('common.enable') }}</a>
                                                             @endif
                                                             <h3 class="panel-title">
                                                                 {{ trans('twofactor.phone_head') }}

@@ -28,7 +28,7 @@ class UserSessionsController extends AuthenticatedController
      */
     public function index()
     {
-        return view('frontend.user.sessions');
+        return view('frontend.account.sessions');
     }
 
     /**

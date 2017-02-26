@@ -34,7 +34,7 @@ class UserSettingsController extends AuthenticatedController
         }, countries());
         $twoFactor = $request->user($this->getGuard())->getTwoFactor();
 
-        return view('frontend.user.settings', compact('twoFactor', 'countries'));
+        return view('frontend.account.settings', compact('twoFactor', 'countries'));
     }
 
     /**
