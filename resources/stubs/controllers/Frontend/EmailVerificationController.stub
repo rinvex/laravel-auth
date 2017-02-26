@@ -104,7 +104,7 @@ class EmailVerificationController extends AbstractController
                 return intend([
                     'route' => 'frontend.verification.email.request',
                     'withInput' => $request->only(['email']),
-                    'withErrors' => ['token' => trans($result)],
+                    'withErrors' => ['email' => trans($result)],
                 ]);
         }
     }

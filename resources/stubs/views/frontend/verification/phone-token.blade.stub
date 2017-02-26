@@ -31,18 +31,19 @@
 
                                 <div class="col-md-6">
                                     {{ Form::text('token', old('token'), ['class' => 'form-control', 'placeholder' => trans('common.authentication_code'), 'required' => 'required', 'autofocus' => 'autofocus']) }}
+
+                                    @if ($errors->has('token'))
+                                        <span class="help-block">
+                                            <strong>{{ $errors->first('token') }}</strong>
+                                        </span>
+                                    @endif
+
                                     {{ trans('twofactor.backup_notice') }}<br />
 
                                     @if ($methods['phone'])
                                         <strong>{!! trans('twofactor.backup_sms', ['href' => route('frontend.verification.phone.request')]) !!}</strong>
                                     @else
                                         <strong>{{ trans('twofactor.backup_code') }}</strong>
-                                    @endif
-
-                                    @if ($errors->has('token'))
-                                        <span class="help-block">
-                                            <strong>{{ $errors->first('token') }}</strong>
-                                        </span>
                                     @endif
                                 </div>
                             </div>
