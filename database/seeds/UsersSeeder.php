@@ -18,7 +18,6 @@ namespace Rinvex\Fort\Seeds;
 use Carbon\Carbon;
 use Rinvex\Fort\Models\User;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\DB;
 
 class UsersSeeder extends Seeder
 {
@@ -29,9 +28,6 @@ class UsersSeeder extends Seeder
      */
     public function run()
     {
-        DB::statement('SET FOREIGN_KEY_CHECKS=0;');
-        DB::table(config('rinvex.fort.tables.users'))->truncate();
-
         $user = [
             'username' => 'Fort',
             'email' => 'help@rinvex.com',
@@ -50,7 +46,5 @@ class UsersSeeder extends Seeder
 
         // Assign roles to users
         $user->assignRoles('admin');
-
-        DB::statement('SET FOREIGN_KEY_CHECKS=1;');
     }
 }
