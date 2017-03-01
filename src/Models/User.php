@@ -197,6 +197,7 @@ class User extends Model implements AuthenticatableContract, AuthenticatableTwoF
             'password' => 'sometimes|required|min:'.config('rinvex.fort.password_min_chars'),
             'gender' => 'in:male,female,undisclosed',
             'active' => 'boolean',
+            'phone' => 'numeric',
             'email_verified' => 'boolean',
             'phone_verified' => 'boolean',
         ]);

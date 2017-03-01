@@ -197,7 +197,7 @@
                                     {{ Form::label('phone', trans('common.phone'), ['class' => 'col-md-3 control-label']) }}
 
                                     <div class="col-md-8">
-                                        {{ Form::text('phone', null, ['class' => 'form-control', 'placeholder' => $currentUser->phone ?: trans('common.phone')]) }}
+                                        {{ Form::number('phone', null, ['class' => 'form-control', 'placeholder' => $currentUser->phone ?: trans('common.phone')]) }}
 
                                         @if ($currentUser->phone_verified)
                                             <small class="text-success">{!! trans('common.phone_verified', ['date' => $currentUser->phone_verified_at]) !!}</small>

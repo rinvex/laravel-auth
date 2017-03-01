@@ -26,7 +26,7 @@
                                 {{ Form::label('phone', trans('common.phone'), ['class' => 'col-md-4 control-label']) }}
 
                                 <div class="col-md-6">
-                                    {{ Form::text('phone', old('phone', auth()->guest() ? '' : $currentUser->phone), ['class' => 'form-control', 'placeholder' => trans('common.phone'), 'required' => 'required', 'autofocus' => 'autofocus']) }}
+                                    {{ Form::number('phone', old('phone', $currentUser->phone), ['class' => 'form-control', 'placeholder' => trans('common.phone'), 'required' => 'required', 'disabled' => 'disabled', 'autofocus' => 'autofocus']) }}
 
                                     @if ($errors->has('phone'))
                                         <span class="help-block">

@@ -199,7 +199,7 @@
                                 {{ Form::label('phone_verified', trans('common.verified'), ['class' => 'control-label pull-right']) }}
 
                                 <div class="input-group">
-                                    {{ Form::text('phone', null, ['class' => 'form-control', 'placeholder' => trans('common.phone')]) }}
+                                    {{ Form::number('phone', null, ['class' => 'form-control', 'placeholder' => trans('common.phone')]) }}
                                     <span class="input-group-addon">
                                         {{ Form::checkbox('phone_verified') }}
                                     </span>
