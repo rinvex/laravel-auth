@@ -88,7 +88,7 @@ class EmailVerificationController extends AbstractController
             $user->forceFill([
                 'email_verified' => true,
                 'email_verified_at' => new Carbon(),
-            ])->save();
+            ])->forceSave();
         });
 
         switch ($result) {
