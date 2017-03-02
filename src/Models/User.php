@@ -194,8 +194,8 @@ class User extends Model implements AuthenticatableContract, AuthenticatableTwoF
         $this->setRules([
             'email' => 'required|email|max:255|unique:'.config('rinvex.fort.tables.users').',email',
             'username' => 'required|alpha_dash|max:255|unique:'.config('rinvex.fort.tables.users').',username',
-            'password' => 'sometimes|required|min:'.config('rinvex.fort.password_min_chars'),
             'gender' => 'in:male,female,undisclosed',
+            'password' => 'sometimes|required',
             'phone' => 'numeric|nullable',
         ]);
     }
@@ -306,6 +306,18 @@ class User extends Model implements AuthenticatableContract, AuthenticatableTwoF
     public function getRoleListAttribute()
     {
         return $this->roles->pluck('id')->toArray();
+    }
+
+    /**
+     * Hash password attribute.
+     *
+     * @param $value
+     *
+     * @return void
+     */
+    public function setPasswordAttribute($value)
+    {
+        $this->attributes['password'] = bcrypt($value);
     }
 
     /**

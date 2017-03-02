@@ -25,7 +25,6 @@ use Rinvex\Fort\Services\AccessGate;
 use Illuminate\Support\Facades\Auth;
 use Rinvex\Fort\Guards\SessionGuard;
 use Rinvex\Fort\Handlers\RoleHandler;
-use Rinvex\Fort\Handlers\UserHandler;
 use Illuminate\Foundation\AliasLoader;
 use Illuminate\Support\ServiceProvider;
 use Collective\Html\HtmlServiceProvider;
@@ -102,7 +101,6 @@ class FortServiceProvider extends ServiceProvider
 
         // Register event handlers
         Role::observe(RoleHandler::class);
-        User::observe(UserHandler::class);
         Ability::observe(AbilityHandler::class);
         $this->app['events']->subscribe(GenericHandler::class);
 
