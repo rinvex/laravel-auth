@@ -351,7 +351,7 @@ class User extends Model implements AuthenticatableContract, AuthenticatableTwoF
                 'authy_id' => $authyId,
             ]);
 
-            $this->update(['two_factor' => $settings]);
+            $this->fill(['two_factor' => $settings])->forceSave();
         }
 
         return $authyId;

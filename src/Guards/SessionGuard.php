@@ -276,7 +276,7 @@ class SessionGuard extends BaseSessionGuard
         }
 
         // Update user last login timestamp
-        $user->update(['login_at' => new Carbon()]);
+        $user->fill(['login_at' => new Carbon()])->forceSave();
 
         // Update user persistence
         $this->updatePersistence($user->id, $persistence ?: $this->session->getId(), false);
@@ -457,9 +457,9 @@ class SessionGuard extends BaseSessionGuard
         array_set($settings, 'totp.backup', $backup);
 
         // Update Two-Factor OTP backup codes
-        $user->update([
+        $user->fill([
             'two_factor' => $settings,
-        ]);
+        ])->forceSave();
     }
 
     /**

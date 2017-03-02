@@ -87,7 +87,7 @@ class AbilityUpdateCommand extends Command
                     $this->error('- '.$key.': '.$messages[0]);
                 }
             } else {
-                $ability->update($data);
+                $ability->fill($data)->save();
 
                 $this->info(trans('rinvex.fort::artisan.ability.updated').' ['.trans('rinvex.fort::artisan.ability.id').': '.$ability->id.', '.trans('rinvex.fort::artisan.ability.name').': '.$ability->name.', '.trans('rinvex.fort::artisan.ability.slug').': '.$ability->slug.']');
             }

@@ -108,10 +108,10 @@ class PhoneVerificationController extends AbstractController
         switch ($result) {
             case SessionGuard::AUTH_PHONE_VERIFIED:
                 // Update user account
-                $user->update([
+                $user->fill([
                     'phone_verified' => true,
                     'phone_verified_at' => new Carbon(),
-                ]);
+                ])->forceSave();
 
                 return intend([
                     'route' => 'frontend.account.settings',

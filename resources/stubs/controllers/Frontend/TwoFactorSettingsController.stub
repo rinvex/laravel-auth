@@ -50,9 +50,9 @@ class TwoFactorSettingsController extends AuthenticatedController
             array_set($settings, 'totp.enabled', false);
             array_set($settings, 'totp.secret', $secret = $totpProvider->generateSecretKey());
 
-            $currentUser->update([
+            $currentUser->fill([
                 'two_factor' => $settings,
-            ]);
+            ])->forceSave();
         }
 
         $qrCode = $totpProvider->getQRCodeInline(config('app.name'), $currentUser->email, $secret);
@@ -87,9 +87,9 @@ class TwoFactorSettingsController extends AuthenticatedController
             array_set($settings, 'totp.backup_at', $backupAt ?: (new Carbon())->toDateTimeString());
 
             // Update Two-Factor settings
-            $currentUser->update([
+            $currentUser->fill([
                 'two_factor' => $settings,
-            ]);
+            ])->forceSave();
 
             return intend([
                 'back' => true,
@@ -121,9 +121,9 @@ class TwoFactorSettingsController extends AuthenticatedController
 
         array_set($settings, 'totp', []);
 
-        $currentUser->update([
+        $currentUser->fill([
             'two_factor' => $settings,
-        ]);
+        ])->forceSave();
 
         return intend([
             'route' => 'frontend.account.settings',
@@ -157,9 +157,9 @@ class TwoFactorSettingsController extends AuthenticatedController
 
         array_set($settings, 'phone.enabled', true);
 
-        $currentUser->update([
+        $currentUser->fill([
             'two_factor' => $settings,
-        ]);
+        ])->forceSave();
 
         return intend([
             'route' => 'frontend.account.settings',
@@ -185,9 +185,9 @@ class TwoFactorSettingsController extends AuthenticatedController
 
         array_set($settings, 'phone.enabled', false);
 
-        $currentUser->update([
+        $currentUser->fill([
             'two_factor' => $settings,
-        ]);
+        ])->forceSave();
 
         return intend([
             'route' => 'frontend.account.settings',
@@ -221,9 +221,9 @@ class TwoFactorSettingsController extends AuthenticatedController
         array_set($settings, 'totp.backup', $this->generateTotpBackups());
         array_set($settings, 'totp.backup_at', (new Carbon())->toDateTimeString());
 
-        $currentUser->update([
+        $currentUser->fill([
             'two_factor' => $settings,
-        ]);
+        ])->forceSave();
 
         return intend([
             'back' => true,

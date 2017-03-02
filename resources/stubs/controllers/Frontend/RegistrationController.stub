@@ -67,17 +67,17 @@ class RegistrationController extends AbstractController
         // Fire the register start event
         event('rinvex.fort.register.start', [$input + $active]);
 
-        $result = $user->create($input + $active);
+        $user->fill($input + $active)->save();
 
         // Attach default role to the registered user
         if ($defaultRole = config('rinvex.fort.registration.default_role')) {
             if ($defaultRole = Role::where('slug', $defaultRole)->first()) {
-                $result->roles()->attach($defaultRole);
+                $user->roles()->attach($defaultRole);
             }
         }
 
         // Fire the register success event
-        event('rinvex.fort.register.success', [$result]);
+        event('rinvex.fort.register.success', [$user]);
 
         // Send verification if required
         if (config('rinvex.fort.emailverification.required')) {

@@ -77,7 +77,7 @@ class AccountSettingsController extends AuthenticatedController
             array_set($twoFactor, 'two_factor.phone.enabled', false);
         }
 
-        $currentUser->update($input + $emailVerification + $phoneVerification + $twoFactor);
+        $currentUser->fill($input + $emailVerification + $phoneVerification + $twoFactor)->save();
 
         return intend([
             'back' => true,

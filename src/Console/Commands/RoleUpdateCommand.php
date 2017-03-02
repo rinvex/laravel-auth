@@ -86,7 +86,7 @@ class RoleUpdateCommand extends Command
                     $this->error('- '.$key.': '.$messages[0]);
                 }
             } else {
-                $role->update($data);
+                $role->fill($data)->save();
 
                 $this->info(trans('rinvex.fort::artisan.role.updated').' ['.trans('rinvex.fort::artisan.role.id').': '.$role->id.', '.trans('rinvex.fort::artisan.role.name').': '.$role->name.', '.trans('rinvex.fort::artisan.role.slug').': '.$role->slug.']');
             }

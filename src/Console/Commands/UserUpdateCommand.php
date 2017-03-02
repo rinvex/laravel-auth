@@ -98,7 +98,7 @@ class UserUpdateCommand extends Command
                     $this->error('- '.$key.': '.$messages[0]);
                 }
             } else {
-                $user->update($data);
+                $user->fill($data)->save();
 
                 $this->info(trans('rinvex.fort::artisan.user.updated').' ['.trans('rinvex.fort::artisan.user.id').': '.$user->id.', '.trans('rinvex.fort::artisan.user.email').': '.$user->email.', '.trans('rinvex.fort::artisan.user.username').': '.$user->username.']');
             }

@@ -144,7 +144,7 @@ class AbilitiesController extends AuthorizedController
         }
 
         // Save ability
-        ! $ability->exists ? $ability = $ability->create($input) : $ability->update($input);
+        $ability->fill($input)->save();
 
         return intend([
             'route' => 'backend.abilities.index',
