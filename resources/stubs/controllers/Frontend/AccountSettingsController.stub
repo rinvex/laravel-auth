@@ -53,7 +53,16 @@ class AccountSettingsController extends AuthenticatedController
         if ($input['password'] && $input['password'] != $input['password_confirmation']) {
             return intend([
                 'back' => true,
+                'withInput' => $request->all(),
                 'withErrors' => ['password' => trans('validation.confirmed', ['attribute' => 'password'])],
+            ]);
+        }
+
+        if (strlen($input['password']) < config('rinvex.fort.password_min_chars')) {
+            return intend([
+                'back' => true,
+                'withInput' => $request->all(),
+                'withErrors' => ['password' => trans('validation.min.string', ['attribute' => 'password', 'min' => config('rinvex.fort.password_min_chars')])],
             ]);
         }
 
