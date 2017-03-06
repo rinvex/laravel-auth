@@ -27,6 +27,7 @@
 
                                 <div class="col-md-6">
                                     {{ Form::number('phone', old('phone', $currentUser->phone), ['class' => 'form-control', 'placeholder' => trans('common.phone'), 'required' => 'required', 'disabled' => 'disabled', 'autofocus' => 'autofocus']) }}
+                                    {{ Form::hidden('phone', old('phone', $currentUser->phone)) }}
 
                                     @if ($errors->has('phone'))
                                         <span class="help-block">
