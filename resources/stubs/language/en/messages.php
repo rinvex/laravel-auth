@@ -13,6 +13,8 @@
  * Link:    https://rinvex.com
  */
 
+declare(strict_types=1);
+
 return [
 
     'error' => '<strong>Whoops!</strong> There were some problems with your input.',

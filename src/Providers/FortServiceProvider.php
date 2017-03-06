@@ -13,10 +13,11 @@
  * Link:    https://rinvex.com
  */
 
+declare(strict_types=1);
+
 namespace Rinvex\Fort\Providers;
 
 use Rinvex\Fort\Models\Role;
-use Rinvex\Fort\Models\User;
 use Illuminate\Routing\Router;
 use Collective\Html\FormFacade;
 use Collective\Html\HtmlFacade;
