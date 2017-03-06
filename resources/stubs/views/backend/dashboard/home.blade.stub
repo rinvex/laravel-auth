@@ -152,7 +152,7 @@
 
                                             <li class="list-group-item" style="vertical-align: middle">
                                                 <span class="pull-right">
-                                                    @if($persistence->user_id == $currentUser->id)<span class="label label-info">{{ trans('common.you') }}</span> @endif
+                                                    @if($persistence->user_id === $currentUser->id)<span class="label label-info">{{ trans('common.you') }}</span> @endif
                                                     <span class="badge">{{ $persistence->updated_at->diffForHumans() }}</span>
                                                 </span>
                                                 @can('update-users', $user) <a href="{{ route('backend.users.edit', ['user' => $persistence->user_id]) }}"> @endcan

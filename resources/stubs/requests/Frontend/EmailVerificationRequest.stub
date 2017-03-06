@@ -39,7 +39,7 @@ class EmailVerificationRequest extends FormRequest
     public function rules()
     {
         // Skip validation rules for request validation form
-        if ($this->route()->getName() == 'frontend.verification.email.request') {
+        if ($this->route()->getName() === 'frontend.verification.email.request') {
             return [];
         }
 
