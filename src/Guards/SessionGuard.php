@@ -475,7 +475,7 @@ class SessionGuard extends BaseSessionGuard
         $settings = $user->getTwoFactor();
         $authyId = array_get($settings, 'phone.authy_id');
 
-        return strlen($token) === 7 && app('rinvex.authy.token')->verify($token, $authyId);
+        return strlen($token) === 7 && app('rinvex.authy.token')->verify($token, $authyId)->succeed();
     }
 
     /**
