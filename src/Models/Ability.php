@@ -18,8 +18,8 @@ declare(strict_types=1);
 namespace Rinvex\Fort\Models;
 
 use Watson\Validating\ValidatingTrait;
-use Rinvex\Cacheable\CacheableEloquent;
 use Illuminate\Database\Eloquent\Model;
+use Rinvex\Cacheable\CacheableEloquent;
 use Spatie\Translatable\HasTranslations;
 
 /**
@@ -294,7 +294,7 @@ class Ability extends Model
         }
 
         // If the connection name isn't set but exists, infer it.
-        if ((strpos($parameters[0], '.') === false) && (($connectionName = $this->getModel()->getConnectionName()) !== null)) {
+        if ((mb_strpos($parameters[0], '.') === false) && (($connectionName = $this->getModel()->getConnectionName()) !== null)) {
             $parameters[0] = $connectionName.'.'.$parameters[0];
         }
 
@@ -305,7 +305,7 @@ class Ability extends Model
 
         if ($this->exists) {
             // If the identifier isn't set, infer it.
-            if (! isset($parameters[2]) || strtolower($parameters[2]) === 'null') {
+            if (! isset($parameters[2]) || mb_strtolower($parameters[2]) === 'null') {
                 $parameters[2] = $this->getModel()->getKey();
             }
 
@@ -315,7 +315,7 @@ class Ability extends Model
             }
 
             foreach ($parameters as $key => $parameter) {
-                if (strtolower($parameter) === 'null') {
+                if (mb_strtolower($parameter) === 'null') {
                     $parameters[$key] = $this->getModel()->{$parameters[$key - 1]};
                 }
             }

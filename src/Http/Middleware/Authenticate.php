@@ -35,7 +35,7 @@ class Authenticate
     {
         if (Auth::guard($guard)->guest()) {
             return intend([
-                'route'      => 'frontend.auth.login',
+                'route' => 'frontend.auth.login',
                 'withErrors' => ['rinvex.fort.session.expired' => trans('messages.auth.session.required')],
             ], 401);
         }

@@ -47,7 +47,7 @@ class RoleFindCommand extends Command
 
         // Find single role
         if ($field = $this->argument('field')) {
-            if (intval($field) && $role = Role::find($field, $columns)) {
+            if ((int) $field && $role = Role::find($field, $columns)) {
                 return $this->table($columns, [$role->toArray()]);
             } elseif ($role = Role::where(['slug' => $field], $columns)->first()) {
                 return $this->table($columns, $role->toArray());

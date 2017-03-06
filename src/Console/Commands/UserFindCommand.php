@@ -47,7 +47,7 @@ class UserFindCommand extends Command
 
         // Find single user
         if ($field = $this->argument('field')) {
-            if (intval($field) && $user = User::find($field, $columns)) {
+            if ((int) $field && $user = User::find($field, $columns)) {
                 return $this->table($columns, [$user->toArray()]);
             } elseif (filter_var($field, FILTER_VALIDATE_EMAIL) && $user = User::where(['email' => $field], $columns)->first()) {
                 return $this->table($columns, [$user->toArray()]);

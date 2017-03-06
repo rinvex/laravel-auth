@@ -38,20 +38,20 @@ class ExceptionHandler extends BaseExceptionHandler
     {
         if ($exception instanceof InvalidPersistenceException) {
             return intend([
-                'route'      => 'frontend.auth.login',
+                'route' => 'frontend.auth.login',
                 'withErrors' => ['rinvex.fort.session.expired' => trans('messages.auth.session.expired')],
             ], 401);
         } elseif ($exception instanceof ModelNotFoundException) {
-            $single = strtolower(trim(strrchr($exception->getModel(), '\\'), '\\'));
+            $single = mb_strtolower(trim(mb_strrchr($exception->getModel(), '\\'), '\\'));
             $plural = str_plural($single);
 
             return intend([
-                'route'      => 'backend.'.$plural.'.index',
+                'route' => 'backend.'.$plural.'.index',
                 'withErrors' => ['rinvex.fort.'.$single.'.not_found' => trans('messages.'.$single.'.not_found')],
             ]);
         } elseif ($exception instanceof AuthorizationException) {
             return intend([
-                'url'        => '/',
+                'url' => '/',
                 'withErrors' => ['rinvex.fort.unauthorized' => $exception->getMessage()],
             ], 403);
         }
@@ -70,7 +70,7 @@ class ExceptionHandler extends BaseExceptionHandler
     protected function unauthenticated($request, AuthenticationException $exception)
     {
         return intend([
-            'route'      => 'frontend.auth.login',
+            'route' => 'frontend.auth.login',
             'withErrors' => ['rinvex.fort.session.required' => trans('messages.auth.session.required')],
         ], 401);
     }

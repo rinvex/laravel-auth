@@ -68,8 +68,8 @@ class AuthenticationLockoutNotification extends Notification implements ShouldQu
             ->subject(trans('emails.auth.lockout.subject'))
             ->line(trans('emails.auth.lockout.intro', [
                 'created_at' => new Carbon(),
-                'ip'         => $this->request->ip(),
-                'agent'      => $this->request->server('HTTP_USER_AGENT'),
+                'ip' => $this->request->ip(),
+                'agent' => $this->request->server('HTTP_USER_AGENT'),
             ]))
             ->line(trans('emails.auth.lockout.outro'));
     }

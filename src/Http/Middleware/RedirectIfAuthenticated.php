@@ -35,7 +35,7 @@ class RedirectIfAuthenticated
     {
         if (Auth::guard($guard)->check()) {
             return intend([
-                'url'  => '/',
+                'url' => '/',
                 'with' => ['success' => trans('messages.auth.already')],
             ]);
         }

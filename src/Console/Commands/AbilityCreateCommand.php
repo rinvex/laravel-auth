@@ -18,8 +18,8 @@ declare(strict_types=1);
 namespace Rinvex\Fort\Console\Commands;
 
 use Illuminate\Support\Str;
-use Rinvex\Fort\Models\Ability;
 use Illuminate\Console\Command;
+use Rinvex\Fort\Models\Ability;
 use Illuminate\Contracts\Validation\Factory;
 
 class AbilityCreateCommand extends Command
@@ -51,8 +51,8 @@ class AbilityCreateCommand extends Command
         $data = array_filter([
 
             // Required ability attributes
-            'name'        => $name = $this->argument('name') ?: $this->ask(trans('rinvex.fort::artisan.ability.name')),
-            'slug'        => $this->argument('slug') ?: Str::slug($name),
+            'name' => $name = $this->argument('name') ?: $this->ask(trans('rinvex.fort::artisan.ability.name')),
+            'slug' => $this->argument('slug') ?: Str::slug($name),
 
             // Optional ability attributes
             'description' => $this->option('description'),

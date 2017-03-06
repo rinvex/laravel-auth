@@ -56,13 +56,13 @@ class UserUpdateCommand extends Command
         $data = array_filter([
 
             // Required user attributes
-            'email'       => $this->option('email'),
-            'username'    => $this->option('username'),
-            'password'    => $this->option('password') ? $this->option('password') : null,
-            'first_name'  => $this->option('firstName'),
+            'email' => $this->option('email'),
+            'username' => $this->option('username'),
+            'password' => $this->option('password') ? $this->option('password') : null,
+            'first_name' => $this->option('firstName'),
             'middle_name' => $this->option('middleName'),
-            'last_name'   => $this->option('lastName'),
-            'active'      => $this->option('active') ?: ! $this->option('inactive'),
+            'last_name' => $this->option('lastName'),
+            'active' => $this->option('active') ?: ! $this->option('inactive'),
 
         ], [
             $this,
@@ -73,7 +73,7 @@ class UserUpdateCommand extends Command
         $field = $this->argument('field') ?: $this->ask(trans('rinvex.fort::artisan.user.invalid'));
 
         // Find single user
-        if (intval($field)) {
+        if ((int) $field) {
             $user = User::find($field);
         } elseif (filter_var($field, FILTER_VALIDATE_EMAIL)) {
             $user = User::where(['email' => $field])->first();
@@ -86,7 +86,7 @@ class UserUpdateCommand extends Command
         }
 
         $rules = [
-            'email'    => 'sometimes|required|email|max:255|unique:'.config('rinvex.fort.tables.users').',email',
+            'email' => 'sometimes|required|email|max:255|unique:'.config('rinvex.fort.tables.users').',email',
             'username' => 'sometimes|required|max:255|unique:'.config('rinvex.fort.tables.users').',username',
         ];
 

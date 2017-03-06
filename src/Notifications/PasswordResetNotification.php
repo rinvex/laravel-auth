@@ -76,8 +76,8 @@ class PasswordResetNotification extends Notification implements ShouldQueue
             ->line(trans('emails.passwordreset.request.intro', ['expire' => $this->expiration]))
             ->action(trans('emails.passwordreset.request.action'), route('frontend.passwordreset.reset').'?token='.$this->token['token'].'&email='.$this->token['email'])
             ->line(trans('emails.passwordreset.request.outro', [
-                'ip'         => $this->token['ip'],
-                'agent'      => $this->token['agent'],
+                'ip' => $this->token['ip'],
+                'agent' => $this->token['agent'],
                 'created_at' => $this->token['created_at'],
             ]));
     }

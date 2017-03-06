@@ -48,7 +48,7 @@ class UserRemindCommand extends Command
     {
         $userField = $this->argument('user') ?: $this->ask(trans('rinvex.fort::artisan.user.identifier'));
 
-        if (intval($userField)) {
+        if ((int) $userField) {
             $user = User::find($userField);
         } elseif (filter_var($userField, FILTER_VALIDATE_EMAIL)) {
             $user = User::where(['email' => $userField])->first();

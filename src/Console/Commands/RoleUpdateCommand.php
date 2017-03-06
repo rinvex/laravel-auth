@@ -50,8 +50,8 @@ class RoleUpdateCommand extends Command
         $data = array_filter([
 
             // Required role attributes
-            'name'        => $this->option('name'),
-            'slug'        => $this->option('slug'),
+            'name' => $this->option('name'),
+            'slug' => $this->option('slug'),
             'description' => $this->option('description'),
 
         ], [
@@ -63,7 +63,7 @@ class RoleUpdateCommand extends Command
         $field = $this->argument('field') ?: $this->ask(trans('rinvex.fort::artisan.user.invalid'));
 
         // Find single role
-        if (intval($field)) {
+        if ((int) $field) {
             $role = Role::find($field);
         } else {
             $role = Role::where(['slug' => $field])->first();
