@@ -58,7 +58,7 @@ class PhoneVerificationController extends AbstractController
         }
 
         // Send phone verification notification
-        $request->user($this->getGuard())->sendPhoneVerificationNotification(false, $request->get('method'));
+        $request->user($this->getGuard())->sendPhoneVerificationNotification($request->get('method'), true);
 
         return intend([
             'route' => 'frontend.verification.phone.verify',
