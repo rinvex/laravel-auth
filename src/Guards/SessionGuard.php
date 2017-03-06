@@ -477,7 +477,7 @@ class SessionGuard extends BaseSessionGuard
         $settings = $user->getTwoFactor();
         $authyId = array_get($settings, 'phone.authy_id');
 
-        return in_array(strlen($token), [6, 7, 8]) && app('rinvex.authy.token')->verify($token, $authyId)->succeed();
+        return in_array(mb_strlen($token), [6, 7, 8]) && app('rinvex.authy.token')->verify($token, $authyId)->succeed();
     }
 
     /**
@@ -492,7 +492,7 @@ class SessionGuard extends BaseSessionGuard
     {
         $backup = array_get($user->getTwoFactor(), 'totp.backup', []);
 
-        return strlen($token) === 10 && in_array($token, $backup);
+        return mb_strlen($token) === 10 && in_array($token, $backup);
     }
 
     /**
@@ -508,7 +508,7 @@ class SessionGuard extends BaseSessionGuard
         $totp = app(TwoFactorTotpProvider::class);
         $secret = array_get($user->getTwoFactor(), 'totp.secret');
 
-        return strlen($token) === 6 && isset($this->session->get('rinvex.fort.twofactor.methods')['totp']) && $totp->verifyKey($secret, $token);
+        return mb_strlen($token) === 6 && isset($this->session->get('rinvex.fort.twofactor.methods')['totp']) && $totp->verifyKey($secret, $token);
     }
 
     /**

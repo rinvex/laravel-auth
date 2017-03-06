@@ -55,15 +55,15 @@ class UserCreateCommand extends Command
         $data = array_filter([
 
             // Required user attributes
-            'email'          => $this->argument('email') ?: $this->ask(trans('rinvex.fort::artisan.user.email')),
-            'username'       => $this->argument('username') ?: $this->ask(trans('rinvex.fort::artisan.user.username')),
-            'password'       => $this->argument('password') ?: $this->secret(trans('rinvex.fort::forms.common.password')),
+            'email' => $this->argument('email') ?: $this->ask(trans('rinvex.fort::artisan.user.email')),
+            'username' => $this->argument('username') ?: $this->ask(trans('rinvex.fort::artisan.user.username')),
+            'password' => $this->argument('password') ?: $this->secret(trans('rinvex.fort::forms.common.password')),
 
             // Optional user attributes
-            'first_name'     => $this->argument('firstName'),
-            'middle_name'    => $this->argument('middleName'),
-            'last_name'      => $this->argument('lastName'),
-            'active'         => ! $this->option('inactive'),
+            'first_name' => $this->argument('firstName'),
+            'middle_name' => $this->argument('middleName'),
+            'last_name' => $this->argument('lastName'),
+            'active' => ! $this->option('inactive'),
             'email_verified' => ! $this->option('unverified'),
 
         ], [
@@ -72,7 +72,7 @@ class UserCreateCommand extends Command
         ]);
 
         $rules = [
-            'email'    => 'required|email|max:255|unique:'.config('rinvex.fort.tables.users').',email',
+            'email' => 'required|email|max:255|unique:'.config('rinvex.fort.tables.users').',email',
             'username' => 'required|max:255|unique:'.config('rinvex.fort.tables.users').',username',
         ];
 

@@ -78,7 +78,7 @@ trait HasRoles
     protected function setRoles($roles, string $process)
     {
         // Guess event name
-        $event = $process == 'syncWithoutDetaching' ? 'attach' : $process;
+        $event = $process === 'syncWithoutDetaching' ? 'attach' : $process;
 
         // If the "attaching/syncing/detaching" event returns false we'll cancel this operation and
         // return false, indicating that the attaching/syncing/detaching failed. This provides a
@@ -179,19 +179,19 @@ trait HasRoles
 
         // Array of role slugs
         if (is_array($roles) && isset($roles[0]) && is_string($roles[0])) {
-            return $this->roles->pluck('slug')->count() == count($roles)
+            return $this->roles->pluck('slug')->count() === count($roles)
                    && $this->roles->pluck('slug')->diff($roles)->isEmpty();
         }
 
         // Array of role ids
         if (is_array($roles) && isset($roles[0]) && is_int($roles[0])) {
-            return $this->roles->pluck('id')->count() == count($roles)
+            return $this->roles->pluck('id')->count() === count($roles)
                    && $this->roles->pluck('id')->diff($roles)->isEmpty();
         }
 
         // Collection of role models
         if ($roles instanceof Collection) {
-            return $this->roles->count() == $roles->count() && $this->roles->diff($roles)->isEmpty();
+            return $this->roles->count() === $roles->count() && $this->roles->diff($roles)->isEmpty();
         }
 
         return false;

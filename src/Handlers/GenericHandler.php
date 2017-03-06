@@ -69,7 +69,7 @@ class GenericHandler
     public function authLockout(Request $request)
     {
         if (config('rinvex.fort.throttle.lockout_email')) {
-            $user = get_login_field($loginfield = $request->get('loginfield')) == 'email' ? User::where('email', $loginfield)->first() : User::where('username', $loginfield)->first();
+            $user = get_login_field($loginfield = $request->get('loginfield')) === 'email' ? User::where('email', $loginfield)->first() : User::where('username', $loginfield)->first();
 
             $user->notify(new AuthenticationLockoutNotification($request));
         }

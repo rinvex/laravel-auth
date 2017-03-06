@@ -19,8 +19,8 @@ namespace Rinvex\Fort\Seeds;
 
 use Rinvex\Fort\Models\Role;
 use Rinvex\Fort\Models\User;
-use Rinvex\Fort\Models\Ability;
 use Illuminate\Database\Seeder;
+use Rinvex\Fort\Models\Ability;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\Model;
 

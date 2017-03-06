@@ -17,8 +17,8 @@ declare(strict_types=1);
 
 namespace Rinvex\Fort\Console\Commands;
 
-use Rinvex\Fort\Models\Ability;
 use Illuminate\Console\Command;
+use Rinvex\Fort\Models\Ability;
 use Illuminate\Contracts\Validation\Factory;
 
 class AbilityUpdateCommand extends Command
@@ -51,8 +51,8 @@ class AbilityUpdateCommand extends Command
         $data = array_filter([
 
             // Required ability attributes
-            'name'        => $this->option('name'),
-            'slug'        => $this->option('slug'),
+            'name' => $this->option('name'),
+            'slug' => $this->option('slug'),
             'description' => $this->option('description'),
 
         ], [
@@ -64,7 +64,7 @@ class AbilityUpdateCommand extends Command
         $field = $this->argument('field') ?: $this->ask(trans('rinvex.fort::artisan.ability.invalid'));
 
         // Find single ability
-        if (intval($field)) {
+        if ((int) $field) {
             $ability = Ability::find($field);
         } else {
             $ability = Ability::where(['slug' => $field])->first();

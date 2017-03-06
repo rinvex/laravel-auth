@@ -51,8 +51,8 @@ class RoleCreateCommand extends Command
         $data = array_filter([
 
             // Required role attributes
-            'name'        => $name = $this->argument('name') ?: $this->ask(trans('rinvex.fort::artisan.role.name')),
-            'slug'        => $this->argument('slug') ?: Str::slug($name),
+            'name' => $name = $this->argument('name') ?: $this->ask(trans('rinvex.fort::artisan.role.name')),
+            'slug' => $this->argument('slug') ?: Str::slug($name),
 
             // Optional role attributes
             'description' => $this->option('description'),

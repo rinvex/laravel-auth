@@ -18,8 +18,8 @@ declare(strict_types=1);
 namespace Rinvex\Fort\Console\Commands;
 
 use Rinvex\Fort\Models\User;
-use Rinvex\Fort\Models\Ability;
 use Illuminate\Console\Command;
+use Rinvex\Fort\Models\Ability;
 
 class UserGiveAbilityCommand extends Command
 {
@@ -48,7 +48,7 @@ class UserGiveAbilityCommand extends Command
     {
         $userField = $this->argument('user') ?: $this->ask(trans('rinvex.fort::artisan.user.identifier'));
 
-        if (intval($userField)) {
+        if ((int) $userField) {
             $user = User::find($userField);
         } elseif (filter_var($userField, FILTER_VALIDATE_EMAIL)) {
             $user = User::where(['email' => $userField])->first();
@@ -62,7 +62,7 @@ class UserGiveAbilityCommand extends Command
 
         $abilityField = $this->argument('ability') ?: $this->anticipate(trans('rinvex.fort::artisan.user.ability'), Ability::all()->pluck('slug', 'id')->toArray());
 
-        if (intval($abilityField)) {
+        if ((int) $abilityField) {
             $ability = Ability::find($abilityField);
         } else {
             $ability = Ability::where(['slug' => $abilityField])->first();

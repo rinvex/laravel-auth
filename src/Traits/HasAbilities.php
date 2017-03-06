@@ -78,7 +78,7 @@ trait HasAbilities
     protected function setAbilities($action, $resource, string $process)
     {
         // Guess event name
-        $event = $process == 'syncWithoutDetaching' ? 'attach' : $process;
+        $event = $process === 'syncWithoutDetaching' ? 'attach' : $process;
 
         // If the "attaching/syncing/detaching" event returns false we'll cancel this operation and
         // return false, indicating that the attaching/syncing/detaching failed. This provides a

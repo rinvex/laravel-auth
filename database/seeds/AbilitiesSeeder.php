@@ -17,8 +17,8 @@ declare(strict_types=1);
 
 namespace Rinvex\Fort\Seeds;
 
-use Rinvex\Fort\Models\Ability;
 use Illuminate\Database\Seeder;
+use Rinvex\Fort\Models\Ability;
 
 class AbilitiesSeeder extends Seeder
 {

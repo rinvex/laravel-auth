@@ -46,7 +46,7 @@ class AccessGate extends Gate
         if ($result) {
             return $this->allow();
         } else {
-            $message = $ability == 'null'
+            $message = $ability === 'null'
                 ? trans('messages.auth.authorize')
                 : trans('messages.auth.unauthorized');
 

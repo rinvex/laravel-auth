@@ -18,8 +18,8 @@ declare(strict_types=1);
 namespace Rinvex\Fort\Console\Commands;
 
 use Rinvex\Fort\Models\Role;
-use Rinvex\Fort\Models\Ability;
 use Illuminate\Console\Command;
+use Rinvex\Fort\Models\Ability;
 
 class RoleGiveAbilityCommand extends Command
 {
@@ -48,7 +48,7 @@ class RoleGiveAbilityCommand extends Command
     {
         $roleField = $this->argument('role') ?: $this->ask(trans('rinvex.fort::artisan.role.identifier'));
 
-        if (intval($roleField)) {
+        if ((int) $roleField) {
             $role = Role::find($roleField);
         } else {
             $role = Role::where(['slug' => $roleField])->first();
@@ -60,7 +60,7 @@ class RoleGiveAbilityCommand extends Command
 
         $abilityField = $this->argument('ability') ?: $this->anticipate(trans('rinvex.fort::artisan.role.ability'), Ability::all()->pluck('slug', 'id')->toArray());
 
-        if (intval($abilityField)) {
+        if ((int) $abilityField) {
             $ability = Ability::find($abilityField);
         } else {
             $ability = Ability::where(['slug' => $abilityField])->first();

@@ -21,8 +21,8 @@ use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
 use Rinvex\Fort\Traits\HasAbilities;
 use Watson\Validating\ValidatingTrait;
-use Rinvex\Cacheable\CacheableEloquent;
 use Illuminate\Database\Eloquent\Model;
+use Rinvex\Cacheable\CacheableEloquent;
 use Spatie\Translatable\HasTranslations;
 
 /**

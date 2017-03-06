@@ -17,8 +17,8 @@ declare(strict_types=1);
 
 namespace Rinvex\Fort\Console\Commands;
 
-use Rinvex\Fort\Models\Ability;
 use Illuminate\Console\Command;
+use Rinvex\Fort\Models\Ability;
 
 class AbilityFindCommand extends Command
 {
@@ -47,7 +47,7 @@ class AbilityFindCommand extends Command
 
         // Find single ability
         if ($field = $this->argument('field')) {
-            if (intval($field) && $ability = Ability::find($field, $columns)) {
+            if ((int) $field && $ability = Ability::find($field, $columns)) {
                 return $this->table($columns, [$ability->toArray()]);
             } elseif ($ability = Ability::where(['slug' => $field], $columns)->first()) {
                 return $this->table($columns, $ability->toArray());
