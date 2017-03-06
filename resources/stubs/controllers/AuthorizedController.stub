@@ -99,7 +99,7 @@ class AuthorizedController extends AuthenticatedController
 
         // Get public methods and filter magic methods
         $methods = array_filter($controller->getMethods(ReflectionMethod::IS_PUBLIC), function ($item) use ($controller) {
-            return $item->class === $controller->name && substr($item->name, 0, 2) !== '__' && ! in_array($item->name, $this->resourceActionWhitelist);
+            return $item->class === $controller->name && mb_substr($item->name, 0, 2) !== '__' && ! in_array($item->name, $this->resourceActionWhitelist);
         });
 
         // Get controller actions

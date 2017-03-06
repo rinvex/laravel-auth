@@ -60,7 +60,7 @@ class AccountSettingsController extends AuthenticatedController
             ]);
         }
 
-        if ($input['password'] && strlen($input['password']) < config('rinvex.fort.password_min_chars')) {
+        if ($input['password'] && mb_strlen($input['password']) < config('rinvex.fort.password_min_chars')) {
             return intend([
                 'back' => true,
                 'withInput' => $request->all(),
