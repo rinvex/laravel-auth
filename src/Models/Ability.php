@@ -315,7 +315,7 @@ class Ability extends Model
             }
 
             foreach ($parameters as $key => $parameter) {
-                if (mb_strtolower($parameter) === 'null') {
+                if (mb_strtolower((string) $parameter) === 'null') {
                     $parameters[$key] = $this->getModel()->{$parameters[$key - 1]};
                 }
             }
