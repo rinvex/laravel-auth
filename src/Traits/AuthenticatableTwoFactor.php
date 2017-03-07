@@ -38,7 +38,7 @@ trait AuthenticatableTwoFactor
      */
     public function getTwoFactorAttribute($options)
     {
-        return json_decode($options, true) ?: [];
+        return $options ? json_decode($options, true) : [];
     }
 
     /**
