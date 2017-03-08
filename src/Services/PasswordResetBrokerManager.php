@@ -59,9 +59,7 @@ class PasswordResetBrokerManager implements PasswordBrokerFactory
     {
         $name = $name ?: $this->getDefaultDriver();
 
-        return isset($this->brokers[$name])
-                    ? $this->brokers[$name]
-                    : $this->brokers[$name] = $this->resolve($name);
+        return $this->brokers[$name] ?? $this->brokers[$name] = $this->resolve($name);
     }
 
     /**
@@ -105,7 +103,7 @@ class PasswordResetBrokerManager implements PasswordBrokerFactory
             $key = base64_decode(mb_substr($key, 7));
         }
 
-        $connection = isset($config['connection']) ? $config['connection'] : null;
+        $connection = $config['connection'] ?? null;
 
         return new PasswordResetTokenRepository(
             $this->app['db']->connection($connection),
