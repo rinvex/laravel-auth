@@ -13,14 +13,16 @@
  * Link:    https://rinvex.com
  */
 
+declare(strict_types=1);
+
 namespace Rinvex\Fort\Models;
 
 use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
 use Rinvex\Fort\Traits\HasAbilities;
 use Watson\Validating\ValidatingTrait;
-use Rinvex\Cacheable\CacheableEloquent;
 use Illuminate\Database\Eloquent\Model;
+use Rinvex\Cacheable\CacheableEloquent;
 use Spatie\Translatable\HasTranslations;
 
 /**
@@ -71,7 +73,16 @@ class Role extends Model
     /**
      * {@inheritdoc}
      */
-    protected $observables = ['validating', 'validated'];
+    protected $observables = [
+        'attaching',
+        'attached',
+        'syncing',
+        'synced',
+        'detaching',
+        'detached',
+        'validating',
+        'validated',
+    ];
 
     /**
      * The attributes that are translatable.
@@ -107,33 +118,11 @@ class Role extends Model
         parent::__construct($attributes);
 
         $this->setTable(config('rinvex.fort.tables.roles'));
-        $this->addObservableEvents(['attaching', 'attached', 'syncing', 'synced', 'detaching', 'detached']);
         $this->setRules([
             'name' => 'required|string',
             'description' => 'nullable|string',
             'slug' => 'required|alpha_dash|unique:'.config('rinvex.fort.tables.roles').',slug',
         ]);
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public static function boot()
-    {
-        parent::boot();
-
-        if (isset(static::$dispatcher)) {
-            // Early auto generate slugs before validation
-            static::$dispatcher->listen('eloquent.validating: '.static::class, function ($model, $event) {
-                if (! $model->slug) {
-                    if ($model->exists) {
-                        $model->generateSlugOnCreate();
-                    } else {
-                        $model->generateSlugOnUpdate();
-                    }
-                }
-            });
-        }
     }
 
     /**
@@ -209,6 +198,30 @@ class Role extends Model
     }
 
     /**
+     * Register a validating role event with the dispatcher.
+     *
+     * @param \Closure|string $callback
+     *
+     * @return void
+     */
+    public static function validating($callback)
+    {
+        static::registerModelEvent('validating', $callback);
+    }
+
+    /**
+     * Register a validated role event with the dispatcher.
+     *
+     * @param \Closure|string $callback
+     *
+     * @return void
+     */
+    public static function validated($callback)
+    {
+        static::registerModelEvent('validated', $callback);
+    }
+
+    /**
      * A role may be given various abilities.
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
@@ -226,7 +239,9 @@ class Role extends Model
      */
     public function users()
     {
-        return $this->belongsToMany(config('rinvex.fort.models.user'), config('rinvex.fort.tables.role_user'), 'role_id', 'user_id')
+        $userModel = config('auth.providers.'.config('auth.guards.'.config('auth.defaults.guard').'.provider').'.model');
+
+        return $this->belongsToMany($userModel, config('rinvex.fort.tables.role_user'), 'role_id', 'user_id')
                     ->withTimestamps();
     }
 

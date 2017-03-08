@@ -13,11 +13,12 @@
  * Link:    https://rinvex.com
  */
 
+declare(strict_types=1);
+
 namespace Rinvex\Fort\Console\Commands;
 
 use Rinvex\Fort\Models\Role;
 use Illuminate\Console\Command;
-use Illuminate\Support\Facades\Lang;
 
 class UserAssignRoleCommand extends Command
 {
@@ -44,9 +45,9 @@ class UserAssignRoleCommand extends Command
      */
     public function handle()
     {
-        $userField = $this->argument('user') ?: $this->ask(Lang::get('rinvex.fort::artisan.user.identifier'));
+        $userField = $this->argument('user') ?: $this->ask(trans('rinvex.fort::artisan.user.identifier'));
 
-        if (intval($userField)) {
+        if ((int) $userField) {
             $user = User::find($userField);
         } elseif (filter_var($userField, FILTER_VALIDATE_EMAIL)) {
             $user = User::where(['email' => $userField])->first();
@@ -55,24 +56,24 @@ class UserAssignRoleCommand extends Command
         }
 
         if (! $user) {
-            return $this->error(Lang::get('rinvex.fort::artisan.user.invalid', ['field' => $userField]));
+            return $this->error(trans('rinvex.fort::artisan.user.invalid', ['field' => $userField]));
         }
 
-        $roleField = $this->argument('role') ?: $this->anticipate(Lang::get('rinvex.fort::artisan.user.role'), Role::all()->pluck('slug', 'id')->toArray());
+        $roleField = $this->argument('role') ?: $this->anticipate(trans('rinvex.fort::artisan.user.role'), Role::all()->pluck('slug', 'id')->toArray());
 
-        if (intval($roleField)) {
+        if ((int) $roleField) {
             $role = Role::find($roleField);
         } else {
             $role = Role::where(['slug' => $roleField])->first();
         }
 
         if (! $role) {
-            return $this->error(Lang::get('rinvex.fort::artisan.role.invalid', ['field' => $roleField]));
+            return $this->error(trans('rinvex.fort::artisan.role.invalid', ['field' => $roleField]));
         }
 
         // Assign role to user
         $user->assignRole($role);
 
-        $this->info(Lang::get('rinvex.fort::artisan.user.roleassigned', ['user' => $user->id, 'role' => $role->id]));
+        $this->info(trans('rinvex.fort::artisan.user.roleassigned', ['user' => $user->id, 'role' => $role->id]));
     }
 }

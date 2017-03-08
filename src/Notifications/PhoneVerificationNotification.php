@@ -13,14 +13,20 @@
  * Link:    https://rinvex.com
  */
 
+declare(strict_types=1);
+
 namespace Rinvex\Fort\Notifications;
 
+use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Notification;
+use Illuminate\Contracts\Queue\ShouldQueue;
 use NotificationChannels\Authy\AuthyChannel;
 use NotificationChannels\Authy\AuthyMessage;
 
-class PhoneVerificationNotification extends Notification
+class PhoneVerificationNotification extends Notification implements ShouldQueue
 {
+    use Queueable;
+
     /**
      * The notification method (sms/call).
      *

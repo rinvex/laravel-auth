@@ -13,6 +13,8 @@
  * Link:    https://rinvex.com
  */
 
+declare(strict_types=1);
+
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
@@ -26,7 +28,7 @@ class CreatePasswordResetsTable extends Migration
      */
     public function up()
     {
-        Schema::create(config('rinvex.fort.tables.password_resets'), function (Blueprint $table) {
+        Schema::create(config('auth.passwords.'.config('auth.defaults.passwords').'.table'), function (Blueprint $table) {
             // Columns
             $table->string('token');
             $table->string('email');
@@ -50,6 +52,6 @@ class CreatePasswordResetsTable extends Migration
      */
     public function down()
     {
-        Schema::drop(config('rinvex.fort.tables.password_resets'));
+        Schema::drop(config('auth.passwords.'.config('auth.defaults.passwords').'.table'));
     }
 }

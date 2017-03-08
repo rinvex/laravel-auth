@@ -13,6 +13,8 @@
  * Link:    https://rinvex.com
  */
 
+declare(strict_types=1);
+
 namespace Rinvex\Fort\Handlers;
 
 use Rinvex\Fort\Models\Role;
@@ -21,18 +23,6 @@ use Rinvex\Fort\Models\Ability;
 
 class AbilityHandler
 {
-    /**
-     * Listen to the Ability created event.
-     *
-     * @param \Rinvex\Fort\Models\Ability $ability
-     *
-     * @return void
-     */
-    public function created(Ability $ability)
-    {
-        //
-    }
-
     /**
      * Listen to the Ability updated event.
      *

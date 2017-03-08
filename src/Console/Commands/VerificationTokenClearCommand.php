@@ -13,6 +13,8 @@
  * Link:    https://rinvex.com
  */
 
+declare(strict_types=1);
+
 namespace Rinvex\Fort\Console\Commands;
 
 use Illuminate\Console\Command;
@@ -40,7 +42,7 @@ class VerificationTokenClearCommand extends Command
      */
     public function handle()
     {
-        app('rinvex.fort.verifier')->broker($this->argument('broker'))->getTokenRepository()->deleteExpired();
+        app('rinvex.fort.verifier')->broker($this->argument('broker'))->getRepository()->deleteExpired();
 
         $this->info('Expired verification tokens cleared!');
     }

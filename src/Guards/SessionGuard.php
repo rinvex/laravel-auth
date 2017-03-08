@@ -13,6 +13,8 @@
  * Link:    https://rinvex.com
  */
 
+declare(strict_types=1);
+
 namespace Rinvex\Fort\Guards;
 
 use Carbon\Carbon;
@@ -34,56 +36,56 @@ class SessionGuard extends BaseSessionGuard
      *
      * @var string
      */
-    const AUTH_LOGIN = 'rinvex/fort::messages.auth.login';
+    const AUTH_LOGIN = 'messages.auth.login';
 
     /**
      * Constant representing a failed login.
      *
      * @var string
      */
-    const AUTH_FAILED = 'rinvex/fort::messages.auth.failed';
+    const AUTH_FAILED = 'messages.auth.failed';
 
     /**
      * Constant representing an unverified user.
      *
      * @var string
      */
-    const AUTH_UNVERIFIED = 'rinvex/fort::messages.auth.unverified';
+    const AUTH_UNVERIFIED = 'messages.auth.unverified';
 
     /**
      * Constant representing a locked out user.
      *
      * @var string
      */
-    const AUTH_LOCKED_OUT = 'rinvex/fort::messages.auth.lockout';
+    const AUTH_LOCKED_OUT = 'messages.auth.lockout';
 
     /**
      * Constant representing a user with Two-Factor authentication enabled.
      *
      * @var string
      */
-    const AUTH_TWOFACTOR_REQUIRED = 'rinvex/fort::messages.verification.twofactor.totp.required';
+    const AUTH_TWOFACTOR_REQUIRED = 'messages.verification.twofactor.totp.required';
 
     /**
      * Constant representing a user with Two-Factor failed authentication.
      *
      * @var string
      */
-    const AUTH_TWOFACTOR_FAILED = 'rinvex/fort::messages.verification.twofactor.invalid_token';
+    const AUTH_TWOFACTOR_FAILED = 'messages.verification.twofactor.invalid_token';
 
     /**
      * Constant representing a user with phone verified.
      *
      * @var string
      */
-    const AUTH_PHONE_VERIFIED = 'rinvex/fort::messages.verification.phone.verified';
+    const AUTH_PHONE_VERIFIED = 'messages.verification.phone.verified';
 
     /**
      * Constant representing a logged out user.
      *
      * @var string
      */
-    const AUTH_LOGOUT = 'rinvex/fort::messages.auth.logout';
+    const AUTH_LOGOUT = 'messages.auth.logout';
 
     /**
      * Indicates if there's logout attempt.
@@ -276,7 +278,7 @@ class SessionGuard extends BaseSessionGuard
         }
 
         // Update user last login timestamp
-        $user->update(['login_at' => new Carbon()]);
+        $user->fill(['login_at' => new Carbon()])->forceSave();
 
         // Update user persistence
         $this->updatePersistence($user->id, $persistence ?: $this->session->getId(), false);
@@ -457,9 +459,9 @@ class SessionGuard extends BaseSessionGuard
         array_set($settings, 'totp.backup', $backup);
 
         // Update Two-Factor OTP backup codes
-        $user->update([
+        $user->fill([
             'two_factor' => $settings,
-        ]);
+        ])->forceSave();
     }
 
     /**
@@ -475,7 +477,7 @@ class SessionGuard extends BaseSessionGuard
         $settings = $user->getTwoFactor();
         $authyId = array_get($settings, 'phone.authy_id');
 
-        return strlen($token) === 7 && app('rinvex.authy.token')->verify($token, $authyId);
+        return in_array(mb_strlen($token), [6, 7, 8]) && app('rinvex.authy.token')->verify($token, $authyId)->succeed();
     }
 
     /**
@@ -490,7 +492,7 @@ class SessionGuard extends BaseSessionGuard
     {
         $backup = array_get($user->getTwoFactor(), 'totp.backup', []);
 
-        return strlen($token) === 10 && in_array($token, $backup);
+        return mb_strlen($token) === 10 && in_array($token, $backup);
     }
 
     /**
@@ -506,7 +508,7 @@ class SessionGuard extends BaseSessionGuard
         $totp = app(TwoFactorTotpProvider::class);
         $secret = array_get($user->getTwoFactor(), 'totp.secret');
 
-        return strlen($token) === 6 && isset($this->session->get('rinvex.fort.twofactor.methods')['totp']) && $totp->verifyKey($secret, $token);
+        return mb_strlen($token) === 6 && isset($this->session->get('rinvex.fort.twofactor.methods')['totp']) && $totp->verifyKey($secret, $token);
     }
 
     /**

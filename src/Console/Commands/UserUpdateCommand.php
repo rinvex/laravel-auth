@@ -13,11 +13,12 @@
  * Link:    https://rinvex.com
  */
 
+declare(strict_types=1);
+
 namespace Rinvex\Fort\Console\Commands;
 
 use Rinvex\Fort\Models\User;
 use Illuminate\Console\Command;
-use Illuminate\Support\Facades\Lang;
 use Illuminate\Contracts\Validation\Factory;
 
 class UserUpdateCommand extends Command
@@ -55,13 +56,13 @@ class UserUpdateCommand extends Command
         $data = array_filter([
 
             // Required user attributes
-            'email'       => $this->option('email'),
-            'username'    => $this->option('username'),
-            'password'    => $this->option('password') ? bcrypt($this->option('password')) : null,
-            'first_name'  => $this->option('firstName'),
+            'email' => $this->option('email'),
+            'username' => $this->option('username'),
+            'password' => $this->option('password') ? $this->option('password') : null,
+            'first_name' => $this->option('firstName'),
             'middle_name' => $this->option('middleName'),
-            'last_name'   => $this->option('lastName'),
-            'active'      => $this->option('active') ?: ! $this->option('inactive'),
+            'last_name' => $this->option('lastName'),
+            'active' => $this->option('active') ?: ! $this->option('inactive'),
 
         ], [
             $this,
@@ -69,10 +70,10 @@ class UserUpdateCommand extends Command
         ]);
 
         // Get required argument
-        $field = $this->argument('field') ?: $this->ask(Lang::get('rinvex.fort::artisan.user.invalid'));
+        $field = $this->argument('field') ?: $this->ask(trans('rinvex.fort::artisan.user.invalid'));
 
         // Find single user
-        if (intval($field)) {
+        if ((int) $field) {
             $user = User::find($field);
         } elseif (filter_var($field, FILTER_VALIDATE_EMAIL)) {
             $user = User::where(['email' => $field])->first();
@@ -81,11 +82,11 @@ class UserUpdateCommand extends Command
         }
 
         if (! $user) {
-            return $this->error(Lang::get('rinvex.fort::artisan.user.invalid', ['field' => $field]));
+            return $this->error(trans('rinvex.fort::artisan.user.invalid', ['field' => $field]));
         }
 
         $rules = [
-            'email'    => 'sometimes|required|email|max:255|unique:'.config('rinvex.fort.tables.users').',email',
+            'email' => 'sometimes|required|email|max:255|unique:'.config('rinvex.fort.tables.users').',email',
             'username' => 'sometimes|required|max:255|unique:'.config('rinvex.fort.tables.users').',username',
         ];
 
@@ -99,12 +100,12 @@ class UserUpdateCommand extends Command
                     $this->error('- '.$key.': '.$messages[0]);
                 }
             } else {
-                $user->update($data);
+                $user->fill($data)->save();
 
-                $this->info(Lang::get('rinvex.fort::artisan.user.updated').' ['.Lang::get('rinvex.fort::artisan.user.id').': '.$user->id.', '.Lang::get('rinvex.fort::artisan.user.email').': '.$user->email.', '.Lang::get('rinvex.fort::artisan.user.username').': '.$user->username.']');
+                $this->info(trans('rinvex.fort::artisan.user.updated').' ['.trans('rinvex.fort::artisan.user.id').': '.$user->id.', '.trans('rinvex.fort::artisan.user.email').': '.$user->email.', '.trans('rinvex.fort::artisan.user.username').': '.$user->username.']');
             }
         } else {
-            $this->info(Lang::get('rinvex.fort::artisan.user.nothing'));
+            $this->info(trans('rinvex.fort::artisan.user.nothing'));
         }
     }
 

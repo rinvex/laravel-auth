@@ -13,6 +13,8 @@
  * Link:    https://rinvex.com
  */
 
+declare(strict_types=1);
+
 namespace Rinvex\Fort\Traits;
 
 trait AuthenticatableTwoFactor
@@ -36,7 +38,7 @@ trait AuthenticatableTwoFactor
      */
     public function getTwoFactorAttribute($options)
     {
-        return json_decode($options, true) ?: [];
+        return $options ? json_decode($options, true) : [];
     }
 
     /**

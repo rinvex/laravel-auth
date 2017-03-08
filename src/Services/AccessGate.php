@@ -13,6 +13,8 @@
  * Link:    https://rinvex.com
  */
 
+declare(strict_types=1);
+
 namespace Rinvex\Fort\Services;
 
 use Illuminate\Support\Str;
@@ -44,9 +46,9 @@ class AccessGate extends Gate
         if ($result) {
             return $this->allow();
         } else {
-            $message = $ability == 'null'
-                ? trans('rinvex/fort::messages.auth.authorize')
-                : trans('rinvex/fort::messages.auth.unauthorized');
+            $message = $ability === 'null'
+                ? trans('messages.auth.authorize')
+                : trans('messages.auth.unauthorized');
 
             throw new AuthorizationException($message, $ability, $arguments);
         }

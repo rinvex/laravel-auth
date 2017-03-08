@@ -13,22 +13,24 @@
  * Link:    https://rinvex.com
  */
 
+declare(strict_types=1);
+
 namespace Rinvex\Fort\Models;
 
 use Rinvex\Fort\Traits\HasRoles;
 use Illuminate\Auth\Authenticatable;
-use Watson\Validating\ValidatingTrait;
 use Rinvex\Fort\Traits\CanVerifyEmail;
 use Rinvex\Fort\Traits\CanVerifyPhone;
-use Rinvex\Cacheable\CacheableEloquent;
+use Watson\Validating\ValidatingTrait;
 use Illuminate\Database\Eloquent\Model;
+use Rinvex\Cacheable\CacheableEloquent;
 use Illuminate\Notifications\Notifiable;
 use Rinvex\Fort\Traits\CanResetPassword;
 use Rinvex\Fort\Traits\AuthenticatableTwoFactor;
 use Rinvex\Fort\Contracts\CanVerifyEmailContract;
 use Rinvex\Fort\Contracts\CanVerifyPhoneContract;
-use Rinvex\Fort\Contracts\CanResetPasswordContract;
 use Illuminate\Foundation\Auth\Access\Authorizable;
+use Rinvex\Fort\Contracts\CanResetPasswordContract;
 use Rinvex\Fort\Contracts\AuthenticatableTwoFactorContract;
 use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 use Illuminate\Contracts\Auth\Access\Authorizable as AuthorizableContract;
@@ -192,14 +194,36 @@ class User extends Model implements AuthenticatableContract, AuthenticatableTwoF
 
         $this->setTable(config('rinvex.fort.tables.users'));
         $this->setRules([
-            'username' => 'required|alpha_dash|max:255|unique:'.config('rinvex.fort.tables.users').',username',
             'email' => 'required|email|max:255|unique:'.config('rinvex.fort.tables.users').',email',
-            'password' => 'sometimes|required|min:'.config('rinvex.fort.passwordreset.minimum_characters'),
+            'username' => 'required|alpha_dash|max:255|unique:'.config('rinvex.fort.tables.users').',username',
             'gender' => 'in:male,female,undisclosed',
-            'active' => 'boolean',
-            'email_verified' => 'boolean',
-            'phone_verified' => 'boolean',
+            'password' => 'sometimes|required',
+            'phone' => 'numeric|nullable',
         ]);
+    }
+
+    /**
+     * Register a validating user event with the dispatcher.
+     *
+     * @param \Closure|string $callback
+     *
+     * @return void
+     */
+    public static function validating($callback)
+    {
+        static::registerModelEvent('validating', $callback);
+    }
+
+    /**
+     * Register a validated user event with the dispatcher.
+     *
+     * @param \Closure|string $callback
+     *
+     * @return void
+     */
+    public static function validated($callback)
+    {
+        static::registerModelEvent('validated', $callback);
     }
 
     /**
@@ -287,6 +311,18 @@ class User extends Model implements AuthenticatableContract, AuthenticatableTwoF
     }
 
     /**
+     * Hash password attribute.
+     *
+     * @param $value
+     *
+     * @return void
+     */
+    public function setPasswordAttribute($value)
+    {
+        $this->attributes['password'] = bcrypt($value);
+    }
+
+    /**
      * Determine if the user is super admin.
      *
      * @return bool
@@ -304,18 +340,6 @@ class User extends Model implements AuthenticatableContract, AuthenticatableTwoF
     public function isProtected()
     {
         return in_array($this->id, config('rinvex.fort.protected.users'));
-    }
-
-    /**
-     * Set the user's password.
-     *
-     * @param string $value
-     *
-     * @return void
-     */
-    public function setPasswordAttribute($value)
-    {
-        $this->attributes['password'] = bcrypt($value);
     }
 
     /**
@@ -338,7 +362,7 @@ class User extends Model implements AuthenticatableContract, AuthenticatableTwoF
                 'authy_id' => $authyId,
             ]);
 
-            $this->update(['two_factor' => $settings]);
+            $this->fill(['two_factor' => $settings])->forceSave();
         }
 
         return $authyId;

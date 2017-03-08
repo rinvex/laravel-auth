@@ -13,15 +13,21 @@
  * Link:    https://rinvex.com
  */
 
+declare(strict_types=1);
+
 namespace Rinvex\Fort\Notifications;
 
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Notification;
+use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 
-class AuthenticationLockoutNotification extends Notification
+class AuthenticationLockoutNotification extends Notification implements ShouldQueue
 {
+    use Queueable;
+
     /**
      * The request instance.
      *
@@ -59,12 +65,12 @@ class AuthenticationLockoutNotification extends Notification
     public function toMail()
     {
         return (new MailMessage())
-            ->subject(trans('rinvex/fort::emails.auth.lockout.subject'))
-            ->line(trans('rinvex/fort::emails.auth.lockout.intro', [
+            ->subject(trans('emails.auth.lockout.subject'))
+            ->line(trans('emails.auth.lockout.intro', [
                 'created_at' => new Carbon(),
-                'ip'         => $this->request->ip(),
-                'agent'      => $this->request->server('HTTP_USER_AGENT'),
+                'ip' => $this->request->ip(),
+                'agent' => $this->request->server('HTTP_USER_AGENT'),
             ]))
-            ->line(trans('rinvex/fort::emails.auth.lockout.outro'));
+            ->line(trans('emails.auth.lockout.outro'));
     }
 }

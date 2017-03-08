@@ -13,6 +13,8 @@
  * Link:    https://rinvex.com
  */
 
+declare(strict_types=1);
+
 namespace Rinvex\Fort\Http\Middleware;
 
 use Closure;
@@ -33,8 +35,8 @@ class Authenticate
     {
         if (Auth::guard($guard)->guest()) {
             return intend([
-                'route'      => 'rinvex.fort.frontend.auth.login',
-                'withErrors' => ['rinvex.fort.session.expired' => trans('rinvex/fort::messages.auth.session.required')],
+                'route' => 'frontend.auth.login',
+                'withErrors' => ['rinvex.fort.session.expired' => trans('messages.auth.session.required')],
             ], 401);
         }
 

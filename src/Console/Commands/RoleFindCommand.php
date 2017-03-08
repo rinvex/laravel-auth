@@ -13,11 +13,12 @@
  * Link:    https://rinvex.com
  */
 
+declare(strict_types=1);
+
 namespace Rinvex\Fort\Console\Commands;
 
 use Rinvex\Fort\Models\Role;
 use Illuminate\Console\Command;
-use Illuminate\Support\Facades\Lang;
 
 class RoleFindCommand extends Command
 {
@@ -46,19 +47,19 @@ class RoleFindCommand extends Command
 
         // Find single role
         if ($field = $this->argument('field')) {
-            if (intval($field) && $role = Role::find($field, $columns)) {
+            if ((int) $field && $role = Role::find($field, $columns)) {
                 return $this->table($columns, [$role->toArray()]);
             } elseif ($role = Role::where(['slug' => $field], $columns)->first()) {
                 return $this->table($columns, $role->toArray());
             }
 
-            return $this->error(Lang::get('rinvex.fort::artisan.role.invalid', ['field' => $field]));
+            return $this->error(trans('rinvex.fort::artisan.role.invalid', ['field' => $field]));
         }
 
         // Find multiple roles
-        $field = $this->anticipate(Lang::get('rinvex.fort::artisan.role.field'), ['id', 'slug'], 'id');
-        $operator = $this->anticipate(Lang::get('rinvex.fort::artisan.role.operator'), ['=', '<', '>', '<=', '>=', '<>', '!=', 'like', 'like binary', 'not like', 'between', 'ilike', '&', '|', '^', '<<', '>>', 'rlike', 'regexp', 'not regexp', '~', '~*', '!~', '!~*', 'similar to', 'not similar to'], '=');
-        $value = $this->ask(Lang::get('rinvex.fort::artisan.role.value'));
+        $field = $this->anticipate(trans('rinvex.fort::artisan.role.field'), ['id', 'slug'], 'id');
+        $operator = $this->anticipate(trans('rinvex.fort::artisan.role.operator'), ['=', '<', '>', '<=', '>=', '<>', '!=', 'like', 'like binary', 'not like', 'between', 'ilike', '&', '|', '^', '<<', '>>', 'rlike', 'regexp', 'not regexp', '~', '~*', '!~', '!~*', 'similar to', 'not similar to'], '=');
+        $value = $this->ask(trans('rinvex.fort::artisan.role.value'));
         $results = Role::where($field, $operator, $value)->get($columns);
 
         return $this->table($columns, $results->toArray());

@@ -13,11 +13,13 @@
  * Link:    https://rinvex.com
  */
 
+declare(strict_types=1);
+
 namespace Rinvex\Fort\Models;
 
 use Watson\Validating\ValidatingTrait;
-use Rinvex\Cacheable\CacheableEloquent;
 use Illuminate\Database\Eloquent\Model;
+use Rinvex\Cacheable\CacheableEloquent;
 use Spatie\Translatable\HasTranslations;
 
 /**
@@ -67,7 +69,14 @@ class Ability extends Model
     /**
      * {@inheritdoc}
      */
-    protected $observables = ['validating', 'validated'];
+    protected $observables = [
+        'attaching',
+        'attached',
+        'detaching',
+        'detached',
+        'validating',
+        'validated',
+    ];
 
     /**
      * The attributes that are translatable.
@@ -111,7 +120,6 @@ class Ability extends Model
         parent::__construct($attributes);
 
         $this->setTable(config('rinvex.fort.tables.abilities'));
-        $this->addObservableEvents(['attaching', 'attached', 'detaching', 'detached']);
         $this->setRules([
             'name' => 'required',
             'action' => 'required|unique:'.config('rinvex.fort.tables.abilities').',action,NULL,id,resource,'.$this->resource,
@@ -168,6 +176,30 @@ class Ability extends Model
     }
 
     /**
+     * Register a validating ability event with the dispatcher.
+     *
+     * @param \Closure|string $callback
+     *
+     * @return void
+     */
+    public static function validating($callback)
+    {
+        static::registerModelEvent('validating', $callback);
+    }
+
+    /**
+     * Register a validated ability event with the dispatcher.
+     *
+     * @param \Closure|string $callback
+     *
+     * @return void
+     */
+    public static function validated($callback)
+    {
+        static::registerModelEvent('validated', $callback);
+    }
+
+    /**
      * An ability can be applied to roles.
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
@@ -185,7 +217,9 @@ class Ability extends Model
      */
     public function users()
     {
-        return $this->belongsToMany(config('rinvex.fort.models.user'), config('rinvex.fort.tables.ability_user'), 'ability_id', 'user_id')
+        $userModel = config('auth.providers.'.config('auth.guards.'.config('auth.defaults.guard').'.provider').'.model');
+
+        return $this->belongsToMany($userModel, config('rinvex.fort.tables.ability_user'), 'ability_id', 'user_id')
                     ->withTimestamps();
     }
 
@@ -260,7 +294,7 @@ class Ability extends Model
         }
 
         // If the connection name isn't set but exists, infer it.
-        if ((strpos($parameters[0], '.') === false) && (($connectionName = $this->getModel()->getConnectionName()) !== null)) {
+        if ((mb_strpos($parameters[0], '.') === false) && (($connectionName = $this->getModel()->getConnectionName()) !== null)) {
             $parameters[0] = $connectionName.'.'.$parameters[0];
         }
 
@@ -271,7 +305,7 @@ class Ability extends Model
 
         if ($this->exists) {
             // If the identifier isn't set, infer it.
-            if (! isset($parameters[2]) || strtolower($parameters[2]) === 'null') {
+            if (! isset($parameters[2]) || mb_strtolower($parameters[2]) === 'null') {
                 $parameters[2] = $this->getModel()->getKey();
             }
 
@@ -281,7 +315,7 @@ class Ability extends Model
             }
 
             foreach ($parameters as $key => $parameter) {
-                if (strtolower($parameter) === 'null') {
+                if (mb_strtolower((string) $parameter) === 'null') {
                     $parameters[$key] = $this->getModel()->{$parameters[$key - 1]};
                 }
             }

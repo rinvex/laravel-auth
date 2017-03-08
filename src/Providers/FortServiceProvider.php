@@ -13,25 +13,35 @@
  * Link:    https://rinvex.com
  */
 
+declare(strict_types=1);
+
 namespace Rinvex\Fort\Providers;
 
 use Rinvex\Fort\Models\Role;
-use Rinvex\Fort\Models\User;
 use Illuminate\Routing\Router;
+use Collective\Html\FormFacade;
+use Collective\Html\HtmlFacade;
 use Rinvex\Fort\Models\Ability;
 use Illuminate\Support\Facades\Auth;
 use Rinvex\Fort\Guards\SessionGuard;
+use Rinvex\Fort\Services\AccessGate;
 use Rinvex\Fort\Handlers\RoleHandler;
-use Rinvex\Fort\Handlers\UserHandler;
+use Illuminate\Foundation\AliasLoader;
 use Illuminate\Support\ServiceProvider;
+use Collective\Html\HtmlServiceProvider;
 use Rinvex\Fort\Handlers\AbilityHandler;
 use Rinvex\Fort\Handlers\GenericHandler;
 use Rinvex\Fort\Http\Middleware\Abilities;
 use Rinvex\Fort\Http\Middleware\Authenticate;
+use Laravel\Socialite\SocialiteServiceProvider;
+use Illuminate\Console\DetectsApplicationNamespace;
 use Rinvex\Fort\Http\Middleware\RedirectIfAuthenticated;
+use Illuminate\Contracts\Auth\Access\Gate as GateContract;
 
 class FortServiceProvider extends ServiceProvider
 {
+    use DetectsApplicationNamespace;
+
     /**
      * {@inheritdoc}
      */
@@ -43,8 +53,32 @@ class FortServiceProvider extends ServiceProvider
         // Override Exception Handler
         $this->overrideExceptionHandler();
 
-        // Register the deferred Fort Service Provider
-        $this->app->register(FortDeferredServiceProvider::class);
+        // Register Access Gate Binding
+        $this->registerAccessGate();
+
+        // Register the Socialite Service Provider
+        $this->app->register(SocialiteServiceProvider::class);
+
+        // Register the LaravelCollective HTML Service Provider
+        $this->app->register(HtmlServiceProvider::class);
+
+        // Alias the LaravelCollective Form & HTML Facades
+        AliasLoader::getInstance()->alias('Form', FormFacade::class);
+        AliasLoader::getInstance()->alias('Html', HtmlFacade::class);
+    }
+
+    /**
+     * Register the access gate service.
+     *
+     * @return void
+     */
+    protected function registerAccessGate()
+    {
+        $this->app->singleton(GateContract::class, function ($app) {
+            return new AccessGate($app, function () use ($app) {
+                return call_user_func($app['auth']->userResolver());
+            });
+        });
     }
 
     /**
@@ -58,12 +92,6 @@ class FortServiceProvider extends ServiceProvider
         // Load routes
         $this->loadRoutes($router);
 
-        // Load views
-        $this->loadViewsFrom(__DIR__.'/../../resources/views', 'rinvex/fort');
-
-        // Load language phrases
-        $this->loadTranslationsFrom(__DIR__.'/../../resources/lang', 'rinvex/fort');
-
         if ($this->app->runningInConsole()) {
             // Load migrations
             $this->loadMigrationsFrom(__DIR__.'/../../database/migrations');
@@ -74,7 +102,6 @@ class FortServiceProvider extends ServiceProvider
 
         // Register event handlers
         Role::observe(RoleHandler::class);
-        User::observe(UserHandler::class);
         Ability::observe(AbilityHandler::class);
         $this->app['events']->subscribe(GenericHandler::class);
 
@@ -103,16 +130,6 @@ class FortServiceProvider extends ServiceProvider
         $this->publishes([
             realpath(__DIR__.'/../../database/migrations') => database_path('migrations'),
         ], 'migrations');
-
-        // Publish language phrases
-        $this->publishes([
-            realpath(__DIR__.'/../../resources/lang') => resource_path('lang/vendor/rinvex/fort'),
-        ], 'lang');
-
-        // Publish views
-        $this->publishes([
-            realpath(__DIR__.'/../../resources/views') => resource_path('views/vendor/rinvex/fort'),
-        ], 'views');
     }
 
     /**
@@ -125,14 +142,10 @@ class FortServiceProvider extends ServiceProvider
     public function loadRoutes(Router $router)
     {
         // Load routes
-        if ($this->app->routesAreCached()) {
-            $this->app->booted(function () {
-                require $this->app->getCachedRoutesPath();
-            });
-        } else {
-            // Load the application routes
-            require __DIR__.'/../../routes/web.backend.php';
-            require __DIR__.'/../../routes/web.frontend.php';
+        if (! $this->app->routesAreCached() && file_exists(base_path('routes/web.rinvex.fort.php'))) {
+            $router->middleware('web')
+                 ->namespace($this->getAppNamespace().'Http\Controllers')
+                 ->group(base_path('routes/web.rinvex.fort.php'));
 
             $this->app->booted(function () use ($router) {
                 $router->getRoutes()->refreshNameLookups();
@@ -198,7 +211,7 @@ class FortServiceProvider extends ServiceProvider
     {
         $this->app->singleton(
             \Illuminate\Contracts\Debug\ExceptionHandler::class,
-            \Rinvex\Fort\Exceptions\ExceptionHandler::class
+            \Rinvex\Fort\Handlers\ExceptionHandler::class
         );
     }
 }

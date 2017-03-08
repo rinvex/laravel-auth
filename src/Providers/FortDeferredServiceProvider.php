@@ -13,35 +13,32 @@
  * Link:    https://rinvex.com
  */
 
+declare(strict_types=1);
+
 namespace Rinvex\Fort\Providers;
 
-use Collective\Html\FormFacade;
-use Collective\Html\HtmlFacade;
-use Rinvex\Fort\Services\AccessGate;
-use Illuminate\Foundation\AliasLoader;
-use Rinvex\Fort\Services\BrokerManager;
 use Illuminate\Support\ServiceProvider;
-use Collective\Html\HtmlServiceProvider;
 use Illuminate\View\Compilers\BladeCompiler;
-use Laravel\Socialite\SocialiteServiceProvider;
-use Rinvex\Fort\Console\Commands\UserFindCommand;
+use Rinvex\Fort\Console\Commands\MakeAuthCommand;
 use Rinvex\Fort\Console\Commands\RoleFindCommand;
+use Rinvex\Fort\Console\Commands\UserFindCommand;
 use Rinvex\Fort\Console\Commands\RoleCreateCommand;
 use Rinvex\Fort\Console\Commands\RoleUpdateCommand;
 use Rinvex\Fort\Console\Commands\UserCreateCommand;
 use Rinvex\Fort\Console\Commands\UserRemindCommand;
 use Rinvex\Fort\Console\Commands\UserUpdateCommand;
 use Rinvex\Fort\Console\Commands\AbilityFindCommand;
+use Rinvex\Fort\Console\Commands\ClearResetsCommand;
+use Rinvex\Fort\Services\PasswordResetBrokerManager;
 use Rinvex\Fort\Console\Commands\AbilityCreateCommand;
 use Rinvex\Fort\Console\Commands\AbilityUpdateCommand;
 use Rinvex\Fort\Console\Commands\UserAssignRoleCommand;
 use Rinvex\Fort\Console\Commands\UserRemoveRoleCommand;
-use Rinvex\Fort\Console\Commands\UserGiveAbilityCommand;
 use Rinvex\Fort\Console\Commands\RoleGiveAbilityCommand;
-use Illuminate\Contracts\Auth\Access\Gate as GateContract;
+use Rinvex\Fort\Console\Commands\UserGiveAbilityCommand;
+use Rinvex\Fort\Services\EmailVerificationBrokerManager;
 use Rinvex\Fort\Console\Commands\RoleRevokeAbilityCommand;
 use Rinvex\Fort\Console\Commands\UserRevokeAbilityCommand;
-use Rinvex\Fort\Console\Commands\PasswordTokenClearCommand;
 use Rinvex\Fort\Console\Commands\VerificationTokenClearCommand;
 
 class FortDeferredServiceProvider extends ServiceProvider
@@ -60,27 +57,29 @@ class FortDeferredServiceProvider extends ServiceProvider
      */
     protected $commands = [
 
-        AbilityFindCommand::class,
-        AbilityUpdateCommand::class,
-        AbilityCreateCommand::class,
+        'AuthMake' => 'command.auth.make',
+        'ClearResets' => 'command.auth.resets.clear',
 
-        RoleFindCommand::class,
-        RoleUpdateCommand::class,
-        RoleCreateCommand::class,
-        RoleGiveAbilityCommand::class,
-        RoleRevokeAbilityCommand::class,
+        'AbilityFind' => 'command.rinvex.fort.ability.find',
+        'AbilityUpdate' => 'command.rinvex.fort.ability.update',
+        'AbilityCreate' => 'command.rinvex.fort.ability.create',
 
-        UserFindCommand::class,
-        UserCreateCommand::class,
-        UserUpdateCommand::class,
-        UserRemindCommand::class,
-        UserAssignRoleCommand::class,
-        UserRemoveRoleCommand::class,
-        UserGiveAbilityCommand::class,
-        UserRevokeAbilityCommand::class,
+        'RoleFind' => 'command.rinvex.fort.role.find',
+        'RoleUpdate' => 'command.rinvex.fort.role.update',
+        'RoleCreate' => 'command.rinvex.fort.role.create',
+        'RoleGiveAbility' => 'command.rinvex.fort.role.giveability',
+        'RoleRevokeAbility' => 'command.rinvex.fort.role.revokeability',
 
-        VerificationTokenClearCommand::class,
-        PasswordTokenClearCommand::class,
+        'UserFind' => 'command.rinvex.fort.user.find',
+        'UserCreate' => 'command.rinvex.fort.user.create',
+        'UserUpdate' => 'command.rinvex.fort.user.update',
+        'UserRemind' => 'command.rinvex.fort.user.remind',
+        'UserAssignRole' => 'command.rinvex.fort.user.assignrole',
+        'UserRemoveRole' => 'command.rinvex.fort.user.removerole',
+        'UserGiveAbility' => 'command.rinvex.fort.user.giveability',
+        'UserRevokeAbility' => 'command.rinvex.fort.user.revokeability',
+
+        'VerificationTokenClear' => 'command.rinvex.fort.verification.tokenclear',
 
     ];
 
@@ -89,57 +88,48 @@ class FortDeferredServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        // Merge config
-        $this->mergeConfigFrom(realpath(__DIR__.'/../../config/config.php'), 'rinvex.fort');
+        // Register bindings
+        $this->registerPasswordBroker();
+        $this->registerBladeExtensions();
+        $this->registerVerificationBroker();
 
         // Register artisan commands
-        $this->commands($this->commands);
+        foreach (array_keys($this->commands) as $command) {
+            call_user_func_array([$this, "register{$command}Command"], []);
+        }
 
-        // Register bindings
-        $this->registerAccessGate();
-        $this->registerBrokerManagers();
-        $this->registerBladeExtensions();
-
-        // Register the Socialite Service Provider
-        $this->app->register(SocialiteServiceProvider::class);
-
-        // Register the LaravelCollective HTML Service Provider
-        $this->app->register(HtmlServiceProvider::class);
-
-        // Alias the LaravelCollective Form & HTML Facades
-        AliasLoader::getInstance()->alias('Form', FormFacade::class);
-        AliasLoader::getInstance()->alias('Html', HtmlFacade::class);
+        $this->commands(array_values($this->commands));
     }
 
     /**
-     * Register the access gate service.
+     * Register the password broker.
      *
      * @return void
      */
-    protected function registerAccessGate()
+    protected function registerPasswordBroker()
     {
-        $this->app->singleton(GateContract::class, function ($app) {
-            return new AccessGate($app, function () use ($app) {
-                return call_user_func($app['auth']->userResolver());
-            });
+        $this->app->singleton('auth.password', function ($app) {
+            return new PasswordResetBrokerManager($app);
+        });
+
+        $this->app->bind('auth.password.broker', function ($app) {
+            return $app->make('auth.password')->broker();
         });
     }
 
     /**
-     * Register the broker managers.
+     * Register the verification broker.
      *
      * @return void
      */
-    protected function registerBrokerManagers()
+    protected function registerVerificationBroker()
     {
-        // Register reset broker manager
-        $this->app->singleton('rinvex.fort.passwordreset', function ($app) {
-            return new BrokerManager($app, 'PasswordReset');
-        });
-
-        // Register verification broker manager
         $this->app->singleton('rinvex.fort.emailverification', function ($app) {
-            return new BrokerManager($app, 'EmailVerification');
+            return new EmailVerificationBrokerManager($app);
+        });
+
+        $this->app->bind('rinvex.fort.emailverification.broker', function ($app) {
+            return $app->make('rinvex.fort.emailverification')->broker();
         });
     }
 
@@ -187,17 +177,244 @@ class FortDeferredServiceProvider extends ServiceProvider
     }
 
     /**
+     * Register make auth command.
+     *
+     * @return void
+     */
+    protected function registerAuthMakeCommand()
+    {
+        $this->app->singleton('command.auth.make', function ($app) {
+            return new MakeAuthCommand();
+        });
+    }
+
+    /**
+     * Register clear password reset tokens command.
+     *
+     * @return void
+     */
+    protected function registerClearResetsCommand()
+    {
+        $this->app->singleton('command.auth.resets.clear', function ($app) {
+            return new ClearResetsCommand();
+        });
+    }
+
+    /**
+     * Register find ability command.
+     *
+     * @return void
+     */
+    protected function registerAbilityFindCommand()
+    {
+        $this->app->singleton('command.rinvex.fort.ability.find', function ($app) {
+            return new AbilityFindCommand();
+        });
+    }
+
+    /**
+     * Register ability update command.
+     *
+     * @return void
+     */
+    protected function registerAbilityUpdateCommand()
+    {
+        $this->app->singleton('command.rinvex.fort.ability.update', function ($app) {
+            return new AbilityUpdateCommand();
+        });
+    }
+
+    /**
+     * Register ability create command.
+     *
+     * @return void
+     */
+    protected function registerAbilityCreateCommand()
+    {
+        $this->app->singleton('command.rinvex.fort.ability.create', function ($app) {
+            return new AbilityCreateCommand();
+        });
+    }
+
+    /**
+     * Register role find command.
+     *
+     * @return void
+     */
+    protected function registerRoleFindCommand()
+    {
+        $this->app->singleton('command.rinvex.fort.role.find', function ($app) {
+            return new RoleFindCommand();
+        });
+    }
+
+    /**
+     * Register role update command.
+     *
+     * @return void
+     */
+    protected function registerRoleUpdateCommand()
+    {
+        $this->app->singleton('command.rinvex.fort.role.update', function ($app) {
+            return new RoleUpdateCommand();
+        });
+    }
+
+    /**
+     * Register role create command.
+     *
+     * @return void
+     */
+    protected function registerRoleCreateCommand()
+    {
+        $this->app->singleton('command.rinvex.fort.role.create', function ($app) {
+            return new RoleCreateCommand();
+        });
+    }
+
+    /**
+     * Register role give ability command.
+     *
+     * @return void
+     */
+    protected function registerRoleGiveAbilityCommand()
+    {
+        $this->app->singleton('command.rinvex.fort.role.giveability', function ($app) {
+            return new RoleGiveAbilityCommand();
+        });
+    }
+
+    /**
+     * Register role revoke ability command.
+     *
+     * @return void
+     */
+    protected function registerRoleRevokeAbilityCommand()
+    {
+        $this->app->singleton('command.rinvex.fort.role.revokeability', function ($app) {
+            return new RoleRevokeAbilityCommand();
+        });
+    }
+
+    /**
+     * Register user find command.
+     *
+     * @return void
+     */
+    protected function registerUserFindCommand()
+    {
+        $this->app->singleton('command.rinvex.fort.user.find', function ($app) {
+            return new UserFindCommand();
+        });
+    }
+
+    /**
+     * Register user create command.
+     *
+     * @return void
+     */
+    protected function registerUserCreateCommand()
+    {
+        $this->app->singleton('command.rinvex.fort.user.create', function ($app) {
+            return new UserCreateCommand();
+        });
+    }
+
+    /**
+     * Register user update command.
+     *
+     * @return void
+     */
+    protected function registerUserUpdateCommand()
+    {
+        $this->app->singleton('command.rinvex.fort.user.update', function ($app) {
+            return new UserUpdateCommand();
+        });
+    }
+
+    /**
+     * Register user remind command.
+     *
+     * @return void
+     */
+    protected function registerUserRemindCommand()
+    {
+        $this->app->singleton('command.rinvex.fort.user.remind', function ($app) {
+            return new UserRemindCommand();
+        });
+    }
+
+    /**
+     * Register user assign role command.
+     *
+     * @return void
+     */
+    protected function registerUserAssignRoleCommand()
+    {
+        $this->app->singleton('command.rinvex.fort.user.assignrole', function ($app) {
+            return new UserAssignRoleCommand();
+        });
+    }
+
+    /**
+     * Register user remove role command.
+     *
+     * @return void
+     */
+    protected function registerUserRemoveRoleCommand()
+    {
+        $this->app->singleton('command.rinvex.fort.user.removerole', function ($app) {
+            return new UserRemoveRoleCommand();
+        });
+    }
+
+    /**
+     * Register user give ability command.
+     *
+     * @return void
+     */
+    protected function registerUserGiveAbilityCommand()
+    {
+        $this->app->singleton('command.rinvex.fort.user.giveability', function ($app) {
+            return new UserGiveAbilityCommand();
+        });
+    }
+
+    /**
+     * Register user revoke ability command.
+     *
+     * @return void
+     */
+    protected function registerUserRevokeAbilityCommand()
+    {
+        $this->app->singleton('command.rinvex.fort.user.revokeability', function ($app) {
+            return new UserRevokeAbilityCommand();
+        });
+    }
+
+    /**
+     * Register clear verification tokens command.
+     *
+     * @return void
+     */
+    protected function registerVerificationTokenClearCommand()
+    {
+        $this->app->singleton('command.rinvex.fort.verification.tokenclear', function ($app) {
+            return new VerificationTokenClearCommand();
+        });
+    }
+
+    /**
      * Get the services provided by the provider.
      *
      * @return array
      */
     public function provides()
     {
-        return array_keys($this->commands) + [
-                GateContract::class,
-                'rinvex.fort.passwordreset',
-                'rinvex.fort.emailverification',
-                \Illuminate\Contracts\Debug\ExceptionHandler::class,
-            ];
+        return array_merge(array_values($this->commands), [
+            'auth.password',
+            'rinvex.fort.emailverification',
+            \Illuminate\Contracts\Debug\ExceptionHandler::class,
+        ]);
     }
 }

@@ -13,11 +13,12 @@
  * Link:    https://rinvex.com
  */
 
+declare(strict_types=1);
+
 namespace Rinvex\Fort\Seeds;
 
-use Rinvex\Fort\Models\Ability;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\DB;
+use Rinvex\Fort\Models\Ability;
 
 class AbilitiesSeeder extends Seeder
 {
@@ -28,9 +29,6 @@ class AbilitiesSeeder extends Seeder
      */
     public function run()
     {
-        DB::statement('SET FOREIGN_KEY_CHECKS=0;');
-        DB::table(config('rinvex.fort.tables.abilities'))->truncate();
-
         // Get abilities data
         $abilities = json_decode(file_get_contents(__DIR__.'/../../resources/data/abilities.json'), true);
 
@@ -38,7 +36,5 @@ class AbilitiesSeeder extends Seeder
         foreach ($abilities as $ability) {
             Ability::create($ability);
         }
-
-        DB::statement('SET FOREIGN_KEY_CHECKS=1;');
     }
 }

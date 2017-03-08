@@ -13,6 +13,8 @@
  * Link:    https://rinvex.com
  */
 
+declare(strict_types=1);
+
 namespace Rinvex\Fort\Handlers;
 
 use Rinvex\Fort\Models\Role;
@@ -21,18 +23,6 @@ use Rinvex\Fort\Models\Ability;
 
 class RoleHandler
 {
-    /**
-     * Listen to the Role created event.
-     *
-     * @param \Rinvex\Fort\Models\Role $role
-     *
-     * @return void
-     */
-    public function created(Role $role)
-    {
-        //
-    }
-
     /**
      * Listen to the Role updated event.
      *
@@ -96,5 +86,25 @@ class RoleHandler
     {
         Ability::forgetCache();
         User::forgetCache();
+    }
+
+    /**
+     * Listen to the Role validating event.
+     *
+     * @param \Rinvex\Fort\Models\Role $role
+     * @param string                   $event
+     *
+     * @return void
+     */
+    public function validating(Role $role, $event)
+    {
+        if (! $role->slug) {
+            // Early auto generate slugs before validation, since it's required
+            if ($role->exists && $role->getSlugOptions()->generateSlugsOnUpdate) {
+                $role->generateSlug();
+            } elseif ($role->getSlugOptions()->generateSlugsOnCreate) {
+                $role->generateSlug();
+            }
+        }
     }
 }

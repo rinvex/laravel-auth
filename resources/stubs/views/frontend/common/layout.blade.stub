@@ -1,0 +1,5 @@
+@extends('frontend.common.layout-example')
+
+@section('content')
+    @yield('content')
+@endsection

@@ -13,12 +13,13 @@
  * Link:    https://rinvex.com
  */
 
+declare(strict_types=1);
+
 namespace Rinvex\Fort\Console\Commands;
 
 use Illuminate\Support\Str;
 use Rinvex\Fort\Models\Role;
 use Illuminate\Console\Command;
-use Illuminate\Support\Facades\Lang;
 use Illuminate\Contracts\Validation\Factory;
 
 class RoleCreateCommand extends Command
@@ -50,8 +51,8 @@ class RoleCreateCommand extends Command
         $data = array_filter([
 
             // Required role attributes
-            'name'        => $name = $this->argument('name') ?: $this->ask(Lang::get('rinvex.fort::artisan.role.name')),
-            'slug'        => $this->argument('slug') ?: Str::slug($name),
+            'name' => $name = $this->argument('name') ?: $this->ask(trans('rinvex.fort::artisan.role.name')),
+            'slug' => $this->argument('slug') ?: Str::slug($name),
 
             // Optional role attributes
             'description' => $this->option('description'),
@@ -74,7 +75,7 @@ class RoleCreateCommand extends Command
         } else {
             $role = Role::create($data);
 
-            $this->info(Lang::get('rinvex.fort::artisan.role.created').' ['.Lang::get('rinvex.fort::artisan.role.id').': '.$role->id.', '.Lang::get('rinvex.fort::artisan.role.name').': '.$role->name.', '.Lang::get('rinvex.fort::artisan.role.slug').': '.$role->slug.']');
+            $this->info(trans('rinvex.fort::artisan.role.created').' ['.trans('rinvex.fort::artisan.role.id').': '.$role->id.', '.trans('rinvex.fort::artisan.role.name').': '.$role->name.', '.trans('rinvex.fort::artisan.role.slug').': '.$role->slug.']');
         }
     }
 }

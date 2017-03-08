@@ -13,11 +13,12 @@
  * Link:    https://rinvex.com
  */
 
+declare(strict_types=1);
+
 namespace Rinvex\Fort\Console\Commands;
 
-use Rinvex\Fort\Models\Ability;
 use Illuminate\Console\Command;
-use Illuminate\Support\Facades\Lang;
+use Rinvex\Fort\Models\Ability;
 
 class UserRevokeAbilityCommand extends Command
 {
@@ -44,9 +45,9 @@ class UserRevokeAbilityCommand extends Command
      */
     public function handle()
     {
-        $userField = $this->argument('user') ?: $this->ask(Lang::get('rinvex.fort::artisan.user.identifier'));
+        $userField = $this->argument('user') ?: $this->ask(trans('rinvex.fort::artisan.user.identifier'));
 
-        if (intval($userField)) {
+        if ((int) $userField) {
             $user = User::find($userField);
         } elseif (filter_var($userField, FILTER_VALIDATE_EMAIL)) {
             $user = User::where(['email' => $userField])->first();
@@ -55,24 +56,24 @@ class UserRevokeAbilityCommand extends Command
         }
 
         if (! $user) {
-            return $this->error(Lang::get('rinvex.fort::artisan.user.invalid', ['field' => $userField]));
+            return $this->error(trans('rinvex.fort::artisan.user.invalid', ['field' => $userField]));
         }
 
-        $abilityField = $this->argument('ability') ?: $this->anticipate(Lang::get('rinvex.fort::artisan.user.ability'), Ability::all()->pluck('slug', 'id')->toArray());
+        $abilityField = $this->argument('ability') ?: $this->anticipate(trans('rinvex.fort::artisan.user.ability'), Ability::all()->pluck('slug', 'id')->toArray());
 
-        if (intval($abilityField)) {
+        if ((int) $abilityField) {
             $ability = Ability::find($abilityField);
         } else {
             $ability = Ability::where(['slug' => $abilityField])->first();
         }
 
         if (! $ability) {
-            return $this->error(Lang::get('rinvex.fort::artisan.ability.invalid', ['field' => $abilityField]));
+            return $this->error(trans('rinvex.fort::artisan.ability.invalid', ['field' => $abilityField]));
         }
 
         // Revoke user ability to..
         $user->revokeAbilities($ability);
 
-        $this->info(Lang::get('rinvex.fort::artisan.user.abilityrevoked', ['user' => $user->id, 'ability' => $ability->id]));
+        $this->info(trans('rinvex.fort::artisan.user.abilityrevoked', ['user' => $user->id, 'ability' => $ability->id]));
     }
 }

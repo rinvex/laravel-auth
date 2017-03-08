@@ -13,11 +13,14 @@
  * Link:    https://rinvex.com
  */
 
+declare(strict_types=1);
+
 namespace Rinvex\Fort\Repositories;
 
 use Carbon\Carbon;
 use Illuminate\Support\Str;
 use Illuminate\Database\ConnectionInterface;
+use Illuminate\Contracts\Hashing\Hasher as HasherContract;
 
 abstract class AbstractTokenRepository
 {
@@ -27,6 +30,13 @@ abstract class AbstractTokenRepository
      * @var \Illuminate\Database\ConnectionInterface
      */
     protected $connection;
+
+    /**
+     * The Hasher implementation.
+     *
+     * @var \Illuminate\Contracts\Hashing\Hasher
+     */
+    protected $hasher;
 
     /**
      * The token database table.
@@ -53,15 +63,17 @@ abstract class AbstractTokenRepository
      * Create a new token repository instance.
      *
      * @param \Illuminate\Database\ConnectionInterface $connection
+     * @param \Illuminate\Contracts\Hashing\Hasher     $hasher
      * @param string                                   $table
      * @param string                                   $hashKey
      * @param int                                      $expires
      */
-    public function __construct(ConnectionInterface $connection, $table, $hashKey, $expires = 60)
+    public function __construct(ConnectionInterface $connection, HasherContract $hasher, $table, $hashKey, $expires = 60)
     {
         $this->table = $table;
+        $this->hasher = $hasher;
         $this->hashKey = $hashKey;
-        $this->expires = $expires;
+        $this->expires = $expires * 60;
         $this->connection = $connection;
     }
 
@@ -78,38 +90,24 @@ abstract class AbstractTokenRepository
     protected function getPayload($email, $token, $agent, $ip)
     {
         return [
-            'email'      => $email,
-            'token'      => $token,
-            'agent'      => $agent,
-            'ip'         => $ip,
+            'email' => $email,
+            'token' => $this->hasher->make($token),
+            'agent' => $agent,
+            'ip' => $ip,
             'created_at' => new Carbon(),
         ];
     }
 
     /**
-     * Determine if the given token has expired.
+     * Determine if the token has expired.
      *
-     * @param array $token
+     * @param string $createdAt
      *
      * @return bool
      */
-    protected function tokenExpired($token)
+    protected function tokenExpired($createdAt)
     {
-        $expiresAt = Carbon::parse($token['created_at'])->addMinutes($this->expires);
-
-        return $expiresAt->isPast();
-    }
-
-    /**
-     * Delete the given token.
-     *
-     * @param string $token
-     *
-     * @return void
-     */
-    public function delete($token)
-    {
-        $this->getTable()->where('token', $token)->delete();
+        return Carbon::parse($createdAt)->addSeconds($this->expires)->isPast();
     }
 
     /**
@@ -162,5 +160,15 @@ abstract class AbstractTokenRepository
     public function getExpiration()
     {
         return $this->expires;
+    }
+
+    /**
+     * Get the hasher instance.
+     *
+     * @return \Illuminate\Contracts\Hashing\Hasher
+     */
+    public function getHasher()
+    {
+        return $this->hasher;
     }
 }

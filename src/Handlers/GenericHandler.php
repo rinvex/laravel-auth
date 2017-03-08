@@ -13,10 +13,11 @@
  * Link:    https://rinvex.com
  */
 
+declare(strict_types=1);
+
 namespace Rinvex\Fort\Handlers;
 
 use Illuminate\Http\Request;
-use Rinvex\Fort\Models\Role;
 use Rinvex\Fort\Models\User;
 use Illuminate\Auth\Events\Lockout;
 use Illuminate\Contracts\Events\Dispatcher;
@@ -68,7 +69,7 @@ class GenericHandler
     public function authLockout(Request $request)
     {
         if (config('rinvex.fort.throttle.lockout_email')) {
-            $user = get_login_field($loginfield = $request->get('loginfield')) == 'email' ? User::where('email', $loginfield)->first() : User::where('username', $loginfield)->first();
+            $user = get_login_field($loginfield = $request->get('loginfield')) === 'email' ? User::where('email', $loginfield)->first() : User::where('username', $loginfield)->first();
 
             $user->notify(new AuthenticationLockoutNotification($request));
         }
@@ -87,13 +88,6 @@ class GenericHandler
         if (config('rinvex.fort.registration.welcome_email')) {
             $user->notify(new RegistrationSuccessNotification());
         }
-
-        // Attach default role to the registered user
-        if ($default = $this->app['config']->get('rinvex.fort.registration.default_role')) {
-            if ($role = Role::where('slug', $default)->first()) {
-                $user->roles()->attach($role);
-            }
-        }
     }
 
     /**
@@ -109,13 +103,6 @@ class GenericHandler
         if (config('rinvex.fort.registration.welcome_email')) {
             $user->notify(new RegistrationSuccessNotification(true));
         }
-
-        // Attach default role to the registered user
-        if ($default = $this->app['config']->get('rinvex.fort.registration.default_role')) {
-            if ($role = Role::where('slug', $default)->first()) {
-                $user->roles()->attach($role);
-            }
-        }
     }
 
     /**
@@ -127,7 +114,7 @@ class GenericHandler
      */
     public function emailVerificationSuccess(Authenticatable $user)
     {
-        if (config('rinvex.fort.emailverification.success_notification')) {
+        if (config('rinvex.fort.emailverification.success_email')) {
             $user->notify(new VerificationSuccessNotification($user->active));
         }
     }

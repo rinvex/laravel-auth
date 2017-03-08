@@ -13,11 +13,12 @@
  * Link:    https://rinvex.com
  */
 
+declare(strict_types=1);
+
 namespace Rinvex\Fort\Console\Commands;
 
-use Rinvex\Fort\Models\Ability;
 use Illuminate\Console\Command;
-use Illuminate\Support\Facades\Lang;
+use Rinvex\Fort\Models\Ability;
 use Illuminate\Contracts\Validation\Factory;
 
 class AbilityUpdateCommand extends Command
@@ -50,8 +51,8 @@ class AbilityUpdateCommand extends Command
         $data = array_filter([
 
             // Required ability attributes
-            'name'        => $this->option('name'),
-            'slug'        => $this->option('slug'),
+            'name' => $this->option('name'),
+            'slug' => $this->option('slug'),
             'description' => $this->option('description'),
 
         ], [
@@ -60,17 +61,17 @@ class AbilityUpdateCommand extends Command
         ]);
 
         // Get required argument
-        $field = $this->argument('field') ?: $this->ask(Lang::get('rinvex.fort::artisan.ability.invalid'));
+        $field = $this->argument('field') ?: $this->ask(trans('rinvex.fort::artisan.ability.invalid'));
 
         // Find single ability
-        if (intval($field)) {
+        if ((int) $field) {
             $ability = Ability::find($field);
         } else {
             $ability = Ability::where(['slug' => $field])->first();
         }
 
         if (! $ability) {
-            return $this->error(Lang::get('rinvex.fort::artisan.ability.invalid', ['field' => $field]));
+            return $this->error(trans('rinvex.fort::artisan.ability.invalid', ['field' => $field]));
         }
 
         $rules = [
@@ -88,12 +89,12 @@ class AbilityUpdateCommand extends Command
                     $this->error('- '.$key.': '.$messages[0]);
                 }
             } else {
-                $ability->update($data);
+                $ability->fill($data)->save();
 
-                $this->info(Lang::get('rinvex.fort::artisan.ability.updated').' ['.Lang::get('rinvex.fort::artisan.ability.id').': '.$ability->id.', '.Lang::get('rinvex.fort::artisan.ability.name').': '.$ability->name.', '.Lang::get('rinvex.fort::artisan.ability.slug').': '.$ability->slug.']');
+                $this->info(trans('rinvex.fort::artisan.ability.updated').' ['.trans('rinvex.fort::artisan.ability.id').': '.$ability->id.', '.trans('rinvex.fort::artisan.ability.name').': '.$ability->name.', '.trans('rinvex.fort::artisan.ability.slug').': '.$ability->slug.']');
             }
         } else {
-            $this->info(Lang::get('rinvex.fort::artisan.ability.nothing'));
+            $this->info(trans('rinvex.fort::artisan.ability.nothing'));
         }
     }
 

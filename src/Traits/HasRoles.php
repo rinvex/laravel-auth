@@ -13,10 +13,13 @@
  * Link:    https://rinvex.com
  */
 
+declare(strict_types=1);
+
 namespace Rinvex\Fort\Traits;
 
 use Rinvex\Fort\Models\Role;
 use Illuminate\Support\Collection;
+use Illuminate\Database\Eloquent\Builder;
 
 trait HasRoles
 {
@@ -75,7 +78,7 @@ trait HasRoles
     protected function setRoles($roles, string $process)
     {
         // Guess event name
-        $event = $process == 'syncWithoutDetaching' ? 'attach' : $process;
+        $event = $process === 'syncWithoutDetaching' ? 'attach' : $process;
 
         // If the "attaching/syncing/detaching" event returns false we'll cancel this operation and
         // return false, indicating that the attaching/syncing/detaching failed. This provides a
@@ -99,7 +102,7 @@ trait HasRoles
     /**
      * Determine if the entity has (one of) the given roles.
      *
-     * @param mixed $roles
+     * @param string|int|array|\Rinvex\Fort\Models\Role|\Illuminate\Support\Collection $roles
      *
      * @return bool
      */
@@ -111,7 +114,7 @@ trait HasRoles
         }
 
         // Single role id
-        if (is_string($roles)) {
+        if (is_int($roles)) {
             return $this->roles->contains('id', $roles);
         }
 
@@ -141,7 +144,7 @@ trait HasRoles
     /**
      * Alias for `hasRole` method.
      *
-     * @param mixed $roles
+     * @param string|int|array|\Rinvex\Fort\Models\Role|\Illuminate\Support\Collection $roles
      *
      * @return bool
      */
@@ -153,7 +156,7 @@ trait HasRoles
     /**
      * Determine if the given entity has all of the given roles.
      *
-     * @param mixed $roles
+     * @param string|int|array|\Rinvex\Fort\Models\Role|\Illuminate\Support\Collection $roles
      *
      * @return bool
      */
@@ -176,22 +179,48 @@ trait HasRoles
 
         // Array of role slugs
         if (is_array($roles) && isset($roles[0]) && is_string($roles[0])) {
-            return $this->roles->pluck('slug')->count() == count($roles)
+            return $this->roles->pluck('slug')->count() === count($roles)
                    && $this->roles->pluck('slug')->diff($roles)->isEmpty();
         }
 
         // Array of role ids
         if (is_array($roles) && isset($roles[0]) && is_int($roles[0])) {
-            return $this->roles->pluck('id')->count() == count($roles)
+            return $this->roles->pluck('id')->count() === count($roles)
                    && $this->roles->pluck('id')->diff($roles)->isEmpty();
         }
 
         // Collection of role models
         if ($roles instanceof Collection) {
-            return $this->roles->count() == $roles->count() && $this->roles->diff($roles)->isEmpty();
+            return $this->roles->count() === $roles->count() && $this->roles->diff($roles)->isEmpty();
         }
 
         return false;
+    }
+
+    /**
+     * Scope the user query to certain roles only.
+     *
+     * @param \Illuminate\Database\Eloquent\Builder                                    $query
+     * @param string|int|array|\Rinvex\Fort\Models\Role|\Illuminate\Support\Collection $roles
+     *
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeRole($query, $roles)
+    {
+        if (is_string($roles) || is_int($roles) || $roles instanceof Role) {
+            $roles = [$roles];
+        }
+
+        return $query->whereHas('roles', function (Builder $query) use ($roles) {
+            $query->where(function (Builder $query) use ($roles) {
+                foreach ($roles as $role) {
+                    $column = is_string($role) ? 'slug' : 'id';
+                    $value = $role instanceof Role ? $role->id : $role;
+
+                    $query->orWhere(config('rinvex.fort.tables.roles').'.'.$column, $value);
+                }
+            });
+        });
     }
 
     /**

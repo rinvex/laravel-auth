@@ -13,6 +13,8 @@
  * Link:    https://rinvex.com
  */
 
+declare(strict_types=1);
+
 namespace Rinvex\Fort\Repositories;
 
 use Rinvex\Fort\Contracts\CanVerifyEmailContract;
@@ -46,11 +48,25 @@ class EmailVerificationTokenRepository extends AbstractTokenRepository implement
      */
     public function exists(CanVerifyEmailContract $user, $token)
     {
-        $email = $user->getEmailForVerification();
+        $record = (array) $this->getTable()->where(
+            'email', $user->getEmailForPasswordReset()
+        )->first();
 
-        $token = (array) $this->getTable()->where('email', $email)->where('token', $token)->first();
+        return $record &&
+               ! $this->tokenExpired($record['created_at']) &&
+               $this->hasher->check($token, $record['token']);
+    }
 
-        return $token && ! $this->tokenExpired($token);
+    /**
+     * Delete tokens of the given user.
+     *
+     * @param \Rinvex\Fort\Contracts\CanVerifyEmailContract $user
+     *
+     * @return void
+     */
+    public function delete(CanVerifyEmailContract $user)
+    {
+        $this->deleteExisting($user);
     }
 
     /**
@@ -64,10 +80,8 @@ class EmailVerificationTokenRepository extends AbstractTokenRepository implement
     /**
      * {@inheritdoc}
      */
-    public function getData(CanVerifyEmailContract $user, $token)
+    public function getData(CanVerifyEmailContract $user)
     {
-        $email = $user->getEmailForVerification();
-
-        return (array) $this->getTable()->where('email', $email)->where('token', $token)->first();
+        return (array) $this->getTable()->where('email', $user->getEmailForVerification())->first();
     }
 }

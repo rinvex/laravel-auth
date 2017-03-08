@@ -1,0 +1,114 @@
+<?php
+
+/*
+ * NOTICE OF LICENSE
+ *
+ * Part of the Rinvex Fort Package.
+ *
+ * This source file is subject to The MIT License (MIT)
+ * that is bundled with this package in the LICENSE file.
+ *
+ * Package: Rinvex Fort Package
+ * License: The MIT License (MIT)
+ * Link:    https://rinvex.com
+ */
+
+declare(strict_types=1);
+
+namespace {{namespace}}Http\Controllers\Frontend;
+
+use Illuminate\Http\Request;
+use Rinvex\Fort\Models\Role;
+use Rinvex\Fort\Models\User;
+use {{namespace}}Http\Controllers\AbstractController;
+
+class RegistrationController extends AbstractController
+{
+    /**
+     * Create a new registration controller instance.
+     */
+    public function __construct()
+    {
+        $this->middleware($this->getGuestMiddleware(), ['except' => $this->middlewareWhitelist]);
+    }
+
+    /**
+     * Show the registration form.
+     *
+     * @param \Illuminate\Http\Request $request
+     *
+     * @return \Illuminate\Http\Response|\Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse
+     */
+    public function form(Request $request)
+    {
+        if (! config('rinvex.fort.registration.enabled')) {
+            return $this->redirect();
+        }
+
+        return view('frontend.authentication.register');
+    }
+
+    /**
+     * Process the registration form.
+     *
+     * @param \Illuminate\Http\Request $request
+     * @param \Rinvex\Fort\Models\User $user
+     *
+     * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse
+     */
+    public function register(Request $request, User $user)
+    {
+        if (! config('rinvex.fort.registration.enabled')) {
+            return $this->redirect();
+        }
+
+        // Prepare registration data
+        $input = $request->only(['username', 'email', 'password', 'password_confirmation']);
+        $active = ['active' => ! config('rinvex.fort.registration.moderated')];
+
+        // Fire the register start event
+        event('rinvex.fort.register.start', [$input + $active]);
+
+        $user->fill($input + $active)->save();
+
+        // Attach default role to the registered user
+        if ($defaultRole = config('rinvex.fort.registration.default_role')) {
+            if ($defaultRole = Role::where('slug', $defaultRole)->first()) {
+                $user->roles()->attach($defaultRole);
+            }
+        }
+
+        // Fire the register success event
+        event('rinvex.fort.register.success', [$user]);
+
+        // Send verification if required
+        if (config('rinvex.fort.emailverification.required')) {
+            app('rinvex.fort.emailverification')->broker()->sendVerificationLink(['email' => $input['email']]);
+
+            // Registration completed, verification required
+            return intend([
+                'intended' => url('/'),
+                'with' => ['success' => trans('messages.register.success_verify')],
+            ]);
+        }
+
+        // Registration completed successfully
+        return intend([
+            'route' => 'frontend.auth.login',
+            'with' => ['success' => trans('messages.register.success')],
+        ]);
+    }
+
+    /**
+     * Return redirect response.
+     *
+     * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse
+     */
+    protected function redirect()
+    {
+        return intend([
+            'back' => true,
+            'withErrors' => ['rinvex.fort.registration.disabled' => trans('messages.register.disabled')],
+        ]);
+    }
+}

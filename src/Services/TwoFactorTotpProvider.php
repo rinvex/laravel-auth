@@ -13,6 +13,8 @@
  * Link:    https://rinvex.com
  */
 
+declare(strict_types=1);
+
 namespace Rinvex\Fort\Services;
 
 use Exception;
@@ -88,7 +90,7 @@ class TwoFactorTotpProvider
      */
     public function base32Decode($b32)
     {
-        $b32 = strtoupper($b32);
+        $b32 = mb_strtoupper($b32);
 
         $this->validateSecret($b32);
 
@@ -107,7 +109,7 @@ class TwoFactorTotpProvider
      */
     public function oathHotp($binaryKey, $timestamp)
     {
-        if (strlen($binaryKey) < 8) {
+        if (mb_strlen($binaryKey) < 8) {
             throw new Exception('Secret key is too short. Must be at least 16 base 32 characters');
         }
 
@@ -177,9 +179,9 @@ class TwoFactorTotpProvider
     public function oathTruncate($hash)
     {
         $offset = ord($hash[19]) & 0xf;
-        $temp = unpack('N', substr($hash, $offset, 4));
+        $temp = unpack('N', mb_substr($hash, $offset, 4));
 
-        return substr($temp[1] & 0x7fffffff, -static::OPT_LENGTH);
+        return mb_substr($temp[1] & 0x7fffffff, -static::OPT_LENGTH);
     }
 
     /**

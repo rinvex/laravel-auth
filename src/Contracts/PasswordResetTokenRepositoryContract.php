@@ -13,6 +13,8 @@
  * Link:    https://rinvex.com
  */
 
+declare(strict_types=1);
+
 namespace Rinvex\Fort\Contracts;
 
 interface PasswordResetTokenRepositoryContract
@@ -37,13 +39,13 @@ interface PasswordResetTokenRepositoryContract
     public function exists(CanResetPasswordContract $user, $token);
 
     /**
-     * Delete a reset token record.
+     * Delete tokens of the given user.
      *
-     * @param string $token
+     * @param \Rinvex\Fort\Contracts\CanResetPasswordContract $user
      *
      * @return void
      */
-    public function delete($token);
+    public function delete(CanResetPasswordContract $user);
 
     /**
      * Delete expired reset tokens.
@@ -63,9 +65,8 @@ interface PasswordResetTokenRepositoryContract
      * Get password reset token data.
      *
      * @param \Rinvex\Fort\Contracts\CanResetPasswordContract $user
-     * @param string                                          $token
      *
      * @return array
      */
-    public function getData(CanResetPasswordContract $user, $token);
+    public function getData(CanResetPasswordContract $user);
 }
