@@ -179,10 +179,10 @@ class TwoFactorTotpProvider
     public function oathTruncate($hash)
     {
         $offset = ord($hash[19]) & 0xf;
-        $temp = unpack('N', substr($hash, $offset, 4));
+        $temp = unpack('N', mb_substr($hash, $offset, 4));
         $token = $temp[1] & 0x7fffffff;
 
-        return substr((string) $token, -static::OPT_LENGTH);
+        return mb_substr((string) $token, -static::OPT_LENGTH);
     }
 
     /**
