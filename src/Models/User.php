@@ -358,7 +358,6 @@ class User extends Model implements AuthenticatableContract, AuthenticatableTwoF
 
             // Update user account
             array_set($settings, 'phone', [
-                'enabled' => true,
                 'authy_id' => $authyId,
             ]);
 
