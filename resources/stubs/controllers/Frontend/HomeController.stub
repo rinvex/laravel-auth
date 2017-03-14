@@ -28,6 +28,6 @@ class HomeController extends AbstractController
      */
     public function index()
     {
-        return view('cortex/fort::frontend.common.welcome');
+        return view('frontend.common.welcome');
     }
 }
