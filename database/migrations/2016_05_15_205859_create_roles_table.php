@@ -31,9 +31,9 @@ class CreateRolesTable extends Migration
         Schema::create(config('rinvex.fort.tables.roles'), function (Blueprint $table) {
             // Columns
             $table->increments('id');
-            $table->json('name');
             $table->string('slug');
-            $table->json('description')->nullable();
+            $table->{$this->jsonable()}('name');
+            $table->{$this->jsonable()}('description')->nullable();
             $table->timestamps();
             $table->softDeletes();
 
@@ -53,5 +53,17 @@ class CreateRolesTable extends Migration
     public function down()
     {
         Schema::dropIfExists(config('rinvex.fort.tables.roles'));
+    }
+
+    /**
+     * Get jsonable column data type.
+     *
+     * @return string
+     */
+    public function jsonable()
+    {
+        return DB::connection()->getPdo()->getAttribute(PDO::ATTR_DRIVER_NAME) === 'mysql'
+               && version_compare(DB::connection()->getPdo()->getAttribute(PDO::ATTR_SERVER_VERSION), '5.7.8', 'ge')
+            ? 'json' : 'text';
     }
 }
