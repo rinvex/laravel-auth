@@ -62,6 +62,6 @@ class CreateRoleUserTable extends Migration
      */
     public function down()
     {
-        Schema::drop(config('rinvex.fort.tables.role_user'));
+        Schema::dropIfExists(config('rinvex.fort.tables.role_user'));
     }
 }

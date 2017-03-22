@@ -75,6 +75,6 @@ class CreateUsersTable extends Migration
      */
     public function down()
     {
-        Schema::drop(config('rinvex.fort.tables.users'));
+        Schema::dropIfExists(config('rinvex.fort.tables.users'));
     }
 }

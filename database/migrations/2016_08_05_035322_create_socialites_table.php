@@ -59,6 +59,6 @@ class CreateSocialitesTable extends Migration
      */
     public function down()
     {
-        Schema::drop(config('rinvex.fort.tables.socialites'));
+        Schema::dropIfExists(config('rinvex.fort.tables.socialites'));
     }
 }

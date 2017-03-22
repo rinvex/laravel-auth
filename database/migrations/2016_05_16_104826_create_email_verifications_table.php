@@ -52,6 +52,6 @@ class CreateEmailVerificationsTable extends Migration
      */
     public function down()
     {
-        Schema::drop(config('rinvex.fort.tables.email_verifications'));
+        Schema::dropIfExists(config('rinvex.fort.tables.email_verifications'));
     }
 }

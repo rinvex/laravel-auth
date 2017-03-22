@@ -57,6 +57,6 @@ class CreatePersistencesTable extends Migration
      */
     public function down()
     {
-        Schema::drop(config('rinvex.fort.tables.persistences'));
+        Schema::dropIfExists(config('rinvex.fort.tables.persistences'));
     }
 }

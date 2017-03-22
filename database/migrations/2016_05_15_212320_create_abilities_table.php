@@ -54,6 +54,6 @@ class CreateAbilitiesTable extends Migration
      */
     public function down()
     {
-        Schema::drop(config('rinvex.fort.tables.abilities'));
+        Schema::dropIfExists(config('rinvex.fort.tables.abilities'));
     }
 }

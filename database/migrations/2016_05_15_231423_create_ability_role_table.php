@@ -62,6 +62,6 @@ class CreateAbilityRoleTable extends Migration
      */
     public function down()
     {
-        Schema::drop(config('rinvex.fort.tables.ability_role'));
+        Schema::dropIfExists(config('rinvex.fort.tables.ability_role'));
     }
 }

@@ -62,6 +62,6 @@ class CreateAbilityUserTable extends Migration
      */
     public function down()
     {
-        Schema::drop(config('rinvex.fort.tables.ability_user'));
+        Schema::dropIfExists(config('rinvex.fort.tables.ability_user'));
     }
 }

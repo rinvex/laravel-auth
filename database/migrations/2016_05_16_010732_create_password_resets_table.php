@@ -52,6 +52,6 @@ class CreatePasswordResetsTable extends Migration
      */
     public function down()
     {
-        Schema::drop(config('auth.passwords.'.config('auth.defaults.passwords').'.table'));
+        Schema::dropIfExists(config('auth.passwords.'.config('auth.defaults.passwords').'.table'));
     }
 }
