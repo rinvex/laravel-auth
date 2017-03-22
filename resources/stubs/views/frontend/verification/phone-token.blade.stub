@@ -30,7 +30,7 @@
                                 {{ Form::label('token', trans('common.authentication_code'), ['class' => 'col-md-4 control-label']) }}
 
                                 <div class="col-md-6">
-                                    {{ Form::text('token', old('token'), ['class' => 'form-control', 'placeholder' => trans('common.authentication_code'), 'required' => 'required', 'autofocus' => 'autofocus']) }}
+                                    {{ Form::text('token', null, ['class' => 'form-control', 'placeholder' => trans('common.authentication_code'), 'required' => 'required', 'autofocus' => 'autofocus']) }}
 
                                     @if ($errors->has('token'))
                                         <span class="help-block">

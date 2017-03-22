@@ -155,8 +155,8 @@ class TwoFactorSettingsController extends AuthenticatedController
             ]);
         }
 
+        $currentUser->routeNotificationForAuthy();
         $settings = $currentUser->getTwoFactor();
-
         array_set($settings, 'phone.enabled', true);
 
         $currentUser->fill([

@@ -60,7 +60,11 @@ class PhoneVerificationController extends AbstractController
         }
 
         // Send phone verification notification
-        $request->user($this->getGuard())->sendPhoneVerificationNotification($request->get('method'), true);
+        $user = $request->user($this->getGuard()) ?? Auth::guard($this->getGuard())->attemptUser();
+        $user->sendPhoneVerificationNotification($request->get('method'), true);
+
+        // If Two-Factor authentication failed, remember Two-Factor persistence
+        Auth::guard($this->getGuard())->rememberTwoFactor();
 
         return intend([
             'route' => 'frontend.verification.phone.verify',
@@ -124,7 +128,7 @@ class PhoneVerificationController extends AbstractController
                 Auth::guard($guard)->login($user, session('rinvex.fort.twofactor.remember'), session('rinvex.fort.twofactor.persistence'));
 
                 return intend([
-                    'url' => '/',
+                    'route' => 'frontend.account.settings',
                     'with' => ['success' => trans($result)],
                 ]);
 
@@ -135,7 +139,6 @@ class PhoneVerificationController extends AbstractController
 
                 return intend([
                     'back' => true,
-                    'withInput' => $request->only(['token']),
                     'withErrors' => ['token' => trans($result)],
                 ]);
         }

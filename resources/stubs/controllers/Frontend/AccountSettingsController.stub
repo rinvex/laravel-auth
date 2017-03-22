@@ -85,10 +85,10 @@ class AccountSettingsController extends AuthenticatedController
         $countryVerification = array_get($input, 'country') !== $currentUser->country;
 
         if ($twoFactor && ($phoneVerification || $countryVerification)) {
-            array_set($twoFactor, 'two_factor.phone.enabled', false);
+            array_set($twoFactor, 'phone.enabled', false);
         }
 
-        $currentUser->fill($input + $emailVerification + $phoneVerification + $twoFactor)->save();
+        $currentUser->fill($input + $emailVerification + $phoneVerification + ['two_factor' => $twoFactor])->save();
 
         return intend([
             'back' => true,
