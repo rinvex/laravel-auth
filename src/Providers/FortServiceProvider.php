@@ -32,6 +32,7 @@ use Collective\Html\HtmlServiceProvider;
 use Rinvex\Fort\Handlers\AbilityHandler;
 use Rinvex\Fort\Handlers\GenericHandler;
 use Rinvex\Fort\Http\Middleware\Abilities;
+use Rinvex\Fort\Http\Middleware\NoHttpCache;
 use Rinvex\Fort\Http\Middleware\Authenticate;
 use Laravel\Socialite\SocialiteServiceProvider;
 use Illuminate\Console\DetectsApplicationNamespace;
@@ -199,6 +200,7 @@ class FortServiceProvider extends ServiceProvider
 
         // Override route middleware on the fly
         $router->aliasMiddleware('auth', Authenticate::class);
+        $router->aliasMiddleware('nohttpcache', NoHttpCache::class);
         $router->aliasMiddleware('guest', RedirectIfAuthenticated::class);
     }
 
