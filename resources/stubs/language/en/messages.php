@@ -60,8 +60,6 @@ return [
     ],
 
     'auth' => [
-        'authorize' => 'Requested resource must be authorized.',
-        'unauthorized' => 'Sorry, you do not have access to the requested resource!',
         'moderated' => 'Your account is currently moderated!',
         'unverified' => 'Your account in currently unverified!',
         'failed' => 'These credentials do not match our records.',
