@@ -102,7 +102,7 @@ class RoleHandler
             // Early auto generate slugs before validation, since it's required
             if ($role->exists && $role->getSlugOptions()->generateSlugsOnUpdate) {
                 $role->generateSlug();
-            } elseif ($role->getSlugOptions()->generateSlugsOnCreate) {
+            } elseif (! $role->exists && $role->getSlugOptions()->generateSlugsOnCreate) {
                 $role->generateSlug();
             }
         }
