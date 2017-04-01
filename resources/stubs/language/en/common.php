@@ -53,6 +53,7 @@ return [
     'last_name' => 'Last Name',
     'username' => 'Username',
     'country' => 'Country',
+    'language' => 'Language',
     'job_title' => 'Job Title',
     'prefix' => 'Prefix',
     'suffix' => 'Suffix',
