@@ -56,6 +56,7 @@ use Illuminate\Contracts\Auth\Access\Authorizable as AuthorizableContract;
  * @property string                                                                                                         $job_title
  * @property string                                                                                                         $country
  * @property string                                                                                                         $language
+ * @property string                                                                                                         $timezone
  * @property array                                                                                                          $two_factor
  * @property \Carbon\Carbon                                                                                                 $birthdate
  * @property string                                                                                                         $gender
@@ -146,6 +147,7 @@ class User extends Model implements AuthenticatableContract, AuthenticatableTwoF
         'job_title',
         'country',
         'language',
+        'timezone',
         'birthdate',
         'gender',
         'active',

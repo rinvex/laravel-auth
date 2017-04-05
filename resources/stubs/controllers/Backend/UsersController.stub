@@ -125,13 +125,15 @@ class UsersController extends AuthorizedController
             return $language['name'];
         }, languages());
 
+        $timezones = timezones();
+
         $abilityList = Ability::all()->groupBy('resource')->map(function ($item) {
             return $item->pluck('name', 'id');
         })->toArray();
 
         $roleList = Role::all()->pluck('name', 'id')->toArray();
 
-        return view('backend.users.form', compact('user', 'abilityList', 'roleList', 'countries', 'languages', 'mode', 'action'));
+        return view('backend.users.form', compact('user', 'abilityList', 'roleList', 'countries', 'languages', 'timezones', 'mode', 'action'));
     }
 
     /**

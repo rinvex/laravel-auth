@@ -48,6 +48,7 @@ class CreateUsersTable extends Migration
             $table->string('job_title')->nullable();
             $table->string('country', 2)->nullable();
             $table->string('language', 2)->nullable();
+            $table->string('timezone')->nullable();
             $table->text('two_factor')->nullable();
             $table->date('birthdate')->nullable();
             $table->enum('gender', [
