@@ -122,6 +122,7 @@ class User extends Model implements AuthenticatableContract, AuthenticatableTwoF
     protected $dates = [
         'email_verified_at',
         'phone_verified_at',
+        'birthdate',
         'login_at',
     ];
 
