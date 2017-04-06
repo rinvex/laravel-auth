@@ -214,27 +214,6 @@
                             </div>
 
                             <div class="row">
-                                <div class="form-group{{ $errors->has('timezone') ? ' has-error' : '' }}">
-                                    {{ Form::label('timezone', trans('common.timezone'), ['class' => 'col-md-3 control-label']) }}
-
-                                    <div class="col-md-8">
-                                        <select id="timezone" name="timezone" class="form-control">
-                                            <option value="" disabled selected>{{ trans('common.select') }}</option>
-                                            @foreach($timezones as $code => $timezone)
-                                                <option value="{{ $code }}" @if(old('timezone', $currentUser->timezone) === $code) selected="selected" @endif>{{ $timezone }}</option>
-                                            @endforeach
-                                        </select>
-
-                                        @if ($errors->has('timezone'))
-                                            <span class="help-block">
-                                                <strong>{{ $errors->first('timezone') }}</strong>
-                                            </span>
-                                        @endif
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="row">
                                 <div class="form-group{{ $errors->has('phone') ? ' has-error' : '' }}">
                                     {{ Form::label('phone', trans('common.phone'), ['class' => 'col-md-3 control-label']) }}
 

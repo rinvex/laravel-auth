@@ -54,7 +54,6 @@ return [
     'username' => 'Username',
     'country' => 'Country',
     'language' => 'Language',
-    'timezone' => 'Timezone',
     'job_title' => 'Job Title',
     'prefix' => 'Prefix',
     'suffix' => 'Suffix',

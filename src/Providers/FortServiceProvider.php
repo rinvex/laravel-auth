@@ -34,7 +34,6 @@ use Rinvex\Fort\Handlers\GenericHandler;
 use Rinvex\Fort\Http\Middleware\Abilities;
 use Rinvex\Fort\Http\Middleware\NoHttpCache;
 use Rinvex\Fort\Http\Middleware\Authenticate;
-use Rinvex\Fort\Http\Middleware\ResetTimezone;
 use Laravel\Socialite\SocialiteServiceProvider;
 use Illuminate\Console\DetectsApplicationNamespace;
 use Rinvex\Fort\Http\Middleware\RedirectIfAuthenticated;
@@ -196,9 +195,8 @@ class FortServiceProvider extends ServiceProvider
      */
     protected function overrideMiddleware(Router $router)
     {
-        // Append abilities & timezone middleware to the 'web' middlware group
+        // Append abilities middleware to the 'web' middlware group
         $router->pushMiddlewareToGroup('web', Abilities::class);
-        $router->pushMiddlewareToGroup('web', ResetTimezone::class);
 
         // Override route middleware on the fly
         $router->aliasMiddleware('auth', Authenticate::class);
