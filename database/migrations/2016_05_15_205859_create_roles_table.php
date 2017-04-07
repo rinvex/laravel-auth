@@ -39,9 +39,6 @@ class CreateRolesTable extends Migration
 
             // Indexes
             $table->unique('slug');
-
-            // Engine
-            $table->engine = 'InnoDB';
         });
     }
 

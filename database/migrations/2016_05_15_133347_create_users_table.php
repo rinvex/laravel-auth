@@ -63,9 +63,6 @@ class CreateUsersTable extends Migration
             // Indexes
             $table->unique('email');
             $table->unique('username');
-
-            // Engine
-            $table->engine = 'InnoDB';
         });
     }
 

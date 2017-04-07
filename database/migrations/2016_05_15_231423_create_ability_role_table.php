@@ -35,23 +35,11 @@ class CreateAbilityRoleTable extends Migration
             $table->timestamps();
 
             // Indexes
-            $table->primary([
-                'ability_id',
-                'role_id',
-            ]);
-            $table->foreign('ability_id')
-                  ->references('id')
-                  ->on(config('rinvex.fort.tables.abilities'))
-                  ->onDelete('cascade')
-                  ->onUpdate('cascade');
-            $table->foreign('role_id')
-                  ->references('id')
-                  ->on(config('rinvex.fort.tables.roles'))
-                  ->onDelete('cascade')
-                  ->onUpdate('cascade');
-
-            // Engine
-            $table->engine = 'InnoDB';
+            $table->primary(['ability_id', 'role_id']);
+            $table->foreign('ability_id')->references('id')->on(config('rinvex.fort.tables.abilities'))
+                  ->onDelete('cascade')->onUpdate('cascade');
+            $table->foreign('role_id')->references('id')->on(config('rinvex.fort.tables.roles'))
+                  ->onDelete('cascade')->onUpdate('cascade');
         });
     }
 

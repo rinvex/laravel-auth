@@ -35,23 +35,11 @@ class CreateRoleUserTable extends Migration
             $table->timestamps();
 
             // Indexes
-            $table->primary([
-                'role_id',
-                'user_id',
-            ]);
-            $table->foreign('role_id')
-                  ->references('id')
-                  ->on(config('rinvex.fort.tables.roles'))
-                  ->onDelete('cascade')
-                  ->onUpdate('cascade');
-            $table->foreign('user_id')
-                  ->references('id')
-                  ->on(config('rinvex.fort.tables.users'))
-                  ->onDelete('cascade')
-                  ->onUpdate('cascade');
-
-            // Engine
-            $table->engine = 'InnoDB';
+            $table->primary(['role_id', 'user_id']);
+            $table->foreign('role_id')->references('id')->on(config('rinvex.fort.tables.roles'))
+                  ->onDelete('cascade')->onUpdate('cascade');
+            $table->foreign('user_id')->references('id')->on(config('rinvex.fort.tables.users'))
+                  ->onDelete('cascade')->onUpdate('cascade');
         });
     }
 

@@ -39,14 +39,8 @@ class CreatePersistencesTable extends Migration
 
             // Indexes
             $table->primary('token');
-            $table->foreign('user_id')
-                  ->references('id')
-                  ->on(config('rinvex.fort.tables.users'))
-                  ->onDelete('cascade')
-                  ->onUpdate('cascade');
-
-            // Engine
-            $table->engine = 'InnoDB';
+            $table->foreign('user_id')->references('id')->on(config('rinvex.fort.tables.users'))
+                  ->onDelete('cascade')->onUpdate('cascade');
         });
     }
 

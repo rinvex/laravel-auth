@@ -39,9 +39,6 @@ class CreatePasswordResetsTable extends Migration
             // Indexes
             $table->primary('token');
             $table->index('email');
-
-            // Engine
-            $table->engine = 'InnoDB';
         });
     }
 

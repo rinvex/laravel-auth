@@ -41,9 +41,6 @@ class CreateAbilitiesTable extends Migration
 
             // Indexes
             $table->unique(['action', 'resource']);
-
-            // Engine
-            $table->engine = 'InnoDB';
         });
     }
 
