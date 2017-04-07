@@ -20,7 +20,7 @@
                     </header>
 
                     <div class="panel-body">
-                        {{ Form::model($currentUser, ['route' => 'frontend.account.settings.update', 'class' => 'form-horizontal']) }}
+                        {{ Form::model($currentUser, ['url' => route('frontend.account.settings.update'), 'class' => 'form-horizontal']) }}
 
                             @include('frontend.alerts.success')
                             @include('frontend.alerts.warning')

@@ -104,7 +104,7 @@ class AbilitiesController extends AuthorizedController
         $ability->delete();
 
         return intend([
-            'route' => 'backend.abilities.index',
+            'url' => route('backend.abilities.index'),
             'with' => ['warning' => trans('messages.ability.deleted', ['abilityId' => $ability->id])],
         ]);
     }
@@ -149,7 +149,7 @@ class AbilitiesController extends AuthorizedController
         $ability->fill($input)->save();
 
         return intend([
-            'route' => 'backend.abilities.index',
+            'url' => route('backend.abilities.index'),
             'with' => ['success' => trans('messages.ability.saved', ['abilityId' => $ability->id])],
         ]);
     }

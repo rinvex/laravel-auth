@@ -16,7 +16,7 @@
                     <header class="panel-heading">{{ trans('common.password_reset') }}</header>
 
                     <div class="panel-body">
-                        {{ Form::open(['route' => 'frontend.passwordreset.process', 'class' => 'form-horizontal']) }}
+                        {{ Form::open(['url' => route('frontend.passwordreset.process'), 'class' => 'form-horizontal']) }}
                             {{ Form::hidden('token', old('token', $token)) }}
 
                             @include('frontend.alerts.success')

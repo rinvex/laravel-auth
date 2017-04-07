@@ -112,7 +112,7 @@ class AuthenticationController extends AbstractController
             // Valid credentials, but user is unverified; Can NOT login!
             case SessionGuard::AUTH_UNVERIFIED:
                 return intend([
-                    'route' => 'frontend.verification.email.request',
+                    'url' => route('frontend.verification.email.request'),
                     'withErrors' => ['email' => trans($result)],
                 ]);
 
@@ -126,10 +126,10 @@ class AuthenticationController extends AbstractController
 
             // Two-Factor authentication required
             case SessionGuard::AUTH_TWOFACTOR_REQUIRED:
-                $route = ! isset(session('rinvex.fort.twofactor.methods')['totp']) ? 'frontend.verification.phone.request' : 'frontend.verification.phone.verify';
+                $route = ! isset(session('rinvex.fort.twofactor.methods')['totp']) ? route('frontend.verification.phone.request') : route('frontend.verification.phone.verify');
 
                 return intend([
-                    'route' => $route,
+                    'url' => $route,
                     'with' => ['warning' => trans($result)],
                 ]);
 

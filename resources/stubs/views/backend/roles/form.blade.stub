@@ -25,9 +25,9 @@
         @endif
 
         @if ($action === 'update')
-            {{ Form::model($role, ['route' => ['backend.roles.update', $role], 'method' => 'put']) }}
+            {{ Form::model($role, ['url' => route('backend.roles.update', ['role' => $role]), 'method' => 'put']) }}
         @else
-            {{ Form::model($role, ['route' => ['backend.roles.store']]) }}
+            {{ Form::model($role, ['url' => route('backend.roles.store')]) }}
         @endif
 
             <section class="panel panel-default">

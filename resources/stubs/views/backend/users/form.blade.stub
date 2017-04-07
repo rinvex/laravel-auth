@@ -25,9 +25,9 @@
         @endif
 
         @if ($action === 'update')
-            {{ Form::model($user, ['route' => ['backend.users.update', $user], 'method' => 'put']) }}
+            {{ Form::model($user, ['url' => route('backend.users.update', ['user' => $user]), 'method' => 'put']) }}
         @else
-            {{ Form::model($user, ['route' => ['backend.users.store']]) }}
+            {{ Form::model($user, ['url' => route('backend.users.store')]) }}
         @endif
 
             <section class="panel panel-default">

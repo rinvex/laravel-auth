@@ -85,7 +85,7 @@ class PasswordResetController extends AbstractController
 
         if (is_null($user = app('auth.password')->broker($this->getBroker())->getUser($request->only(['email'])))) {
             return intend([
-                'route' => 'frontend.passwordreset.request',
+                'url' => route('frontend.passwordreset.request'),
                 'withInput' => $request->only(['email']),
                 'withErrors' => ['email' => trans(PasswordBroker::INVALID_USER)],
             ]);
@@ -93,7 +93,7 @@ class PasswordResetController extends AbstractController
 
         if (! app('auth.password')->broker($this->getBroker())->tokenExists($user, $token)) {
             return intend([
-                'route' => 'frontend.passwordreset.request',
+                'url' => route('frontend.passwordreset.request'),
                 'withInput' => $request->only(['email']),
                 'withErrors' => ['email' => trans(PasswordBroker::INVALID_TOKEN)],
             ]);
@@ -123,7 +123,7 @@ class PasswordResetController extends AbstractController
         switch ($result) {
             case PasswordBroker::PASSWORD_RESET:
                 return intend([
-                    'route' => 'frontend.auth.login',
+                    'url' => route('frontend.auth.login'),
                     'with' => ['success' => trans($result)],
                 ]);
 

@@ -82,7 +82,7 @@
                                     @endif
                                     <li>
                                         <a href="{{ route('frontend.auth.logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();"><i class="fa fa-sign-out"></i> {{ trans('common.logout') }}</a>
-                                        {{ Form::open(['route' => 'frontend.auth.logout', 'id' => 'logout-form', 'style' => 'display: none;']) }}
+                                        {{ Form::open(['url' => route('frontend.auth.logout'), 'id' => 'logout-form', 'style' => 'display: none;']) }}
                                         {{ Form::close() }}
                                     </li>
                                 </ul>
