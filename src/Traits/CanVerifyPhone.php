@@ -38,7 +38,7 @@ trait CanVerifyPhone
      */
     public function getCountryForVerification()
     {
-        $country = country($this->country);
+        $country = country($this->country_code);
 
         return $country ? $country->getCallingCode() : null;
     }

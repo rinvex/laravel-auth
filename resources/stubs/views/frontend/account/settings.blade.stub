@@ -172,20 +172,20 @@
                             </div>
 
                             <div class="row">
-                                <div class="form-group{{ $errors->has('country') ? ' has-error' : '' }}">
-                                    {{ Form::label('country', trans('common.country'), ['class' => 'col-md-3 control-label']) }}
+                                <div class="form-group{{ $errors->has('country_code') ? ' has-error' : '' }}">
+                                    {{ Form::label('country_code', trans('common.country'), ['class' => 'col-md-3 control-label']) }}
 
                                     <div class="col-md-8">
-                                        <select id="country" name="country" class="form-control">
+                                        <select id="country_code" name="country_code" class="form-control">
                                             <option value="" disabled selected>{{ trans('common.select') }}</option>
                                             @foreach($countries as $code => $country)
-                                                <option value="{{ $code }}" @if(old('country', $currentUser->country) === $code) selected="selected" @endif>{{ $country }}</option>
+                                                <option value="{{ $code }}" @if(old('country_code', $currentUser->country_code) === $code) selected="selected" @endif>{{ $country }}</option>
                                             @endforeach
                                         </select>
 
-                                        @if ($errors->has('country'))
+                                        @if ($errors->has('country_code'))
                                             <span class="help-block">
-                                                <strong>{{ $errors->first('country') }}</strong>
+                                                <strong>{{ $errors->first('country_code') }}</strong>
                                             </span>
                                         @endif
                                     </div>
@@ -193,20 +193,20 @@
                             </div>
 
                             <div class="row">
-                                <div class="form-group{{ $errors->has('language') ? ' has-error' : '' }}">
-                                    {{ Form::label('language', trans('common.language'), ['class' => 'col-md-3 control-label']) }}
+                                <div class="form-group{{ $errors->has('language_code') ? ' has-error' : '' }}">
+                                    {{ Form::label('language_code', trans('common.language'), ['class' => 'col-md-3 control-label']) }}
 
                                     <div class="col-md-8">
-                                        <select id="language" name="language" class="form-control">
+                                        <select id="language_code" name="language_code" class="form-control">
                                             <option value="" disabled selected>{{ trans('common.select') }}</option>
                                             @foreach($languages as $code => $language)
-                                                <option value="{{ $code }}" @if(old('language', $currentUser->language) === $code) selected="selected" @endif>{{ $language }}</option>
+                                                <option value="{{ $code }}" @if(old('language_code', $currentUser->language_code) === $code) selected="selected" @endif>{{ $language }}</option>
                                             @endforeach
                                         </select>
 
-                                        @if ($errors->has('language'))
+                                        @if ($errors->has('language_code'))
                                             <span class="help-block">
-                                                <strong>{{ $errors->first('language') }}</strong>
+                                                <strong>{{ $errors->first('language_code') }}</strong>
                                             </span>
                                         @endif
                                     </div>

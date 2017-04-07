@@ -163,17 +163,17 @@ class PhoneVerificationController extends AbstractController
         }
 
         // Logged in user, No login attempt, no country, Phone verification attempt (account update)
-        if ((! $attemptUser && $user && ! $user->country)) {
-            return ! in_array('phone', $providers) ? 'disabled' : 'country';
+        if ((! $attemptUser && $user && ! $user->country_code)) {
+            return ! in_array('phone', $providers) ? 'disabled' : 'country_code';
         }
 
         // Logged in user, No login attempt, country exists, no phone, Phone verification attempt (account update)
-        if ((! $attemptUser && $user && $user->country && ! $user->phone)) {
+        if ((! $attemptUser && $user && $user->country_code && ! $user->phone)) {
             return 'phone';
         }
 
         // Not logged in, Login attempt, no country, Two-Factor TOTP disabled
-        if (! $user && $attemptUser && ! $attemptUser->country && ! isset(session('rinvex.fort.twofactor.methods')['totp'])) {
+        if (! $user && $attemptUser && ! $attemptUser->country_code && ! isset(session('rinvex.fort.twofactor.methods')['totp'])) {
             return 'home';
         }
 
@@ -191,17 +191,17 @@ class PhoneVerificationController extends AbstractController
     {
         switch ($type) {
             // Logged in user, no country, phone verification attempt (account update)
-            case 'country':
+            case 'country_code':
                 return intend([
-                    'route' => 'frontend.account.settings',
-                    'withErrors' => ['country' => trans('messages.account.country_required')],
+                    'url' => route('frontend.account.settings'),
+                    'withErrors' => ['country_code' => trans('messages.account.country_required')],
                 ]);
                 break;
 
             // Logged in user, Two-Factor Phone disabled, phone verification attempt (account update)
             case 'disabled':
                 return intend([
-                    'route' => 'frontend.account.settings',
+                    'url' => route('frontend.account.settings'),
                     'withErrors' => ['rinvex.fort.auth.twofactor.phone.disabled' => trans('messages.verification.twofactor.phone.disabled')],
                 ]);
                 break;
@@ -227,7 +227,7 @@ class PhoneVerificationController extends AbstractController
             default:
                 return intend([
                     'url' => '/',
-                    'withErrors' => ['rinvex.fort.auth.country' => trans('messages.verification.twofactor.phone.country_required')],
+                    'withErrors' => ['rinvex.fort.auth.country_code' => trans('messages.verification.twofactor.phone.country_required')],
                 ]);
                 break;
         }

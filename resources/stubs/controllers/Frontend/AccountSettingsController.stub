@@ -85,7 +85,7 @@ class AccountSettingsController extends AuthenticatedController
             'phone_verified_at' => null,
         ] : [];
 
-        $countryVerification = array_get($input, 'country') !== $currentUser->country;
+        $countryVerification = array_get($input, 'country_code') !== $currentUser->country_code;
 
         if ($twoFactor && ($phoneVerification || $countryVerification)) {
             array_set($twoFactor, 'phone.enabled', false);

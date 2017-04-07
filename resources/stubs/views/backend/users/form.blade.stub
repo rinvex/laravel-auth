@@ -178,14 +178,14 @@
                         </div>
                         <div class="col-md-4">
 
-                            {{-- Country --}}
-                            <div class="form-group{{ $errors->has('country') ? ' has-error' : '' }}">
-                                {{ Form::label('country', trans('common.country'), ['class' => 'control-label']) }}
-                                {{ Form::select('country', $countries, null, ['class' => 'form-control', 'placeholder' => trans('common.select')]) }}
+                            {{-- Country Code --}}
+                            <div class="form-group{{ $errors->has('country_code') ? ' has-error' : '' }}">
+                                {{ Form::label('country_code', trans('common.country'), ['class' => 'control-label']) }}
+                                {{ Form::select('country_code', $countries, null, ['class' => 'form-control', 'placeholder' => trans('common.select')]) }}
 
-                                @if ($errors->has('country'))
+                                @if ($errors->has('country_code'))
                                     <span class="help-block">
-                                        <strong>{{ $errors->first('country') }}</strong>
+                                        <strong>{{ $errors->first('country_code') }}</strong>
                                     </span>
                                 @endif
                             </div>
@@ -193,14 +193,14 @@
                         </div>
                         <div class="col-md-4">
 
-                            {{-- Language --}}
-                            <div class="form-group{{ $errors->has('language') ? ' has-error' : '' }}">
-                                {{ Form::label('language', trans('common.language'), ['class' => 'control-label']) }}
-                                {{ Form::select('language', $languages, null, ['class' => 'form-control', 'placeholder' => trans('common.select')]) }}
+                            {{-- Language Code --}}
+                            <div class="form-group{{ $errors->has('language_code') ? ' has-error' : '' }}">
+                                {{ Form::label('language_code', trans('common.language'), ['class' => 'control-label']) }}
+                                {{ Form::select('language_code', $languages, null, ['class' => 'form-control', 'placeholder' => trans('common.select')]) }}
 
-                                @if ($errors->has('language'))
+                                @if ($errors->has('language_code'))
                                     <span class="help-block">
-                                        <strong>{{ $errors->first('language') }}</strong>
+                                        <strong>{{ $errors->first('language_code') }}</strong>
                                     </span>
                                 @endif
                             </div>

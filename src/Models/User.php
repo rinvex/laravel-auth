@@ -54,8 +54,8 @@ use Illuminate\Contracts\Auth\Access\Authorizable as AuthorizableContract;
  * @property string                                                                                                         $last_name
  * @property string                                                                                                         $sufix
  * @property string                                                                                                         $job_title
- * @property string                                                                                                         $country
- * @property string                                                                                                         $language
+ * @property string                                                                                                         $country_code
+ * @property string                                                                                                         $language_code
  * @property array                                                                                                          $two_factor
  * @property \Carbon\Carbon                                                                                                 $birthdate
  * @property string                                                                                                         $gender
@@ -75,7 +75,6 @@ use Illuminate\Contracts\Auth\Access\Authorizable as AuthorizableContract;
  * @property-read \Illuminate\Notifications\DatabaseNotificationCollection|\Illuminate\Notifications\DatabaseNotification[] $notifications
  * @property-read \Illuminate\Notifications\DatabaseNotificationCollection|\Illuminate\Notifications\DatabaseNotification[] $readNotifications
  * @property-read \Illuminate\Notifications\DatabaseNotificationCollection|\Illuminate\Notifications\DatabaseNotification[] $unreadNotifications
- *
  * @method static \Illuminate\Database\Query\Builder|\Rinvex\Fort\Models\User whereId($value)
  * @method static \Illuminate\Database\Query\Builder|\Rinvex\Fort\Models\User whereUsername($value)
  * @method static \Illuminate\Database\Query\Builder|\Rinvex\Fort\Models\User wherePassword($value)
@@ -145,8 +144,8 @@ class User extends Model implements AuthenticatableContract, AuthenticatableTwoF
         'last_name',
         'suffix',
         'job_title',
-        'country',
-        'language',
+        'country_code',
+        'language_code',
         'birthdate',
         'gender',
         'active',
