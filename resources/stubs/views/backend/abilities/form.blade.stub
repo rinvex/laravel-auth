@@ -3,7 +3,7 @@
 
 {{-- Page Title --}}
 @section('title')
-    {{ config('app.name') }} » {{ trans('common.abilities') }} » {{ trans('common.'.$mode) }} @if($ability->exists) {{ $ability->slug }} @endif
+    {{ config('app.name') }} » {{ trans('common.abilities.label') }} » {{ $ability->exists ? $ability->name : trans('common.abilities.create') }}
 @stop
 
 {{-- Main Content --}}
@@ -24,7 +24,7 @@
             @include('backend.common.confirm-modal', ['type' => 'ability'])
         @endif
 
-        @if ($action === 'update')
+        @if ($ability->exists)
             {{ Form::model($ability, ['url' => route('backend.abilities.update', ['ability' => $ability]), 'method' => 'put']) }}
         @else
             {{ Form::model($ability, ['url' => route('backend.abilities.store')]) }}
@@ -35,7 +35,7 @@
                 {{-- Heading --}}
                 <header class="panel-heading">
                     <h4>
-                        <a href="{{ route('backend.abilities.index') }}">{{ trans('common.abilities') }}</a> » {{ trans('common.'.$mode) }} @if($ability->exists) <strong>{{ $ability->slug }}</strong> @endif
+                        <a href="{{ route('backend.abilities.index') }}">{{ trans('common.abilities.label') }}</a> » {{ $ability->exists ? $ability->name : trans('common.abilities.create') }}
                         @if($ability->exists)
                             <span class="pull-right" style="margin-top: -7px">
                                 @can('delete-abilities', $ability) <a href="#" class="btn btn-default" data-toggle="modal" data-target="#delete-confirmation" data-item-href="{{ route('backend.abilities.delete', ['ability' => $ability]) }}" data-item-name="{{ $ability->slug }}"><i class="fa fa-trash-o text-danger"></i></a> @endcan

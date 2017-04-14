@@ -46,28 +46,6 @@ class AbilitiesController extends AuthorizedController
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        return $this->form('create', 'store', new Ability());
-    }
-
-    /**
-     * Show the form for editing the given resource.
-     *
-     * @param \Rinvex\Fort\Models\Ability $ability
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Ability $ability)
-    {
-        return $this->form('edit', 'update', $ability);
-    }
-
-    /**
      * Store a newly created resource in storage.
      *
      * @param \Illuminate\Http\Request $request
@@ -112,15 +90,13 @@ class AbilitiesController extends AuthorizedController
     /**
      * Show the form for create/update of the given resource.
      *
-     * @param string                      $mode
-     * @param string                      $action
      * @param \Rinvex\Fort\Models\Ability $ability
      *
      * @return \Illuminate\Http\Response
      */
-    protected function form($mode, $action, Ability $ability)
+    public function form(Ability $ability)
     {
-        return view('backend.abilities.form', compact('ability', 'resources', 'mode', 'action'));
+        return view('backend.abilities.form', compact('ability', 'resources'));
     }
 
     /**

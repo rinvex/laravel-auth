@@ -3,7 +3,7 @@
 
 {{-- Page Title --}}
 @section('title')
-    » {{ trans('common.users') }}
+    » {{ trans('common.users.label') }}
 @stop
 
 {{-- Main Content --}}
@@ -27,7 +27,7 @@
             {{-- Heading --}}
             <header class="panel-heading">
                 <h4>
-                    {{ trans('common.users') }}
+                    {{ trans('common.users.label') }}
                     @can('create-users')
                         <span class="pull-right" style="margin-top: -7px">
                             <a href="{{ route('backend.users.create') }}" class="btn btn-default"><i class="fa fa-plus"></i></a>
@@ -47,7 +47,7 @@
                             <tr>
                                 <th style="width: 20%">{{ trans('common.name') }}</th>
                                 <th style="width: 20%">{{ trans('common.contact') }}</th>
-                                <th style="width: 20%">{{ trans('common.roles') }}</th>
+                                <th style="width: 20%">{{ trans('common.roles.label') }}</th>
                                 <th style="width: 10%">{{ trans('common.status') }}</th>
                                 <th style="width: 15%">{{ trans('common.created_at') }}</th>
                                 <th style="width: 15%">{{ trans('common.updated_at') }}</th>

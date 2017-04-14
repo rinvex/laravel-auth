@@ -43,28 +43,6 @@ class UsersController extends AuthorizedController
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        return $this->form('create', 'store', new User());
-    }
-
-    /**
-     * Show the form for editing the given resource.
-     *
-     * @param \Rinvex\Fort\Models\User $user
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(User $user)
-    {
-        return $this->form('edit', 'update', $user);
-    }
-
-    /**
      * Store a newly created resource in storage.
      *
      * @param \Illuminate\Http\Request $request
@@ -109,13 +87,11 @@ class UsersController extends AuthorizedController
     /**
      * Show the form for create/update of the given resource.
      *
-     * @param string                   $mode
-     * @param string                   $action
      * @param \Rinvex\Fort\Models\User $user
      *
      * @return \Illuminate\Http\Response
      */
-    protected function form($mode, $action, User $user)
+    public function form(User $user)
     {
         $countries = array_map(function ($country) {
             return $country['name'];
@@ -131,7 +107,7 @@ class UsersController extends AuthorizedController
 
         $roleList = Role::all()->pluck('name', 'id')->toArray();
 
-        return view('backend.users.form', compact('user', 'abilityList', 'roleList', 'countries', 'languages', 'mode', 'action'));
+        return view('backend.users.form', compact('user', 'abilityList', 'roleList', 'countries', 'languages'));
     }
 
     /**

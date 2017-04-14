@@ -47,28 +47,6 @@ class RolesController extends AuthorizedController
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        return $this->form('create', 'store', new Role());
-    }
-
-    /**
-     * Show the form for editing the given resource.
-     *
-     * @param \Rinvex\Fort\Models\Role $role
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Role $role)
-    {
-        return $this->form('edit', 'update', $role);
-    }
-
-    /**
      * Store a newly created resource in storage.
      *
      * @param \Illuminate\Http\Request $request
@@ -113,19 +91,17 @@ class RolesController extends AuthorizedController
     /**
      * Show the form for create/update of the given resource.
      *
-     * @param string                   $mode
-     * @param string                   $action
      * @param \Rinvex\Fort\Models\Role $role
      *
      * @return \Illuminate\Http\Response
      */
-    protected function form($mode, $action, Role $role)
+    public function form(Role $role)
     {
         $abilityList = Ability::all()->groupBy('resource')->map(function ($ability) {
             return $ability->pluck('name', 'id');
         })->toArray();
 
-        return view('backend.roles.form', compact('role', 'abilityList', 'mode', 'action'));
+        return view('backend.roles.form', compact('role', 'abilityList'));
     }
 
     /**

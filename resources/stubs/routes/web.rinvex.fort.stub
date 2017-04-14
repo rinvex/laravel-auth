@@ -110,9 +110,9 @@ Route::namespace('Backend')->name('backend.')->prefix('backend')->middleware(['w
     // Abilities Routes
     Route::name('abilities.')->prefix('abilities')->group(function () {
         Route::get('/')->name('index')->uses('AbilitiesController@index');
-        Route::get('create')->name('create')->uses('AbilitiesController@create');
+        Route::get('create')->name('create')->uses('AbilitiesController@form');
         Route::post('create')->name('store')->uses('AbilitiesController@store');
-        Route::get('{ability}')->name('edit')->uses('AbilitiesController@edit')->where('ability', '[0-9]+');
+        Route::get('{ability}')->name('edit')->uses('AbilitiesController@form')->where('ability', '[0-9]+');
         Route::put('{ability}')->name('update')->uses('AbilitiesController@update')->where('ability', '[0-9]+');
         Route::delete('{ability}')->name('delete')->uses('AbilitiesController@delete')->where('ability', '[0-9]+');
     });
@@ -120,9 +120,9 @@ Route::namespace('Backend')->name('backend.')->prefix('backend')->middleware(['w
     // Roles Routes
     Route::name('roles.')->prefix('roles')->group(function () {
         Route::get('/')->name('index')->uses('RolesController@index');
-        Route::get('create')->name('create')->uses('RolesController@create');
+        Route::get('create')->name('create')->uses('RolesController@form');
         Route::post('create')->name('store')->uses('RolesController@store');
-        Route::get('{role}')->name('edit')->uses('RolesController@edit')->where('role', '[0-9]+');
+        Route::get('{role}')->name('edit')->uses('RolesController@form')->where('role', '[0-9]+');
         Route::put('{role}')->name('update')->uses('RolesController@update')->where('role', '[0-9]+');
         Route::delete('{role}')->name('delete')->uses('RolesController@delete')->where('role', '[0-9]+');
     });
@@ -130,9 +130,9 @@ Route::namespace('Backend')->name('backend.')->prefix('backend')->middleware(['w
     // Users Routes
     Route::name('users.')->prefix('users')->group(function () {
         Route::get('/')->name('index')->uses('UsersController@index');
-        Route::get('create')->name('create')->uses('UsersController@create');
+        Route::get('create')->name('create')->uses('UsersController@form');
         Route::post('create')->name('store')->uses('UsersController@store');
-        Route::get('{user}')->name('edit')->uses('UsersController@edit')->where('user', '[0-9]+');
+        Route::get('{user}')->name('edit')->uses('UsersController@form')->where('user', '[0-9]+');
         Route::put('{user}')->name('update')->uses('UsersController@update')->where('user', '[0-9]+');
         Route::delete('{user}')->name('delete')->uses('UsersController@delete')->where('user', '[0-9]+');
     });

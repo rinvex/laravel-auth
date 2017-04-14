@@ -84,9 +84,6 @@ return [
     'verification_phone_request' => 'Request Phone Verification',
     'verify_phone' => 'Verify Phone',
     'dashboard' => 'Dashboard',
-    'abilities' => 'Abilities',
-    'users' => 'Users',
-    'roles' => 'Roles',
     'account' => 'Account',
     'settings' => 'Settings',
     'sessions' => 'Sessions',
@@ -109,5 +106,23 @@ return [
     'phone_verified' => 'Phone verified at <date>:date</date>.',
     'phone_unverified' => 'Phone not yet verified! <a href=":href">Verify Phone</a>',
     'forgot_password' => 'I forgot my password',
+
+    // Abilities Phrases
+    'abilities' => [
+        'label' => 'Abilities',
+        'create' => 'Create New Ability',
+    ],
+
+    // Users Phrases
+    'users' => [
+        'label' => 'Users',
+        'create' => 'Create New User',
+    ],
+
+    // Roles Phrases
+    'roles' => [
+        'label' => 'Roles',
+        'create' => 'Create New Role',
+    ],
 
 ];
