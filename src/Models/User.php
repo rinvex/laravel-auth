@@ -353,4 +353,28 @@ class User extends Model implements AuthenticatableContract, AuthenticatableTwoF
 
         return $authyId;
     }
+
+    /**
+     * Get the user's country.
+     *
+     * @param string $countryCode
+     *
+     * @return \Rinvex\Country\Country
+     */
+    public function getCountryAttribute(string $countryCode)
+    {
+        return country($countryCode);
+    }
+
+    /**
+     * Get the user's language.
+     *
+     * @param string $languageCode
+     *
+     * @return \Rinvex\Language\Language
+     */
+    public function getLanguageAttribute(string $languageCode)
+    {
+        return language($languageCode);
+    }
 }
