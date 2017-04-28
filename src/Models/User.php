@@ -357,24 +357,20 @@ class User extends Model implements AuthenticatableContract, AuthenticatableTwoF
     /**
      * Get the user's country.
      *
-     * @param string $countryCode
-     *
      * @return \Rinvex\Country\Country
      */
-    public function getCountryAttribute(string $countryCode)
+    public function getCountryAttribute()
     {
-        return country($countryCode);
+        return country($this->country_code);
     }
 
     /**
      * Get the user's language.
      *
-     * @param string $languageCode
-     *
      * @return \Rinvex\Language\Language
      */
-    public function getLanguageAttribute(string $languageCode)
+    public function getLanguageAttribute()
     {
-        return language($languageCode);
+        return language($this->language_code);
     }
 }
