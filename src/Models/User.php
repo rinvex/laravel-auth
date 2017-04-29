@@ -23,7 +23,7 @@ use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 use Illuminate\Contracts\Auth\Access\Authorizable as AuthorizableContract;
 
 /**
- * Rinvex\Fort\Models\User.
+ * Rinvex\Fort\Models\User
  *
  * @property int                                                                                                            $id
  * @property string                                                                                                         $username
@@ -34,15 +34,14 @@ use Illuminate\Contracts\Auth\Access\Authorizable as AuthorizableContract;
  * @property \Carbon\Carbon                                                                                                 $email_verified_at
  * @property string                                                                                                         $phone
  * @property bool                                                                                                           $phone_verified
- * @property string                                                                                                         $phone_verified_at
+ * @property \Carbon\Carbon                                                                                                 $phone_verified_at
  * @property string                                                                                                         $prefix
  * @property string                                                                                                         $first_name
  * @property string                                                                                                         $middle_name
  * @property string                                                                                                         $last_name
- * @property string                                                                                                         $sufix
+ * @property string                                                                                                         $suffix
  * @property string                                                                                                         $job_title
  * @property string                                                                                                         $country_code
- * @property string                                                                                                         $language_code
  * @property array                                                                                                          $two_factor
  * @property \Carbon\Carbon                                                                                                 $birthdate
  * @property string                                                                                                         $gender
@@ -51,43 +50,46 @@ use Illuminate\Contracts\Auth\Access\Authorizable as AuthorizableContract;
  * @property \Carbon\Carbon                                                                                                 $created_at
  * @property \Carbon\Carbon                                                                                                 $updated_at
  * @property \Carbon\Carbon                                                                                                 $deleted_at
+ * @property string                                                                                                         $language_code
  * @property-read \Illuminate\Database\Eloquent\Collection|\Rinvex\Fort\Models\Ability[]                                    $abilities
- * @property-read \Illuminate\Database\Eloquent\Collection|\Rinvex\Fort\Models\Role[]                                       $roles
- * @property-read \Illuminate\Database\Eloquent\Collection|\Rinvex\Fort\Models\Persistence[]                                $persistences
- * @property-read \Illuminate\Database\Eloquent\Collection|\Rinvex\Fort\Models\Socialite[]                                  $socialites
- * @property-read string                                                                                                    $name
- * @property-read \Illuminate\Support\Collection                                                                            $all_abilities
  * @property-read array                                                                                                     $ability_list
+ * @property-read \Illuminate\Support\Collection                                                                            $all_abilities
+ * @property-read \Rinvex\Country\Country                                                                                   $country
+ * @property-read \Rinvex\Language\Language                                                                                 $language
+ * @property-read string                                                                                                    $name
  * @property-read array                                                                                                     $role_list
  * @property-read \Illuminate\Notifications\DatabaseNotificationCollection|\Illuminate\Notifications\DatabaseNotification[] $notifications
- * @property-read \Illuminate\Notifications\DatabaseNotificationCollection|\Illuminate\Notifications\DatabaseNotification[] $readNotifications
- * @property-read \Illuminate\Notifications\DatabaseNotificationCollection|\Illuminate\Notifications\DatabaseNotification[] $unreadNotifications
- * @method static \Illuminate\Database\Query\Builder|\Rinvex\Fort\Models\User whereId($value)
- * @method static \Illuminate\Database\Query\Builder|\Rinvex\Fort\Models\User whereUsername($value)
- * @method static \Illuminate\Database\Query\Builder|\Rinvex\Fort\Models\User wherePassword($value)
- * @method static \Illuminate\Database\Query\Builder|\Rinvex\Fort\Models\User whereRememberToken($value)
+ * @property-read \Illuminate\Database\Eloquent\Collection|\Rinvex\Fort\Models\Persistence[]                                $persistences
+ * @property-read \Illuminate\Database\Eloquent\Collection|\Rinvex\Fort\Models\Role[]                                       $roles
+ * @property-read \Illuminate\Database\Eloquent\Collection|\Rinvex\Fort\Models\Socialite[]                                  $socialites
+ * @method static \Illuminate\Database\Query\Builder|\Rinvex\Fort\Models\User role($roles)
+ * @method static \Illuminate\Database\Query\Builder|\Rinvex\Fort\Models\User whereActive($value)
+ * @method static \Illuminate\Database\Query\Builder|\Rinvex\Fort\Models\User whereBirthdate($value)
+ * @method static \Illuminate\Database\Query\Builder|\Rinvex\Fort\Models\User whereCountryCode($value)
+ * @method static \Illuminate\Database\Query\Builder|\Rinvex\Fort\Models\User whereCreatedAt($value)
+ * @method static \Illuminate\Database\Query\Builder|\Rinvex\Fort\Models\User whereDeletedAt($value)
  * @method static \Illuminate\Database\Query\Builder|\Rinvex\Fort\Models\User whereEmail($value)
  * @method static \Illuminate\Database\Query\Builder|\Rinvex\Fort\Models\User whereEmailVerified($value)
  * @method static \Illuminate\Database\Query\Builder|\Rinvex\Fort\Models\User whereEmailVerifiedAt($value)
+ * @method static \Illuminate\Database\Query\Builder|\Rinvex\Fort\Models\User whereFirstName($value)
+ * @method static \Illuminate\Database\Query\Builder|\Rinvex\Fort\Models\User whereGender($value)
+ * @method static \Illuminate\Database\Query\Builder|\Rinvex\Fort\Models\User whereId($value)
+ * @method static \Illuminate\Database\Query\Builder|\Rinvex\Fort\Models\User whereJobTitle($value)
+ * @method static \Illuminate\Database\Query\Builder|\Rinvex\Fort\Models\User whereLanguageCode($value)
+ * @method static \Illuminate\Database\Query\Builder|\Rinvex\Fort\Models\User whereLastName($value)
+ * @method static \Illuminate\Database\Query\Builder|\Rinvex\Fort\Models\User whereLoginAt($value)
+ * @method static \Illuminate\Database\Query\Builder|\Rinvex\Fort\Models\User whereMiddleName($value)
+ * @method static \Illuminate\Database\Query\Builder|\Rinvex\Fort\Models\User wherePassword($value)
  * @method static \Illuminate\Database\Query\Builder|\Rinvex\Fort\Models\User wherePhone($value)
  * @method static \Illuminate\Database\Query\Builder|\Rinvex\Fort\Models\User wherePhoneVerified($value)
  * @method static \Illuminate\Database\Query\Builder|\Rinvex\Fort\Models\User wherePhoneVerifiedAt($value)
  * @method static \Illuminate\Database\Query\Builder|\Rinvex\Fort\Models\User wherePrefix($value)
- * @method static \Illuminate\Database\Query\Builder|\Rinvex\Fort\Models\User whereFirstName($value)
- * @method static \Illuminate\Database\Query\Builder|\Rinvex\Fort\Models\User whereMiddleName($value)
- * @method static \Illuminate\Database\Query\Builder|\Rinvex\Fort\Models\User whereLastName($value)
- * @method static \Illuminate\Database\Query\Builder|\Rinvex\Fort\Models\User whereSufix($value)
- * @method static \Illuminate\Database\Query\Builder|\Rinvex\Fort\Models\User whereJobTitle($value)
- * @method static \Illuminate\Database\Query\Builder|\Rinvex\Fort\Models\User whereCountry($value)
+ * @method static \Illuminate\Database\Query\Builder|\Rinvex\Fort\Models\User whereRememberToken($value)
+ * @method static \Illuminate\Database\Query\Builder|\Rinvex\Fort\Models\User whereSuffix($value)
  * @method static \Illuminate\Database\Query\Builder|\Rinvex\Fort\Models\User whereTwoFactor($value)
- * @method static \Illuminate\Database\Query\Builder|\Rinvex\Fort\Models\User whereBirthdate($value)
- * @method static \Illuminate\Database\Query\Builder|\Rinvex\Fort\Models\User whereGender($value)
- * @method static \Illuminate\Database\Query\Builder|\Rinvex\Fort\Models\User whereActive($value)
- * @method static \Illuminate\Database\Query\Builder|\Rinvex\Fort\Models\User whereLoginAt($value)
- * @method static \Illuminate\Database\Query\Builder|\Rinvex\Fort\Models\User whereCreatedAt($value)
  * @method static \Illuminate\Database\Query\Builder|\Rinvex\Fort\Models\User whereUpdatedAt($value)
- * @method static \Illuminate\Database\Query\Builder|\Rinvex\Fort\Models\User whereDeletedAt($value)
- * @mixin \Illuminate\Database\Eloquent\Model
+ * @method static \Illuminate\Database\Query\Builder|\Rinvex\Fort\Models\User whereUsername($value)
+ * @mixin \Eloquent
  */
 class User extends Model implements AuthenticatableContract, AuthenticatableTwoFactorContract, AuthorizableContract, CanResetPasswordContract, CanVerifyEmailContract, CanVerifyPhoneContract
 {
