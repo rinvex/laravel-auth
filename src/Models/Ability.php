@@ -263,7 +263,7 @@ class Ability extends Model
     /**
      * Get slug attribute out of ability's action & resource.
      *
-     * @return bool
+     * @return string
      */
     public function getSlugAttribute()
     {
