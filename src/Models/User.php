@@ -112,6 +112,7 @@ class User extends Model implements AuthenticatableContract, AuthenticatableTwoF
         'phone_verified_at',
         'birthdate',
         'login_at',
+        'deleted_at',
     ];
 
     /**

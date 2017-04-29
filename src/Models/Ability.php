@@ -44,6 +44,13 @@ class Ability extends Model
     /**
      * {@inheritdoc}
      */
+    protected $dates = [
+        'deleted_at',
+    ];
+
+    /**
+     * {@inheritdoc}
+     */
     protected $fillable = [
         'action',
         'resource',

@@ -45,6 +45,13 @@ class Role extends Model
     /**
      * {@inheritdoc}
      */
+    protected $dates = [
+        'deleted_at',
+    ];
+
+    /**
+     * {@inheritdoc}
+     */
     protected $fillable = [
         'slug',
         'name',
