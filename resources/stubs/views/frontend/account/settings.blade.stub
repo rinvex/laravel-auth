@@ -155,12 +155,7 @@
                                     {{ Form::label('gender', trans('common.gender'), ['class' => 'col-md-3 control-label']) }}
 
                                     <div class="col-md-8">
-                                        <select id="gender" name="gender" class="form-control">
-                                            <option value="" disabled selected>{{ trans('common.select') }}</option>
-                                            <option value="male" @if(old('gender', $currentUser->gender) === 'male') selected @endif>{{ trans('common.male') }}</option>
-                                            <option value="female" @if(old('gender', $currentUser->gender) === 'female') selected @endif>{{ trans('common.female') }}</option>
-                                            <option value="undisclosed" @if(old('gender', $currentUser->gender) === 'undisclosed') selected @endif>{{ trans('common.undisclosed') }}</option>
-                                        </select>
+                                        {{ Form::select('gender', ['male' => trans('common.male'), 'female' => trans('common.female')], null, ['class' => 'form-control']) }}
 
                                         @if ($errors->has('gender'))
                                             <span class="help-block">

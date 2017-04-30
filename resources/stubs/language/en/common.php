@@ -56,7 +56,6 @@ return [
     'gender' => 'Gender',
     'male' => 'Male',
     'female' => 'Female',
-    'undisclosed' => 'Undisclosed',
     'active' => 'Active',
     'inactive' => 'Inactive',
     'verified' => 'Verified',

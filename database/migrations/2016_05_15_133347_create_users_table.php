@@ -37,11 +37,7 @@ class CreateUsersTable extends Migration
             $table->string('language_code', 2)->nullable();
             $table->text('two_factor')->nullable();
             $table->date('birthdate')->nullable();
-            $table->enum('gender', [
-                'male',
-                'female',
-                'undisclosed',
-            ])->default('undisclosed');
+            $table->string('gender', 6)->nullable();
             $table->boolean('active')->default(true);
             $table->timestamp('login_at')->nullable();
             $table->timestamps();
