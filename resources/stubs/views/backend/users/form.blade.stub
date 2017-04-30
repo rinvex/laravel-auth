@@ -297,20 +297,20 @@
 
                         <div class="col-md-4">
 
-                            {{-- Birthdate --}}
-                            <div class="form-group{{ $errors->has('birthdate') ? ' has-error' : '' }}">
-                                {{ Form::label('birthdate', trans('common.birthdate'), ['class' => 'control-label']) }}
+                            {{-- Birthday --}}
+                            <div class="form-group{{ $errors->has('birthday') ? ' has-error' : '' }}">
+                                {{ Form::label('birthday', trans('common.birthday'), ['class' => 'control-label']) }}
                                 <div class="input-group date">
                                     <div class="input-group-addon">
                                         <i class="fa fa-calendar"></i>
                                     </div>
 
-                                    {{ Form::text('birthdate', null, ['class' => 'form-control']) }}
+                                    {{ Form::text('birthday', null, ['class' => 'form-control']) }}
                                 </div>
 
-                                @if ($errors->has('birthdate'))
+                                @if ($errors->has('birthday'))
                                     <span class="help-block">
-                                        <strong>{{ $errors->first('birthdate') }}</strong>
+                                        <strong>{{ $errors->first('birthday') }}</strong>
                                     </span>
                                 @endif
                             </div>

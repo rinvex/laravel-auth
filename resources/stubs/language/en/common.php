@@ -52,7 +52,7 @@ return [
     'phone' => 'Phone',
     'status' => 'Status',
     'contact' => 'Contact',
-    'birthdate' => 'Birthdate',
+    'birthday' => 'Birthday',
     'gender' => 'Gender',
     'male' => 'Male',
     'female' => 'Female',
