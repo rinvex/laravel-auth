@@ -38,6 +38,12 @@ class CreateUsersTable extends Migration
             $table->text('two_factor')->nullable();
             $table->date('birthday')->nullable();
             $table->string('gender', 6)->nullable();
+            $table->string('website')->nullable();
+            $table->string('twitter')->nullable();
+            $table->string('facebook')->nullable();
+            $table->string('linkedin')->nullable();
+            $table->string('google_plus')->nullable();
+            $table->string('skype')->nullable();
             $table->boolean('active')->default(true);
             $table->timestamp('login_at')->nullable();
             $table->timestamps();

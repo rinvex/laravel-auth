@@ -49,6 +49,7 @@
                 <div class="panel-body">
 
                     <div class="row">
+
                         <div class="col-md-4">
 
                             {{-- First Name --}}
@@ -64,6 +65,7 @@
                             </div>
 
                         </div>
+
                         <div class="col-md-4">
 
                             {{-- Middle Name --}}
@@ -79,6 +81,7 @@
                             </div>
 
                         </div>
+
                         <div class="col-md-4">
 
                             {{-- Last Name --}}
@@ -94,6 +97,7 @@
                             </div>
 
                         </div>
+
                         <div class="col-md-4">
 
                             {{-- Username --}}
@@ -109,6 +113,7 @@
                             </div>
 
                         </div>
+
                         <div class="col-md-4">
 
                             {{-- Job Title --}}
@@ -124,6 +129,7 @@
                             </div>
 
                         </div>
+
                         <div class="col-md-2">
 
                             {{-- Name Prefix --}}
@@ -139,6 +145,7 @@
                             </div>
 
                         </div>
+
                         <div class="col-md-2">
 
                             {{-- Name Suffix --}}
@@ -154,6 +161,7 @@
                             </div>
 
                         </div>
+
                         <div class="col-md-4">
 
                             {{-- Email --}}
@@ -176,6 +184,7 @@
                             </div>
 
                         </div>
+
                         <div class="col-md-4">
 
                             {{-- Country Code --}}
@@ -191,6 +200,7 @@
                             </div>
 
                         </div>
+
                         <div class="col-md-4">
 
                             {{-- Language Code --}}
@@ -206,6 +216,7 @@
                             </div>
 
                         </div>
+
                         <div class="col-md-4">
 
                             {{-- Phone --}}
@@ -228,6 +239,7 @@
                             </div>
 
                         </div>
+
                         <div class="col-md-4">
 
                             {{-- Gender --}}
@@ -243,6 +255,7 @@
                             </div>
 
                         </div>
+
                         <div class="col-md-4">
 
                             {{-- Active --}}
@@ -258,6 +271,7 @@
                             </div>
 
                         </div>
+
                         <div class="col-md-4">
 
                             {{-- Password --}}
@@ -277,22 +291,25 @@
                             </div>
 
                         </div>
+
                         @can('assign-roles')
-                        <div class="col-md-4">
 
-                            {{-- Roles --}}
-                            <div class="form-group{{ $errors->has('roles') ? ' has-error' : '' }}">
-                                {{ Form::label('roleList[]', trans('common.roles.label'), ['class' => 'control-label']) }}
-                                {{ Form::select('roleList[]', $roleList, null, ['class' => 'form-control', 'placeholder' => trans('common.select'), 'multiple' => 'multiple', 'size' => 4]) }}
+                            <div class="col-md-4">
 
-                                @if ($errors->has('roles'))
-                                    <span class="help-block">
-                                        <strong>{{ $errors->first('roles') }}</strong>
-                                    </span>
-                                @endif
+                                {{-- Roles --}}
+                                <div class="form-group{{ $errors->has('roles') ? ' has-error' : '' }}">
+                                    {{ Form::label('roleList[]', trans('common.roles.label'), ['class' => 'control-label']) }}
+                                    {{ Form::select('roleList[]', $roleList, null, ['class' => 'form-control', 'placeholder' => trans('common.select'), 'multiple' => 'multiple', 'size' => 4]) }}
+
+                                    @if ($errors->has('roles'))
+                                        <span class="help-block">
+                                            <strong>{{ $errors->first('roles') }}</strong>
+                                        </span>
+                                    @endif
+                                </div>
+
                             </div>
 
-                        </div>
                         @endcan
 
                         <div class="col-md-4">
@@ -317,23 +334,158 @@
 
                         </div>
 
-                        @can('grant-abilities')
                         <div class="col-md-4">
 
-                            {{-- Abilities --}}
-                            <div class="form-group{{ $errors->has('abilityList[]') ? ' has-error' : '' }}">
-                                {{ Form::label('abilityList[]', trans('common.abilities.label'), ['class' => 'control-label']) }}
-                                {{ Form::select('abilityList[]', $abilityList, null, ['class' => 'form-control', 'placeholder' => trans('common.select'), 'multiple' => 'multiple', 'size' => 4]) }}
+                            {{-- Twitter --}}
+                            <div class="form-group{{ $errors->has('twitter') ? ' has-error' : '' }}">
+                                {{ Form::label('twitter', trans('common.twitter'), ['class' => 'control-label']) }}
+                                <div class="input-group date">
+                                    <div class="input-group-addon">
+                                        <i class="fa fa-twitter"></i>
+                                    </div>
 
-                                @if ($errors->has('abilities'))
+                                    {{ Form::text('twitter', null, ['class' => 'form-control']) }}
+                                </div>
+
+                                @if ($errors->has('twitter'))
                                     <span class="help-block">
-                                        <strong>{{ $errors->first('abilityList[]') }}</strong>
+                                        <strong>{{ $errors->first('twitter') }}</strong>
                                     </span>
                                 @endif
                             </div>
 
                         </div>
+
+                        <div class="col-md-4">
+
+                            {{-- Facebook --}}
+                            <div class="form-group{{ $errors->has('facebook') ? ' has-error' : '' }}">
+                                {{ Form::label('facebook', trans('common.facebook'), ['class' => 'control-label']) }}
+                                <div class="input-group date">
+                                    <div class="input-group-addon">
+                                        <i class="fa fa-facebook"></i>
+                                    </div>
+
+                                    {{ Form::text('facebook', null, ['class' => 'form-control']) }}
+                                </div>
+
+                                @if ($errors->has('facebook'))
+                                    <span class="help-block">
+                                        <strong>{{ $errors->first('facebook') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+
+                        </div>
+
+                        <div class="col-md-4">
+
+                            {{-- Linkedin --}}
+                            <div class="form-group{{ $errors->has('linkedin') ? ' has-error' : '' }}">
+                                {{ Form::label('linkedin', trans('common.linkedin'), ['class' => 'control-label']) }}
+                                <div class="input-group date">
+                                    <div class="input-group-addon">
+                                        <i class="fa fa-linkedin"></i>
+                                    </div>
+
+                                    {{ Form::text('linkedin', null, ['class' => 'form-control']) }}
+                                </div>
+
+                                @if ($errors->has('linkedin'))
+                                    <span class="help-block">
+                                        <strong>{{ $errors->first('linkedin') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+
+                        </div>
+
+                        <div class="col-md-4">
+
+                            {{-- Google Plus --}}
+                            <div class="form-group{{ $errors->has('google_plus') ? ' has-error' : '' }}">
+                                {{ Form::label('google_plus', trans('common.google_plus'), ['class' => 'control-label']) }}
+                                <div class="input-group date">
+                                    <div class="input-group-addon">
+                                        <i class="fa fa-google-plus"></i>
+                                    </div>
+
+                                    {{ Form::text('google_plus', null, ['class' => 'form-control']) }}
+                                </div>
+
+                                @if ($errors->has('google_plus'))
+                                    <span class="help-block">
+                                        <strong>{{ $errors->first('google_plus') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+
+                        </div>
+
+                        <div class="col-md-4">
+
+                            {{-- Skype --}}
+                            <div class="form-group{{ $errors->has('skype') ? ' has-error' : '' }}">
+                                {{ Form::label('skype', trans('common.skype'), ['class' => 'control-label']) }}
+                                <div class="input-group date">
+                                    <div class="input-group-addon">
+                                        <i class="fa fa-skype"></i>
+                                    </div>
+
+                                    {{ Form::text('skype', null, ['class' => 'form-control']) }}
+                                </div>
+
+                                @if ($errors->has('skype'))
+                                    <span class="help-block">
+                                        <strong>{{ $errors->first('skype') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+
+                        </div>
+
+                        <div class="col-md-4">
+
+                            {{-- Website --}}
+                            <div class="form-group{{ $errors->has('website') ? ' has-error' : '' }}">
+                                {{ Form::label('website', trans('common.website'), ['class' => 'control-label']) }}
+                                <div class="input-group date">
+                                    <div class="input-group-addon">
+                                        <i class="fa fa-globe"></i>
+                                    </div>
+
+                                    {{ Form::text('website', null, ['class' => 'form-control']) }}
+                                </div>
+
+                                @if ($errors->has('website'))
+                                    <span class="help-block">
+                                        <strong>{{ $errors->first('website') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+
+                        </div>
+
+                        @can('grant-abilities')
+
+                            <div class="col-md-4">
+
+                                {{-- Abilities --}}
+                                <div class="form-group{{ $errors->has('abilityList[]') ? ' has-error' : '' }}">
+                                    {{ Form::label('abilityList[]', trans('common.abilities.label'), ['class' => 'control-label']) }}
+                                    {{ Form::select('abilityList[]', $abilityList, null, ['class' => 'form-control', 'placeholder' => trans('common.select'), 'multiple' => 'multiple', 'size' => 4]) }}
+
+                                    @if ($errors->has('abilities'))
+                                        <span class="help-block">
+                                            <strong>{{ $errors->first('abilityList[]') }}</strong>
+                                        </span>
+                                    @endif
+                                </div>
+
+                            </div>
+
                         @endcan
+
                     </div>
 
                 </div>
