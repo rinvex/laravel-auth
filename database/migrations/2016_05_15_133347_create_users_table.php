@@ -27,11 +27,11 @@ class CreateUsersTable extends Migration
             $table->string('phone')->nullable();
             $table->boolean('phone_verified')->default(false);
             $table->timestamp('phone_verified_at')->nullable();
-            $table->string('prefix')->nullable();
+            $table->string('name_prefix')->nullable();
             $table->string('first_name')->nullable();
             $table->string('middle_name')->nullable();
             $table->string('last_name')->nullable();
-            $table->string('suffix')->nullable();
+            $table->string('name_suffix')->nullable();
             $table->string('job_title')->nullable();
             $table->string('country_code', 2)->nullable();
             $table->string('language_code', 2)->nullable();

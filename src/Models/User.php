@@ -35,11 +35,11 @@ use Illuminate\Contracts\Auth\Access\Authorizable as AuthorizableContract;
  * @property string                                                                                                         $phone
  * @property bool                                                                                                           $phone_verified
  * @property \Carbon\Carbon                                                                                                 $phone_verified_at
- * @property string                                                                                                         $prefix
+ * @property string                                                                                                         $name_prefix
  * @property string                                                                                                         $first_name
  * @property string                                                                                                         $middle_name
  * @property string                                                                                                         $last_name
- * @property string                                                                                                         $suffix
+ * @property string                                                                                                         $name_suffix
  * @property string                                                                                                         $job_title
  * @property string                                                                                                         $country_code
  * @property string                                                                                                         $language_code
@@ -83,9 +83,9 @@ use Illuminate\Contracts\Auth\Access\Authorizable as AuthorizableContract;
  * @method static \Illuminate\Database\Query\Builder|\Rinvex\Fort\Models\User wherePhone($value)
  * @method static \Illuminate\Database\Query\Builder|\Rinvex\Fort\Models\User wherePhoneVerified($value)
  * @method static \Illuminate\Database\Query\Builder|\Rinvex\Fort\Models\User wherePhoneVerifiedAt($value)
- * @method static \Illuminate\Database\Query\Builder|\Rinvex\Fort\Models\User wherePrefix($value)
+ * @method static \Illuminate\Database\Query\Builder|\Rinvex\Fort\Models\User whereNamePrefix($value)
+ * @method static \Illuminate\Database\Query\Builder|\Rinvex\Fort\Models\User whereNameSuffix($value)
  * @method static \Illuminate\Database\Query\Builder|\Rinvex\Fort\Models\User whereRememberToken($value)
- * @method static \Illuminate\Database\Query\Builder|\Rinvex\Fort\Models\User whereSuffix($value)
  * @method static \Illuminate\Database\Query\Builder|\Rinvex\Fort\Models\User whereTwoFactor($value)
  * @method static \Illuminate\Database\Query\Builder|\Rinvex\Fort\Models\User whereUpdatedAt($value)
  * @method static \Illuminate\Database\Query\Builder|\Rinvex\Fort\Models\User whereUsername($value)
@@ -128,11 +128,11 @@ class User extends Model implements AuthenticatableContract, AuthenticatableTwoF
         'phone',
         'phone_verified',
         'phone_verified_at',
-        'prefix',
+        'name_prefix',
         'first_name',
         'middle_name',
         'last_name',
-        'suffix',
+        'name_suffix',
         'job_title',
         'country_code',
         'language_code',
@@ -267,7 +267,7 @@ class User extends Model implements AuthenticatableContract, AuthenticatableTwoF
      */
     public function getNameAttribute()
     {
-        $segments = [$this->prefix, $this->first_name, $this->middle_name, $this->last_name, $this->suffix];
+        $segments = [$this->name_prefix, $this->first_name, $this->middle_name, $this->last_name, $this->name_suffix];
 
         return trim(implode(' ', $segments));
     }

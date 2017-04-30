@@ -69,15 +69,15 @@
 
 
                             <div class="row">
-                                <div class="form-group{{ $errors->has('prefix') ? ' has-error' : '' }}">
-                                    {{ Form::label('prefix', trans('common.prefix'), ['class' => 'col-md-3 control-label']) }}
+                                <div class="form-group{{ $errors->has('name_prefix') ? ' has-error' : '' }}">
+                                    {{ Form::label('name_prefix', trans('common.name_prefix'), ['class' => 'col-md-3 control-label']) }}
 
                                     <div class="col-md-8">
-                                        {{ Form::text('prefix', null, ['class' => 'form-control', 'placeholder' => $currentUser->prefix ?: trans('common.prefix')]) }}
+                                        {{ Form::text('name_prefix', null, ['class' => 'form-control', 'placeholder' => $currentUser->name_prefix ?: trans('common.name_prefix')]) }}
 
-                                        @if ($errors->has('prefix'))
+                                        @if ($errors->has('name_prefix'))
                                             <span class="help-block">
-                                                <strong>{{ $errors->first('prefix') }}</strong>
+                                                <strong>{{ $errors->first('name_prefix') }}</strong>
                                             </span>
                                         @endif
                                     </div>
@@ -133,15 +133,15 @@
                             </div>
 
                             <div class="row">
-                                <div class="form-group{{ $errors->has('suffix') ? ' has-error' : '' }}">
-                                    {{ Form::label('suffix', trans('common.suffix'), ['class' => 'col-md-3 control-label']) }}
+                                <div class="form-group{{ $errors->has('name_suffix') ? ' has-error' : '' }}">
+                                    {{ Form::label('name_suffix', trans('common.name_suffix'), ['class' => 'col-md-3 control-label']) }}
 
                                     <div class="col-md-8">
-                                        {{ Form::text('suffix', null, ['class' => 'form-control', 'placeholder' => $currentUser->suffix ?: trans('common.suffix')]) }}
+                                        {{ Form::text('name_suffix', null, ['class' => 'form-control', 'placeholder' => $currentUser->name_suffix ?: trans('common.name_suffix')]) }}
 
-                                        @if ($errors->has('suffix'))
+                                        @if ($errors->has('name_suffix'))
                                             <span class="help-block">
-                                                <strong>{{ $errors->first('suffix') }}</strong>
+                                                <strong>{{ $errors->first('name_suffix') }}</strong>
                                             </span>
                                         @endif
                                     </div>
