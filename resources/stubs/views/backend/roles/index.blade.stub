@@ -3,7 +3,7 @@
 
 {{-- Page Title --}}
 @section('title')
-    {{ config('app.name') }} » {{ trans('common.roles.label') }}
+    {{ config('app.name') }} » {{ trans('common.backend') }} » {{ trans('common.roles') }}
 @stop
 
 {{-- Main Content --}}
@@ -27,7 +27,7 @@
             {{-- Heading --}}
             <header class="panel-heading">
                 <h4>
-                    {{ trans('common.roles.label') }}
+                    {{ trans('common.roles') }}
                     @can('create-roles')
                         <span class="pull-right" style="margin-top: -7px">
                             <a href="{{ route('backend.roles.create') }}" class="btn btn-default"><i class="fa fa-plus"></i></a>

@@ -3,7 +3,7 @@
 
 {{-- Page Title --}}
 @section('title')
-    {{ config('app.name') }} » {{ trans('common.abilities.label') }} » {{ $ability->exists ? $ability->name : trans('common.abilities.create') }}
+    {{ config('app.name') }} » {{ trans('common.backend') }} » {{ trans('common.abilities') }} » {{ $ability->exists ? $ability->name : trans('common.create_ability') }}
 @stop
 
 {{-- Main Content --}}
@@ -35,7 +35,7 @@
                 {{-- Heading --}}
                 <header class="panel-heading">
                     <h4>
-                        <a href="{{ route('backend.abilities.index') }}">{{ trans('common.abilities.label') }}</a> » {{ $ability->exists ? $ability->name : trans('common.abilities.create') }}
+                        <a href="{{ route('backend.abilities.index') }}">{{ trans('common.abilities') }}</a> » {{ $ability->exists ? $ability->name : trans('common.create_ability') }}
                         @if($ability->exists)
                             <span class="pull-right" style="margin-top: -7px">
                                 @can('delete-abilities', $ability) <a href="#" class="btn btn-default" data-toggle="modal" data-target="#delete-confirmation" data-item-href="{{ route('backend.abilities.delete', ['ability' => $ability]) }}" data-item-name="{{ $ability->slug }}"><i class="fa fa-trash-o text-danger"></i></a> @endcan

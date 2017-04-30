@@ -3,7 +3,7 @@
 
 {{-- Page Title --}}
 @section('title')
-    {{ config('app.name') }} » {{ trans('common.users.label') }} » {{ $user->exists ? $user->name : trans('common.users.create') }}
+    {{ config('app.name') }} » {{ trans('common.backend') }} » {{ trans('common.users') }} » {{ $user->exists ? $user->name : trans('common.create_user') }}
 @stop
 
 {{-- Main Content --}}
@@ -35,7 +35,7 @@
                 {{-- Heading --}}
                 <header class="panel-heading">
                     <h4>
-                        <a href="{{ route('backend.users.index') }}">{{ trans('common.users.label') }}</a> » {{ $user->exists ? $user->name : trans('common.users.create') }}
+                        <a href="{{ route('backend.users.index') }}">{{ trans('common.users') }}</a> » {{ $user->exists ? $user->name : trans('common.create_user') }}
                         @if($user->exists)
                             <span class="pull-right" style="margin-top: -7px">
                                 @can('delete-users', $user) <a href="#" class="btn btn-default" data-toggle="modal" data-target="#delete-confirmation" data-item-href="{{ route('backend.users.delete', ['user' => $user]) }}" data-item-name="{{ $user->username }}"><i class="fa fa-trash-o text-danger"></i></a> @endcan
@@ -298,7 +298,7 @@
 
                                 {{-- Roles --}}
                                 <div class="form-group{{ $errors->has('roles') ? ' has-error' : '' }}">
-                                    {{ Form::label('roleList[]', trans('common.roles.label'), ['class' => 'control-label']) }}
+                                    {{ Form::label('roleList[]', trans('common.roles'), ['class' => 'control-label']) }}
                                     {{ Form::select('roleList[]', $roleList, null, ['class' => 'form-control', 'placeholder' => trans('common.select'), 'multiple' => 'multiple', 'size' => 4]) }}
 
                                     @if ($errors->has('roles'))
@@ -472,7 +472,7 @@
 
                                 {{-- Abilities --}}
                                 <div class="form-group{{ $errors->has('abilityList[]') ? ' has-error' : '' }}">
-                                    {{ Form::label('abilityList[]', trans('common.abilities.label'), ['class' => 'control-label']) }}
+                                    {{ Form::label('abilityList[]', trans('common.abilities'), ['class' => 'control-label']) }}
                                     {{ Form::select('abilityList[]', $abilityList, null, ['class' => 'form-control', 'placeholder' => trans('common.select'), 'multiple' => 'multiple', 'size' => 4]) }}
 
                                     @if ($errors->has('abilities'))

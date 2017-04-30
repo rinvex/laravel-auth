@@ -3,7 +3,7 @@
 
 {{-- Page Title --}}
 @section('title')
-    {{ config('app.name') }} » {{ trans('common.roles.label') }} » {{ $role->exists ? $role->name : trans('common.roles.create') }}
+    {{ config('app.name') }} » {{ trans('common.backend') }} » {{ trans('common.roles') }} » {{ $role->exists ? $role->name : trans('common.create_role') }}
 @stop
 
 {{-- Main Content --}}
@@ -35,7 +35,7 @@
                 {{-- Heading --}}
                 <header class="panel-heading">
                     <h4>
-                        <a href="{{ route('backend.roles.index') }}">{{ trans('common.roles.label') }}</a> » {{ $role->exists ? $role->name : trans('common.roles.create') }}
+                        <a href="{{ route('backend.roles.index') }}">{{ trans('common.roles') }}</a> » {{ $role->exists ? $role->name : trans('common.create_role') }}
                         @if($role->exists)
                             <span class="pull-right" style="margin-top: -7px">
                                 @can('delete-roles', $role) <a href="#" class="btn btn-default" data-toggle="modal" data-target="#delete-confirmation" data-item-href="{{ route('backend.roles.delete', ['role' => $role]) }}" data-item-name="{{ $role->slug }}"><i class="fa fa-trash-o text-danger"></i></a> @endcan
@@ -102,7 +102,7 @@
 
                             {{-- Abilities --}}
                             <div class="form-group{{ $errors->has('abilities') ? ' has-error' : '' }}">
-                                {{ Form::label('abilityList[]', trans('common.abilities.label'), ['class' => 'control-label']) }}
+                                {{ Form::label('abilityList[]', trans('common.abilities'), ['class' => 'control-label']) }}
                                 {{ Form::select('abilityList[]', $abilityList, null, ['class' => 'form-control', 'multiple' => 'multiple', 'size' => 4]) }}
 
                                 @if ($errors->has('abilities'))

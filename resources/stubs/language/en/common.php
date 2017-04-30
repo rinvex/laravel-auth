@@ -76,6 +76,7 @@ return [
     'verification_phone_request' => 'Request Phone Verification',
     'verify_phone' => 'Verify Phone',
     'dashboard' => 'Dashboard',
+    'backend' => 'Backend',
     'account' => 'Account',
     'settings' => 'Settings',
     'sessions' => 'Sessions',
@@ -100,21 +101,15 @@ return [
     'forgot_password' => 'I forgot my password',
 
     // Abilities Phrases
-    'abilities' => [
-        'label' => 'Abilities',
-        'create' => 'Create New Ability',
-    ],
-
-    // Users Phrases
-    'users' => [
-        'label' => 'Users',
-        'create' => 'Create New User',
-    ],
+    'abilities' => 'Abilities',
+    'create_ability' => 'Create New Ability',
 
     // Roles Phrases
-    'roles' => [
-        'label' => 'Roles',
-        'create' => 'Create New Role',
-    ],
+    'roles' => 'Roles',
+    'create_role' => 'Create New Role',
+
+    // Users Phrases
+    'users' => 'Users',
+    'create_user' => 'Create New User',
 
 ];

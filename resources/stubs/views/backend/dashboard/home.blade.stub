@@ -3,7 +3,7 @@
 
 {{-- Page Title --}}
 @section('title')
-    {{ config('app.name') }} » {{ trans('common.dashboard') }}
+    {{ config('app.name') }} » {{ trans('common.backend') }}
 @stop
 
 {{-- Main Content --}}
