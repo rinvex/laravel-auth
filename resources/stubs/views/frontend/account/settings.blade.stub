@@ -155,7 +155,7 @@
                                     {{ Form::label('gender', trans('common.gender'), ['class' => 'col-md-3 control-label']) }}
 
                                     <div class="col-md-8">
-                                        {{ Form::select('gender', ['male' => trans('common.male'), 'female' => trans('common.female')], null, ['class' => 'form-control']) }}
+                                        {{ Form::select('gender', ['male' => trans('common.male'), 'female' => trans('common.female')], null, ['class' => 'form-control', 'placeholder' => trans('common.select')]) }}
 
                                         @if ($errors->has('gender'))
                                             <span class="help-block">
