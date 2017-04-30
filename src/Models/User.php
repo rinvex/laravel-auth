@@ -42,6 +42,7 @@ use Illuminate\Contracts\Auth\Access\Authorizable as AuthorizableContract;
  * @property string                                                                                                         $suffix
  * @property string                                                                                                         $job_title
  * @property string                                                                                                         $country_code
+ * @property string                                                                                                         $language_code
  * @property array                                                                                                          $two_factor
  * @property \Carbon\Carbon                                                                                                 $birthdate
  * @property string                                                                                                         $gender
@@ -50,7 +51,6 @@ use Illuminate\Contracts\Auth\Access\Authorizable as AuthorizableContract;
  * @property \Carbon\Carbon                                                                                                 $created_at
  * @property \Carbon\Carbon                                                                                                 $updated_at
  * @property \Carbon\Carbon                                                                                                 $deleted_at
- * @property string                                                                                                         $language_code
  * @property-read \Illuminate\Database\Eloquent\Collection|\Rinvex\Fort\Models\Ability[]                                    $abilities
  * @property-read array                                                                                                     $ability_list
  * @property-read \Illuminate\Support\Collection                                                                            $all_abilities
@@ -66,6 +66,7 @@ use Illuminate\Contracts\Auth\Access\Authorizable as AuthorizableContract;
  * @method static \Illuminate\Database\Query\Builder|\Rinvex\Fort\Models\User whereActive($value)
  * @method static \Illuminate\Database\Query\Builder|\Rinvex\Fort\Models\User whereBirthdate($value)
  * @method static \Illuminate\Database\Query\Builder|\Rinvex\Fort\Models\User whereCountryCode($value)
+ * @method static \Illuminate\Database\Query\Builder|\Rinvex\Fort\Models\User whereLanguageCode($value)
  * @method static \Illuminate\Database\Query\Builder|\Rinvex\Fort\Models\User whereCreatedAt($value)
  * @method static \Illuminate\Database\Query\Builder|\Rinvex\Fort\Models\User whereDeletedAt($value)
  * @method static \Illuminate\Database\Query\Builder|\Rinvex\Fort\Models\User whereEmail($value)
@@ -75,7 +76,6 @@ use Illuminate\Contracts\Auth\Access\Authorizable as AuthorizableContract;
  * @method static \Illuminate\Database\Query\Builder|\Rinvex\Fort\Models\User whereGender($value)
  * @method static \Illuminate\Database\Query\Builder|\Rinvex\Fort\Models\User whereId($value)
  * @method static \Illuminate\Database\Query\Builder|\Rinvex\Fort\Models\User whereJobTitle($value)
- * @method static \Illuminate\Database\Query\Builder|\Rinvex\Fort\Models\User whereLanguageCode($value)
  * @method static \Illuminate\Database\Query\Builder|\Rinvex\Fort\Models\User whereLastName($value)
  * @method static \Illuminate\Database\Query\Builder|\Rinvex\Fort\Models\User whereLoginAt($value)
  * @method static \Illuminate\Database\Query\Builder|\Rinvex\Fort\Models\User whereMiddleName($value)
