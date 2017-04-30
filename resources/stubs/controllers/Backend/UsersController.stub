@@ -117,6 +117,16 @@ class UsersController extends AuthorizedController
             unset($input['password']);
         }
 
+        // Update email verification date
+        if ($user->email_verified && ! $user->email_verified_at) {
+            $input['email_verified_at'] = Carbon::now();
+        }
+
+        // Update phone verification date
+        if ($user->phone_verified && ! $user->phone_verified_at) {
+            $input['phone_verified_at'] = Carbon::now();
+        }
+
         // Save user
         $user->fill($input)->save();
 
