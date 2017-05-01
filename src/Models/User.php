@@ -44,8 +44,14 @@ use Illuminate\Contracts\Auth\Access\Authorizable as AuthorizableContract;
  * @property string                                                                                                         $country_code
  * @property string                                                                                                         $language_code
  * @property array                                                                                                          $two_factor
- * @property \Carbon\Carbon                                                                                                 $birthdate
+ * @property \Carbon\Carbon                                                                                                 $birthday
  * @property string                                                                                                         $gender
+ * @property string                                                                                                         $website
+ * @property string                                                                                                         $twitter
+ * @property string                                                                                                         $facebook
+ * @property string                                                                                                         $linkedin
+ * @property string                                                                                                         $google_plus
+ * @property string                                                                                                         $skype
  * @property bool                                                                                                           $active
  * @property \Carbon\Carbon                                                                                                 $login_at
  * @property \Carbon\Carbon                                                                                                 $created_at
@@ -65,31 +71,37 @@ use Illuminate\Contracts\Auth\Access\Authorizable as AuthorizableContract;
  *
  * @method static \Illuminate\Database\Query\Builder|\Rinvex\Fort\Models\User role($roles)
  * @method static \Illuminate\Database\Query\Builder|\Rinvex\Fort\Models\User whereActive($value)
- * @method static \Illuminate\Database\Query\Builder|\Rinvex\Fort\Models\User whereBirthdate($value)
+ * @method static \Illuminate\Database\Query\Builder|\Rinvex\Fort\Models\User whereBirthday($value)
  * @method static \Illuminate\Database\Query\Builder|\Rinvex\Fort\Models\User whereCountryCode($value)
- * @method static \Illuminate\Database\Query\Builder|\Rinvex\Fort\Models\User whereLanguageCode($value)
  * @method static \Illuminate\Database\Query\Builder|\Rinvex\Fort\Models\User whereCreatedAt($value)
  * @method static \Illuminate\Database\Query\Builder|\Rinvex\Fort\Models\User whereDeletedAt($value)
  * @method static \Illuminate\Database\Query\Builder|\Rinvex\Fort\Models\User whereEmail($value)
  * @method static \Illuminate\Database\Query\Builder|\Rinvex\Fort\Models\User whereEmailVerified($value)
  * @method static \Illuminate\Database\Query\Builder|\Rinvex\Fort\Models\User whereEmailVerifiedAt($value)
+ * @method static \Illuminate\Database\Query\Builder|\Rinvex\Fort\Models\User whereFacebook($value)
  * @method static \Illuminate\Database\Query\Builder|\Rinvex\Fort\Models\User whereFirstName($value)
  * @method static \Illuminate\Database\Query\Builder|\Rinvex\Fort\Models\User whereGender($value)
+ * @method static \Illuminate\Database\Query\Builder|\Rinvex\Fort\Models\User whereGooglePlus($value)
  * @method static \Illuminate\Database\Query\Builder|\Rinvex\Fort\Models\User whereId($value)
  * @method static \Illuminate\Database\Query\Builder|\Rinvex\Fort\Models\User whereJobTitle($value)
+ * @method static \Illuminate\Database\Query\Builder|\Rinvex\Fort\Models\User whereLanguageCode($value)
  * @method static \Illuminate\Database\Query\Builder|\Rinvex\Fort\Models\User whereLastName($value)
+ * @method static \Illuminate\Database\Query\Builder|\Rinvex\Fort\Models\User whereLinkedin($value)
  * @method static \Illuminate\Database\Query\Builder|\Rinvex\Fort\Models\User whereLoginAt($value)
  * @method static \Illuminate\Database\Query\Builder|\Rinvex\Fort\Models\User whereMiddleName($value)
+ * @method static \Illuminate\Database\Query\Builder|\Rinvex\Fort\Models\User whereNamePrefix($value)
+ * @method static \Illuminate\Database\Query\Builder|\Rinvex\Fort\Models\User whereNameSuffix($value)
  * @method static \Illuminate\Database\Query\Builder|\Rinvex\Fort\Models\User wherePassword($value)
  * @method static \Illuminate\Database\Query\Builder|\Rinvex\Fort\Models\User wherePhone($value)
  * @method static \Illuminate\Database\Query\Builder|\Rinvex\Fort\Models\User wherePhoneVerified($value)
  * @method static \Illuminate\Database\Query\Builder|\Rinvex\Fort\Models\User wherePhoneVerifiedAt($value)
- * @method static \Illuminate\Database\Query\Builder|\Rinvex\Fort\Models\User whereNamePrefix($value)
- * @method static \Illuminate\Database\Query\Builder|\Rinvex\Fort\Models\User whereNameSuffix($value)
  * @method static \Illuminate\Database\Query\Builder|\Rinvex\Fort\Models\User whereRememberToken($value)
+ * @method static \Illuminate\Database\Query\Builder|\Rinvex\Fort\Models\User whereSkype($value)
+ * @method static \Illuminate\Database\Query\Builder|\Rinvex\Fort\Models\User whereTwitter($value)
  * @method static \Illuminate\Database\Query\Builder|\Rinvex\Fort\Models\User whereTwoFactor($value)
  * @method static \Illuminate\Database\Query\Builder|\Rinvex\Fort\Models\User whereUpdatedAt($value)
  * @method static \Illuminate\Database\Query\Builder|\Rinvex\Fort\Models\User whereUsername($value)
+ * @method static \Illuminate\Database\Query\Builder|\Rinvex\Fort\Models\User whereWebsite($value)
  * @mixin \Eloquent
  */
 class User extends Model implements AuthenticatableContract, AuthenticatableTwoFactorContract, AuthorizableContract, CanResetPasswordContract, CanVerifyEmailContract, CanVerifyPhoneContract
