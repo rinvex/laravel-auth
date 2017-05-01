@@ -23,7 +23,7 @@ use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 use Illuminate\Contracts\Auth\Access\Authorizable as AuthorizableContract;
 
 /**
- * Rinvex\Fort\Models\User
+ * Rinvex\Fort\Models\User.
  *
  * @property int                                                                                                            $id
  * @property string                                                                                                         $username
@@ -62,6 +62,7 @@ use Illuminate\Contracts\Auth\Access\Authorizable as AuthorizableContract;
  * @property-read \Illuminate\Database\Eloquent\Collection|\Rinvex\Fort\Models\Persistence[]                                $persistences
  * @property-read \Illuminate\Database\Eloquent\Collection|\Rinvex\Fort\Models\Role[]                                       $roles
  * @property-read \Illuminate\Database\Eloquent\Collection|\Rinvex\Fort\Models\Socialite[]                                  $socialites
+ *
  * @method static \Illuminate\Database\Query\Builder|\Rinvex\Fort\Models\User role($roles)
  * @method static \Illuminate\Database\Query\Builder|\Rinvex\Fort\Models\User whereActive($value)
  * @method static \Illuminate\Database\Query\Builder|\Rinvex\Fort\Models\User whereBirthdate($value)
