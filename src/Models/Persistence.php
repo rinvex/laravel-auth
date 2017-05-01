@@ -7,7 +7,7 @@ namespace Rinvex\Fort\Models;
 use Illuminate\Database\Eloquent\Model;
 
 /**
- * Rinvex\Fort\Models\Persistence
+ * Rinvex\Fort\Models\Persistence.
  *
  * @property string                        $token
  * @property int                           $user_id
@@ -17,6 +17,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property \Carbon\Carbon                $created_at
  * @property \Carbon\Carbon                $updated_at
  * @property-read \Rinvex\Fort\Models\User $user
+ *
  * @method static \Illuminate\Database\Query\Builder|\Rinvex\Fort\Models\Persistence whereAgent($value)
  * @method static \Illuminate\Database\Query\Builder|\Rinvex\Fort\Models\Persistence whereAttempt($value)
  * @method static \Illuminate\Database\Query\Builder|\Rinvex\Fort\Models\Persistence whereCreatedAt($value)
