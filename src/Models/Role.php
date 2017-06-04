@@ -96,7 +96,8 @@ class Role extends Model
     protected $rules = [];
 
     /**
-     * Whether the model should throw a ValidationException if it fails validation.
+     * Whether the model should throw a
+     * ValidationException if it fails validation.
      *
      * @var bool
      */
