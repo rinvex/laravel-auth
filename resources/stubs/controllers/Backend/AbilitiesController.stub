@@ -83,7 +83,9 @@ class AbilitiesController extends AuthorizedController
      */
     public function form(Ability $ability)
     {
-        return view('backend.abilities.form', compact('ability', 'resources'));
+        $roleList = Role::all()->pluck('name', 'id');
+
+        return view('backend.abilities.form', compact('ability', 'roleList'));
     }
 
     /**
