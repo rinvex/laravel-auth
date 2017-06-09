@@ -21,6 +21,7 @@ use Spatie\Translatable\HasTranslations;
  * @property \Carbon\Carbon                                                           $created_at
  * @property \Carbon\Carbon                                                           $updated_at
  * @property \Carbon\Carbon                                                           $deleted_at
+ * @property-read array                                                               $role_list
  * @property-read string                                                              $slug
  * @property-read \Illuminate\Database\Eloquent\Collection|\Rinvex\Fort\Models\Role[] $roles
  * @property-read \Illuminate\Database\Eloquent\Collection|\Rinvex\Fort\Models\User[] $users
@@ -216,6 +217,16 @@ class Ability extends Model
 
         return $this->belongsToMany($userModel, config('rinvex.fort.tables.ability_user'), 'ability_id', 'user_id')
                     ->withTimestamps();
+    }
+
+    /**
+     * Get the list of role Ids.
+     *
+     * @return array
+     */
+    public function getRoleListAttribute()
+    {
+        return $this->roles->pluck('id')->toArray();
     }
 
     /**
