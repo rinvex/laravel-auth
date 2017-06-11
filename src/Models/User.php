@@ -159,6 +159,7 @@ class User extends Model implements AuthenticatableContract, AuthenticatableTwoF
         'gender',
         'active',
         'login_at',
+        'roles',
     ];
 
     /**
@@ -395,5 +396,21 @@ class User extends Model implements AuthenticatableContract, AuthenticatableTwoF
     public function getLanguageAttribute()
     {
         return language($this->language_code);
+    }
+
+    /**
+     * Attach the user roles.
+     *
+     * @param array $roles
+     *
+     * @return void
+     */
+    public function setRolesAttribute(array $roles)
+    {
+        static::saved(function (self $model) use ($roles) {
+            foreach (Role::whereIn('slug', $roles)->get() as $role) {
+                $model->roles()->attach($role);
+            }
+        });
     }
 }
