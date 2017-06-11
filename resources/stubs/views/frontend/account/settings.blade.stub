@@ -68,6 +68,100 @@
                             <hr />
 
 
+                            <div class="form-group has-feedback{{ $errors->has('twitter') ? ' has-error' : '' }}">
+                                {{ Form::label('twitter', trans('cortex/fort::common.twitter'), ['class' => 'col-md-2 control-label']) }}
+
+                                <div class="col-md-8">
+                                    {{ Form::text('twitter', null, ['class' => 'form-control', 'placeholder' => trans('cortex/fort::common.twitter')]) }}
+                                    <span class="fa fa-twitter form-control-feedback"></span>
+
+                                    @if ($errors->has('twitter'))
+                                        <span class="help-block">
+                                            <strong>{{ $errors->first('twitter') }}</strong>
+                                        </span>
+                                    @endif
+                                </div>
+                            </div>
+
+                            <div class="form-group has-feedback{{ $errors->has('facebook') ? ' has-error' : '' }}">
+                                {{ Form::label('facebook', trans('cortex/fort::common.facebook'), ['class' => 'col-md-2 control-label']) }}
+
+                                <div class="col-md-8">
+                                    {{ Form::text('facebook', null, ['class' => 'form-control', 'placeholder' => trans('cortex/fort::common.facebook')]) }}
+                                    <span class="fa fa-facebook form-control-feedback"></span>
+
+                                    @if ($errors->has('facebook'))
+                                        <span class="help-block">
+                                            <strong>{{ $errors->first('facebook') }}</strong>
+                                        </span>
+                                    @endif
+                                </div>
+                            </div>
+
+                            <div class="form-group has-feedback{{ $errors->has('linkedin') ? ' has-error' : '' }}">
+                                {{ Form::label('linkedin', trans('cortex/fort::common.linkedin'), ['class' => 'col-md-2 control-label']) }}
+
+                                <div class="col-md-8">
+                                    {{ Form::text('linkedin', null, ['class' => 'form-control', 'placeholder' => trans('cortex/fort::common.linkedin')]) }}
+                                    <span class="fa fa-linkedin form-control-feedback"></span>
+
+                                    @if ($errors->has('linkedin'))
+                                        <span class="help-block">
+                                            <strong>{{ $errors->first('linkedin') }}</strong>
+                                        </span>
+                                    @endif
+                                </div>
+                            </div>
+
+                            <div class="form-group has-feedback{{ $errors->has('google_plus') ? ' has-error' : '' }}">
+                                {{ Form::label('google_plus', trans('cortex/fort::common.google_plus'), ['class' => 'col-md-2 control-label']) }}
+
+                                <div class="col-md-8">
+                                    {{ Form::text('google_plus', null, ['class' => 'form-control', 'placeholder' => trans('cortex/fort::common.google_plus')]) }}
+                                    <span class="fa fa-google-plus form-control-feedback"></span>
+
+                                    @if ($errors->has('google_plus'))
+                                        <span class="help-block">
+                                            <strong>{{ $errors->first('google_plus') }}</strong>
+                                        </span>
+                                    @endif
+                                </div>
+                            </div>
+
+                            <div class="form-group has-feedback{{ $errors->has('skype') ? ' has-error' : '' }}">
+                                {{ Form::label('skype', trans('cortex/fort::common.skype'), ['class' => 'col-md-2 control-label']) }}
+
+                                <div class="col-md-8">
+                                    {{ Form::text('skype', null, ['class' => 'form-control', 'placeholder' => trans('cortex/fort::common.skype')]) }}
+                                    <span class="fa fa-skype form-control-feedback"></span>
+
+                                    @if ($errors->has('skype'))
+                                        <span class="help-block">
+                                            <strong>{{ $errors->first('skype') }}</strong>
+                                        </span>
+                                    @endif
+                                </div>
+                            </div>
+
+                            <div class="form-group has-feedback{{ $errors->has('website') ? ' has-error' : '' }}">
+                                {{ Form::label('website', trans('cortex/fort::common.website'), ['class' => 'col-md-2 control-label']) }}
+
+                                <div class="col-md-8">
+                                    {{ Form::text('website', null, ['class' => 'form-control', 'placeholder' => trans('cortex/fort::common.website')]) }}
+                                    <span class="fa fa-globe form-control-feedback"></span>
+
+                                    @if ($errors->has('website'))
+                                        <span class="help-block">
+                                            <strong>{{ $errors->first('website') }}</strong>
+                                        </span>
+                                    @endif
+                                </div>
+                            </div>
+
+
+                            <hr />
+
+
                             <div class="row">
                                 <div class="form-group{{ $errors->has('name_prefix') ? ' has-error' : '' }}">
                                     {{ Form::label('name_prefix', trans('common.name_prefix'), ['class' => 'col-md-3 control-label']) }}
