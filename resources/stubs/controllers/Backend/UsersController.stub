@@ -108,36 +108,36 @@ class UsersController extends AuthorizedController
     protected function process(Request $request, User $user)
     {
         // Prepare required input fields
-        $input = $request->all();
-        $input['email_verified'] = $request->get('email_verified', false);
-        $input['phone_verified'] = $request->get('phone_verified', false);
+        $data = $request->all();
+        $data['email_verified'] = $request->get('email_verified', false);
+        $data['phone_verified'] = $request->get('phone_verified', false);
 
         // Remove empty password fields
-        if (! $input['password']) {
-            unset($input['password']);
+        if (! $data['password']) {
+            unset($data['password']);
         }
 
         // Update email verification date
         if ($user->email_verified && ! $user->email_verified_at) {
-            $input['email_verified_at'] = Carbon::now();
+            $data['email_verified_at'] = Carbon::now();
         }
 
         // Update phone verification date
         if ($user->phone_verified && ! $user->phone_verified_at) {
-            $input['phone_verified_at'] = Carbon::now();
+            $data['phone_verified_at'] = Carbon::now();
         }
 
         // Save user
-        $user->fill($input)->save();
+        $user->fill($data)->save();
 
         // Sync abilities
         if ($request->user($this->getGuard())->can('grant-abilities')) {
-            $user->abilities()->sync((array) array_pull($input, 'abilityList'));
+            $user->abilities()->sync((array) array_pull($data, 'abilityList'));
         }
 
         // Sync roles
         if ($request->user($this->getGuard())->can('assign-roles')) {
-            $user->roles()->sync((array) array_pull($input, 'roleList'));
+            $user->roles()->sync((array) array_pull($data, 'roleList'));
         }
 
         return intend([

@@ -50,13 +50,13 @@ class RegistrationController extends AbstractController
         }
 
         // Prepare registration data
-        $input = $request->only(['username', 'email', 'password', 'password_confirmation']);
+        $data = $request->only(['username', 'email', 'password', 'password_confirmation']);
         $active = ['active' => ! config('rinvex.fort.registration.moderated')];
 
         // Fire the register start event
-        event('rinvex.fort.register.start', [$input + $active]);
+        event('rinvex.fort.register.start', [$data + $active]);
 
-        $user->fill($input + $active)->save();
+        $user->fill($data + $active)->save();
 
         // Attach default role to the registered user
         if ($defaultRole = config('rinvex.fort.registration.default_role')) {
@@ -70,7 +70,7 @@ class RegistrationController extends AbstractController
 
         // Send verification if required
         if (config('rinvex.fort.emailverification.required')) {
-            app('rinvex.fort.emailverification')->broker()->sendVerificationLink(['email' => $input['email']]);
+            app('rinvex.fort.emailverification')->broker()->sendVerificationLink(['email' => $data['email']]);
 
             // Registration completed, verification required
             return intend([

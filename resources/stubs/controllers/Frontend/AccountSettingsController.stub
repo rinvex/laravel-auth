@@ -39,16 +39,16 @@ class AccountSettingsController extends AuthenticatedController
      */
     public function update(AccountSettingsRequest $request)
     {
-        $input = $request->all();
+        $data = $request->all();
         $currentUser = $request->user($this->getGuard());
 
         // Update profile
-        $currentUser->fill($input)->save();
+        $currentUser->fill($data)->save();
 
         return intend([
             'back' => true,
-            'with' => ['success' => trans('cortex/fort::messages.account.'.(isset($input['email_verified']) ? 'reverify' : 'updated'))]
-                      + (isset($input['two_factor']) ? ['warning' => trans('cortex/fort::messages.verification.twofactor.phone.auto_disabled')] : []),
+            'with' => ['success' => trans('cortex/fort::messages.account.'.(isset($data['email_verified']) ? 'reverify' : 'updated'))]
+                      + (isset($data['two_factor']) ? ['warning' => trans('cortex/fort::messages.verification.twofactor.phone.auto_disabled')] : []),
         ]);
     }
 }

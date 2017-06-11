@@ -99,10 +99,10 @@ class AbilitiesController extends AuthorizedController
     protected function process(Request $request, Ability $ability)
     {
         // Prepare required input fields
-        $input = $request->all();
+        $data = $request->all();
 
         // Verify valid policy
-        if (! empty($input['policy']) && (($class = mb_strstr($input['policy'], '@', true)) === false || ! method_exists($class, str_replace('@', '', mb_strstr($input['policy'], '@'))))) {
+        if (! empty($data['policy']) && (($class = mb_strstr($data['policy'], '@', true)) === false || ! method_exists($class, str_replace('@', '', mb_strstr($data['policy'], '@'))))) {
             return intend([
                 'back' => true,
                 'withInput' => $request->all(),
@@ -111,7 +111,7 @@ class AbilitiesController extends AuthorizedController
         }
 
         // Save ability
-        $ability->fill($input)->save();
+        $ability->fill($data)->save();
 
         return intend([
             'url' => route('backend.abilities.index'),

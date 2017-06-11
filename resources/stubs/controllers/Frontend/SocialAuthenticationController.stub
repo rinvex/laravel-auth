@@ -48,7 +48,7 @@ class SocialAuthenticationController extends AuthenticationController
 
         if (! $result) {
             // Prepare registration data
-            $input = [
+            $data = [
                 'email' => $githubUser->email,
                 'username' => $githubUser->username,
                 'password' => str_random(),
@@ -56,10 +56,10 @@ class SocialAuthenticationController extends AuthenticationController
             ];
 
             // Fire the register start event
-            event('rinvex.fort.register.social.start', [$input]);
+            event('rinvex.fort.register.social.start', [$data]);
 
             // Create user
-            $result = $user->create($input);
+            $result = $user->create($data);
 
             // Attach default role to the registered user
             if ($defaultRole = config('rinvex.fort.registration.default_role')) {
