@@ -6,6 +6,7 @@ namespace {{namespace}}Http\Controllers\Frontend;
 
 use Illuminate\Http\Request;
 use {{namespace}}Http\Controllers\AuthenticatedController;
+use {{namespace}}Http\Requests\Frontend\AccountSettingsRequest;
 
 class AccountSettingsController extends AuthenticatedController
 {
@@ -32,59 +33,22 @@ class AccountSettingsController extends AuthenticatedController
     /**
      * Process the account update form.
      *
-     * @param \Illuminate\Http\Request $request
+     * @param \Cortex\Fort\Http\Requests\Frontend\AccountSettingsRequest $request
      *
      * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse
      */
-    public function update(Request $request)
+    public function update(AccountSettingsRequest $request)
     {
         $input = $request->all();
         $currentUser = $request->user($this->getGuard());
-        $twoFactor = $currentUser->getTwoFactor();
 
-        if ($input['password'] && $input['password'] !== $input['password_confirmation']) {
-            return intend([
-                'back' => true,
-                'withInput' => $request->all(),
-                'withErrors' => ['password' => trans('validation.confirmed', ['attribute' => 'password'])],
-            ]);
-        }
-
-        if ($input['password'] && mb_strlen($input['password']) < config('rinvex.fort.password_min_chars')) {
-            return intend([
-                'back' => true,
-                'withInput' => $request->all(),
-                'withErrors' => ['password' => trans('validation.min.string', ['attribute' => 'password', 'min' => config('rinvex.fort.password_min_chars')])],
-            ]);
-        }
-
-        if (! $input['password']) {
-            unset($input['password'], $input['password_confirmation']);
-        }
-
-        $emailVerification = array_get($input, 'email') !== $currentUser->email ? [
-            'email_verified' => false,
-            'email_verified_at' => null,
-        ] : [];
-
-        $phoneVerification = array_get($input, 'phone') !== $currentUser->phone ? [
-            'phone_verified' => false,
-            'phone_verified_at' => null,
-        ] : [];
-
-        $countryVerification = array_get($input, 'country_code') !== $currentUser->country_code;
-
-        if ($twoFactor && ($phoneVerification || $countryVerification)) {
-            array_set($twoFactor, 'phone.enabled', false);
-        }
-
-        $currentUser->fill($input + $emailVerification + $phoneVerification + ['two_factor' => $twoFactor])->save();
+        // Update profile
+        $currentUser->fill($input)->save();
 
         return intend([
             'back' => true,
-            'with' => [
-                          'success' => trans('messages.account.'.(! empty($emailVerification) ? 'reverify' : 'updated')),
-                      ] + ($twoFactor !== $currentUser->getTwoFactor() ? ['warning' => trans('messages.verification.twofactor.phone.auto_disabled')] : []),
+            'with' => ['success' => trans('cortex/fort::messages.account.'.(isset($input['email_verified']) ? 'reverify' : 'updated'))]
+                      + (isset($input['two_factor']) ? ['warning' => trans('cortex/fort::messages.verification.twofactor.phone.auto_disabled')] : []),
         ]);
     }
 }
