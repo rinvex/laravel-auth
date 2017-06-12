@@ -65,10 +65,10 @@
 
 
                             <div class="form-group has-feedback{{ $errors->has('twitter') ? ' has-error' : '' }}">
-                                {{ Form::label('twitter', trans('cortex/fort::common.twitter'), ['class' => 'col-md-2 control-label']) }}
+                                {{ Form::label('twitter', trans('common.twitter'), ['class' => 'col-md-2 control-label']) }}
 
                                 <div class="col-md-8">
-                                    {{ Form::text('twitter', null, ['class' => 'form-control', 'placeholder' => trans('cortex/fort::common.twitter')]) }}
+                                    {{ Form::text('twitter', null, ['class' => 'form-control', 'placeholder' => trans('common.twitter')]) }}
                                     <span class="fa fa-twitter form-control-feedback"></span>
 
                                     @if ($errors->has('twitter'))
@@ -78,10 +78,10 @@
                             </div>
 
                             <div class="form-group has-feedback{{ $errors->has('facebook') ? ' has-error' : '' }}">
-                                {{ Form::label('facebook', trans('cortex/fort::common.facebook'), ['class' => 'col-md-2 control-label']) }}
+                                {{ Form::label('facebook', trans('common.facebook'), ['class' => 'col-md-2 control-label']) }}
 
                                 <div class="col-md-8">
-                                    {{ Form::text('facebook', null, ['class' => 'form-control', 'placeholder' => trans('cortex/fort::common.facebook')]) }}
+                                    {{ Form::text('facebook', null, ['class' => 'form-control', 'placeholder' => trans('common.facebook')]) }}
                                     <span class="fa fa-facebook form-control-feedback"></span>
 
                                     @if ($errors->has('facebook'))
@@ -91,10 +91,10 @@
                             </div>
 
                             <div class="form-group has-feedback{{ $errors->has('linkedin') ? ' has-error' : '' }}">
-                                {{ Form::label('linkedin', trans('cortex/fort::common.linkedin'), ['class' => 'col-md-2 control-label']) }}
+                                {{ Form::label('linkedin', trans('common.linkedin'), ['class' => 'col-md-2 control-label']) }}
 
                                 <div class="col-md-8">
-                                    {{ Form::text('linkedin', null, ['class' => 'form-control', 'placeholder' => trans('cortex/fort::common.linkedin')]) }}
+                                    {{ Form::text('linkedin', null, ['class' => 'form-control', 'placeholder' => trans('common.linkedin')]) }}
                                     <span class="fa fa-linkedin form-control-feedback"></span>
 
                                     @if ($errors->has('linkedin'))
@@ -104,10 +104,10 @@
                             </div>
 
                             <div class="form-group has-feedback{{ $errors->has('google_plus') ? ' has-error' : '' }}">
-                                {{ Form::label('google_plus', trans('cortex/fort::common.google_plus'), ['class' => 'col-md-2 control-label']) }}
+                                {{ Form::label('google_plus', trans('common.google_plus'), ['class' => 'col-md-2 control-label']) }}
 
                                 <div class="col-md-8">
-                                    {{ Form::text('google_plus', null, ['class' => 'form-control', 'placeholder' => trans('cortex/fort::common.google_plus')]) }}
+                                    {{ Form::text('google_plus', null, ['class' => 'form-control', 'placeholder' => trans('common.google_plus')]) }}
                                     <span class="fa fa-google-plus form-control-feedback"></span>
 
                                     @if ($errors->has('google_plus'))
@@ -117,10 +117,10 @@
                             </div>
 
                             <div class="form-group has-feedback{{ $errors->has('skype') ? ' has-error' : '' }}">
-                                {{ Form::label('skype', trans('cortex/fort::common.skype'), ['class' => 'col-md-2 control-label']) }}
+                                {{ Form::label('skype', trans('common.skype'), ['class' => 'col-md-2 control-label']) }}
 
                                 <div class="col-md-8">
-                                    {{ Form::text('skype', null, ['class' => 'form-control', 'placeholder' => trans('cortex/fort::common.skype')]) }}
+                                    {{ Form::text('skype', null, ['class' => 'form-control', 'placeholder' => trans('common.skype')]) }}
                                     <span class="fa fa-skype form-control-feedback"></span>
 
                                     @if ($errors->has('skype'))
@@ -130,10 +130,10 @@
                             </div>
 
                             <div class="form-group has-feedback{{ $errors->has('website') ? ' has-error' : '' }}">
-                                {{ Form::label('website', trans('cortex/fort::common.website'), ['class' => 'col-md-2 control-label']) }}
+                                {{ Form::label('website', trans('common.website'), ['class' => 'col-md-2 control-label']) }}
 
                                 <div class="col-md-8">
-                                    {{ Form::text('website', null, ['class' => 'form-control', 'placeholder' => trans('cortex/fort::common.website')]) }}
+                                    {{ Form::text('website', null, ['class' => 'form-control', 'placeholder' => trans('common.website')]) }}
                                     <span class="fa fa-globe form-control-feedback"></span>
 
                                     @if ($errors->has('website'))

@@ -47,8 +47,8 @@ class AccountSettingsController extends AuthenticatedController
 
         return intend([
             'back' => true,
-            'with' => ['success' => trans('cortex/fort::messages.account.'.(isset($data['email_verified']) ? 'reverify' : 'updated'))]
-                      + (isset($data['two_factor']) ? ['warning' => trans('cortex/fort::messages.verification.twofactor.phone.auto_disabled')] : []),
+            'with' => ['success' => trans('messages.account.'.(isset($data['email_verified']) ? 'reverify' : 'updated'))]
+                      + (isset($data['two_factor']) ? ['warning' => trans('messages.verification.twofactor.phone.auto_disabled')] : []),
         ]);
     }
 }
