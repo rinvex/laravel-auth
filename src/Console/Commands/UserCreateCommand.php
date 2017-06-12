@@ -59,8 +59,8 @@ class UserCreateCommand extends Command
         ]);
 
         $rules = [
-            'email' => 'required|email|max:255|unique:'.config('rinvex.fort.tables.users').',email',
-            'username' => 'required|max:255|unique:'.config('rinvex.fort.tables.users').',username',
+            'email' => 'required|email|max:250|unique:'.config('rinvex.fort.tables.users').',email',
+            'username' => 'required|alpha_dash|max:250|unique:'.config('rinvex.fort.tables.users').',username',
         ];
 
         $validator = app(Factory::class)->make($data, $rules);

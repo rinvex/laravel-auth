@@ -47,8 +47,8 @@ class AbilityCreateCommand extends Command
         ]);
 
         $rules = [
-            'name' => 'required|max:255',
-            'slug' => 'required|max:255|alpha_dash|unique:'.config('rinvex.fort.tables.abilities'),
+            'name' => 'required|string|max:250',
+            'slug' => 'required|alpha_dash|max:250|unique:'.config('rinvex.fort.tables.abilities'),
         ];
 
         $validator = app(Factory::class)->make($data, $rules);

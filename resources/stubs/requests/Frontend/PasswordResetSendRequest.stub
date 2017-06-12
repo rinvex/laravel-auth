@@ -26,7 +26,7 @@ class PasswordResetSendRequest extends FormRequest
     public function rules()
     {
         return [
-            'email' => 'required|email|max:255',
+            'email' => 'required|email|max:250|exists:'.config('rinvex.fort.tables.users').',email',
         ];
     }
 }

@@ -117,7 +117,7 @@ class Ability extends Model
 
         $this->setTable(config('rinvex.fort.tables.abilities'));
         $this->setRules([
-            'name' => 'required',
+            'name' => 'required|string|max:250',
             'action' => 'required|unique:'.config('rinvex.fort.tables.abilities').',action,NULL,id,resource,'.$this->resource,
             'resource' => 'required|unique:'.config('rinvex.fort.tables.abilities').',resource,NULL,id,action,'.$this->action,
         ]);

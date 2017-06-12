@@ -73,8 +73,8 @@ class UserUpdateCommand extends Command
         }
 
         $rules = [
-            'email' => 'sometimes|required|email|max:255|unique:'.config('rinvex.fort.tables.users').',email',
-            'username' => 'sometimes|required|max:255|unique:'.config('rinvex.fort.tables.users').',username',
+            'email' => 'sometimes|required|email|max:250|unique:'.config('rinvex.fort.tables.users').',email',
+            'username' => 'sometimes|required|alpha_dash|max:250|unique:'.config('rinvex.fort.tables.users').',username',
         ];
 
         if (! empty($data)) {

@@ -27,11 +27,11 @@ class PasswordResetRequest extends FormRequest
     {
         return $this->isMethod('post') ? [
             'token' => 'required|regex:/^[0-9a-zA-Z]+$/',
-            'email' => 'required|email|max:255|exists:'.config('rinvex.fort.tables.users').',email',
+            'email' => 'required|email|max:250|exists:'.config('rinvex.fort.tables.users').',email',
             'password' => 'required|confirmed|min:'.config('rinvex.fort.password_min_chars'),
         ] : [
             'token' => 'required|regex:/^[0-9a-zA-Z]+$/',
-            'email' => 'required|email|max:255|exists:'.config('rinvex.fort.tables.users').',email',
+            'email' => 'required|email|max:250|exists:'.config('rinvex.fort.tables.users').',email',
         ];
     }
 
