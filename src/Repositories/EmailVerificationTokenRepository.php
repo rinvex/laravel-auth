@@ -36,7 +36,7 @@ class EmailVerificationTokenRepository extends AbstractTokenRepository implement
     public function exists(CanVerifyEmailContract $user, $token)
     {
         $record = (array) $this->getTable()->where(
-            'email', $user->getEmailForPasswordReset()
+            'email', $user->getEmailForVerification()
         )->first();
 
         return $record &&
