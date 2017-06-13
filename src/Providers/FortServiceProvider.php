@@ -38,8 +38,10 @@ class FortServiceProvider extends ServiceProvider
         // Merge config
         $this->mergeConfigFrom(realpath(__DIR__.'/../../config/config.php'), 'rinvex.fort');
 
-        // Override Exception Handler
-        $this->overrideExceptionHandler();
+        if (config('rinvex.fort.boot.override_exceptionhandler')) {
+            // Override Exception Handler
+            $this->overrideExceptionHandler();
+        }
 
         // Register Access Gate Binding
         $this->registerAccessGate();
@@ -74,8 +76,10 @@ class FortServiceProvider extends ServiceProvider
      */
     public function boot(Router $router)
     {
-        // Override middlware
-        $this->overrideMiddleware($router);
+        if (config('rinvex.fort.boot.override_middleware')) {
+            // Override middlware
+            $this->overrideMiddleware($router);
+        }
 
         // Load routes
         $this->loadRoutes($router);

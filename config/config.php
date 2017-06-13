@@ -263,4 +263,9 @@ return [
         'items_per_dashboard' => 2,
     ],
 
+    'boot' => [
+        'override_middleware' => true,
+        'override_exceptionhandler' => true,
+    ],
+
 ];
