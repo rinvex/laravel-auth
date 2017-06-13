@@ -6,8 +6,6 @@ namespace Rinvex\Fort\Providers;
 
 use Rinvex\Fort\Models\Role;
 use Illuminate\Routing\Router;
-use Collective\Html\FormFacade;
-use Collective\Html\HtmlFacade;
 use Rinvex\Fort\Models\Ability;
 use Illuminate\Support\Facades\Auth;
 use Rinvex\Fort\Guards\SessionGuard;
@@ -15,13 +13,11 @@ use Rinvex\Fort\Services\AccessGate;
 use Rinvex\Fort\Handlers\RoleHandler;
 use Illuminate\Foundation\AliasLoader;
 use Illuminate\Support\ServiceProvider;
-use Collective\Html\HtmlServiceProvider;
 use Rinvex\Fort\Handlers\AbilityHandler;
 use Rinvex\Fort\Handlers\GenericHandler;
 use Rinvex\Fort\Http\Middleware\Abilities;
 use Rinvex\Fort\Http\Middleware\NoHttpCache;
 use Rinvex\Fort\Http\Middleware\Authenticate;
-use Laravel\Socialite\SocialiteServiceProvider;
 use Illuminate\Console\DetectsApplicationNamespace;
 use Rinvex\Fort\Http\Middleware\RedirectIfAuthenticated;
 use Illuminate\Contracts\Auth\Access\Gate as GateContract;
@@ -45,16 +41,6 @@ class FortServiceProvider extends ServiceProvider
 
         // Register Access Gate Binding
         $this->registerAccessGate();
-
-        // Register the Socialite Service Provider
-        $this->app->register(SocialiteServiceProvider::class);
-
-        // Register the LaravelCollective HTML Service Provider
-        $this->app->register(HtmlServiceProvider::class);
-
-        // Alias the LaravelCollective Form & HTML Facades
-        AliasLoader::getInstance()->alias('Form', FormFacade::class);
-        AliasLoader::getInstance()->alias('Html', HtmlFacade::class);
     }
 
     /**
