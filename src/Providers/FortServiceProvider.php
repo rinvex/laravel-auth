@@ -11,7 +11,6 @@ use Illuminate\Support\Facades\Auth;
 use Rinvex\Fort\Guards\SessionGuard;
 use Rinvex\Fort\Services\AccessGate;
 use Rinvex\Fort\Handlers\RoleHandler;
-use Illuminate\Foundation\AliasLoader;
 use Illuminate\Support\ServiceProvider;
 use Rinvex\Fort\Handlers\AbilityHandler;
 use Rinvex\Fort\Handlers\GenericHandler;
