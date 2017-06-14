@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Rinvex\Fort\Guards\SessionGuard;
 use {{namespace}}Http\Controllers\AbstractController;
-use {{namespace}}Http\Requests\Frontend\UserAuthenticationRequest;
+use {{namespace}}Http\Requests\Frontend\AuthenticationRequest;
 
 class AuthenticationController extends AbstractController
 {
@@ -43,11 +43,11 @@ class AuthenticationController extends AbstractController
     /**
      * Process to the login form.
      *
-     * @param \{{namespace}}Http\Requests\Frontend\UserAuthenticationRequest $request
+     * @param \{{namespace}}Http\Requests\Frontend\AuthenticationRequest $request
      *
      * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse
      */
-    public function login(UserAuthenticationRequest $request)
+    public function login(AuthenticationRequest $request)
     {
         // Prepare variables
         $remember = $request->has('remember');
