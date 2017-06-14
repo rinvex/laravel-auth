@@ -33,7 +33,7 @@ class AccountSettingsController extends AuthenticatedController
     /**
      * Process the account update form.
      *
-     * @param \Cortex\Fort\Http\Requests\Frontend\AccountSettingsRequest $request
+     * @param \{{namespace}}Http\Requests\Frontend\AccountSettingsRequest $request
      *
      * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse
      */
