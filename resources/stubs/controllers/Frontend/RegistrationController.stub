@@ -16,54 +16,40 @@ class RegistrationController extends AbstractController
      */
     public function __construct()
     {
+        parent::__construct();
+
         $this->middleware($this->getGuestMiddleware(), ['except' => $this->middlewareWhitelist]);
     }
 
     /**
      * Show the registration form.
      *
-     * @param \Illuminate\Http\Request $request
+     * @param \{{namespace}}Http\Requests\Frontend\RegistrationRequest $request
      *
      * @return \Illuminate\Http\Response|\Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse
      */
-    public function form(Request $request)
+    public function form(RegistrationRequest $request)
     {
-        if (! config('rinvex.fort.registration.enabled')) {
-            return $this->redirect();
-        }
-
         return view('frontend.authentication.register');
     }
 
     /**
      * Process the registration form.
      *
-     * @param \Illuminate\Http\Request $request
+     * @param \{{namespace}}Http\Requests\Frontend\RegistrationProcessRequest $request
      * @param \Rinvex\Fort\Models\User $user
      *
      * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse
      */
-    public function register(Request $request, User $user)
+    public function register(RegistrationProcessRequest $request, User $user)
     {
-        if (! config('rinvex.fort.registration.enabled')) {
-            return $this->redirect();
-        }
-
         // Prepare registration data
-        $data = $request->only(['username', 'email', 'password', 'password_confirmation']);
-        $active = ['active' => ! config('rinvex.fort.registration.moderated')];
+        $data = $request->all();
 
         // Fire the register start event
-        event('rinvex.fort.register.start', [$data + $active]);
+        event('rinvex.fort.register.start', [$data]);
 
-        $user->fill($data + $active)->save();
-
-        // Attach default role to the registered user
-        if ($defaultRole = config('rinvex.fort.registration.default_role')) {
-            if ($defaultRole = Role::where('slug', $defaultRole)->first()) {
-                $user->roles()->attach($defaultRole);
-            }
-        }
+        $user->fill($data)->save();
 
         // Fire the register success event
         event('rinvex.fort.register.success', [$user]);
