@@ -39,7 +39,7 @@ class EmailVerificationProcessRequest extends FormRequest
     {
         // Do not validate `token` here since at this stage we can NOT generate viewable
         // notification/error, and it is been processed through EmailVerificationBroker anyway
-        return ['email' => 'required|email|max:250|exists:'.config('rinvex.fort.tables.users').',email'];
+        return ['email' => 'required|email|min:3|max:250|exists:'.config('rinvex.fort.tables.users').',email'];
     }
 
     /**
