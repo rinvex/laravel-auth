@@ -29,7 +29,7 @@ class AuthorizedController extends AuthenticatedController
     protected $resourceActionWhitelist = [];
 
     /**
-     * Create a new manage persistence controller instance.
+     * Create a new authorized controller instance.
      *
      * @throws \Rinvex\Fort\Exceptions\AuthorizationException
      */
