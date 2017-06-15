@@ -159,6 +159,7 @@ class User extends Model implements AuthenticatableContract, AuthenticatableTwoF
         'gender',
         'active',
         'login_at',
+        'abilities',
         'roles',
     ];
 
@@ -410,6 +411,22 @@ class User extends Model implements AuthenticatableContract, AuthenticatableTwoF
         static::saved(function (self $model) use ($roles) {
             foreach (Role::whereIn('slug', $roles)->get() as $role) {
                 $model->roles()->attach($role);
+            }
+        });
+    }
+
+    /**
+     * Attach the user abilities.
+     *
+     * @param array $abilities
+     *
+     * @return void
+     */
+    public function setAbilitiesAttribute(array $abilities)
+    {
+        static::saved(function (self $model) use ($abilities) {
+            foreach (Ability::whereIn('slug', $abilities)->get() as $ability) {
+                $model->abilities()->attach($ability);
             }
         });
     }
