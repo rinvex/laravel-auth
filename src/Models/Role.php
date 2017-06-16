@@ -121,6 +121,50 @@ class Role extends Model
     }
 
     /**
+     * {@inheritdoc}
+     */
+    public static function boot(): void
+    {
+        parent::boot();
+
+        static::updated(function (self $role) {
+            Ability::forgetCache();
+            User::forgetCache();
+        });
+
+        static::deleted(function (self $role) {
+            Ability::forgetCache();
+            User::forgetCache();
+        });
+
+        static::attached(function (self $role) {
+            Ability::forgetCache();
+            User::forgetCache();
+        });
+
+        static::synced(function (self $role) {
+            Ability::forgetCache();
+            User::forgetCache();
+        });
+
+        static::detached(function (self $role) {
+            Ability::forgetCache();
+            User::forgetCache();
+        });
+
+        // Auto generate slugs early before validation
+        static::registerModelEvent('validating', function (self $role) {
+            if (! $role->slug) {
+                if ($role->exists && $role->getSlugOptions()->generateSlugsOnUpdate) {
+                    $role->generateSlugOnUpdate();
+                } else if (! $role->exists && $role->getSlugOptions()->generateSlugsOnCreate) {
+                    $role->generateSlugOnCreate();
+                }
+            }
+        });
+    }
+
+    /**
      * Register an attaching role event with the dispatcher.
      *
      * @param \Closure|string $callback

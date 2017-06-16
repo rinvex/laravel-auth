@@ -124,6 +124,34 @@ class Ability extends Model
     }
 
     /**
+     * {@inheritdoc}
+     */
+    public static function boot(): void
+    {
+        parent::boot();
+
+        static::updated(function (self $ability) {
+            Role::forgetCache();
+            User::forgetCache();
+        });
+
+        static::deleted(function (self $ability) {
+            Role::forgetCache();
+            User::forgetCache();
+        });
+
+        static::attached(function (self $ability) {
+            Role::forgetCache();
+            User::forgetCache();
+        });
+
+        static::detached(function (self $ability) {
+            Role::forgetCache();
+            User::forgetCache();
+        });
+    }
+
+    /**
      * Register an attaching ability event with the dispatcher.
      *
      * @param \Closure|string $callback

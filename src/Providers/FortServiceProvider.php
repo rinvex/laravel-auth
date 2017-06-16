@@ -4,15 +4,12 @@ declare(strict_types=1);
 
 namespace Rinvex\Fort\Providers;
 
-use Rinvex\Fort\Models\Role;
 use Illuminate\Routing\Router;
 use Rinvex\Fort\Models\Ability;
 use Illuminate\Support\Facades\Auth;
 use Rinvex\Fort\Guards\SessionGuard;
 use Rinvex\Fort\Services\AccessGate;
-use Rinvex\Fort\Handlers\RoleHandler;
 use Illuminate\Support\ServiceProvider;
-use Rinvex\Fort\Handlers\AbilityHandler;
 use Rinvex\Fort\Handlers\GenericHandler;
 use Rinvex\Fort\Http\Middleware\Abilities;
 use Rinvex\Fort\Http\Middleware\NoHttpCache;
@@ -77,13 +74,11 @@ class FortServiceProvider extends ServiceProvider
             $this->publishResources();
         }
 
-        // Register event handlers
-        Role::observe(RoleHandler::class);
-        Ability::observe(AbilityHandler::class);
-        $this->app['events']->subscribe(GenericHandler::class);
-
         // Override session guard
         $this->overrideSessionGuard();
+
+        // Register event handlers
+        $this->app['events']->subscribe(GenericHandler::class);
 
         // Share current user instance with all views
         $this->app['view']->composer('*', function ($view) {
