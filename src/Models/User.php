@@ -409,9 +409,7 @@ class User extends Model implements AuthenticatableContract, AuthenticatableTwoF
     public function setRolesAttribute(array $roles)
     {
         static::saved(function (self $model) use ($roles) {
-            foreach (Role::whereIn('slug', $roles)->get() as $role) {
-                $model->roles()->attach($role);
-            }
+            $model->roles()->syncWithoutDetaching($roles);
         });
     }
 
@@ -425,9 +423,7 @@ class User extends Model implements AuthenticatableContract, AuthenticatableTwoF
     public function setAbilitiesAttribute(array $abilities)
     {
         static::saved(function (self $model) use ($abilities) {
-            foreach (Ability::whereIn('slug', $abilities)->get() as $ability) {
-                $model->abilities()->attach($ability);
-            }
+            $model->abilities()->syncWithoutDetaching($abilities);
         });
     }
 }
