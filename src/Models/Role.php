@@ -57,6 +57,7 @@ class Role extends Model
         'slug',
         'name',
         'description',
+        'abilities',
     ];
 
     /**
@@ -361,5 +362,19 @@ class Role extends Model
                           ->doNotGenerateSlugsOnUpdate()
                           ->generateSlugsFrom('name')
                           ->saveSlugsTo('slug');
+    }
+
+    /**
+     * Attach the role abilities.
+     *
+     * @param array $abilities
+     *
+     * @return void
+     */
+    public function setAbilitiesAttribute(array $abilities)
+    {
+        static::saved(function (self $model) use ($abilities) {
+            $model->abilities()->syncWithoutDetaching($abilities);
+        });
     }
 }
