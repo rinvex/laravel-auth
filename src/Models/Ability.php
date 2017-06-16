@@ -59,6 +59,7 @@ class Ability extends Model
         'policy',
         'name',
         'description',
+        'roles',
     ];
 
     /**
@@ -358,5 +359,19 @@ class Ability extends Model
         }
 
         return 'unique:'.implode(',', $parameters);
+    }
+
+    /**
+     * Attach the ability roles.
+     *
+     * @param array $roles
+     *
+     * @return void
+     */
+    public function setRolesAttribute(array $roles)
+    {
+        static::saved(function (self $model) use ($roles) {
+            $model->roles()->syncWithoutDetaching($roles);
+        });
     }
 }
