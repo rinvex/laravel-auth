@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Rinvex\Fort\Providers;
 
 use Illuminate\Routing\Router;
-use Rinvex\Fort\Models\Ability;
 use Illuminate\Support\Facades\Auth;
 use Rinvex\Fort\Guards\SessionGuard;
 use Rinvex\Fort\Services\AccessGate;

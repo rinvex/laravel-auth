@@ -157,7 +157,7 @@ class Role extends Model
             if (! $role->slug) {
                 if ($role->exists && $role->getSlugOptions()->generateSlugsOnUpdate) {
                     $role->generateSlugOnUpdate();
-                } else if (! $role->exists && $role->getSlugOptions()->generateSlugsOnCreate) {
+                } elseif (! $role->exists && $role->getSlugOptions()->generateSlugsOnCreate) {
                     $role->generateSlugOnCreate();
                 }
             }
