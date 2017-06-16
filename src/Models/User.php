@@ -423,7 +423,7 @@ class User extends Model implements AuthenticatableContract, AuthenticatableTwoF
     public function setRolesAttribute(array $roles)
     {
         static::saved(function (self $model) use ($roles) {
-            $model->roles()->syncWithoutDetaching($roles);
+            $model->roles()->sync($roles);
         });
     }
 
@@ -437,7 +437,7 @@ class User extends Model implements AuthenticatableContract, AuthenticatableTwoF
     public function setAbilitiesAttribute(array $abilities)
     {
         static::saved(function (self $model) use ($abilities) {
-            $model->abilities()->syncWithoutDetaching($abilities);
+            $model->abilities()->sync($abilities);
         });
     }
 }

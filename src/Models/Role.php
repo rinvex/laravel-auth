@@ -374,7 +374,7 @@ class Role extends Model
     public function setAbilitiesAttribute(array $abilities)
     {
         static::saved(function (self $model) use ($abilities) {
-            $model->abilities()->syncWithoutDetaching($abilities);
+            $model->abilities()->sync($abilities);
         });
     }
 }
