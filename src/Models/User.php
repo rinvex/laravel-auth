@@ -5,14 +5,14 @@ declare(strict_types=1);
 namespace Rinvex\Fort\Models;
 
 use Rinvex\Fort\Traits\HasRoles;
-use Illuminate\Support\Facades\Hash;
 use Illuminate\Auth\Authenticatable;
-use Watson\Validating\ValidatingTrait;
+use Illuminate\Support\Facades\Hash;
 use Rinvex\Fort\Traits\CanVerifyEmail;
 use Rinvex\Fort\Traits\CanVerifyPhone;
-use Rinvex\Support\Traits\HasHashables;
+use Watson\Validating\ValidatingTrait;
 use Illuminate\Database\Eloquent\Model;
 use Rinvex\Cacheable\CacheableEloquent;
+use Rinvex\Support\Traits\HasHashables;
 use Illuminate\Notifications\Notifiable;
 use Rinvex\Fort\Traits\CanResetPassword;
 use Rinvex\Fort\Traits\AuthenticatableTwoFactor;
