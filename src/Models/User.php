@@ -6,9 +6,9 @@ namespace Rinvex\Fort\Models;
 
 use Rinvex\Fort\Traits\HasRoles;
 use Illuminate\Auth\Authenticatable;
+use Watson\Validating\ValidatingTrait;
 use Rinvex\Fort\Traits\CanVerifyEmail;
 use Rinvex\Fort\Traits\CanVerifyPhone;
-use Watson\Validating\ValidatingTrait;
 use Illuminate\Database\Eloquent\Model;
 use Rinvex\Cacheable\CacheableEloquent;
 use Illuminate\Notifications\Notifiable;

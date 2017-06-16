@@ -320,6 +320,8 @@ class Ability extends Model
                 $parameters[3] = $this->getModel()->getKeyName();
             }
 
+            // If the additional where clause isn't set, infer it.
+            // Example: unique:abilities,resource,123,id,action,NULL
             foreach ($parameters as $key => $parameter) {
                 if (mb_strtolower((string) $parameter) === 'null') {
                     $parameters[$key] = $this->getModel()->{$parameters[$key - 1]};
