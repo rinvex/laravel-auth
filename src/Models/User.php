@@ -5,10 +5,12 @@ declare(strict_types=1);
 namespace Rinvex\Fort\Models;
 
 use Rinvex\Fort\Traits\HasRoles;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Auth\Authenticatable;
 use Watson\Validating\ValidatingTrait;
 use Rinvex\Fort\Traits\CanVerifyEmail;
 use Rinvex\Fort\Traits\CanVerifyPhone;
+use Rinvex\Support\Traits\HasHashables;
 use Illuminate\Database\Eloquent\Model;
 use Rinvex\Cacheable\CacheableEloquent;
 use Illuminate\Notifications\Notifiable;
@@ -109,6 +111,7 @@ class User extends Model implements AuthenticatableContract, AuthenticatableTwoF
     use HasRoles;
     use Notifiable;
     use Authorizable;
+    use HasHashables;
     use CanVerifyEmail;
     use CanVerifyPhone;
     use Authenticatable;
@@ -183,6 +186,13 @@ class User extends Model implements AuthenticatableContract, AuthenticatableTwoF
     protected $observables = ['validating', 'validated'];
 
     /**
+     * The attributes to be encrypted before saving.
+     *
+     * @var array
+     */
+    protected $hashables = ['password'];
+
+    /**
      * The default rules that the model will validate against.
      *
      * @var array
@@ -214,6 +224,22 @@ class User extends Model implements AuthenticatableContract, AuthenticatableTwoF
             'gender' => 'nullable|string|in:male,female',
             'phone' => 'nullable|string',
         ]);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public static function boot(): void
+    {
+        parent::boot();
+
+        static::saving(function (self $user) {
+            foreach (array_intersect($user->getHashables(), array_keys($user->getAttributes())) as $hashable) {
+                if ($user->isDirty($hashable) && Hash::needsRehash($user->$hashable)) {
+                    $user->$hashable = Hash::make($user->$hashable);
+                }
+            }
+        });
     }
 
     /**
@@ -322,18 +348,6 @@ class User extends Model implements AuthenticatableContract, AuthenticatableTwoF
     public function getRoleListAttribute()
     {
         return $this->roles->pluck('id')->toArray();
-    }
-
-    /**
-     * Hash password attribute.
-     *
-     * @param $value
-     *
-     * @return void
-     */
-    public function setPasswordAttribute($value)
-    {
-        $this->attributes['password'] = bcrypt($value);
     }
 
     /**
