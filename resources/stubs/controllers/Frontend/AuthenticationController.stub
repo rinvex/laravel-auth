@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace {{namespace}}Http\Controllers\Frontend;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Rinvex\Fort\Guards\SessionGuard;
 use {{namespace}}Http\Controllers\AbstractController;
 use {{namespace}}Http\Requests\Frontend\AuthenticationRequest;
@@ -57,7 +56,7 @@ class AuthenticationController extends AbstractController
             'password' => $request->input('password'),
         ];
 
-        $result = Auth::guard($this->getGuard())->attempt($credentials, $remember);
+        $result = auth()->guard($this->getGuard())->attempt($credentials, $remember);
 
         return $this->getLoginResponse($request, $result);
     }
@@ -69,7 +68,7 @@ class AuthenticationController extends AbstractController
      */
     public function logout()
     {
-        $result = Auth::guard($this->getGuard())->logout();
+        $result = auth()->guard($this->getGuard())->logout();
 
         return intend([
             'url' => '/',
@@ -90,7 +89,7 @@ class AuthenticationController extends AbstractController
         switch ($result) {
             // Too many failed logins, user locked out
             case SessionGuard::AUTH_LOCKED_OUT:
-                $seconds = Auth::guard($this->getGuard())->secondsRemainingOnLockout($request);
+                $seconds = auth()->guard($this->getGuard())->secondsRemainingOnLockout($request);
 
                 return intend([
                     'url' => '/',

@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Rinvex\Fort\Http\Middleware;
 
 use Closure;
-use Illuminate\Support\Facades\Auth;
 
 class Authenticate
 {
@@ -20,7 +19,7 @@ class Authenticate
      */
     public function handle($request, Closure $next, $guard = null)
     {
-        if (Auth::guard($guard)->guest()) {
+        if (auth()->guard($guard)->guest()) {
             return intend([
                 'url' => route('frontend.auth.login'),
                 'withErrors' => ['rinvex.fort.session.expired' => trans('messages.auth.session.required')],

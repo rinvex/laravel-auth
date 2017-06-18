@@ -6,7 +6,6 @@ namespace {{namespace}}Http\Controllers\Frontend;
 
 use Carbon\Carbon;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Rinvex\Fort\Guards\SessionGuard;
 use {{namespace}}Http\Controllers\AbstractController;
 use {{namespace}}Http\Requests\Frontend\PhoneVerificationRequest;
@@ -96,7 +95,7 @@ class PhoneVerificationController extends AbstractController
         $guard = $this->getGuard();
         $token = $request->get('token');
         $user = session('rinvex.fort.twofactor.user') ?: $request->user($guard);
-        $result = Auth::guard($guard)->attemptTwoFactor($user, $token);
+        $result = auth()->guard($guard)->attemptTwoFactor($user, $token);
 
         switch ($result) {
             case SessionGuard::AUTH_PHONE_VERIFIED:
@@ -112,7 +111,7 @@ class PhoneVerificationController extends AbstractController
                 ]);
 
             case SessionGuard::AUTH_LOGIN:
-                Auth::guard($guard)->login($user, session('rinvex.fort.twofactor.remember'), session('rinvex.fort.twofactor.persistence'));
+                auth()->guard($guard)->login($user, session('_twofactor.remember'), session('_twofactor'));
 
                 return intend([
                     'url' => route('frontend.account.settings'),
@@ -141,7 +140,7 @@ class PhoneVerificationController extends AbstractController
     protected function invalidity(Request $request)
     {
         $user = $request->user($this->getGuard());
-        $attemptUser = Auth::guard($this->getGuard())->attemptUser();
+        $attemptUser = auth()->guard($this->getGuard())->attemptUser();
         $providers = config('rinvex.fort.twofactor.providers');
 
         // Not logged in, No login attempt, Phone verification attempt
