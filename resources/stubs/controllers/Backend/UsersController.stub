@@ -9,6 +9,7 @@ use Rinvex\Fort\Models\Role;
 use Rinvex\Fort\Models\User;
 use Rinvex\Fort\Models\Ability;
 use {{namespace}}Http\Controllers\AuthorizedController;
+use {{namespace}}Http\Requests\Backend\UserFormRequest;
 
 class UsersController extends AuthorizedController
 {
@@ -32,11 +33,11 @@ class UsersController extends AuthorizedController
     /**
      * Store a newly created resource in storage.
      *
-     * @param \Illuminate\Http\Request $request
+     * @param \{{namespace}}Http\Requests\Backend\UserFormRequest $request
      *
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(UserFormRequest $request)
     {
         return $this->process($request, new User());
     }
@@ -44,12 +45,12 @@ class UsersController extends AuthorizedController
     /**
      * Update the given resource in storage.
      *
-     * @param \Illuminate\Http\Request $request
+     * @param \{{namespace}}Http\Requests\Backend\UserFormRequest $request
      * @param \Rinvex\Fort\Models\User $user
      *
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, User $user)
+    public function update(UserFormRequest $request, User $user)
     {
         return $this->process($request, $user);
     }
@@ -109,36 +110,9 @@ class UsersController extends AuthorizedController
     {
         // Prepare required input fields
         $data = $request->all();
-        $data['email_verified'] = $request->get('email_verified', false);
-        $data['phone_verified'] = $request->get('phone_verified', false);
-
-        // Remove empty password fields
-        if (! $data['password']) {
-            unset($data['password']);
-        }
-
-        // Update email verification date
-        if ($user->email_verified && ! $user->email_verified_at) {
-            $data['email_verified_at'] = Carbon::now();
-        }
-
-        // Update phone verification date
-        if ($user->phone_verified && ! $user->phone_verified_at) {
-            $data['phone_verified_at'] = Carbon::now();
-        }
 
         // Save user
         $user->fill($data)->save();
-
-        // Sync abilities
-        if ($request->user($this->getGuard())->can('grant-abilities')) {
-            $user->abilities()->sync((array) array_pull($data, 'abilityList'));
-        }
-
-        // Sync roles
-        if ($request->user($this->getGuard())->can('assign-roles')) {
-            $user->roles()->sync((array) array_pull($data, 'roleList'));
-        }
 
         return intend([
             'url' => route('backend.users.index'),

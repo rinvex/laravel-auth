@@ -7,6 +7,7 @@ namespace {{namespace}}Http\Controllers\Backend;
 use Illuminate\Http\Request;
 use Rinvex\Fort\Models\Ability;
 use {{namespace}}Http\Controllers\AuthorizedController;
+use {{namespace}}Http\Requests\Backend\AbilityFormRequest;
 
 class AbilitiesController extends AuthorizedController
 {
@@ -35,11 +36,11 @@ class AbilitiesController extends AuthorizedController
     /**
      * Store a newly created resource in storage.
      *
-     * @param \Illuminate\Http\Request $request
+     * @param \{{namespace}}Http\Requests\Backend\AbilityFormRequest $request
      *
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(AbilityFormRequest $request)
     {
         return $this->process($request, new Ability());
     }
@@ -47,12 +48,12 @@ class AbilitiesController extends AuthorizedController
     /**
      * Update the given resource in storage.
      *
-     * @param \Illuminate\Http\Request    $request
+     * @param \{{namespace}}Http\Requests\Backend\AbilityFormRequest $request
      * @param \Rinvex\Fort\Models\Ability $ability
      *
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Ability $ability)
+    public function update(AbilityFormRequest $request, Ability $ability)
     {
         return $this->process($request, $ability);
     }

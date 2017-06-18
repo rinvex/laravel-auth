@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Rinvex\Fort\Models\Role;
 use Rinvex\Fort\Models\Ability;
 use {{namespace}}Http\Controllers\AuthorizedController;
+use {{namespace}}Http\Requests\Backend\RoleFormRequest;
 
 class RolesController extends AuthorizedController
 {
@@ -36,11 +37,11 @@ class RolesController extends AuthorizedController
     /**
      * Store a newly created resource in storage.
      *
-     * @param \Illuminate\Http\Request $request
+     * @param \{{namespace}}Http\Requests\Backend\RoleFormRequest $request
      *
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(RoleFormRequest $request)
     {
         return $this->process($request, new Role());
     }
@@ -48,12 +49,12 @@ class RolesController extends AuthorizedController
     /**
      * Update the given resource in storage.
      *
-     * @param \Illuminate\Http\Request $request
+     * @param \{{namespace}}Http\Requests\Backend\RoleFormRequest $request
      * @param \Rinvex\Fort\Models\Role $role
      *
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Role $role)
+    public function update(RoleFormRequest $request, Role $role)
     {
         return $this->process($request, $role);
     }
@@ -106,11 +107,6 @@ class RolesController extends AuthorizedController
 
         // Save role
         $role->fill($data)->save();
-
-        // Sync abilities
-        if ($request->user($this->getGuard())->can('grant-abilities')) {
-            $role->abilities()->sync((array) array_pull($data, 'abilityList'));
-        }
 
         return intend([
             'url' => route('backend.roles.index'),
