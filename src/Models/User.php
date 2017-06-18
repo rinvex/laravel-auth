@@ -377,7 +377,7 @@ class User extends Model implements AuthenticatableContract, AuthenticatableTwoF
      */
     public function routeNotificationForAuthy()
     {
-        if (! $authyId = array_get($this->getTwoFactor(), 'phone.authy_id')) {
+        if (! ($authyId = array_get($this->getTwoFactor(), 'phone.authy_id')) && $this->getEmailForVerification() && $this->getPhoneForVerification() && $this->getCountryForVerification()) {
             $result = app('rinvex.authy.user')->register($this->getEmailForVerification(), preg_replace('/[^0-9]/', '', $this->getPhoneForVerification()), $this->getCountryForVerification());
             $authyId = $result->get('user')['id'];
 
