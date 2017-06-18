@@ -168,12 +168,12 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | Two-Factor authentication
+    | TwoFactor authentication
     |--------------------------------------------------------------------------
     |
-    | Rinvex Fort supports a variety of Two-Factor authentication backends through
+    | Rinvex Fort supports a variety of TwoFactor authentication backends through
     | unified API, giving you convenient access to each using the same syntax.
-    | Here you may set the active Two-Factor authentication providers.
+    | Here you may set the active TwoFactor authentication providers.
     |
     */
 

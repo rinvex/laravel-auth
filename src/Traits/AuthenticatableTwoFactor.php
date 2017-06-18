@@ -7,7 +7,7 @@ namespace Rinvex\Fort\Traits;
 trait AuthenticatableTwoFactor
 {
     /**
-     * Get the Two-Factor options.
+     * Get the TwoFactor options.
      *
      * @return array
      */
@@ -17,7 +17,7 @@ trait AuthenticatableTwoFactor
     }
 
     /**
-     * Get the Two-Factor options in array format.
+     * Get the TwoFactor options in array format.
      *
      * @param string $options
      *
@@ -29,7 +29,7 @@ trait AuthenticatableTwoFactor
     }
 
     /**
-     * Set the Two-Factor options in array format.
+     * Set the TwoFactor options in array format.
      *
      * @param array $options
      *

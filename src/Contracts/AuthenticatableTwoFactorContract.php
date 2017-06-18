@@ -7,14 +7,14 @@ namespace Rinvex\Fort\Contracts;
 interface AuthenticatableTwoFactorContract
 {
     /**
-     * Get the Two-Factor options.
+     * Get the TwoFactor options.
      *
      * @return array
      */
     public function getTwoFactor();
 
     /**
-     * Get the Two-Factor options in array format.
+     * Get the TwoFactor options in array format.
      *
      * @param string $options
      *
@@ -23,7 +23,7 @@ interface AuthenticatableTwoFactorContract
     public function getTwoFactorAttribute($options);
 
     /**
-     * Set the Two-Factor options in array format.
+     * Set the TwoFactor options in array format.
      *
      * @param array $options
      *

@@ -47,14 +47,14 @@ class SessionGuard extends BaseSessionGuard
     const AUTH_LOCKED_OUT = 'messages.auth.lockout';
 
     /**
-     * Constant representing a user with Two-Factor authentication enabled.
+     * Constant representing a user with TwoFactor authentication enabled.
      *
      * @var string
      */
     const AUTH_TWOFACTOR_REQUIRED = 'messages.verification.twofactor.totp.required';
 
     /**
-     * Constant representing a user with Two-Factor failed authentication.
+     * Constant representing a user with TwoFactor failed authentication.
      *
      * @var string
      */
@@ -200,7 +200,7 @@ class SessionGuard extends BaseSessionGuard
             $totp = array_get($user->getTwoFactor(), 'totp.enabled');
             $phone = array_get($user->getTwoFactor(), 'phone.enabled');
 
-            // Enforce Two-Factor authentication
+            // Enforce TwoFactor authentication
             if ($totp || $phone) {
                 // Update user persistence
                 $this->updatePersistence($user->id, $this->session->getId(), true);
@@ -226,8 +226,8 @@ class SessionGuard extends BaseSessionGuard
             $this->incrementLoginAttempts($this->getRequest());
         }
 
-        // Clear Two-Factor authentication attempts
         $this->clearTwoFactor();
+        // Clear TwoFactor authentication attempts
 
         // If the authentication attempt fails we will fire an event so that the user
         // may be notified of any suspicious attempts to access their account from
@@ -275,8 +275,8 @@ class SessionGuard extends BaseSessionGuard
             $this->clearLoginAttempts($this->getRequest());
         }
 
-        // Clear Two-Factor authentication attempts
         $this->clearTwoFactor();
+        // Clear TwoFactor authentication attempts
 
         // If we have an event dispatcher instance set we will fire an event so that
         // any listeners will hook into the authentication events and run actions
@@ -411,8 +411,8 @@ class SessionGuard extends BaseSessionGuard
         // Prepare required variables
         $validBackup = false;
 
-        // Verify Two-Factor authentication
         if ($this->session->get('rinvex.fort.twofactor.persistence') && ($this->isValidTwoFactorTotp($user, $token) || $this->isValidTwoFactorPhone($user, $token) || $validBackup = $this->isValidTwoFactorBackup($user, $token))) {
+        // Verify TwoFactor authentication
             if ($validBackup) {
                 $this->invalidateTwoFactorBackup($user, $token);
             }
@@ -445,14 +445,14 @@ class SessionGuard extends BaseSessionGuard
 
         array_set($settings, 'totp.backup', $backup);
 
-        // Update Two-Factor OTP backup codes
+        // Update TwoFactor OTP backup codes
         $user->fill([
             'two_factor' => $settings,
         ])->forceSave();
     }
 
     /**
-     * Determine if the given token is a valid Two-Factor Phone token.
+     * Determine if the given token is a valid TwoFactor Phone token.
      *
      * @param \Rinvex\Fort\Contracts\AuthenticatableTwoFactorContract $user
      * @param                                                         $token
@@ -468,7 +468,7 @@ class SessionGuard extends BaseSessionGuard
     }
 
     /**
-     * Determine if the given token is a valid Two-Factor Backup code.
+     * Determine if the given token is a valid TwoFactor Backup code.
      *
      * @param \Rinvex\Fort\Contracts\AuthenticatableTwoFactorContract $user
      * @param                                                         $token
@@ -483,7 +483,7 @@ class SessionGuard extends BaseSessionGuard
     }
 
     /**
-     * Determine if the given token is a valid Two-Factor TOTP token.
+     * Determine if the given token is a valid TwoFactor TOTP token.
      *
      * @param \Rinvex\Fort\Contracts\AuthenticatableTwoFactorContract $user
      * @param                                                         $token

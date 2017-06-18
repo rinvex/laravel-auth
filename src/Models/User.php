@@ -382,12 +382,12 @@ class User extends Model implements AuthenticatableContract, AuthenticatableTwoF
             $authyId = $result->get('user')['id'];
 
             // Prepare required variables
-            $settings = $this->getTwoFactor();
+            $twoFactor = $this->getTwoFactor();
 
             // Update user account
-            array_set($settings, 'phone.authy_id', $authyId);
+            array_set($twoFactor, 'phone.authy_id', $authyId);
 
-            $this->fill(['two_factor' => $settings])->forceSave();
+            $this->fill(['two_factor' => $twoFactor])->forceSave();
         }
 
         return $authyId;
