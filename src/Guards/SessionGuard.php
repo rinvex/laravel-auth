@@ -412,7 +412,7 @@ class SessionGuard extends BaseSessionGuard
         $validBackup = false;
 
         if ($this->session->get('rinvex.fort.twofactor.persistence') && ($this->isValidTwoFactorTotp($user, $token) || $this->isValidTwoFactorPhone($user, $token) || $validBackup = $this->isValidTwoFactorBackup($user, $token))) {
-        // Verify TwoFactor authentication
+            // Verify TwoFactor authentication
             if ($validBackup) {
                 $this->invalidateTwoFactorBackup($user, $token);
             }
