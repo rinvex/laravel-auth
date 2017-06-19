@@ -10,7 +10,7 @@ use Rinvex\Cacheable\CacheableEloquent;
 use Spatie\Translatable\HasTranslations;
 
 /**
- * Rinvex\Fort\Models\Ability
+ * Rinvex\Fort\Models\Ability.
  *
  * @property int                                                                      $id
  * @property string                                                                   $action
@@ -24,7 +24,7 @@ use Spatie\Translatable\HasTranslations;
  * @property-read array                                                               $role_list
  * @property-read string                                                              $slug
  * @property \Illuminate\Database\Eloquent\Collection|\Rinvex\Fort\Models\Role[]      $roles
- * @property-read \Illuminate\Database\Eloquent\Collection|\Cortex\Fort\Models\User[] $users
+ * @property-read \Illuminate\Database\Eloquent\Collection|\Rinvex\Fort\Models\User[] $users
  *
  * @method static \Illuminate\Database\Eloquent\Builder|\Rinvex\Fort\Models\Ability whereAction($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\Rinvex\Fort\Models\Ability whereCreatedAt($value)

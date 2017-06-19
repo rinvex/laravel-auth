@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
 
 /**
- * Rinvex\Fort\Models\Session
+ * Rinvex\Fort\Models\Session.
  *
  * @property int                                $id
  * @property int|null                           $user_id
@@ -16,7 +16,7 @@ use Illuminate\Database\Eloquent\Builder;
  * @property string|null                        $user_agent
  * @property string                             $payload
  * @property \Carbon\Carbon                     $last_activity
- * @property-read \Cortex\Fort\Models\User|null $user
+ * @property-read \Rinvex\Fort\Models\User|null $user
  *
  * @method static \Illuminate\Database\Eloquent\Builder|\Rinvex\Fort\Models\Session guests($minutes = 5)
  * @method static \Illuminate\Database\Eloquent\Builder|\Rinvex\Fort\Models\Session guestsByHours($hours = 1)

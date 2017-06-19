@@ -7,7 +7,7 @@ namespace Rinvex\Fort\Models;
 use Illuminate\Database\Eloquent\Model;
 
 /**
- * Rinvex\Fort\Models\Socialite
+ * Rinvex\Fort\Models\Socialite.
  *
  * @property int                           $id
  * @property int                           $user_id
@@ -15,7 +15,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property int                           $provider_uid
  * @property \Carbon\Carbon|null           $created_at
  * @property \Carbon\Carbon|null           $updated_at
- * @property-read \Cortex\Fort\Models\User $user
+ * @property-read \Rinvex\Fort\Models\User $user
  *
  * @method static \Illuminate\Database\Eloquent\Builder|\Rinvex\Fort\Models\Socialite whereCreatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\Rinvex\Fort\Models\Socialite whereId($value)
