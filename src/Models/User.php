@@ -25,41 +25,41 @@ use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 use Illuminate\Contracts\Auth\Access\Authorizable as AuthorizableContract;
 
 /**
- * Rinvex\Fort\Models\User.
+ * Rinvex\Fort\Models\User
  *
  * @property int                                                                                                            $id
  * @property string                                                                                                         $username
- * @property string                                                                                                         $password
- * @property string                                                                                                         $remember_token
- * @property string                                                                                                         $email
- * @property bool                                                                                                           $email_verified
- * @property \Carbon\Carbon                                                                                                 $email_verified_at
- * @property string                                                                                                         $phone
- * @property bool                                                                                                           $phone_verified
- * @property \Carbon\Carbon                                                                                                 $phone_verified_at
- * @property string                                                                                                         $name_prefix
- * @property string                                                                                                         $first_name
- * @property string                                                                                                         $middle_name
- * @property string                                                                                                         $last_name
- * @property string                                                                                                         $name_suffix
- * @property string                                                                                                         $job_title
- * @property string                                                                                                         $country_code
- * @property string                                                                                                         $language_code
  * @property array                                                                                                          $two_factor
- * @property \Carbon\Carbon                                                                                                 $birthday
- * @property string                                                                                                         $gender
- * @property string                                                                                                         $website
- * @property string                                                                                                         $twitter
- * @property string                                                                                                         $facebook
- * @property string                                                                                                         $linkedin
- * @property string                                                                                                         $google_plus
- * @property string                                                                                                         $skype
- * @property bool                                                                                                           $active
- * @property \Carbon\Carbon                                                                                                 $login_at
- * @property \Carbon\Carbon                                                                                                 $created_at
- * @property \Carbon\Carbon                                                                                                 $updated_at
- * @property \Carbon\Carbon                                                                                                 $deleted_at
- * @property-read \Illuminate\Database\Eloquent\Collection|\Rinvex\Fort\Models\Ability[]                                    $abilities
+ * @property string                                                                                                         $password
+ * @property string|null                                                                                                    $remember_token
+ * @property string                                                                                                         $email
+ * @property int                                                                                                            $email_verified
+ * @property \Carbon\Carbon|null                                                                                            $email_verified_at
+ * @property string|null                                                                                                    $phone
+ * @property int                                                                                                            $phone_verified
+ * @property \Carbon\Carbon|null                                                                                            $phone_verified_at
+ * @property string|null                                                                                                    $name_prefix
+ * @property string|null                                                                                                    $first_name
+ * @property string|null                                                                                                    $middle_name
+ * @property string|null                                                                                                    $last_name
+ * @property string|null                                                                                                    $name_suffix
+ * @property string|null                                                                                                    $job_title
+ * @property string|null                                                                                                    $country_code
+ * @property string|null                                                                                                    $language_code
+ * @property \Carbon\Carbon|null                                                                                            $birthday
+ * @property string|null                                                                                                    $gender
+ * @property string|null                                                                                                    $website
+ * @property string|null                                                                                                    $twitter
+ * @property string|null                                                                                                    $facebook
+ * @property string|null                                                                                                    $linkedin
+ * @property string|null                                                                                                    $google_plus
+ * @property string|null                                                                                                    $skype
+ * @property int                                                                                                            $active
+ * @property \Carbon\Carbon|null                                                                                            $login_at
+ * @property \Carbon\Carbon|null                                                                                            $created_at
+ * @property \Carbon\Carbon|null                                                                                            $updated_at
+ * @property \Carbon\Carbon|null                                                                                            $deleted_at
+ * @property \Illuminate\Database\Eloquent\Collection|\Rinvex\Fort\Models\Ability[]                                         $abilities
  * @property-read array                                                                                                     $ability_list
  * @property-read \Illuminate\Support\Collection                                                                            $all_abilities
  * @property-read \Rinvex\Country\Country                                                                                   $country
@@ -67,43 +67,43 @@ use Illuminate\Contracts\Auth\Access\Authorizable as AuthorizableContract;
  * @property-read string                                                                                                    $name
  * @property-read array                                                                                                     $role_list
  * @property-read \Illuminate\Notifications\DatabaseNotificationCollection|\Illuminate\Notifications\DatabaseNotification[] $notifications
- * @property-read \Illuminate\Database\Eloquent\Collection|\Rinvex\Fort\Models\Role[]                                       $roles
+ * @property \Illuminate\Database\Eloquent\Collection|\Rinvex\Fort\Models\Role[]                                            $roles
  * @property-read \Illuminate\Database\Eloquent\Collection|\Rinvex\Fort\Models\Session[]                                    $sessions
  * @property-read \Illuminate\Database\Eloquent\Collection|\Rinvex\Fort\Models\Socialite[]                                  $socialites
  *
- * @method static \Illuminate\Database\Query\Builder|\Rinvex\Fort\Models\User role($roles)
- * @method static \Illuminate\Database\Query\Builder|\Rinvex\Fort\Models\User whereActive($value)
- * @method static \Illuminate\Database\Query\Builder|\Rinvex\Fort\Models\User whereBirthday($value)
- * @method static \Illuminate\Database\Query\Builder|\Rinvex\Fort\Models\User whereCountryCode($value)
- * @method static \Illuminate\Database\Query\Builder|\Rinvex\Fort\Models\User whereCreatedAt($value)
- * @method static \Illuminate\Database\Query\Builder|\Rinvex\Fort\Models\User whereDeletedAt($value)
- * @method static \Illuminate\Database\Query\Builder|\Rinvex\Fort\Models\User whereEmail($value)
- * @method static \Illuminate\Database\Query\Builder|\Rinvex\Fort\Models\User whereEmailVerified($value)
- * @method static \Illuminate\Database\Query\Builder|\Rinvex\Fort\Models\User whereEmailVerifiedAt($value)
- * @method static \Illuminate\Database\Query\Builder|\Rinvex\Fort\Models\User whereFacebook($value)
- * @method static \Illuminate\Database\Query\Builder|\Rinvex\Fort\Models\User whereFirstName($value)
- * @method static \Illuminate\Database\Query\Builder|\Rinvex\Fort\Models\User whereGender($value)
- * @method static \Illuminate\Database\Query\Builder|\Rinvex\Fort\Models\User whereGooglePlus($value)
- * @method static \Illuminate\Database\Query\Builder|\Rinvex\Fort\Models\User whereId($value)
- * @method static \Illuminate\Database\Query\Builder|\Rinvex\Fort\Models\User whereJobTitle($value)
- * @method static \Illuminate\Database\Query\Builder|\Rinvex\Fort\Models\User whereLanguageCode($value)
- * @method static \Illuminate\Database\Query\Builder|\Rinvex\Fort\Models\User whereLastName($value)
- * @method static \Illuminate\Database\Query\Builder|\Rinvex\Fort\Models\User whereLinkedin($value)
- * @method static \Illuminate\Database\Query\Builder|\Rinvex\Fort\Models\User whereLoginAt($value)
- * @method static \Illuminate\Database\Query\Builder|\Rinvex\Fort\Models\User whereMiddleName($value)
- * @method static \Illuminate\Database\Query\Builder|\Rinvex\Fort\Models\User whereNamePrefix($value)
- * @method static \Illuminate\Database\Query\Builder|\Rinvex\Fort\Models\User whereNameSuffix($value)
- * @method static \Illuminate\Database\Query\Builder|\Rinvex\Fort\Models\User wherePassword($value)
- * @method static \Illuminate\Database\Query\Builder|\Rinvex\Fort\Models\User wherePhone($value)
- * @method static \Illuminate\Database\Query\Builder|\Rinvex\Fort\Models\User wherePhoneVerified($value)
- * @method static \Illuminate\Database\Query\Builder|\Rinvex\Fort\Models\User wherePhoneVerifiedAt($value)
- * @method static \Illuminate\Database\Query\Builder|\Rinvex\Fort\Models\User whereRememberToken($value)
- * @method static \Illuminate\Database\Query\Builder|\Rinvex\Fort\Models\User whereSkype($value)
- * @method static \Illuminate\Database\Query\Builder|\Rinvex\Fort\Models\User whereTwitter($value)
- * @method static \Illuminate\Database\Query\Builder|\Rinvex\Fort\Models\User whereTwoFactor($value)
- * @method static \Illuminate\Database\Query\Builder|\Rinvex\Fort\Models\User whereUpdatedAt($value)
- * @method static \Illuminate\Database\Query\Builder|\Rinvex\Fort\Models\User whereUsername($value)
- * @method static \Illuminate\Database\Query\Builder|\Rinvex\Fort\Models\User whereWebsite($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\Rinvex\Fort\Models\User role($roles)
+ * @method static \Illuminate\Database\Eloquent\Builder|\Rinvex\Fort\Models\User whereActive($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\Rinvex\Fort\Models\User whereBirthday($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\Rinvex\Fort\Models\User whereCountryCode($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\Rinvex\Fort\Models\User whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\Rinvex\Fort\Models\User whereDeletedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\Rinvex\Fort\Models\User whereEmail($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\Rinvex\Fort\Models\User whereEmailVerified($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\Rinvex\Fort\Models\User whereEmailVerifiedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\Rinvex\Fort\Models\User whereFacebook($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\Rinvex\Fort\Models\User whereFirstName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\Rinvex\Fort\Models\User whereGender($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\Rinvex\Fort\Models\User whereGooglePlus($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\Rinvex\Fort\Models\User whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\Rinvex\Fort\Models\User whereJobTitle($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\Rinvex\Fort\Models\User whereLanguageCode($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\Rinvex\Fort\Models\User whereLastName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\Rinvex\Fort\Models\User whereLinkedin($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\Rinvex\Fort\Models\User whereLoginAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\Rinvex\Fort\Models\User whereMiddleName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\Rinvex\Fort\Models\User whereNamePrefix($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\Rinvex\Fort\Models\User whereNameSuffix($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\Rinvex\Fort\Models\User wherePassword($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\Rinvex\Fort\Models\User wherePhone($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\Rinvex\Fort\Models\User wherePhoneVerified($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\Rinvex\Fort\Models\User wherePhoneVerifiedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\Rinvex\Fort\Models\User whereRememberToken($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\Rinvex\Fort\Models\User whereSkype($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\Rinvex\Fort\Models\User whereTwitter($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\Rinvex\Fort\Models\User whereTwoFactor($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\Rinvex\Fort\Models\User whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\Rinvex\Fort\Models\User whereUsername($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\Rinvex\Fort\Models\User whereWebsite($value)
  * @mixin \Eloquent
  */
 class User extends Model implements AuthenticatableContract, AuthenticatableTwoFactorContract, AuthorizableContract, CanResetPasswordContract, CanVerifyEmailContract, CanVerifyPhoneContract
