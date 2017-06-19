@@ -13,7 +13,7 @@ use Rinvex\Cacheable\CacheableEloquent;
 use Spatie\Translatable\HasTranslations;
 
 /**
- * Rinvex\Fort\Models\Role
+ * Rinvex\Fort\Models\Role.
  *
  * @property int                                                                      $id
  * @property string                                                                   $slug

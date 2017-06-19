@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
 
 /**
- * Rinvex\Fort\Models\Session
+ * Rinvex\Fort\Models\Session.
  *
  * @property int                                $id
  * @property int|null                           $user_id
