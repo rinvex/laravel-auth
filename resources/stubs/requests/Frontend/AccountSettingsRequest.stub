@@ -28,13 +28,12 @@ class AccountSettingsRequest extends FormRequest
     public function process($data)
     {
         $country = $data['country_code'] ?? null;
-        $password = $data['password'] ?? null;
         $email = $data['email'] ?? null;
         $phone = $data['phone'] ?? null;
         $user = $this->user();
         $twoFactor = $user->getTwoFactor();
 
-        if (! $password) {
+        if (empty($data['password'])) {
             unset($data['password'], $data['password_confirmation']);
         }
 

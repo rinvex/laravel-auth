@@ -136,10 +136,10 @@
 
                             <div class="row">
                                 <div class="form-group{{ $errors->has('job_title') ? ' has-error' : '' }}">
-                                    {{ Form::label('job_title', trans('cortex/fort::common.job_title'), ['class' => 'col-md-2 control-label']) }}
+                                    {{ Form::label('job_title', trans('common.job_title'), ['class' => 'col-md-2 control-label']) }}
 
                                     <div class="col-md-10">
-                                        {{ Form::text('job_title', null, ['class' => 'form-control', 'placeholder' => $currentUser->job_title ?: trans('cortex/fort::common.job_title')]) }}
+                                        {{ Form::text('job_title', null, ['class' => 'form-control', 'placeholder' => $currentUser->job_title ?: trans('common.job_title')]) }}
 
                                         @if ($errors->has('job_title'))
                                             <span class="help-block">{{ $errors->first('job_title') }}</span>
@@ -153,21 +153,6 @@
 
 
                             <div class="row">
-                                <div class="form-group has-feedback{{ $errors->has('birthday') ? ' has-error' : '' }}">
-                                    {{ Form::label('birthday', trans('cortex/fort::common.birthday'), ['class' => 'col-md-2 control-label']) }}
-
-                                    <div class="col-md-8">
-                                        {{ Form::text('birthday', null, ['class' => 'form-control datepicker', 'data-auto-update-input' => 'false']) }}
-                                        <span class="fa fa-calendar form-control-feedback"></span>
-
-                                        @if ($errors->has('birthday'))
-                                            <span class="help-block">{{ $errors->first('birthday') }}</span>
-                                        @endif
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="row">
                                 <div class="form-group{{ $errors->has('gender') ? ' has-error' : '' }}">
                                     {{ Form::label('gender', trans('common.gender'), ['class' => 'col-md-3 control-label']) }}
 
@@ -176,6 +161,21 @@
 
                                         @if ($errors->has('gender'))
                                             <span class="help-block">{{ $errors->first('gender') }}</span>
+                                        @endif
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="form-group has-feedback{{ $errors->has('birthday') ? ' has-error' : '' }}">
+                                    {{ Form::label('birthday', trans('common.birthday'), ['class' => 'col-md-2 control-label']) }}
+
+                                    <div class="col-md-8">
+                                        {{ Form::text('birthday', null, ['class' => 'form-control datepicker', 'data-auto-update-input' => 'false']) }}
+                                        <span class="fa fa-calendar form-control-feedback"></span>
+
+                                        @if ($errors->has('birthday'))
+                                            <span class="help-block">{{ $errors->first('birthday') }}</span>
                                         @endif
                                     </div>
                                 </div>
@@ -244,16 +244,14 @@
 
                         <div class="row">
                             <div class="form-group has-feedback{{ $errors->has('twitter') ? ' has-error' : '' }}">
-                                {{ Form::label('twitter', trans('common.twitter'), ['class' => 'col-md-2
-                                control-label']) }}
+                                {{ Form::label('twitter', trans('common.twitter'), ['class' => 'col-md-2 control-label']) }}
 
                                 <div class="col-md-8">
-                                    {{ Form::text('twitter', null, ['class' => 'form-control', 'placeholder' =>
-                                    trans('common.twitter')]) }}
+                                    {{ Form::text('twitter', null, ['class' => 'form-control', 'placeholder' => trans('common.twitter')]) }}
                                     <span class="fa fa-twitter form-control-feedback"></span>
 
                                     @if ($errors->has('twitter'))
-                                    <span class="help-block">{{ $errors->first('twitter') }}</span>
+                                        <span class="help-block">{{ $errors->first('twitter') }}</span>
                                     @endif
                                 </div>
                             </div>
@@ -261,16 +259,14 @@
 
                         <div class="row">
                             <div class="form-group has-feedback{{ $errors->has('facebook') ? ' has-error' : '' }}">
-                                {{ Form::label('facebook', trans('common.facebook'), ['class' => 'col-md-2
-                                control-label']) }}
+                                {{ Form::label('facebook', trans('common.facebook'), ['class' => 'col-md-2 control-label']) }}
 
                                 <div class="col-md-8">
-                                    {{ Form::text('facebook', null, ['class' => 'form-control', 'placeholder' =>
-                                    trans('common.facebook')]) }}
+                                    {{ Form::text('facebook', null, ['class' => 'form-control', 'placeholder' => trans('common.facebook')]) }}
                                     <span class="fa fa-facebook form-control-feedback"></span>
 
                                     @if ($errors->has('facebook'))
-                                    <span class="help-block">{{ $errors->first('facebook') }}</span>
+                                        <span class="help-block">{{ $errors->first('facebook') }}</span>
                                     @endif
                                 </div>
                             </div>
@@ -278,16 +274,14 @@
 
                         <div class="row">
                             <div class="form-group has-feedback{{ $errors->has('linkedin') ? ' has-error' : '' }}">
-                                {{ Form::label('linkedin', trans('common.linkedin'), ['class' => 'col-md-2
-                                control-label']) }}
+                                {{ Form::label('linkedin', trans('common.linkedin'), ['class' => 'col-md-2 control-label']) }}
 
                                 <div class="col-md-8">
-                                    {{ Form::text('linkedin', null, ['class' => 'form-control', 'placeholder' =>
-                                    trans('common.linkedin')]) }}
+                                    {{ Form::text('linkedin', null, ['class' => 'form-control', 'placeholder' => trans('common.linkedin')]) }}
                                     <span class="fa fa-linkedin form-control-feedback"></span>
 
                                     @if ($errors->has('linkedin'))
-                                    <span class="help-block">{{ $errors->first('linkedin') }}</span>
+                                        <span class="help-block">{{ $errors->first('linkedin') }}</span>
                                     @endif
                                 </div>
                             </div>
@@ -295,16 +289,14 @@
 
                         <div class="row">
                             <div class="form-group has-feedback{{ $errors->has('google_plus') ? ' has-error' : '' }}">
-                                {{ Form::label('google_plus', trans('common.google_plus'), ['class' => 'col-md-2
-                                control-label']) }}
+                                {{ Form::label('google_plus', trans('common.google_plus'), ['class' => 'col-md-2 control-label']) }}
 
                                 <div class="col-md-8">
-                                    {{ Form::text('google_plus', null, ['class' => 'form-control', 'placeholder' =>
-                                    trans('common.google_plus')]) }}
+                                    {{ Form::text('google_plus', null, ['class' => 'form-control', 'placeholder' => trans('common.google_plus')]) }}
                                     <span class="fa fa-google-plus form-control-feedback"></span>
 
                                     @if ($errors->has('google_plus'))
-                                    <span class="help-block">{{ $errors->first('google_plus') }}</span>
+                                        <span class="help-block">{{ $errors->first('google_plus') }}</span>
                                     @endif
                                 </div>
                             </div>
@@ -315,12 +307,11 @@
                                 {{ Form::label('skype', trans('common.skype'), ['class' => 'col-md-2 control-label']) }}
 
                                 <div class="col-md-8">
-                                    {{ Form::text('skype', null, ['class' => 'form-control', 'placeholder' =>
-                                    trans('common.skype')]) }}
+                                    {{ Form::text('skype', null, ['class' => 'form-control', 'placeholder' => trans('common.skype')]) }}
                                     <span class="fa fa-skype form-control-feedback"></span>
 
                                     @if ($errors->has('skype'))
-                                    <span class="help-block">{{ $errors->first('skype') }}</span>
+                                        <span class="help-block">{{ $errors->first('skype') }}</span>
                                     @endif
                                 </div>
                             </div>
@@ -328,16 +319,14 @@
 
                         <div class="row">
                             <div class="form-group has-feedback{{ $errors->has('website') ? ' has-error' : '' }}">
-                                {{ Form::label('website', trans('common.website'), ['class' => 'col-md-2
-                                control-label']) }}
+                                {{ Form::label('website', trans('common.website'), ['class' => 'col-md-2 control-label']) }}
 
                                 <div class="col-md-8">
-                                    {{ Form::text('website', null, ['class' => 'form-control', 'placeholder' =>
-                                    trans('common.website')]) }}
+                                    {{ Form::text('website', null, ['class' => 'form-control', 'placeholder' => trans('common.website')]) }}
                                     <span class="fa fa-globe form-control-feedback"></span>
 
                                     @if ($errors->has('website'))
-                                    <span class="help-block">{{ $errors->first('website') }}</span>
+                                        <span class="help-block">{{ $errors->first('website') }}</span>
                                     @endif
                                 </div>
                             </div>
@@ -347,11 +336,12 @@
 
 
                             <div class="row">
-                                <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">
+                                <div class="form-group has-feedback{{ $errors->has('password') ? ' has-error' : '' }}">
                                     {{ Form::label('password', trans('common.password'), ['class' => 'col-md-3 control-label']) }}
 
                                     <div class="col-md-8">
                                         {{ Form::password('password', ['class' => 'form-control', 'placeholder' => trans('common.password')]) }}
+                                        <span class="fa fa-key form-control-feedback"></span>
 
                                         @if ($errors->has('password'))
                                             <span class="help-block">{{ $errors->first('password') }}</span>
@@ -361,11 +351,12 @@
                             </div>
 
                             <div class="row">
-                                <div class="form-group{{ $errors->has('password_confirmation') ? ' has-error' : '' }}">
+                                <div class="form-group has-feedback{{ $errors->has('password_confirmation') ? ' has-error' : '' }}">
                                     {{ Form::label('password_confirmation', trans('common.password_confirmation'), ['class' => 'col-md-3 control-label']) }}
 
                                     <div class="col-md-8">
                                         {{ Form::password('password_confirmation', ['class' => 'form-control', 'placeholder' => trans('common.password_confirmation')]) }}
+                                        <span class="fa fa-key form-control-feedback"></span>
 
                                         @if ($errors->has('password_confirmation'))
                                             <span class="help-block">{{ $errors->first('password_confirmation') }}</span>
@@ -403,10 +394,13 @@
 
                                                     <div class="panel panel-primary">
                                                         <header class="panel-heading">
-                                                            <a class="btn btn-default btn-xs pull-right" style="margin-left: 10px" href="{{ route('frontend.account.twofactor.totp.enable') }}">@if(array_get($twoFactor, 'totp.enabled')) {{ trans('common.settings') }} @else {{ trans('common.enable') }} @endif</a>
-                                                            @if(array_get($twoFactor, 'totp.enabled'))
-                                                                <a class="btn btn-default btn-xs pull-right" href="{{ route('frontend.account.twofactor.totp.disable') }}">{{ trans('common.disable') }}</a>
+                                                            @if(! empty($twoFactor['totp']['enabled']))
+                                                                <a class="btn btn-default btn-xs pull-right" href="{{ route('frontend.account.twofactor.totp.disable') }}" onclick="event.preventDefault(); var form = document.getElementById('frontend-account-settings-update'); form.action = '{{ route('frontend.account.twofactor.totp.disable') }}'; form.submit();">{{ trans('common.disable') }}</a>
+                                                                <a class="btn btn-default btn-xs pull-right" style="margin-right: 10px" href="{{ route('frontend.account.twofactor.totp.enable') }}">{{ trans('common.settings') }}</a>
+                                                            @else
+                                                                <a class="btn btn-default btn-xs pull-right" href="{{ route('frontend.account.twofactor.totp.enable') }}">{{ trans('common.enable') }}</a>
                                                             @endif
+
                                                             <h3 class="panel-title">
                                                                 {{ trans('twofactor.totp_head') }}
                                                             </h3>
@@ -422,11 +416,8 @@
 
                                                     <div class="panel panel-primary">
                                                         <header class="panel-heading">
-                                                            @if(array_get($twoFactor, 'phone.enabled'))
-                                                                <a class="btn btn-default btn-xs pull-right" href="{{ route('frontend.account.twofactor.phone.disable') }}">{{ trans('common.disable') }}</a>
-                                                            @else
-                                                                <a class="btn btn-default btn-xs pull-right" href="{{ route('frontend.account.twofactor.phone.enable') }}">{{ trans('common.enable') }}</a>
-                                                            @endif
+                                                            <a class="btn btn-default btn-xs pull-right" href="{{ route('frontend.account.twofactor.phone.'.(! empty($twoFactor['phone']['enabled']) ? 'disable' : 'enable')) }}" onclick="event.preventDefault(); var form = document.getElementById('frontend-account-settings-update'); form.action = '{{ route('frontend.account.twofactor.phone.'.(! empty($twoFactor['phone']['enabled']) ? 'disable' : 'enable')) }}'; form.submit();">{{ trans('common.'.(! empty($twoFactor['phone']['enabled']) ? 'disable' : 'enable')) }}</a>
+
                                                             <h3 class="panel-title">
                                                                 {{ trans('twofactor.phone_head') }}
                                                             </h3>

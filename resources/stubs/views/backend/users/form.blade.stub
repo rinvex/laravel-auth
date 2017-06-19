@@ -248,17 +248,104 @@
 
                         <div class="col-md-4">
 
-                            {{-- Password --}}
-                            <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">
-                                {{ Form::label('password', trans('common.password'), ['class' => 'control-label']) }}
-                                @if ($user->exists)
-                                    {{ Form::password('password', ['class' => 'form-control', 'placeholder' => trans('common.password')]) }}
-                                @else
-                                    {{ Form::password('password', ['class' => 'form-control', 'placeholder' => trans('common.password'), 'required' => 'required']) }}
-                                @endif
+                            {{-- Birthday --}}
+                            <div class="form-group has-feedback{{ $errors->has('birthday') ? ' has-error' : '' }}">
+                                {{ Form::label('birthday', trans('common.birthday'), ['class' => 'control-label']) }}
+                                {{ Form::text('birthday', null, ['class' => 'form-control']) }}
+                                <span class="fa fa-calendar form-control-feedback"></span>
 
-                                @if ($errors->has('password'))
-                                    <span class="help-block">{{ $errors->first('password') }}</span>
+                                @if ($errors->has('birthday'))
+                                    <span class="help-block">{{ $errors->first('birthday') }}</span>
+                                @endif
+                            </div>
+
+                        </div>
+
+                        <div class="col-md-4">
+
+                            {{-- Twitter --}}
+                            <div class="form-group has-feedback{{ $errors->has('twitter') ? ' has-error' : '' }}">
+                                {{ Form::label('twitter', trans('common.twitter'), ['class' => 'control-label']) }}
+                                {{ Form::text('twitter', null, ['class' => 'form-control']) }}
+                                <span class="fa fa-twitter form-control-feedback"></span>
+
+                                @if ($errors->has('twitter'))
+                                    <span class="help-block">{{ $errors->first('twitter') }}</span>
+                                @endif
+                            </div>
+
+                        </div>
+
+                        <div class="col-md-4">
+
+                            {{-- Facebook --}}
+                            <div class="form-group has-feedback{{ $errors->has('facebook') ? ' has-error' : '' }}">
+                                {{ Form::label('facebook', trans('common.facebook'), ['class' => 'control-label']) }}
+                                {{ Form::text('facebook', null, ['class' => 'form-control']) }}
+                                <span class="fa fa-facebook form-control-feedback"></span>
+
+                                @if ($errors->has('facebook'))
+                                    <span class="help-block">{{ $errors->first('facebook') }}</span>
+                                @endif
+                            </div>
+
+                        </div>
+
+                        <div class="col-md-4">
+
+                            {{-- Linkedin --}}
+                            <div class="form-group has-feedback{{ $errors->has('linkedin') ? ' has-error' : '' }}">
+                                {{ Form::label('linkedin', trans('common.linkedin'), ['class' => 'control-label']) }}
+                                {{ Form::text('linkedin', null, ['class' => 'form-control']) }}
+                                <span class="fa fa-linkedin form-control-feedback"></span>
+
+                                @if ($errors->has('linkedin'))
+                                    <span class="help-block">{{ $errors->first('linkedin') }}</span>
+                                @endif
+                            </div>
+
+                        </div>
+
+                        <div class="col-md-4">
+
+                            {{-- Google Plus --}}
+                            <div class="form-group has-feedback{{ $errors->has('google_plus') ? ' has-error' : '' }}">
+                                {{ Form::label('google_plus', trans('common.google_plus'), ['class' => 'control-label']) }}
+                                {{ Form::text('google_plus', null, ['class' => 'form-control']) }}
+                                <span class="fa fa-google-plus form-control-feedback"></span>
+
+                                @if ($errors->has('google_plus'))
+                                    <span class="help-block">{{ $errors->first('google_plus') }}</span>
+                                @endif
+                            </div>
+
+                        </div>
+
+                        <div class="col-md-4">
+
+                            {{-- Skype --}}
+                            <div class="form-group has-feedback{{ $errors->has('skype') ? ' has-error' : '' }}">
+                                {{ Form::label('skype', trans('common.skype'), ['class' => 'control-label']) }}
+                                {{ Form::text('skype', null, ['class' => 'form-control']) }}
+                                <span class="fa fa-skype form-control-feedback"></span>
+
+                                @if ($errors->has('skype'))
+                                    <span class="help-block">{{ $errors->first('skype') }}</span>
+                                @endif
+                            </div>
+
+                        </div>
+
+                        <div class="col-md-4">
+
+                            {{-- Website --}}
+                            <div class="form-group has-feedback{{ $errors->has('website') ? ' has-error' : '' }}">
+                                {{ Form::label('website', trans('common.website'), ['class' => 'control-label']) }}
+                                {{ Form::text('website', null, ['class' => 'form-control']) }}
+                                <span class="fa fa-globe form-control-feedback"></span>
+
+                                @if ($errors->has('website'))
+                                    <span class="help-block">{{ $errors->first('website') }}</span>
                                 @endif
                             </div>
 
@@ -282,146 +369,6 @@
 
                         @endcan
 
-                        <div class="col-md-4">
-
-                            {{-- Birthday --}}
-                            <div class="form-group{{ $errors->has('birthday') ? ' has-error' : '' }}">
-                                {{ Form::label('birthday', trans('common.birthday'), ['class' => 'control-label']) }}
-                                <div class="input-group date">
-                                    <div class="input-group-addon">
-                                        <i class="fa fa-calendar"></i>
-                                    </div>
-
-                                    {{ Form::text('birthday', null, ['class' => 'form-control']) }}
-                                </div>
-
-                                @if ($errors->has('birthday'))
-                                    <span class="help-block">{{ $errors->first('birthday') }}</span>
-                                @endif
-                            </div>
-
-                        </div>
-
-                        <div class="col-md-4">
-
-                            {{-- Twitter --}}
-                            <div class="form-group{{ $errors->has('twitter') ? ' has-error' : '' }}">
-                                {{ Form::label('twitter', trans('common.twitter'), ['class' => 'control-label']) }}
-                                <div class="input-group date">
-                                    <div class="input-group-addon">
-                                        <i class="fa fa-twitter"></i>
-                                    </div>
-
-                                    {{ Form::text('twitter', null, ['class' => 'form-control']) }}
-                                </div>
-
-                                @if ($errors->has('twitter'))
-                                    <span class="help-block">{{ $errors->first('twitter') }}</span>
-                                @endif
-                            </div>
-
-                        </div>
-
-                        <div class="col-md-4">
-
-                            {{-- Facebook --}}
-                            <div class="form-group{{ $errors->has('facebook') ? ' has-error' : '' }}">
-                                {{ Form::label('facebook', trans('common.facebook'), ['class' => 'control-label']) }}
-                                <div class="input-group date">
-                                    <div class="input-group-addon">
-                                        <i class="fa fa-facebook"></i>
-                                    </div>
-
-                                    {{ Form::text('facebook', null, ['class' => 'form-control']) }}
-                                </div>
-
-                                @if ($errors->has('facebook'))
-                                    <span class="help-block">{{ $errors->first('facebook') }}</span>
-                                @endif
-                            </div>
-
-                        </div>
-
-                        <div class="col-md-4">
-
-                            {{-- Linkedin --}}
-                            <div class="form-group{{ $errors->has('linkedin') ? ' has-error' : '' }}">
-                                {{ Form::label('linkedin', trans('common.linkedin'), ['class' => 'control-label']) }}
-                                <div class="input-group date">
-                                    <div class="input-group-addon">
-                                        <i class="fa fa-linkedin"></i>
-                                    </div>
-
-                                    {{ Form::text('linkedin', null, ['class' => 'form-control']) }}
-                                </div>
-
-                                @if ($errors->has('linkedin'))
-                                    <span class="help-block">{{ $errors->first('linkedin') }}</span>
-                                @endif
-                            </div>
-
-                        </div>
-
-                        <div class="col-md-4">
-
-                            {{-- Google Plus --}}
-                            <div class="form-group{{ $errors->has('google_plus') ? ' has-error' : '' }}">
-                                {{ Form::label('google_plus', trans('common.google_plus'), ['class' => 'control-label']) }}
-                                <div class="input-group date">
-                                    <div class="input-group-addon">
-                                        <i class="fa fa-google-plus"></i>
-                                    </div>
-
-                                    {{ Form::text('google_plus', null, ['class' => 'form-control']) }}
-                                </div>
-
-                                @if ($errors->has('google_plus'))
-                                    <span class="help-block">{{ $errors->first('google_plus') }}</span>
-                                @endif
-                            </div>
-
-                        </div>
-
-                        <div class="col-md-4">
-
-                            {{-- Skype --}}
-                            <div class="form-group{{ $errors->has('skype') ? ' has-error' : '' }}">
-                                {{ Form::label('skype', trans('common.skype'), ['class' => 'control-label']) }}
-                                <div class="input-group date">
-                                    <div class="input-group-addon">
-                                        <i class="fa fa-skype"></i>
-                                    </div>
-
-                                    {{ Form::text('skype', null, ['class' => 'form-control']) }}
-                                </div>
-
-                                @if ($errors->has('skype'))
-                                    <span class="help-block">{{ $errors->first('skype') }}</span>
-                                @endif
-                            </div>
-
-                        </div>
-
-                        <div class="col-md-4">
-
-                            {{-- Website --}}
-                            <div class="form-group{{ $errors->has('website') ? ' has-error' : '' }}">
-                                {{ Form::label('website', trans('common.website'), ['class' => 'control-label']) }}
-                                <div class="input-group date">
-                                    <div class="input-group-addon">
-                                        <i class="fa fa-globe"></i>
-                                    </div>
-
-                                    {{ Form::text('website', null, ['class' => 'form-control']) }}
-                                </div>
-
-                                @if ($errors->has('website'))
-                                    <span class="help-block">{{ $errors->first('website') }}</span>
-                                @endif
-                            </div>
-
-                        </div>
-
                         @can('grant-abilities')
 
                             <div class="col-md-4">
@@ -439,6 +386,42 @@
                             </div>
 
                         @endcan
+
+                        <div class="col-md-4">
+
+                            {{-- Password --}}
+                            <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">
+                                {{ Form::label('password', trans('common.password'), ['class' => 'control-label']) }}
+                                @if ($user->exists)
+                                {{ Form::password('password', ['class' => 'form-control', 'placeholder' => trans('common.password')]) }}
+                                @else
+                                {{ Form::password('password', ['class' => 'form-control', 'placeholder' => trans('common.password'), 'required' => 'required']) }}
+                                @endif
+
+                                @if ($errors->has('password'))
+                                <span class="help-block">{{ $errors->first('password') }}</span>
+                                @endif
+                            </div>
+
+                        </div>
+
+                        <div class="col-md-4">
+
+                            {{-- Password Confirmation --}}
+                            <div class="form-group{{ $errors->has('password_confirmation') ? ' has-error' : '' }}">
+                                {{ Form::label('password_confirmation', trans('common.password_confirmation'), ['class' => 'control-label']) }}
+                                @if ($user->exists)
+                                {{ Form::password('password_confirmation', ['class' => 'form-control', 'placeholder' => trans('common.password_confirmation')]) }}
+                                @else
+                                {{ Form::password('password_confirmation', ['class' => 'form-control', 'placeholder' => trans('common.password_confirmation'), 'required' => 'required']) }}
+                                @endif
+
+                                @if ($errors->has('password_confirmation'))
+                                    <span class="help-block">{{ $errors->first('password_confirmation') }}</span>
+                                @endif
+                            </div>
+
+                        </div>
 
                     </div>
 

@@ -52,6 +52,7 @@ class AuthenticationController extends AbstractController
         $remember = $request->has('remember');
         $loginField = get_login_field($request->get('loginfield'));
         $credentials = [
+            'active' => true,
             $loginField => $request->input('loginfield'),
             'password' => $request->input('password'),
         ];
@@ -114,7 +115,7 @@ class AuthenticationController extends AbstractController
 
             // TwoFactor authentication required
             case SessionGuard::AUTH_TWOFACTOR_REQUIRED:
-                $route = ! isset(session('rinvex.fort.twofactor.methods')['totp']) ? route('frontend.verification.phone.request') : route('frontend.verification.phone.verify');
+                $route = ! empty(session('_twofactor')['totp']['enabled']) ? route('frontend.verification.phone.request') : route('frontend.verification.phone.verify');
 
                 return intend([
                     'url' => $route,

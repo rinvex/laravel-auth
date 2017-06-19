@@ -5,6 +5,7 @@ declare(strict_types=1);
 return [
 
     'error' => '<strong>Whoops!</strong> There were some problems with your input.',
+    'session_required' => 'You must login first!',
 
     'sessions' => [
         'flush_single_heading' => 'Flush Selected Session',
@@ -39,6 +40,7 @@ return [
     ],
 
     'account' => [
+        'phone_field_required' => 'You must enter your phone first!',
         'phone_verification_required' => 'You must verify your phone first!',
         'country_required' => 'You must select your country first!',
         'phone_required' => 'You must update your phone first!',
@@ -62,6 +64,10 @@ return [
         ],
     ],
 
+    'passwordreset' => [
+        'already_logged' => 'You are logged in, so you can change password from your account settings.',
+    ],
+
     'verification' => [
 
         'email' => [
@@ -81,6 +87,7 @@ return [
 
         'twofactor' => [
             'invalid_token' => 'This verification token is invalid.',
+            'globaly_disabled' => 'Sorry, TwoFactor authentication globally disabled!',
             'totp' => [
                 'required' => 'TwoFactor TOTP authentication enabled for your account, authentication code required to proceed.',
                 'enabled' => 'TwoFactor TOTP authentication has been enabled and backup codes generated for your account.',
@@ -95,7 +102,8 @@ return [
                 'enabled' => 'TwoFactor phone authentication has been enabled for your account.',
                 'disabled' => 'TwoFactor phone authentication has been disabled for your account.',
                 'auto_disabled' => 'TwoFactor phone authentication has been disabled for your account. Changing country or phone results in TwoFactor auto disable. You need to enable it again manually.',
-                'country_required' => 'Country field seems to be missing in your account, and since TwoFactor authentication already activated which require that field, you can NOT login. Please contact staff to solve this issue.',
+                'phone_required' => 'Phone field seems to be missing in your account, and since TwoFactor authentication already activated which require that field, you can NOT login unfortunately. Please contact staff to solve this issue.',
+                'country_required' => 'Country field seems to be missing in your account, and since TwoFactor authentication already activated which require that field, you can NOT login unfortunately. Please contact staff to solve this issue.',
                 'globaly_disabled' => 'Sorry, TwoFactor phone authentication globally disabled!',
             ],
         ],
