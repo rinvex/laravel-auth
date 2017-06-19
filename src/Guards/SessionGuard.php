@@ -4,13 +4,10 @@ declare(strict_types=1);
 
 namespace Rinvex\Fort\Guards;
 
-use Carbon\Carbon;
-use Rinvex\Fort\Models\Persistence;
 use Rinvex\Fort\Traits\ThrottlesLogins;
 use Rinvex\Fort\Services\TwoFactorTotpProvider;
 use Illuminate\Auth\Events\Logout as LogoutEvent;
 use Illuminate\Auth\SessionGuard as BaseSessionGuard;
-use Rinvex\Fort\Exceptions\InvalidPersistenceException;
 use Rinvex\Fort\Contracts\AuthenticatableTwoFactorContract;
 use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 
@@ -75,86 +72,6 @@ class SessionGuard extends BaseSessionGuard
     const AUTH_LOGOUT = 'messages.auth.logout';
 
     /**
-     * Indicates if there's logout attempt.
-     *
-     * @var bool
-     */
-    protected $logoutAttempted = false;
-
-    /**
-     * Get the currently authenticated user.
-     *
-     * @throws \Rinvex\Fort\Exceptions\InvalidPersistenceException
-     *
-     * @return \Illuminate\Contracts\Auth\Authenticatable|null
-     */
-    public function user()
-    {
-        if ($this->loggedOut) {
-            return;
-        }
-
-        // If we've already retrieved the user for the current request we can just
-        // return it back immediately. We do not want to fetch the user data on
-        // every call to this method because that would be tremendously slow.
-        if (! is_null($this->user)) {
-            return $this->user;
-        }
-
-        $id = $this->session->get($this->getName());
-
-        // First we will try to load the user using the identifier in the session if
-        // one exists. Otherwise we will check for a "remember me" cookie in this
-        // request, and if one exists, attempt to retrieve the user using that.
-        $user = null;
-
-        if (! is_null($id)) {
-            if ($user = $this->provider->retrieveById($id)) {
-                $this->fireAuthenticatedEvent($user);
-            }
-        }
-
-        // If the user is null, but we decrypt a "recaller" cookie we can attempt to
-        // pull the user data on that cookie which serves as a remember cookie on
-        // the application. Once we have a user we can return it to the caller.
-        $recaller = $this->recaller();
-
-        if (is_null($user) && ! is_null($recaller)) {
-            $user = $this->userFromRecaller($recaller);
-
-            if ($user) {
-                // Copy the old session id for persistence update
-                // before the `updateSession` method change it!
-                $oldSession = $this->session->getId();
-
-                $this->updateSession($user->getAuthIdentifier());
-
-                // Update user persistence
-                $this->updatePersistence($user->id, $oldSession, false);
-
-                $this->fireLoginEvent($user, true);
-            }
-        }
-
-        $persistence = null;
-
-        // Check if we've a valid persistence
-        if ($user && ! $this->logoutAttempted && ! ($persistence = $this->getPersistenceByToken($this->session->getId()))) {
-            $this->logout();
-
-            // Throw invalid persistence exception
-            throw new InvalidPersistenceException();
-        }
-
-        // Update last activity
-        if (! $this->logoutAttempted && ! is_null($user) && ! is_null($persistence)) {
-            $persistence->touch();
-        }
-
-        return $this->user = $user;
-    }
-
-    /**
      * Attempt to authenticate a user using the given credentials.
      *
      * @param array $credentials
@@ -164,8 +81,6 @@ class SessionGuard extends BaseSessionGuard
      */
     public function attempt(array $credentials = [], $remember = false)
     {
-        $credentials = $credentials + ['active' => true];
-
         // Fire the authentication attempt event
         $this->fireAttemptEvent($credentials, $remember);
 
@@ -197,27 +112,24 @@ class SessionGuard extends BaseSessionGuard
                 return static::AUTH_UNVERIFIED;
             }
 
-            $totp = array_get($user->getTwoFactor(), 'totp.enabled');
-            $phone = array_get($user->getTwoFactor(), 'phone.enabled');
+            if (! empty(config('rinvex.fort.twofactor.providers'))) {
+                $twofactor = $user->getTwoFactor();
+                $totpStatus = $twofactor['totp']['enabled'] ?? false;
+                $phoneStatus = $twofactor['phone']['enabled'] ?? false;
 
-            // Enforce TwoFactor authentication
-            if ($totp || $phone) {
-                // Update user persistence
-                $this->updatePersistence($user->id, $this->session->getId(), true);
+                // Enforce TwoFactor authentication
+                if ($totpStatus || $phoneStatus) {
+                    $this->session->put('_twofactor', ['user_id' => $user->id, 'remember' => $remember, 'totp' => $totpStatus, 'phone' => $phoneStatus]);
 
-                $this->session->flash('rinvex.fort.twofactor.user', $user);
-                $this->session->flash('rinvex.fort.twofactor.remember', $remember);
-                $this->session->flash('rinvex.fort.twofactor.persistence', $this->session->getId());
-                $this->session->flash('rinvex.fort.twofactor.methods', ['totp' => $totp, 'phone' => $phone]);
+                    // Fire the TwoFactor authentication required event
+                    $this->events->dispatch('rinvex.fort.twofactor.required', [$user]);
 
-                // Fire the Two-Factor authentication required event
-                $this->events->dispatch('rinvex.fort.twofactor.required', [$user]);
-
-                return static::AUTH_TWOFACTOR_REQUIRED;
+                    // If TwoFactor enabled, the attempt method never login users, so
+                    // an explicit call to "login" or "loginUsingId" is required elsewhere
+                    return static::AUTH_TWOFACTOR_REQUIRED;
+                }
             }
 
-            // If Two-Factor enabled, `attempt` method always returns false,
-            // use `login` or `loginUsingId` methods to login users in such case.
             return $this->login($user, $remember);
         }
 
@@ -225,9 +137,6 @@ class SessionGuard extends BaseSessionGuard
         if ($throttles && ! $lockedOut) {
             $this->incrementLoginAttempts($this->getRequest());
         }
-
-        $this->clearTwoFactor();
-        // Clear TwoFactor authentication attempts
 
         // If the authentication attempt fails we will fire an event so that the user
         // may be notified of any suspicious attempts to access their account from
@@ -242,12 +151,17 @@ class SessionGuard extends BaseSessionGuard
      *
      * @param \Illuminate\Contracts\Auth\Authenticatable $user
      * @param bool                                       $remember
-     * @param string                                     $persistence
      *
      * @return string
      */
-    public function login(AuthenticatableContract $user, $remember = false, $persistence = null)
+    public function login(AuthenticatableContract $user, $remember = false)
     {
+        // Check persistence mode
+        if (config('rinvex.fort.persistence') === 'single') {
+            $this->cycleRememberToken($user);
+            $user->sessions()->delete();
+        }
+
         $this->updateSession($user->getAuthIdentifier());
 
         // If the user should be permanently "remembered" by the application we will
@@ -259,24 +173,10 @@ class SessionGuard extends BaseSessionGuard
             $this->queueRecallerCookie($user);
         }
 
-        // Check persistence mode
-        if (config('rinvex.fort.persistence') === 'single') {
-            $user->persistences()->delete();
-        }
-
-        // Update user last login timestamp
-        $user->fill(['login_at' => new Carbon()])->forceSave();
-
-        // Update user persistence
-        $this->updatePersistence($user->id, $persistence ?: $this->session->getId(), false);
-
         // Login successful, clear login attempts
         if (config('rinvex.fort.throttle.enabled')) {
             $this->clearLoginAttempts($this->getRequest());
         }
-
-        $this->clearTwoFactor();
-        // Clear TwoFactor authentication attempts
 
         // If we have an event dispatcher instance set we will fire an event so that
         // any listeners will hook into the authentication events and run actions
@@ -289,14 +189,26 @@ class SessionGuard extends BaseSessionGuard
     }
 
     /**
+     * Update the session with the given ID.
+     *
+     * @param  string $id
+     *
+     * @return void
+     */
+    protected function updateSession($id)
+    {
+        $this->session->put($this->getName(), $id);
+        $this->session->forget('_twofactor');
+        $this->session->migrate(true);
+    }
+
+    /**
      * Log the user out of the application.
      *
      * @return void
      */
     public function logout()
     {
-        $this->logoutAttempted = true;
-
         $user = $this->user();
 
         // If we have an event dispatcher instance, we can fire off the logout event
@@ -306,11 +218,6 @@ class SessionGuard extends BaseSessionGuard
 
         if (! is_null($this->user)) {
             $this->cycleRememberToken($user);
-        }
-
-        // Delete user persistence
-        if ($persistence = Persistence::find($this->session->getId())) {
-            $persistence->delete();
         }
 
         if (isset($this->events)) {
@@ -334,94 +241,28 @@ class SessionGuard extends BaseSessionGuard
      */
     public function attemptUser()
     {
-        if (! empty($session = $this->session->get('rinvex.fort.twofactor.persistence')) && $persistence = $this->getPersistenceByToken($session)) {
-            return $this->provider->retrieveById($persistence->user_id);
+        if (! empty($twofactor = $this->session->get('_twofactor'))) {
+            return $this->provider->retrieveById($twofactor['user_id']);
         }
     }
 
     /**
-     * Clear Two-Factor authentication attempts.
+     * Verify TwoFactor authentication.
      *
-     * @return void
-     */
-    protected function clearTwoFactor()
-    {
-        $this->session->forget([
-            'rinvex.fort.twofactor.user',
-            'rinvex.fort.twofactor.methods',
-            'rinvex.fort.twofactor.remember',
-            'rinvex.fort.twofactor.persistence',
-        ]);
-    }
-
-    /**
-     * Remember Two-Factor authentication attempts.
-     *
-     * @return void
-     */
-    public function rememberTwoFactor()
-    {
-        $this->session->keep([
-            'rinvex.fort.twofactor.user',
-            'rinvex.fort.twofactor.methods',
-            'rinvex.fort.twofactor.remember',
-            'rinvex.fort.twofactor.persistence',
-        ]);
-    }
-
-    /**
-     * Update user persistence.
-     *
-     * @param int    $id
-     * @param string $token
-     * @param bool   $attempt
-     *
-     * @return void
-     */
-    protected function updatePersistence($id, $token, $attempt)
-    {
-        $agent = request()->server('HTTP_USER_AGENT');
-        $ip = request()->ip();
-
-        // Delete previous user persistence
-        if ($persistence = Persistence::find($token)) {
-            $persistence->delete();
-        }
-
-        // Create new user persistence
-        Persistence::create([
-            'user_id' => $id,
-            'token' => $this->session->getId(),
-            'attempt' => $attempt,
-            'agent' => $agent,
-            'ip' => $ip,
-        ]);
-    }
-
-    /**
-     * Verify Two-Factor authentication.
-     *
-     * @param \Illuminate\Contracts\Auth\Authenticatable $user
+     * @param \Rinvex\Fort\Contracts\AuthenticatableTwoFactorContract $user
      * @param string                                     $token
      *
      * @return string
      */
-    public function attemptTwoFactor(AuthenticatableContract $user, $token)
+    public function attemptTwoFactor(AuthenticatableTwoFactorContract $user, $token)
     {
-        // Prepare required variables
-        $validBackup = false;
-
-        if ($this->session->get('rinvex.fort.twofactor.persistence') && ($this->isValidTwoFactorTotp($user, $token) || $this->isValidTwoFactorPhone($user, $token) || $validBackup = $this->isValidTwoFactorBackup($user, $token))) {
-            // Verify TwoFactor authentication
-            if ($validBackup) {
-                $this->invalidateTwoFactorBackup($user, $token);
-            }
-
+        // Verify TwoFactor authentication
+        if ($this->session->has('_twofactor') && ($this->isValidTwoFactorTotp($user, $token) || $this->isValidTwoFactorBackup($user, $token) || $this->isValidTwoFactorPhone($user, $token))) {
             return static::AUTH_LOGIN;
         }
 
         // This is NOT login attempt, it's just account update -> phone verification
-        if (! $this->session->get('rinvex.fort.twofactor.persistence') && $this->isValidTwoFactorPhone($user, $token)) {
+        if (! $this->session->has('_twofactor') && $this->isValidTwoFactorPhone($user, $token)) {
             return static::AUTH_PHONE_VERIFIED;
         }
 
@@ -446,9 +287,7 @@ class SessionGuard extends BaseSessionGuard
         array_set($settings, 'totp.backup', $backup);
 
         // Update TwoFactor OTP backup codes
-        $user->fill([
-            'two_factor' => $settings,
-        ])->forceSave();
+        $user->fill(['two_factor' => $settings])->forceSave();
     }
 
     /**
@@ -478,8 +317,10 @@ class SessionGuard extends BaseSessionGuard
     protected function isValidTwoFactorBackup(AuthenticatableTwoFactorContract $user, $token)
     {
         $backup = array_get($user->getTwoFactor(), 'totp.backup', []);
+        $result = mb_strlen($token) === 10 && in_array($token, $backup);
+        ! $result || $this->invalidateTwoFactorBackup($user, $token);
 
-        return mb_strlen($token) === 10 && in_array($token, $backup);
+        return $result;
     }
 
     /**
@@ -495,18 +336,6 @@ class SessionGuard extends BaseSessionGuard
         $totp = app(TwoFactorTotpProvider::class);
         $secret = array_get($user->getTwoFactor(), 'totp.secret');
 
-        return mb_strlen($token) === 6 && isset($this->session->get('rinvex.fort.twofactor.methods')['totp']) && $totp->verifyKey($secret, $token);
-    }
-
-    /**
-     * Pull a persistence from the repository by its token.
-     *
-     * @param string $token
-     *
-     * @return \Rinvex\Fort\Models\Persistence
-     */
-    public function getPersistenceByToken($token)
-    {
-        return Persistence::where('token', $token)->first();
+        return mb_strlen($token) === 6 && $this->session->get('_twofactor.totp') && $totp->verifyKey($secret, $token);
     }
 }

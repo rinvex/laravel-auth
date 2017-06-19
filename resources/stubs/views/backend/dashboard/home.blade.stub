@@ -148,22 +148,22 @@
 
                                     <ul class="list-group" style="vertical-align: middle">
 
-                                        @foreach($persistences as $persistence)
+                                        @foreach($sessions as $session)
 
                                             <li class="list-group-item" style="vertical-align: middle">
                                                 <span class="pull-right">
-                                                    @if($persistence->user_id === $currentUser->id)<span class="label label-info">{{ trans('common.you') }}</span> @endif
-                                                    <span class="badge">{{ $persistence->updated_at->diffForHumans() }}</span>
+                                                    @if($session->user_id === $currentUser->id)<span class="label label-info">{{ trans('common.you') }}</span> @endif
+                                                    <span class="badge">{{ $session->last_activity->diffForHumans() }}</span>
                                                 </span>
-                                                @can('update-users', $user) <a href="{{ route('backend.users.edit', ['user' => $persistence->user_id]) }}"> @endcan
+                                                @can('update-users', $user) <a href="{{ route('backend.users.edit', ['user' => $session->user_id]) }}"> @endcan
                                                     <strong>
-                                                        @if($persistence->user->first_name)
-                                                            {{ $persistence->user->first_name }} {{ $persistence->user->middle_name }} {{ $persistence->user->last_name }}
+                                                        @if($session->user->first_name)
+                                                            {{ $session->user->first_name }} {{ $session->user->middle_name }} {{ $session->user->last_name }}
                                                         @else
-                                                            {{ $persistence->user->username }}
+                                                            {{ $session->user->username }}
                                                         @endif
                                                     </strong>
-                                                    <div class="small ">{{ $persistence->user->job_title }}</div>
+                                                    <div class="small ">{{ $session->user->job_title }}</div>
                                                 @can('update-users', $user) </a> @endcan
                                             </li>
 

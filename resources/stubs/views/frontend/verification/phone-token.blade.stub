@@ -26,11 +26,12 @@
                             @include('frontend.alerts.warning')
                             @include('frontend.alerts.error')
 
-                            <div class="form-group{{ $errors->has('token') ? ' has-error' : '' }}">
+                            <div class="form-group has-feedback{{ $errors->has('token') ? ' has-error' : '' }}">
                                 {{ Form::label('token', trans('common.authentication_code'), ['class' => 'col-md-4 control-label']) }}
 
                                 <div class="col-md-6">
                                     {{ Form::text('token', null, ['class' => 'form-control', 'placeholder' => trans('common.authentication_code'), 'required' => 'required', 'autofocus' => 'autofocus']) }}
+                                    <span class="fa fa-phone form-control-feedback"></span>
 
                                     @if ($errors->has('token'))
                                         <span class="help-block">{{ $errors->first('token') }}</span>
@@ -38,7 +39,7 @@
 
                                     {{ trans('twofactor.backup_notice') }}<br />
 
-                                    @if ($twoFactor['phone']['enabled'])
+                                    @if ($phoneEnabled)
                                         <strong>{!! trans('twofactor.backup_sms', ['href' => route('frontend.verification.phone.request')]) !!}</strong>
                                     @else
                                         <strong>{{ trans('twofactor.backup_code') }}</strong>

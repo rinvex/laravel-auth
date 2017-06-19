@@ -8,7 +8,6 @@ use Exception;
 use Illuminate\Auth\AuthenticationException;
 use Rinvex\Fort\Exceptions\AuthorizationException;
 use App\Exceptions\Handler as BaseExceptionHandler;
-use Rinvex\Fort\Exceptions\InvalidPersistenceException;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class ExceptionHandler extends BaseExceptionHandler
@@ -23,12 +22,7 @@ class ExceptionHandler extends BaseExceptionHandler
      */
     public function render($request, Exception $exception)
     {
-        if ($exception instanceof InvalidPersistenceException) {
-            return intend([
-                'url' => route('frontend.auth.login'),
-                'withErrors' => ['rinvex.fort.session.expired' => trans('messages.auth.session.expired')],
-            ], 401);
-        } elseif ($exception instanceof ModelNotFoundException) {
+        if ($exception instanceof ModelNotFoundException) {
             $single = mb_strtolower(trim(mb_strrchr($exception->getModel(), '\\'), '\\'));
             $plural = str_plural($single);
 

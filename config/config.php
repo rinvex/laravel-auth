@@ -20,8 +20,7 @@ return [
     | Defaults:
     | - Rinvex\Fort\Models\Ability::class
     | - Rinvex\Fort\Models\Role::class
-    | - Rinvex\Fort\Models\User::class
-    | - Rinvex\Fort\Models\Persistence::class
+    | - Rinvex\Fort\Models\Session::class
     | - Rinvex\Fort\Models\Socialite::class
     |
     */
@@ -30,7 +29,7 @@ return [
 
         'ability' => Rinvex\Fort\Models\Ability::class,
         'role' => Rinvex\Fort\Models\Role::class,
-        'persistence' => Rinvex\Fort\Models\Persistence::class,
+        'session' => Rinvex\Fort\Models\Session::class,
         'socialite' => Rinvex\Fort\Models\Socialite::class,
 
     ],
@@ -45,8 +44,11 @@ return [
     | you may use whatever you like. The table you want to use
     | must have the same structure as of the default ones.
     |
-    | Note: Password resets table is defined in the default Laravel configuration file:
-    |       config/auth.php (Check 'table' key inside the 'passwords' array)
+    | Notes: - Password resets table is defined in the default Laravel configuration file:
+    |          config/auth.php (Check 'table' key inside the 'passwords' array)
+    |
+    |        - Sessions table is defined in the default Laravel configuration file:
+    |          config/session.php (Check 'table' key)
     |
     | Defaults:
     | - abilities
@@ -56,7 +58,6 @@ return [
     | - role_user
     | - ability_role
     | - email_verifications
-    | - persistences
     | - socialites
     |
     */
@@ -70,7 +71,6 @@ return [
         'role_user' => 'role_user',
         'ability_role' => 'ability_role',
         'email_verifications' => 'email_verifications',
-        'persistences' => 'persistences',
         'socialites' => 'socialites',
 
     ],

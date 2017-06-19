@@ -115,7 +115,9 @@ class AuthenticationController extends AbstractController
 
             // TwoFactor authentication required
             case SessionGuard::AUTH_TWOFACTOR_REQUIRED:
-                $route = ! empty(session('_twofactor')['totp']['enabled']) ? route('frontend.verification.phone.request') : route('frontend.verification.phone.verify');
+                $route = session('_twofactor.totp')
+                    ? route('frontend.verification.phone.verify')
+                    : route('frontend.verification.phone.request');
 
                 return intend([
                     'url' => $route,

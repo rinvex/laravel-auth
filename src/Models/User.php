@@ -67,8 +67,8 @@ use Illuminate\Contracts\Auth\Access\Authorizable as AuthorizableContract;
  * @property-read string                                                                                                    $name
  * @property-read array                                                                                                     $role_list
  * @property-read \Illuminate\Notifications\DatabaseNotificationCollection|\Illuminate\Notifications\DatabaseNotification[] $notifications
- * @property-read \Illuminate\Database\Eloquent\Collection|\Rinvex\Fort\Models\Persistence[]                                $persistences
  * @property-read \Illuminate\Database\Eloquent\Collection|\Rinvex\Fort\Models\Role[]                                       $roles
+ * @property-read \Illuminate\Database\Eloquent\Collection|\Rinvex\Fort\Models\Session[]                                    $sessions
  * @property-read \Illuminate\Database\Eloquent\Collection|\Rinvex\Fort\Models\Socialite[]                                  $socialites
  *
  * @method static \Illuminate\Database\Query\Builder|\Rinvex\Fort\Models\User role($roles)
@@ -289,13 +289,13 @@ class User extends Model implements AuthenticatableContract, AuthenticatableTwoF
     }
 
     /**
-     * A user may have multiple persistences.
+     * A user may have multiple sessions.
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function persistences()
+    public function sessions()
     {
-        return $this->hasMany(config('rinvex.fort.models.persistence'), 'user_id', 'id');
+        return $this->hasMany(config('rinvex.fort.models.session'), 'user_id', 'id');
     }
 
     /**
