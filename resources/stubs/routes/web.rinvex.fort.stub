@@ -48,16 +48,16 @@ Route::namespace('Frontend')->name('frontend.')->middleware(['web', 'nohttpcache
 
             // TwoFactor TOTP Routes
             Route::name('totp.')->prefix('totp')->group(function () {
-                Route::get('enable')->name('enable')->uses('TwoFactorSettingsController@enableTotp');
+                Route::post('enable')->name('enable')->uses('TwoFactorSettingsController@enableTotp');
                 Route::post('update')->name('update')->uses('TwoFactorSettingsController@updateTotp');
-                Route::get('disable')->name('disable')->uses('TwoFactorSettingsController@disableTotp');
-                Route::get('backup')->name('backup')->uses('TwoFactorSettingsController@backupTotp');
+                Route::post('disable')->name('disable')->uses('TwoFactorSettingsController@disableTotp');
+                Route::post('backup')->name('backup')->uses('TwoFactorSettingsController@backupTotp');
             });
 
             // TwoFactor Phone Routes
             Route::name('phone.')->prefix('phone')->group(function () {
-                Route::get('enable')->name('enable')->uses('TwoFactorSettingsController@enablePhone');
-                Route::get('disable')->name('disable')->uses('TwoFactorSettingsController@disablePhone');
+                Route::post('enable')->name('enable')->uses('TwoFactorSettingsController@enablePhone');
+                Route::post('disable')->name('disable')->uses('TwoFactorSettingsController@disablePhone');
             });
         });
     });
