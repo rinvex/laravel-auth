@@ -20,7 +20,7 @@
                     </header>
 
                     <div class="panel-body">
-                        {{ Form::open(['url' => route('frontend.account.twofactor.totp.update'), 'class' => 'form-horizontal']) }}
+                        {{ Form::open(['url' => route('frontend.account.twofactor.totp.update'), 'class' => 'form-horizontal', 'id' => 'frontend-account-twofactor-totp-update']) }}
 
                             @include('frontend.alerts.success')
                             @include('frontend.alerts.warning')
@@ -84,9 +84,14 @@
 
                                 <div class="col-md-8 col-sm-8 col-xs-8">
                                     {!! trans('twofactor.totp_apps_step3') !!}
-                                    <p>
-                                        {{ Form::text('token', old('token'), ['class' => 'form-control', 'placeholder' => trans('common.authentication_code'), 'required' => 'required', 'autofocus' => 'autofocus']) }}
-                                    </p>
+
+                                    <div class="form-group{{ $errors->has('token') ? ' has-error' : '' }}" style="margin-left: 0; margin-right: 0">
+                                        {{ Form::text('token', null, ['class' => 'form-control', 'placeholder' => trans('common.authentication_code'), 'required' => 'required', 'autofocus' => 'autofocus']) }}
+
+                                        @if ($errors->has('token'))
+                                            <span class="help-block">{{ $errors->first('token') }}</span>
+                                        @endif
+                                    </div>
                                 </div>
 
                             </div>
@@ -112,7 +117,7 @@
                                                 @if(array_get($settings, 'totp.backup'))
                                                     <div class="panel panel-primary">
                                                         <header class="panel-heading">
-                                                            <a class="btn btn-default btn-xs pull-right" style="margin-left: 10px" href="{{ route('frontend.account.twofactor.totp.backup') }}">{{ trans('twofactor.totp_backup_generate') }}</a>
+                                                            <a class="btn btn-default btn-xs pull-right" href="{{ route('frontend.account.twofactor.totp.backup') }}" onclick="event.preventDefault(); var form = document.getElementById('frontend-account-twofactor-totp-update'); form.action = '{{ route('frontend.account.twofactor.totp.backup') }}'; form.submit();">{{ trans('twofactor.totp_backup_generate') }}</a>
                                                             <h3 class="panel-title">{{ trans('twofactor.totp_backup_head') }}</h3>
                                                         </header>
                                                         <div class="panel-body">
