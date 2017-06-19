@@ -25,7 +25,7 @@ use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 use Illuminate\Contracts\Auth\Access\Authorizable as AuthorizableContract;
 
 /**
- * Rinvex\Fort\Models\User
+ * Rinvex\Fort\Models\User.
  *
  * @property int                                                                                                            $id
  * @property string                                                                                                         $username
