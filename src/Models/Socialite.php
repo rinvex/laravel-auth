@@ -7,7 +7,7 @@ namespace Rinvex\Fort\Models;
 use Illuminate\Database\Eloquent\Model;
 
 /**
- * Rinvex\Fort\Models\Socialite
+ * Rinvex\Fort\Models\Socialite.
  *
  * @property int                           $id
  * @property int                           $user_id

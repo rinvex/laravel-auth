@@ -10,7 +10,7 @@ use Rinvex\Cacheable\CacheableEloquent;
 use Spatie\Translatable\HasTranslations;
 
 /**
- * Rinvex\Fort\Models\Ability
+ * Rinvex\Fort\Models\Ability.
  *
  * @property int                                                                      $id
  * @property string                                                                   $action
