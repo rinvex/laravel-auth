@@ -4,29 +4,33 @@ declare(strict_types=1);
 
 namespace {{namespace}}Http\Requests\Frontend;
 
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Foundation\Http\FormRequest;
+use Exception;
+use Rinvex\Support\Http\Requests\FormRequest;
 
 class PhoneVerificationRequest extends FormRequest
 {
     /**
-     * {@inheritdoc}
-     */
-    public function response(array $errors)
-    {
-        // If we've got errors, remember Two-Factor persistence
-        Auth::guard()->rememberTwoFactor();
-
-        return parent::response($errors);
-    }
-
-    /**
      * Determine if the user is authorized to make this request.
+     *
+     * @throws \Exception
      *
      * @return bool
      */
     public function authorize()
     {
+        $user = $this->user();
+        $attemptUser = auth()->attemptUser();
+
+        if (empty(config('rinvex.fort.twofactor.providers'))) {
+            // At least one TwoFactor provider required for phone verification
+            throw new Exception(trans('messages.verification.twofactor.globaly_disabled'));
+        }
+
+        if (! $user && ! $attemptUser) {
+            // User instance required to detect active TwoFactor methods
+            throw new Exception(trans('messages.session_required'));
+        }
+
         return true;
     }
 
@@ -37,8 +41,6 @@ class PhoneVerificationRequest extends FormRequest
      */
     public function rules()
     {
-        return ! $this->isMethod('post') ? [] : [
-            'token' => 'required|numeric',
-        ];
+        return [];
     }
 }
