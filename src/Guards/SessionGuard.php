@@ -191,7 +191,7 @@ class SessionGuard extends BaseSessionGuard
     /**
      * Update the session with the given ID.
      *
-     * @param  string $id
+     * @param string $id
      *
      * @return void
      */
@@ -250,7 +250,7 @@ class SessionGuard extends BaseSessionGuard
      * Verify TwoFactor authentication.
      *
      * @param \Rinvex\Fort\Contracts\AuthenticatableTwoFactorContract $user
-     * @param string                                     $token
+     * @param string                                                  $token
      *
      * @return string
      */
