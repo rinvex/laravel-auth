@@ -57,8 +57,8 @@ class Session extends Model
     /**
      * Add an "order by" clause to retrieve most recent sessions.
      *
-     * @param  \Illuminate\Database\Query\Builder $query
-     * @param  string                             $column
+     * @param \Illuminate\Database\Query\Builder $query
+     * @param string                             $column
      *
      * @return \Illuminate\Database\Query\Builder
      */
@@ -70,8 +70,8 @@ class Session extends Model
     /**
      * Add an "order by" clause to retrieve least recent sessions.
      *
-     * @param  \Illuminate\Database\Query\Builder $query
-     * @param  string                             $column
+     * @param \Illuminate\Database\Query\Builder $query
+     * @param string                             $column
      *
      * @return \Illuminate\Database\Query\Builder
      */
@@ -83,8 +83,8 @@ class Session extends Model
     /**
      * Use joins to order by the users' column attributes.
      *
-     * @param  \Illuminate\Database\Query\Builder $query
-     * @param  string                             $column
+     * @param \Illuminate\Database\Query\Builder $query
+     * @param string                             $column
      *
      * @return \Illuminate\Database\Query\Builder
      */
@@ -93,7 +93,7 @@ class Session extends Model
         $table = $this->getTable();
 
         $userModel = config('auth.providers.'.config('auth.guards.'.config('auth.defaults.guard').'.provider').'.model');
-        $user = new $userModel;
+        $user = new $userModel();
         $userTable = $user->getTable();
         $userKey = $user->getKeyName();
 
@@ -104,8 +104,8 @@ class Session extends Model
      * Constrain the query to retrieve only sessions of guests who
      * have been active within the specified number of seconds.
      *
-     * @param  \Illuminate\Database\Query\Builder $query
-     * @param  int                                $seconds
+     * @param \Illuminate\Database\Query\Builder $query
+     * @param int                                $seconds
      *
      * @return \Illuminate\Database\Query\Builder
      */
@@ -117,8 +117,8 @@ class Session extends Model
     /**
      * Alias for the `guestsByMinutes` query method.
      *
-     * @param  \Illuminate\Database\Query\Builder $query
-     * @param  int                                $minutes
+     * @param \Illuminate\Database\Query\Builder $query
+     * @param int                                $minutes
      *
      * @return \Illuminate\Database\Query\Builder
      */
@@ -131,8 +131,8 @@ class Session extends Model
      * Constrain the query to retrieve only sessions of guests who
      * have been active within the specified number of minutes.
      *
-     * @param  \Illuminate\Database\Query\Builder $query
-     * @param  int                                $minutes
+     * @param \Illuminate\Database\Query\Builder $query
+     * @param int                                $minutes
      *
      * @return \Illuminate\Database\Query\Builder
      */
@@ -145,8 +145,8 @@ class Session extends Model
      * Constrain the query to retrieve only sessions of guests who
      * have been active within the specified number of hours.
      *
-     * @param  \Illuminate\Database\Query\Builder $query
-     * @param  int                                $hours
+     * @param \Illuminate\Database\Query\Builder $query
+     * @param int                                $hours
      *
      * @return \Illuminate\Database\Query\Builder
      */
@@ -159,8 +159,8 @@ class Session extends Model
      * Constrain the query to retrieve only sessions of users who
      * have been active within the specified number of seconds.
      *
-     * @param  \Illuminate\Database\Query\Builder $query
-     * @param  int                                $seconds
+     * @param \Illuminate\Database\Query\Builder $query
+     * @param int                                $seconds
      *
      * @return \Illuminate\Database\Query\Builder
      */
@@ -172,8 +172,8 @@ class Session extends Model
     /**
      * Alias for the `usersByMinutes` query method.
      *
-     * @param  \Illuminate\Database\Query\Builder $query
-     * @param  int                                $minutes
+     * @param \Illuminate\Database\Query\Builder $query
+     * @param int                                $minutes
      *
      * @return \Illuminate\Database\Query\Builder
      */
@@ -186,8 +186,8 @@ class Session extends Model
      * Constrain the query to retrieve only sessions of users who
      * have been active within the specified number of minutes.
      *
-     * @param  \Illuminate\Database\Query\Builder $query
-     * @param  int                                $minutes
+     * @param \Illuminate\Database\Query\Builder $query
+     * @param int                                $minutes
      *
      * @return \Illuminate\Database\Query\Builder
      */
@@ -200,8 +200,8 @@ class Session extends Model
      * Constrain the query to retrieve only sessions of users who
      * have been active within the specified number of hours.
      *
-     * @param  \Illuminate\Database\Query\Builder $query
-     * @param  int                                $hours
+     * @param \Illuminate\Database\Query\Builder $query
+     * @param int                                $hours
      *
      * @return \Illuminate\Database\Query\Builder
      */
