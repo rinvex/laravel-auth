@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Rinvex\Fort\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Builder;
 
 class Session extends Model
 {
@@ -57,12 +58,12 @@ class Session extends Model
     /**
      * Add an "order by" clause to retrieve most recent sessions.
      *
-     * @param \Illuminate\Database\Query\Builder $query
-     * @param string                             $column
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @param string                                $column
      *
-     * @return \Illuminate\Database\Query\Builder
+     * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function scopeMostRecent($query, $column = 'last_activity')
+    public function scopeMostRecent(Builder $query, $column = 'last_activity')
     {
         return $query->latest($column);
     }
@@ -70,12 +71,12 @@ class Session extends Model
     /**
      * Add an "order by" clause to retrieve least recent sessions.
      *
-     * @param \Illuminate\Database\Query\Builder $query
-     * @param string                             $column
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @param string                                $column
      *
-     * @return \Illuminate\Database\Query\Builder
+     * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function scopeLeastRecent($query, $column = 'last_activity')
+    public function scopeLeastRecent(Builder $query, $column = 'last_activity')
     {
         return $query->oldest($column);
     }
@@ -83,12 +84,12 @@ class Session extends Model
     /**
      * Use joins to order by the users' column attributes.
      *
-     * @param \Illuminate\Database\Query\Builder $query
-     * @param string                             $column
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @param string                                $column
      *
-     * @return \Illuminate\Database\Query\Builder
+     * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function scopeOrderByUsers($query, $column, $dir = 'ASC')
+    public function scopeOrderByUsers(Builder $query, $column, $dir = 'ASC')
     {
         $table = $this->getTable();
 
@@ -104,12 +105,12 @@ class Session extends Model
      * Constrain the query to retrieve only sessions of guests who
      * have been active within the specified number of seconds.
      *
-     * @param \Illuminate\Database\Query\Builder $query
-     * @param int                                $seconds
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @param int                                   $seconds
      *
-     * @return \Illuminate\Database\Query\Builder
+     * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function scopeGuestsBySeconds($query, $seconds = 60)
+    public function scopeGuestsBySeconds(Builder $query, $seconds = 60)
     {
         return $query->where('last_activity', '>=', time() - $seconds)->whereNull('user_id');
     }
@@ -117,12 +118,12 @@ class Session extends Model
     /**
      * Alias for the `guestsByMinutes` query method.
      *
-     * @param \Illuminate\Database\Query\Builder $query
-     * @param int                                $minutes
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @param int                                   $minutes
      *
-     * @return \Illuminate\Database\Query\Builder
+     * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function scopeGuests($query, $minutes = 5)
+    public function scopeGuests(Builder $query, $minutes = 5)
     {
         return $query->guestsByMinutes($minutes);
     }
@@ -131,12 +132,12 @@ class Session extends Model
      * Constrain the query to retrieve only sessions of guests who
      * have been active within the specified number of minutes.
      *
-     * @param \Illuminate\Database\Query\Builder $query
-     * @param int                                $minutes
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @param int                                   $minutes
      *
-     * @return \Illuminate\Database\Query\Builder
+     * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function scopeGuestsByMinutes($query, $minutes = 5)
+    public function scopeGuestsByMinutes(Builder $query, $minutes = 5)
     {
         return $query->guestsBySeconds($minutes * 60);
     }
@@ -145,12 +146,12 @@ class Session extends Model
      * Constrain the query to retrieve only sessions of guests who
      * have been active within the specified number of hours.
      *
-     * @param \Illuminate\Database\Query\Builder $query
-     * @param int                                $hours
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @param int                                   $hours
      *
-     * @return \Illuminate\Database\Query\Builder
+     * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function scopeGuestsByHours($query, $hours = 1)
+    public function scopeGuestsByHours(Builder $query, $hours = 1)
     {
         return $query->guestsByMinutes($hours * 60);
     }
@@ -159,12 +160,12 @@ class Session extends Model
      * Constrain the query to retrieve only sessions of users who
      * have been active within the specified number of seconds.
      *
-     * @param \Illuminate\Database\Query\Builder $query
-     * @param int                                $seconds
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @param int                                   $seconds
      *
-     * @return \Illuminate\Database\Query\Builder
+     * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function scopeUsersBySeconds($query, $seconds = 60)
+    public function scopeUsersBySeconds(Builder $query, $seconds = 60)
     {
         return $query->with(['user'])->where('last_activity', '>=', time() - $seconds)->whereNotNull('user_id');
     }
@@ -172,12 +173,12 @@ class Session extends Model
     /**
      * Alias for the `usersByMinutes` query method.
      *
-     * @param \Illuminate\Database\Query\Builder $query
-     * @param int                                $minutes
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @param int                                   $minutes
      *
-     * @return \Illuminate\Database\Query\Builder
+     * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function scopeUsers($query, $minutes = 5)
+    public function scopeUsers(Builder $query, $minutes = 5)
     {
         return $query->usersByMinutes($minutes);
     }
@@ -186,12 +187,12 @@ class Session extends Model
      * Constrain the query to retrieve only sessions of users who
      * have been active within the specified number of minutes.
      *
-     * @param \Illuminate\Database\Query\Builder $query
-     * @param int                                $minutes
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @param int                                   $minutes
      *
-     * @return \Illuminate\Database\Query\Builder
+     * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function scopeUsersByMinutes($query, $minutes = 5)
+    public function scopeUsersByMinutes(Builder $query, $minutes = 5)
     {
         return $query->usersBySeconds($minutes * 60);
     }
@@ -200,12 +201,12 @@ class Session extends Model
      * Constrain the query to retrieve only sessions of users who
      * have been active within the specified number of hours.
      *
-     * @param \Illuminate\Database\Query\Builder $query
-     * @param int                                $hours
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @param int                                   $hours
      *
-     * @return \Illuminate\Database\Query\Builder
+     * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function scopeUsersByHours($query, $hours = 1)
+    public function scopeUsersByHours(Builder $query, $hours = 1)
     {
         return $query->usersByMinutes($hours * 60);
     }
