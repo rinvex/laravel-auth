@@ -229,7 +229,7 @@ class User extends Model implements AuthenticatableContract, AuthenticatableTwoF
     /**
      * {@inheritdoc}
      */
-    public static function boot(): void
+    protected static function boot()
     {
         parent::boot();
 
