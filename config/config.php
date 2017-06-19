@@ -208,14 +208,6 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | Minimum Passwords Characters
-    |--------------------------------------------------------------------------
-    */
-
-    'password_min_chars' => 8,
-
-    /*
-    |--------------------------------------------------------------------------
     | Session Persistence
     |--------------------------------------------------------------------------
     |
@@ -231,37 +223,14 @@ return [
 
     'persistence' => 'multiple',
 
-    /*
-     |--------------------------------------------------------------------------
-     | Online Users Options
-     |--------------------------------------------------------------------------
-     */
+    // Minimum Passwords Characters
+    'password_min_chars' => 8,
 
-    'online' => [
+    // Online Users Activity Interval (minutes to indicate user as active)
+    'online_interval' => 15,
 
-        /*
-        |--------------------------------------------------------------------------
-        | Online Users Activity Interval (minutes)
-        |--------------------------------------------------------------------------
-        |
-        | Minutes that indicates an active user, to be considered an online user.
-        |
-        */
-
-        'interval' => 15,
-
-    ],
-
-    /*
-     |--------------------------------------------------------------------------
-     | Backend Options
-     |--------------------------------------------------------------------------
-     */
-
-    'backend' => [
-        'items_per_page' => 2,
-        'items_per_dashboard' => 2,
-    ],
+    // List items per page (use accross data lists)
+    'items_per_page' => 10,
 
     'boot' => [
         'override_middleware' => true,

@@ -28,7 +28,7 @@ class AbilitiesController extends AuthorizedController
      */
     public function index()
     {
-        $abilities = Ability::paginate(config('rinvex.fort.backend.items_per_page'));
+        $abilities = Ability::paginate(config('rinvex.fort.items_per_page'));
 
         return view('backend.abilities.index', compact('abilities'));
     }

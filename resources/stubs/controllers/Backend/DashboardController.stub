@@ -32,7 +32,7 @@ class DashboardController extends AuthorizedController
     public function home()
     {
         // Get recent registered users
-        $limit = config('rinvex.fort.backend.items_per_dashboard');
+        $limit = config('rinvex.fort.items_per_page');
         $users = User::orderBy('created_at', 'desc')->limit($limit)->get();
 
         // Get statistics

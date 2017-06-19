@@ -141,8 +141,8 @@
                                 <section class="panel panel-default">
                                     <header class="panel-heading">
                                         <h4>
-                                            {{ trans('common.online_users', ['mins' => config('rinvex.fort.online.interval')]) }}
-                                            <span class="pull-right">{{ $persistences->count() }}</span>
+                                            {{ trans('common.online_users', ['mins' => config('rinvex.fort.online_interval')]) }}
+                                            <span class="pull-right">{{ $sessions->count() }}</span>
                                         </h4>
                                     </header>
 

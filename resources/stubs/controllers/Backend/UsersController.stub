@@ -25,7 +25,7 @@ class UsersController extends AuthorizedController
      */
     public function index()
     {
-        $users = User::paginate(config('rinvex.fort.backend.items_per_page'));
+        $users = User::paginate(config('rinvex.fort.items_per_page'));
 
         return view('backend.users.index', compact('users'));
     }

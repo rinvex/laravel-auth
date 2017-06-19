@@ -7,7 +7,7 @@ namespace {{namespace}}Http\Controllers;
 class AuthenticatedController extends AbstractController
 {
     /**
-     * Create a new manage persistence controller instance.
+     * Create a new manage authenticated controller instance.
      */
     public function __construct()
     {

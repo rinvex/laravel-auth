@@ -29,7 +29,7 @@ class RolesController extends AuthorizedController
      */
     public function index()
     {
-        $roles = Role::paginate(config('rinvex.fort.backend.items_per_page'));
+        $roles = Role::paginate(config('rinvex.fort.items_per_page'));
 
         return view('backend.roles.index', compact('roles'));
     }
