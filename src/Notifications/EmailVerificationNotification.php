@@ -30,7 +30,7 @@ class EmailVerificationNotification extends Notification implements ShouldQueue
     /**
      * Create a notification instance.
      *
-     * @param string  $token
+     * @param string $token
      * @param string $expiration
      */
     public function __construct($token, $expiration)
@@ -54,7 +54,7 @@ class EmailVerificationNotification extends Notification implements ShouldQueue
     /**
      * Build the mail representation of the notification.
      *
-     * @param  mixed $notifiable
+     * @param mixed $notifiable
      *
      * @return \Illuminate\Notifications\Messages\MailMessage
      */

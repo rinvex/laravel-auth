@@ -47,8 +47,8 @@ class PasswordResetBroker implements PasswordResetBrokerContract
      * Create a new verification broker instance.
      *
      * @param \Illuminate\Contracts\Auth\UserProvider $users
-     * @param  string                                 $key
-     * @param  int                                    $expiration
+     * @param string                                  $key
+     * @param int                                     $expiration
      */
     public function __construct(UserProvider $users, $key, $expiration)
     {
@@ -190,7 +190,7 @@ class PasswordResetBroker implements PasswordResetBrokerContract
      * Create a new password reset token for the given user.
      *
      * @param \Rinvex\Fort\Contracts\CanResetPasswordContract $user
-     * @param  int $expiration
+     * @param int                                             $expiration
      *
      * @return string
      */
@@ -205,7 +205,7 @@ class PasswordResetBroker implements PasswordResetBrokerContract
      * Validate the given password reset token.
      *
      * @param \Rinvex\Fort\Contracts\CanResetPasswordContract $user
-     * @param  array                                          $credentials
+     * @param array                                           $credentials
      *
      * @return bool
      */
@@ -219,7 +219,7 @@ class PasswordResetBroker implements PasswordResetBrokerContract
     /**
      * Validate the given expiration timestamp.
      *
-     * @param  int $expiration
+     * @param int $expiration
      *
      * @return bool
      */
@@ -236,7 +236,7 @@ class PasswordResetBroker implements PasswordResetBrokerContract
     public function getKey()
     {
         if (Str::startsWith($this->key, 'base64:')) {
-            return base64_decode(substr($this->key, 7));
+            return base64_decode(mb_substr($this->key, 7));
         }
 
         return $this->key;
@@ -246,8 +246,8 @@ class PasswordResetBroker implements PasswordResetBrokerContract
      * Returns the payload string containing.
      *
      * @param \Rinvex\Fort\Contracts\CanResetPasswordContract $user
-     * @param  string                                         $email
-     * @param  int                                            $expiration
+     * @param string                                          $email
+     * @param int                                             $expiration
      *
      * @return string
      */
