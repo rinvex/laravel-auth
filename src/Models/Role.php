@@ -23,7 +23,6 @@ use Spatie\Translatable\HasTranslations;
  * @property \Carbon\Carbon|null                                                      $updated_at
  * @property \Carbon\Carbon|null                                                      $deleted_at
  * @property \Illuminate\Database\Eloquent\Collection|\Rinvex\Fort\Models\Ability[]   $abilities
- * @property-read array                                                               $ability_list
  * @property-read \Illuminate\Database\Eloquent\Collection|\Rinvex\Fort\Models\User[] $users
  *
  * @method static \Illuminate\Database\Eloquent\Builder|\Rinvex\Fort\Models\Role whereCreatedAt($value)
@@ -286,16 +285,6 @@ class Role extends Model
     }
 
     /**
-     * Get the list of ability Ids.
-     *
-     * @return array
-     */
-    public function getAbilityListAttribute()
-    {
-        return $this->abilities->pluck('id')->toArray();
-    }
-
-    /**
      * Set the translatable name attribute.
      *
      * @param string $value
@@ -367,11 +356,11 @@ class Role extends Model
     /**
      * Attach the role abilities.
      *
-     * @param array $abilities
+     * @param mixed $abilities
      *
      * @return void
      */
-    public function setAbilitiesAttribute(array $abilities)
+    public function setAbilitiesAttribute($abilities)
     {
         static::saved(function (self $model) use ($abilities) {
             $model->abilities()->sync($abilities);

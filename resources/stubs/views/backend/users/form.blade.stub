@@ -357,8 +357,8 @@
 
                                 {{-- Roles --}}
                                 <div class="form-group{{ $errors->has('roles') ? ' has-error' : '' }}">
-                                    {{ Form::label('roleList[]', trans('common.roles'), ['class' => 'control-label']) }}
-                                    {{ Form::select('roleList[]', $roleList, null, ['class' => 'form-control', 'placeholder' => trans('common.select'), 'multiple' => 'multiple', 'size' => 4]) }}
+                                    {{ Form::label('roles[]', trans('common.roles'), ['class' => 'control-label']) }}
+                                    {{ Form::select('roles[]', $roles, null, ['class' => 'form-control', 'placeholder' => trans('common.select'), 'multiple' => 'multiple', 'size' => 4]) }}
 
                                     @if ($errors->has('roles'))
                                         <span class="help-block">{{ $errors->first('roles') }}</span>
@@ -374,12 +374,12 @@
                             <div class="col-md-4">
 
                                 {{-- Abilities --}}
-                                <div class="form-group{{ $errors->has('abilityList[]') ? ' has-error' : '' }}">
-                                    {{ Form::label('abilityList[]', trans('common.abilities'), ['class' => 'control-label']) }}
-                                    {{ Form::select('abilityList[]', $abilityList, null, ['class' => 'form-control', 'placeholder' => trans('common.select'), 'multiple' => 'multiple', 'size' => 4]) }}
+                                <div class="form-group{{ $errors->has('abilities') ? ' has-error' : '' }}">
+                                    {{ Form::label('abilities[]', trans('common.abilities'), ['class' => 'control-label']) }}
+                                    {{ Form::select('abilities[]', $abilities, null, ['class' => 'form-control', 'placeholder' => trans('common.select'), 'multiple' => 'multiple', 'size' => 4]) }}
 
                                     @if ($errors->has('abilities'))
-                                        <span class="help-block">{{ $errors->first('abilityList[]') }}</span>
+                                        <span class="help-block">{{ $errors->first('abilities') }}</span>
                                     @endif
                                 </div>
 

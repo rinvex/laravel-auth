@@ -60,12 +60,10 @@ use Illuminate\Contracts\Auth\Access\Authorizable as AuthorizableContract;
  * @property \Carbon\Carbon|null                                                                                            $updated_at
  * @property \Carbon\Carbon|null                                                                                            $deleted_at
  * @property \Illuminate\Database\Eloquent\Collection|\Rinvex\Fort\Models\Ability[]                                         $abilities
- * @property-read array                                                                                                     $ability_list
  * @property-read \Illuminate\Support\Collection                                                                            $all_abilities
  * @property-read \Rinvex\Country\Country                                                                                   $country
  * @property-read \Rinvex\Language\Language                                                                                 $language
  * @property-read string                                                                                                    $name
- * @property-read array                                                                                                     $role_list
  * @property-read \Illuminate\Notifications\DatabaseNotificationCollection|\Illuminate\Notifications\DatabaseNotification[] $notifications
  * @property \Illuminate\Database\Eloquent\Collection|\Rinvex\Fort\Models\Role[]                                            $roles
  * @property-read \Illuminate\Database\Eloquent\Collection|\Rinvex\Fort\Models\Session[]                                    $sessions
@@ -328,26 +326,6 @@ class User extends Model implements AuthenticatableContract, AuthenticatableTwoF
     public function getAllAbilitiesAttribute()
     {
         return $this->abilities->merge($this->roles->pluck('abilities')->collapse());
-    }
-
-    /**
-     * Get the list of ability Ids.
-     *
-     * @return array
-     */
-    public function getAbilityListAttribute()
-    {
-        return $this->abilities->pluck('id')->toArray();
-    }
-
-    /**
-     * Get the list of role Ids.
-     *
-     * @return array
-     */
-    public function getRoleListAttribute()
-    {
-        return $this->roles->pluck('id')->toArray();
     }
 
     /**

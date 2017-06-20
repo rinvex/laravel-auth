@@ -89,13 +89,13 @@ class UsersController extends AuthorizedController
             return $language['name'];
         }, languages());
 
-        $abilityList = Ability::all()->groupBy('resource')->map(function ($item) {
+        $abilities = Ability::all()->groupBy('resource')->map(function ($item) {
             return $item->pluck('name', 'id');
         })->toArray();
 
-        $roleList = Role::all()->pluck('name', 'id')->toArray();
+        $roles = Role::all()->pluck('name', 'id')->toArray();
 
-        return view('backend.users.form', compact('user', 'abilityList', 'roleList', 'countries', 'languages'));
+        return view('backend.users.form', compact('user', 'abilities', 'roles', 'countries', 'languages'));
     }
 
     /**

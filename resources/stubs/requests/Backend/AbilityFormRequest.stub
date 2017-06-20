@@ -28,9 +28,8 @@ class AbilityFormRequest extends FormRequest
      */
     public function process($data)
     {
-        // Sync roles
-        if (! empty($data['roleList']) && $this->user()->can('assign-roles')) {
-            $data['roles'] = $data['roleList'];
+        if ($this->user()->can('assign-roles')) {
+            $data['roles'] = $data['roles'] ?? null;
         }
 
         return $data;

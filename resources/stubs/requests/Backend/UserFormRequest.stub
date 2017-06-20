@@ -50,14 +50,14 @@ class UserFormRequest extends FormRequest
             $data['phone_verified_at'] = Carbon::now();
         }
 
-        // Sync abilities
-        if (! empty($data['abilityList']) && $this->user()->can('grant-abilities')) {
-            $data['abilities'] = $data['abilityList'];
+        // Set abilities
+        if ($this->user()->can('grant-abilities')) {
+            $data['abilities'] = $data['abilities'] ?? null;
         }
 
-        // Sync roles
-        if (! empty($data['roleList']) && $this->user()->can('assign-roles')) {
-            $data['roles'] = $data['roleList'];
+        // Set roles
+        if ($this->user()->can('assign-roles')) {
+            $data['roles'] = $data['roles'] ?? null;
         }
 
         if ($twoFactor && (isset($data['phone_verified_at']) || $country !== $user->country_code)) {

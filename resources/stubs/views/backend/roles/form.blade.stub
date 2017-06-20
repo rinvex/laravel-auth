@@ -84,8 +84,8 @@
 
                                 {{-- Abilities --}}
                                 <div class="form-group{{ $errors->has('abilities') ? ' has-error' : '' }}">
-                                    {{ Form::label('abilityList[]', trans('common.abilities'), ['class' => 'control-label']) }}
-                                    {{ Form::select('abilityList[]', $abilityList, null, ['class' => 'form-control', 'multiple' => 'multiple', 'size' => 4]) }}
+                                    {{ Form::label('abilities[]', trans('common.abilities'), ['class' => 'control-label']) }}
+                                    {{ Form::select('abilities[]', $abilities, null, ['class' => 'form-control', 'multiple' => 'multiple', 'size' => 4]) }}
 
                                     @if ($errors->has('abilities'))
                                         <span class="help-block">{{ $errors->first('abilities') }}</span>

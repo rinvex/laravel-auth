@@ -85,11 +85,11 @@ class RolesController extends AuthorizedController
      */
     public function form(Role $role)
     {
-        $abilityList = Ability::all()->groupBy('resource')->map(function ($ability) {
+        $abilities = Ability::all()->groupBy('resource')->map(function ($ability) {
             return $ability->pluck('name', 'id');
         })->toArray();
 
-        return view('backend.roles.form', compact('role', 'abilityList'));
+        return view('backend.roles.form', compact('role', 'abilities'));
     }
 
     /**
