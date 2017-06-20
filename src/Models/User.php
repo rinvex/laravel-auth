@@ -218,11 +218,11 @@ class User extends Model implements AuthenticatableContract, AuthenticatableTwoF
 
         $this->setTable(config('rinvex.fort.tables.users'));
         $this->setRules([
-            'email' => 'required|email|min:3|max:250|unique:'.config('rinvex.fort.tables.users').',email',
-            'username' => 'required|alpha_dash|min:3|max:250|unique:'.config('rinvex.fort.tables.users').',username',
+            'email' => 'required|email|min:3|max:150|unique:'.config('rinvex.fort.tables.users').',email',
+            'username' => 'required|alpha_dash|min:3|max:150|unique:'.config('rinvex.fort.tables.users').',username',
             'password' => 'sometimes|required|min:'.config('rinvex.fort.password_min_chars'),
             'gender' => 'nullable|string|in:male,female',
-            'phone' => 'nullable|numeric',
+            'phone' => 'nullable|numeric|min:4',
         ]);
     }
 

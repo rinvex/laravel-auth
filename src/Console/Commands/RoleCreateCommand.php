@@ -47,8 +47,8 @@ class RoleCreateCommand extends Command
         ]);
 
         $rules = [
-            'name' => 'required|string|max:250',
-            'slug' => 'required|alpha_dash|max:250|unique:'.config('rinvex.fort.tables.roles'),
+            'name' => 'required|string|max:150',
+            'slug' => 'required|alpha_dash|max:150|unique:'.config('rinvex.fort.tables.roles'),
         ];
 
         $validator = app(Factory::class)->make($data, $rules);

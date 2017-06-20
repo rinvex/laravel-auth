@@ -26,7 +26,7 @@ class AuthenticationRequest extends FormRequest
     public function rules()
     {
         return [
-            'loginfield' => 'required|min:3|max:250',
+            'loginfield' => 'required|min:3|max:150',
             'password' => 'required|min:'.config('rinvex.fort.password_min_chars'),
         ];
     }

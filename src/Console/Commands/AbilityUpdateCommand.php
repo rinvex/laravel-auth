@@ -62,8 +62,8 @@ class AbilityUpdateCommand extends Command
         }
 
         $rules = [
-            'name' => 'sometimes|required|max:250',
-            'slug' => 'sometimes|required|alpha_dash|max:250|unique:'.config('rinvex.fort.tables.abilities'),
+            'name' => 'sometimes|required|max:150',
+            'slug' => 'sometimes|required|alpha_dash|max:150|unique:'.config('rinvex.fort.tables.abilities'),
         ];
 
         if (! empty($data)) {

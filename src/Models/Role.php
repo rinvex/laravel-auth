@@ -115,9 +115,9 @@ class Role extends Model
 
         $this->setTable(config('rinvex.fort.tables.roles'));
         $this->setRules([
-            'name' => 'required|string|max:250',
+            'name' => 'required|string|max:150',
             'description' => 'nullable|string',
-            'slug' => 'required|alpha_dash|max:250|unique:'.config('rinvex.fort.tables.roles').',slug',
+            'slug' => 'required|alpha_dash|max:150|unique:'.config('rinvex.fort.tables.roles').',slug',
         ]);
     }
 
