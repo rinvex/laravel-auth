@@ -45,7 +45,7 @@ class RegistrationSuccessNotification extends Notification implements ShouldQueu
     /**
      * Build the mail representation of the notification.
      *
-     * @param  mixed $notifiable
+     * @param mixed $notifiable
      *
      * @return \Illuminate\Notifications\Messages\MailMessage
      */

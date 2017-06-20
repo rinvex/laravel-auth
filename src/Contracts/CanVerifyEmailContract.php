@@ -23,7 +23,7 @@ interface CanVerifyEmailContract
     /**
      * Send the email verification notification.
      *
-     * @param string  $token
+     * @param string $token
      * @param string $expiration
      *
      * @return void

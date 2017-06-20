@@ -40,8 +40,8 @@ class EmailVerificationBroker implements EmailVerificationBrokerContract
      * Create a new verification broker instance.
      *
      * @param \Illuminate\Contracts\Auth\UserProvider $users
-     * @param  string                                 $key
-     * @param  int                                    $expiration
+     * @param string                                  $key
+     * @param int                                     $expiration
      */
     public function __construct(UserProvider $users, $key, $expiration)
     {
@@ -124,7 +124,7 @@ class EmailVerificationBroker implements EmailVerificationBrokerContract
      * Create a new email verification token for the given user.
      *
      * @param \Rinvex\Fort\Contracts\CanVerifyEmailContract $user
-     * @param  int $expiration
+     * @param int                                           $expiration
      *
      * @return string
      */
@@ -139,7 +139,7 @@ class EmailVerificationBroker implements EmailVerificationBrokerContract
      * Validate the given email verification token.
      *
      * @param \Rinvex\Fort\Contracts\CanVerifyEmailContract $user
-     * @param  array                                        $credentials
+     * @param array                                         $credentials
      *
      * @return bool
      */
@@ -153,7 +153,7 @@ class EmailVerificationBroker implements EmailVerificationBrokerContract
     /**
      * Validate the given expiration timestamp.
      *
-     * @param  int $expiration
+     * @param int $expiration
      *
      * @return bool
      */
@@ -170,7 +170,7 @@ class EmailVerificationBroker implements EmailVerificationBrokerContract
     public function getKey()
     {
         if (Str::startsWith($this->key, 'base64:')) {
-            return base64_decode(substr($this->key, 7));
+            return base64_decode(mb_substr($this->key, 7));
         }
 
         return $this->key;
@@ -180,8 +180,8 @@ class EmailVerificationBroker implements EmailVerificationBrokerContract
      * Returns the payload string containing.
      *
      * @param \Rinvex\Fort\Contracts\CanVerifyEmailContract $user
-     * @param  string                                       $email
-     * @param  int                                          $expiration
+     * @param string                                        $email
+     * @param int                                           $expiration
      *
      * @return string
      */

@@ -21,7 +21,7 @@ trait CanResetPassword
     /**
      * Send the password reset notification.
      *
-     * @param string  $token
+     * @param string $token
      * @param string $expiration
      *
      * @return void
