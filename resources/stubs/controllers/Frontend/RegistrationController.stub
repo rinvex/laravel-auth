@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace {{namespace}}Http\Controllers\Frontend;
 
-use Rinvex\Fort\Models\Role;
 use Rinvex\Fort\Models\User;
 use {{namespace}}Http\Controllers\AbstractController;
 use {{namespace}}Http\Requests\Frontend\RegistrationRequest;

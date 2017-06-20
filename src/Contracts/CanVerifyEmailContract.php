@@ -23,10 +23,10 @@ interface CanVerifyEmailContract
     /**
      * Send the email verification notification.
      *
-     * @param array  $token
+     * @param string  $token
      * @param string $expiration
      *
      * @return void
      */
-    public function sendEmailVerificationNotification(array $token, $expiration);
+    public function sendEmailVerificationNotification($token, $expiration);
 }

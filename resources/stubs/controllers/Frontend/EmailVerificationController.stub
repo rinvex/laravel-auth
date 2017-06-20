@@ -27,11 +27,11 @@ class EmailVerificationController extends AbstractController
     /**
      * Process the email verification request form.
      *
-     * @param \{{namespace}}Http\Requests\Frontend\EmailVerificationProcessRequest $request
+     * @param \{{namespace}}Http\Requests\Frontend\EmailVerificationSendRequest $request
      *
      * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse
      */
-    public function send(EmailVerificationProcessRequest $request)
+    public function send(EmailVerificationSendRequest $request)
     {
         $result = app('rinvex.fort.emailverification')
             ->broker($this->getBroker())
@@ -44,6 +44,7 @@ class EmailVerificationController extends AbstractController
                     'with' => ['success' => trans($result)],
                 ]);
 
+            case EmailVerificationBrokerContract::INVALID_USER:
             default:
                 return intend([
                     'back' => true,
@@ -64,7 +65,7 @@ class EmailVerificationController extends AbstractController
     {
         $result = app('rinvex.fort.emailverification')
             ->broker($this->getBroker())
-            ->verify($request->only(['email', 'token']), function ($user) {
+            ->verify($request->only(['email', 'expiration', 'token']), function ($user) {
                 $user->fill([
                     'email_verified' => true,
                     'email_verified_at' => new Carbon(),
@@ -80,6 +81,7 @@ class EmailVerificationController extends AbstractController
 
             case EmailVerificationBrokerContract::INVALID_USER:
             case EmailVerificationBrokerContract::INVALID_TOKEN:
+            case EmailVerificationBrokerContract::EXPIRED_TOKEN:
             default:
                 return intend([
                     'url' => route('frontend.verification.email.request'),

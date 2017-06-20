@@ -25,7 +25,6 @@ use Rinvex\Fort\Console\Commands\UserGiveAbilityCommand;
 use Rinvex\Fort\Services\EmailVerificationBrokerManager;
 use Rinvex\Fort\Console\Commands\RoleRevokeAbilityCommand;
 use Rinvex\Fort\Console\Commands\UserRevokeAbilityCommand;
-use Rinvex\Fort\Console\Commands\VerificationTokenClearCommand;
 
 class FortDeferredServiceProvider extends ServiceProvider
 {
@@ -63,8 +62,6 @@ class FortDeferredServiceProvider extends ServiceProvider
         'UserRemoveRole' => 'command.rinvex.fort.user.removerole',
         'UserGiveAbility' => 'command.rinvex.fort.user.giveability',
         'UserRevokeAbility' => 'command.rinvex.fort.user.revokeability',
-
-        'VerificationTokenClear' => 'command.rinvex.fort.verification.tokenclear',
 
     ];
 
@@ -362,18 +359,6 @@ class FortDeferredServiceProvider extends ServiceProvider
     {
         $this->app->singleton('command.rinvex.fort.user.revokeability', function ($app) {
             return new UserRevokeAbilityCommand();
-        });
-    }
-
-    /**
-     * Register clear verification tokens command.
-     *
-     * @return void
-     */
-    protected function registerVerificationTokenClearCommand()
-    {
-        $this->app->singleton('command.rinvex.fort.verification.tokenclear', function ($app) {
-            return new VerificationTokenClearCommand();
         });
     }
 

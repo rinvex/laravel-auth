@@ -37,6 +37,13 @@ interface EmailVerificationBrokerContract
     const INVALID_TOKEN = 'messages.verification.email.invalid_token';
 
     /**
+     * Constant representing an expired token.
+     *
+     * @var string
+     */
+    const EXPIRED_TOKEN = 'messages.verification.email.expired_token';
+
+    /**
      * Send a user email verification.
      *
      * @param array $credentials

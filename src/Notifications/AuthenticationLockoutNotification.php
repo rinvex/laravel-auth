@@ -47,9 +47,11 @@ class AuthenticationLockoutNotification extends Notification implements ShouldQu
     /**
      * Build the mail representation of the notification.
      *
+     * @param  mixed $notifiable
+     *
      * @return \Illuminate\Notifications\Messages\MailMessage
      */
-    public function toMail()
+    public function toMail($notifiable)
     {
         return (new MailMessage())
             ->subject(trans('emails.auth.lockout.subject'))

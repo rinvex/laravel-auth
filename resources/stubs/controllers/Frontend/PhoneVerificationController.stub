@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace {{namespace}}Http\Controllers\Frontend;
 
 use Carbon\Carbon;
-use Illuminate\Http\Request;
 use Rinvex\Fort\Guards\SessionGuard;
 use {{namespace}}Http\Controllers\AbstractController;
 use {{namespace}}Http\Requests\Frontend\PhoneVerificationRequest;

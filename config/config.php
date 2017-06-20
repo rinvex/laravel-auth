@@ -54,7 +54,6 @@ return [
     | - ability_user
     | - role_user
     | - ability_role
-    | - email_verifications
     | - socialites
     |
     */
@@ -67,7 +66,6 @@ return [
         'ability_user' => 'ability_user',
         'role_user' => 'role_user',
         'ability_role' => 'ability_role',
-        'email_verifications' => 'email_verifications',
         'socialites' => 'socialites',
 
     ],

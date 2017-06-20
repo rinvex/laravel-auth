@@ -35,7 +35,7 @@ return [
 
     'register' => [
         'success' => 'Registration completed successfully!',
-        'success_verify' => 'Registration completed successfully! Email verification request has been sent to you!',
+        'success_verify' => 'Registration completed successfully! We have e-mailed your verification link!',
         'disabled' => 'Sorry, registration is currently disabled!',
     ],
 
@@ -71,9 +71,10 @@ return [
     'verification' => [
 
         'email' => [
-            'already' => 'Your email already verified!',
+            'expired_token' => 'This email verification link is expired, please request a new one.',
+            'already_verified' => 'Your email already verified!',
             'verified' => 'Your email has been verified!',
-            'link_sent' => 'Email verification request has been sent to you!',
+            'link_sent' => 'We have e-mailed your verification link!',
             'invalid_token' => 'This verification token is invalid.',
             'invalid_user' => 'We can not find a user with that email address.',
         ],

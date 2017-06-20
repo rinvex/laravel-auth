@@ -4,32 +4,8 @@ declare(strict_types=1);
 
 namespace {{namespace}}Http\Requests\Frontend;
 
-use Exception;
-use Rinvex\Fort\Models\User;
-use Rinvex\Support\Http\Requests\FormRequest;
-
-class EmailVerificationProcessRequest extends FormRequest
+class EmailVerificationProcessRequest extends EmailVerificationRequest
 {
-    /**
-     * Determine if the user is authorized to make this request.
-     *
-     * @throws \Exception
-     *
-     * @return bool
-     */
-    public function authorize()
-    {
-        $userVerified = $this->user() && $this->user()->email_verified;
-        $guestVerified = ($email = $this->get('email')) && ($user = User::where('email', $email)->first()) && $user->email_verified;
-
-        if ($userVerified || $guestVerified) {
-            // Redirect users if their email already verified, no need to process their request
-            throw new Exception(trans('messages.verification.email.already'));
-        }
-
-        return true;
-    }
-
     /**
      * Get the validation rules that apply to the request.
      *
@@ -37,9 +13,12 @@ class EmailVerificationProcessRequest extends FormRequest
      */
     public function rules()
     {
-        // Do not validate `token` here since at this stage we can NOT generate viewable
-        // notification/error, and it is been processed through EmailVerificationBroker anyway
-        return ['email' => 'required|email|min:3|max:250|exists:'.config('rinvex.fort.tables.users').',email'];
+        return [
+            // Do not validate `token` here since at this stage we can NOT generate viewable error,
+            // and it is been processed in the controller through EmailVerificationBroker anyway
+            //'token' => 'required|regex:/^([0-9a-f]*)$/',
+            'email' => 'required|email|min:3|max:250|exists:'.config('rinvex.fort.tables.users').',email',
+        ];
     }
 
     /**
@@ -47,12 +26,6 @@ class EmailVerificationProcessRequest extends FormRequest
      */
     protected function getRedirectUrl()
     {
-        // This is route('frontend.verification.email.send')
-        if ($this->isMethod('post')) {
-            return parent::getRedirectUrl();
-        }
-
-        // This is route('frontend.verification.email.verify')
         return $this->redirector->getUrlGenerator()->route('frontend.verification.email.request');
     }
 }

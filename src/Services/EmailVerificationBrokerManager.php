@@ -4,9 +4,7 @@ declare(strict_types=1);
 
 namespace Rinvex\Fort\Services;
 
-use Illuminate\Support\Str;
 use InvalidArgumentException;
-use Rinvex\Fort\Repositories\EmailVerificationTokenRepository;
 use Rinvex\Fort\Contracts\EmailVerificationBrokerFactoryContract;
 
 class EmailVerificationBrokerManager implements EmailVerificationBrokerFactoryContract
@@ -40,7 +38,7 @@ class EmailVerificationBrokerManager implements EmailVerificationBrokerFactoryCo
      *
      * @param string $name
      *
-     * @return \Illuminate\Contracts\Auth\PasswordBroker
+     * @return \Rinvex\Fort\Contracts\EmailVerificationBrokerContract
      */
     public function broker($name = null)
     {
@@ -66,35 +64,9 @@ class EmailVerificationBrokerManager implements EmailVerificationBrokerFactoryCo
             throw new InvalidArgumentException("Email verification broker [{$name}] is not defined.");
         }
 
-        // The email verification broker uses a token repository to validate tokens and send email verification e-mails
         return new EmailVerificationBroker(
-            $this->createTokenRepository($config),
-            $this->app['auth']->createUserProvider($config['provider'])
-        );
-    }
-
-    /**
-     * Create a token repository instance based on the given configuration.
-     *
-     * @param array $config
-     *
-     * @return \Rinvex\Fort\Contracts\EmailVerificationTokenRepositoryContract
-     */
-    protected function createTokenRepository(array $config)
-    {
-        $key = $this->app['config']['app.key'];
-
-        if (Str::startsWith($key, 'base64:')) {
-            $key = base64_decode(mb_substr($key, 7));
-        }
-
-        $connection = $config['connection'] ?? null;
-
-        return new EmailVerificationTokenRepository(
-            $this->app['db']->connection($connection),
-            $this->app['hash'],
-            $this->app['config']['rinvex.fort.tables.email_verifications'],
-            $key,
+            $this->app['auth']->createUserProvider($config['provider']),
+            $this->app['config']['app.key'],
             $config['expire']
         );
     }
