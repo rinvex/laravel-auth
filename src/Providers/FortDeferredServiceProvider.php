@@ -15,7 +15,6 @@ use Rinvex\Fort\Console\Commands\UserCreateCommand;
 use Rinvex\Fort\Console\Commands\UserRemindCommand;
 use Rinvex\Fort\Console\Commands\UserUpdateCommand;
 use Rinvex\Fort\Console\Commands\AbilityFindCommand;
-use Rinvex\Fort\Console\Commands\ClearResetsCommand;
 use Rinvex\Fort\Services\PasswordResetBrokerManager;
 use Rinvex\Fort\Console\Commands\AbilityCreateCommand;
 use Rinvex\Fort\Console\Commands\AbilityUpdateCommand;
@@ -45,7 +44,6 @@ class FortDeferredServiceProvider extends ServiceProvider
     protected $commands = [
 
         'AuthMake' => 'command.auth.make',
-        'ClearResets' => 'command.auth.resets.clear',
 
         'AbilityFind' => 'command.rinvex.fort.ability.find',
         'AbilityUpdate' => 'command.rinvex.fort.ability.update',
@@ -172,18 +170,6 @@ class FortDeferredServiceProvider extends ServiceProvider
     {
         $this->app->singleton('command.auth.make', function ($app) {
             return new MakeAuthCommand();
-        });
-    }
-
-    /**
-     * Register clear password reset tokens command.
-     *
-     * @return void
-     */
-    protected function registerClearResetsCommand()
-    {
-        $this->app->singleton('command.auth.resets.clear', function ($app) {
-            return new ClearResetsCommand();
         });
     }
 

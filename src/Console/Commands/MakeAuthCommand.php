@@ -72,6 +72,7 @@ class MakeAuthCommand extends Command
         'Frontend/PasswordResetPostProcessRequest',
         'Frontend/PasswordResetProcessRequest',
         'Frontend/PasswordResetRequest',
+        'Frontend/PasswordResetSendRequest',
         'Frontend/PhoneVerificationProcessRequest',
         'Frontend/PhoneVerificationRequest',
         'Frontend/PhoneVerificationSendProcessRequest',

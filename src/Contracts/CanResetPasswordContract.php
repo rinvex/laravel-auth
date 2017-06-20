@@ -16,10 +16,10 @@ interface CanResetPasswordContract
     /**
      * Send the password reset notification.
      *
-     * @param array  $token
+     * @param string  $token
      * @param string $expiration
      *
      * @return void
      */
-    public function sendPasswordResetNotification(array $token, $expiration);
+    public function sendPasswordResetNotification($token, $expiration);
 }

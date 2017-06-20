@@ -13,9 +13,11 @@ class PasswordResetPostProcessRequest extends PasswordResetRequest
      */
     public function rules()
     {
-        // Do not validate `token` here since at this stage we can NOT generate viewable
-        // notification/error, and it is been processed through PasswordResetBroker anyway
         return [
+            //'token' => 'required|regex:/^([0-9a-f]*)$/',
+            //'expiration' => 'required|date_format:U',
+            // Do not validate `token` or `expiration` here since at this stage we can NOT generate viewable
+            // error, and it is been processed in the controller through EmailVerificationBroker anyway
             'email' => 'required|email|min:3|max:250|exists:'.config('rinvex.fort.tables.users').',email',
             'password' => 'required|confirmed|min:'.config('rinvex.fort.password_min_chars'),
         ];

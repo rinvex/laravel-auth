@@ -31,7 +31,6 @@ class DatabaseSeeder extends Seeder
             DB::table(config('rinvex.fort.tables.role_user'))->truncate();
             DB::table(config('rinvex.fort.tables.ability_role'))->truncate();
             DB::table(config('rinvex.fort.tables.email_verifications'))->truncate();
-            DB::table(config('auth.passwords.'.config('auth.defaults.passwords').'.table'))->truncate();
             DB::table(config('rinvex.fort.tables.socialites'))->truncate();
             Schema::enableForeignKeyConstraints();
 

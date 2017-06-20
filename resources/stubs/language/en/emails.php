@@ -27,7 +27,7 @@ return [
             'action' => 'Reset Password',
             'subject' => 'Your Password Reset Link',
             'intro' => 'You are receiving this email because we received a password reset request for your account. Click the button below to reset your password (link expires in :expire seconds):',
-            'outro' => 'If you did not request a password reset, no further action is required. Password reset request reference: Time: :created_at, IP Address: :ip, Agent: :agent.',
+            'outro' => 'If you did not request a password reset, no further action is required.',
         ],
     ],
 
