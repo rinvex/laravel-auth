@@ -44,10 +44,7 @@ return [
     | you may use whatever you like. The table you want to use
     | must have the same structure as of the default ones.
     |
-    | Notes: - Password resets table is defined in the default Laravel configuration file:
-    |          config/auth.php (Check 'table' key inside the 'passwords' array)
-    |
-    |        - Sessions table is defined in the default Laravel configuration file:
+    | Notes: - Sessions table is defined in the default Laravel configuration file:
     |          config/session.php (Check 'table' key)
     |
     | Defaults:

@@ -17,6 +17,8 @@
 
                     <div class="panel-body">
                         {{ Form::open(['url' => route('frontend.passwordreset.process'), 'class' => 'form-horizontal']) }}
+
+                            {{ Form::hidden('expiration', old('expiration', $expiration)) }}
                             {{ Form::hidden('token', old('token', $token)) }}
 
                             @include('frontend.alerts.success')

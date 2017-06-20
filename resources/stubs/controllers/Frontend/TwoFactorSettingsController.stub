@@ -38,7 +38,7 @@ class TwoFactorSettingsController extends AuthenticatedController
 
         $qrCode = $totpProvider->getQRCodeInline(config('app.name'), $currentUser->email, $secret);
 
-        return view('frontend.account.twofactor', compact('secret', 'qrCode', 'settings'));
+        return view('frontend.account.twofactor', compact('secret', 'qrCode', 'twoFactor'));
     }
 
     /**

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace {{namespace}}Http\Requests\Frontend;
 
-use Illuminate\Foundation\Http\FormRequest;
+use Rinvex\Support\Http\Requests\FormRequest;
 
 class AuthenticationRequest extends FormRequest
 {

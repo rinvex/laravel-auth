@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace {{namespace}}Http\Controllers\Frontend;
 
 use Illuminate\Http\Request;
+use Rinvex\Fort\Models\Session;
 use {{namespace}}Http\Controllers\AuthenticatedController;
 
 class AccountSessionsController extends AuthenticatedController
