@@ -49,7 +49,7 @@ use Illuminate\Contracts\Auth\Access\Authorizable as AuthorizableContract;
  * @property \Carbon\Carbon|null                                                                                            $birthday
  * @property string|null                                                                                                    $gender
  * @property int                                                                                                            $active
- * @property \Carbon\Carbon|null                                                                                            $login_at
+ * @property \Carbon\Carbon|null                                                                                            $last_activity
  * @property \Carbon\Carbon|null                                                                                            $created_at
  * @property \Carbon\Carbon|null                                                                                            $updated_at
  * @property \Carbon\Carbon|null                                                                                            $deleted_at
@@ -77,8 +77,8 @@ use Illuminate\Contracts\Auth\Access\Authorizable as AuthorizableContract;
  * @method static \Illuminate\Database\Eloquent\Builder|\Rinvex\Fort\Models\User whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\Rinvex\Fort\Models\User whereJobTitle($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\Rinvex\Fort\Models\User whereLanguageCode($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\Rinvex\Fort\Models\User whereLastActivity($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\Rinvex\Fort\Models\User whereLastName($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\Rinvex\Fort\Models\User whereLoginAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\Rinvex\Fort\Models\User whereMiddleName($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\Rinvex\Fort\Models\User whereNamePrefix($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\Rinvex\Fort\Models\User whereNameSuffix($value)
@@ -113,7 +113,7 @@ class User extends Model implements AuthenticatableContract, AuthenticatableTwoF
         'email_verified_at',
         'phone_verified_at',
         'birthday',
-        'login_at',
+        'last_activity',
         'deleted_at',
     ];
 
@@ -141,7 +141,7 @@ class User extends Model implements AuthenticatableContract, AuthenticatableTwoF
         'birthday',
         'gender',
         'active',
-        'login_at',
+        'last_activity',
         'abilities',
         'roles',
     ];

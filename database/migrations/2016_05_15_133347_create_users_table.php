@@ -39,7 +39,7 @@ class CreateUsersTable extends Migration
             $table->date('birthday')->nullable();
             $table->string('gender', 6)->nullable();
             $table->boolean('active')->default(true);
-            $table->timestamp('login_at')->nullable();
+            $table->timestamp('last_activity')->nullable();
             $table->timestamps();
             $table->softDeletes();
 
