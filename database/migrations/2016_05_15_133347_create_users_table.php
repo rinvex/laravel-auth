@@ -37,7 +37,7 @@ class CreateUsersTable extends Migration
             $table->string('language_code', 2)->nullable();
             $table->text('two_factor')->nullable();
             $table->date('birthday')->nullable();
-            $table->string('gender', 6)->nullable();
+            $table->char('gender', 1)->nullable();
             $table->boolean('active')->default(true);
             $table->timestamp('last_activity')->nullable();
             $table->timestamps();

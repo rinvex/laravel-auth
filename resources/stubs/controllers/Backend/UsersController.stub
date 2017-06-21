@@ -94,8 +94,9 @@ class UsersController extends AuthorizedController
         })->toArray();
 
         $roles = Role::all()->pluck('name', 'id')->toArray();
+        $genders = ['m' => trans('common.male'), 'f' => trans('common.female')];
 
-        return view('backend.users.form', compact('user', 'abilities', 'roles', 'countries', 'languages'));
+        return view('backend.users.form', compact('user', 'abilities', 'roles', 'countries', 'languages', 'genders'));
     }
 
     /**

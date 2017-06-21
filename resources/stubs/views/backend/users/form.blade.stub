@@ -223,7 +223,7 @@
                             {{-- Gender --}}
                             <div class="form-group{{ $errors->has('gender') ? ' has-error' : '' }}">
                                 {{ Form::label('gender', trans('common.gender'), ['class' => 'control-label']) }}
-                                {{ Form::select('gender', ['male' => trans('common.male'), 'female' => trans('common.female')], null, ['class' => 'form-control', 'placeholder' => trans('common.select')]) }}
+                                {{ Form::select('gender', $genders, null, ['class' => 'form-control', 'placeholder' => trans('common.select')]) }}
 
                                 @if ($errors->has('gender'))
                                     <span class="help-block">{{ $errors->first('gender') }}</span>

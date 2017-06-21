@@ -26,8 +26,9 @@ class AccountSettingsController extends AuthenticatedController
             return $language['name'];
         }, languages());
         $twoFactor = $request->user($this->getGuard())->getTwoFactor();
+        $genders = ['m' => trans('common.male'), 'f' => trans('common.female')];
 
-        return view('frontend.account.settings', compact('twoFactor', 'countries', 'languages'));
+        return view('frontend.account.settings', compact('twoFactor', 'countries', 'languages', 'genders'));
     }
 
     /**
