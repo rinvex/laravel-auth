@@ -48,12 +48,6 @@ use Illuminate\Contracts\Auth\Access\Authorizable as AuthorizableContract;
  * @property string|null                                                                                                    $language_code
  * @property \Carbon\Carbon|null                                                                                            $birthday
  * @property string|null                                                                                                    $gender
- * @property string|null                                                                                                    $website
- * @property string|null                                                                                                    $twitter
- * @property string|null                                                                                                    $facebook
- * @property string|null                                                                                                    $linkedin
- * @property string|null                                                                                                    $google_plus
- * @property string|null                                                                                                    $skype
  * @property int                                                                                                            $active
  * @property \Carbon\Carbon|null                                                                                            $login_at
  * @property \Carbon\Carbon|null                                                                                            $created_at
@@ -78,15 +72,12 @@ use Illuminate\Contracts\Auth\Access\Authorizable as AuthorizableContract;
  * @method static \Illuminate\Database\Eloquent\Builder|\Rinvex\Fort\Models\User whereEmail($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\Rinvex\Fort\Models\User whereEmailVerified($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\Rinvex\Fort\Models\User whereEmailVerifiedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\Rinvex\Fort\Models\User whereFacebook($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\Rinvex\Fort\Models\User whereFirstName($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\Rinvex\Fort\Models\User whereGender($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\Rinvex\Fort\Models\User whereGooglePlus($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\Rinvex\Fort\Models\User whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\Rinvex\Fort\Models\User whereJobTitle($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\Rinvex\Fort\Models\User whereLanguageCode($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\Rinvex\Fort\Models\User whereLastName($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\Rinvex\Fort\Models\User whereLinkedin($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\Rinvex\Fort\Models\User whereLoginAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\Rinvex\Fort\Models\User whereMiddleName($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\Rinvex\Fort\Models\User whereNamePrefix($value)
@@ -96,12 +87,9 @@ use Illuminate\Contracts\Auth\Access\Authorizable as AuthorizableContract;
  * @method static \Illuminate\Database\Eloquent\Builder|\Rinvex\Fort\Models\User wherePhoneVerified($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\Rinvex\Fort\Models\User wherePhoneVerifiedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\Rinvex\Fort\Models\User whereRememberToken($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\Rinvex\Fort\Models\User whereSkype($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\Rinvex\Fort\Models\User whereTwitter($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\Rinvex\Fort\Models\User whereTwoFactor($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\Rinvex\Fort\Models\User whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\Rinvex\Fort\Models\User whereUsername($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\Rinvex\Fort\Models\User whereWebsite($value)
  * @mixin \Eloquent
  */
 class User extends Model implements AuthenticatableContract, AuthenticatableTwoFactorContract, AuthorizableContract, CanResetPasswordContract, CanVerifyEmailContract, CanVerifyPhoneContract
@@ -151,12 +139,6 @@ class User extends Model implements AuthenticatableContract, AuthenticatableTwoF
         'country_code',
         'language_code',
         'birthday',
-        'website',
-        'twitter',
-        'facebook',
-        'linkedin',
-        'google_plus',
-        'skype',
         'gender',
         'active',
         'login_at',
