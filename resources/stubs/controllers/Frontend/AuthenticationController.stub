@@ -52,7 +52,7 @@ class AuthenticationController extends AbstractController
         $remember = $request->has('remember');
         $loginField = get_login_field($request->get('loginfield'));
         $credentials = [
-            'active' => true,
+            'is_active' => true,
             $loginField => $request->input('loginfield'),
             'password' => $request->input('password'),
         ];

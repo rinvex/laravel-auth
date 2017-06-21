@@ -51,7 +51,7 @@ class SocialAuthenticationController extends AuthenticationController
                 'email' => $githubUser->email,
                 'username' => $githubUser->username,
                 'password' => str_random(),
-                'active' => ! config('rinvex.fort.registration.moderated'),
+                'is_active' => ! config('rinvex.fort.registration.moderated'),
             ];
 
             // Fire the register start event

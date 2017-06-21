@@ -235,12 +235,12 @@
                         <div class="col-md-4">
 
                             {{-- Active --}}
-                            <div class="form-group{{ $errors->has('active') ? ' has-error' : '' }}">
-                                {{ Form::label('active', trans('common.active'), ['class' => 'control-label']) }}
-                                {{ Form::select('active', [1 => trans('common.yes'), 0 => trans('common.no')], null, ['class' => 'form-control']) }}
+                            <div class="form-group{{ $errors->has('is_active') ? ' has-error' : '' }}">
+                                {{ Form::label('is_active', trans('common.active'), ['class' => 'control-label']) }}
+                                {{ Form::select('is_active', [1 => trans('common.yes'), 0 => trans('common.no')], null, ['class' => 'form-control']) }}
 
-                                @if ($errors->has('active'))
-                                    <span class="help-block">{{ $errors->first('active') }}</span>
+                                @if ($errors->has('is_active'))
+                                    <span class="help-block">{{ $errors->first('is_active') }}</span>
                                 @endif
                             </div>
 

@@ -19,7 +19,7 @@ class RegistrationProcessRequest extends RegistrationRequest
     public function process($data)
     {
         $role = Role::where('slug', config('rinvex.fort.registration.default_role'))->first();
-        $data['active'] = ! config('rinvex.fort.registration.moderated');
+        $data['is_active'] = ! config('rinvex.fort.registration.moderated');
         ! $role || $data['roles'] = [$role->id];
 
         return $data;

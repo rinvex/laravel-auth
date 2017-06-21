@@ -48,7 +48,7 @@ use Illuminate\Contracts\Auth\Access\Authorizable as AuthorizableContract;
  * @property string|null                                                                                                    $language_code
  * @property \Carbon\Carbon|null                                                                                            $birthday
  * @property string|null                                                                                                    $gender
- * @property int                                                                                                            $active
+ * @property int                                                                                                            $is_active
  * @property \Carbon\Carbon|null                                                                                            $last_activity
  * @property \Carbon\Carbon|null                                                                                            $created_at
  * @property \Carbon\Carbon|null                                                                                            $updated_at
@@ -64,7 +64,6 @@ use Illuminate\Contracts\Auth\Access\Authorizable as AuthorizableContract;
  * @property-read \Illuminate\Database\Eloquent\Collection|\Rinvex\Fort\Models\Socialite[]                                  $socialites
  *
  * @method static \Illuminate\Database\Eloquent\Builder|\Rinvex\Fort\Models\User role($roles)
- * @method static \Illuminate\Database\Eloquent\Builder|\Rinvex\Fort\Models\User whereActive($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\Rinvex\Fort\Models\User whereBirthday($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\Rinvex\Fort\Models\User whereCountryCode($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\Rinvex\Fort\Models\User whereCreatedAt($value)
@@ -75,6 +74,7 @@ use Illuminate\Contracts\Auth\Access\Authorizable as AuthorizableContract;
  * @method static \Illuminate\Database\Eloquent\Builder|\Rinvex\Fort\Models\User whereFirstName($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\Rinvex\Fort\Models\User whereGender($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\Rinvex\Fort\Models\User whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\Rinvex\Fort\Models\User whereIsActive($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\Rinvex\Fort\Models\User whereJobTitle($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\Rinvex\Fort\Models\User whereLanguageCode($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\Rinvex\Fort\Models\User whereLastActivity($value)
@@ -140,7 +140,7 @@ class User extends Model implements AuthenticatableContract, AuthenticatableTwoF
         'language_code',
         'birthday',
         'gender',
-        'active',
+        'is_active',
         'last_activity',
         'abilities',
         'roles',

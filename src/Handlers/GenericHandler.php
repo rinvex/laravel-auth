@@ -102,7 +102,7 @@ class GenericHandler
     public function emailVerificationSuccess(Authenticatable $user)
     {
         if (config('rinvex.fort.emailverification.success_email')) {
-            $user->notify(new VerificationSuccessNotification($user->active));
+            $user->notify(new VerificationSuccessNotification($user->is_active));
         }
     }
 }

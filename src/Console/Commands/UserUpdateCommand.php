@@ -49,7 +49,7 @@ class UserUpdateCommand extends Command
             'first_name' => $this->option('firstName'),
             'middle_name' => $this->option('middleName'),
             'last_name' => $this->option('lastName'),
-            'active' => $this->option('active') ?: ! $this->option('inactive'),
+            'is_active' => $this->option('active') ?: ! $this->option('inactive'),
 
         ], [
             $this,

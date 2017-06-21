@@ -88,7 +88,7 @@
                                     </td>
 
                                     <td>
-                                        @if($user->active)
+                                        @if($user->is_active)
                                             <span class="label label-success">{{ trans('common.active') }}</span>
                                         @else
                                             <span class="label label-warning">{{ trans('common.inactive') }}</span>

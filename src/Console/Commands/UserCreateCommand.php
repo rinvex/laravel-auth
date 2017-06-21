@@ -50,7 +50,7 @@ class UserCreateCommand extends Command
             'first_name' => $this->argument('firstName'),
             'middle_name' => $this->argument('middleName'),
             'last_name' => $this->argument('lastName'),
-            'active' => ! $this->option('inactive'),
+            'is_active' => ! $this->option('inactive'),
             'email_verified' => ! $this->option('unverified'),
 
         ], [

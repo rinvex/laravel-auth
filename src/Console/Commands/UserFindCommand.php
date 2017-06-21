@@ -30,7 +30,7 @@ class UserFindCommand extends Command
      */
     public function handle()
     {
-        $columns = ['id', 'email', 'username', 'gender', 'active', 'verified', 'created_at', 'updated_at'];
+        $columns = ['id', 'email', 'username', 'gender', 'is_active', 'verified', 'created_at', 'updated_at'];
 
         // Find single user
         if ($field = $this->argument('field')) {

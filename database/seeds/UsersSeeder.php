@@ -24,7 +24,7 @@ class UsersSeeder extends Seeder
             'email_verified_at' => Carbon::now(),
             'remember_token' => str_random(10),
             'password' => $password = str_random(),
-            'active' => true,
+            'is_active' => true,
         ];
 
         $user = User::create($user);

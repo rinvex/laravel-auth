@@ -18,16 +18,16 @@ class VerificationSuccessNotification extends Notification implements ShouldQueu
      *
      * @var bool
      */
-    public $active;
+    public $isActive;
 
     /**
      * Create a notification instance.
      *
-     * @param bool $social
+     * @param bool $isActive
      */
-    public function __construct($active = false)
+    public function __construct($isActive = false)
     {
-        $this->active = $active;
+        $this->isActive = $isActive;
     }
 
     /**
@@ -51,7 +51,7 @@ class VerificationSuccessNotification extends Notification implements ShouldQueu
      */
     public function toMail($notifiable)
     {
-        if ($this->active) {
+        if ($this->isActive) {
             $phrase = trans('emails.verification.email.success.intro_default');
         } else {
             $phrase = trans('emails.verification.email.success.intro_moderation');
