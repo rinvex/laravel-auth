@@ -12,8 +12,8 @@ use Rinvex\Fort\Handlers\GenericHandler;
 use Rinvex\Fort\Http\Middleware\Abilities;
 use Rinvex\Fort\Http\Middleware\NoHttpCache;
 use Rinvex\Fort\Http\Middleware\Authenticate;
-use Rinvex\Fort\Http\Middleware\UpdateLastActivity;
 use Illuminate\Console\DetectsApplicationNamespace;
+use Rinvex\Fort\Http\Middleware\UpdateLastActivity;
 use Rinvex\Fort\Http\Middleware\RedirectIfAuthenticated;
 use Illuminate\Contracts\Auth\Access\Gate as GateContract;
 

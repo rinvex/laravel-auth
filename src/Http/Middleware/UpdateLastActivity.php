@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Rinvex\Fort\Http\Middleware;
 
-use Carbon\Carbon;
 use Closure;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class UpdateLastActivity
@@ -26,8 +26,8 @@ class UpdateLastActivity
     /**
      * Perform any final actions for the request lifecycle.
      *
-     * @param  \Illuminate\Http\Request                   $request
-     * @param  \Symfony\Component\HttpFoundation\Response $response
+     * @param \Illuminate\Http\Request                   $request
+     * @param \Symfony\Component\HttpFoundation\Response $response
      *
      * @return void
      */
