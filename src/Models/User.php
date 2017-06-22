@@ -376,11 +376,11 @@ class User extends Model implements AuthenticatableContract, AuthenticatableTwoF
     /**
      * Attach the user roles.
      *
-     * @param array $roles
+     * @param mixed $roles
      *
      * @return void
      */
-    public function setRolesAttribute(array $roles)
+    public function setRolesAttribute($roles)
     {
         static::saved(function (self $model) use ($roles) {
             $model->roles()->sync($roles);
@@ -390,11 +390,11 @@ class User extends Model implements AuthenticatableContract, AuthenticatableTwoF
     /**
      * Attach the user abilities.
      *
-     * @param array $abilities
+     * @param mixed $abilities
      *
      * @return void
      */
-    public function setAbilitiesAttribute(array $abilities)
+    public function setAbilitiesAttribute($abilities)
     {
         static::saved(function (self $model) use ($abilities) {
             $model->abilities()->sync($abilities);
