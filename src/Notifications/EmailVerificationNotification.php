@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Rinvex\Fort\Notifications;
 
+use Carbon\Carbon;
 use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Notification;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -65,7 +66,7 @@ class EmailVerificationNotification extends Notification implements ShouldQueue
 
         return (new MailMessage())
             ->subject(trans('emails.verification.email.subject'))
-            ->line(trans('emails.verification.email.intro', ['expire' => $this->expiration]))
+            ->line(trans('emails.verification.email.intro', ['expire' => Carbon::createFromTimestamp($this->expiration)->diffForHumans()]))
             ->action(trans('emails.verification.email.action'), $link)
             ->line(trans('emails.verification.email.outro'));
     }
