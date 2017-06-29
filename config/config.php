@@ -1,18 +1,5 @@
 <?php
 
-/*
- * NOTICE OF LICENSE
- *
- * Part of the Rinvex Fort Package.
- *
- * This source file is subject to The MIT License (MIT)
- * that is bundled with this package in the LICENSE file.
- *
- * Package: Rinvex Fort Package
- * License: The MIT License (MIT)
- * Link:    https://rinvex.com
- */
-
 declare(strict_types=1);
 
 return [
@@ -33,8 +20,7 @@ return [
     | Defaults:
     | - Rinvex\Fort\Models\Ability::class
     | - Rinvex\Fort\Models\Role::class
-    | - Rinvex\Fort\Models\User::class
-    | - Rinvex\Fort\Models\Persistence::class
+    | - Rinvex\Fort\Models\Session::class
     | - Rinvex\Fort\Models\Socialite::class
     |
     */
@@ -43,7 +29,7 @@ return [
 
         'ability' => Rinvex\Fort\Models\Ability::class,
         'role' => Rinvex\Fort\Models\Role::class,
-        'persistence' => Rinvex\Fort\Models\Persistence::class,
+        'session' => Rinvex\Fort\Models\Session::class,
         'socialite' => Rinvex\Fort\Models\Socialite::class,
 
     ],
@@ -58,8 +44,8 @@ return [
     | you may use whatever you like. The table you want to use
     | must have the same structure as of the default ones.
     |
-    | Note: Password resets table is defined in the default Laravel configuration file:
-    |       config/auth.php (Check 'table' key inside the 'passwords' array)
+    | Notes: - Sessions table is defined in the default Laravel configuration file:
+    |          config/session.php (Check 'table' key)
     |
     | Defaults:
     | - abilities
@@ -68,8 +54,6 @@ return [
     | - ability_user
     | - role_user
     | - ability_role
-    | - email_verifications
-    | - persistences
     | - socialites
     |
     */
@@ -82,8 +66,6 @@ return [
         'ability_user' => 'ability_user',
         'role_user' => 'role_user',
         'ability_role' => 'ability_role',
-        'email_verifications' => 'email_verifications',
-        'persistences' => 'persistences',
         'socialites' => 'socialites',
 
     ],
@@ -181,12 +163,12 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | Two-Factor authentication
+    | TwoFactor authentication
     |--------------------------------------------------------------------------
     |
-    | Rinvex Fort supports a variety of Two-Factor authentication backends through
+    | Rinvex Fort supports a variety of TwoFactor authentication backends through
     | unified API, giving you convenient access to each using the same syntax.
-    | Here you may set the active Two-Factor authentication providers.
+    | Here you may set the active TwoFactor authentication providers.
     |
     */
 
@@ -221,14 +203,6 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | Minimum Passwords Characters
-    |--------------------------------------------------------------------------
-    */
-
-    'password_min_chars' => 8,
-
-    /*
-    |--------------------------------------------------------------------------
     | Session Persistence
     |--------------------------------------------------------------------------
     |
@@ -244,36 +218,18 @@ return [
 
     'persistence' => 'multiple',
 
-    /*
-     |--------------------------------------------------------------------------
-     | Online Users Options
-     |--------------------------------------------------------------------------
-     */
+    // Minimum Passwords Characters
+    'password_min_chars' => 8,
 
-    'online' => [
+    // Online Users Activity Interval (minutes to indicate user as active)
+    'online_interval' => 15,
 
-        /*
-        |--------------------------------------------------------------------------
-        | Online Users Activity Interval (minutes)
-        |--------------------------------------------------------------------------
-        |
-        | Minutes that indicates an active user, to be considered an online user.
-        |
-        */
+    // List items per page (use accross data lists)
+    'items_per_page' => 10,
 
-        'interval' => 15,
-
-    ],
-
-    /*
-     |--------------------------------------------------------------------------
-     | Backend Options
-     |--------------------------------------------------------------------------
-     */
-
-    'backend' => [
-        'items_per_page' => 2,
-        'items_per_dashboard' => 2,
+    'boot' => [
+        'override_middleware' => true,
+        'override_exceptionhandler' => true,
     ],
 
 ];

@@ -20,7 +20,7 @@
                     </header>
 
                     <div class="panel-body">
-                        {{ Form::model($currentUser, ['route' => 'frontend.account.settings.update', 'class' => 'form-horizontal']) }}
+                        {{ Form::model($currentUser, ['url' => route('frontend.account.settings.update'), 'class' => 'form-horizontal']) }}
 
                             @include('frontend.alerts.success')
                             @include('frontend.alerts.warning')
@@ -40,9 +40,7 @@
                                         @endif
 
                                         @if ($errors->has('email'))
-                                            <span class="help-block">
-                                                <strong>{{ $errors->first('email') }}</strong>
-                                            </span>
+                                            <span class="help-block">{{ $errors->first('email') }}</span>
                                         @endif
                                     </div>
                                 </div>
@@ -56,9 +54,7 @@
                                         {{ Form::text('username', null, ['class' => 'form-control', 'placeholder' => $currentUser->username, 'required' => 'required']) }}
 
                                         @if ($errors->has('username'))
-                                            <span class="help-block">
-                                                <strong>{{ $errors->first('username') }}</strong>
-                                            </span>
+                                            <span class="help-block">{{ $errors->first('username') }}</span>
                                         @endif
                                     </div>
                                 </div>
@@ -69,16 +65,14 @@
 
 
                             <div class="row">
-                                <div class="form-group{{ $errors->has('prefix') ? ' has-error' : '' }}">
-                                    {{ Form::label('prefix', trans('common.prefix'), ['class' => 'col-md-3 control-label']) }}
+                                <div class="form-group{{ $errors->has('name_prefix') ? ' has-error' : '' }}">
+                                    {{ Form::label('name_prefix', trans('common.name_prefix'), ['class' => 'col-md-3 control-label']) }}
 
                                     <div class="col-md-8">
-                                        {{ Form::text('prefix', null, ['class' => 'form-control', 'placeholder' => $currentUser->prefix ?: trans('common.prefix')]) }}
+                                        {{ Form::text('name_prefix', null, ['class' => 'form-control', 'placeholder' => $currentUser->name_prefix ?: trans('common.name_prefix')]) }}
 
-                                        @if ($errors->has('prefix'))
-                                            <span class="help-block">
-                                                <strong>{{ $errors->first('prefix') }}</strong>
-                                            </span>
+                                        @if ($errors->has('name_prefix'))
+                                            <span class="help-block">{{ $errors->first('name_prefix') }}</span>
                                         @endif
                                     </div>
                                 </div>
@@ -92,9 +86,7 @@
                                         {{ Form::text('first_name', null, ['class' => 'form-control', 'placeholder' => $currentUser->first_name ?: trans('common.first_name')]) }}
 
                                         @if ($errors->has('first_name'))
-                                            <span class="help-block">
-                                                <strong>{{ $errors->first('first_name') }}</strong>
-                                            </span>
+                                            <span class="help-block">{{ $errors->first('first_name') }}</span>
                                         @endif
                                     </div>
                                 </div>
@@ -108,9 +100,7 @@
                                         {{ Form::text('middle_name', null, ['class' => 'form-control', 'placeholder' => $currentUser->middle_name ?: trans('common.middle_name')]) }}
 
                                         @if ($errors->has('middle_name'))
-                                            <span class="help-block">
-                                                <strong>{{ $errors->first('middle_name') }}</strong>
-                                            </span>
+                                            <span class="help-block">{{ $errors->first('middle_name') }}</span>
                                         @endif
                                     </div>
                                 </div>
@@ -124,69 +114,106 @@
                                         {{ Form::text('last_name', null, ['class' => 'form-control', 'placeholder' => $currentUser->last_name ?: trans('common.last_name')]) }}
 
                                         @if ($errors->has('last_name'))
-                                            <span class="help-block">
-                                                <strong>{{ $errors->first('last_name') }}</strong>
-                                            </span>
+                                            <span class="help-block">{{ $errors->first('last_name') }}</span>
                                         @endif
                                     </div>
                                 </div>
                             </div>
 
                             <div class="row">
-                                <div class="form-group{{ $errors->has('suffix') ? ' has-error' : '' }}">
-                                    {{ Form::label('suffix', trans('common.suffix'), ['class' => 'col-md-3 control-label']) }}
+                                <div class="form-group{{ $errors->has('name_suffix') ? ' has-error' : '' }}">
+                                    {{ Form::label('name_suffix', trans('common.name_suffix'), ['class' => 'col-md-3 control-label']) }}
 
                                     <div class="col-md-8">
-                                        {{ Form::text('suffix', null, ['class' => 'form-control', 'placeholder' => $currentUser->suffix ?: trans('common.suffix')]) }}
+                                        {{ Form::text('name_suffix', null, ['class' => 'form-control', 'placeholder' => $currentUser->name_suffix ?: trans('common.name_suffix')]) }}
 
-                                        @if ($errors->has('suffix'))
-                                            <span class="help-block">
-                                                <strong>{{ $errors->first('suffix') }}</strong>
-                                            </span>
+                                        @if ($errors->has('name_suffix'))
+                                            <span class="help-block">{{ $errors->first('name_suffix') }}</span>
                                         @endif
                                     </div>
                                 </div>
                             </div>
 
+                            <div class="row">
+                                <div class="form-group{{ $errors->has('job_title') ? ' has-error' : '' }}">
+                                    {{ Form::label('job_title', trans('common.job_title'), ['class' => 'col-md-2 control-label']) }}
+
+                                    <div class="col-md-10">
+                                        {{ Form::text('job_title', null, ['class' => 'form-control', 'placeholder' => $currentUser->job_title ?: trans('common.job_title')]) }}
+
+                                        @if ($errors->has('job_title'))
+                                            <span class="help-block">{{ $errors->first('job_title') }}</span>
+                                        @endif
+                                    </div>
+                                </div>
+                            </div>
+
+
                             <hr />
+
 
                             <div class="row">
                                 <div class="form-group{{ $errors->has('gender') ? ' has-error' : '' }}">
                                     {{ Form::label('gender', trans('common.gender'), ['class' => 'col-md-3 control-label']) }}
 
                                     <div class="col-md-8">
-                                        <select id="gender" name="gender" class="form-control">
-                                            <option value="" disabled selected>{{ trans('common.select') }}</option>
-                                            <option value="male" @if(old('gender', $currentUser->gender) === 'male') selected @endif>{{ trans('common.male') }}</option>
-                                            <option value="female" @if(old('gender', $currentUser->gender) === 'female') selected @endif>{{ trans('common.female') }}</option>
-                                            <option value="undisclosed" @if(old('gender', $currentUser->gender) === 'undisclosed') selected @endif>{{ trans('common.undisclosed') }}</option>
-                                        </select>
+                                        {{ Form::select('gender', $genders, null, ['class' => 'form-control', 'placeholder' => trans('common.select')]) }}
 
                                         @if ($errors->has('gender'))
-                                            <span class="help-block">
-                                                <strong>{{ $errors->first('gender') }}</strong>
-                                            </span>
+                                            <span class="help-block">{{ $errors->first('gender') }}</span>
                                         @endif
                                     </div>
                                 </div>
                             </div>
 
                             <div class="row">
-                                <div class="form-group{{ $errors->has('country') ? ' has-error' : '' }}">
-                                    {{ Form::label('country', trans('common.country'), ['class' => 'col-md-3 control-label']) }}
+                                <div class="form-group has-feedback{{ $errors->has('birthday') ? ' has-error' : '' }}">
+                                    {{ Form::label('birthday', trans('common.birthday'), ['class' => 'col-md-2 control-label']) }}
 
                                     <div class="col-md-8">
-                                        <select id="country" name="country" class="form-control">
+                                        {{ Form::text('birthday', null, ['class' => 'form-control datepicker', 'data-auto-update-input' => 'false']) }}
+                                        <span class="fa fa-calendar form-control-feedback"></span>
+
+                                        @if ($errors->has('birthday'))
+                                            <span class="help-block">{{ $errors->first('birthday') }}</span>
+                                        @endif
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="form-group{{ $errors->has('country_code') ? ' has-error' : '' }}">
+                                    {{ Form::label('country_code', trans('common.country'), ['class' => 'col-md-3 control-label']) }}
+
+                                    <div class="col-md-8">
+                                        <select id="country_code" name="country_code" class="form-control">
                                             <option value="" disabled selected>{{ trans('common.select') }}</option>
                                             @foreach($countries as $code => $country)
-                                                <option value="{{ $code }}" @if(old('country', $currentUser->country) === $code) selected="selected" @endif>{{ $country }}</option>
+                                                <option value="{{ $code }}" @if(old('country_code', $currentUser->country_code) === $code) selected="selected" @endif>{{ $country }}</option>
                                             @endforeach
                                         </select>
 
-                                        @if ($errors->has('country'))
-                                            <span class="help-block">
-                                                <strong>{{ $errors->first('country') }}</strong>
-                                            </span>
+                                        @if ($errors->has('country_code'))
+                                            <span class="help-block">{{ $errors->first('country_code') }}</span>
+                                        @endif
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="form-group{{ $errors->has('language_code') ? ' has-error' : '' }}">
+                                    {{ Form::label('language_code', trans('common.language'), ['class' => 'col-md-3 control-label']) }}
+
+                                    <div class="col-md-8">
+                                        <select id="language_code" name="language_code" class="form-control">
+                                            <option value="" disabled selected>{{ trans('common.select') }}</option>
+                                            @foreach($languages as $code => $language)
+                                                <option value="{{ $code }}" @if(old('language_code', $currentUser->language_code) === $code) selected="selected" @endif>{{ $language }}</option>
+                                            @endforeach
+                                        </select>
+
+                                        @if ($errors->has('language_code'))
+                                            <span class="help-block">{{ $errors->first('language_code') }}</span>
                                         @endif
                                     </div>
                                 </div>
@@ -206,44 +233,39 @@
                                         @endif
 
                                         @if ($errors->has('phone'))
-                                            <span class="help-block">
-                                                <strong>{{ $errors->first('phone') }}</strong>
-                                            </span>
+                                            <span class="help-block">{{ $errors->first('phone') }}</span>
                                         @endif
                                     </div>
                                 </div>
                             </div>
 
-                            <hr />
-
+                        <hr />
 
                             <div class="row">
-                                <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">
+                                <div class="form-group has-feedback{{ $errors->has('password') ? ' has-error' : '' }}">
                                     {{ Form::label('password', trans('common.password'), ['class' => 'col-md-3 control-label']) }}
 
                                     <div class="col-md-8">
                                         {{ Form::password('password', ['class' => 'form-control', 'placeholder' => trans('common.password')]) }}
+                                        <span class="fa fa-key form-control-feedback"></span>
 
                                         @if ($errors->has('password'))
-                                            <span class="help-block">
-                                                <strong>{{ $errors->first('password') }}</strong>
-                                            </span>
+                                            <span class="help-block">{{ $errors->first('password') }}</span>
                                         @endif
                                     </div>
                                 </div>
                             </div>
 
                             <div class="row">
-                                <div class="form-group{{ $errors->has('password_confirmation') ? ' has-error' : '' }}">
+                                <div class="form-group has-feedback{{ $errors->has('password_confirmation') ? ' has-error' : '' }}">
                                     {{ Form::label('password_confirmation', trans('common.password_confirmation'), ['class' => 'col-md-3 control-label']) }}
 
                                     <div class="col-md-8">
                                         {{ Form::password('password_confirmation', ['class' => 'form-control', 'placeholder' => trans('common.password_confirmation')]) }}
+                                        <span class="fa fa-key form-control-feedback"></span>
 
                                         @if ($errors->has('password_confirmation'))
-                                            <span class="help-block">
-                                                <strong>{{ $errors->first('password_confirmation') }}</strong>
-                                            </span>
+                                            <span class="help-block">{{ $errors->first('password_confirmation') }}</span>
                                         @endif
                                     </div>
                                 </div>
@@ -278,10 +300,13 @@
 
                                                     <div class="panel panel-primary">
                                                         <header class="panel-heading">
-                                                            <a class="btn btn-default btn-xs pull-right" style="margin-left: 10px" href="{{ route('frontend.account.twofactor.totp.enable') }}">@if(array_get($twoFactor, 'totp.enabled')) {{ trans('common.settings') }} @else {{ trans('common.enable') }} @endif</a>
-                                                            @if(array_get($twoFactor, 'totp.enabled'))
-                                                                <a class="btn btn-default btn-xs pull-right" href="{{ route('frontend.account.twofactor.totp.disable') }}">{{ trans('common.disable') }}</a>
+                                                            @if(! empty($twoFactor['totp']['enabled']))
+                                                                <a class="btn btn-default btn-xs pull-right" href="{{ route('frontend.account.twofactor.totp.disable') }}" onclick="event.preventDefault(); var form = document.getElementById('frontend-account-settings-update'); form.action = '{{ route('frontend.account.twofactor.totp.disable') }}'; form.submit();">{{ trans('common.disable') }}</a>
+                                                                <a class="btn btn-default btn-xs pull-right" style="margin-right: 10px" href="{{ route('frontend.account.twofactor.totp.enable') }}">{{ trans('common.settings') }}</a>
+                                                            @else
+                                                                <a class="btn btn-default btn-xs pull-right" href="{{ route('frontend.account.twofactor.totp.enable') }}">{{ trans('common.enable') }}</a>
                                                             @endif
+
                                                             <h3 class="panel-title">
                                                                 {{ trans('twofactor.totp_head') }}
                                                             </h3>
@@ -297,11 +322,8 @@
 
                                                     <div class="panel panel-primary">
                                                         <header class="panel-heading">
-                                                            @if(array_get($twoFactor, 'phone.enabled'))
-                                                                <a class="btn btn-default btn-xs pull-right" href="{{ route('frontend.account.twofactor.phone.disable') }}">{{ trans('common.disable') }}</a>
-                                                            @else
-                                                                <a class="btn btn-default btn-xs pull-right" href="{{ route('frontend.account.twofactor.phone.enable') }}">{{ trans('common.enable') }}</a>
-                                                            @endif
+                                                            <a class="btn btn-default btn-xs pull-right" href="{{ route('frontend.account.twofactor.phone.'.(! empty($twoFactor['phone']['enabled']) ? 'disable' : 'enable')) }}" onclick="event.preventDefault(); var form = document.getElementById('frontend-account-settings-update'); form.action = '{{ route('frontend.account.twofactor.phone.'.(! empty($twoFactor['phone']['enabled']) ? 'disable' : 'enable')) }}'; form.submit();">{{ trans('common.'.(! empty($twoFactor['phone']['enabled']) ? 'disable' : 'enable')) }}</a>
+
                                                             <h3 class="panel-title">
                                                                 {{ trans('twofactor.phone_head') }}
                                                             </h3>

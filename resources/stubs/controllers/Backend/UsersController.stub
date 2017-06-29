@@ -1,18 +1,5 @@
 <?php
 
-/*
- * NOTICE OF LICENSE
- *
- * Part of the Rinvex Fort Package.
- *
- * This source file is subject to The MIT License (MIT)
- * that is bundled with this package in the LICENSE file.
- *
- * Package: Rinvex Fort Package
- * License: The MIT License (MIT)
- * Link:    https://rinvex.com
- */
-
 declare(strict_types=1);
 
 namespace {{namespace}}Http\Controllers\Backend;
@@ -22,6 +9,7 @@ use Rinvex\Fort\Models\Role;
 use Rinvex\Fort\Models\User;
 use Rinvex\Fort\Models\Ability;
 use {{namespace}}Http\Controllers\AuthorizedController;
+use {{namespace}}Http\Requests\Backend\UserFormRequest;
 
 class UsersController extends AuthorizedController
 {
@@ -37,41 +25,19 @@ class UsersController extends AuthorizedController
      */
     public function index()
     {
-        $users = User::paginate(config('rinvex.fort.backend.items_per_page'));
+        $users = User::paginate(config('rinvex.fort.items_per_page'));
 
         return view('backend.users.index', compact('users'));
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        return $this->form('create', 'store', new User());
-    }
-
-    /**
-     * Show the form for editing the given resource.
-     *
-     * @param \Rinvex\Fort\Models\User $user
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(User $user)
-    {
-        return $this->form('edit', 'update', $user);
-    }
-
-    /**
      * Store a newly created resource in storage.
      *
-     * @param \Illuminate\Http\Request $request
+     * @param \{{namespace}}Http\Requests\Backend\UserFormRequest $request
      *
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(UserFormRequest $request)
     {
         return $this->process($request, new User());
     }
@@ -79,12 +45,12 @@ class UsersController extends AuthorizedController
     /**
      * Update the given resource in storage.
      *
-     * @param \Illuminate\Http\Request $request
+     * @param \{{namespace}}Http\Requests\Backend\UserFormRequest $request
      * @param \Rinvex\Fort\Models\User $user
      *
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, User $user)
+    public function update(UserFormRequest $request, User $user)
     {
         return $this->process($request, $user);
     }
@@ -101,7 +67,7 @@ class UsersController extends AuthorizedController
         $user->delete();
 
         return intend([
-            'route' => 'backend.users.index',
+            'url' => route('backend.users.index'),
             'with' => ['warning' => trans('messages.user.deleted', ['userId' => $user->id])],
         ]);
     }
@@ -109,25 +75,28 @@ class UsersController extends AuthorizedController
     /**
      * Show the form for create/update of the given resource.
      *
-     * @param string                   $mode
-     * @param string                   $action
      * @param \Rinvex\Fort\Models\User $user
      *
      * @return \Illuminate\Http\Response
      */
-    protected function form($mode, $action, User $user)
+    public function form(User $user)
     {
         $countries = array_map(function ($country) {
             return $country['name'];
         }, countries());
 
-        $abilityList = Ability::all()->groupBy('resource')->map(function ($item) {
+        $languages = array_map(function ($language) {
+            return $language['name'];
+        }, languages());
+
+        $abilities = Ability::all()->groupBy('resource')->map(function ($item) {
             return $item->pluck('name', 'id');
         })->toArray();
 
-        $roleList = Role::all()->pluck('name', 'id')->toArray();
+        $roles = Role::all()->pluck('name', 'id')->toArray();
+        $genders = ['m' => trans('common.male'), 'f' => trans('common.female')];
 
-        return view('backend.users.form', compact('user', 'abilityList', 'roleList', 'countries', 'mode', 'action'));
+        return view('backend.users.form', compact('user', 'abilities', 'roles', 'countries', 'languages', 'genders'));
     }
 
     /**
@@ -141,30 +110,13 @@ class UsersController extends AuthorizedController
     protected function process(Request $request, User $user)
     {
         // Prepare required input fields
-        $input = $request->all();
-        $input['email_verified'] = $request->get('email_verified', false);
-        $input['phone_verified'] = $request->get('phone_verified', false);
-
-        // Remove empty password fields
-        if (! $input['password']) {
-            unset($input['password']);
-        }
+        $data = $request->all();
 
         // Save user
-        $user->fill($input)->save();
-
-        // Sync abilities
-        if ($request->user($this->getGuard())->can('grant-abilities')) {
-            $user->abilities()->sync((array) array_pull($input, 'abilityList'));
-        }
-
-        // Sync roles
-        if ($request->user($this->getGuard())->can('assign-roles')) {
-            $user->roles()->sync((array) array_pull($input, 'roleList'));
-        }
+        $user->fill($data)->save();
 
         return intend([
-            'route' => 'backend.users.index',
+            'url' => route('backend.users.index'),
             'with' => ['success' => trans('messages.user.saved', ['userId' => $user->id])],
         ]);
     }

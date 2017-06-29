@@ -1,18 +1,5 @@
 <?php
 
-/*
- * NOTICE OF LICENSE
- *
- * Part of the Rinvex Fort Package.
- *
- * This source file is subject to The MIT License (MIT)
- * that is bundled with this package in the LICENSE file.
- *
- * Package: Rinvex Fort Package
- * License: The MIT License (MIT)
- * Link:    https://rinvex.com
- */
-
 declare(strict_types=1);
 
 namespace Rinvex\Fort\Console\Commands;
@@ -75,8 +62,8 @@ class AbilityUpdateCommand extends Command
         }
 
         $rules = [
-            'name' => 'sometimes|required|max:255',
-            'slug' => 'sometimes|required|max:255|unique:'.config('rinvex.fort.tables.abilities'),
+            'name' => 'sometimes|required|max:150',
+            'slug' => 'sometimes|required|alpha_dash|max:150|unique:'.config('rinvex.fort.tables.abilities'),
         ];
 
         if (! empty($data)) {

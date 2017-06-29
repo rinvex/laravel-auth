@@ -1,18 +1,5 @@
 <?php
 
-/*
- * NOTICE OF LICENSE
- *
- * Part of the Rinvex Fort Package.
- *
- * This source file is subject to The MIT License (MIT)
- * that is bundled with this package in the LICENSE file.
- *
- * Package: Rinvex Fort Package
- * License: The MIT License (MIT)
- * Link:    https://rinvex.com
- */
-
 declare(strict_types=1);
 
 namespace Rinvex\Fort\Notifications;
@@ -60,9 +47,11 @@ class AuthenticationLockoutNotification extends Notification implements ShouldQu
     /**
      * Build the mail representation of the notification.
      *
+     * @param mixed $notifiable
+     *
      * @return \Illuminate\Notifications\Messages\MailMessage
      */
-    public function toMail()
+    public function toMail($notifiable)
     {
         return (new MailMessage())
             ->subject(trans('emails.auth.lockout.subject'))

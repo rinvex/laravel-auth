@@ -1,27 +1,13 @@
 <?php
 
-/*
- * NOTICE OF LICENSE
- *
- * Part of the Rinvex Fort Package.
- *
- * This source file is subject to The MIT License (MIT)
- * that is bundled with this package in the LICENSE file.
- *
- * Package: Rinvex Fort Package
- * License: The MIT License (MIT)
- * Link:    https://rinvex.com
- */
-
 declare(strict_types=1);
 
 namespace {{namespace}}Http\Controllers\Frontend;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Rinvex\Fort\Guards\SessionGuard;
 use {{namespace}}Http\Controllers\AbstractController;
-use {{namespace}}Http\Requests\Frontend\UserAuthenticationRequest;
+use {{namespace}}Http\Requests\Frontend\AuthenticationRequest;
 
 class AuthenticationController extends AbstractController
 {
@@ -35,6 +21,8 @@ class AuthenticationController extends AbstractController
      */
     public function __construct()
     {
+        parent::__construct();
+
         $this->middleware($this->getGuestMiddleware(), ['except' => $this->middlewareWhitelist]);
     }
 
@@ -54,21 +42,22 @@ class AuthenticationController extends AbstractController
     /**
      * Process to the login form.
      *
-     * @param \{{namespace}}Http\Requests\Frontend\UserAuthenticationRequest $request
+     * @param \{{namespace}}Http\Requests\Frontend\AuthenticationRequest $request
      *
      * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse
      */
-    public function login(UserAuthenticationRequest $request)
+    public function login(AuthenticationRequest $request)
     {
         // Prepare variables
         $remember = $request->has('remember');
         $loginField = get_login_field($request->get('loginfield'));
         $credentials = [
+            'is_active' => true,
             $loginField => $request->input('loginfield'),
             'password' => $request->input('password'),
         ];
 
-        $result = Auth::guard($this->getGuard())->attempt($credentials, $remember);
+        $result = auth()->guard($this->getGuard())->attempt($credentials, $remember);
 
         return $this->getLoginResponse($request, $result);
     }
@@ -80,7 +69,7 @@ class AuthenticationController extends AbstractController
      */
     public function logout()
     {
-        $result = Auth::guard($this->getGuard())->logout();
+        $result = auth()->guard($this->getGuard())->logout();
 
         return intend([
             'url' => '/',
@@ -101,7 +90,7 @@ class AuthenticationController extends AbstractController
         switch ($result) {
             // Too many failed logins, user locked out
             case SessionGuard::AUTH_LOCKED_OUT:
-                $seconds = Auth::guard($this->getGuard())->secondsRemainingOnLockout($request);
+                $seconds = auth()->guard($this->getGuard())->secondsRemainingOnLockout($request);
 
                 return intend([
                     'url' => '/',
@@ -112,7 +101,7 @@ class AuthenticationController extends AbstractController
             // Valid credentials, but user is unverified; Can NOT login!
             case SessionGuard::AUTH_UNVERIFIED:
                 return intend([
-                    'route' => 'frontend.verification.email.request',
+                    'url' => route('frontend.verification.email.request'),
                     'withErrors' => ['email' => trans($result)],
                 ]);
 
@@ -124,12 +113,14 @@ class AuthenticationController extends AbstractController
                     'withErrors' => ['loginfield' => trans($result)],
                 ]);
 
-            // Two-Factor authentication required
+            // TwoFactor authentication required
             case SessionGuard::AUTH_TWOFACTOR_REQUIRED:
-                $route = ! isset(session('rinvex.fort.twofactor.methods')['totp']) ? 'frontend.verification.phone.request' : 'frontend.verification.phone.verify';
+                $route = session('_twofactor.totp')
+                    ? route('frontend.verification.phone.verify')
+                    : route('frontend.verification.phone.request');
 
                 return intend([
-                    'route' => $route,
+                    'url' => $route,
                     'with' => ['warning' => trans($result)],
                 ]);
 

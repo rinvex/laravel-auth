@@ -1,18 +1,5 @@
 <?php
 
-/*
- * NOTICE OF LICENSE
- *
- * Part of the Rinvex Fort Package.
- *
- * This source file is subject to The MIT License (MIT)
- * that is bundled with this package in the LICENSE file.
- *
- * Package: Rinvex Fort Package
- * License: The MIT License (MIT)
- * Link:    https://rinvex.com
- */
-
 declare(strict_types=1);
 
 namespace {{namespace}}Http\Controllers\Backend;
@@ -21,6 +8,7 @@ use Illuminate\Http\Request;
 use Rinvex\Fort\Models\Role;
 use Rinvex\Fort\Models\Ability;
 use {{namespace}}Http\Controllers\AuthorizedController;
+use {{namespace}}Http\Requests\Backend\RoleFormRequest;
 
 class RolesController extends AuthorizedController
 {
@@ -41,41 +29,19 @@ class RolesController extends AuthorizedController
      */
     public function index()
     {
-        $roles = Role::paginate(config('rinvex.fort.backend.items_per_page'));
+        $roles = Role::paginate(config('rinvex.fort.items_per_page'));
 
         return view('backend.roles.index', compact('roles'));
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        return $this->form('create', 'store', new Role());
-    }
-
-    /**
-     * Show the form for editing the given resource.
-     *
-     * @param \Rinvex\Fort\Models\Role $role
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Role $role)
-    {
-        return $this->form('edit', 'update', $role);
-    }
-
-    /**
      * Store a newly created resource in storage.
      *
-     * @param \Illuminate\Http\Request $request
+     * @param \{{namespace}}Http\Requests\Backend\RoleFormRequest $request
      *
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(RoleFormRequest $request)
     {
         return $this->process($request, new Role());
     }
@@ -83,12 +49,12 @@ class RolesController extends AuthorizedController
     /**
      * Update the given resource in storage.
      *
-     * @param \Illuminate\Http\Request $request
+     * @param \{{namespace}}Http\Requests\Backend\RoleFormRequest $request
      * @param \Rinvex\Fort\Models\Role $role
      *
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Role $role)
+    public function update(RoleFormRequest $request, Role $role)
     {
         return $this->process($request, $role);
     }
@@ -105,7 +71,7 @@ class RolesController extends AuthorizedController
         $role->delete();
 
         return intend([
-            'route' => 'backend.roles.index',
+            'url' => route('backend.roles.index'),
             'with' => ['warning' => trans('messages.role.deleted', ['roleId' => $role->id])],
         ]);
     }
@@ -113,19 +79,17 @@ class RolesController extends AuthorizedController
     /**
      * Show the form for create/update of the given resource.
      *
-     * @param string                   $mode
-     * @param string                   $action
      * @param \Rinvex\Fort\Models\Role $role
      *
      * @return \Illuminate\Http\Response
      */
-    protected function form($mode, $action, Role $role)
+    public function form(Role $role)
     {
-        $abilityList = Ability::all()->groupBy('resource')->map(function ($ability) {
+        $abilities = Ability::all()->groupBy('resource')->map(function ($ability) {
             return $ability->pluck('name', 'id');
         })->toArray();
 
-        return view('backend.roles.form', compact('role', 'abilityList', 'mode', 'action'));
+        return view('backend.roles.form', compact('role', 'abilities'));
     }
 
     /**
@@ -139,18 +103,13 @@ class RolesController extends AuthorizedController
     protected function process(Request $request, Role $role)
     {
         // Prepare required input fields
-        $input = $request->all();
+        $data = $request->all();
 
         // Save role
-        $role->fill($input)->save();
-
-        // Sync abilities
-        if ($request->user($this->getGuard())->can('grant-abilities')) {
-            $role->abilities()->sync((array) array_pull($input, 'abilityList'));
-        }
+        $role->fill($data)->save();
 
         return intend([
-            'route' => 'backend.roles.index',
+            'url' => route('backend.roles.index'),
             'with' => ['success' => trans('messages.role.saved', ['roleId' => $role->id])],
         ]);
     }

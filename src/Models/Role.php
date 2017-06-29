@@ -1,18 +1,5 @@
 <?php
 
-/*
- * NOTICE OF LICENSE
- *
- * Part of the Rinvex Fort Package.
- *
- * This source file is subject to The MIT License (MIT)
- * that is bundled with this package in the LICENSE file.
- *
- * Package: Rinvex Fort Package
- * License: The MIT License (MIT)
- * Link:    https://rinvex.com
- */
-
 declare(strict_types=1);
 
 namespace Rinvex\Fort\Models;
@@ -28,25 +15,24 @@ use Spatie\Translatable\HasTranslations;
 /**
  * Rinvex\Fort\Models\Role.
  *
- * @property int                                                                         $id
- * @property string                                                                      $slug
- * @property string                                                                      $name
- * @property string                                                                      $description
- * @property \Carbon\Carbon                                                              $created_at
- * @property \Carbon\Carbon                                                              $updated_at
- * @property \Carbon\Carbon                                                              $deleted_at
- * @property-read \Illuminate\Database\Eloquent\Collection|\Rinvex\Fort\Models\Ability[] $abilities
- * @property-read \Illuminate\Database\Eloquent\Collection|\Rinvex\Fort\Models\User[]    $users
- * @property-read array                                                                  $ability_list
+ * @property int                                                                      $id
+ * @property string                                                                   $slug
+ * @property array                                                                    $name
+ * @property array                                                                    $description
+ * @property \Carbon\Carbon|null                                                      $created_at
+ * @property \Carbon\Carbon|null                                                      $updated_at
+ * @property \Carbon\Carbon|null                                                      $deleted_at
+ * @property \Illuminate\Database\Eloquent\Collection|\Rinvex\Fort\Models\Ability[]   $abilities
+ * @property-read \Illuminate\Database\Eloquent\Collection|\Rinvex\Fort\Models\User[] $users
  *
- * @method static \Illuminate\Database\Query\Builder|\Rinvex\Fort\Models\Role whereId($value)
- * @method static \Illuminate\Database\Query\Builder|\Rinvex\Fort\Models\Role whereSlug($value)
- * @method static \Illuminate\Database\Query\Builder|\Rinvex\Fort\Models\Role whereTitle($value)
- * @method static \Illuminate\Database\Query\Builder|\Rinvex\Fort\Models\Role whereDescription($value)
- * @method static \Illuminate\Database\Query\Builder|\Rinvex\Fort\Models\Role whereCreatedAt($value)
- * @method static \Illuminate\Database\Query\Builder|\Rinvex\Fort\Models\Role whereUpdatedAt($value)
- * @method static \Illuminate\Database\Query\Builder|\Rinvex\Fort\Models\Role whereDeletedAt($value)
- * @mixin \Illuminate\Database\Eloquent\Model
+ * @method static \Illuminate\Database\Eloquent\Builder|\Rinvex\Fort\Models\Role whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\Rinvex\Fort\Models\Role whereDeletedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\Rinvex\Fort\Models\Role whereDescription($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\Rinvex\Fort\Models\Role whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\Rinvex\Fort\Models\Role whereName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\Rinvex\Fort\Models\Role whereSlug($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\Rinvex\Fort\Models\Role whereUpdatedAt($value)
+ * @mixin \Eloquent
  */
 class Role extends Model
 {
@@ -59,10 +45,18 @@ class Role extends Model
     /**
      * {@inheritdoc}
      */
+    protected $dates = [
+        'deleted_at',
+    ];
+
+    /**
+     * {@inheritdoc}
+     */
     protected $fillable = [
         'slug',
         'name',
         'description',
+        'abilities',
     ];
 
     /**
@@ -102,7 +96,8 @@ class Role extends Model
     protected $rules = [];
 
     /**
-     * Whether the model should throw a ValidationException if it fails validation.
+     * Whether the model should throw a
+     * ValidationException if it fails validation.
      *
      * @var bool
      */
@@ -119,10 +114,54 @@ class Role extends Model
 
         $this->setTable(config('rinvex.fort.tables.roles'));
         $this->setRules([
-            'name' => 'required|string',
+            'name' => 'required|string|max:150',
             'description' => 'nullable|string',
-            'slug' => 'required|alpha_dash|unique:'.config('rinvex.fort.tables.roles').',slug',
+            'slug' => 'required|alpha_dash|max:150|unique:'.config('rinvex.fort.tables.roles').',slug',
         ]);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::updated(function (self $role) {
+            Ability::forgetCache();
+            User::forgetCache();
+        });
+
+        static::deleted(function (self $role) {
+            Ability::forgetCache();
+            User::forgetCache();
+        });
+
+        static::attached(function (self $role) {
+            Ability::forgetCache();
+            User::forgetCache();
+        });
+
+        static::synced(function (self $role) {
+            Ability::forgetCache();
+            User::forgetCache();
+        });
+
+        static::detached(function (self $role) {
+            Ability::forgetCache();
+            User::forgetCache();
+        });
+
+        // Auto generate slugs early before validation
+        static::registerModelEvent('validating', function (self $role) {
+            if (! $role->slug) {
+                if ($role->exists && $role->getSlugOptions()->generateSlugsOnUpdate) {
+                    $role->generateSlugOnUpdate();
+                } elseif (! $role->exists && $role->getSlugOptions()->generateSlugsOnCreate) {
+                    $role->generateSlugOnCreate();
+                }
+            }
+        });
     }
 
     /**
@@ -246,16 +285,6 @@ class Role extends Model
     }
 
     /**
-     * Get the list of ability Ids.
-     *
-     * @return array
-     */
-    public function getAbilityListAttribute()
-    {
-        return $this->abilities->pluck('id')->toArray();
-    }
-
-    /**
      * Set the translatable name attribute.
      *
      * @param string $value
@@ -319,7 +348,22 @@ class Role extends Model
     public function getSlugOptions(): SlugOptions
     {
         return SlugOptions::create()
+                          ->doNotGenerateSlugsOnUpdate()
                           ->generateSlugsFrom('name')
                           ->saveSlugsTo('slug');
+    }
+
+    /**
+     * Attach the role abilities.
+     *
+     * @param mixed $abilities
+     *
+     * @return void
+     */
+    public function setAbilitiesAttribute($abilities)
+    {
+        static::saved(function (self $model) use ($abilities) {
+            $model->abilities()->sync($abilities);
+        });
     }
 }

@@ -1,18 +1,5 @@
 <?php
 
-/*
- * NOTICE OF LICENSE
- *
- * Part of the Rinvex Fort Package.
- *
- * This source file is subject to The MIT License (MIT)
- * that is bundled with this package in the LICENSE file.
- *
- * Package: Rinvex Fort Package
- * License: The MIT License (MIT)
- * Link:    https://rinvex.com
- */
-
 declare(strict_types=1);
 
 namespace Rinvex\Fort\Console\Commands;
@@ -62,7 +49,7 @@ class UserUpdateCommand extends Command
             'first_name' => $this->option('firstName'),
             'middle_name' => $this->option('middleName'),
             'last_name' => $this->option('lastName'),
-            'active' => $this->option('active') ?: ! $this->option('inactive'),
+            'is_active' => $this->option('active') ?: ! $this->option('inactive'),
 
         ], [
             $this,
@@ -86,8 +73,8 @@ class UserUpdateCommand extends Command
         }
 
         $rules = [
-            'email' => 'sometimes|required|email|max:255|unique:'.config('rinvex.fort.tables.users').',email',
-            'username' => 'sometimes|required|max:255|unique:'.config('rinvex.fort.tables.users').',username',
+            'email' => 'sometimes|required|email|min:3|max:150|unique:'.config('rinvex.fort.tables.users').',email',
+            'username' => 'sometimes|required|alpha_dash|min:3|max:150|unique:'.config('rinvex.fort.tables.users').',username',
         ];
 
         if (! empty($data)) {

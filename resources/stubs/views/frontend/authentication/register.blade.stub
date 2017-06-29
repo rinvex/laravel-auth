@@ -15,7 +15,7 @@
                 <section class="panel panel-default">
                     <header class="panel-heading">{{ trans('common.register') }}</header>
                     <div class="panel-body">
-                        {{ Form::open(['route' => 'frontend.auth.register.process', 'class' => 'form-horizontal']) }}
+                        {{ Form::open(['url' => route('frontend.auth.register.process'), 'class' => 'form-horizontal']) }}
 
                             @include('frontend.alerts.success')
                             @include('frontend.alerts.warning')
@@ -28,9 +28,7 @@
                                     {{ Form::text('username', old('username'), ['class' => 'form-control', 'placeholder' => trans('common.username'), 'required' => 'required', 'autofocus' => 'autofocus']) }}
 
                                     @if ($errors->has('username'))
-                                        <span class="help-block">
-                                            <strong>{{ $errors->first('username') }}</strong>
-                                        </span>
+                                        <span class="help-block">{{ $errors->first('username') }}</span>
                                     @endif
                                 </div>
                             </div>
@@ -42,9 +40,7 @@
                                     {{ Form::email('email', old('email'), ['class' => 'form-control', 'placeholder' => trans('common.email'), 'required' => 'required']) }}
 
                                     @if ($errors->has('email'))
-                                        <span class="help-block">
-                                            <strong>{{ $errors->first('email') }}</strong>
-                                        </span>
+                                        <span class="help-block">{{ $errors->first('email') }}</span>
                                     @endif
                                 </div>
                             </div>
@@ -56,9 +52,7 @@
                                     {{ Form::password('password', ['class' => 'form-control', 'placeholder' => trans('common.password'), 'required' => 'required']) }}
 
                                     @if ($errors->has('password'))
-                                        <span class="help-block">
-                                            <strong>{{ $errors->first('password') }}</strong>
-                                        </span>
+                                        <span class="help-block">{{ $errors->first('password') }}</span>
                                     @endif
                                 </div>
                             </div>
@@ -70,9 +64,7 @@
                                     {{ Form::password('password_confirmation', ['class' => 'form-control', 'placeholder' => trans('common.password_confirmation'), 'required' => 'required']) }}
 
                                     @if ($errors->has('password_confirmation'))
-                                        <span class="help-block">
-                                            <strong>{{ $errors->first('password_confirmation') }}</strong>
-                                        </span>
+                                        <span class="help-block">{{ $errors->first('password_confirmation') }}</span>
                                     @endif
                                 </div>
                             </div>

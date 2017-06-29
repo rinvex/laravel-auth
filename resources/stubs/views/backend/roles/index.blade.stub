@@ -3,7 +3,7 @@
 
 {{-- Page Title --}}
 @section('title')
-    {{ config('app.name') }} » {{ trans('common.roles') }}
+    {{ config('app.name') }} » {{ trans('common.backend') }} » {{ trans('common.roles') }}
 @stop
 
 {{-- Main Content --}}

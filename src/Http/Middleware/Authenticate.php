@@ -1,24 +1,10 @@
 <?php
 
-/*
- * NOTICE OF LICENSE
- *
- * Part of the Rinvex Fort Package.
- *
- * This source file is subject to The MIT License (MIT)
- * that is bundled with this package in the LICENSE file.
- *
- * Package: Rinvex Fort Package
- * License: The MIT License (MIT)
- * Link:    https://rinvex.com
- */
-
 declare(strict_types=1);
 
 namespace Rinvex\Fort\Http\Middleware;
 
 use Closure;
-use Illuminate\Support\Facades\Auth;
 
 class Authenticate
 {
@@ -33,9 +19,9 @@ class Authenticate
      */
     public function handle($request, Closure $next, $guard = null)
     {
-        if (Auth::guard($guard)->guest()) {
+        if (auth()->guard($guard)->guest()) {
             return intend([
-                'route' => 'frontend.auth.login',
+                'url' => route('frontend.auth.login'),
                 'withErrors' => ['rinvex.fort.session.expired' => trans('messages.auth.session.required')],
             ], 401);
         }

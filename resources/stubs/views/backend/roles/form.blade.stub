@@ -3,7 +3,7 @@
 
 {{-- Page Title --}}
 @section('title')
-    {{ config('app.name') }} » {{ trans('common.roles') }} » {{ trans('common.'.$mode) }} @if($role->exists) {{ $role->slug }} @endif
+    {{ config('app.name') }} » {{ trans('common.backend') }} » {{ trans('common.roles') }} » {{ $role->exists ? $role->name : trans('common.create_role') }}
 @stop
 
 {{-- Main Content --}}
@@ -24,10 +24,10 @@
             @include('backend.common.confirm-modal', ['type' => 'role'])
         @endif
 
-        @if ($action === 'update')
-            {{ Form::model($role, ['route' => ['backend.roles.update', $role], 'method' => 'put']) }}
+        @if ($role->exists)
+            {{ Form::model($role, ['url' => route('backend.roles.update', ['role' => $role]), 'method' => 'put']) }}
         @else
-            {{ Form::model($role, ['route' => ['backend.roles.store']]) }}
+            {{ Form::model($role, ['url' => route('backend.roles.store')]) }}
         @endif
 
             <section class="panel panel-default">
@@ -35,7 +35,7 @@
                 {{-- Heading --}}
                 <header class="panel-heading">
                     <h4>
-                        <a href="{{ route('backend.roles.index') }}">{{ trans('common.roles') }}</a> » {{ trans('common.'.$mode) }} @if($role->exists) <strong>{{ $role->slug }}</strong> @endif
+                        <a href="{{ route('backend.roles.index') }}">{{ trans('common.roles') }}</a> » {{ $role->exists ? $role->name : trans('common.create_role') }}
                         @if($role->exists)
                             <span class="pull-right" style="margin-top: -7px">
                                 @can('delete-roles', $role) <a href="#" class="btn btn-default" data-toggle="modal" data-target="#delete-confirmation" data-item-href="{{ route('backend.roles.delete', ['role' => $role]) }}" data-item-name="{{ $role->slug }}"><i class="fa fa-trash-o text-danger"></i></a> @endcan
@@ -57,9 +57,7 @@
                                 {{ Form::text('name', null, ['class' => 'form-control', 'placeholder' => trans('common.name'), 'required' => 'required', 'autofocus' => 'autofocus']) }}
 
                                 @if ($errors->has('name'))
-                                    <span class="help-block">
-                                        <strong>{{ $errors->first('name') }}</strong>
-                                    </span>
+                                    <span class="help-block">{{ $errors->first('name') }}</span>
                                 @endif
                             </div>
 
@@ -72,9 +70,7 @@
                                 {{ Form::text('slug', null, ['class' => 'form-control', 'placeholder' => trans('common.slug'), 'required' => 'required']) }}
 
                                 @if ($errors->has('slug'))
-                                    <span class="help-block">
-                                        <strong>{{ $errors->first('slug') }}</strong>
-                                    </span>
+                                    <span class="help-block">{{ $errors->first('slug') }}</span>
                                 @endif
                             </div>
 
@@ -82,7 +78,27 @@
                     </div>
 
                     <div class="row">
-                        <div class="col-md-8">
+
+                        @can('grant-abilities')
+                            <div class="col-md-12">
+
+                                {{-- Abilities --}}
+                                <div class="form-group{{ $errors->has('abilities') ? ' has-error' : '' }}">
+                                    {{ Form::label('abilities[]', trans('common.abilities'), ['class' => 'control-label']) }}
+                                    {{ Form::select('abilities[]', $abilities, null, ['class' => 'form-control', 'multiple' => 'multiple', 'size' => 4]) }}
+
+                                    @if ($errors->has('abilities'))
+                                        <span class="help-block">{{ $errors->first('abilities') }}</span>
+                                    @endif
+                                </div>
+
+                            </div>
+                        @endcan
+
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-12">
 
                             {{-- Description --}}
                             <div class="form-group{{ $errors->has('description') ? ' has-error' : '' }}">
@@ -90,30 +106,11 @@
                                 {{ Form::textarea('description', null, ['class' => 'form-control', 'placeholder' => trans('common.description'), 'rows' => 3]) }}
 
                                 @if ($errors->has('description'))
-                                    <span class="help-block">
-                                        <strong>{{ $errors->first('description') }}</strong>
-                                    </span>
+                                    <span class="help-block">{{ $errors->first('description') }}</span>
                                 @endif
                             </div>
 
                         </div>
-                        @can('grant-abilities')
-                        <div class="col-md-4">
-
-                            {{-- Abilities --}}
-                            <div class="form-group{{ $errors->has('abilities') ? ' has-error' : '' }}">
-                                {{ Form::label('abilityList[]', trans('common.abilities'), ['class' => 'control-label']) }}
-                                {{ Form::select('abilityList[]', $abilityList, null, ['class' => 'form-control', 'multiple' => 'multiple', 'size' => 4]) }}
-
-                                @if ($errors->has('abilities'))
-                                    <span class="help-block">
-                                        <strong>{{ $errors->first('abilities') }}</strong>
-                                    </span>
-                                @endif
-                            </div>
-
-                        </div>
-                        @endcan
                     </div>
 
                 </div>

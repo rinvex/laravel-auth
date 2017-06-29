@@ -16,7 +16,7 @@
                     <header class="panel-heading">{{ trans('common.password_reset_request') }}</header>
 
                     <div class="panel-body">
-                        {{ Form::open(['route' => 'frontend.passwordreset.send', 'class' => 'form-horizontal']) }}
+                        {{ Form::open(['url' => route('frontend.passwordreset.send'), 'class' => 'form-horizontal']) }}
 
                             @include('frontend.alerts.success')
                             @include('frontend.alerts.warning')
@@ -29,9 +29,7 @@
                                     {{ Form::email('email', old('email'), ['class' => 'form-control', 'placeholder' => trans('common.email'), 'required' => 'required', 'autofocus' => 'autofocus']) }}
 
                                     @if ($errors->has('email'))
-                                        <span class="help-block">
-                                            <strong>{{ $errors->first('email') }}</strong>
-                                        </span>
+                                        <span class="help-block">{{ $errors->first('email') }}</span>
                                     @endif
                                 </div>
                             </div>

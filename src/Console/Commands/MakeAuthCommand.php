@@ -1,18 +1,5 @@
 <?php
 
-/*
- * NOTICE OF LICENSE
- *
- * Part of the Rinvex Fort Package.
- *
- * This source file is subject to The MIT License (MIT)
- * that is bundled with this package in the LICENSE file.
- *
- * Package: Rinvex Fort Package
- * License: The MIT License (MIT)
- * Link:    https://rinvex.com
- */
-
 declare(strict_types=1);
 
 namespace Rinvex\Fort\Console\Commands;
@@ -50,10 +37,11 @@ class MakeAuthCommand extends Command
         'Backend/RolesController',
         'Backend/UsersController',
 
-        'Frontend/AccountSettingsController',
         'Frontend/AccountSessionsController',
+        'Frontend/AccountSettingsController',
         'Frontend/AuthenticationController',
         'Frontend/EmailVerificationController',
+        'Frontend/HomeController',
         'Frontend/PasswordResetController',
         'Frontend/PhoneVerificationController',
         'Frontend/RegistrationController',
@@ -73,12 +61,29 @@ class MakeAuthCommand extends Command
      */
     protected $requests = [
 
+        'Backend/AbilityFormRequest',
+        'Backend/RoleFormRequest',
+        'Backend/UserFormRequest',
+
+        'Frontend/AccountSettingsRequest',
+        'Frontend/AuthenticationRequest',
+        'Frontend/EmailVerificationProcessRequest',
         'Frontend/EmailVerificationRequest',
+        'Frontend/EmailVerificationSendRequest',
+        'Frontend/PasswordResetPostProcessRequest',
+        'Frontend/PasswordResetProcessRequest',
         'Frontend/PasswordResetRequest',
         'Frontend/PasswordResetSendRequest',
+        'Frontend/PhoneVerificationProcessRequest',
         'Frontend/PhoneVerificationRequest',
+        'Frontend/PhoneVerificationSendProcessRequest',
         'Frontend/PhoneVerificationSendRequest',
-        'Frontend/UserAuthenticationRequest',
+        'Frontend/RegistrationProcessRequest',
+        'Frontend/RegistrationRequest',
+        'Frontend/TwoFactorPhoneSettingsRequest',
+        'Frontend/TwoFactorTotpBackupSettingsRequest',
+        'Frontend/TwoFactorTotpProcessSettingsRequest',
+        'Frontend/TwoFactorTotpSettingsRequest',
 
     ];
 
@@ -92,8 +97,8 @@ class MakeAuthCommand extends Command
         'backend/abilities/form.blade',
         'backend/abilities/index.blade',
         'backend/common/confirm-modal.blade',
-        'backend/common/layout.blade',
         'backend/common/layout-example.blade',
+        'backend/common/layout.blade',
         'backend/common/pagination.blade',
         'backend/dashboard/home.blade',
         'backend/roles/form.blade',
@@ -110,8 +115,8 @@ class MakeAuthCommand extends Command
         'frontend/authentication/login.blade',
         'frontend/authentication/register.blade',
         'frontend/common/confirm-modal.blade',
-        'frontend/common/layout.blade',
         'frontend/common/layout-example.blade',
+        'frontend/common/layout.blade',
         'frontend/passwordreset/request.blade',
         'frontend/passwordreset/reset.blade',
         'frontend/verification/email-request.blade',

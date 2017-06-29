@@ -1,38 +1,26 @@
 <?php
 
-/*
- * NOTICE OF LICENSE
- *
- * Part of the Rinvex Fort Package.
- *
- * This source file is subject to The MIT License (MIT)
- * that is bundled with this package in the LICENSE file.
- *
- * Package: Rinvex Fort Package
- * License: The MIT License (MIT)
- * Link:    https://rinvex.com
- */
-
 declare(strict_types=1);
 
 namespace Rinvex\Fort\Services;
 
 use Closure;
+use Carbon\Carbon;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Str;
 use UnexpectedValueException;
 use Illuminate\Contracts\Auth\UserProvider;
 use Rinvex\Fort\Contracts\CanResetPasswordContract;
-use Rinvex\Fort\Contracts\PasswordResetTokenRepositoryContract;
-use Illuminate\Contracts\Auth\PasswordBroker as PasswordBrokerContract;
+use Rinvex\Fort\Contracts\PasswordResetBrokerContract;
 
-class PasswordResetBroker implements PasswordBrokerContract
+class PasswordResetBroker implements PasswordResetBrokerContract
 {
     /**
-     * The password token repository.
+     * The application key.
      *
-     * @var \Illuminate\Auth\Passwords\TokenRepositoryInterface
+     * @var string
      */
-    protected $tokens;
+    protected $key;
 
     /**
      * The user provider implementation.
@@ -42,6 +30,13 @@ class PasswordResetBroker implements PasswordBrokerContract
     protected $users;
 
     /**
+     * The number of minutes that the reset token should be considered valid.
+     *
+     * @var int
+     */
+    protected $expiration;
+
+    /**
      * The custom password validator callback.
      *
      * @var \Closure
@@ -49,15 +44,17 @@ class PasswordResetBroker implements PasswordBrokerContract
     protected $passwordValidator;
 
     /**
-     * Create a new password broker instance.
+     * Create a new verification broker instance.
      *
-     * @param \Rinvex\Fort\Contracts\PasswordResetTokenRepositoryContract $tokens
-     * @param \Illuminate\Contracts\Auth\UserProvider                     $users
+     * @param \Illuminate\Contracts\Auth\UserProvider $users
+     * @param string                                  $key
+     * @param int                                     $expiration
      */
-    public function __construct(PasswordResetTokenRepositoryContract $tokens, UserProvider $users)
+    public function __construct(UserProvider $users, $key, $expiration)
     {
+        $this->key = $key;
         $this->users = $users;
-        $this->tokens = $tokens;
+        $this->expiration = $expiration;
     }
 
     /**
@@ -78,17 +75,12 @@ class PasswordResetBroker implements PasswordBrokerContract
             return static::INVALID_USER;
         }
 
-        // Once we have the reset password token, we are ready to send the message out
-        // to this user with a link for password. We will then redirect back to the
-        // current URI having nothing set in the session to indicate errors.
-        $data = $this->tokens->getData($user, $token = $this->tokens->create($user));
-        $expiration = $this->tokens->getExpiration();
+        $expiration = Carbon::now()->addMinutes($this->expiration)->timestamp;
 
-        // Returned token is hashed, and we need the
-        // public token to be sent to the user
-        $data['token'] = $token;
-
-        $user->sendPasswordResetNotification($data, $expiration);
+        // Once we have the reset token, we are ready to send the message out to this
+        // user with a link to reset their password. We will then redirect back to
+        // the current URI having nothing set in the session to indicate errors.
+        $user->sendPasswordResetNotification($this->createToken($user, $expiration), $expiration);
 
         return static::RESET_LINK_SENT;
     }
@@ -116,10 +108,8 @@ class PasswordResetBroker implements PasswordBrokerContract
 
         // Once the reset has been validated, we'll call the given callback with the
         // new password. This gives the user an opportunity to store the password
-        // in their persistent storage. Then we'll delete the token and return.
+        // in their persistent storage.
         $callback($user, $password);
-
-        $this->tokens->delete($user);
 
         return static::PASSWORD_RESET;
     }
@@ -187,9 +177,7 @@ class PasswordResetBroker implements PasswordBrokerContract
      */
     public function getUser(array $credentials)
     {
-        $credentials = Arr::except($credentials, ['token']);
-
-        $user = $this->users->retrieveByCredentials($credentials);
+        $user = $this->users->retrieveByCredentials(Arr::only($credentials, ['email']));
 
         if ($user && ! $user instanceof CanResetPasswordContract) {
             throw new UnexpectedValueException('User must implement CanResetPassword interface.');
@@ -201,48 +189,76 @@ class PasswordResetBroker implements PasswordBrokerContract
     /**
      * Create a new password reset token for the given user.
      *
-     * @param CanResetPasswordContract $user
+     * @param \Rinvex\Fort\Contracts\CanResetPasswordContract $user
+     * @param int                                             $expiration
      *
      * @return string
      */
-    public function createToken(CanResetPasswordContract $user)
+    public function createToken(CanResetPasswordContract $user, $expiration)
     {
-        return $this->tokens->create($user);
-    }
+        $payload = $this->buildPayload($user, $user->getEmailForPasswordReset(), $expiration);
 
-    /**
-     * Delete password reset tokens of the given user.
-     *
-     * @param \Illuminate\Contracts\Auth\CanResetPassword $user
-     *
-     * @return void
-     */
-    public function deleteToken(CanResetPasswordContract $user)
-    {
-        $this->tokens->delete($user);
+        return hash_hmac('sha256', $payload, $this->getKey());
     }
 
     /**
      * Validate the given password reset token.
      *
      * @param \Rinvex\Fort\Contracts\CanResetPasswordContract $user
-     * @param string                                          $token
+     * @param array                                           $credentials
      *
      * @return bool
      */
-    public function tokenExists(CanResetPasswordContract $user, $token)
+    public function validateToken(CanResetPasswordContract $user, array $credentials)
     {
-        return $this->tokens->exists($user, $token);
+        $payload = $this->buildPayload($user, $credentials['email'], $credentials['expiration']);
+
+        return hash_equals($credentials['token'], hash_hmac('sha256', $payload, $this->getKey()));
     }
 
     /**
-     * Get the password reset token repository implementation.
+     * Validate the given expiration timestamp.
      *
-     * @return \Illuminate\Auth\Passwords\TokenRepositoryInterface
+     * @param int $expiration
+     *
+     * @return bool
      */
-    public function getRepository()
+    public function validateTimestamp($expiration)
     {
-        return $this->tokens;
+        return Carbon::createFromTimestamp($expiration)->isFuture();
+    }
+
+    /**
+     * Return the application key.
+     *
+     * @return string
+     */
+    public function getKey()
+    {
+        if (Str::startsWith($this->key, 'base64:')) {
+            return base64_decode(mb_substr($this->key, 7));
+        }
+
+        return $this->key;
+    }
+
+    /**
+     * Returns the payload string containing.
+     *
+     * @param \Rinvex\Fort\Contracts\CanResetPasswordContract $user
+     * @param string                                          $email
+     * @param int                                             $expiration
+     *
+     * @return string
+     */
+    protected function buildPayload(CanResetPasswordContract $user, $email, $expiration)
+    {
+        return implode(';', [
+            $email,
+            $expiration,
+            $user->getKey(),
+            $user->password,
+        ]);
     }
 
     /**
@@ -262,8 +278,12 @@ class PasswordResetBroker implements PasswordBrokerContract
             return static::INVALID_PASSWORD;
         }
 
-        if (! $this->tokens->exists($user, $credentials['token'])) {
+        if (! $this->validateToken($user, $credentials)) {
             return static::INVALID_TOKEN;
+        }
+
+        if (! $this->validateTimestamp($credentials['expiration'])) {
+            return static::EXPIRED_TOKEN;
         }
 
         return $user;

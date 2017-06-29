@@ -3,7 +3,7 @@
 
 {{-- Page Title --}}
 @section('title')
-    {{ config('app.name') }} » {{ trans('common.dashboard') }}
+    {{ config('app.name') }} » {{ trans('common.backend') }}
 @stop
 
 {{-- Main Content --}}
@@ -81,7 +81,7 @@
                                                         </td>
 
                                                         <td>
-                                                            @if($user->active)
+                                                            @if($user->is_active)
                                                                 <span class="label label-success">{{ trans('common.active') }}</span>
                                                             @else
                                                                 <span class="label label-warning">{{ trans('common.inactive') }}</span>
@@ -141,29 +141,29 @@
                                 <section class="panel panel-default">
                                     <header class="panel-heading">
                                         <h4>
-                                            {{ trans('common.online_users', ['mins' => config('rinvex.fort.online.interval')]) }}
-                                            <span class="pull-right">{{ $persistences->count() }}</span>
+                                            {{ trans('common.online_users', ['mins' => config('rinvex.fort.online_interval')]) }}
+                                            <span class="pull-right">{{ $sessions->count() }}</span>
                                         </h4>
                                     </header>
 
                                     <ul class="list-group" style="vertical-align: middle">
 
-                                        @foreach($persistences as $persistence)
+                                        @foreach($sessions as $session)
 
                                             <li class="list-group-item" style="vertical-align: middle">
                                                 <span class="pull-right">
-                                                    @if($persistence->user_id === $currentUser->id)<span class="label label-info">{{ trans('common.you') }}</span> @endif
-                                                    <span class="badge">{{ $persistence->updated_at->diffForHumans() }}</span>
+                                                    @if($session->user_id === $currentUser->id)<span class="label label-info">{{ trans('common.you') }}</span> @endif
+                                                    <span class="badge">{{ $session->last_activity->diffForHumans() }}</span>
                                                 </span>
-                                                @can('update-users', $user) <a href="{{ route('backend.users.edit', ['user' => $persistence->user_id]) }}"> @endcan
+                                                @can('update-users', $user) <a href="{{ route('backend.users.edit', ['user' => $session->user_id]) }}"> @endcan
                                                     <strong>
-                                                        @if($persistence->user->first_name)
-                                                            {{ $persistence->user->first_name }} {{ $persistence->user->middle_name }} {{ $persistence->user->last_name }}
+                                                        @if($session->user->first_name)
+                                                            {{ $session->user->first_name }} {{ $session->user->middle_name }} {{ $session->user->last_name }}
                                                         @else
-                                                            {{ $persistence->user->username }}
+                                                            {{ $session->user->username }}
                                                         @endif
                                                     </strong>
-                                                    <div class="small ">{{ $persistence->user->job_title }}</div>
+                                                    <div class="small ">{{ $session->user->job_title }}</div>
                                                 @can('update-users', $user) </a> @endcan
                                             </li>
 

@@ -1,40 +1,19 @@
 <?php
 
-/*
- * NOTICE OF LICENSE
- *
- * Part of the Rinvex Fort Package.
- *
- * This source file is subject to The MIT License (MIT)
- * that is bundled with this package in the LICENSE file.
- *
- * Package: Rinvex Fort Package
- * License: The MIT License (MIT)
- * Link:    https://rinvex.com
- */
-
 declare(strict_types=1);
 
 namespace Rinvex\Fort\Providers;
 
-use Rinvex\Fort\Models\Role;
 use Illuminate\Routing\Router;
-use Collective\Html\FormFacade;
-use Collective\Html\HtmlFacade;
-use Rinvex\Fort\Models\Ability;
-use Illuminate\Support\Facades\Auth;
 use Rinvex\Fort\Guards\SessionGuard;
 use Rinvex\Fort\Services\AccessGate;
-use Rinvex\Fort\Handlers\RoleHandler;
-use Illuminate\Foundation\AliasLoader;
 use Illuminate\Support\ServiceProvider;
-use Collective\Html\HtmlServiceProvider;
-use Rinvex\Fort\Handlers\AbilityHandler;
 use Rinvex\Fort\Handlers\GenericHandler;
 use Rinvex\Fort\Http\Middleware\Abilities;
+use Rinvex\Fort\Http\Middleware\NoHttpCache;
 use Rinvex\Fort\Http\Middleware\Authenticate;
-use Laravel\Socialite\SocialiteServiceProvider;
 use Illuminate\Console\DetectsApplicationNamespace;
+use Rinvex\Fort\Http\Middleware\UpdateLastActivity;
 use Rinvex\Fort\Http\Middleware\RedirectIfAuthenticated;
 use Illuminate\Contracts\Auth\Access\Gate as GateContract;
 
@@ -50,21 +29,13 @@ class FortServiceProvider extends ServiceProvider
         // Merge config
         $this->mergeConfigFrom(realpath(__DIR__.'/../../config/config.php'), 'rinvex.fort');
 
-        // Override Exception Handler
-        $this->overrideExceptionHandler();
+        if (config('rinvex.fort.boot.override_exceptionhandler')) {
+            // Override Exception Handler
+            $this->overrideExceptionHandler();
+        }
 
         // Register Access Gate Binding
         $this->registerAccessGate();
-
-        // Register the Socialite Service Provider
-        $this->app->register(SocialiteServiceProvider::class);
-
-        // Register the LaravelCollective HTML Service Provider
-        $this->app->register(HtmlServiceProvider::class);
-
-        // Alias the LaravelCollective Form & HTML Facades
-        AliasLoader::getInstance()->alias('Form', FormFacade::class);
-        AliasLoader::getInstance()->alias('Html', HtmlFacade::class);
     }
 
     /**
@@ -86,8 +57,10 @@ class FortServiceProvider extends ServiceProvider
      */
     public function boot(Router $router)
     {
-        // Override middlware
-        $this->overrideMiddleware($router);
+        if (config('rinvex.fort.boot.override_middleware')) {
+            // Override middlware
+            $this->overrideMiddleware($router);
+        }
 
         // Load routes
         $this->loadRoutes($router);
@@ -100,17 +73,15 @@ class FortServiceProvider extends ServiceProvider
             $this->publishResources();
         }
 
-        // Register event handlers
-        Role::observe(RoleHandler::class);
-        Ability::observe(AbilityHandler::class);
-        $this->app['events']->subscribe(GenericHandler::class);
-
         // Override session guard
         $this->overrideSessionGuard();
 
+        // Register event handlers
+        $this->app['events']->subscribe(GenericHandler::class);
+
         // Share current user instance with all views
         $this->app['view']->composer('*', function ($view) {
-            $view->with('currentUser', Auth::user());
+            $view->with('currentUser', auth()->user());
         });
     }
 
@@ -194,11 +165,13 @@ class FortServiceProvider extends ServiceProvider
      */
     protected function overrideMiddleware(Router $router)
     {
-        // Append abilities middleware to the 'web' middlware group
+        // Append middleware to the 'web' middlware group
         $router->pushMiddlewareToGroup('web', Abilities::class);
+        $router->pushMiddlewareToGroup('web', UpdateLastActivity::class);
 
         // Override route middleware on the fly
         $router->aliasMiddleware('auth', Authenticate::class);
+        $router->aliasMiddleware('nohttpcache', NoHttpCache::class);
         $router->aliasMiddleware('guest', RedirectIfAuthenticated::class);
     }
 

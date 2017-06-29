@@ -1,18 +1,5 @@
 <?php
 
-/*
- * NOTICE OF LICENSE
- *
- * Part of the Rinvex Fort Package.
- *
- * This source file is subject to The MIT License (MIT)
- * that is bundled with this package in the LICENSE file.
- *
- * Package: Rinvex Fort Package
- * License: The MIT License (MIT)
- * Link:    https://rinvex.com
- */
-
 declare(strict_types=1);
 
 namespace Rinvex\Fort\Console\Commands;
@@ -43,7 +30,7 @@ class UserFindCommand extends Command
      */
     public function handle()
     {
-        $columns = ['id', 'email', 'username', 'gender', 'active', 'verified', 'created_at', 'updated_at'];
+        $columns = ['id', 'email', 'username', 'gender', 'is_active', 'verified', 'created_at', 'updated_at'];
 
         // Find single user
         if ($field = $this->argument('field')) {

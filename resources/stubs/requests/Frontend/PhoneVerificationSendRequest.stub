@@ -1,24 +1,55 @@
 <?php
 
-/*
- * NOTICE OF LICENSE
- *
- * Part of the Rinvex Fort Package.
- *
- * This source file is subject to The MIT License (MIT)
- * that is bundled with this package in the LICENSE file.
- *
- * Package: Rinvex Fort Package
- * License: The MIT License (MIT)
- * Link:    https://rinvex.com
- */
-
 declare(strict_types=1);
 
 namespace {{namespace}}Http\Requests\Frontend;
 
+use Exception;
+
 class PhoneVerificationSendRequest extends PhoneVerificationRequest
 {
+    /**
+     * Determine if the user is authorized to make this request.
+     *
+     * @throws \Exception
+     *
+     * @return bool
+     */
+    public function authorize()
+    {
+        parent::authorize();
+
+        $user = $this->user();
+        $attemptUser = auth()->attemptUser();
+
+        if ($user && ! $user->country_code) {
+            // Country field required for phone verification
+            throw new Exception(trans('messages.account.country_required'));
+        }
+
+        if ($user && ! $user->phone) {
+            // Phone field required before verification
+            throw new Exception(trans('messages.account.phone_required'));
+        }
+
+        if ($attemptUser && ! $attemptUser->country_code) {
+            // Country field required for TwoFactor authentication
+            throw new Exception(trans('messages.verification.twofactor.phone.country_required'));
+        }
+
+        if ($attemptUser && ! $attemptUser->phone) {
+            // Phone field required for TwoFactor authentication
+            throw new Exception(trans('messages.verification.twofactor.phone.phone_required'));
+        }
+
+        if (! in_array('phone', config('rinvex.fort.twofactor.providers'))) {
+            // Country required for phone verification
+            throw new Exception(trans('messages.verification.twofactor.phone.disabled'));
+        }
+
+        return true;
+    }
+
     /**
      * Get the validation rules that apply to the request.
      *
@@ -26,9 +57,6 @@ class PhoneVerificationSendRequest extends PhoneVerificationRequest
      */
     public function rules()
     {
-        return $this->isMethod('post') ? [
-            'phone' => 'required|numeric|exists:'.config('rinvex.fort.tables.users').',phone',
-            'method' => 'required',
-        ] : [];
+        return [];
     }
 }

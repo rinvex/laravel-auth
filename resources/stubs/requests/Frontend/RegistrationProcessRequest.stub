@@ -1,0 +1,40 @@
+<?php
+
+declare(strict_types=1);
+
+namespace {{namespace}}Http\Requests\Frontend;
+
+use Rinvex\Fort\Models\Role;
+use Rinvex\Fort\Models\User;
+
+class RegistrationProcessRequest extends RegistrationRequest
+{
+    /**
+     * Process given request data before validation.
+     *
+     * @param array $data
+     *
+     * @return array
+     */
+    public function process($data)
+    {
+        $role = Role::where('slug', config('rinvex.fort.registration.default_role'))->first();
+        $data['is_active'] = ! config('rinvex.fort.registration.moderated');
+        ! $role || $data['roles'] = [$role->id];
+
+        return $data;
+    }
+
+    /**
+     * Get the validation rules that apply to the request.
+     *
+     * @return array
+     */
+    public function rules()
+    {
+        $rules = (new User())->getRules();
+        $rules['password'] = 'required|confirmed|min:'.config('rinvex.fort.password_min_chars');
+
+        return $rules;
+    }
+}

@@ -1,18 +1,5 @@
 <?php
 
-/*
- * NOTICE OF LICENSE
- *
- * Part of the Rinvex Fort Package.
- *
- * This source file is subject to The MIT License (MIT)
- * that is bundled with this package in the LICENSE file.
- *
- * Package: Rinvex Fort Package
- * License: The MIT License (MIT)
- * Link:    https://rinvex.com
- */
-
 declare(strict_types=1);
 
 namespace {{namespace}}Http\Controllers\Frontend;
@@ -21,7 +8,6 @@ use Exception;
 use Rinvex\Fort\Models\Role;
 use Rinvex\Fort\Models\User;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Laravel\Socialite\Facades\Socialite;
 
 class SocialAuthenticationController extends AuthenticationController
@@ -50,7 +36,7 @@ class SocialAuthenticationController extends AuthenticationController
             $githubUser = Socialite::driver('github')->user();
         } catch (Exception $e) {
             return intend([
-                'route' => 'frontend.auth.social.github',
+                'url' => route('frontend.auth.social.github'),
             ]);
         }
 
@@ -61,18 +47,18 @@ class SocialAuthenticationController extends AuthenticationController
 
         if (! $result) {
             // Prepare registration data
-            $input = [
+            $data = [
                 'email' => $githubUser->email,
                 'username' => $githubUser->username,
                 'password' => str_random(),
-                'active' => ! config('rinvex.fort.registration.moderated'),
+                'is_active' => ! config('rinvex.fort.registration.moderated'),
             ];
 
             // Fire the register start event
-            event('rinvex.fort.register.social.start', [$input]);
+            event('rinvex.fort.register.social.start', [$data]);
 
             // Create user
-            $result = $user->create($input);
+            $result = $user->create($data);
 
             // Attach default role to the registered user
             if ($defaultRole = config('rinvex.fort.registration.default_role')) {
@@ -91,7 +77,7 @@ class SocialAuthenticationController extends AuthenticationController
             ]);
         }
 
-        $result = Auth::guard($this->getGuard())->login($result, true);
+        $result = auth()->guard($this->getGuard())->login($result, true);
 
         return $this->getLoginResponse($request, $result);
     }

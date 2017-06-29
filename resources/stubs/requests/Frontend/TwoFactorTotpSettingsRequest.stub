@@ -1,0 +1,37 @@
+<?php
+
+declare(strict_types=1);
+
+namespace {{namespace}}Http\Requests\Frontend;
+
+use Exception;
+use Rinvex\Support\Http\Requests\FormRequest;
+
+class TwoFactorTotpSettingsRequest extends FormRequest
+{
+    /**
+     * Determine if the user is authorized to make this request.
+     *
+     * @throws \Exception
+     *
+     * @return bool
+     */
+    public function authorize()
+    {
+        if (! in_array('totp', config('rinvex.fort.twofactor.providers'))) {
+            throw new Exception(trans('messages.verification.twofactor.totp.globaly_disabled'));
+        }
+
+        return true;
+    }
+
+    /**
+     * Get the validation rules that apply to the request.
+     *
+     * @return array
+     */
+    public function rules()
+    {
+        return [];
+    }
+}

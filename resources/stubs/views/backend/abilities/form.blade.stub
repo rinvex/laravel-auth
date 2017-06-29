@@ -3,7 +3,7 @@
 
 {{-- Page Title --}}
 @section('title')
-    {{ config('app.name') }} » {{ trans('common.abilities') }} » {{ trans('common.'.$mode) }} @if($ability->exists) {{ $ability->slug }} @endif
+    {{ config('app.name') }} » {{ trans('common.backend') }} » {{ trans('common.abilities') }} » {{ $ability->exists ? $ability->name : trans('common.create_ability') }}
 @stop
 
 {{-- Main Content --}}
@@ -24,10 +24,10 @@
             @include('backend.common.confirm-modal', ['type' => 'ability'])
         @endif
 
-        @if ($action === 'update')
-            {{ Form::model($ability, ['route' => ['backend.abilities.update', $ability], 'method' => 'put']) }}
+        @if ($ability->exists)
+            {{ Form::model($ability, ['url' => route('backend.abilities.update', ['ability' => $ability]), 'method' => 'put']) }}
         @else
-            {{ Form::model($ability, ['route' => ['backend.abilities.store']]) }}
+            {{ Form::model($ability, ['url' => route('backend.abilities.store')]) }}
         @endif
 
             <section class="panel panel-default">
@@ -35,7 +35,7 @@
                 {{-- Heading --}}
                 <header class="panel-heading">
                     <h4>
-                        <a href="{{ route('backend.abilities.index') }}">{{ trans('common.abilities') }}</a> » {{ trans('common.'.$mode) }} @if($ability->exists) <strong>{{ $ability->slug }}</strong> @endif
+                        <a href="{{ route('backend.abilities.index') }}">{{ trans('common.abilities') }}</a> » {{ $ability->exists ? $ability->name : trans('common.create_ability') }}
                         @if($ability->exists)
                             <span class="pull-right" style="margin-top: -7px">
                                 @can('delete-abilities', $ability) <a href="#" class="btn btn-default" data-toggle="modal" data-target="#delete-confirmation" data-item-href="{{ route('backend.abilities.delete', ['ability' => $ability]) }}" data-item-name="{{ $ability->slug }}"><i class="fa fa-trash-o text-danger"></i></a> @endcan
@@ -57,9 +57,7 @@
                                 {{ Form::text('name', null, ['class' => 'form-control', 'placeholder' => trans('common.name'), 'required' => 'required', 'autofocus' => 'autofocus']) }}
 
                                 @if ($errors->has('name'))
-                                    <span class="help-block">
-                                        <strong>{{ $errors->first('name') }}</strong>
-                                    </span>
+                                    <span class="help-block">{{ $errors->first('name') }}</span>
                                 @endif
                             </div>
 
@@ -72,9 +70,7 @@
                                 {{ Form::text('policy', null, ['class' => 'form-control', 'placeholder' => trans('common.policy')]) }}
 
                                 @if ($errors->has('policy'))
-                                    <span class="help-block">
-                                        <strong>{{ $errors->first('policy') }}</strong>
-                                    </span>
+                                    <span class="help-block">{{ $errors->first('policy') }}</span>
                                 @endif
                             </div>
 
@@ -90,9 +86,7 @@
                                 {{ Form::text('action', null, ['class' => 'form-control', 'placeholder' => trans('common.action'), 'required' => 'required']) }}
 
                                 @if ($errors->has('action'))
-                                    <span class="help-block">
-                                        <strong>{{ $errors->first('action') }}</strong>
-                                    </span>
+                                    <span class="help-block">{{ $errors->first('action') }}</span>
                                 @endif
                             </div>
 
@@ -105,13 +99,31 @@
                                 {{ Form::text('resource', null, ['class' => 'form-control', 'placeholder' => trans('common.resource'), 'required' => 'required']) }}
 
                                 @if ($errors->has('resource'))
-                                    <span class="help-block">
-                                        <strong>{{ $errors->first('resource') }}</strong>
-                                    </span>
+                                    <span class="help-block">{{ $errors->first('resource') }}</span>
                                 @endif
                             </div>
 
                         </div>
+                    </div>
+
+                    <div class="row">
+
+                        @can('grant-abilities')
+                            <div class="col-md-12">
+
+                                {{-- Roles --}}
+                                <div class="form-group{{ $errors->has('roles') ? ' has-error' : '' }}">
+                                    {{ Form::label('roles[]', trans('common.roles'), ['class' => 'control-label']) }}
+                                    {{ Form::select('roles[]', $roles, null, ['class' => 'form-control', 'multiple' => 'multiple', 'size' => 4]) }}
+
+                                    @if ($errors->has('roles'))
+                                        <span class="help-block">{{ $errors->first('roles') }}</span>
+                                    @endif
+                                </div>
+
+                            </div>
+                        @endcan
+
                     </div>
 
                     <div class="row">
@@ -123,9 +135,7 @@
                                 {{ Form::textarea('description', null, ['class' => 'form-control', 'placeholder' => trans('common.description'), 'rows' => 3]) }}
 
                                 @if ($errors->has('description'))
-                                    <span class="help-block">
-                                        <strong>{{ $errors->first('description') }}</strong>
-                                    </span>
+                                    <span class="help-block">{{ $errors->first('description') }}</span>
                                 @endif
                             </div>
 

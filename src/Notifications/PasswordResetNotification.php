@@ -1,22 +1,10 @@
 <?php
 
-/*
- * NOTICE OF LICENSE
- *
- * Part of the Rinvex Fort Package.
- *
- * This source file is subject to The MIT License (MIT)
- * that is bundled with this package in the LICENSE file.
- *
- * Package: Rinvex Fort Package
- * License: The MIT License (MIT)
- * Link:    https://rinvex.com
- */
-
 declare(strict_types=1);
 
 namespace Rinvex\Fort\Notifications;
 
+use Carbon\Carbon;
 use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Notification;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -34,19 +22,19 @@ class PasswordResetNotification extends Notification implements ShouldQueue
     public $token;
 
     /**
-     * The password reset token expiration.
+     * The password reset expiration date.
      *
-     * @var string
+     * @var int
      */
     public $expiration;
 
     /**
      * Create a notification instance.
      *
-     * @param array  $token
+     * @param string $token
      * @param string $expiration
      */
-    public function __construct(array $token, $expiration)
+    public function __construct($token, $expiration)
     {
         $this->token = $token;
         $this->expiration = $expiration;
@@ -67,18 +55,19 @@ class PasswordResetNotification extends Notification implements ShouldQueue
     /**
      * Build the mail representation of the notification.
      *
+     * @param mixed $notifiable
+     *
      * @return \Illuminate\Notifications\Messages\MailMessage
      */
-    public function toMail()
+    public function toMail($notifiable)
     {
+        $email = $notifiable->getEmailForPasswordReset();
+        $link = route('frontend.passwordreset.reset')."?email={$email}&expiration={$this->expiration}&token={$this->token}";
+
         return (new MailMessage())
             ->subject(trans('emails.passwordreset.request.subject'))
-            ->line(trans('emails.passwordreset.request.intro', ['expire' => $this->expiration]))
-            ->action(trans('emails.passwordreset.request.action'), route('frontend.passwordreset.reset').'?token='.$this->token['token'].'&email='.$this->token['email'])
-            ->line(trans('emails.passwordreset.request.outro', [
-                'ip' => $this->token['ip'],
-                'agent' => $this->token['agent'],
-                'created_at' => $this->token['created_at'],
-            ]));
+            ->line(trans('emails.passwordreset.request.intro', ['expire' => Carbon::createFromTimestamp($this->expiration)->diffForHumans()]))
+            ->action(trans('emails.passwordreset.request.action'), $link)
+            ->line(trans('emails.passwordreset.request.outro'));
     }
 }

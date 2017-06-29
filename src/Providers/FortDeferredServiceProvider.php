@@ -1,18 +1,5 @@
 <?php
 
-/*
- * NOTICE OF LICENSE
- *
- * Part of the Rinvex Fort Package.
- *
- * This source file is subject to The MIT License (MIT)
- * that is bundled with this package in the LICENSE file.
- *
- * Package: Rinvex Fort Package
- * License: The MIT License (MIT)
- * Link:    https://rinvex.com
- */
-
 declare(strict_types=1);
 
 namespace Rinvex\Fort\Providers;
@@ -28,7 +15,6 @@ use Rinvex\Fort\Console\Commands\UserCreateCommand;
 use Rinvex\Fort\Console\Commands\UserRemindCommand;
 use Rinvex\Fort\Console\Commands\UserUpdateCommand;
 use Rinvex\Fort\Console\Commands\AbilityFindCommand;
-use Rinvex\Fort\Console\Commands\ClearResetsCommand;
 use Rinvex\Fort\Services\PasswordResetBrokerManager;
 use Rinvex\Fort\Console\Commands\AbilityCreateCommand;
 use Rinvex\Fort\Console\Commands\AbilityUpdateCommand;
@@ -39,7 +25,6 @@ use Rinvex\Fort\Console\Commands\UserGiveAbilityCommand;
 use Rinvex\Fort\Services\EmailVerificationBrokerManager;
 use Rinvex\Fort\Console\Commands\RoleRevokeAbilityCommand;
 use Rinvex\Fort\Console\Commands\UserRevokeAbilityCommand;
-use Rinvex\Fort\Console\Commands\VerificationTokenClearCommand;
 
 class FortDeferredServiceProvider extends ServiceProvider
 {
@@ -58,7 +43,6 @@ class FortDeferredServiceProvider extends ServiceProvider
     protected $commands = [
 
         'AuthMake' => 'command.auth.make',
-        'ClearResets' => 'command.auth.resets.clear',
 
         'AbilityFind' => 'command.rinvex.fort.ability.find',
         'AbilityUpdate' => 'command.rinvex.fort.ability.update',
@@ -78,8 +62,6 @@ class FortDeferredServiceProvider extends ServiceProvider
         'UserRemoveRole' => 'command.rinvex.fort.user.removerole',
         'UserGiveAbility' => 'command.rinvex.fort.user.giveability',
         'UserRevokeAbility' => 'command.rinvex.fort.user.revokeability',
-
-        'VerificationTokenClear' => 'command.rinvex.fort.verification.tokenclear',
 
     ];
 
@@ -185,18 +167,6 @@ class FortDeferredServiceProvider extends ServiceProvider
     {
         $this->app->singleton('command.auth.make', function ($app) {
             return new MakeAuthCommand();
-        });
-    }
-
-    /**
-     * Register clear password reset tokens command.
-     *
-     * @return void
-     */
-    protected function registerClearResetsCommand()
-    {
-        $this->app->singleton('command.auth.resets.clear', function ($app) {
-            return new ClearResetsCommand();
         });
     }
 
@@ -389,18 +359,6 @@ class FortDeferredServiceProvider extends ServiceProvider
     {
         $this->app->singleton('command.rinvex.fort.user.revokeability', function ($app) {
             return new UserRevokeAbilityCommand();
-        });
-    }
-
-    /**
-     * Register clear verification tokens command.
-     *
-     * @return void
-     */
-    protected function registerVerificationTokenClearCommand()
-    {
-        $this->app->singleton('command.rinvex.fort.verification.tokenclear', function ($app) {
-            return new VerificationTokenClearCommand();
         });
     }
 

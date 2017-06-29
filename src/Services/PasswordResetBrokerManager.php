@@ -1,26 +1,11 @@
 <?php
 
-/*
- * NOTICE OF LICENSE
- *
- * Part of the Rinvex Fort Package.
- *
- * This source file is subject to The MIT License (MIT)
- * that is bundled with this package in the LICENSE file.
- *
- * Package: Rinvex Fort Package
- * License: The MIT License (MIT)
- * Link:    https://rinvex.com
- */
-
 declare(strict_types=1);
 
 namespace Rinvex\Fort\Services;
 
-use Illuminate\Support\Str;
 use InvalidArgumentException;
 use Illuminate\Contracts\Auth\PasswordBrokerFactory;
-use Rinvex\Fort\Repositories\PasswordResetTokenRepository;
 
 class PasswordResetBrokerManager implements PasswordBrokerFactory
 {
@@ -53,7 +38,7 @@ class PasswordResetBrokerManager implements PasswordBrokerFactory
      *
      * @param string $name
      *
-     * @return \Illuminate\Contracts\Auth\PasswordBroker
+     * @return \Rinvex\Fort\Contracts\PasswordResetBrokerContract
      */
     public function broker($name = null)
     {
@@ -69,7 +54,7 @@ class PasswordResetBrokerManager implements PasswordBrokerFactory
      *
      * @throws \InvalidArgumentException
      *
-     * @return \Illuminate\Contracts\Auth\PasswordBroker
+     * @return \Rinvex\Fort\Contracts\PasswordResetBrokerContract
      */
     protected function resolve($name)
     {
@@ -79,37 +64,9 @@ class PasswordResetBrokerManager implements PasswordBrokerFactory
             throw new InvalidArgumentException("Password resetter [{$name}] is not defined.");
         }
 
-        // The password broker uses a token repository to validate tokens and send user
-        // password e-mails, as well as validating that password reset process as an
-        // aggregate service of sorts providing a convenient interface for resets.
         return new PasswordResetBroker(
-            $this->createTokenRepository($config),
-            $this->app['auth']->createUserProvider($config['provider'])
-        );
-    }
-
-    /**
-     * Create a token repository instance based on the given configuration.
-     *
-     * @param array $config
-     *
-     * @return \Rinvex\Fort\Contracts\PasswordResetTokenRepositoryContract
-     */
-    protected function createTokenRepository(array $config)
-    {
-        $key = $this->app['config']['app.key'];
-
-        if (Str::startsWith($key, 'base64:')) {
-            $key = base64_decode(mb_substr($key, 7));
-        }
-
-        $connection = $config['connection'] ?? null;
-
-        return new PasswordResetTokenRepository(
-            $this->app['db']->connection($connection),
-            $this->app['hash'],
-            $config['table'],
-            $key,
+            $this->app['auth']->createUserProvider($config['provider']),
+            $this->app['config']['app.key'],
             $config['expire']
         );
     }

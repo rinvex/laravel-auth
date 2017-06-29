@@ -1,18 +1,5 @@
 <?php
 
-/*
- * NOTICE OF LICENSE
- *
- * Part of the Rinvex Fort Package.
- *
- * This source file is subject to The MIT License (MIT)
- * that is bundled with this package in the LICENSE file.
- *
- * Package: Rinvex Fort Package
- * License: The MIT License (MIT)
- * Link:    https://rinvex.com
- */
-
 declare(strict_types=1);
 
 namespace {{namespace}}Http\Controllers;
@@ -42,7 +29,7 @@ class AuthorizedController extends AuthenticatedController
     protected $resourceActionWhitelist = [];
 
     /**
-     * Create a new manage persistence controller instance.
+     * Create a new authorized controller instance.
      *
      * @throws \Rinvex\Fort\Exceptions\AuthorizationException
      */

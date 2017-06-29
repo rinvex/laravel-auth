@@ -1,18 +1,5 @@
 <?php
 
-/*
- * NOTICE OF LICENSE
- *
- * Part of the Rinvex Fort Package.
- *
- * This source file is subject to The MIT License (MIT)
- * that is bundled with this package in the LICENSE file.
- *
- * Package: Rinvex Fort Package
- * License: The MIT License (MIT)
- * Link:    https://rinvex.com
- */
-
 declare(strict_types=1);
 
 namespace Rinvex\Fort\Handlers;
@@ -115,7 +102,7 @@ class GenericHandler
     public function emailVerificationSuccess(Authenticatable $user)
     {
         if (config('rinvex.fort.emailverification.success_email')) {
-            $user->notify(new VerificationSuccessNotification($user->active));
+            $user->notify(new VerificationSuccessNotification($user->is_active));
         }
     }
 }

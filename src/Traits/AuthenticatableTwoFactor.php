@@ -1,18 +1,5 @@
 <?php
 
-/*
- * NOTICE OF LICENSE
- *
- * Part of the Rinvex Fort Package.
- *
- * This source file is subject to The MIT License (MIT)
- * that is bundled with this package in the LICENSE file.
- *
- * Package: Rinvex Fort Package
- * License: The MIT License (MIT)
- * Link:    https://rinvex.com
- */
-
 declare(strict_types=1);
 
 namespace Rinvex\Fort\Traits;
@@ -20,7 +7,7 @@ namespace Rinvex\Fort\Traits;
 trait AuthenticatableTwoFactor
 {
     /**
-     * Get the Two-Factor options.
+     * Get the TwoFactor options.
      *
      * @return array
      */
@@ -30,7 +17,7 @@ trait AuthenticatableTwoFactor
     }
 
     /**
-     * Get the Two-Factor options in array format.
+     * Get the TwoFactor options in array format.
      *
      * @param string $options
      *
@@ -42,7 +29,7 @@ trait AuthenticatableTwoFactor
     }
 
     /**
-     * Set the Two-Factor options in array format.
+     * Set the TwoFactor options in array format.
      *
      * @param array $options
      *

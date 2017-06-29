@@ -16,7 +16,7 @@
                     <header class="panel-heading">{{ trans('common.verification_phone_request') }}</header>
 
                     <div class="panel-body">
-                        {{ Form::open(['route' => 'frontend.verification.phone.send', 'class' => 'form-horizontal']) }}
+                        {{ Form::open(['url' => route('frontend.verification.phone.send'), 'class' => 'form-horizontal']) }}
 
                             @include('frontend.alerts.success')
                             @include('frontend.alerts.warning')
@@ -26,13 +26,15 @@
                                 {{ Form::label('phone', trans('common.phone'), ['class' => 'col-md-4 control-label']) }}
 
                                 <div class="col-md-6">
-                                    {{ Form::number('phone', old('phone', $currentUser->phone), ['class' => 'form-control', 'placeholder' => trans('common.phone'), 'required' => 'required', 'disabled' => 'disabled', 'autofocus' => 'autofocus']) }}
-                                    {{ Form::hidden('phone', old('phone', $currentUser->phone)) }}
+                                    @if (auth()->user())
+                                        {{ Form::number('phone', old('phone', $currentUser->phone), ['class' => 'form-control', 'placeholder' => trans('common.phone'), 'required' => 'required', 'autofocus' => 'autofocus', 'disabled' => 'disabled']) }}
+                                        {{ Form::hidden('phone', old('phone', $currentUser->phone)) }}
+                                    @else
+                                        {{ Form::number('phone', old('phone'), ['class' => 'form-control', 'placeholder' => trans('common.phone'), 'required' => 'required', 'autofocus' => 'autofocus']) }}
+                                    @endif
 
                                     @if ($errors->has('phone'))
-                                        <span class="help-block">
-                                            <strong>{{ $errors->first('phone') }}</strong>
-                                        </span>
+                                        <span class="help-block">{{ $errors->first('phone') }}</span>
                                     @endif
                                 </div>
                             </div>
@@ -52,9 +54,7 @@
                                     </div>
 
                                     @if ($errors->has('method'))
-                                        <span class="help-block">
-                                            <strong>{{ $errors->first('method') }}</strong>
-                                        </span>
+                                        <span class="help-block">{{ $errors->first('method') }}</span>
                                     @endif
                                 </div>
                             </div>

@@ -1,18 +1,5 @@
 <?php
 
-/*
- * NOTICE OF LICENSE
- *
- * Part of the Rinvex Fort Package.
- *
- * This source file is subject to The MIT License (MIT)
- * that is bundled with this package in the LICENSE file.
- *
- * Package: Rinvex Fort Package
- * License: The MIT License (MIT)
- * Link:    https://rinvex.com
- */
-
 declare(strict_types=1);
 
 namespace Rinvex\Fort\Console\Commands;
@@ -63,7 +50,7 @@ class UserCreateCommand extends Command
             'first_name' => $this->argument('firstName'),
             'middle_name' => $this->argument('middleName'),
             'last_name' => $this->argument('lastName'),
-            'active' => ! $this->option('inactive'),
+            'is_active' => ! $this->option('inactive'),
             'email_verified' => ! $this->option('unverified'),
 
         ], [
@@ -72,8 +59,8 @@ class UserCreateCommand extends Command
         ]);
 
         $rules = [
-            'email' => 'required|email|max:255|unique:'.config('rinvex.fort.tables.users').',email',
-            'username' => 'required|max:255|unique:'.config('rinvex.fort.tables.users').',username',
+            'email' => 'required|email|min:3|max:150|unique:'.config('rinvex.fort.tables.users').',email',
+            'username' => 'required|alpha_dash|min:3|max:150|unique:'.config('rinvex.fort.tables.users').',username',
         ];
 
         $validator = app(Factory::class)->make($data, $rules);

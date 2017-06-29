@@ -1,18 +1,5 @@
 <?php
 
-/*
- * NOTICE OF LICENSE
- *
- * Part of the Rinvex Fort Package.
- *
- * This source file is subject to The MIT License (MIT)
- * that is bundled with this package in the LICENSE file.
- *
- * Package: Rinvex Fort Package
- * License: The MIT License (MIT)
- * Link:    https://rinvex.com
- */
-
 declare(strict_types=1);
 
 namespace Rinvex\Fort\Seeds;
@@ -37,7 +24,7 @@ class UsersSeeder extends Seeder
             'email_verified_at' => Carbon::now(),
             'remember_token' => str_random(10),
             'password' => $password = str_random(),
-            'active' => true,
+            'is_active' => true,
         ];
 
         $user = User::create($user);

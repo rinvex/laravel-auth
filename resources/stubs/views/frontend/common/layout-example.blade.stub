@@ -55,7 +55,7 @@
                     <!-- Right Side Of Navbar -->
                     <ul class="nav navbar-nav navbar-right">
                         <!-- Authentication Links -->
-                        @if (Auth::guest())
+                        @if (auth()->guest())
                             <li>
                                 <a href="{{ route('frontend.auth.login') }}"> {{ trans('common.login') }}</a>
                             </li>
@@ -65,7 +65,7 @@
                         @else
                             <li class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-                                    {{ Auth::user()->username }} <span class="caret"></span>
+                                    {{ auth()->user()->username }} <span class="caret"></span>
                                 </a>
 
                                 <ul class="dropdown-menu" role="menu">
@@ -77,12 +77,12 @@
                                     @can('list-abilities') <li><a href="{{ route('backend.abilities.index') }}"><i class="fa fa-arrow-right"></i> {{ trans('common.abilities') }}</a></li> @endcan
                                     @can('list-roles') <li><a href="{{ route('backend.roles.index') }}"><i class="fa fa-arrow-right"></i> {{ trans('common.roles') }}</a></li> @endcan
                                     @can('list-users') <li><a href="{{ route('backend.users.index') }}"><i class="fa fa-arrow-right"></i> {{ trans('common.users') }}</a></li> @endcan
-                                    @if(Auth::user()->can('access-dashboard') || Auth::user()->can('list-abilities') || Auth::user()->can('list-roles') || Auth::user()->can('list-users'))
+                                    @if(auth()->user()->can('access-dashboard') || auth()->user()->can('list-abilities') || auth()->user()->can('list-roles') || auth()->user()->can('list-users'))
                                         <li role="separator" class="divider"></li>
                                     @endif
                                     <li>
                                         <a href="{{ route('frontend.auth.logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();"><i class="fa fa-sign-out"></i> {{ trans('common.logout') }}</a>
-                                        {{ Form::open(['route' => 'frontend.auth.logout', 'id' => 'logout-form', 'style' => 'display: none;']) }}
+                                        {{ Form::open(['url' => route('frontend.auth.logout'), 'id' => 'logout-form', 'style' => 'display: none;']) }}
                                         {{ Form::close() }}
                                     </li>
                                 </ul>

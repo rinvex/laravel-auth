@@ -1,18 +1,5 @@
 <?php
 
-/*
- * NOTICE OF LICENSE
- *
- * Part of the Rinvex Fort Package.
- *
- * This source file is subject to The MIT License (MIT)
- * that is bundled with this package in the LICENSE file.
- *
- * Package: Rinvex Fort Package
- * License: The MIT License (MIT)
- * Link:    https://rinvex.com
- */
-
 declare(strict_types=1);
 
 namespace Rinvex\Fort\Services;
@@ -179,9 +166,10 @@ class TwoFactorTotpProvider
     public function oathTruncate($hash)
     {
         $offset = ord($hash[19]) & 0xf;
-        $temp = unpack('N', mb_substr($hash, $offset, 4));
+        $temp = unpack('N', substr($hash, $offset, 4));
+        $token = $temp[1] & 0x7fffffff;
 
-        return mb_substr($temp[1] & 0x7fffffff, -static::OPT_LENGTH);
+        return substr((string) $token, -static::OPT_LENGTH);
     }
 
     /**

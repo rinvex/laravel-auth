@@ -1,18 +1,5 @@
 <?php
 
-/*
- * NOTICE OF LICENSE
- *
- * Part of the Rinvex Fort Package.
- *
- * This source file is subject to The MIT License (MIT)
- * that is bundled with this package in the LICENSE file.
- *
- * Package: Rinvex Fort Package
- * License: The MIT License (MIT)
- * Link:    https://rinvex.com
- */
-
 declare(strict_types=1);
 
 use Illuminate\Support\Facades\Schema;
@@ -37,18 +24,9 @@ class CreateSocialitesTable extends Migration
             $table->timestamps();
 
             // Indexes
-            $table->unique([
-                'provider',
-                'provider_uid',
-            ]);
-            $table->foreign('user_id')
-                  ->references('id')
-                  ->on(config('rinvex.fort.tables.users'))
-                  ->onDelete('cascade')
-                  ->onUpdate('cascade');
-
-            // Engine
-            $table->engine = 'InnoDB';
+            $table->unique(['provider', 'provider_uid']);
+            $table->foreign('user_id')->references('id')->on(config('rinvex.fort.tables.users'))
+                  ->onDelete('cascade')->onUpdate('cascade');
         });
     }
 
@@ -59,6 +37,6 @@ class CreateSocialitesTable extends Migration
      */
     public function down()
     {
-        Schema::drop(config('rinvex.fort.tables.socialites'));
+        Schema::dropIfExists(config('rinvex.fort.tables.socialites'));
     }
 }

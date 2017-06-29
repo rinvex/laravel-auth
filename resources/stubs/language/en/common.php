@@ -1,18 +1,5 @@
 <?php
 
-/*
- * NOTICE OF LICENSE
- *
- * Part of the Rinvex Fort Package.
- *
- * This source file is subject to The MIT License (MIT)
- * that is bundled with this package in the LICENSE file.
- *
- * Package: Rinvex Fort Package
- * License: The MIT License (MIT)
- * Link:    https://rinvex.com
- */
-
 declare(strict_types=1);
 
 return [
@@ -32,11 +19,7 @@ return [
     'logout' => 'Logout',
     'warning' => 'Warning',
     'register' => 'Register',
-    'register_via_facebook' => 'Register via Facebook',
-    'register_via_gplus' => 'Register via Google+',
     'login' => 'Login',
-    'login_via_facebook' => 'Login via Facebook',
-    'login_via_gplus' => 'Login via Google+',
     'password_reset' => 'Reset Password',
     'password_reset_request' => 'Request Password Reset',
     'remember_me' => 'Remember Me',
@@ -53,9 +36,10 @@ return [
     'last_name' => 'Last Name',
     'username' => 'Username',
     'country' => 'Country',
+    'language' => 'Language',
     'job_title' => 'Job Title',
-    'prefix' => 'Prefix',
-    'suffix' => 'Suffix',
+    'name_prefix' => 'Name Prefix',
+    'name_suffix' => 'Name Suffix',
     'password' => 'Password',
     'password_confirmation' => 'Password Confirmation',
     'new_password' => 'New Password',
@@ -64,11 +48,10 @@ return [
     'phone' => 'Phone',
     'status' => 'Status',
     'contact' => 'Contact',
-    'birthdate' => 'Birthdate',
+    'birthday' => 'Birthday',
     'gender' => 'Gender',
     'male' => 'Male',
     'female' => 'Female',
-    'undisclosed' => 'Undisclosed',
     'active' => 'Active',
     'inactive' => 'Inactive',
     'verified' => 'Verified',
@@ -83,9 +66,7 @@ return [
     'verification_phone_request' => 'Request Phone Verification',
     'verify_phone' => 'Verify Phone',
     'dashboard' => 'Dashboard',
-    'abilities' => 'Abilities',
-    'users' => 'Users',
-    'roles' => 'Roles',
+    'backend' => 'Backend',
     'account' => 'Account',
     'settings' => 'Settings',
     'sessions' => 'Sessions',
@@ -108,5 +89,17 @@ return [
     'phone_verified' => 'Phone verified at <date>:date</date>.',
     'phone_unverified' => 'Phone not yet verified! <a href=":href">Verify Phone</a>',
     'forgot_password' => 'I forgot my password',
+
+    // Abilities Phrases
+    'abilities' => 'Abilities',
+    'create_ability' => 'Create New Ability',
+
+    // Roles Phrases
+    'roles' => 'Roles',
+    'create_role' => 'Create New Role',
+
+    // Users Phrases
+    'users' => 'Users',
+    'create_user' => 'Create New User',
 
 ];

@@ -3,7 +3,7 @@
 
 {{-- Page Title --}}
 @section('title')
-    {{ config('app.name') }} » {{ trans('common.users') }} » {{ trans('common.'.$mode) }} @if($user->exists) {{ $user->username }} @endif
+    {{ config('app.name') }} » {{ trans('common.backend') }} » {{ trans('common.users') }} » {{ $user->exists ? $user->name : trans('common.create_user') }}
 @stop
 
 {{-- Main Content --}}
@@ -24,10 +24,10 @@
             @include('backend.common.confirm-modal', ['type' => 'user'])
         @endif
 
-        @if ($action === 'update')
-            {{ Form::model($user, ['route' => ['backend.users.update', $user], 'method' => 'put']) }}
+        @if ($user->exists)
+            {{ Form::model($user, ['url' => route('backend.users.update', ['user' => $user]), 'method' => 'put']) }}
         @else
-            {{ Form::model($user, ['route' => ['backend.users.store']]) }}
+            {{ Form::model($user, ['url' => route('backend.users.store')]) }}
         @endif
 
             <section class="panel panel-default">
@@ -35,7 +35,7 @@
                 {{-- Heading --}}
                 <header class="panel-heading">
                     <h4>
-                        <a href="{{ route('backend.users.index') }}">{{ trans('common.users') }}</a> » {{ trans('common.'.$mode) }} @if($user->exists) <strong>{{ $user->username }}</strong> @endif
+                        <a href="{{ route('backend.users.index') }}">{{ trans('common.users') }}</a> » {{ $user->exists ? $user->name : trans('common.create_user') }}
                         @if($user->exists)
                             <span class="pull-right" style="margin-top: -7px">
                                 @can('delete-users', $user) <a href="#" class="btn btn-default" data-toggle="modal" data-target="#delete-confirmation" data-item-href="{{ route('backend.users.delete', ['user' => $user]) }}" data-item-name="{{ $user->username }}"><i class="fa fa-trash-o text-danger"></i></a> @endcan
@@ -49,6 +49,7 @@
                 <div class="panel-body">
 
                     <div class="row">
+
                         <div class="col-md-4">
 
                             {{-- First Name --}}
@@ -57,13 +58,12 @@
                                 {{ Form::text('first_name', null, ['class' => 'form-control', 'placeholder' => trans('common.first_name'), 'required' => 'required', 'autofocus' => 'autofocus']) }}
 
                                 @if ($errors->has('first_name'))
-                                    <span class="help-block">
-                                        <strong>{{ $errors->first('first_name') }}</strong>
-                                    </span>
+                                    <span class="help-block">{{ $errors->first('first_name') }}</span>
                                 @endif
                             </div>
 
                         </div>
+
                         <div class="col-md-4">
 
                             {{-- Middle Name --}}
@@ -72,13 +72,12 @@
                                 {{ Form::text('middle_name', null, ['class' => 'form-control', 'placeholder' => trans('common.middle_name')]) }}
 
                                 @if ($errors->has('middle_name'))
-                                    <span class="help-block">
-                                        <strong>{{ $errors->first('middle_name') }}</strong>
-                                    </span>
+                                    <span class="help-block">{{ $errors->first('middle_name') }}</span>
                                 @endif
                             </div>
 
                         </div>
+
                         <div class="col-md-4">
 
                             {{-- Last Name --}}
@@ -87,13 +86,12 @@
                                 {{ Form::text('last_name', null, ['class' => 'form-control', 'placeholder' => trans('common.last_name')]) }}
 
                                 @if ($errors->has('last_name'))
-                                    <span class="help-block">
-                                        <strong>{{ $errors->first('last_name') }}</strong>
-                                    </span>
+                                    <span class="help-block">{{ $errors->first('last_name') }}</span>
                                 @endif
                             </div>
 
                         </div>
+
                         <div class="col-md-4">
 
                             {{-- Username --}}
@@ -102,13 +100,12 @@
                                 {{ Form::text('username', null, ['class' => 'form-control', 'placeholder' => trans('common.username'), 'required' => 'required']) }}
 
                                 @if ($errors->has('username'))
-                                    <span class="help-block">
-                                        <strong>{{ $errors->first('username') }}</strong>
-                                    </span>
+                                    <span class="help-block">{{ $errors->first('username') }}</span>
                                 @endif
                             </div>
 
                         </div>
+
                         <div class="col-md-4">
 
                             {{-- Job Title --}}
@@ -117,43 +114,40 @@
                                 {{ Form::text('job_title', null, ['class' => 'form-control', 'placeholder' => trans('common.job_title')]) }}
 
                                 @if ($errors->has('job_title'))
-                                    <span class="help-block">
-                                        <strong>{{ $errors->first('job_title') }}</strong>
-                                    </span>
+                                    <span class="help-block">{{ $errors->first('job_title') }}</span>
                                 @endif
                             </div>
 
                         </div>
+
                         <div class="col-md-2">
 
-                            {{-- Prefix --}}
-                            <div class="form-group{{ $errors->has('prefix') ? ' has-error' : '' }}">
-                                {{ Form::label('prefix', trans('common.prefix'), ['class' => 'control-label']) }}
-                                {{ Form::text('prefix', null, ['class' => 'form-control', 'placeholder' => trans('common.prefix')]) }}
+                            {{-- Name Prefix --}}
+                            <div class="form-group{{ $errors->has('name_prefix') ? ' has-error' : '' }}">
+                                {{ Form::label('name_prefix', trans('common.name_prefix'), ['class' => 'control-label']) }}
+                                {{ Form::text('name_prefix', null, ['class' => 'form-control', 'placeholder' => trans('common.name_prefix')]) }}
 
-                                @if ($errors->has('prefix'))
-                                    <span class="help-block">
-                                        <strong>{{ $errors->first('prefix') }}</strong>
-                                    </span>
+                                @if ($errors->has('name_prefix'))
+                                    <span class="help-block">{{ $errors->first('name_prefix') }}</span>
                                 @endif
                             </div>
 
                         </div>
+
                         <div class="col-md-2">
 
-                            {{-- email --}}
-                            <div class="form-group{{ $errors->has('suffix') ? ' has-error' : '' }}">
-                                {{ Form::label('suffix', trans('common.suffix'), ['class' => 'control-label']) }}
-                                {{ Form::text('suffix', null, ['class' => 'form-control', 'placeholder' => trans('common.suffix')]) }}
+                            {{-- Name Suffix --}}
+                            <div class="form-group{{ $errors->has('name_suffix') ? ' has-error' : '' }}">
+                                {{ Form::label('name_suffix', trans('common.name_suffix'), ['class' => 'control-label']) }}
+                                {{ Form::text('name_suffix', null, ['class' => 'form-control', 'placeholder' => trans('common.name_suffix')]) }}
 
-                                @if ($errors->has('suffix'))
-                                    <span class="help-block">
-                                        <strong>{{ $errors->first('suffix') }}</strong>
-                                    </span>
+                                @if ($errors->has('name_suffix'))
+                                    <span class="help-block">{{ $errors->first('name_suffix') }}</span>
                                 @endif
                             </div>
 
                         </div>
+
                         <div class="col-md-4">
 
                             {{-- Email --}}
@@ -169,28 +163,40 @@
                                 </div>
 
                                 @if ($errors->has('email'))
-                                    <span class="help-block">
-                                        <strong>{{ $errors->first('email') }}</strong>
-                                    </span>
+                                    <span class="help-block">{{ $errors->first('email') }}</span>
                                 @endif
                             </div>
 
                         </div>
+
                         <div class="col-md-4">
 
-                            {{-- Country --}}
-                            <div class="form-group{{ $errors->has('country') ? ' has-error' : '' }}">
-                                {{ Form::label('country', trans('common.country'), ['class' => 'control-label']) }}
-                                {{ Form::select('country', $countries, null, ['class' => 'form-control', 'placeholder' => trans('common.select')]) }}
+                            {{-- Country Code --}}
+                            <div class="form-group{{ $errors->has('country_code') ? ' has-error' : '' }}">
+                                {{ Form::label('country_code', trans('common.country'), ['class' => 'control-label']) }}
+                                {{ Form::select('country_code', $countries, null, ['class' => 'form-control', 'placeholder' => trans('common.select')]) }}
 
-                                @if ($errors->has('country'))
-                                    <span class="help-block">
-                                        <strong>{{ $errors->first('country') }}</strong>
-                                    </span>
+                                @if ($errors->has('country_code'))
+                                    <span class="help-block">{{ $errors->first('country_code') }}</span>
                                 @endif
                             </div>
 
                         </div>
+
+                        <div class="col-md-4">
+
+                            {{-- Language Code --}}
+                            <div class="form-group{{ $errors->has('language_code') ? ' has-error' : '' }}">
+                                {{ Form::label('language_code', trans('common.language'), ['class' => 'control-label']) }}
+                                {{ Form::select('language_code', $languages, null, ['class' => 'form-control', 'placeholder' => trans('common.select')]) }}
+
+                                @if ($errors->has('language_code'))
+                                    <span class="help-block">{{ $errors->first('language_code') }}</span>
+                                @endif
+                            </div>
+
+                        </div>
+
                         <div class="col-md-4">
 
                             {{-- Phone --}}
@@ -206,119 +212,127 @@
                                 </div>
 
                                 @if ($errors->has('phone'))
-                                    <span class="help-block">
-                                        <strong>{{ $errors->first('phone') }}</strong>
-                                    </span>
+                                    <span class="help-block">{{ $errors->first('phone') }}</span>
                                 @endif
                             </div>
 
                         </div>
+
                         <div class="col-md-4">
 
                             {{-- Gender --}}
                             <div class="form-group{{ $errors->has('gender') ? ' has-error' : '' }}">
                                 {{ Form::label('gender', trans('common.gender'), ['class' => 'control-label']) }}
-                                {{ Form::select('gender', ['male' => trans('common.male'), 'female' => trans('common.female'), 'undisclosed' => trans('common.undisclosed')], $action !== 'update' ? 'undisclosed' : null, ['class' => 'form-control']) }}
+                                {{ Form::select('gender', $genders, null, ['class' => 'form-control', 'placeholder' => trans('common.select')]) }}
 
                                 @if ($errors->has('gender'))
-                                    <span class="help-block">
-                                        <strong>{{ $errors->first('gender') }}</strong>
-                                    </span>
+                                    <span class="help-block">{{ $errors->first('gender') }}</span>
                                 @endif
                             </div>
 
                         </div>
+
                         <div class="col-md-4">
 
                             {{-- Active --}}
-                            <div class="form-group{{ $errors->has('active') ? ' has-error' : '' }}">
-                                {{ Form::label('active', trans('common.active'), ['class' => 'control-label']) }}
-                                {{ Form::select('active', [1 => trans('common.yes'), 0 => trans('common.no')], null, ['class' => 'form-control']) }}
+                            <div class="form-group{{ $errors->has('is_active') ? ' has-error' : '' }}">
+                                {{ Form::label('is_active', trans('common.active'), ['class' => 'control-label']) }}
+                                {{ Form::select('is_active', [1 => trans('common.yes'), 0 => trans('common.no')], null, ['class' => 'form-control']) }}
 
-                                @if ($errors->has('active'))
-                                    <span class="help-block">
-                                        <strong>{{ $errors->first('active') }}</strong>
-                                    </span>
+                                @if ($errors->has('is_active'))
+                                    <span class="help-block">{{ $errors->first('is_active') }}</span>
                                 @endif
                             </div>
 
                         </div>
+
+                        <div class="col-md-4">
+
+                            {{-- Birthday --}}
+                            <div class="form-group has-feedback{{ $errors->has('birthday') ? ' has-error' : '' }}">
+                                {{ Form::label('birthday', trans('common.birthday'), ['class' => 'control-label']) }}
+                                {{ Form::text('birthday', null, ['class' => 'form-control']) }}
+                                <span class="fa fa-calendar form-control-feedback"></span>
+
+                                @if ($errors->has('birthday'))
+                                    <span class="help-block">{{ $errors->first('birthday') }}</span>
+                                @endif
+                            </div>
+
+                        </div>
+
+                        @can('assign-roles')
+
+                            <div class="col-md-4">
+
+                                {{-- Roles --}}
+                                <div class="form-group{{ $errors->has('roles') ? ' has-error' : '' }}">
+                                    {{ Form::label('roles[]', trans('common.roles'), ['class' => 'control-label']) }}
+                                    {{ Form::select('roles[]', $roles, null, ['class' => 'form-control', 'placeholder' => trans('common.select'), 'multiple' => 'multiple', 'size' => 4]) }}
+
+                                    @if ($errors->has('roles'))
+                                        <span class="help-block">{{ $errors->first('roles') }}</span>
+                                    @endif
+                                </div>
+
+                            </div>
+
+                        @endcan
+
+                        @can('grant-abilities')
+
+                            <div class="col-md-4">
+
+                                {{-- Abilities --}}
+                                <div class="form-group{{ $errors->has('abilities') ? ' has-error' : '' }}">
+                                    {{ Form::label('abilities[]', trans('common.abilities'), ['class' => 'control-label']) }}
+                                    {{ Form::select('abilities[]', $abilities, null, ['class' => 'form-control', 'placeholder' => trans('common.select'), 'multiple' => 'multiple', 'size' => 4]) }}
+
+                                    @if ($errors->has('abilities'))
+                                        <span class="help-block">{{ $errors->first('abilities') }}</span>
+                                    @endif
+                                </div>
+
+                            </div>
+
+                        @endcan
+
                         <div class="col-md-4">
 
                             {{-- Password --}}
                             <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">
                                 {{ Form::label('password', trans('common.password'), ['class' => 'control-label']) }}
-                                @if ($action === 'update')
-                                    {{ Form::password('password', ['class' => 'form-control', 'placeholder' => trans('common.password')]) }}
+                                @if ($user->exists)
+                                {{ Form::password('password', ['class' => 'form-control', 'placeholder' => trans('common.password')]) }}
                                 @else
-                                    {{ Form::password('password', ['class' => 'form-control', 'placeholder' => trans('common.password'), 'required' => 'required']) }}
+                                {{ Form::password('password', ['class' => 'form-control', 'placeholder' => trans('common.password'), 'required' => 'required']) }}
                                 @endif
 
                                 @if ($errors->has('password'))
-                                    <span class="help-block">
-                                        <strong>{{ $errors->first('password') }}</strong>
-                                    </span>
+                                <span class="help-block">{{ $errors->first('password') }}</span>
                                 @endif
                             </div>
 
                         </div>
-                        @can('assign-roles')
-                        <div class="col-md-4">
-
-                            {{-- Roles --}}
-                            <div class="form-group{{ $errors->has('roles') ? ' has-error' : '' }}">
-                                {{ Form::label('roleList[]', trans('common.roles'), ['class' => 'control-label']) }}
-                                {{ Form::select('roleList[]', $roleList, null, ['class' => 'form-control', 'placeholder' => trans('common.select'), 'multiple' => 'multiple', 'size' => 4]) }}
-
-                                @if ($errors->has('roles'))
-                                    <span class="help-block">
-                                        <strong>{{ $errors->first('roles') }}</strong>
-                                    </span>
-                                @endif
-                            </div>
-
-                        </div>
-                        @endcan
 
                         <div class="col-md-4">
 
-                            {{-- Birthdate --}}
-                            <div class="form-group{{ $errors->has('birthdate') ? ' has-error' : '' }}">
-                                {{ Form::label('birthdate', trans('common.birthdate'), ['class' => 'control-label']) }}
-                                <div class="input-group date">
-                                    <div class="input-group-addon">
-                                        <i class="fa fa-calendar"></i>
-                                    </div>
+                            {{-- Password Confirmation --}}
+                            <div class="form-group{{ $errors->has('password_confirmation') ? ' has-error' : '' }}">
+                                {{ Form::label('password_confirmation', trans('common.password_confirmation'), ['class' => 'control-label']) }}
+                                @if ($user->exists)
+                                {{ Form::password('password_confirmation', ['class' => 'form-control', 'placeholder' => trans('common.password_confirmation')]) }}
+                                @else
+                                {{ Form::password('password_confirmation', ['class' => 'form-control', 'placeholder' => trans('common.password_confirmation'), 'required' => 'required']) }}
+                                @endif
 
-                                    {{ Form::text('birthdate', null, ['class' => 'form-control']) }}
-                                </div>
-
-                                @if ($errors->has('birthdate'))
-                                    <span class="help-block">
-                                        <strong>{{ $errors->first('birthdate') }}</strong>
-                                    </span>
+                                @if ($errors->has('password_confirmation'))
+                                    <span class="help-block">{{ $errors->first('password_confirmation') }}</span>
                                 @endif
                             </div>
 
                         </div>
 
-                        @can('grant-abilities')
-                        <div class="col-md-4">
-
-                            {{-- Abilities --}}
-                            <div class="form-group{{ $errors->has('abilityList[]') ? ' has-error' : '' }}">
-                                {{ Form::label('abilityList[]', trans('common.abilities'), ['class' => 'control-label']) }}
-                                {{ Form::select('abilityList[]', $abilityList, null, ['class' => 'form-control', 'placeholder' => trans('common.select'), 'multiple' => 'multiple', 'size' => 4]) }}
-
-                                @if ($errors->has('abilities'))
-                                    <span class="help-block">
-                                        <strong>{{ $errors->first('abilityList[]') }}</strong>
-                                    </span>
-                                @endif
-                            </div>
-
-                        </div>
-                        @endcan
                     </div>
 
                 </div>

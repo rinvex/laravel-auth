@@ -1,23 +1,11 @@
 <?php
 
-/*
- * NOTICE OF LICENSE
- *
- * Part of the Rinvex Fort Package.
- *
- * This source file is subject to The MIT License (MIT)
- * that is bundled with this package in the LICENSE file.
- *
- * Package: Rinvex Fort Package
- * License: The MIT License (MIT)
- * Link:    https://rinvex.com
- */
-
 declare(strict_types=1);
 
 return [
 
     'error' => '<strong>Whoops!</strong> There were some problems with your input.',
+    'session_required' => 'You must login first!',
 
     'sessions' => [
         'flush_single_heading' => 'Flush Selected Session',
@@ -47,11 +35,12 @@ return [
 
     'register' => [
         'success' => 'Registration completed successfully!',
-        'success_verify' => 'Registration completed successfully! Email verification request has been sent to you!',
+        'success_verify' => 'Registration completed successfully! We have e-mailed your verification link!',
         'disabled' => 'Sorry, registration is currently disabled!',
     ],
 
     'account' => [
+        'phone_field_required' => 'You must enter your phone first!',
         'phone_verification_required' => 'You must verify your phone first!',
         'country_required' => 'You must select your country first!',
         'phone_required' => 'You must update your phone first!',
@@ -60,8 +49,6 @@ return [
     ],
 
     'auth' => [
-        'authorize' => 'Requested resource must be authorized.',
-        'unauthorized' => 'Sorry, you do not have access to the requested resource!',
         'moderated' => 'Your account is currently moderated!',
         'unverified' => 'Your account in currently unverified!',
         'failed' => 'These credentials do not match our records.',
@@ -77,12 +64,17 @@ return [
         ],
     ],
 
+    'passwordreset' => [
+        'already_logged' => 'You are logged in, so you can change password from your account settings.',
+    ],
+
     'verification' => [
 
         'email' => [
-            'already' => 'Your email already verified!',
+            'expired_token' => 'This email verification link is expired, please request a new one.',
+            'already_verified' => 'Your email already verified!',
             'verified' => 'Your email has been verified!',
-            'link_sent' => 'Email verification request has been sent to you!',
+            'link_sent' => 'We have e-mailed your verification link!',
             'invalid_token' => 'This verification token is invalid.',
             'invalid_user' => 'We can not find a user with that email address.',
         ],
@@ -96,22 +88,24 @@ return [
 
         'twofactor' => [
             'invalid_token' => 'This verification token is invalid.',
+            'globaly_disabled' => 'Sorry, TwoFactor authentication globally disabled!',
             'totp' => [
-                'required' => 'Two-Factor TOTP authentication enabled for your account, authentication code required to proceed.',
-                'enabled' => 'Two-Factor TOTP authentication has been enabled and backup codes generated for your account.',
-                'disabled' => 'Two-Factor TOTP authentication has been disabled for your account.',
-                'rebackup' => 'Two-Factor TOTP authentication backup codes re-generated for your account.',
-                'cant_backup' => 'Two-Factor TOTP authentication currently disabled for your account, thus backup codes can not be generated.',
-                'already' => 'You have already configured Two-Factor TOTP authentication. This page allows you to switch to a different authentication app. If this is not what you\'d like to do, you can go back to your account settings.',
+                'required' => 'TwoFactor TOTP authentication enabled for your account, authentication code required to proceed.',
+                'enabled' => 'TwoFactor TOTP authentication has been enabled and backup codes generated for your account.',
+                'disabled' => 'TwoFactor TOTP authentication has been disabled for your account.',
+                'rebackup' => 'TwoFactor TOTP authentication backup codes re-generated for your account.',
+                'cant_backup' => 'TwoFactor TOTP authentication currently disabled for your account, thus backup codes can not be generated.',
+                'already' => 'You have already configured TwoFactor TOTP authentication. This page allows you to switch to a different authentication app. If this is not what you\'d like to do, you can go back to your account settings.',
                 'invalid_token' => 'Your passcode did not match, or expired after scanning. Remove the old barcode from your app, and try again. Since this process is time-sensitive, make sure your device\'s date and time is set to "automatic."',
-                'globaly_disabled' => 'Sorry, Two-Factor TOTP authentication globally disabled!',
+                'globaly_disabled' => 'Sorry, TwoFactor TOTP authentication globally disabled!',
             ],
             'phone' => [
-                'enabled' => 'Two-Factor phone authentication has been enabled for your account.',
-                'disabled' => 'Two-Factor phone authentication has been disabled for your account.',
-                'auto_disabled' => 'Two-Factor phone authentication has been disabled for your account. Changing country or phone results in Two-Factor auto disable. You need to enable it again manually.',
-                'country_required' => 'Country field seems to be missing in your account, and since Two-Factor authentication already activated which require that field, you can NOT login. Please contact staff to solve this issue.',
-                'globaly_disabled' => 'Sorry, Two-Factor phone authentication globally disabled!',
+                'enabled' => 'TwoFactor phone authentication has been enabled for your account.',
+                'disabled' => 'TwoFactor phone authentication has been disabled for your account.',
+                'auto_disabled' => 'TwoFactor phone authentication has been disabled for your account. Changing country or phone results in TwoFactor auto disable. You need to enable it again manually.',
+                'phone_required' => 'Phone field seems to be missing in your account, and since TwoFactor authentication already activated which require that field, you can NOT login unfortunately. Please contact staff to solve this issue.',
+                'country_required' => 'Country field seems to be missing in your account, and since TwoFactor authentication already activated which require that field, you can NOT login unfortunately. Please contact staff to solve this issue.',
+                'globaly_disabled' => 'Sorry, TwoFactor phone authentication globally disabled!',
             ],
         ],
 

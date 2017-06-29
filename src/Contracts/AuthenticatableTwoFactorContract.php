@@ -1,18 +1,5 @@
 <?php
 
-/*
- * NOTICE OF LICENSE
- *
- * Part of the Rinvex Fort Package.
- *
- * This source file is subject to The MIT License (MIT)
- * that is bundled with this package in the LICENSE file.
- *
- * Package: Rinvex Fort Package
- * License: The MIT License (MIT)
- * Link:    https://rinvex.com
- */
-
 declare(strict_types=1);
 
 namespace Rinvex\Fort\Contracts;
@@ -20,14 +7,14 @@ namespace Rinvex\Fort\Contracts;
 interface AuthenticatableTwoFactorContract
 {
     /**
-     * Get the Two-Factor options.
+     * Get the TwoFactor options.
      *
      * @return array
      */
     public function getTwoFactor();
 
     /**
-     * Get the Two-Factor options in array format.
+     * Get the TwoFactor options in array format.
      *
      * @param string $options
      *
@@ -36,7 +23,7 @@ interface AuthenticatableTwoFactorContract
     public function getTwoFactorAttribute($options);
 
     /**
-     * Set the Two-Factor options in array format.
+     * Set the TwoFactor options in array format.
      *
      * @param array $options
      *

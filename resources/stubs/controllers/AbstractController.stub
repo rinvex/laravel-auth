@@ -1,18 +1,5 @@
 <?php
 
-/*
- * NOTICE OF LICENSE
- *
- * Part of the Rinvex Fort Package.
- *
- * This source file is subject to The MIT License (MIT)
- * that is bundled with this package in the LICENSE file.
- *
- * Package: Rinvex Fort Package
- * License: The MIT License (MIT)
- * Link:    https://rinvex.com
- */
-
 declare(strict_types=1);
 
 namespace {{namespace}}Http\Controllers;
@@ -25,6 +12,13 @@ abstract class AbstractController extends Controller
 {
     use GetsMiddleware;
     use DispatchesJobs;
+
+    /**
+     * The browsing area.
+     *
+     * @var string
+     */
+    protected $browsingArea;
 
     /**
      * Whitelisted methods.
@@ -40,6 +34,14 @@ abstract class AbstractController extends Controller
      * @var string
      */
     protected $broker;
+
+    /**
+     * Create a new abstract controller instance.
+     */
+    public function __construct()
+    {
+        $this->browsingArea = request()->route() ? mb_strstr(request()->route()->getName(), '.', true) : 'frontend';
+    }
 
     /**
      * Get the broker to be used.

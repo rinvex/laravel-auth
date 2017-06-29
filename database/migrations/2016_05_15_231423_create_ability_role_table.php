@@ -1,18 +1,5 @@
 <?php
 
-/*
- * NOTICE OF LICENSE
- *
- * Part of the Rinvex Fort Package.
- *
- * This source file is subject to The MIT License (MIT)
- * that is bundled with this package in the LICENSE file.
- *
- * Package: Rinvex Fort Package
- * License: The MIT License (MIT)
- * Link:    https://rinvex.com
- */
-
 declare(strict_types=1);
 
 use Illuminate\Support\Facades\Schema;
@@ -35,23 +22,11 @@ class CreateAbilityRoleTable extends Migration
             $table->timestamps();
 
             // Indexes
-            $table->primary([
-                'ability_id',
-                'role_id',
-            ]);
-            $table->foreign('ability_id')
-                  ->references('id')
-                  ->on(config('rinvex.fort.tables.abilities'))
-                  ->onDelete('cascade')
-                  ->onUpdate('cascade');
-            $table->foreign('role_id')
-                  ->references('id')
-                  ->on(config('rinvex.fort.tables.roles'))
-                  ->onDelete('cascade')
-                  ->onUpdate('cascade');
-
-            // Engine
-            $table->engine = 'InnoDB';
+            $table->primary(['ability_id', 'role_id']);
+            $table->foreign('ability_id')->references('id')->on(config('rinvex.fort.tables.abilities'))
+                  ->onDelete('cascade')->onUpdate('cascade');
+            $table->foreign('role_id')->references('id')->on(config('rinvex.fort.tables.roles'))
+                  ->onDelete('cascade')->onUpdate('cascade');
         });
     }
 
@@ -62,6 +37,6 @@ class CreateAbilityRoleTable extends Migration
      */
     public function down()
     {
-        Schema::drop(config('rinvex.fort.tables.ability_role'));
+        Schema::dropIfExists(config('rinvex.fort.tables.ability_role'));
     }
 }
