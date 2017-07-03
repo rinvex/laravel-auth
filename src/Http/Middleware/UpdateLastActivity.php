@@ -33,8 +33,9 @@ class UpdateLastActivity
      */
     public function terminate($request, $response)
     {
-        $user = $request->user();
-        $user->timestamps = false;
-        $user->fill(['last_activity' => new Carbon()])->forceSave();
+        if ($user = $request->user()) {
+            $user->timestamps = false;
+            $user->fill(['last_activity' => new Carbon()])->forceSave();
+        }
     }
 }
