@@ -46,9 +46,17 @@ class AccountSettingsController extends AuthenticatedController
         // Update profile
         $currentUser->fill($data)->save();
 
+        if (config('rinvex.fort.emailverification.required')) {
+            return intend([
+                'url' => route('frontend.verification.email.request'),
+                'with' => ['success' => trans('messages.account.reverify')]
+                          + (isset($data['two_factor']) ? ['warning' => trans('messages.verification.twofactor.phone.auto_disabled')] : []),
+            ]);
+        }
+
         return intend([
             'back' => true,
-            'with' => ['success' => trans('messages.account.'.(isset($data['email_verified']) ? 'reverify' : 'updated'))]
+            'with' => ['success' => trans('messages.account.updated')]
                       + (isset($data['two_factor']) ? ['warning' => trans('messages.verification.twofactor.phone.auto_disabled')] : []),
         ]);
     }
