@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace {{namespace}}Http\Requests\Frontend;
+namespace {{namespace}}Http\Requests\Userarea;
 
 use Rinvex\Support\Http\Requests\FormRequest;
 

@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace {{namespace}}Http\Controllers\Frontend;
+namespace {{namespace}}Http\Controllers\Userarea;
 
 use Illuminate\Http\Request;
 use {{namespace}}Http\Controllers\AuthenticatedController;
-use {{namespace}}Http\Requests\Frontend\AccountSettingsRequest;
+use {{namespace}}Http\Requests\Userarea\AccountSettingsRequest;
 
 class AccountSettingsController extends AuthenticatedController
 {
@@ -28,13 +28,13 @@ class AccountSettingsController extends AuthenticatedController
         $twoFactor = $request->user($this->getGuard())->getTwoFactor();
         $genders = ['m' => trans('common.male'), 'f' => trans('common.female')];
 
-        return view('frontend.account.settings', compact('twoFactor', 'countries', 'languages', 'genders'));
+        return view('userarea.account.settings', compact('twoFactor', 'countries', 'languages', 'genders'));
     }
 
     /**
      * Process the account update form.
      *
-     * @param \{{namespace}}Http\Requests\Frontend\AccountSettingsRequest $request
+     * @param \{{namespace}}Http\Requests\Userarea\AccountSettingsRequest $request
      *
      * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse
      */

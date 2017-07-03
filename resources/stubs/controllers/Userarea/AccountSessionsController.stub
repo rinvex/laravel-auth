@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace {{namespace}}Http\Controllers\Frontend;
+namespace {{namespace}}Http\Controllers\Userarea;
 
 use Illuminate\Http\Request;
 use Rinvex\Fort\Models\Session;
@@ -17,7 +17,7 @@ class AccountSessionsController extends AuthenticatedController
      */
     public function index()
     {
-        return view('frontend.account.sessions');
+        return view('userarea.account.sessions');
     }
 
     /**

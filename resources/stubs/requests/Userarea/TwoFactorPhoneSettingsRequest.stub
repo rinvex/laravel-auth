@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace {{namespace}}Http\Requests\Frontend;
+namespace {{namespace}}Http\Requests\Userarea;
 
 use Exception;
 use Rinvex\Support\Http\Requests\FormRequest;
@@ -24,7 +24,7 @@ class TwoFactorPhoneSettingsRequest extends FormRequest
             throw new Exception(trans('messages.verification.twofactor.phone.globaly_disabled'));
         }
 
-        if (mb_strpos($this->route()->getName(), 'frontend.account.twofactor.phone') !== false && (! $user->phone || ! $user->phone_verified)) {
+        if (mb_strpos($this->route()->getName(), 'userarea.account.twofactor.phone') !== false && (! $user->phone || ! $user->phone_verified)) {
             throw new Exception(trans('messages.account.'.(! $user->phone ? 'phone_field_required' : 'phone_verification_required')));
         }
 

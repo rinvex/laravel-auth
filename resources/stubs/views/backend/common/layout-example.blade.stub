@@ -70,8 +70,8 @@
 
                                 <ul class="dropdown-menu" role="menu">
                                     <li class="disabled"><a href="#"><i class="fa fa-user"></i> {{ trans('common.account') }}</a></li>
-                                    <li><a href="{{ route('frontend.account.settings') }}"><i class="fa fa-user"></i> {{ trans('common.settings') }}</a></li>
-                                    <li><a href="{{ route('frontend.account.sessions') }}"><i class="fa fa-check-square-o"></i> {{ trans('common.sessions') }}</a></li>
+                                    <li><a href="{{ route('userarea.account.settings') }}"><i class="fa fa-user"></i> {{ trans('common.settings') }}</a></li>
+                                    <li><a href="{{ route('userarea.account.sessions') }}"><i class="fa fa-check-square-o"></i> {{ trans('common.sessions') }}</a></li>
                                     <li role="separator" class="divider"></li>
                                     @can('access-dashboard') <li class="disabled"><a href="{{ route('backend.dashboard.home') }}"><i class="fa fa-dashboard"></i> {{ trans('common.dashboard') }}</a></li> @endcan
                                     @can('list-abilities') <li><a href="{{ route('backend.abilities.index') }}"><i class="fa fa-arrow-right"></i> {{ trans('common.abilities') }}</a></li> @endcan

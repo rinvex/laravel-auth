@@ -2,22 +2,22 @@
 
 declare(strict_types=1);
 
-namespace {{namespace}}Http\Controllers\Frontend;
+namespace {{namespace}}Http\Controllers\Userarea;
 
 use Carbon\Carbon;
 use Rinvex\Fort\Services\TwoFactorTotpProvider;
 use {{namespace}}Http\Controllers\AuthenticatedController;
-use {{namespace}}Http\Requests\Frontend\TwoFactorTotpSettingsRequest;
-use {{namespace}}Http\Requests\Frontend\TwoFactorPhoneSettingsRequest;
-use {{namespace}}Http\Requests\Frontend\TwoFactorTotpBackupSettingsRequest;
-use {{namespace}}Http\Requests\Frontend\TwoFactorTotpProcessSettingsRequest;
+use {{namespace}}Http\Requests\Userarea\TwoFactorTotpSettingsRequest;
+use {{namespace}}Http\Requests\Userarea\TwoFactorPhoneSettingsRequest;
+use {{namespace}}Http\Requests\Userarea\TwoFactorTotpBackupSettingsRequest;
+use {{namespace}}Http\Requests\Userarea\TwoFactorTotpProcessSettingsRequest;
 
 class TwoFactorSettingsController extends AuthenticatedController
 {
     /**
      * Enable TwoFactor TOTP authentication.
      *
-     * @param \{{namespace}}Http\Requests\Frontend\TwoFactorTotpSettingsRequest $request
+     * @param \{{namespace}}Http\Requests\Userarea\TwoFactorTotpSettingsRequest $request
      * @param \Rinvex\Fort\Services\TwoFactorTotpProvider                      $totpProvider
      *
      * @return \Illuminate\Http\Response|\Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse
@@ -38,13 +38,13 @@ class TwoFactorSettingsController extends AuthenticatedController
 
         $qrCode = $totpProvider->getQRCodeInline(config('app.name'), $currentUser->email, $secret);
 
-        return view('frontend.account.twofactor', compact('secret', 'qrCode', 'twoFactor'));
+        return view('userarea.account.twofactor', compact('secret', 'qrCode', 'twoFactor'));
     }
 
     /**
      * Disable TwoFactor TOTP authentication.
      *
-     * @param \{{namespace}}Http\Requests\Frontend\TwoFactorTotpSettingsRequest $request
+     * @param \{{namespace}}Http\Requests\Userarea\TwoFactorTotpSettingsRequest $request
      *
      * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse
      */
@@ -57,7 +57,7 @@ class TwoFactorSettingsController extends AuthenticatedController
         $currentUser->fill(['two_factor' => $twoFactor])->forceSave();
 
         return intend([
-            'url' => route('frontend.account.settings'),
+            'url' => route('userarea.account.settings'),
             'with' => ['success' => trans('messages.verification.twofactor.totp.disabled')],
         ]);
     }
@@ -65,7 +65,7 @@ class TwoFactorSettingsController extends AuthenticatedController
     /**
      * Process the TwoFactor TOTP enable form.
      *
-     * @param \{{namespace}}Http\Requests\Frontend\TwoFactorTotpProcessSettingsRequest $request
+     * @param \{{namespace}}Http\Requests\Userarea\TwoFactorTotpProcessSettingsRequest $request
      * @param \Rinvex\Fort\Services\TwoFactorTotpProvider                             $totpProvider
      *
      * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse
@@ -104,7 +104,7 @@ class TwoFactorSettingsController extends AuthenticatedController
     /**
      * Process the TwoFactor OTP backup.
      *
-     * @param \{{namespace}}Http\Requests\Frontend\TwoFactorTotpBackupSettingsRequest $request
+     * @param \{{namespace}}Http\Requests\Userarea\TwoFactorTotpBackupSettingsRequest $request
      *
      * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse
      */
@@ -126,7 +126,7 @@ class TwoFactorSettingsController extends AuthenticatedController
     /**
      * Enable TwoFactor Phone authentication.
      *
-     * @param \{{namespace}}Http\Requests\Frontend\TwoFactorPhoneSettingsRequest $request
+     * @param \{{namespace}}Http\Requests\Userarea\TwoFactorPhoneSettingsRequest $request
      *
      * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse
      */
@@ -140,7 +140,7 @@ class TwoFactorSettingsController extends AuthenticatedController
         $currentUser->fill(['two_factor' => $twoFactor])->forceSave();
 
         return intend([
-            'url' => route('frontend.account.settings'),
+            'url' => route('userarea.account.settings'),
             'with' => ['success' => trans('messages.verification.twofactor.phone.enabled')],
         ]);
     }
@@ -148,7 +148,7 @@ class TwoFactorSettingsController extends AuthenticatedController
     /**
      * Disable TwoFactor Phone authentication.
      *
-     * @param \{{namespace}}Http\Requests\Frontend\TwoFactorPhoneSettingsRequest $request
+     * @param \{{namespace}}Http\Requests\Userarea\TwoFactorPhoneSettingsRequest $request
      *
      * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse
      */
@@ -161,7 +161,7 @@ class TwoFactorSettingsController extends AuthenticatedController
         $currentUser->fill(['two_factor' => $twoFactor])->forceSave();
 
         return intend([
-            'url' => route('frontend.account.settings'),
+            'url' => route('userarea.account.settings'),
             'with' => ['success' => trans('messages.verification.twofactor.phone.disabled')],
         ]);
     }

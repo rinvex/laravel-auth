@@ -1,5 +1,5 @@
 {{-- Master Layout --}}
-@extends('frontend.common.layout')
+@extends('userarea.common.layout')
 
 {{-- Page Title --}}
 @section('title')
@@ -20,7 +20,7 @@
                     </header>
 
                     <div class="panel-body">
-                        {{ Form::open(['url' => route('frontend.account.twofactor.totp.update'), 'class' => 'form-horizontal', 'id' => 'frontend-account-twofactor-totp-update']) }}
+                        {{ Form::open(['url' => route('userarea.account.twofactor.totp.update'), 'class' => 'form-horizontal', 'id' => 'frontend-account-twofactor-totp-update']) }}
 
                             @include('frontend.alerts.success')
                             @include('frontend.alerts.warning')
@@ -117,7 +117,7 @@
                                                 @if(array_get($twoFactor, 'totp.backup'))
                                                     <div class="panel panel-primary">
                                                         <header class="panel-heading">
-                                                            <a class="btn btn-default btn-xs pull-right" href="{{ route('frontend.account.twofactor.totp.backup') }}" onclick="event.preventDefault(); var form = document.getElementById('frontend-account-twofactor-totp-update'); form.action = '{{ route('frontend.account.twofactor.totp.backup') }}'; form.submit();">{{ trans('twofactor.totp_backup_generate') }}</a>
+                                                            <a class="btn btn-default btn-xs pull-right" href="{{ route('userarea.account.twofactor.totp.backup') }}" onclick="event.preventDefault(); var form = document.getElementById('frontend-account-twofactor-totp-update'); form.action = '{{ route('userarea.account.twofactor.totp.backup') }}'; form.submit();">{{ trans('twofactor.totp_backup_generate') }}</a>
                                                             <h3 class="panel-title">{{ trans('twofactor.totp_backup_head') }}</h3>
                                                         </header>
                                                         <div class="panel-body">
