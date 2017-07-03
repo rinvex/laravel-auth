@@ -60,7 +60,7 @@ class RegistrationController extends AbstractController
 
             // Registration completed, verification required
             return intend([
-                'intended' => url('/'),
+                'url' => route('frontend.verification.email.request'),
                 'with' => ['success' => trans('messages.register.success_verify')],
             ]);
         }
