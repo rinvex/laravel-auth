@@ -9,6 +9,7 @@ use Rinvex\Fort\Guards\SessionGuard;
 use Rinvex\Fort\Services\AccessGate;
 use Illuminate\Support\ServiceProvider;
 use Rinvex\Fort\Handlers\GenericHandler;
+use Illuminate\Support\Facades\Validator;
 use Rinvex\Fort\Http\Middleware\Abilities;
 use Rinvex\Fort\Http\Middleware\NoHttpCache;
 use Rinvex\Fort\Http\Middleware\Authenticate;
@@ -57,6 +58,16 @@ class FortServiceProvider extends ServiceProvider
      */
     public function boot(Router $router)
     {
+        // Add country validation rule
+        Validator::extend('country', function ($attribute, $value) {
+            return in_array($value, array_keys(countries()));
+        }, 'Country MUST be valid!');
+
+        // Add langauge validation rule
+        Validator::extend('language', function ($attribute, $value) {
+            return in_array($value, array_keys(languages()));
+        }, 'Language MUST be valid!');
+
         if (config('rinvex.fort.boot.override_middleware')) {
             // Override middlware
             $this->overrideMiddleware($router);
