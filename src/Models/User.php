@@ -175,19 +175,27 @@ class User extends Model implements AuthenticatableContract, AuthenticatableTwoF
     /**
      * {@inheritdoc}
      */
-    protected $with = ['abilities', 'roles'];
+    protected $with = [
+        'abilities',
+        'roles',
+    ];
 
     /**
      * {@inheritdoc}
      */
-    protected $observables = ['validating', 'validated'];
+    protected $observables = [
+        'validating',
+        'validated',
+    ];
 
     /**
      * The attributes to be encrypted before saving.
      *
      * @var array
      */
-    protected $hashables = ['password'];
+    protected $hashables = [
+        'password',
+    ];
 
     /**
      * The default rules that the model will validate against.
@@ -215,11 +223,27 @@ class User extends Model implements AuthenticatableContract, AuthenticatableTwoF
 
         $this->setTable(config('rinvex.fort.tables.users'));
         $this->setRules([
-            'email' => 'required|email|min:3|max:150|unique:'.config('rinvex.fort.tables.users').',email',
             'username' => 'required|alpha_dash|min:3|max:150|unique:'.config('rinvex.fort.tables.users').',username',
             'password' => 'sometimes|required|min:'.config('rinvex.fort.password_min_chars'),
-            'gender' => 'nullable|string|in:m,f',
+            'two_factor' => 'json',
+            'email' => 'required|email|min:3|max:150|unique:'.config('rinvex.fort.tables.users').',email',
+            'email_verified' => 'boolean',
+            'email_verified_at' => 'datetime',
             'phone' => 'nullable|numeric|min:4',
+            'phone_verified' => 'boolean',
+            'phone_verified_at' => 'datetime',
+            'name_prefix' => 'nullable|string|max:150',
+            'first_name' => 'nullable|string|max:150',
+            'middle_name' => 'nullable|string|max:150',
+            'last_name' => 'nullable|string|max:150',
+            'name_suffix' => 'nullable|string|max:150',
+            'job_title' => 'nullable|string|max:150',
+            'country_code' => 'nullable|alpha|size:2|country',
+            'language_code' => 'nullable|alpha|size:2|language',
+            'birthday' => 'nullable|date_format:Y-m-d',
+            'gender' => 'nullable|string|in:m,f',
+            'is_active' => 'boolean',
+            'last_activity' => 'nullable|date',
         ]);
     }
 

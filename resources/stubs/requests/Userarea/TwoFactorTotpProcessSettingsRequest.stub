@@ -13,6 +13,6 @@ class TwoFactorTotpProcessSettingsRequest extends TwoFactorTotpSettingsRequest
      */
     public function rules()
     {
-        return ['token' => 'required|numeric'];
+        return ['token' => 'required|integer'];
     }
 }
