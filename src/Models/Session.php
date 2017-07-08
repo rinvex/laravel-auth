@@ -54,12 +54,18 @@ class Session extends Model
     /**
      * {@inheritdoc}
      */
-    public $timestamps = false;
+    protected $casts = [
+        'user_id' => 'integer',
+        'ip_address' => 'string',
+        'user_agent' => 'string',
+        'payload' => 'string',
+        'last_activity' => 'datetime',
+    ];
 
     /**
      * {@inheritdoc}
      */
-    protected $dates = ['last_activity'];
+    public $timestamps = false;
 
     /**
      * Create a new Eloquent model instance.

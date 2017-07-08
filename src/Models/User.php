@@ -109,17 +109,6 @@ class User extends Model implements AuthenticatableContract, AuthenticatableTwoF
     /**
      * {@inheritdoc}
      */
-    protected $dates = [
-        'email_verified_at',
-        'phone_verified_at',
-        'birthday',
-        'last_activity',
-        'deleted_at',
-    ];
-
-    /**
-     * {@inheritdoc}
-     */
     protected $fillable = [
         'username',
         'password',
@@ -144,6 +133,34 @@ class User extends Model implements AuthenticatableContract, AuthenticatableTwoF
         'last_activity',
         'abilities',
         'roles',
+    ];
+
+    /**
+     * {@inheritdoc}
+     */
+    protected $casts = [
+        'username' => 'string',
+        'password' => 'string',
+        'two_factor' => 'json',
+        'email' => 'string',
+        'email_verified' => 'boolean',
+        'email_verified_at' => 'datetime',
+        'phone' => 'string',
+        'phone_verified' => 'boolean',
+        'phone_verified_at' => 'datetime',
+        'name_prefix' => 'string',
+        'first_name' => 'string',
+        'middle_name' => 'string',
+        'last_name' => 'string',
+        'name_suffix' => 'string',
+        'job_title' => 'string',
+        'country_code' => 'string',
+        'language_code' => 'string',
+        'birthday' => 'string',
+        'gender' => 'string',
+        'is_active' => 'boolean',
+        'last_activity' => 'datetime',
+        'deleted_at' => 'datetime',
     ];
 
     /**
