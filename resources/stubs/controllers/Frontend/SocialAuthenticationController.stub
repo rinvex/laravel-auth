@@ -59,7 +59,7 @@ class SocialAuthenticationController extends AuthenticationController
             event('rinvex.fort.register.social.start', [$data]);
 
             // Create user
-            $result = $user->create($data);
+            $result = $user->fill($data)->save();
 
             // Attach default role to the registered user
             if ($defaultRole = config('rinvex.fort.registration.default_role')) {
