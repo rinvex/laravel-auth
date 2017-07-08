@@ -7,11 +7,15 @@ namespace {{namespace}}Http\Controllers;
 use Illuminate\Routing\Controller;
 use Rinvex\Fort\Traits\GetsMiddleware;
 use Illuminate\Foundation\Bus\DispatchesJobs;
+use Illuminate\Foundation\Validation\ValidatesRequests;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 
 abstract class AbstractController extends Controller
 {
     use GetsMiddleware;
     use DispatchesJobs;
+    use ValidatesRequests;
+    use AuthorizesRequests;
 
     /**
      * The browsing area.
