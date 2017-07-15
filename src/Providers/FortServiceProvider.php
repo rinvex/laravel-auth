@@ -103,15 +103,8 @@ class FortServiceProvider extends ServiceProvider
      */
     protected function publishResources()
     {
-        // Publish config
-        $this->publishes([
-            realpath(__DIR__.'/../../config/config.php') => config_path('rinvex.fort.php'),
-        ], 'config');
-
-        // Publish migrations
-        $this->publishes([
-            realpath(__DIR__.'/../../database/migrations') => database_path('migrations'),
-        ], 'migrations');
+        $this->publishes([realpath(__DIR__.'/../../config/config.php') => config_path('rinvex.fort.php')], 'rinvex-fort-config');
+        $this->publishes([realpath(__DIR__.'/../../database/migrations') => database_path('migrations')], 'rinvex-fort-migrations');
     }
 
     /**
