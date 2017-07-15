@@ -113,15 +113,7 @@
 
                             <h4>Publish Resources</h4>
                             <p>
-                                To correctly display this view in your own blade layout, you need to publish this package's resources as follows (if you haven't already):
-                            </p>
-                            <hr />
-                            <code>
-                                php artisan vendor:publish --provider="Rinvex\Fort\Providers\FortServiceProvider"
-                            </code>
-                            <hr />
-                            <p>
-                                Then open
+                                To correctly display this view in your own blade layout, you need to open
                                 <code>"resources/views/frontend/common/layout.blade.php"</code> and change the extended layout view to the layout view you are using in your app eg:
                                 <code>"layouts.app"</code>. See
                                 <a href="https://laravel.com/docs/5.3/blade#extending-a-layout" target="_blank">Laravel Docs on Extending A Layout</a> for more info.
