@@ -19,6 +19,7 @@ use Rinvex\Fort\Traits\AuthenticatableTwoFactor;
 use Rinvex\Fort\Contracts\CanVerifyEmailContract;
 use Rinvex\Fort\Contracts\CanVerifyPhoneContract;
 use Illuminate\Foundation\Auth\Access\Authorizable;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Rinvex\Fort\Contracts\CanResetPasswordContract;
 use Rinvex\Fort\Contracts\AuthenticatableTwoFactorContract;
 use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
@@ -310,11 +311,11 @@ class User extends Model implements AuthenticatableContract, AuthenticatableTwoF
     }
 
     /**
-     * A user may have multiple sessions.
+     * A user may have many sessions.
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function sessions()
+    public function sessions(): HasMany
     {
         return $this->hasMany(config('rinvex.fort.models.session'), 'user_id', 'id');
     }
@@ -324,7 +325,7 @@ class User extends Model implements AuthenticatableContract, AuthenticatableTwoF
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function socialites()
+    public function socialites(): HasMany
     {
         return $this->hasMany(config('rinvex.fort.models.socialite'), 'user_id', 'id');
     }
