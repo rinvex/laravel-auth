@@ -34,8 +34,10 @@ class UpdateLastActivity
     public function terminate($request, $response)
     {
         if ($user = $request->user()) {
-            $user->timestamps = false;
-            $user->fill(['last_activity' => new Carbon()])->forceSave();
+            // We are using database queries rather than eloquent, to bypass triggering events.
+            // Triggering update events flush cache and costs us more queries, which we don't need.
+            $userModel = config('auth.providers.'.config('auth.guards.'.config('auth.defaults.guard').'.provider').'.model');
+            (new $userModel)->where('id', $user->id)->update(['last_activity' => new Carbon()]);
         }
     }
 }
