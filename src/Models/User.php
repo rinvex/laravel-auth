@@ -228,10 +228,10 @@ class User extends Model implements AuthenticatableContract, AuthenticatableTwoF
             'password' => 'sometimes|required|min:'.config('rinvex.fort.password_min_chars'),
             'two_factor' => 'nullable|array',
             'email' => 'required|email|min:3|max:150|unique:'.config('rinvex.fort.tables.users').',email',
-            'email_verified' => 'boolean',
+            'email_verified' => 'sometimes|required|boolean',
             'email_verified_at' => 'nullable|date',
             'phone' => 'nullable|numeric|min:4',
-            'phone_verified' => 'boolean',
+            'phone_verified' => 'sometimes|required|boolean',
             'phone_verified_at' => 'nullable|date',
             'name_prefix' => 'nullable|string|max:150',
             'first_name' => 'nullable|string|max:150',
@@ -243,7 +243,7 @@ class User extends Model implements AuthenticatableContract, AuthenticatableTwoF
             'language_code' => 'nullable|alpha|size:2|language',
             'birthday' => 'nullable|date_format:Y-m-d',
             'gender' => 'nullable|string|in:m,f',
-            'is_active' => 'boolean',
+            'is_active' => 'sometimes|required|boolean',
             'last_activity' => 'nullable|date',
         ]);
     }
