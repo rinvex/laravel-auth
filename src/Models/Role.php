@@ -66,7 +66,9 @@ class Role extends Model
     /**
      * {@inheritdoc}
      */
-    protected $with = ['abilities'];
+    protected $with = [
+        'abilities',
+    ];
 
     /**
      * {@inheritdoc}
