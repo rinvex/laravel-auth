@@ -50,6 +50,7 @@ class Role extends Model
         'name',
         'description',
         'abilities',
+        'users',
     ];
 
     /**
@@ -367,6 +368,20 @@ class Role extends Model
     {
         static::saved(function (self $model) use ($abilities) {
             $model->abilities()->sync($abilities);
+        });
+    }
+
+    /**
+     * Attach the role users.
+     *
+     * @param mixed $users
+     *
+     * @return void
+     */
+    public function setUsersAttribute($users)
+    {
+        static::saved(function (self $model) use ($users) {
+            $model->users()->sync($users);
         });
     }
 }
