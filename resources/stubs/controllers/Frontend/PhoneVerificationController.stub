@@ -9,6 +9,7 @@ use Rinvex\Fort\Guards\SessionGuard;
 use {{namespace}}Http\Controllers\AbstractController;
 use {{namespace}}Http\Requests\Frontend\PhoneVerificationRequest;
 use {{namespace}}Http\Requests\Frontend\PhoneVerificationSendRequest;
+use {{namespace}}Http\Requests\Frontend\PhoneVerificationSendProcessRequest;
 
 class PhoneVerificationController extends AbstractController
 {

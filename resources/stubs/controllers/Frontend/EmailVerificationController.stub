@@ -8,6 +8,7 @@ use Carbon\Carbon;
 use {{namespace}}Http\Controllers\AbstractController;
 use Rinvex\Fort\Contracts\EmailVerificationBrokerContract;
 use {{namespace}}Http\Requests\Frontend\EmailVerificationRequest;
+use {{namespace}}Http\Requests\Frontend\EmailVerificationSendRequest;
 use {{namespace}}Http\Requests\Frontend\EmailVerificationProcessRequest;
 
 class EmailVerificationController extends AbstractController
