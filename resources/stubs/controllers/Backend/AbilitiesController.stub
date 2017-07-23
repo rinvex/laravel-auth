@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace {{namespace}}Http\Controllers\Backend;
 
 use Illuminate\Http\Request;
+use Rinvex\Fort\Models\Role;
 use Rinvex\Fort\Models\Ability;
 use {{namespace}}Http\Controllers\AuthorizedController;
 use {{namespace}}Http\Requests\Backend\AbilityFormRequest;
