@@ -52,6 +52,7 @@ class MakeAuthCommand extends Command
     protected function exportViews()
     {
         foreach (glob(__DIR__.'/../../../resources/stubs/views/*/*/*.stub') as $view) {
+            //$viewFile = resource_path(str_replace('.stub', '.php', explode('/stubs/', $view)[1]));
             $viewFile = resource_path(explode('/stubs/', $view)[1]);
 
             if (! is_dir($viewDir = dirname($viewFile))) {
@@ -69,8 +70,8 @@ class MakeAuthCommand extends Command
      */
     protected function exportLangs()
     {
-        foreach (glob(__DIR__.'/../../../resources/stubs/language/*/*/*.stub') as $lang) {
-            $langFile = resource_path(explode('/stubs/', $lang)[1]);
+        foreach (glob(__DIR__.'/../../../resources/stubs/language/*/*.php') as $lang) {
+            $langFile = resource_path('lang/'.explode('/language/', $lang)[1]);
 
             if (! is_dir($langDir = dirname($langFile))) {
                 mkdir($langDir, 0755, true);
