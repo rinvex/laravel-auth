@@ -5,12 +5,13 @@ declare(strict_types=1);
 namespace Rinvex\Fort\Handlers;
 
 use Exception;
+use Rinvex\Fort\Exceptions\GenericException;
 use Illuminate\Auth\AuthenticationException;
+use Illuminate\Foundation\Exceptions\Handler;
 use Rinvex\Fort\Exceptions\AuthorizationException;
-use App\Exceptions\Handler as BaseExceptionHandler;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
-class ExceptionHandler extends BaseExceptionHandler
+class ExceptionHandler extends Handler
 {
     /**
      * Render an exception into an HTTP response.
@@ -18,7 +19,7 @@ class ExceptionHandler extends BaseExceptionHandler
      * @param \Illuminate\Http\Request $request
      * @param \Exception               $exception
      *
-     * @return \Illuminate\Http\Response
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     public function render($request, Exception $exception)
     {
@@ -36,6 +37,12 @@ class ExceptionHandler extends BaseExceptionHandler
                 'url' => '/',
                 'with' => ['warning' => $exception->getMessage()],
             ], 403);
+        } elseif ($exception instanceof GenericException) {
+            return intend([
+                'url' => $exception->getRedirection() ?? route('frontend.home'),
+                'withInput' => $exception->getInputs() ?? $request->all(),
+                'with' => ['warning' => $exception->getMessage()],
+            ], 422);
         }
 
         return parent::render($request, $exception);

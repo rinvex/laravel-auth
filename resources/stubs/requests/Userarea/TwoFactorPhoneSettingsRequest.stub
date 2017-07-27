@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace {{namespace}}Http\Requests\Userarea;
 
-use Exception;
+use Rinvex\Fort\Exceptions\GenericException;
 use Rinvex\Support\Http\Requests\FormRequest;
 
 class TwoFactorPhoneSettingsRequest extends FormRequest
@@ -12,7 +12,7 @@ class TwoFactorPhoneSettingsRequest extends FormRequest
     /**
      * Determine if the user is authorized to make this request.
      *
-     * @throws \Exception
+     * @throws \Rinvex\Fort\Exceptions\GenericException
      *
      * @return bool
      */
@@ -21,11 +21,11 @@ class TwoFactorPhoneSettingsRequest extends FormRequest
         $user = $this->user();
 
         if (! in_array('phone', config('rinvex.fort.twofactor.providers'))) {
-            throw new Exception(trans('messages.verification.twofactor.phone.globaly_disabled'));
+            throw new GenericException(trans('messages.verification.twofactor.phone.globaly_disabled'), route('userarea.account.settings'));
         }
 
         if (mb_strpos($this->route()->getName(), 'userarea.account.twofactor.phone') !== false && (! $user->phone || ! $user->phone_verified)) {
-            throw new Exception(trans('messages.account.'.(! $user->phone ? 'phone_field_required' : 'phone_verification_required')));
+            throw new GenericException(trans('messages.account.'.(! $user->phone ? 'phone_field_required' : 'phone_verification_required')), route('userarea.account.settings'));
         }
 
         return true;

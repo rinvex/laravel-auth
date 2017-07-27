@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace {{namespace}}Http\Requests\Userarea;
 
-use Exception;
+use Rinvex\Fort\Exceptions\GenericException;
 use Rinvex\Support\Http\Requests\FormRequest;
 
 class TwoFactorTotpSettingsRequest extends FormRequest
@@ -12,14 +12,14 @@ class TwoFactorTotpSettingsRequest extends FormRequest
     /**
      * Determine if the user is authorized to make this request.
      *
-     * @throws \Exception
+     * @throws \Rinvex\Fort\Exceptions\GenericException
      *
      * @return bool
      */
     public function authorize()
     {
         if (! in_array('totp', config('rinvex.fort.twofactor.providers'))) {
-            throw new Exception(trans('messages.verification.twofactor.totp.globaly_disabled'));
+            throw new GenericException(trans('messages.verification.twofactor.totp.globaly_disabled'), route('userarea.account.settings'));
         }
 
         return true;

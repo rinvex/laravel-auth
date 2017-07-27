@@ -4,14 +4,14 @@ declare(strict_types=1);
 
 namespace {{namespace}}Http\Requests\Userarea;
 
-use Exception;
+use Rinvex\Fort\Exceptions\GenericException;
 
 class TwoFactorTotpBackupSettingsRequest extends TwoFactorTotpSettingsRequest
 {
     /**
      * Determine if the user is authorized to make this request.
      *
-     * @throws \Exception
+     * @throws \Rinvex\Fort\Exceptions\GenericException
      *
      * @return bool
      */
@@ -23,7 +23,7 @@ class TwoFactorTotpBackupSettingsRequest extends TwoFactorTotpSettingsRequest
         $twoFactor = $user->getTwoFactor();
 
         if (empty($twoFactor['totp']['enabled'])) {
-            throw new Exception(trans('messages.verification.twofactor.totp.cant_backup'));
+            throw new GenericException(trans('messages.verification.twofactor.totp.cant_backup'), route('userarea.account.settings'));
         }
 
         return true;

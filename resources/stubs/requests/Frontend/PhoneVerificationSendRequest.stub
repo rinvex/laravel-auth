@@ -4,14 +4,14 @@ declare(strict_types=1);
 
 namespace {{namespace}}Http\Requests\Frontend;
 
-use Exception;
+use Rinvex\Fort\Exceptions\GenericException;
 
 class PhoneVerificationSendRequest extends PhoneVerificationRequest
 {
     /**
      * Determine if the user is authorized to make this request.
      *
-     * @throws \Exception
+     * @throws \Rinvex\Fort\Exceptions\GenericException
      *
      * @return bool
      */
@@ -24,27 +24,27 @@ class PhoneVerificationSendRequest extends PhoneVerificationRequest
 
         if ($user && ! $user->country_code) {
             // Country field required for phone verification
-            throw new Exception(trans('messages.account.country_required'));
+            throw new GenericException(trans('messages.account.country_required'), route('userarea.account.settings'));
         }
 
         if ($user && ! $user->phone) {
             // Phone field required before verification
-            throw new Exception(trans('messages.account.phone_required'));
+            throw new GenericException(trans('messages.account.phone_required'), route('userarea.account.settings'));
         }
 
         if ($attemptUser && ! $attemptUser->country_code) {
             // Country field required for TwoFactor authentication
-            throw new Exception(trans('messages.verification.twofactor.phone.country_required'));
+            throw new GenericException(trans('messages.verification.twofactor.phone.country_required'), route('frontend.home'));
         }
 
         if ($attemptUser && ! $attemptUser->phone) {
             // Phone field required for TwoFactor authentication
-            throw new Exception(trans('messages.verification.twofactor.phone.phone_required'));
+            throw new GenericException(trans('messages.verification.twofactor.phone.phone_required'), route('frontend.home'));
         }
 
         if (! in_array('phone', config('rinvex.fort.twofactor.providers'))) {
             // Country required for phone verification
-            throw new Exception(trans('messages.verification.twofactor.phone.disabled'));
+            throw new GenericException(trans('messages.verification.twofactor.phone.disabled'), route('userarea.account.settings'));
         }
 
         return true;
