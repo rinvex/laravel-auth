@@ -18,7 +18,3 @@ enabled:
 disabled:
   - align_double_arrow
   - alpha_ordered_imports
-
-finder:
-  not-name:
-    - "TwoFactorTotpProvider.php"

@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Rinvex\Fort\Guards;
 
+use PragmaRX\Google2FA\Google2FA;
 use Rinvex\Fort\Traits\ThrottlesLogins;
-use Rinvex\Fort\Services\TwoFactorTotpProvider;
 use Illuminate\Auth\Events\Logout as LogoutEvent;
 use Illuminate\Auth\SessionGuard as BaseSessionGuard;
 use Rinvex\Fort\Contracts\AuthenticatableTwoFactorContract;
@@ -333,9 +333,9 @@ class SessionGuard extends BaseSessionGuard
      */
     protected function isValidTwoFactorTotp(AuthenticatableTwoFactorContract $user, $token)
     {
-        $totp = app(TwoFactorTotpProvider::class);
+        $totpProvider = app(Google2FA::class);
         $secret = array_get($user->getTwoFactor(), 'totp.secret');
 
-        return mb_strlen($token) === 6 && $this->session->get('_twofactor.totp') && $totp->verifyKey($secret, $token);
+        return mb_strlen($token) === 6 && $this->session->get('_twofactor.totp') && $totpProvider->verifyKey($secret, $token);
     }
 }
