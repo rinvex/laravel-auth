@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace Rinvex\Fort\Handlers;
 
 use Exception;
-use Rinvex\Fort\Exceptions\GenericException;
 use Illuminate\Auth\AuthenticationException;
+use Rinvex\Fort\Exceptions\GenericException;
 use Illuminate\Foundation\Exceptions\Handler;
 use Rinvex\Fort\Exceptions\AuthorizationException;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
