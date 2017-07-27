@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Rinvex\Fort\Guards;
 
+use Illuminate\Support\Facades\Config;
 use Rinvex\Fort\Traits\ThrottlesLogins;
 use Rinvex\Fort\Services\TwoFactorTotpProvider;
 use Illuminate\Auth\Events\Logout as LogoutEvent;
@@ -87,7 +88,7 @@ class SessionGuard extends BaseSessionGuard
         $this->lastAttempted = $user = $this->provider->retrieveByCredentials($credentials);
 
         // Login throttling
-        $throttles = config('rinvex.fort.throttle.enabled');
+        $throttles = Config::get('rinvex.fort.throttle.enabled');
         $lockedOut = $this->hasTooManyLoginAttempts($this->getRequest());
 
         if ($throttles && $lockedOut) {
@@ -104,7 +105,7 @@ class SessionGuard extends BaseSessionGuard
         // fact valid we'll log the users into the application and return true.
         if ($this->hasValidCredentials($user, $credentials)) {
             // Check if unverified
-            if (config('rinvex.fort.emailverification.required') && ! $user->isEmailVerified()) {
+            if (Config::get('rinvex.fort.emailverification.required') && ! $user->isEmailVerified()) {
                 // Fire the authentication unverified event
                 $this->events->dispatch('rinvex.fort.auth.unverified', [$user]);
 
@@ -112,7 +113,7 @@ class SessionGuard extends BaseSessionGuard
                 return static::AUTH_UNVERIFIED;
             }
 
-            if (! empty(config('rinvex.fort.twofactor.providers'))) {
+            if (! empty(Config::get('rinvex.fort.twofactor.providers'))) {
                 $twofactor = $user->getTwoFactor();
                 $totpStatus = $twofactor['totp']['enabled'] ?? false;
                 $phoneStatus = $twofactor['phone']['enabled'] ?? false;
@@ -157,7 +158,7 @@ class SessionGuard extends BaseSessionGuard
     public function login(AuthenticatableContract $user, $remember = false)
     {
         // Check persistence mode
-        if (config('rinvex.fort.persistence') === 'single') {
+        if (Config::get('rinvex.fort.persistence') === 'single') {
             $this->cycleRememberToken($user);
             $user->sessions()->delete();
         }
@@ -174,7 +175,7 @@ class SessionGuard extends BaseSessionGuard
         }
 
         // Login successful, clear login attempts
-        if (config('rinvex.fort.throttle.enabled')) {
+        if (Config::get('rinvex.fort.throttle.enabled')) {
             $this->clearLoginAttempts($this->getRequest());
         }
 

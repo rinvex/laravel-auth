@@ -18,7 +18,6 @@ use Rinvex\Fort\Traits\CanResetPassword;
 use Rinvex\Fort\Traits\AuthenticatableTwoFactor;
 use Rinvex\Fort\Contracts\CanVerifyEmailContract;
 use Rinvex\Fort\Contracts\CanVerifyPhoneContract;
-use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\Access\Authorizable;
 use Rinvex\Fort\Contracts\CanResetPasswordContract;
 use Rinvex\Fort\Contracts\AuthenticatableTwoFactorContract;
@@ -110,6 +109,17 @@ class User extends Model implements AuthenticatableContract, AuthenticatableTwoF
     /**
      * {@inheritdoc}
      */
+    protected $dates = [
+        'email_verified_at',
+        'phone_verified_at',
+        'birthday',
+        'last_activity',
+        'deleted_at',
+    ];
+
+    /**
+     * {@inheritdoc}
+     */
     protected $fillable = [
         'username',
         'password',
@@ -139,34 +149,6 @@ class User extends Model implements AuthenticatableContract, AuthenticatableTwoF
     /**
      * {@inheritdoc}
      */
-    protected $casts = [
-        'username' => 'string',
-        'password' => 'string',
-        'two_factor' => 'json',
-        'email' => 'string',
-        'email_verified' => 'boolean',
-        'email_verified_at' => 'datetime',
-        'phone' => 'string',
-        'phone_verified' => 'boolean',
-        'phone_verified_at' => 'datetime',
-        'name_prefix' => 'string',
-        'first_name' => 'string',
-        'middle_name' => 'string',
-        'last_name' => 'string',
-        'name_suffix' => 'string',
-        'job_title' => 'string',
-        'country_code' => 'string',
-        'language_code' => 'string',
-        'birthday' => 'string',
-        'gender' => 'string',
-        'is_active' => 'boolean',
-        'last_activity' => 'datetime',
-        'deleted_at' => 'datetime',
-    ];
-
-    /**
-     * {@inheritdoc}
-     */
     protected $hidden = [
         'password',
         'two_factor',
@@ -176,27 +158,19 @@ class User extends Model implements AuthenticatableContract, AuthenticatableTwoF
     /**
      * {@inheritdoc}
      */
-    protected $with = [
-        'abilities',
-        'roles',
-    ];
+    protected $with = ['abilities', 'roles'];
 
     /**
      * {@inheritdoc}
      */
-    protected $observables = [
-        'validating',
-        'validated',
-    ];
+    protected $observables = ['validating', 'validated'];
 
     /**
      * The attributes to be encrypted before saving.
      *
      * @var array
      */
-    protected $hashables = [
-        'password',
-    ];
+    protected $hashables = ['password'];
 
     /**
      * The default rules that the model will validate against.
@@ -224,27 +198,11 @@ class User extends Model implements AuthenticatableContract, AuthenticatableTwoF
 
         $this->setTable(config('rinvex.fort.tables.users'));
         $this->setRules([
+            'email' => 'required|email|min:3|max:150|unique:'.config('rinvex.fort.tables.users').',email',
             'username' => 'required|alpha_dash|min:3|max:150|unique:'.config('rinvex.fort.tables.users').',username',
             'password' => 'sometimes|required|min:'.config('rinvex.fort.password_min_chars'),
-            'two_factor' => 'nullable|array',
-            'email' => 'required|email|min:3|max:150|unique:'.config('rinvex.fort.tables.users').',email',
-            'email_verified' => 'sometimes|boolean',
-            'email_verified_at' => 'nullable|date',
+            'gender' => 'nullable|string|in:male,female',
             'phone' => 'nullable|numeric|min:4',
-            'phone_verified' => 'sometimes|boolean',
-            'phone_verified_at' => 'nullable|date',
-            'name_prefix' => 'nullable|string|max:150',
-            'first_name' => 'nullable|string|max:150',
-            'middle_name' => 'nullable|string|max:150',
-            'last_name' => 'nullable|string|max:150',
-            'name_suffix' => 'nullable|string|max:150',
-            'job_title' => 'nullable|string|max:150',
-            'country_code' => 'nullable|alpha|size:2|country',
-            'language_code' => 'nullable|alpha|size:2|language',
-            'birthday' => 'nullable|date_format:Y-m-d',
-            'gender' => 'nullable|string|in:m,f',
-            'is_active' => 'sometimes|boolean',
-            'last_activity' => 'nullable|date',
         ]);
     }
 
@@ -311,11 +269,11 @@ class User extends Model implements AuthenticatableContract, AuthenticatableTwoF
     }
 
     /**
-     * A user may have many sessions.
+     * A user may have multiple sessions.
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function sessions(): HasMany
+    public function sessions()
     {
         return $this->hasMany(config('rinvex.fort.models.session'), 'user_id', 'id');
     }
@@ -325,7 +283,7 @@ class User extends Model implements AuthenticatableContract, AuthenticatableTwoF
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function socialites(): HasMany
+    public function socialites()
     {
         return $this->hasMany(config('rinvex.fort.models.socialite'), 'user_id', 'id');
     }

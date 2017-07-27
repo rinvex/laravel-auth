@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Rinvex\Fort\Models;
 
+use Illuminate\Support\Facades\Config;
 use Watson\Validating\ValidatingTrait;
 use Illuminate\Database\Eloquent\Model;
 use Rinvex\Cacheable\CacheableEloquent;
@@ -45,25 +46,20 @@ class Ability extends Model
     /**
      * {@inheritdoc}
      */
-    protected $fillable = [
-        'name',
-        'action',
-        'resource',
-        'policy',
-        'description',
-        'roles',
+    protected $dates = [
+        'deleted_at',
     ];
 
     /**
      * {@inheritdoc}
      */
-    protected $casts = [
-        'name' => 'string',
-        'action' => 'string',
-        'resource' => 'string',
-        'policy' => 'string',
-        'description' => 'string',
-        'deleted_at' => 'datetime',
+    protected $fillable = [
+        'action',
+        'resource',
+        'policy',
+        'name',
+        'description',
+        'roles',
     ];
 
     /**
@@ -120,13 +116,11 @@ class Ability extends Model
     {
         parent::__construct($attributes);
 
-        $this->setTable(config('rinvex.fort.tables.abilities'));
+        $this->setTable(Config::get('rinvex.fort.tables.abilities'));
         $this->setRules([
             'name' => 'required|string|max:150',
-            'action' => 'required|string|unique:'.config('rinvex.fort.tables.abilities').',action,NULL,id,resource,'.($this->resource ?? 'null'),
-            'resource' => 'required|string|unique:'.config('rinvex.fort.tables.abilities').',resource,NULL,id,action,'.($this->action ?? 'null'),
-            'policy' => 'nullable|string',
-            'description' => 'nullable|string|max:10000',
+            'action' => 'required|unique:'.Config::get('rinvex.fort.tables.abilities').',action,NULL,id,resource,'.($this->resource ?? 'null'),
+            'resource' => 'required|unique:'.Config::get('rinvex.fort.tables.abilities').',resource,NULL,id,action,'.($this->action ?? 'null'),
         ]);
     }
 
@@ -295,7 +289,7 @@ class Ability extends Model
      */
     public function isProtected()
     {
-        return in_array($this->id, config('rinvex.fort.protected.abilities'));
+        return in_array($this->id, Config::get('rinvex.fort.protected.abilities'));
     }
 
     /**

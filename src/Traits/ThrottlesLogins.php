@@ -4,8 +4,10 @@ declare(strict_types=1);
 
 namespace Rinvex\Fort\Traits;
 
+use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Str;
-use Symfony\Component\HttpFoundation\Request;
+//use \Symfony\Component\HttpFoundation\Request;
+use \Illuminate\Http\Request;
 use Illuminate\Foundation\Auth\ThrottlesLogins as BaseThrottlesLogins;
 
 trait ThrottlesLogins
@@ -22,8 +24,8 @@ trait ThrottlesLogins
     protected function hasTooManyLoginAttempts(Request $request)
     {
         $throttleKey = $this->throttleKey($request);
-        $throttleAttempts = config('rinvex.fort.throttle.max_login_attempts', 5);
-        $throttleTimeout = config('rinvex.fort.throttle.lockout_time', 1);
+        $throttleAttempts = Config::get('rinvex.fort.throttle.max_login_attempts', 5);
+        $throttleTimeout = Config::get('rinvex.fort.throttle.lockout_time', 1);
 
         return $this->limiter()->tooManyAttempts($throttleKey, $throttleAttempts, $throttleTimeout);
     }

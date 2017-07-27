@@ -114,16 +114,16 @@ class SessionGuardTest extends TestCase
 		$guard->basic('email', ['active' => 1]);
 	}
 
-	// public function testAttemptCallsRetrieveByCredentials()
-	// {
-	// 	$guard = $this->getGuard();
-	// 	$guard->setDispatcher($events = m::mock('Illuminate\Contracts\Events\Dispatcher'));
-	// 	$events->shouldReceive('dispatch')->once()->with(m::type(Attempting::class));
-	// 	$events->shouldReceive('dispatch')->once()->with(m::type(Failed::class));
-	// 	$guard->getProvider()->shouldReceive('retrieveByCredentials')->once()->with(['foo']);
-	// 	$guard->attempt(['foo']);
-	// }
-	//
+	public function testAttemptCallsRetrieveByCredentials()
+	{
+		$guard = $this->getGuard();
+		$guard->setDispatcher($events = m::mock('Illuminate\Contracts\Events\Dispatcher'));
+		$events->shouldReceive('dispatch')->once()->with(m::type(Attempting::class));
+		$events->shouldReceive('dispatch')->once()->with(m::type(Failed::class));
+		$guard->getProvider()->shouldReceive('retrieveByCredentials')->once()->with(['foo']);
+		$guard->attempt(['foo']);
+	}
+
 	// public function testAttemptReturnsUserInterface()
 	// {
 	// 	list($session, $provider, $request, $cookie) = $this->getMocks();
@@ -136,7 +136,7 @@ class SessionGuardTest extends TestCase
 	// 	$guard->expects($this->once())->method('login')->with($this->equalTo($user));
 	// 	$this->assertTrue($guard->attempt(['foo']));
 	// }
-	//
+
 	// public function testAttemptReturnsFalseIfUserNotGiven()
 	// {
 	// 	$mock = $this->getGuard();
