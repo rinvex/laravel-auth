@@ -61,7 +61,7 @@ Route::namespace('Frontend')->name('frontend.')->middleware(['web', 'nohttpcache
 });
 
 
-Route::namespace('Userarea')->name('userarea.')->prefix('userarea')->middleware(['web', 'nohttpcache'])->group(function () {
+Route::namespace('Userarea')->name('userarea.')->middleware(['web', 'nohttpcache'])->group(function () {
     // User Account Routes
     Route::name('account.')->prefix('account')->group(function () {
         // Homepage Routes
