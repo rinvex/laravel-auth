@@ -89,9 +89,7 @@ class UsersController extends AuthorizedController
             return $language['name'];
         }, languages());
 
-        $abilities = Ability::all()->groupBy('resource')->map(function ($item) {
-            return $item->pluck('name', 'id');
-        })->toArray();
+        $abilities = Ability::all()->groupBy('resource')->map->pluck('name', 'id')->toArray();
 
         $roles = Role::all()->pluck('name', 'id')->toArray();
         $genders = ['m' => trans('common.male'), 'f' => trans('common.female')];

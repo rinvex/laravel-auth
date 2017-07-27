@@ -8,6 +8,7 @@ use Carbon\Carbon;
 use {{namespace}}Http\Controllers\AbstractController;
 use Rinvex\Fort\Contracts\EmailVerificationBrokerContract;
 use {{namespace}}Http\Requests\Frontend\EmailVerificationRequest;
+use {{namespace}}Http\Requests\Frontend\EmailVerificationSendRequest;
 use {{namespace}}Http\Requests\Frontend\EmailVerificationProcessRequest;
 
 class EmailVerificationController extends AbstractController
@@ -75,7 +76,7 @@ class EmailVerificationController extends AbstractController
         switch ($result) {
             case EmailVerificationBrokerContract::EMAIL_VERIFIED:
                 return intend([
-                    'url' => $request->user($this->getGuard()) ? route('frontend.account.settings') : route('frontend.auth.login'),
+                    'url' => $request->user($this->getGuard()) ? route('userarea.account.settings') : route('frontend.auth.login'),
                     'with' => ['success' => trans($result)],
                 ]);
 

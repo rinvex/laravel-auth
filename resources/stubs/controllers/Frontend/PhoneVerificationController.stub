@@ -9,6 +9,7 @@ use Rinvex\Fort\Guards\SessionGuard;
 use {{namespace}}Http\Controllers\AbstractController;
 use {{namespace}}Http\Requests\Frontend\PhoneVerificationRequest;
 use {{namespace}}Http\Requests\Frontend\PhoneVerificationSendRequest;
+use {{namespace}}Http\Requests\Frontend\PhoneVerificationSendProcessRequest;
 
 class PhoneVerificationController extends AbstractController
 {
@@ -78,7 +79,7 @@ class PhoneVerificationController extends AbstractController
                 ])->forceSave();
 
                 return intend([
-                    'url' => route('frontend.account.settings'),
+                    'url' => route('userarea.account.settings'),
                     'with' => ['success' => trans($result)],
                 ]);
 
@@ -86,7 +87,7 @@ class PhoneVerificationController extends AbstractController
                 auth()->guard($this->getGuard())->login($user, session('_twofactor.remember'));
 
                 return intend([
-                    'url' => route('frontend.account.settings'),
+                    'url' => route('userarea.account.settings'),
                     'with' => ['success' => trans($result)],
                 ]);
 

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace {{namespace}}Http\Requests\Frontend;
+namespace {{namespace}}Http\Requests\Userarea;
 
 class TwoFactorTotpProcessSettingsRequest extends TwoFactorTotpSettingsRequest
 {
@@ -13,6 +13,6 @@ class TwoFactorTotpProcessSettingsRequest extends TwoFactorTotpSettingsRequest
      */
     public function rules()
     {
-        return ['token' => 'required|numeric'];
+        return ['token' => 'required|integer'];
     }
 }

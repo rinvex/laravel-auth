@@ -6,6 +6,7 @@ return [
 
     'error' => '<strong>Whoops!</strong> There were some problems with your input.',
     'session_required' => 'You must login first!',
+    'resource_not_found' => 'Sorry! Requested resource [:resource::id] not found!',
 
     'sessions' => [
         'flush_single_heading' => 'Flush Selected Session',

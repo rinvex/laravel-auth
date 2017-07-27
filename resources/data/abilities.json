@@ -2,128 +2,96 @@
     {
         "action": "superadmin",
         "resource": "global",
-        "name": {
-            "en": "Super Administrator"
-        }
+        "name": "Super Administrator"
     },
     {
         "action": "access",
         "resource": "dashboard",
         "policy": "Rinvex\\Fort\\Policies\\DashboardPolicy@access",
-        "name": {
-            "en": "Access Dashboard"
-        }
+        "name": "Access Dashboard"
     },
     {
         "action": "list",
         "resource": "abilities",
         "policy": "Rinvex\\Fort\\Policies\\AbilityPolicy@list",
-        "name": {
-            "en": "Can List Existing Abilities"
-        }
+        "name": "Can List Existing Abilities"
     },
     {
         "action": "create",
         "resource": "abilities",
         "policy": "Rinvex\\Fort\\Policies\\AbilityPolicy@create",
-        "name": {
-            "en": "Can Create New Abilities"
-        }
+        "name": "Can Create New Abilities"
     },
     {
         "action": "update",
         "resource": "abilities",
         "policy": "Rinvex\\Fort\\Policies\\AbilityPolicy@update",
-        "name": {
-            "en": "Can Update Existing Abilities"
-        }
+        "name": "Can Update Existing Abilities"
     },
     {
         "action": "delete",
         "resource": "abilities",
         "policy": "Rinvex\\Fort\\Policies\\AbilityPolicy@delete",
-        "name": {
-            "en": "Can Delete Existing Abilities"
-        }
+        "name": "Can Delete Existing Abilities"
     },
     {
         "action": "grant",
         "resource": "abilities",
         "policy": "Rinvex\\Fort\\Policies\\AbilityPolicy@grant",
-        "name": {
-            "en": "Can Grant/Revoke Abilities To Users"
-        }
+        "name": "Can Grant/Revoke Abilities To Users"
     },
     {
         "action": "list",
         "resource": "roles",
         "policy": "Rinvex\\Fort\\Policies\\RolePolicy@list",
-        "name": {
-            "en": "Can List Existing Roles"
-        }
+        "name": "Can List Existing Roles"
     },
     {
         "action": "create",
         "resource": "roles",
         "policy": "Rinvex\\Fort\\Policies\\RolePolicy@create",
-        "name": {
-            "en": "Can Create New Roles"
-        }
+        "name": "Can Create New Roles"
     },
     {
         "action": "update",
         "resource": "roles",
         "policy": "Rinvex\\Fort\\Policies\\RolePolicy@update",
-        "name": {
-            "en": "Can Update Existing Roles"
-        }
+        "name": "Can Update Existing Roles"
     },
     {
         "action": "delete",
         "resource": "roles",
         "policy": "Rinvex\\Fort\\Policies\\RolePolicy@delete",
-        "name": {
-            "en": "Can Delete Existing Roles"
-        }
+        "name": "Can Delete Existing Roles"
     },
     {
         "action": "assign",
         "resource": "roles",
         "policy": "Rinvex\\Fort\\Policies\\RolePolicy@assign",
-        "name": {
-            "en": "Can Assign/Remove Roles To Users"
-        }
+        "name": "Can Assign/Remove Roles To Users"
     },
     {
         "action": "list",
         "resource": "users",
         "policy": "Rinvex\\Fort\\Policies\\UserPolicy@list",
-        "name": {
-            "en": "Can List Existing Users"
-        }
+        "name": "Can List Existing Users"
     },
     {
         "action": "create",
         "resource": "users",
         "policy": "Rinvex\\Fort\\Policies\\UserPolicy@create",
-        "name": {
-            "en": "Can Create New Users"
-        }
+        "name": "Can Create New Users"
     },
     {
         "action": "update",
         "resource": "users",
         "policy": "Rinvex\\Fort\\Policies\\UserPolicy@update",
-        "name": {
-            "en": "Can Update Existing Users"
-        }
+        "name": "Can Update Existing Users"
     },
     {
         "action": "delete",
         "resource": "users",
         "policy": "Rinvex\\Fort\\Policies\\UserPolicy@delete",
-        "name": {
-            "en": "Can Delete Existing Users"
-        }
+        "name": "Can Delete Existing Users"
     }
 ]

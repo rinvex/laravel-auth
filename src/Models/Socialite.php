@@ -37,6 +37,15 @@ class Socialite extends Model
     ];
 
     /**
+     * {@inheritdoc}
+     */
+    protected $casts = [
+        'user_id' => 'integer',
+        'provider' => 'string',
+        'provider_uid' => 'integer',
+    ];
+
+    /**
      * Create a new Eloquent model instance.
      *
      * @param array $attributes

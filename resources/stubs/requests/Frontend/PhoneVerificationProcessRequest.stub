@@ -13,6 +13,6 @@ class PhoneVerificationProcessRequest extends PhoneVerificationRequest
      */
     public function rules()
     {
-        return ['token' => 'required|numeric'];
+        return ['token' => 'required|integer'];
     }
 }

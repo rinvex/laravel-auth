@@ -187,24 +187,24 @@ trait HasRoles
     /**
      * Scope the user query to certain roles only.
      *
-     * @param \Illuminate\Database\Eloquent\Builder                                    $query
+     * @param \Illuminate\Database\Eloquent\Builder                                    $builder
      * @param string|int|array|\Rinvex\Fort\Models\Role|\Illuminate\Support\Collection $roles
      *
      * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function scopeRole($query, $roles)
+    public function scopeRole(Builder $builder, $roles): Builder
     {
         if (is_string($roles) || is_int($roles) || $roles instanceof Role) {
             $roles = [$roles];
         }
 
-        return $query->whereHas('roles', function (Builder $query) use ($roles) {
-            $query->where(function (Builder $query) use ($roles) {
+        return $builder->whereHas('roles', function (Builder $builder) use ($roles) {
+            $builder->where(function (Builder $builder) use ($roles) {
                 foreach ($roles as $role) {
                     $column = is_string($role) ? 'slug' : 'id';
                     $value = $role instanceof Role ? $role->id : $role;
 
-                    $query->orWhere(config('rinvex.fort.tables.roles').'.'.$column, $value);
+                    $builder->orWhere(config('rinvex.fort.tables.roles').'.'.$column, $value);
                 }
             });
         });

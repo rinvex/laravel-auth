@@ -45,20 +45,25 @@ class Ability extends Model
     /**
      * {@inheritdoc}
      */
-    protected $dates = [
-        'deleted_at',
+    protected $fillable = [
+        'name',
+        'action',
+        'resource',
+        'policy',
+        'description',
+        'roles',
     ];
 
     /**
      * {@inheritdoc}
      */
-    protected $fillable = [
-        'action',
-        'resource',
-        'policy',
-        'name',
-        'description',
-        'roles',
+    protected $casts = [
+        'name' => 'string',
+        'action' => 'string',
+        'resource' => 'string',
+        'policy' => 'string',
+        'description' => 'string',
+        'deleted_at' => 'datetime',
     ];
 
     /**
@@ -118,8 +123,10 @@ class Ability extends Model
         $this->setTable(config('rinvex.fort.tables.abilities'));
         $this->setRules([
             'name' => 'required|string|max:150',
-            'action' => 'required|unique:'.config('rinvex.fort.tables.abilities').',action,NULL,id,resource,'.($this->resource ?? 'null'),
-            'resource' => 'required|unique:'.config('rinvex.fort.tables.abilities').',resource,NULL,id,action,'.($this->action ?? 'null'),
+            'action' => 'required|string|unique:'.config('rinvex.fort.tables.abilities').',action,NULL,id,resource,'.($this->resource ?? 'null'),
+            'resource' => 'required|string|unique:'.config('rinvex.fort.tables.abilities').',resource,NULL,id,action,'.($this->action ?? 'null'),
+            'policy' => 'nullable|string',
+            'description' => 'nullable|string|max:10000',
         ]);
     }
 

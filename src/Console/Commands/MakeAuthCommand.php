@@ -26,120 +26,6 @@ class MakeAuthCommand extends Command
     protected $description = 'Scaffold basic login and registration views and routes';
 
     /**
-     * The controllers that need to be exported.
-     *
-     * @var array
-     */
-    protected $controllers = [
-
-        'Backend/AbilitiesController',
-        'Backend/DashboardController',
-        'Backend/RolesController',
-        'Backend/UsersController',
-
-        'Frontend/AccountSessionsController',
-        'Frontend/AccountSettingsController',
-        'Frontend/AuthenticationController',
-        'Frontend/EmailVerificationController',
-        'Frontend/HomeController',
-        'Frontend/PasswordResetController',
-        'Frontend/PhoneVerificationController',
-        'Frontend/RegistrationController',
-        'Frontend/SocialAuthenticationController',
-        'Frontend/TwoFactorSettingsController',
-
-        'AbstractController',
-        'AuthenticatedController',
-        'AuthorizedController',
-
-    ];
-
-    /**
-     * The requests that need to be exported.
-     *
-     * @var array
-     */
-    protected $requests = [
-
-        'Backend/AbilityFormRequest',
-        'Backend/RoleFormRequest',
-        'Backend/UserFormRequest',
-
-        'Frontend/AccountSettingsRequest',
-        'Frontend/AuthenticationRequest',
-        'Frontend/EmailVerificationProcessRequest',
-        'Frontend/EmailVerificationRequest',
-        'Frontend/EmailVerificationSendRequest',
-        'Frontend/PasswordResetPostProcessRequest',
-        'Frontend/PasswordResetProcessRequest',
-        'Frontend/PasswordResetRequest',
-        'Frontend/PasswordResetSendRequest',
-        'Frontend/PhoneVerificationProcessRequest',
-        'Frontend/PhoneVerificationRequest',
-        'Frontend/PhoneVerificationSendProcessRequest',
-        'Frontend/PhoneVerificationSendRequest',
-        'Frontend/RegistrationProcessRequest',
-        'Frontend/RegistrationRequest',
-        'Frontend/TwoFactorPhoneSettingsRequest',
-        'Frontend/TwoFactorTotpBackupSettingsRequest',
-        'Frontend/TwoFactorTotpProcessSettingsRequest',
-        'Frontend/TwoFactorTotpSettingsRequest',
-
-    ];
-
-    /**
-     * The views that need to be exported.
-     *
-     * @var array
-     */
-    protected $views = [
-
-        'backend/abilities/form.blade',
-        'backend/abilities/index.blade',
-        'backend/common/confirm-modal.blade',
-        'backend/common/layout-example.blade',
-        'backend/common/layout.blade',
-        'backend/common/pagination.blade',
-        'backend/dashboard/home.blade',
-        'backend/roles/form.blade',
-        'backend/roles/index.blade',
-        'backend/users/form.blade',
-        'backend/users/index.blade',
-
-        'frontend/account/sessions.blade',
-        'frontend/account/settings.blade',
-        'frontend/account/twofactor.blade',
-        'frontend/alerts/error.blade',
-        'frontend/alerts/success.blade',
-        'frontend/alerts/warning.blade',
-        'frontend/authentication/login.blade',
-        'frontend/authentication/register.blade',
-        'frontend/common/confirm-modal.blade',
-        'frontend/common/layout-example.blade',
-        'frontend/common/layout.blade',
-        'frontend/passwordreset/request.blade',
-        'frontend/passwordreset/reset.blade',
-        'frontend/verification/email-request.blade',
-        'frontend/verification/phone-request.blade',
-        'frontend/verification/phone-token.blade',
-
-    ];
-
-    /**
-     * The language files that need to be exported.
-     *
-     * @var array
-     */
-    protected $langs = [
-
-        'en/common.php',
-        'en/emails.php',
-        'en/messages.php',
-        'en/twofactor.php',
-
-    ];
-
-    /**
      * Execute the console command.
      *
      * @return void
@@ -165,17 +51,14 @@ class MakeAuthCommand extends Command
      */
     protected function exportViews()
     {
-        foreach ($this->views as $view) {
-            $viewFile = resource_path('views/'.$view.'.php');
+        foreach (glob(__DIR__.'/../../../resources/stubs/views/*/*/*.stub') as $view) {
+            $viewFile = resource_path(str_replace('.stub', '.php', explode('/stubs/', $view)[1]));
 
             if (! is_dir($viewDir = dirname($viewFile))) {
                 mkdir($viewDir, 0755, true);
             }
 
-            copy(
-                __DIR__.'/../../../resources/stubs/views/'.$view.'.stub',
-                $viewFile
-            );
+            copy($view, $viewFile);
         }
     }
 
@@ -186,17 +69,14 @@ class MakeAuthCommand extends Command
      */
     protected function exportLangs()
     {
-        foreach ($this->langs as $lang) {
-            $langFile = resource_path('lang/'.$lang);
+        foreach (glob(__DIR__.'/../../../resources/stubs/language/*/*.php') as $lang) {
+            $langFile = resource_path('lang/'.explode('/language/', $lang)[1]);
 
             if (! is_dir($langDir = dirname($langFile))) {
                 mkdir($langDir, 0755, true);
             }
 
-            copy(
-                __DIR__.'/../../../resources/stubs/language/'.$lang,
-                $langFile
-            );
+            copy($lang, $langFile);
         }
     }
 
@@ -207,17 +87,16 @@ class MakeAuthCommand extends Command
      */
     protected function exportControllers()
     {
-        foreach ($this->controllers as $controller) {
-            $controllerFile = app_path('Http/Controllers/'.$controller.'.php');
+        $controllers = array_merge(glob(__DIR__.'/../../../resources/stubs/controllers/*/*.stub'), glob(__DIR__.'/../../../resources/stubs/controllers/*.stub'));
+
+        foreach ($controllers as $controller) {
+            $controllerFile = app_path('Http/Controllers/'.explode('/controllers/', str_replace('.stub', '.php', $controller))[1]);
 
             if (! is_dir($controllerDir = dirname($controllerFile))) {
                 mkdir($controllerDir, 0755, true);
             }
 
-            file_put_contents(
-                $controllerFile,
-                $this->compileClassStub(__DIR__.'/../../../resources/stubs/controllers/'.$controller.'.stub')
-            );
+            file_put_contents($controllerFile, $this->compileClassStub($controller));
         }
     }
 
@@ -228,17 +107,14 @@ class MakeAuthCommand extends Command
      */
     protected function exportRequests()
     {
-        foreach ($this->requests as $request) {
-            $requestFile = app_path('Http/Requests/'.$request.'.php');
+        foreach (glob(__DIR__.'/../../../resources/stubs/requests/*/*.stub') as $request) {
+            $requestFile = app_path('Http/Requests/'.explode('/requests/', str_replace('.stub', '.php', $request))[1]);
 
             if (! is_dir($requestDir = dirname($requestFile))) {
                 mkdir($requestDir, 0755, true);
             }
 
-            file_put_contents(
-                $requestFile,
-                $this->compileClassStub(__DIR__.'/../../../resources/stubs/requests/'.$request.'.stub')
-            );
+            file_put_contents($requestFile, $this->compileClassStub($request));
         }
     }
 

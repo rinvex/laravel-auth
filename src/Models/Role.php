@@ -45,24 +45,30 @@ class Role extends Model
     /**
      * {@inheritdoc}
      */
-    protected $dates = [
-        'deleted_at',
-    ];
-
-    /**
-     * {@inheritdoc}
-     */
     protected $fillable = [
         'slug',
         'name',
         'description',
         'abilities',
+        'users',
     ];
 
     /**
      * {@inheritdoc}
      */
-    protected $with = ['abilities'];
+    protected $casts = [
+        'slug' => 'string',
+        'name' => 'string',
+        'description' => 'string',
+        'deleted_at' => 'datetime',
+    ];
+
+    /**
+     * {@inheritdoc}
+     */
+    protected $with = [
+        'abilities',
+    ];
 
     /**
      * {@inheritdoc}
@@ -114,9 +120,9 @@ class Role extends Model
 
         $this->setTable(config('rinvex.fort.tables.roles'));
         $this->setRules([
-            'name' => 'required|string|max:150',
-            'description' => 'nullable|string',
             'slug' => 'required|alpha_dash|max:150|unique:'.config('rinvex.fort.tables.roles').',slug',
+            'name' => 'required|string|max:150',
+            'description' => 'nullable|string|max:10000',
         ]);
     }
 
@@ -364,6 +370,20 @@ class Role extends Model
     {
         static::saved(function (self $model) use ($abilities) {
             $model->abilities()->sync($abilities);
+        });
+    }
+
+    /**
+     * Attach the role users.
+     *
+     * @param mixed $users
+     *
+     * @return void
+     */
+    public function setUsersAttribute($users)
+    {
+        static::saved(function (self $model) use ($users) {
+            $model->users()->sync($users);
         });
     }
 }

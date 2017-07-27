@@ -9,6 +9,7 @@ use Rinvex\Fort\Models\Role;
 use Rinvex\Fort\Models\User;
 use Illuminate\Http\Request;
 use Laravel\Socialite\Facades\Socialite;
+use Illuminate\Database\Eloquent\Builder;
 
 class SocialAuthenticationController extends AuthenticationController
 {
@@ -40,9 +41,9 @@ class SocialAuthenticationController extends AuthenticationController
             ]);
         }
 
-        $result = User::whereHas(['socialites', function ($query) use ($githubUser) {
-            $query->where('provider', 'github');
-            $query->where('provider_uid', $githubUser->id);
+        $result = User::whereHas(['socialites', function (Builder $builder) use ($githubUser) {
+            $builder->where('provider', 'github');
+            $builder->where('provider_uid', $githubUser->id);
         }])->first();
 
         if (! $result) {
@@ -58,7 +59,7 @@ class SocialAuthenticationController extends AuthenticationController
             event('rinvex.fort.register.social.start', [$data]);
 
             // Create user
-            $result = $user->create($data);
+            $result = $user->fill($data)->save();
 
             // Attach default role to the registered user
             if ($defaultRole = config('rinvex.fort.registration.default_role')) {

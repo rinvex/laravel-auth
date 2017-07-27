@@ -23,17 +23,18 @@ class ExceptionHandler extends BaseExceptionHandler
     public function render($request, Exception $exception)
     {
         if ($exception instanceof ModelNotFoundException) {
-            $single = mb_strtolower(trim(mb_strrchr($exception->getModel(), '\\'), '\\'));
+            $isBackend = mb_strpos($request->route()->getName(), 'backend') !== false;
+            $single = mb_strtolower(mb_substr($exception->getModel(), mb_strrpos($exception->getModel(), '\\') + 1));
             $plural = str_plural($single);
 
             return intend([
-                'url' => route('backend.'.$plural.'.index'),
-                'withErrors' => ['rinvex.fort.'.$single.'.not_found' => trans('messages.'.$single.'.not_found')],
-            ]);
+                'url' => $isBackend ? route("backend.{$plural}.index") : route('frontend.home'),
+                'with' => ['warning' => trans('messages.resource_not_found', ['resource' => $single, 'id' => $request->route()->parameter($single)])],
+            ], 404);
         } elseif ($exception instanceof AuthorizationException) {
             return intend([
                 'url' => '/',
-                'withErrors' => ['rinvex.fort.unauthorized' => $exception->getMessage()],
+                'with' => ['warning' => $exception->getMessage()],
             ], 403);
         }
 
