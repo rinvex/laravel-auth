@@ -24,6 +24,8 @@ use Rinvex\Fort\Contracts\CanResetPasswordContract;
 use Rinvex\Fort\Contracts\AuthenticatableTwoFactorContract;
 use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 use Illuminate\Contracts\Auth\Access\Authorizable as AuthorizableContract;
+use Illuminate\Support\Facades\Config;
+
 
 /**
  * Rinvex\Fort\Models\User.
@@ -222,14 +224,12 @@ class User extends Model implements AuthenticatableContract, AuthenticatableTwoF
     {
         parent::__construct($attributes);
 
-        $this->setTable(config('rinvex.fort.tables.users'));
+        $this->setTable(Config::get('rinvex.fort.tables.users'));
         $this->setRules([
-            'username' => 'required|alpha_dash|min:3|max:150|unique:'.config('rinvex.fort.tables.users').',username',
-            'password' => 'sometimes|required|min:'.config('rinvex.fort.password_min_chars'),
-            'two_factor' => 'nullable|array',
-            'email' => 'required|email|min:3|max:150|unique:'.config('rinvex.fort.tables.users').',email',
-            'email_verified' => 'sometimes|boolean',
-            'email_verified_at' => 'nullable|date',
+            'email' => 'required|email|min:3|max:150|unique:'.Config::get('rinvex.fort.tables.users').',email',
+            'username' => 'required|alpha_dash|min:3|max:150|unique:'.Config::get('rinvex.fort.tables.users').',username',
+            'password' => 'sometimes|required|min:'.Config::get('rinvex.fort.password_min_chars'),
+            'gender' => 'nullable|string|in:male,female',
             'phone' => 'nullable|numeric|min:4',
             'phone_verified' => 'sometimes|boolean',
             'phone_verified_at' => 'nullable|date',
@@ -295,7 +295,7 @@ class User extends Model implements AuthenticatableContract, AuthenticatableTwoF
      */
     public function abilities()
     {
-        return $this->belongsToMany(config('rinvex.fort.models.ability'), config('rinvex.fort.tables.ability_user'), 'user_id', 'ability_id')
+        return $this->belongsToMany(Config::get('rinvex.fort.models.ability'), Config::get('rinvex.fort.tables.ability_user'), 'user_id', 'ability_id')
                     ->withTimestamps();
     }
 
@@ -306,7 +306,7 @@ class User extends Model implements AuthenticatableContract, AuthenticatableTwoF
      */
     public function roles()
     {
-        return $this->belongsToMany(config('rinvex.fort.models.role'), config('rinvex.fort.tables.role_user'), 'user_id', 'role_id')
+        return $this->belongsToMany(Config::get('rinvex.fort.models.role'), Config::get('rinvex.fort.tables.role_user'), 'user_id', 'role_id')
                     ->withTimestamps();
     }
 
@@ -317,7 +317,7 @@ class User extends Model implements AuthenticatableContract, AuthenticatableTwoF
      */
     public function sessions(): HasMany
     {
-        return $this->hasMany(config('rinvex.fort.models.session'), 'user_id', 'id');
+        return $this->hasMany(Config::get('rinvex.fort.models.session'), 'user_id', 'id');
     }
 
     /**
@@ -327,7 +327,7 @@ class User extends Model implements AuthenticatableContract, AuthenticatableTwoF
      */
     public function socialites(): HasMany
     {
-        return $this->hasMany(config('rinvex.fort.models.socialite'), 'user_id', 'id');
+        return $this->hasMany(Config::get('rinvex.fort.models.socialite'), 'user_id', 'id');
     }
 
     /**
@@ -369,7 +369,7 @@ class User extends Model implements AuthenticatableContract, AuthenticatableTwoF
      */
     public function isProtected()
     {
-        return in_array($this->id, config('rinvex.fort.protected.users'));
+        return in_array($this->id, Config::get('rinvex.fort.protected.users'));
     }
 
     /**
