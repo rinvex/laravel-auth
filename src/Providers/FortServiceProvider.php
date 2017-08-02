@@ -114,7 +114,7 @@ class FortServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    public function loadRoutes(Router $router)
+    protected function loadRoutes(Router $router)
     {
         // Load routes
         if (! $this->app->routesAreCached() && file_exists(base_path('routes/web.rinvex.fort.php'))) {
@@ -124,6 +124,7 @@ class FortServiceProvider extends ServiceProvider
 
             $this->app->booted(function () use ($router) {
                 $router->getRoutes()->refreshNameLookups();
+                $router->getRoutes()->refreshActionLookups();
             });
         }
     }
