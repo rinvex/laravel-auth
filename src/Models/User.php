@@ -15,6 +15,7 @@ use Rinvex\Cacheable\CacheableEloquent;
 use Rinvex\Support\Traits\HasHashables;
 use Illuminate\Notifications\Notifiable;
 use Rinvex\Fort\Traits\CanResetPassword;
+use Illuminate\Database\Eloquent\Builder;
 use Rinvex\Fort\Traits\AuthenticatableTwoFactor;
 use Rinvex\Fort\Contracts\CanVerifyEmailContract;
 use Rinvex\Fort\Contracts\CanVerifyPhoneContract;
@@ -286,6 +287,30 @@ class User extends Model implements AuthenticatableContract, AuthenticatableTwoF
     public static function validated($callback)
     {
         static::registerModelEvent('validated', $callback);
+    }
+
+    /**
+     * Get the active users.
+     *
+     * @param \Illuminate\Database\Eloquent\Builder $builder
+     *
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeActive(Builder $builder): Builder
+    {
+        return $builder->where('is_active', true);
+    }
+
+    /**
+     * Get the inactive users.
+     *
+     * @param \Illuminate\Database\Eloquent\Builder $builder
+     *
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeInactive(Builder $builder): Builder
+    {
+        return $builder->where('is_active', false);
     }
 
     /**
