@@ -467,4 +467,28 @@ class User extends Model implements AuthenticatableContract, AuthenticatableTwoF
             $model->abilities()->sync($abilities);
         });
     }
+
+    /**
+     * Active the user.
+     *
+     * @return $this
+     */
+    public function activate(): self
+    {
+        $this->update(['is_active' => true]);
+
+        return $this;
+    }
+
+    /**
+     * Deactivate the user.
+     *
+     * @return $this
+     */
+    public function deactivate(): self
+    {
+        $this->update(['is_active' => false]);
+
+        return $this;
+    }
 }
