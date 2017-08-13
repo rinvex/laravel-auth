@@ -6,6 +6,7 @@ namespace Rinvex\Fort\Providers;
 
 use Illuminate\Support\ServiceProvider;
 use Illuminate\View\Compilers\BladeCompiler;
+use Rinvex\Fort\Console\Commands\MigrateCommand;
 use Rinvex\Fort\Console\Commands\MakeAuthCommand;
 use Rinvex\Fort\Services\PasswordResetBrokerManager;
 use Rinvex\Fort\Services\EmailVerificationBrokerManager;
@@ -25,7 +26,8 @@ class FortDeferredServiceProvider extends ServiceProvider
      * @var array
      */
     protected $commands = [
-        'AuthMake' => 'command.auth.make',
+        MakeAuthCommand::class => 'command.auth.make',
+        MigrateCommand::class => 'command.rinvex.fort.migrate',
     ];
 
     /**
@@ -39,8 +41,10 @@ class FortDeferredServiceProvider extends ServiceProvider
         $this->registerVerificationBroker();
 
         // Register artisan commands
-        foreach (array_keys($this->commands) as $command) {
-            call_user_func_array([$this, "register{$command}Command"], []);
+        foreach ($this->commands as $key => $value) {
+            $this->app->singleton($value, function ($app) use ($key) {
+                return new $key();
+            });
         }
 
         $this->commands(array_values($this->commands));
@@ -118,18 +122,6 @@ class FortDeferredServiceProvider extends ServiceProvider
             $bladeCompiler->directive('endhasallroles', function () {
                 return '<?php endif; ?>';
             });
-        });
-    }
-
-    /**
-     * Register make auth command.
-     *
-     * @return void
-     */
-    protected function registerAuthMakeCommand()
-    {
-        $this->app->singleton('command.auth.make', function ($app) {
-            return new MakeAuthCommand();
         });
     }
 
