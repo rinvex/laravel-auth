@@ -24,11 +24,13 @@ trait AbilitySeeder
             throw new Exception("Abilities seeder file '{$seeder}' does NOT exist!");
         }
 
+        $this->warn('Seeding: '.str_after($seeder, $this->laravel->basePath().'/'));
+
         // Create new abilities
         foreach (json_decode(file_get_contents($seeder), true) as $ability) {
             Ability::firstOrCreate(array_except($ability, ['name']), array_only($ability, ['name']));
         }
 
-        $this->info("Abilities seeder file '{$seeder}' seeded successfully!");
+        $this->info('Seeded: '.str_after($seeder, $this->laravel->basePath().'/'));
     }
 }
