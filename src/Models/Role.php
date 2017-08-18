@@ -313,15 +313,17 @@ class Role extends Model
     }
 
     /**
-     * Enforce clean slugs.
+     * Get the options for generating the slug.
      *
-     * @param string $value
-     *
-     * @return void
+     * @return \Spatie\Sluggable\SlugOptions
      */
-    public function setSlugAttribute($value)
+    public function getSlugOptions(): SlugOptions
     {
-        $this->attributes['slug'] = str_slug($value, '_');
+        return SlugOptions::create()
+                          ->usingSeparator('_')
+                          ->doNotGenerateSlugsOnUpdate()
+                          ->generateSlugsFrom('name')
+                          ->saveSlugsTo('slug');
     }
 
     /**
@@ -342,19 +344,6 @@ class Role extends Model
     public function isProtected()
     {
         return in_array($this->id, config('rinvex.fort.protected.roles'));
-    }
-
-    /**
-     * Get the options for generating the slug.
-     *
-     * @return \Spatie\Sluggable\SlugOptions
-     */
-    public function getSlugOptions(): SlugOptions
-    {
-        return SlugOptions::create()
-                          ->doNotGenerateSlugsOnUpdate()
-                          ->generateSlugsFrom('name')
-                          ->saveSlugsTo('slug');
     }
 
     /**
