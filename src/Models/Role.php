@@ -58,8 +58,6 @@ class Role extends Model
      */
     protected $casts = [
         'slug' => 'string',
-        'name' => 'string',
-        'description' => 'string',
         'deleted_at' => 'datetime',
     ];
 

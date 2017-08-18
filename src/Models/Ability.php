@@ -62,11 +62,9 @@ class Ability extends Model
      * {@inheritdoc}
      */
     protected $casts = [
-        'name' => 'string',
         'action' => 'string',
         'resource' => 'string',
         'policy' => 'string',
-        'description' => 'string',
         'deleted_at' => 'datetime',
     ];
 
