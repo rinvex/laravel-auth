@@ -18,13 +18,6 @@ abstract class AbstractController extends Controller
     use AuthorizesRequests;
 
     /**
-     * The browsing area.
-     *
-     * @var string
-     */
-    protected $browsingArea;
-
-    /**
      * Whitelisted methods.
      * Array of whitelisted methods which do not need to go through middleware.
      *
@@ -38,14 +31,6 @@ abstract class AbstractController extends Controller
      * @var string
      */
     protected $broker;
-
-    /**
-     * Create a new abstract controller instance.
-     */
-    public function __construct()
-    {
-        $this->browsingArea = request()->route() ? mb_strstr(request()->route()->getName(), '.', true) : 'frontend';
-    }
 
     /**
      * Get the broker to be used.
