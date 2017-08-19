@@ -27,10 +27,10 @@ return [
 
     'models' => [
 
-        'ability' => Rinvex\Fort\Models\Ability::class,
-        'role' => Rinvex\Fort\Models\Role::class,
-        'session' => Rinvex\Fort\Models\Session::class,
-        'socialite' => Rinvex\Fort\Models\Socialite::class,
+        'ability' => \Rinvex\Fort\Models\Ability::class,
+        'role' => \Rinvex\Fort\Models\Role::class,
+        'session' => \Rinvex\Fort\Models\Session::class,
+        'socialite' => \Rinvex\Fort\Models\Socialite::class,
 
     ],
 

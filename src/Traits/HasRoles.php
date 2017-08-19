@@ -223,7 +223,7 @@ trait HasRoles
         $isRolesIntBased = $this->isRolesIntBased($roles);
         $field = $isRolesStringBased ? 'slug' : 'id';
 
-        return $isRolesStringBased || $isRolesIntBased ? Role::whereIn($field, (array) $roles)->get() : collect($roles);
+        return $isRolesStringBased || $isRolesIntBased ? app('rinvex.fort.role')->whereIn($field, (array) $roles)->get() : collect($roles);
     }
 
     /**
