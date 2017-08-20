@@ -6,7 +6,6 @@ namespace {{namespace}}Http\Controllers\Backend;
 
 use Illuminate\Http\Request;
 use Rinvex\Fort\Models\Role;
-use Rinvex\Fort\Models\Ability;
 use {{namespace}}Http\Controllers\AuthorizedController;
 use {{namespace}}Http\Requests\Backend\RoleFormRequest;
 
@@ -29,7 +28,7 @@ class RolesController extends AuthorizedController
      */
     public function index()
     {
-        $roles = Role::paginate(config('rinvex.fort.items_per_page'));
+        $roles = app('rinvex.fort.role')->paginate(config('rinvex.fort.items_per_page'));
 
         return view('backend.roles.index', compact('roles'));
     }
@@ -43,7 +42,7 @@ class RolesController extends AuthorizedController
      */
     public function store(RoleFormRequest $request)
     {
-        return $this->process($request, new Role());
+        return $this->process($request, app('rinvex.fort.role'));
     }
 
     /**
@@ -85,7 +84,7 @@ class RolesController extends AuthorizedController
      */
     public function form(Role $role)
     {
-        $abilities = Ability::all()->groupBy('resource')->map->pluck('name', 'id')->toArray();
+        $abilities = app('rinvex.fort.ability')->all()->groupBy('resource')->map->pluck('name', 'id')->toArray();
 
         return view('backend.roles.form', compact('role', 'abilities'));
     }

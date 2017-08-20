@@ -5,9 +5,7 @@ declare(strict_types=1);
 namespace {{namespace}}Http\Controllers\Backend;
 
 use Illuminate\Http\Request;
-use Rinvex\Fort\Models\Role;
 use Rinvex\Fort\Models\User;
-use Rinvex\Fort\Models\Ability;
 use {{namespace}}Http\Controllers\AuthorizedController;
 use {{namespace}}Http\Requests\Backend\UserFormRequest;
 
@@ -25,7 +23,7 @@ class UsersController extends AuthorizedController
      */
     public function index()
     {
-        $users = User::paginate(config('rinvex.fort.items_per_page'));
+        $users = app('rinvex.fort.user')->paginate(config('rinvex.fort.items_per_page'));
 
         return view('backend.users.index', compact('users'));
     }
@@ -39,7 +37,7 @@ class UsersController extends AuthorizedController
      */
     public function store(UserFormRequest $request)
     {
-        return $this->process($request, new User());
+        return $this->process($request, app('rinvex.fort.user'));
     }
 
     /**
@@ -89,9 +87,9 @@ class UsersController extends AuthorizedController
             return $language['name'];
         }, languages());
 
-        $abilities = Ability::all()->groupBy('resource')->map->pluck('name', 'id')->toArray();
+        $abilities = app('rinvex.fort.ability')->all()->groupBy('resource')->map->pluck('name', 'id')->toArray();
 
-        $roles = Role::all()->pluck('name', 'id')->toArray();
+        $roles = app('rinvex.fort.role')->all()->pluck('name', 'id')->toArray();
         $genders = ['m' => trans('common.male'), 'f' => trans('common.female')];
 
         return view('backend.users.form', compact('user', 'abilities', 'roles', 'countries', 'languages', 'genders'));

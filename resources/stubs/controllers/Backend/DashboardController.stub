@@ -5,10 +5,6 @@ declare(strict_types=1);
 namespace {{namespace}}Http\Controllers\Backend;
 
 use Carbon\Carbon;
-use Rinvex\Fort\Models\Role;
-use Rinvex\Fort\Models\User;
-use Rinvex\Fort\Models\Ability;
-use Rinvex\Fort\Models\Session;
 use Illuminate\Support\Facades\DB;
 use {{namespace}}Http\Controllers\AuthorizedController;
 
@@ -33,17 +29,17 @@ class DashboardController extends AuthorizedController
     {
         // Get recent registered users
         $limit = config('rinvex.fort.items_per_page');
-        $users = User::orderBy('created_at', 'desc')->limit($limit)->get();
+        $users = app('rinvex.fort.user')->orderBy('created_at', 'desc')->limit($limit)->get();
 
         // Get statistics
         $stats = [
-            'abilities' => Ability::count(),
-            'roles' => Role::count(),
-            'users' => User::count(),
+            'abilities' => app('rinvex.fort.ability')->count(),
+            'roles' => app('rinvex.fort.role')->count(),
+            'users' => app('rinvex.fort.user')->count(),
         ];
 
         // Get online users
-        $sessions = Session::users(config('rinvex.fort.online_interval'))->groupBy(['user_id'])->with(['user'])->get(['user_id', DB::raw('MAX(last_activity) as last_activity')]);
+        $sessions = app('rinvex.fort.session')->users(config('rinvex.fort.online_interval'))->groupBy(['user_id'])->with(['user'])->get(['user_id', DB::raw('MAX(last_activity) as last_activity')]);
 
         return view('backend.dashboard.home', compact('users', 'sessions', 'stats'));
     }

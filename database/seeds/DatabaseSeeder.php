@@ -4,10 +4,7 @@ declare(strict_types=1);
 
 namespace Rinvex\Fort\Seeds;
 
-use Rinvex\Fort\Models\Role;
-use Rinvex\Fort\Models\User;
 use Illuminate\Database\Seeder;
-use Rinvex\Fort\Models\Ability;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Eloquent\Model;
@@ -44,9 +41,9 @@ class DatabaseSeeder extends Seeder
 
     protected function isFirstRun()
     {
-        $userCount = User::count();
-        $roleCount = Role::count();
-        $abilityCount = Ability::count();
+        $userCount = app('rinvex.fort.user')->count();
+        $roleCount = app('rinvex.fort.role')->count();
+        $abilityCount = app('rinvex.fort.ability')->count();
 
         return ! $userCount && ! $roleCount && ! $abilityCount;
     }

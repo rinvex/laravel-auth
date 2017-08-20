@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Rinvex\Fort\Seeds;
 
 use Illuminate\Database\Seeder;
-use Rinvex\Fort\Models\Ability;
 
 class AbilitiesSeeder extends Seeder
 {
@@ -21,7 +20,7 @@ class AbilitiesSeeder extends Seeder
 
         // Create new abilities
         foreach ($abilities as $ability) {
-            Ability::create($ability);
+            app('rinvex.fort.ability')->create($ability);
         }
     }
 }

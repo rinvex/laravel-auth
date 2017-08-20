@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace {{namespace}}Http\Requests\Backend;
 
 use Carbon\Carbon;
-use Rinvex\Fort\Models\User;
 use Rinvex\Support\Http\Requests\FormRequest;
 
 class UserFormRequest extends FormRequest
@@ -29,7 +28,7 @@ class UserFormRequest extends FormRequest
      */
     public function process($data)
     {
-        $user = $this->route('user') ?? new User();
+        $user = $this->route('user') ?? app('rinvex.fort.user');
         $country = $data['country_code'] ?? null;
         $twoFactor = $user->getTwoFactor();
 
@@ -75,7 +74,7 @@ class UserFormRequest extends FormRequest
      */
     public function rules()
     {
-        $user = $this->route('user') ?? new User();
+        $user = $this->route('user') ?? app('rinvex.fort.user');
         $user->updateRulesUniques();
         $rules = $user->getRules();
         $rules['password'] = $user->exists

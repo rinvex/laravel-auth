@@ -132,28 +132,28 @@ class Role extends Model
         parent::boot();
 
         static::updated(function (self $role) {
-            Ability::forgetCache();
-            User::forgetCache();
+            app('rinvex.fort.ability')->forgetCache();
+            app('rinvex.fort.user')->forgetCache();
         });
 
         static::deleted(function (self $role) {
-            Ability::forgetCache();
-            User::forgetCache();
+            app('rinvex.fort.ability')->forgetCache();
+            app('rinvex.fort.user')->forgetCache();
         });
 
         static::attached(function (self $role) {
-            Ability::forgetCache();
-            User::forgetCache();
+            app('rinvex.fort.ability')->forgetCache();
+            app('rinvex.fort.user')->forgetCache();
         });
 
         static::synced(function (self $role) {
-            Ability::forgetCache();
-            User::forgetCache();
+            app('rinvex.fort.ability')->forgetCache();
+            app('rinvex.fort.user')->forgetCache();
         });
 
         static::detached(function (self $role) {
-            Ability::forgetCache();
-            User::forgetCache();
+            app('rinvex.fort.ability')->forgetCache();
+            app('rinvex.fort.user')->forgetCache();
         });
 
         // Auto generate slugs early before validation

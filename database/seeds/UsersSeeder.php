@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Rinvex\Fort\Seeds;
 
 use Carbon\Carbon;
-use Rinvex\Fort\Models\User;
 use Illuminate\Database\Seeder;
 
 class UsersSeeder extends Seeder
@@ -27,7 +26,7 @@ class UsersSeeder extends Seeder
             'is_active' => true,
         ];
 
-        $user = User::create($user);
+        $user = app('rinvex.fort.user')->create($user);
 
         if (isset($this->command)) {
             $this->command->getOutput()->writeln("<comment>Username</comment>: {$user['username']} / <comment>Password</comment>: {$password}");

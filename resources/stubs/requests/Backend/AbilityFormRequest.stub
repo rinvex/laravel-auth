@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace {{namespace}}Http\Requests\Backend;
 
-use Rinvex\Fort\Models\Ability;
 use Rinvex\Support\Http\Requests\FormRequest;
 
 class AbilityFormRequest extends FormRequest
@@ -42,7 +41,7 @@ class AbilityFormRequest extends FormRequest
      */
     public function rules()
     {
-        $user = $this->route('ability') ?? new Ability();
+        $user = $this->route('ability') ?? app('rinvex.fort.ability');
         $user->updateRulesUniques();
 
         return $user->getRules();

@@ -140,23 +140,23 @@ class Ability extends Model
         parent::boot();
 
         static::updated(function (self $ability) {
-            Role::forgetCache();
-            User::forgetCache();
+            app('rinvex.fort.role')->forgetCache();
+            app('rinvex.fort.user')->forgetCache();
         });
 
         static::deleted(function (self $ability) {
-            Role::forgetCache();
-            User::forgetCache();
+            app('rinvex.fort.role')->forgetCache();
+            app('rinvex.fort.user')->forgetCache();
         });
 
         static::attached(function (self $ability) {
-            Role::forgetCache();
-            User::forgetCache();
+            app('rinvex.fort.role')->forgetCache();
+            app('rinvex.fort.user')->forgetCache();
         });
 
         static::detached(function (self $ability) {
-            Role::forgetCache();
-            User::forgetCache();
+            app('rinvex.fort.role')->forgetCache();
+            app('rinvex.fort.user')->forgetCache();
         });
     }
 
