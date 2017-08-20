@@ -4,7 +4,12 @@ declare(strict_types=1);
 
 namespace Rinvex\Fort\Providers;
 
+use Rinvex\Fort\Models\Role;
+use Rinvex\Fort\Models\User;
 use Illuminate\Routing\Router;
+use Rinvex\Fort\Models\Ability;
+use Rinvex\Fort\Models\Session;
+use Rinvex\Fort\Models\Socialite;
 use Rinvex\Fort\Guards\SessionGuard;
 use Rinvex\Fort\Services\AccessGate;
 use Illuminate\Support\ServiceProvider;
@@ -38,26 +43,31 @@ class FortServiceProvider extends ServiceProvider
         // Register Access Gate Binding
         $this->registerAccessGate();
 
-        // Register eloquent models
+        // Bind eloquent models to IoC container
         $this->app->singleton('rinvex.fort.role', function ($app) {
             return new $app['config']['rinvex.fort.models.role']();
         });
+        $this->app->alias('rinvex.fort.role', Role::class);
 
         $this->app->singleton('rinvex.fort.ability', function ($app) {
             return new $app['config']['rinvex.fort.models.ability']();
         });
+        $this->app->alias('rinvex.fort.ability', Ability::class);
 
         $this->app->singleton('rinvex.fort.session', function ($app) {
             return new $app['config']['rinvex.fort.models.session']();
         });
+        $this->app->alias('rinvex.fort.session', Session::class);
 
         $this->app->singleton('rinvex.fort.socialite', function ($app) {
             return new $app['config']['rinvex.fort.models.socialite']();
         });
+        $this->app->alias('rinvex.fort.socialite', Socialite::class);
 
         $this->app->singleton('rinvex.fort.user', function ($app) {
             return new $app['config']['auth.providers.'.$app['config']['auth.guards.'.$app['config']['auth.defaults.guard'].'.provider'].'.model']();
         });
+        $this->app->alias('rinvex.fort.user', User::class);
     }
 
     /**
