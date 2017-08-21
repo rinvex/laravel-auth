@@ -40,14 +40,8 @@ class FortDeferredServiceProvider extends ServiceProvider
         $this->registerBladeExtensions();
         $this->registerVerificationBroker();
 
-        // Register artisan commands
-        foreach ($this->commands as $key => $value) {
-            $this->app->singleton($value, function ($app) use ($key) {
-                return new $key();
-            });
-        }
-
-        $this->commands(array_values($this->commands));
+        // Register console commands
+        ! $this->app->runningInConsole() || $this->registerCommands();
     }
 
     /**
@@ -137,5 +131,22 @@ class FortDeferredServiceProvider extends ServiceProvider
             'rinvex.fort.emailverification',
             \Illuminate\Contracts\Debug\ExceptionHandler::class,
         ];
+    }
+
+    /**
+     * Register console commands.
+     *
+     * @return void
+     */
+    protected function registerCommands()
+    {
+        // Register artisan commands
+        foreach ($this->commands as $key => $value) {
+            $this->app->singleton($value, function ($app) use ($key) {
+                return new $key();
+            });
+        }
+
+        $this->commands(array_values($this->commands));
     }
 }

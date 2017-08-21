@@ -104,16 +104,12 @@ class FortServiceProvider extends ServiceProvider
             $this->overrideMiddleware($router);
         }
 
-        // Load routes
+        // Load resources
         $this->loadRoutes($router);
+        ! $this->app->runningInConsole() || $this->loadMigrationsFrom(__DIR__.'/../../database/migrations');
 
-        if ($this->app->runningInConsole()) {
-            // Load migrations
-            $this->loadMigrationsFrom(__DIR__.'/../../database/migrations');
-
-            // Publish Resources
-            $this->publishResources();
-        }
+        // Publish resources
+        ! $this->app->runningInConsole() || $this->publishResources();
 
         // Override session guard
         $this->overrideSessionGuard();
