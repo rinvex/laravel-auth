@@ -12,9 +12,9 @@ use Illuminate\Database\Eloquent\Builder;
  * Rinvex\Fort\Models\Session.
  *
  * @property int                                $id
- * @property int|null                           $user_id
- * @property string|null                        $ip_address
- * @property string|null                        $user_agent
+ * @property int                                $user_id
+ * @property string                             $ip_address
+ * @property string                             $user_agent
  * @property string                             $payload
  * @property \Carbon\Carbon                     $last_activity
  * @property-read \Rinvex\Fort\Models\User|null $user

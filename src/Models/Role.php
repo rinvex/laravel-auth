@@ -15,15 +15,15 @@ use Spatie\Translatable\HasTranslations;
 /**
  * Rinvex\Fort\Models\Role.
  *
- * @property int                                                                      $id
- * @property string                                                                   $slug
- * @property array                                                                    $name
- * @property array                                                                    $description
- * @property \Carbon\Carbon|null                                                      $created_at
- * @property \Carbon\Carbon|null                                                      $updated_at
- * @property \Carbon\Carbon|null                                                      $deleted_at
- * @property \Illuminate\Database\Eloquent\Collection|\Rinvex\Fort\Models\Ability[]   $abilities
- * @property-read \Illuminate\Database\Eloquent\Collection|\Rinvex\Fort\Models\User[] $users
+ * @property int                                                                    $id
+ * @property string                                                                 $slug
+ * @property array                                                                  $name
+ * @property array                                                                  $description
+ * @property \Carbon\Carbon                                                         $created_at
+ * @property \Carbon\Carbon                                                         $updated_at
+ * @property \Carbon\Carbon                                                         $deleted_at
+ * @property \Illuminate\Database\Eloquent\Collection|\Rinvex\Fort\Models\Ability[] $abilities
+ * @property \Illuminate\Database\Eloquent\Collection|\Rinvex\Fort\Models\User[]    $users
  *
  * @method static \Illuminate\Database\Eloquent\Builder|\Rinvex\Fort\Models\Role whereCreatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\Rinvex\Fort\Models\Role whereDeletedAt($value)
