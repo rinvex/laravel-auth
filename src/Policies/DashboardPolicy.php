@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Rinvex\Fort\Policies;
 
-use Rinvex\Fort\Models\User;
+use Rinvex\Fort\Contracts\UserContract;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
 class DashboardPolicy
@@ -15,11 +15,11 @@ class DashboardPolicy
      * Determine whether the user can access the dashboard.
      *
      * @param string                   $ability
-     * @param \Rinvex\Fort\Models\User $user
+     * @param \Rinvex\Fort\Contracts\UserContract $user
      *
      * @return bool
      */
-    public function access($ability, User $user)
+    public function access($ability, UserContract $user)
     {
         return $user->allAbilities->pluck('slug')->contains($ability);
     }
