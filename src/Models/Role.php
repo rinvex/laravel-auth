@@ -9,6 +9,7 @@ use Spatie\Sluggable\SlugOptions;
 use Rinvex\Fort\Traits\HasAbilities;
 use Watson\Validating\ValidatingTrait;
 use Illuminate\Database\Eloquent\Model;
+use Rinvex\Fort\Contracts\RoleContract;
 use Rinvex\Cacheable\CacheableEloquent;
 use Spatie\Translatable\HasTranslations;
 
@@ -34,7 +35,7 @@ use Spatie\Translatable\HasTranslations;
  * @method static \Illuminate\Database\Eloquent\Builder|\Rinvex\Fort\Models\Role whereUpdatedAt($value)
  * @mixin \Eloquent
  */
-class Role extends Model
+class Role extends Model implements RoleContract
 {
     use HasSlug;
     use HasAbilities;

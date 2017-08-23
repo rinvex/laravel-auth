@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Model;
 use Rinvex\Cacheable\CacheableEloquent;
 use Spatie\Translatable\HasTranslations;
 use Rinvex\Support\Traits\UniqueInjector;
+use Rinvex\Fort\Contracts\AbilityContract;
 
 /**
  * Rinvex\Fort\Models\Ability.
@@ -37,12 +38,11 @@ use Rinvex\Support\Traits\UniqueInjector;
  * @method static \Illuminate\Database\Eloquent\Builder|\Rinvex\Fort\Models\Ability whereUpdatedAt($value)
  * @mixin \Eloquent
  */
-class Ability extends Model
+class Ability extends Model implements AbilityContract
 {
     use HasTranslations;
     use CacheableEloquent;
-    use ValidatingTrait, UniqueInjector
-    {
+    use ValidatingTrait, UniqueInjector {
         UniqueInjector::prepareUniqueRule insteadof ValidatingTrait;
     }
 
