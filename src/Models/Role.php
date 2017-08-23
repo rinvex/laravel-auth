@@ -9,8 +9,8 @@ use Spatie\Sluggable\SlugOptions;
 use Rinvex\Fort\Traits\HasAbilities;
 use Watson\Validating\ValidatingTrait;
 use Illuminate\Database\Eloquent\Model;
-use Rinvex\Fort\Contracts\RoleContract;
 use Rinvex\Cacheable\CacheableEloquent;
+use Rinvex\Fort\Contracts\RoleContract;
 use Spatie\Translatable\HasTranslations;
 
 /**
