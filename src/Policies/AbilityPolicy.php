@@ -15,7 +15,7 @@ class AbilityPolicy
     /**
      * Determine whether the user can list abilities.
      *
-     * @param string                   $ability
+     * @param string                              $ability
      * @param \Rinvex\Fort\Contracts\UserContract $user
      *
      * @return bool
@@ -28,7 +28,7 @@ class AbilityPolicy
     /**
      * Determine whether the user can create abilities.
      *
-     * @param string                   $ability
+     * @param string                              $ability
      * @param \Rinvex\Fort\Contracts\UserContract $user
      *
      * @return bool
@@ -41,7 +41,7 @@ class AbilityPolicy
     /**
      * Determine whether the user can update the ability.
      *
-     * @param string                      $ability
+     * @param string                                 $ability
      * @param \Rinvex\Fort\Contracts\UserContract    $user
      * @param \Rinvex\Fort\Contracts\AbilityContract $resource
      *
@@ -58,7 +58,7 @@ class AbilityPolicy
     /**
      * Determine whether the user can delete the ability.
      *
-     * @param string                      $ability
+     * @param string                                 $ability
      * @param \Rinvex\Fort\Contracts\UserContract    $user
      * @param \Rinvex\Fort\Contracts\AbilityContract $resource
      *
@@ -77,7 +77,7 @@ class AbilityPolicy
     /**
      * Determine whether the user can grant the given ability to the given user.
      *
-     * @param string                      $ability
+     * @param string                                 $ability
      * @param \Rinvex\Fort\Contracts\UserContract    $user
      * @param \Rinvex\Fort\Contracts\AbilityContract $resource
      * @param \Rinvex\Fort\Contracts\UserContract    $resourced
