@@ -15,7 +15,7 @@ class RolePolicy
     /**
      * Determine whether the user can list roles.
      *
-     * @param string                   $ability
+     * @param string                              $ability
      * @param \Rinvex\Fort\Contracts\UserContract $user
      *
      * @return bool
@@ -28,7 +28,7 @@ class RolePolicy
     /**
      * Determine whether the user can create roles.
      *
-     * @param string                   $ability
+     * @param string                              $ability
      * @param \Rinvex\Fort\Contracts\UserContract $user
      *
      * @return bool
@@ -41,7 +41,7 @@ class RolePolicy
     /**
      * Determine whether the user can update the role.
      *
-     * @param string                   $ability
+     * @param string                              $ability
      * @param \Rinvex\Fort\Contracts\UserContract $user
      * @param \Rinvex\Fort\Contracts\RoleContract $resource
      *
@@ -58,7 +58,7 @@ class RolePolicy
     /**
      * Determine whether the user can delete the role.
      *
-     * @param string                   $ability
+     * @param string                              $ability
      * @param \Rinvex\Fort\Contracts\UserContract $user
      * @param \Rinvex\Fort\Contracts\RoleContract $resource
      *
@@ -77,7 +77,7 @@ class RolePolicy
     /**
      * Determine whether the user can assign the given role to the given user.
      *
-     * @param string                   $ability
+     * @param string                              $ability
      * @param \Rinvex\Fort\Contracts\UserContract $user
      * @param \Rinvex\Fort\Contracts\RoleContract $resource
      * @param \Rinvex\Fort\Contracts\UserContract $resourced

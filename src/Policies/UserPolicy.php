@@ -14,7 +14,7 @@ class UserPolicy
     /**
      * Determine whether the user can list users.
      *
-     * @param string                   $ability
+     * @param string                              $ability
      * @param \Rinvex\Fort\Contracts\UserContract $user
      *
      * @return bool
@@ -27,7 +27,7 @@ class UserPolicy
     /**
      * Determine whether the user can create users.
      *
-     * @param string                   $ability
+     * @param string                              $ability
      * @param \Rinvex\Fort\Contracts\UserContract $user
      *
      * @return bool
@@ -40,7 +40,7 @@ class UserPolicy
     /**
      * Determine whether the user can update the user.
      *
-     * @param string                   $ability
+     * @param string                              $ability
      * @param \Rinvex\Fort\Contracts\UserContract $user
      * @param \Rinvex\Fort\Contracts\UserContract $resource
      *
@@ -56,7 +56,7 @@ class UserPolicy
     /**
      * Determine whether the user can delete the user.
      *
-     * @param string                   $ability
+     * @param string                              $ability
      * @param \Rinvex\Fort\Contracts\UserContract $user
      * @param \Rinvex\Fort\Contracts\UserContract $resource
      *

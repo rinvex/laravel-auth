@@ -14,7 +14,7 @@ class DashboardPolicy
     /**
      * Determine whether the user can access the dashboard.
      *
-     * @param string                   $ability
+     * @param string                              $ability
      * @param \Rinvex\Fort\Contracts\UserContract $user
      *
      * @return bool
