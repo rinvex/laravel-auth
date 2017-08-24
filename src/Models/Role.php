@@ -158,13 +158,11 @@ class Role extends Model implements RoleContract
         });
 
         // Auto generate slugs early before validation
-        static::registerModelEvent('validating', function (self $role) {
-            if (! $role->slug) {
-                if ($role->exists && $role->getSlugOptions()->generateSlugsOnUpdate) {
-                    $role->generateSlugOnUpdate();
-                } elseif (! $role->exists && $role->getSlugOptions()->generateSlugsOnCreate) {
-                    $role->generateSlugOnCreate();
-                }
+        static::validating(function (self $role) {
+            if ($role->exists && $role->getSlugOptions()->generateSlugsOnUpdate) {
+                $role->generateSlugOnUpdate();
+            } elseif (! $role->exists && $role->getSlugOptions()->generateSlugsOnCreate) {
+                $role->generateSlugOnCreate();
             }
         });
     }
