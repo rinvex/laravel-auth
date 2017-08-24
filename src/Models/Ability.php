@@ -6,9 +6,9 @@ namespace Rinvex\Fort\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Rinvex\Cacheable\CacheableEloquent;
+use Rinvex\Fort\Contracts\AbilityContract;
 use Rinvex\Support\Traits\HasTranslations;
 use Rinvex\Support\Traits\ValidatingTrait;
-use Rinvex\Fort\Contracts\AbilityContract;
 
 /**
  * Rinvex\Fort\Models\Ability.
