@@ -9,7 +9,6 @@ use Illuminate\Auth\Authenticatable;
 use Illuminate\Support\Facades\Hash;
 use Rinvex\Fort\Traits\CanVerifyEmail;
 use Rinvex\Fort\Traits\CanVerifyPhone;
-use Watson\Validating\ValidatingTrait;
 use Illuminate\Database\Eloquent\Model;
 use Rinvex\Cacheable\CacheableEloquent;
 use Rinvex\Fort\Contracts\UserContract;
@@ -17,6 +16,7 @@ use Rinvex\Support\Traits\HasHashables;
 use Illuminate\Notifications\Notifiable;
 use Rinvex\Fort\Traits\CanResetPassword;
 use Illuminate\Database\Eloquent\Builder;
+use Rinvex\Support\Traits\ValidatingTrait;
 use Rinvex\Fort\Traits\AuthenticatableTwoFactor;
 use Rinvex\Fort\Contracts\CanVerifyEmailContract;
 use Rinvex\Fort\Contracts\CanVerifyPhoneContract;
@@ -266,30 +266,6 @@ class User extends Model implements UserContract, AuthenticatableContract, Authe
                 }
             }
         });
-    }
-
-    /**
-     * Register a validating user event with the dispatcher.
-     *
-     * @param \Closure|string $callback
-     *
-     * @return void
-     */
-    public static function validating($callback)
-    {
-        static::registerModelEvent('validating', $callback);
-    }
-
-    /**
-     * Register a validated user event with the dispatcher.
-     *
-     * @param \Closure|string $callback
-     *
-     * @return void
-     */
-    public static function validated($callback)
-    {
-        static::registerModelEvent('validated', $callback);
     }
 
     /**

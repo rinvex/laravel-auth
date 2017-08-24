@@ -7,11 +7,11 @@ namespace Rinvex\Fort\Models;
 use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
 use Rinvex\Fort\Traits\HasAbilities;
-use Watson\Validating\ValidatingTrait;
 use Illuminate\Database\Eloquent\Model;
 use Rinvex\Cacheable\CacheableEloquent;
 use Rinvex\Fort\Contracts\RoleContract;
-use Spatie\Translatable\HasTranslations;
+use Rinvex\Support\Traits\HasTranslations;
+use Rinvex\Support\Traits\ValidatingTrait;
 
 /**
  * Rinvex\Fort\Models\Role.
@@ -239,30 +239,6 @@ class Role extends Model implements RoleContract
     public static function detached($callback)
     {
         static::registerModelEvent('detached', $callback);
-    }
-
-    /**
-     * Register a validating role event with the dispatcher.
-     *
-     * @param \Closure|string $callback
-     *
-     * @return void
-     */
-    public static function validating($callback)
-    {
-        static::registerModelEvent('validating', $callback);
-    }
-
-    /**
-     * Register a validated role event with the dispatcher.
-     *
-     * @param \Closure|string $callback
-     *
-     * @return void
-     */
-    public static function validated($callback)
-    {
-        static::registerModelEvent('validated', $callback);
     }
 
     /**

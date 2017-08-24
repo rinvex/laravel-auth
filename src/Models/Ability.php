@@ -4,11 +4,10 @@ declare(strict_types=1);
 
 namespace Rinvex\Fort\Models;
 
-use Watson\Validating\ValidatingTrait;
 use Illuminate\Database\Eloquent\Model;
 use Rinvex\Cacheable\CacheableEloquent;
-use Spatie\Translatable\HasTranslations;
-use Rinvex\Support\Traits\UniqueInjector;
+use Rinvex\Support\Traits\HasTranslations;
+use Rinvex\Support\Traits\ValidatingTrait;
 use Rinvex\Fort\Contracts\AbilityContract;
 
 /**
@@ -41,10 +40,8 @@ use Rinvex\Fort\Contracts\AbilityContract;
 class Ability extends Model implements AbilityContract
 {
     use HasTranslations;
+    use ValidatingTrait;
     use CacheableEloquent;
-    use ValidatingTrait, UniqueInjector {
-        UniqueInjector::prepareUniqueRule insteadof ValidatingTrait;
-    }
 
     /**
      * {@inheritdoc}
@@ -206,30 +203,6 @@ class Ability extends Model implements AbilityContract
     public static function detached($callback)
     {
         static::registerModelEvent('detached', $callback);
-    }
-
-    /**
-     * Register a validating ability event with the dispatcher.
-     *
-     * @param \Closure|string $callback
-     *
-     * @return void
-     */
-    public static function validating($callback)
-    {
-        static::registerModelEvent('validating', $callback);
-    }
-
-    /**
-     * Register a validated ability event with the dispatcher.
-     *
-     * @param \Closure|string $callback
-     *
-     * @return void
-     */
-    public static function validated($callback)
-    {
-        static::registerModelEvent('validated', $callback);
     }
 
     /**
