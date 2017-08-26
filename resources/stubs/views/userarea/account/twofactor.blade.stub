@@ -151,7 +151,6 @@
 
                             <div class="row">
                                 <div class="col-md-12 col-sm-12 col-xs-12 text-center">
-                                    {{ Form::button(trans('common.reset'), ['class' => 'btn btn-default', 'type' => 'reset']) }}
                                     {{ Form::button('<i class="fa fa-cog"></i> '.trans('twofactor.configure'), ['class' => 'btn btn-primary', 'type' => 'submit']) }}
                                 </div>
                             </div>

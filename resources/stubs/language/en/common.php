@@ -11,7 +11,6 @@ return [
     'update' => 'Update',
     'create' => 'Create',
     'delete' => 'Delete',
-    'reset' => 'Reset',
     'submit' => 'Submit',
     'cancel' => 'Cancel',
     'select' => 'Select',

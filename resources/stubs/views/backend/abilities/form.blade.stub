@@ -165,7 +165,6 @@
                             @endif
 
                             <div class="pull-right">
-                                {{ Form::button(trans('common.reset'), ['class' => 'btn btn-default', 'type' => 'reset']) }}
                                 {{ Form::button(trans('common.submit'), ['class' => 'btn btn-primary', 'type' => 'submit']) }}
                             </div>
 
