@@ -24,8 +24,9 @@ class ExceptionHandler extends Handler
     public function render($request, Exception $exception)
     {
         if ($exception instanceof ModelNotFoundException) {
+            $model = str_replace('Contract', '', $exception->getModel());
             $isBackend = mb_strpos($request->route()->getName(), 'backend') !== false;
-            $single = mb_strtolower(mb_substr($exception->getModel(), mb_strrpos($exception->getModel(), '\\') + 1));
+            $single = mb_strtolower(mb_substr($model, mb_strrpos($model, '\\') + 1));
             $plural = str_plural($single);
 
             return intend([
