@@ -295,7 +295,6 @@ class Role extends Model implements RoleContract
     public function getSlugOptions(): SlugOptions
     {
         return SlugOptions::create()
-                          ->usingSeparator('_')
                           ->doNotGenerateSlugsOnUpdate()
                           ->generateSlugsFrom('name')
                           ->saveSlugsTo('slug');
