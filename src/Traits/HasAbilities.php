@@ -12,7 +12,7 @@ trait HasAbilities
      * @param string|array $action
      * @param string|array $resource
      *
-     * @return $this
+     * @return static
      */
     public function grantAbilities($action, $resource)
     {
@@ -27,7 +27,7 @@ trait HasAbilities
      * @param string|array $action
      * @param string|array $resource
      *
-     * @return $this
+     * @return static
      */
     public function syncAbilities($action, $resource)
     {
@@ -42,7 +42,7 @@ trait HasAbilities
      * @param string|array $action
      * @param string|array $resource
      *
-     * @return $this
+     * @return static
      */
     public function revokeAbilities($action, $resource)
     {
