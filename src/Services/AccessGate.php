@@ -49,7 +49,7 @@ class AccessGate extends Gate
      *
      * @throws \InvalidArgumentException
      *
-     * @return static
+     * @return $this
      */
     public function define($ability, $callback)
     {

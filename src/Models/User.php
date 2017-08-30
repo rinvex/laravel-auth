@@ -450,7 +450,7 @@ class User extends Model implements UserContract, AuthenticatableContract, Authe
     /**
      * Active the user.
      *
-     * @return static
+     * @return $this
      */
     public function activate()
     {
@@ -462,7 +462,7 @@ class User extends Model implements UserContract, AuthenticatableContract, Authe
     /**
      * Deactivate the user.
      *
-     * @return static
+     * @return $this
      */
     public function deactivate()
     {

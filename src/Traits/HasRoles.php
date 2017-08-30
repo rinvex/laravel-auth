@@ -17,7 +17,7 @@ trait HasRoles
      *
      * @param int|string|array|\ArrayAccess|\Rinvex\Fort\Models\Role $roles
      *
-     * @return static
+     * @return $this
      */
     public function assignRoles($roles)
     {
@@ -31,7 +31,7 @@ trait HasRoles
      *
      * @param int|string|array|\ArrayAccess|\Rinvex\Fort\Models\Role $roles
      *
-     * @return static
+     * @return $this
      */
     public function syncRoles($roles)
     {
@@ -45,7 +45,7 @@ trait HasRoles
      *
      * @param int|string|array|\ArrayAccess|\Rinvex\Fort\Models\Role $roles
      *
-     * @return static
+     * @return $this
      */
     public function removeRoles($roles)
     {
