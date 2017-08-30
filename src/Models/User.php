@@ -452,7 +452,7 @@ class User extends Model implements UserContract, AuthenticatableContract, Authe
      *
      * @return static
      */
-    public function activate(): self
+    public function activate()
     {
         $this->update(['is_active' => true]);
 
@@ -464,7 +464,7 @@ class User extends Model implements UserContract, AuthenticatableContract, Authe
      *
      * @return static
      */
-    public function deactivate(): self
+    public function deactivate()
     {
         $this->update(['is_active' => false]);
 
