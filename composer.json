@@ -57,7 +57,7 @@
         "rinvex/country": "dev-develop",
         "rinvex/language": "dev-develop",
         "rinvex/cacheable": "dev-develop",
-        "spatie/laravel-sluggable": "^1.5.0",
+        "spatie/laravel-sluggable": "^2.0.0",
         "spatie/laravel-translatable": "^2.0.0",
         "laravel-notification-channels/authy": "dev-develop"
     },
