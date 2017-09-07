@@ -5,8 +5,8 @@
         "description": "Fully privileged administrative role."
     },
     {
-        "slug": "registered",
-        "name": "Registered",
+        "slug": "member",
+        "name": "Member",
         "description": "Default role for registered users."
     }
 ]

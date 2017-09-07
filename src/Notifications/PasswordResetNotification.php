@@ -62,7 +62,7 @@ class PasswordResetNotification extends Notification implements ShouldQueue
     public function toMail($notifiable)
     {
         $email = $notifiable->getEmailForPasswordReset();
-        $link = route('frontend.passwordreset.reset')."?email={$email}&expiration={$this->expiration}&token={$this->token}";
+        $link = route('guestarea.passwordreset.reset')."?email={$email}&expiration={$this->expiration}&token={$this->token}";
 
         return (new MailMessage())
             ->subject(trans('emails.passwordreset.request.subject'))

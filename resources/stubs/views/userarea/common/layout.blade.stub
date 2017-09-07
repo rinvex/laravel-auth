@@ -1,5 +1,0 @@
-@extends('userarea.common.layout-example')
-
-@section('content')
-    @yield('content')
-@endsection

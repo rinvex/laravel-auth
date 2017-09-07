@@ -10,7 +10,7 @@
 |
 */
 
-Route::namespace('Frontend')->name('frontend.')->middleware(['web', 'nohttpcache'])->group(function () {
+Route::namespace('Guestarea')->name('guestarea.')->middleware(['web', 'nohttpcache'])->group(function () {
 
     // Homepage Routes
     Route::get('/')->name('home')->uses('HomeController@index');
@@ -61,7 +61,7 @@ Route::namespace('Frontend')->name('frontend.')->middleware(['web', 'nohttpcache
 });
 
 
-Route::namespace('Userarea')->name('userarea.')->middleware(['web', 'nohttpcache'])->group(function () {
+Route::namespace('Memberarea')->name('memberarea.')->middleware(['web', 'nohttpcache'])->group(function () {
     // User Account Routes
     Route::name('account.')->prefix('account')->group(function () {
         // Homepage Routes
@@ -95,7 +95,7 @@ Route::namespace('Userarea')->name('userarea.')->middleware(['web', 'nohttpcache
 });
 
 
-Route::namespace('Backend')->name('backend.')->prefix('backend')->middleware(['web', 'nohttpcache', 'can:access-dashboard'])->group(function () {
+Route::namespace('Adminarea')->name('adminarea.')->prefix('adminarea')->middleware(['web', 'nohttpcache', 'can:access-dashboard'])->group(function () {
     Route::get('/')->name('dashboard.home')->uses('DashboardController@home');
 
     // Abilities Routes

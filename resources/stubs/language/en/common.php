@@ -65,7 +65,7 @@ return [
     'verification_phone_request' => 'Request Phone Verification',
     'verify_phone' => 'Verify Phone',
     'dashboard' => 'Dashboard',
-    'backend' => 'Backend',
+    'adminarea' => 'Adminarea',
     'account' => 'Account',
     'settings' => 'Settings',
     'sessions' => 'Sessions',

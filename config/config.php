@@ -90,7 +90,7 @@ return [
         'moderated' => false,
 
         // Default Role For New User Registrations (slug)
-        'default_role' => 'registered',
+        'default_role' => 'member',
 
         // Send Welcome Email Upon Registration Success
         'welcome_email' => true,

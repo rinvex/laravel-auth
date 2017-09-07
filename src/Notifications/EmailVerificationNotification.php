@@ -62,7 +62,7 @@ class EmailVerificationNotification extends Notification implements ShouldQueue
     public function toMail($notifiable)
     {
         $email = $notifiable->getEmailForVerification();
-        $link = route('frontend.verification.email.verify')."?email={$email}&expiration={$this->expiration}&token={$this->token}";
+        $link = route('guestarea.verification.email.verify')."?email={$email}&expiration={$this->expiration}&token={$this->token}";
 
         return (new MailMessage())
             ->subject(trans('emails.verification.email.subject'))
