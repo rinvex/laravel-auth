@@ -21,16 +21,6 @@ class FortDeferredServiceProvider extends ServiceProvider
     protected $defer = true;
 
     /**
-     * The commands to be registered.
-     *
-     * @var array
-     */
-    protected $commands = [
-        MakeAuthCommand::class => 'command.auth.make',
-        MigrateCommand::class => 'command.rinvex.fort.migrate',
-    ];
-
-    /**
      * {@inheritdoc}
      */
     public function register()
@@ -140,13 +130,17 @@ class FortDeferredServiceProvider extends ServiceProvider
      */
     protected function registerCommands()
     {
-        // Register artisan commands
-        foreach ($this->commands as $key => $value) {
-            $this->app->singleton($value, function ($app) use ($key) {
-                return new $key();
+        if (config('rinvex.fort.boot.override_makeauth_command')) {
+            $this->app->singleton('command.auth.make', function ($app) {
+                return new MakeAuthCommand();
             });
+            $this->commands('command.auth.make');
         }
 
-        $this->commands(array_values($this->commands));
+        $this->app->singleton('command.rinvex.fort.migrate', function ($app) {
+            return new MigrateCommand();
+        });
+
+        $this->commands('command.rinvex.fort.migrate');
     }
 }

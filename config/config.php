@@ -230,6 +230,7 @@ return [
     'boot' => [
         'override_middleware' => true,
         'override_exceptionhandler' => true,
+        'override_makeauth_command' => true,
     ],
 
 ];
