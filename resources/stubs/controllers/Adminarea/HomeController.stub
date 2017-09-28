@@ -8,12 +8,12 @@ use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use {{namespace}}Http\Controllers\AuthorizedController;
 
-class DashboardController extends AuthorizedController
+class HomeController extends AuthorizedController
 {
     /**
      * {@inheritdoc}
      */
-    protected $resource = 'dashboard';
+    protected $resource = 'adminarea';
 
     /**
      * {@inheritdoc}
@@ -21,7 +21,7 @@ class DashboardController extends AuthorizedController
     protected $resourceAbilityMap = ['home' => 'access'];
 
     /**
-     * Show the dashboard home.
+     * Show the adminarea home.
      *
      * @return \Illuminate\Http\Response
      */
@@ -41,6 +41,6 @@ class DashboardController extends AuthorizedController
         // Get online users
         $sessions = app('rinvex.fort.session')->users(config('rinvex.fort.online_interval'))->groupBy(['user_id'])->with(['user'])->get(['user_id', DB::raw('MAX(last_activity) as last_activity')]);
 
-        return view('adminarea.dashboard.home', compact('users', 'sessions', 'stats'));
+        return view('adminarea.home', compact('users', 'sessions', 'stats'));
     }
 }

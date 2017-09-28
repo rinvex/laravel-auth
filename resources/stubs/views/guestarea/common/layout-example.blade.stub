@@ -73,11 +73,11 @@
                                     <li><a href="{{ route('memberarea.account.settings') }}"><i class="fa fa-user"></i> {{ trans('common.settings') }}</a></li>
                                     <li><a href="{{ route('memberarea.account.sessions') }}"><i class="fa fa-check-square-o"></i> {{ trans('common.sessions') }}</a></li>
                                     <li role="separator" class="divider"></li>
-                                    @can('access-dashboard') <li class="disabled"><a href="{{ route('adminarea.dashboard.home') }}"><i class="fa fa-dashboard"></i> {{ trans('common.dashboard') }}</a></li> @endcan
+                                    @can('access-adminarea') <li class="disabled"><a href="{{ route('adminarea.home') }}"><i class="fa fa-dashboard"></i> {{ trans('common.adminarea') }}</a></li> @endcan
                                     @can('list-abilities') <li><a href="{{ route('adminarea.abilities.index') }}"><i class="fa fa-arrow-right"></i> {{ trans('common.abilities') }}</a></li> @endcan
                                     @can('list-roles') <li><a href="{{ route('adminarea.roles.index') }}"><i class="fa fa-arrow-right"></i> {{ trans('common.roles') }}</a></li> @endcan
                                     @can('list-users') <li><a href="{{ route('adminarea.users.index') }}"><i class="fa fa-arrow-right"></i> {{ trans('common.users') }}</a></li> @endcan
-                                    @if(auth()->user()->can('access-dashboard') || auth()->user()->can('list-abilities') || auth()->user()->can('list-roles') || auth()->user()->can('list-users'))
+                                    @if(auth()->user()->can('access-adminarea') || auth()->user()->can('list-abilities') || auth()->user()->can('list-roles') || auth()->user()->can('list-users'))
                                         <li role="separator" class="divider"></li>
                                     @endif
                                     <li>

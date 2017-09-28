@@ -6,9 +6,9 @@
     },
     {
         "action": "access",
-        "resource": "dashboard",
-        "policy": "Rinvex\\Fort\\Policies\\DashboardPolicy@access",
-        "name": "Access Dashboard"
+        "resource": "adminarea",
+        "policy": "Rinvex\\Fort\\Policies\\AdminareaPolicy@access",
+        "name": "Access Adminarea"
     },
     {
         "action": "list",

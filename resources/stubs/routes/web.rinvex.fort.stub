@@ -95,8 +95,8 @@ Route::namespace('Memberarea')->name('memberarea.')->middleware(['web', 'nohttpc
 });
 
 
-Route::namespace('Adminarea')->name('adminarea.')->prefix('adminarea')->middleware(['web', 'nohttpcache', 'can:access-dashboard'])->group(function () {
-    Route::get('/')->name('dashboard.home')->uses('DashboardController@home');
+Route::namespace('Adminarea')->name('adminarea.')->prefix('adminarea')->middleware(['web', 'nohttpcache', 'can:access-adminarea'])->group(function () {
+    Route::get('/')->name('home')->uses('HomeController@home');
 
     // Abilities Routes
     Route::name('abilities.')->prefix('abilities')->group(function () {
