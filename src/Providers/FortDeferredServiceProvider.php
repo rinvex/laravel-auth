@@ -6,6 +6,7 @@ namespace Rinvex\Fort\Providers;
 
 use Illuminate\Support\ServiceProvider;
 use Illuminate\View\Compilers\BladeCompiler;
+use Rinvex\Fort\Console\Commands\SeedCommand;
 use Rinvex\Fort\Console\Commands\MigrateCommand;
 use Rinvex\Fort\Console\Commands\MakeAuthCommand;
 use Rinvex\Fort\Services\PasswordResetBrokerManager;
@@ -142,5 +143,11 @@ class FortDeferredServiceProvider extends ServiceProvider
         });
 
         $this->commands('command.rinvex.fort.migrate');
+
+        $this->app->singleton('command.rinvex.fort.seed', function ($app) {
+            return new SeedCommand();
+        });
+
+        $this->commands('command.rinvex.fort.seed');
     }
 }
