@@ -84,7 +84,9 @@ class RolesController extends AuthorizedController
      */
     public function form(Role $role)
     {
-        $abilities = app('rinvex.fort.ability')->all()->groupBy('resource')->map->pluck('name', 'id')->toArray();
+        $abilities = $request->user($this->getGuard())->isSuperadmin()
+            ? app('rinvex.fort.ability')->all()->groupBy('resource')->map->pluck('name', 'id')->toArray()
+            : $request->user()->allAbilities->groupBy('resource')->map->pluck('name', 'id')->toArray();
 
         return view('adminarea.roles.form', compact('role', 'abilities'));
     }

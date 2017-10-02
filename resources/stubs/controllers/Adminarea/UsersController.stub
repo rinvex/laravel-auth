@@ -73,11 +73,12 @@ class UsersController extends AuthorizedController
     /**
      * Show the form for create/update of the given resource.
      *
+     * @param \Illuminate\Http\Request $request
      * @param \Rinvex\Fort\Models\User $user
      *
      * @return \Illuminate\Http\Response
      */
-    public function form(User $user)
+    public function form(Request $request, User $user)
     {
         $countries = array_map(function ($country) {
             return $country['name'];
@@ -87,9 +88,14 @@ class UsersController extends AuthorizedController
             return $language['name'];
         }, languages());
 
-        $abilities = app('rinvex.fort.ability')->all()->groupBy('resource')->map->pluck('name', 'id')->toArray();
+        $roles = $request->user()->isSuperadmin()
+            ? app('rinvex.fort.role')->all()->pluck('name', 'id')->toArray()
+            : $request->user()->roles->pluck('name', 'id')->toArray();
 
-        $roles = app('rinvex.fort.role')->all()->pluck('name', 'id')->toArray();
+        $abilities = $request->user($this->getGuard())->isSuperadmin()
+            ? app('rinvex.fort.ability')->all()->groupBy('resource')->map->pluck('name', 'id')->toArray()
+            : $request->user()->allAbilities->groupBy('resource')->map->pluck('name', 'id')->toArray();
+
         $genders = ['m' => trans('common.male'), 'f' => trans('common.female')];
 
         return view('adminarea.users.form', compact('user', 'abilities', 'roles', 'countries', 'languages', 'genders'));

@@ -78,13 +78,16 @@ class AbilitiesController extends AuthorizedController
     /**
      * Show the form for create/update of the given resource.
      *
+     * @param \Illuminate\Http\Request    $request
      * @param \Rinvex\Fort\Models\Ability $ability
      *
      * @return \Illuminate\Http\Response
      */
-    public function form(Ability $ability)
+    public function form(Request $request, Ability $ability)
     {
-        $roles = app('rinvex.fort.role')->all()->pluck('name', 'id');
+        $roles = $request->user()->isSuperadmin()
+            ? app('rinvex.fort.role')->all()->pluck('name', 'id')->toArray()
+            : $request->user()->roles->pluck('name', 'id')->toArray();
 
         return view('adminarea.abilities.form', compact('ability', 'roles'));
     }

@@ -50,13 +50,19 @@ class UserFormRequest extends FormRequest
         }
 
         // Set abilities
-        if ($this->user()->can('grant-abilities')) {
-            $data['abilities'] = $data['abilities'] ?? null;
+        if ($this->user()->can('grant-abilities') && $data['abilities']) {
+            $data['abilities'] = $this->user()->isSuperadmin() ? $data['abilities']
+                : array_intersect($this->user()->allAbilities->pluck('id')->toArray(), $data['abilities']);
+        } else {
+            unset($data['abilities']);
         }
 
         // Set roles
-        if ($this->user()->can('assign-roles')) {
-            $data['roles'] = $data['roles'] ?? null;
+        if ($this->user()->can('assign-roles') && $data['roles']) {
+            $data['roles'] = $this->user()->isSuperadmin() ? $data['roles']
+                : array_intersect($this->user()->roles->pluck('id')->toArray(), $data['roles']);
+        } else {
+            unset($data['roles']);
         }
 
         if ($twoFactor && (isset($data['phone_verified_at']) || $country !== $user->country_code)) {
