@@ -88,13 +88,13 @@ class UsersController extends AuthorizedController
             return $language['name'];
         }, languages());
 
-        $roles = $request->user()->isSuperadmin()
+        $roles = $request->user($this->getGuard())->isSuperadmin()
             ? app('rinvex.fort.role')->all()->pluck('name', 'id')->toArray()
-            : $request->user()->roles->pluck('name', 'id')->toArray();
+            : $request->user($this->getGuard())->roles->pluck('name', 'id')->toArray();
 
         $abilities = $request->user($this->getGuard())->isSuperadmin()
             ? app('rinvex.fort.ability')->all()->groupBy('resource')->map->pluck('name', 'id')->toArray()
-            : $request->user()->allAbilities->groupBy('resource')->map->pluck('name', 'id')->toArray();
+            : $request->user($this->getGuard())->allAbilities->groupBy('resource')->map->pluck('name', 'id')->toArray();
 
         $genders = ['m' => trans('common.male'), 'f' => trans('common.female')];
 
