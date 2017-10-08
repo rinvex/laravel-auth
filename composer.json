@@ -51,7 +51,7 @@
         "laravel/framework": "~5.5.0",
         "pragmarx/google2fa": "^2.0.0",
         "laravel/socialite": "^3.0.0",
-        "watson/validating": "^3.0.0",
+        "watson/validating": "3.0.*",
         "bacon/bacon-qr-code": "^1.0.0",
         "rinvex/support": "dev-develop",
         "rinvex/country": "dev-develop",
