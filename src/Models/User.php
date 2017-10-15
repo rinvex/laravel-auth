@@ -448,7 +448,7 @@ class User extends Model implements UserContract, AuthenticatableContract, Authe
     }
 
     /**
-     * Active the user.
+     * Activate the user.
      *
      * @return $this
      */
