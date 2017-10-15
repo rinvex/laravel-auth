@@ -129,7 +129,7 @@ class Session extends Model implements SessionContract
      */
     public function scopeOrderByUsers(Builder $builder, $column, $dir = 'ASC'): Builder
     {
-        return $builder->join(config('rinvex.fort.tables.users'), config('session.table').".user_id", '=', config('rinvex.fort.tables.users').'.id')->orderBy(config('rinvex.fort.tables.users').".{$column}", $dir);
+        return $builder->join(config('rinvex.fort.tables.users'), config('session.table').'.user_id', '=', config('rinvex.fort.tables.users').'.id')->orderBy(config('rinvex.fort.tables.users').".{$column}", $dir);
     }
 
     /**
