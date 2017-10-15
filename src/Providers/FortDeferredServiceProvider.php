@@ -8,12 +8,24 @@ use Illuminate\Support\ServiceProvider;
 use Illuminate\View\Compilers\BladeCompiler;
 use Rinvex\Fort\Console\Commands\SeedCommand;
 use Rinvex\Fort\Console\Commands\MigrateCommand;
+use Rinvex\Fort\Console\Commands\PublishCommand;
 use Rinvex\Fort\Console\Commands\MakeAuthCommand;
 use Rinvex\Fort\Services\PasswordResetBrokerManager;
 use Rinvex\Fort\Services\EmailVerificationBrokerManager;
 
 class FortDeferredServiceProvider extends ServiceProvider
 {
+    /**
+     * The commands to be registered.
+     *
+     * @var array
+     */
+    protected $commands = [
+        MigrateCommand::class => 'command.rinvex.fort.migrate',
+        PublishCommand::class => 'command.rinvex.fort.publish',
+        SeedCommand::class => 'command.rinvex.fort.seed',
+    ];
+
     /**
      * Indicates if loading of the provider is deferred.
      *
@@ -138,16 +150,13 @@ class FortDeferredServiceProvider extends ServiceProvider
             $this->commands('command.auth.make');
         }
 
-        $this->app->singleton('command.rinvex.fort.migrate', function ($app) {
-            return new MigrateCommand();
-        });
+        // Register artisan commands
+        foreach ($this->commands as $key => $value) {
+            $this->app->singleton($value, function ($app) use ($key) {
+                return new $key();
+            });
+        }
 
-        $this->commands('command.rinvex.fort.migrate');
-
-        $this->app->singleton('command.rinvex.fort.seed', function ($app) {
-            return new SeedCommand();
-        });
-
-        $this->commands('command.rinvex.fort.seed');
+        $this->commands(array_values($this->commands));
     }
 }
