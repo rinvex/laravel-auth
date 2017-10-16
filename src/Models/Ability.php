@@ -19,9 +19,9 @@ use Rinvex\Support\Traits\ValidatingTrait;
  * @property string                                                                   $policy
  * @property array                                                                    $name
  * @property array                                                                    $description
- * @property \Carbon\Carbon                                                           $created_at
- * @property \Carbon\Carbon                                                           $updated_at
- * @property \Carbon\Carbon                                                           $deleted_at
+ * @property \Carbon\Carbon|null                                                      $created_at
+ * @property \Carbon\Carbon|null                                                      $updated_at
+ * @property \Carbon\Carbon|null                                                      $deleted_at
  * @property-read string                                                              $slug
  * @property \Illuminate\Database\Eloquent\Collection|\Rinvex\Fort\Models\Role[]      $roles
  * @property-read \Illuminate\Database\Eloquent\Collection|\Rinvex\Fort\Models\User[] $users

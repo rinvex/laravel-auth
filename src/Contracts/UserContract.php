@@ -30,9 +30,9 @@ namespace Rinvex\Fort\Contracts;
  * @property string                                                                                                         $gender
  * @property bool                                                                                                           $is_active
  * @property \Carbon\Carbon                                                                                                 $last_activity
- * @property \Carbon\Carbon                                                                                                 $created_at
- * @property \Carbon\Carbon                                                                                                 $updated_at
- * @property \Carbon\Carbon                                                                                                 $deleted_at
+ * @property \Carbon\Carbon|null                                                                                            $created_at
+ * @property \Carbon\Carbon|null                                                                                            $updated_at
+ * @property \Carbon\Carbon|null                                                                                            $deleted_at
  * @property \Illuminate\Database\Eloquent\Collection|\Rinvex\Fort\Models\Ability[]                                         $abilities
  * @property-read \Illuminate\Support\Collection                                                                            $all_abilities
  * @property-read \Rinvex\Country\Country                                                                                   $country

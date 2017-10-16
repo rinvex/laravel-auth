@@ -11,8 +11,8 @@ namespace Rinvex\Fort\Contracts;
  * @property int                           $user_id
  * @property string                        $provider
  * @property int                           $provider_uid
- * @property \Carbon\Carbon                $created_at
- * @property \Carbon\Carbon                $updated_at
+ * @property \Carbon\Carbon|null           $created_at
+ * @property \Carbon\Carbon|null           $updated_at
  * @property-read \Rinvex\Fort\Models\User $user
  *
  * @method static \Illuminate\Database\Eloquent\Builder|\Rinvex\Fort\Models\Socialite whereCreatedAt($value)
