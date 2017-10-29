@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Rinvex\Fort\Models;
 
-use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
+use Rinvex\Support\Traits\HasSlug;
 use Rinvex\Fort\Traits\HasAbilities;
 use Illuminate\Database\Eloquent\Model;
 use Rinvex\Cacheable\CacheableEloquent;
@@ -155,15 +155,6 @@ class Role extends Model implements RoleContract
         static::detached(function (self $role) {
             app('rinvex.fort.ability')->forgetCache();
             app('rinvex.fort.user')->forgetCache();
-        });
-
-        // Auto generate slugs early before validation
-        static::validating(function (self $role) {
-            if ($role->exists && $role->getSlugOptions()->generateSlugsOnUpdate) {
-                $role->generateSlugOnUpdate();
-            } elseif (! $role->exists && $role->getSlugOptions()->generateSlugsOnCreate) {
-                $role->generateSlugOnCreate();
-            }
         });
     }
 
