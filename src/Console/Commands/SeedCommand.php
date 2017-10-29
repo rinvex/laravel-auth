@@ -33,7 +33,7 @@ class SeedCommand extends Command
      */
     public function handle()
     {
-        $this->warn('Seed rinvex/fort:');
+        $this->warn($this->description);
 
         if ($this->ensureExistingDatabaseTables('rinvex/fort')) {
             $this->seedResources(app('rinvex.fort.ability'), realpath(__DIR__.'/../../../resources/data/abilities.json'), ['name', 'description', 'policy']);
