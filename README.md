@@ -3,7 +3,6 @@
 **Rinvex Fort** is a powerful authentication, authorization and verification package built on top of Laravel. It provides developers with Role Based Access Control, TwoFactor Authentication, Social Authentication, compatible with Laravel’s standard API and fully featured all-in-one solution out of the box.
 
 [![Packagist](https://img.shields.io/packagist/v/rinvex/fort.svg?label=Packagist&style=flat-square)](https://packagist.org/packages/rinvex/fort)
-[![VersionEye Dependencies](https://img.shields.io/versioneye/d/php/rinvex:fort.svg?label=Dependencies&style=flat-square)](https://www.versioneye.com/php/rinvex:fort/)
 [![Scrutinizer Code Quality](https://img.shields.io/scrutinizer/g/rinvex/fort.svg?label=Scrutinizer&style=flat-square)](https://scrutinizer-ci.com/g/rinvex/fort/)
 [![Code Climate](https://img.shields.io/codeclimate/github/rinvex/fort.svg?label=CodeClimate&style=flat-square)](https://codeclimate.com/github/rinvex/fort)
 [![Travis](https://img.shields.io/travis/rinvex/fort.svg?label=TravisCI&style=flat-square)](https://travis-ci.org/rinvex/fort)
