@@ -1,0 +1,63 @@
+<?php
+
+declare(strict_types=1);
+
+namespace {{namespace}}Http\Controllers\Frontarea;
+
+use Illuminate\Http\Request;
+use {{namespace}}Http\Controllers\AuthenticatedController;
+use {{namespace}}Http\Requests\Frontarea\AccountSettingsRequest;
+
+class AccountSettingsController extends AuthenticatedController
+{
+    /**
+     * Show the account update form.
+     *
+     * @param \Illuminate\Http\Request $request
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function edit(Request $request)
+    {
+        $countries = array_map(function ($country) {
+            return $country['name'];
+        }, countries());
+        $languages = array_map(function ($language) {
+            return $language['name'];
+        }, languages());
+        $twoFactor = $request->user($this->getGuard())->getTwoFactor();
+        $genders = ['m' => trans('common.male'), 'f' => trans('common.female')];
+
+        return view('frontarea.account.settings', compact('twoFactor', 'countries', 'languages', 'genders'));
+    }
+
+    /**
+     * Process the account update form.
+     *
+     * @param \{{namespace}}Http\Requests\Frontarea\AccountSettingsRequest $request
+     *
+     * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse
+     */
+    public function update(AccountSettingsRequest $request)
+    {
+        $data = $request->all();
+        $currentUser = $request->user($this->getGuard());
+
+        // Update profile
+        $currentUser->fill($data)->save();
+
+        if (config('rinvex.fort.emailverification.required')) {
+            return intend([
+                'url' => route('frontarea.verification.email.request'),
+                'with' => ['success' => trans('messages.account.reverify')]
+                          + (isset($data['two_factor']) ? ['warning' => trans('messages.verification.twofactor.phone.auto_disabled')] : []),
+            ]);
+        }
+
+        return intend([
+            'back' => true,
+            'with' => ['success' => trans('messages.account.updated')]
+                      + (isset($data['two_factor']) ? ['warning' => trans('messages.verification.twofactor.phone.auto_disabled')] : []),
+        ]);
+    }
+}

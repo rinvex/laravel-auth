@@ -106,15 +106,15 @@
                             <h3>This view is using an example blade layout view.</h3>
                             <div class="alert alert-warning">
                                 <strong>Rinvex Fort default layout view!</strong> This view:
-                                <code>adminarea.common.layout</code> is extending a default stub layout
-                                <code>adminarea.common.layout-example</code> which is a default layout to show
+                                <code>frontarea.common.layout</code> is extending a default stub layout
+                                <code>frontarea.common.layout-example</code> which is a default layout to show
                                 <highlight>Rinvex Fort</highlight> features, and that view needs overriding to your own custom layout.
                             </div>
 
                             <h4>Publish Resources</h4>
                             <p>
                                 To correctly display this view in your own blade layout, you need to open
-                                <code>"resources/views/adminarea/common/layout.blade.php"</code> and change the extended layout view to the layout view you are using in your app eg:
+                                <code>"resources/views/frontarea/common/layout.blade.php"</code> and change the extended layout view to the layout view you are using in your app eg:
                                 <code>"layouts.app"</code>. See
                                 <a href="https://laravel.com/docs/master/blade#extending-a-layout" target="_blank">Laravel Docs on Extending A Layout</a> for more info.
                             </p>

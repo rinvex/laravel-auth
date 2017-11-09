@@ -1,5 +1,0 @@
-@extends('guestarea.common.layout-example')
-
-@section('content')
-    @yield('content')
-@endsection

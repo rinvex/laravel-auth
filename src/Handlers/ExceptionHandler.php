@@ -30,7 +30,7 @@ class ExceptionHandler extends Handler
             $plural = str_plural($single);
 
             return intend([
-                'url' => $isAdminarea ? route("adminarea.{$plural}.index") : route('guestarea.home'),
+                'url' => $isAdminarea ? route("adminarea.{$plural}.index") : route('frontarea.home'),
                 'with' => ['warning' => trans('messages.resource_not_found', ['resource' => $single, 'id' => $request->route()->parameter($single)])],
             ], 404);
         } elseif ($exception instanceof AuthorizationException) {
@@ -40,7 +40,7 @@ class ExceptionHandler extends Handler
             ], 403);
         } elseif ($exception instanceof GenericException) {
             return intend([
-                'url' => $exception->getRedirection() ?? route('guestarea.home'),
+                'url' => $exception->getRedirection() ?? route('frontarea.home'),
                 'withInput' => $exception->getInputs() ?? $request->all(),
                 'with' => ['warning' => $exception->getMessage()],
             ], 422);
@@ -60,7 +60,7 @@ class ExceptionHandler extends Handler
     protected function unauthenticated($request, AuthenticationException $exception)
     {
         return intend([
-            'url' => route('guestarea.auth.login'),
+            'url' => route('frontarea.auth.login'),
             'withErrors' => ['rinvex.fort.session.required' => trans('messages.auth.session.required')],
         ], 401);
     }

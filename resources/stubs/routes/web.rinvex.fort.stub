@@ -10,7 +10,7 @@
 |
 */
 
-Route::namespace('Guestarea')->name('guestarea.')->middleware(['web', 'nohttpcache'])->group(function () {
+Route::namespace('Frontarea')->name('frontarea.')->middleware(['web', 'nohttpcache'])->group(function () {
 
     // Homepage Routes
     Route::get('/')->name('home')->uses('HomeController@index');
@@ -58,14 +58,8 @@ Route::namespace('Guestarea')->name('guestarea.')->middleware(['web', 'nohttpcac
             Route::get('verify')->name('verify')->uses('EmailVerificationController@verify');
         });
     });
-});
 
-
-Route::namespace('Memberarea')->name('memberarea.')->middleware(['web', 'nohttpcache'])->group(function () {
-    // User Account Routes
     Route::name('account.')->prefix('account')->group(function () {
-        // Homepage Routes
-        Route::get('/')->name('home')->uses('HomeController@index');
 
         // Account Page Routes
         Route::get('settings')->name('settings')->uses('AccountSettingsController@edit');

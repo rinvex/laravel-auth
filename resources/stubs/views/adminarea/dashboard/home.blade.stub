@@ -17,9 +17,9 @@
 
     <div class="container">
 
-        @include('guestarea.alerts.success')
-        @include('guestarea.alerts.warning')
-        @include('guestarea.alerts.error')
+        @include('frontarea.alerts.success')
+        @include('frontarea.alerts.warning')
+        @include('frontarea.alerts.error')
 
         <div class="row">
             <div class="col-md-12">
