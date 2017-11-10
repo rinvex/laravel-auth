@@ -44,6 +44,11 @@ class Session extends Model implements SessionContract
     /**
      * {@inheritdoc}
      */
+    public $incrementing = false;
+
+    /**
+     * {@inheritdoc}
+     */
     protected $fillable = [
         'id',
         'user_id',
