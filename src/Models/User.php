@@ -341,9 +341,9 @@ class User extends Model implements UserContract, AuthenticatableContract, Authe
      */
     public function getNameAttribute()
     {
-        $segments = [$this->name_prefix, $this->first_name, $this->middle_name, $this->last_name, $this->name_suffix];
+        $name = trim(implode(' ', [$this->name_prefix, $this->first_name, $this->middle_name, $this->last_name, $this->name_suffix]));
 
-        return trim(implode(' ', $segments));
+        return $name ?: $this->username;
     }
 
     /**
