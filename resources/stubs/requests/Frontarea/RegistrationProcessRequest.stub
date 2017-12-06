@@ -7,19 +7,19 @@ namespace {{namespace}}Http\Requests\Frontarea;
 class RegistrationProcessRequest extends RegistrationRequest
 {
     /**
-     * Process given request data before validation.
+     * Prepare the data for validation.
      *
-     * @param array $data
-     *
-     * @return array
+     * @return void
      */
-    public function process($data)
+    protected function prepareForValidation()
     {
+        $data = $this->all();
+
         $role = app('rinvex.fort.role')->where('slug', config('rinvex.fort.registration.default_role'))->first();
         $data['is_active'] = ! config('rinvex.fort.registration.moderated');
         ! $role || $data['roles'] = [$role->id];
 
-        return $data;
+        $this->replace($data);
     }
 
     /**

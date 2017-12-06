@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace {{namespace}}Http\Requests\Adminarea;
 
 use Carbon\Carbon;
-use Rinvex\Support\Http\Requests\FormRequest;
+use Illuminate\Foundation\Http\FormRequest;
 
 class UserFormRequest extends FormRequest
 {
@@ -20,14 +20,14 @@ class UserFormRequest extends FormRequest
     }
 
     /**
-     * Process given request data before validation.
+     * Prepare the data for validation.
      *
-     * @param array $data
-     *
-     * @return array
+     * @return void
      */
-    public function process($data)
+    protected function prepareForValidation()
     {
+        $data = $this->all();
+
         $user = $this->route('user') ?? app('rinvex.fort.user');
         $country = $data['country_code'] ?? null;
         $twoFactor = $user->getTwoFactor();
@@ -70,7 +70,7 @@ class UserFormRequest extends FormRequest
             $data['two_factor'] = $twoFactor;
         }
 
-        return $data;
+        $this->replace($data);
     }
 
     /**

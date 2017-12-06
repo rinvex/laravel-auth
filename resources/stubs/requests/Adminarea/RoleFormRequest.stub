@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace {{namespace}}Http\Requests\Adminarea;
 
-use Rinvex\Support\Http\Requests\FormRequest;
+use Illuminate\Foundation\Http\FormRequest;
 
 class RoleFormRequest extends FormRequest
 {
@@ -19,14 +19,14 @@ class RoleFormRequest extends FormRequest
     }
 
     /**
-     * Process given request data before validation.
+     * Prepare the data for validation.
      *
-     * @param array $data
-     *
-     * @return array
+     * @return void
      */
-    public function process($data)
+    protected function prepareForValidation()
     {
+        $data = $this->all();
+
         // Set abilities
         if ($this->user()->can('grant-abilities') && $data['abilities']) {
             $data['abilities'] = $this->user()->isSuperadmin() ? $data['abilities']
@@ -35,7 +35,7 @@ class RoleFormRequest extends FormRequest
             unset($data['abilities']);
         }
 
-        return $data;
+        $this->replace($data);
     }
 
     /**

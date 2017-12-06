@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace {{namespace}}Http\Requests\Frontarea;
 
-use Rinvex\Support\Http\Requests\FormRequest;
+use Illuminate\Foundation\Http\FormRequest;
 
 class AccountSettingsRequest extends FormRequest
 {
@@ -19,14 +19,14 @@ class AccountSettingsRequest extends FormRequest
     }
 
     /**
-     * Process given request data before validation.
+     * Prepare the data for validation.
      *
-     * @param array $data
-     *
-     * @return array
+     * @return void
      */
-    public function process($data)
+    protected function prepareForValidation()
     {
+        $data = $this->all();
+
         $country = $data['country_code'] ?? null;
         $email = $data['email'] ?? null;
         $phone = $data['phone'] ?? null;
@@ -52,7 +52,7 @@ class AccountSettingsRequest extends FormRequest
             $data['two_factor'] = $twoFactor;
         }
 
-        return $data;
+        $this->replace($data);
     }
 
     /**
