@@ -23,7 +23,7 @@ class EmailVerificationRequest extends FormRequest
 
         if ($userVerified || $guestVerified) {
             // Redirect users if their email already verified, no need to process their request
-            throw new GenericException(trans('messages.verification.email.already_verified'), $userVerified ? route('frontarea.account.settings') : route('frontarea.auth.login'));
+            throw new GenericException(trans('messages.verification.email.already_verified'), $userVerified ? route('frontarea.account.settings') : route('frontarea.login'));
         }
 
         return true;

@@ -65,7 +65,7 @@ class RegistrationController extends AbstractController
 
         // Registration completed successfully
         return intend([
-            'url' => route('frontarea.auth.login'),
+            'url' => route('frontarea.login'),
             'with' => ['success' => trans('messages.register.success')],
         ]);
     }

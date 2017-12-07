@@ -36,7 +36,7 @@ class SocialAuthenticationController extends AuthenticationController
             $githubUser = Socialite::driver('github')->user();
         } catch (Exception $e) {
             return intend([
-                'url' => route('frontarea.auth.social.github'),
+                'url' => route('frontarea.social.github'),
             ]);
         }
 

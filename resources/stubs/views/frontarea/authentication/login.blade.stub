@@ -24,7 +24,7 @@
                 <section class="panel panel-default">
                     <header class="panel-heading">{{ trans('common.login') }}</header>
                     <div class="panel-body">
-                        {{ Form::open(['url' => route('frontarea.auth.login.process'), 'class' => 'form-horizontal']) }}
+                        {{ Form::open(['url' => route('frontarea.login.process'), 'class' => 'form-horizontal']) }}
 
                             @include('frontarea.alerts.success')
                             @include('frontarea.alerts.warning')

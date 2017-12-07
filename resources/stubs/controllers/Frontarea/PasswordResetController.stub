@@ -91,7 +91,7 @@ class PasswordResetController extends AbstractController
         switch ($result) {
             case PasswordResetBrokerContract::PASSWORD_RESET:
                 return intend([
-                    'url' => route('frontarea.auth.login'),
+                    'url' => route('frontarea.login'),
                     'with' => ['success' => trans($result)],
                 ]);
 

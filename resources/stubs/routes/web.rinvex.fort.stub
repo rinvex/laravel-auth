@@ -15,22 +15,18 @@ Route::namespace('Frontarea')->name('frontarea.')->middleware(['web', 'nohttpcac
     // Homepage Routes
     Route::get('/')->name('home')->uses('HomeController@index');
 
-    // Authentication Routes
-    Route::name('auth.')->prefix('auth')->group(function () {
+    // Login Routes
+    Route::get('login')->name('login')->uses('AuthenticationController@form');
+    Route::post('login')->name('login.process')->uses('AuthenticationController@login');
+    Route::post('logout')->name('logout')->uses('AuthenticationController@logout');
 
-        // Login Routes
-        Route::get('login')->name('login')->uses('AuthenticationController@form');
-        Route::post('login')->name('login.process')->uses('AuthenticationController@login');
-        Route::post('logout')->name('logout')->uses('AuthenticationController@logout');
+    // Registration Routes
+    Route::get('register')->name('register')->uses('RegistrationController@form');
+    Route::post('register')->name('register.process')->uses('RegistrationController@register');
 
-        // Registration Routes
-        Route::get('register')->name('register')->uses('RegistrationController@form');
-        Route::post('register')->name('register.process')->uses('RegistrationController@register');
-
-        // Social Authentication Routes
-        Route::get('github')->name('social.github')->uses('SocialAuthenticationController@redirectToGithub');
-        Route::get('github/callback')->name('social.github.callback')->uses('SocialAuthenticationController@handleGithubCallback');
-    });
+    // Social Authentication Routes
+    Route::get('github')->name('social.github')->uses('SocialAuthenticationController@redirectToGithub');
+    Route::get('github/callback')->name('social.github.callback')->uses('SocialAuthenticationController@handleGithubCallback');
 
     // Password Reset Routes
     Route::name('passwordreset.')->prefix('passwordreset')->group(function () {

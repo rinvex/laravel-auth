@@ -15,7 +15,7 @@
                 <section class="panel panel-default">
                     <header class="panel-heading">{{ trans('common.register') }}</header>
                     <div class="panel-body">
-                        {{ Form::open(['url' => route('frontarea.auth.register.process'), 'class' => 'form-horizontal']) }}
+                        {{ Form::open(['url' => route('frontarea.register.process'), 'class' => 'form-horizontal']) }}
 
                             @include('frontarea.alerts.success')
                             @include('frontarea.alerts.warning')
