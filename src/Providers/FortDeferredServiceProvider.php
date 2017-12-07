@@ -9,6 +9,7 @@ use Illuminate\View\Compilers\BladeCompiler;
 use Rinvex\Fort\Console\Commands\SeedCommand;
 use Rinvex\Fort\Console\Commands\MigrateCommand;
 use Rinvex\Fort\Console\Commands\PublishCommand;
+use Rinvex\Fort\Console\Commands\RollbackCommand;
 use Rinvex\Fort\Console\Commands\MakeAuthCommand;
 use Rinvex\Fort\Services\PasswordResetBrokerManager;
 use Rinvex\Fort\Services\EmailVerificationBrokerManager;
@@ -21,9 +22,10 @@ class FortDeferredServiceProvider extends ServiceProvider
      * @var array
      */
     protected $commands = [
+        SeedCommand::class => 'command.rinvex.fort.seed',
         MigrateCommand::class => 'command.rinvex.fort.migrate',
         PublishCommand::class => 'command.rinvex.fort.publish',
-        SeedCommand::class => 'command.rinvex.fort.seed',
+        RollbackCommand::class => 'command.rinvex.fort.rollback',
     ];
 
     /**
