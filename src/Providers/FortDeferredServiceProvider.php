@@ -9,8 +9,8 @@ use Illuminate\View\Compilers\BladeCompiler;
 use Rinvex\Fort\Console\Commands\SeedCommand;
 use Rinvex\Fort\Console\Commands\MigrateCommand;
 use Rinvex\Fort\Console\Commands\PublishCommand;
-use Rinvex\Fort\Console\Commands\RollbackCommand;
 use Rinvex\Fort\Console\Commands\MakeAuthCommand;
+use Rinvex\Fort\Console\Commands\RollbackCommand;
 use Rinvex\Fort\Services\PasswordResetBrokerManager;
 use Rinvex\Fort\Services\EmailVerificationBrokerManager;
 
