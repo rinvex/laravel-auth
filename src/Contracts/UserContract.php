@@ -43,8 +43,6 @@ namespace Rinvex\Fort\Contracts;
  * @property-read \Illuminate\Database\Eloquent\Collection|\Rinvex\Fort\Models\Session[]                                    $sessions
  * @property-read \Illuminate\Database\Eloquent\Collection|\Rinvex\Fort\Models\Socialite[]                                  $socialites
  *
- * @method static \Illuminate\Database\Eloquent\Builder|\Rinvex\Fort\Models\User active()
- * @method static \Illuminate\Database\Eloquent\Builder|\Rinvex\Fort\Models\User inactive()
  * @method static \Illuminate\Database\Eloquent\Builder|\Rinvex\Fort\Models\User role($roles)
  * @method static \Illuminate\Database\Eloquent\Builder|\Rinvex\Fort\Models\User whereBirthday($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\Rinvex\Fort\Models\User whereCountryCode($value)

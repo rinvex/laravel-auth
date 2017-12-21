@@ -66,8 +66,6 @@ use Illuminate\Contracts\Auth\Access\Authorizable as AuthorizableContract;
  * @property-read \Illuminate\Database\Eloquent\Collection|\Rinvex\Fort\Models\Session[]                                    $sessions
  * @property-read \Illuminate\Database\Eloquent\Collection|\Rinvex\Fort\Models\Socialite[]                                  $socialites
  *
- * @method static \Illuminate\Database\Eloquent\Builder|\Rinvex\Fort\Models\User active()
- * @method static \Illuminate\Database\Eloquent\Builder|\Rinvex\Fort\Models\User inactive()
  * @method static \Illuminate\Database\Eloquent\Builder|\Rinvex\Fort\Models\User role($roles)
  * @method static \Illuminate\Database\Eloquent\Builder|\Rinvex\Fort\Models\User whereBirthday($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\Rinvex\Fort\Models\User whereCountryCode($value)
@@ -266,30 +264,6 @@ class User extends Model implements UserContract, AuthenticatableContract, Authe
                 }
             }
         });
-    }
-
-    /**
-     * Get the active users.
-     *
-     * @param \Illuminate\Database\Eloquent\Builder $builder
-     *
-     * @return \Illuminate\Database\Eloquent\Builder
-     */
-    public function scopeActive(Builder $builder): Builder
-    {
-        return $builder->where('is_active', true);
-    }
-
-    /**
-     * Get the inactive users.
-     *
-     * @param \Illuminate\Database\Eloquent\Builder $builder
-     *
-     * @return \Illuminate\Database\Eloquent\Builder
-     */
-    public function scopeInactive(Builder $builder): Builder
-    {
-        return $builder->where('is_active', false);
     }
 
     /**
