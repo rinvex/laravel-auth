@@ -16,20 +16,17 @@ return [
     ],
 
     'ability' => [
-        'not_found' => 'Sorry! Requested ability not found!',
         'saved' => 'Congrats! Ability [:abilityId] saved successfully!',
         'deleted' => 'Done! Ability [:abilityId] deleted successfully!',
         'invalid_policy' => 'The policy must be a valid class method.',
     ],
 
     'role' => [
-        'not_found' => 'Sorry! Requested role not found!',
         'saved' => 'Congrats! Role [:roleId] saved successfully!',
         'deleted' => 'Done! Role [:roleId] deleted successfully!',
     ],
 
     'user' => [
-        'not_found' => 'Sorry! Requested user not found!',
         'saved' => 'Congrats! User [:userId] saved successfully!',
         'deleted' => 'Done! User [:userId] deleted successfully!',
     ],
