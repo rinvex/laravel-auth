@@ -42,11 +42,21 @@ class FortDeferredServiceProvider extends ServiceProvider
     {
         // Register bindings
         $this->registerPasswordBroker();
-        $this->registerBladeExtensions();
         $this->registerVerificationBroker();
 
         // Register console commands
         ! $this->app->runningInConsole() || $this->registerCommands();
+    }
+
+    /**
+     * Bootstrap the application events.
+     *
+     * @return void
+     */
+    public function boot()
+    {
+        // Register blade extensions
+        $this->registerBladeExtensions();
     }
 
     /**
@@ -91,32 +101,32 @@ class FortDeferredServiceProvider extends ServiceProvider
         $this->app->afterResolving('blade.compiler', function (BladeCompiler $bladeCompiler) {
 
             // @role('writer') / @hasrole(['writer', 'editor'])
-            $bladeCompiler->directive('role', function ($roles) {
-                return "<?php if(auth()->user()->hasRole({$roles})): ?>";
+            $bladeCompiler->directive('role', function ($expression) {
+                return "<?php if(auth()->user()->hasRole({$expression})): ?>";
             });
             $bladeCompiler->directive('endrole', function () {
                 return '<?php endif; ?>';
             });
 
             // @hasrole('writer') / @hasrole(['writer', 'editor'])
-            $bladeCompiler->directive('hasrole', function ($roles) {
-                return "<?php if(auth()->user()->hasRole({$roles})): ?>";
+            $bladeCompiler->directive('hasrole', function ($expression) {
+                return "<?php if(auth()->user()->hasRole({$expression})): ?>";
             });
             $bladeCompiler->directive('endhasrole', function () {
                 return '<?php endif; ?>';
             });
 
             // @hasanyrole(['writer', 'editor'])
-            $bladeCompiler->directive('hasanyrole', function ($roles) {
-                return "<?php if(auth()->user()->hasAnyRole({$roles})): ?>";
+            $bladeCompiler->directive('hasanyrole', function ($expression) {
+                return "<?php if(auth()->user()->hasAnyRole({$expression})): ?>";
             });
             $bladeCompiler->directive('endhasanyrole', function () {
                 return '<?php endif; ?>';
             });
 
             // @hasallroles(['writer', 'editor'])
-            $bladeCompiler->directive('hasallroles', function ($roles) {
-                return "<?php if(auth()->user()->hasAllRoles({$roles})): ?>";
+            $bladeCompiler->directive('hasallroles', function ($expression) {
+                return "<?php if(auth()->user()->hasAllRoles({$expression})): ?>";
             });
             $bladeCompiler->directive('endhasallroles', function () {
                 return '<?php endif; ?>';
