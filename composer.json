@@ -62,7 +62,8 @@
         "laravel-notification-channels/authy": "dev-develop"
     },
     "require-dev": {
-        "phpunit/phpunit": "^6.0.0"
+        "phpunit/phpunit": "^6.0.0",
+        "codedungeon/phpunit-result-printer": "^0.4.0"
     },
     "autoload": {
         "classmap": [
