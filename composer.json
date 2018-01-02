@@ -47,24 +47,23 @@
     ],
     "require": {
         "php": "^7.1.0",
-        "laravelcollective/html": "~5.5.0",
-        "laravel/framework": "~5.5.0",
-        "pragmarx/google2fa": "^2.0.0",
-        "laravel/socialite": "^3.0.0",
-        "watson/validating": "^3.0.0",
         "bacon/bacon-qr-code": "^1.0.0",
-        "rinvex/support": "dev-develop",
+        "laravel-notification-channels/authy": "dev-develop",
+        "laravel/framework": "~5.5.0",
+        "laravel/socialite": "^3.0.0",
+        "laravelcollective/html": "~5.5.0",
+        "pragmarx/google2fa": "^2.0.0",
+        "rinvex/cacheable": "dev-develop",
         "rinvex/country": "dev-develop",
         "rinvex/language": "dev-develop",
-        "rinvex/cacheable": "dev-develop",
+        "rinvex/support": "dev-develop",
         "spatie/laravel-sluggable": "^2.0.0",
         "spatie/laravel-translatable": "^2.0.0",
-        "roave/security-advisories": "dev-master",
-        "laravel-notification-channels/authy": "dev-develop"
+        "watson/validating": "^3.0.0"
     },
     "require-dev": {
-        "phpunit/phpunit": "^6.0.0",
-        "codedungeon/phpunit-result-printer": "^0.4.0"
+        "codedungeon/phpunit-result-printer": "^0.4.0",
+        "phpunit/phpunit": "^6.0.0"
     },
     "autoload": {
         "classmap": [
@@ -78,8 +77,8 @@
         }
     },
     "config": {
-        "preferred-install": "dist",
         "sort-packages": true,
+        "preferred-install": "dist",
         "optimize-autoloader": true
     },
     "extra": {
