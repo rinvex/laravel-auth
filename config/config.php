@@ -27,10 +27,10 @@ return [
 
     'models' => [
 
-        'ability' => Rinvex\Fort\Models\Ability::class,
-        'role' => Rinvex\Fort\Models\Role::class,
-        'session' => Rinvex\Fort\Models\Session::class,
-        'socialite' => Rinvex\Fort\Models\Socialite::class,
+        'ability' => \Rinvex\Fort\Models\Ability::class,
+        'role' => \Rinvex\Fort\Models\Role::class,
+        'session' => \Rinvex\Fort\Models\Session::class,
+        'socialite' => \Rinvex\Fort\Models\Socialite::class,
 
     ],
 
@@ -90,7 +90,7 @@ return [
         'moderated' => false,
 
         // Default Role For New User Registrations (slug)
-        'default_role' => 'registered',
+        'default_role' => 'member',
 
         // Send Welcome Email Upon Registration Success
         'welcome_email' => true,
@@ -230,6 +230,7 @@ return [
     'boot' => [
         'override_middleware' => true,
         'override_exceptionhandler' => true,
+        'override_makeauth_command' => true,
     ],
 
 ];

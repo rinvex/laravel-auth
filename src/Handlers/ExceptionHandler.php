@@ -6,11 +6,12 @@ namespace Rinvex\Fort\Handlers;
 
 use Exception;
 use Illuminate\Auth\AuthenticationException;
+use Rinvex\Fort\Exceptions\GenericException;
+use Illuminate\Foundation\Exceptions\Handler;
 use Rinvex\Fort\Exceptions\AuthorizationException;
-use App\Exceptions\Handler as BaseExceptionHandler;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
-class ExceptionHandler extends BaseExceptionHandler
+class ExceptionHandler extends Handler
 {
     /**
      * Render an exception into an HTTP response.
@@ -18,23 +19,31 @@ class ExceptionHandler extends BaseExceptionHandler
      * @param \Illuminate\Http\Request $request
      * @param \Exception               $exception
      *
-     * @return \Illuminate\Http\Response
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     public function render($request, Exception $exception)
     {
         if ($exception instanceof ModelNotFoundException) {
-            $single = mb_strtolower(trim(mb_strrchr($exception->getModel(), '\\'), '\\'));
+            $model = str_replace('Contract', '', $exception->getModel());
+            $isAdminarea = mb_strpos($request->route()->getName(), 'adminarea') !== false;
+            $single = mb_strtolower(mb_substr($model, mb_strrpos($model, '\\') + 1));
             $plural = str_plural($single);
 
             return intend([
-                'url' => route('backend.'.$plural.'.index'),
-                'withErrors' => ['rinvex.fort.'.$single.'.not_found' => trans('messages.'.$single.'.not_found')],
-            ]);
+                'url' => $isAdminarea ? route("adminarea.{$plural}.index") : route('frontarea.home'),
+                'with' => ['warning' => trans('messages.resource_not_found', ['resource' => $single, 'id' => $request->route()->parameter($single)])],
+            ], 404);
         } elseif ($exception instanceof AuthorizationException) {
             return intend([
                 'url' => '/',
-                'withErrors' => ['rinvex.fort.unauthorized' => $exception->getMessage()],
+                'with' => ['warning' => $exception->getMessage()],
             ], 403);
+        } elseif ($exception instanceof GenericException) {
+            return intend([
+                'url' => $exception->getRedirection() ?? route('frontarea.home'),
+                'withInput' => $exception->getInputs() ?? $request->all(),
+                'with' => ['warning' => $exception->getMessage()],
+            ], 422);
         }
 
         return parent::render($request, $exception);
@@ -51,7 +60,7 @@ class ExceptionHandler extends BaseExceptionHandler
     protected function unauthenticated($request, AuthenticationException $exception)
     {
         return intend([
-            'url' => route('frontend.auth.login'),
+            'url' => route('frontarea.login'),
             'withErrors' => ['rinvex.fort.session.required' => trans('messages.auth.session.required')],
         ], 401);
     }

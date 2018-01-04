@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace Rinvex\Fort\Traits;
 
-use Rinvex\Fort\Models\Ability;
-
 trait HasAbilities
 {
     /**
@@ -75,7 +73,7 @@ trait HasAbilities
         }
 
         // Ability model
-        $model = Ability::query();
+        $model = app('rinvex.fort.ability')->query();
 
         if (is_string($action) && $action !== '*') {
             $model->where('action', $action);

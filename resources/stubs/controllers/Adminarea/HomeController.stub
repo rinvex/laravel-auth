@@ -1,0 +1,46 @@
+<?php
+
+declare(strict_types=1);
+
+namespace {{namespace}}Http\Controllers\Adminarea;
+
+use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
+use {{namespace}}Http\Controllers\AuthorizedController;
+
+class HomeController extends AuthorizedController
+{
+    /**
+     * {@inheritdoc}
+     */
+    protected $resource = 'adminarea';
+
+    /**
+     * {@inheritdoc}
+     */
+    protected $resourceAbilityMap = ['index' => 'access'];
+
+    /**
+     * Show the adminarea home.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function index()
+    {
+        // Get recent registered users
+        $limit = config('rinvex.fort.items_per_page');
+        $users = app('rinvex.fort.user')->orderBy('created_at', 'desc')->limit($limit)->get();
+
+        // Get statistics
+        $stats = [
+            'abilities' => app('rinvex.fort.ability')->count(),
+            'roles' => app('rinvex.fort.role')->count(),
+            'users' => app('rinvex.fort.user')->count(),
+        ];
+
+        // Get online users
+        $sessions = app('rinvex.fort.session')->users(config('rinvex.fort.online_interval'))->groupBy(['user_id'])->with(['user'])->get(['user_id', DB::raw('MAX(last_activity) as last_activity')]);
+
+        return view('adminarea.home', compact('users', 'sessions', 'stats'));
+    }
+}

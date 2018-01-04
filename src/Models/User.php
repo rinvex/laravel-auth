@@ -9,15 +9,17 @@ use Illuminate\Auth\Authenticatable;
 use Illuminate\Support\Facades\Hash;
 use Rinvex\Fort\Traits\CanVerifyEmail;
 use Rinvex\Fort\Traits\CanVerifyPhone;
-use Watson\Validating\ValidatingTrait;
 use Illuminate\Database\Eloquent\Model;
 use Rinvex\Cacheable\CacheableEloquent;
+use Rinvex\Fort\Contracts\UserContract;
 use Rinvex\Support\Traits\HasHashables;
 use Illuminate\Notifications\Notifiable;
 use Rinvex\Fort\Traits\CanResetPassword;
+use Rinvex\Support\Traits\ValidatingTrait;
 use Rinvex\Fort\Traits\AuthenticatableTwoFactor;
 use Rinvex\Fort\Contracts\CanVerifyEmailContract;
 use Rinvex\Fort\Contracts\CanVerifyPhoneContract;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\Access\Authorizable;
 use Rinvex\Fort\Contracts\CanResetPasswordContract;
 use Rinvex\Fort\Contracts\AuthenticatableTwoFactorContract;
@@ -29,27 +31,27 @@ use Illuminate\Contracts\Auth\Access\Authorizable as AuthorizableContract;
  *
  * @property int                                                                                                            $id
  * @property string                                                                                                         $username
- * @property array                                                                                                          $two_factor
  * @property string                                                                                                         $password
  * @property string|null                                                                                                    $remember_token
  * @property string                                                                                                         $email
- * @property int                                                                                                            $email_verified
- * @property \Carbon\Carbon|null                                                                                            $email_verified_at
- * @property string|null                                                                                                    $phone
- * @property int                                                                                                            $phone_verified
- * @property \Carbon\Carbon|null                                                                                            $phone_verified_at
- * @property string|null                                                                                                    $name_prefix
- * @property string|null                                                                                                    $first_name
- * @property string|null                                                                                                    $middle_name
- * @property string|null                                                                                                    $last_name
- * @property string|null                                                                                                    $name_suffix
- * @property string|null                                                                                                    $job_title
- * @property string|null                                                                                                    $country_code
- * @property string|null                                                                                                    $language_code
- * @property \Carbon\Carbon|null                                                                                            $birthday
- * @property string|null                                                                                                    $gender
- * @property int                                                                                                            $is_active
- * @property \Carbon\Carbon|null                                                                                            $last_activity
+ * @property bool                                                                                                           $email_verified
+ * @property \Carbon\Carbon                                                                                                 $email_verified_at
+ * @property string                                                                                                         $phone
+ * @property bool                                                                                                           $phone_verified
+ * @property \Carbon\Carbon                                                                                                 $phone_verified_at
+ * @property string                                                                                                         $name_prefix
+ * @property string                                                                                                         $first_name
+ * @property string                                                                                                         $middle_name
+ * @property string                                                                                                         $last_name
+ * @property string                                                                                                         $name_suffix
+ * @property string                                                                                                         $job_title
+ * @property string                                                                                                         $country_code
+ * @property string                                                                                                         $language_code
+ * @property array                                                                                                          $two_factor
+ * @property string                                                                                                         $birthday
+ * @property string                                                                                                         $gender
+ * @property bool                                                                                                           $is_active
+ * @property \Carbon\Carbon                                                                                                 $last_activity
  * @property \Carbon\Carbon|null                                                                                            $created_at
  * @property \Carbon\Carbon|null                                                                                            $updated_at
  * @property \Carbon\Carbon|null                                                                                            $deleted_at
@@ -92,7 +94,7 @@ use Illuminate\Contracts\Auth\Access\Authorizable as AuthorizableContract;
  * @method static \Illuminate\Database\Eloquent\Builder|\Rinvex\Fort\Models\User whereUsername($value)
  * @mixin \Eloquent
  */
-class User extends Model implements AuthenticatableContract, AuthenticatableTwoFactorContract, AuthorizableContract, CanResetPasswordContract, CanVerifyEmailContract, CanVerifyPhoneContract
+class User extends Model implements UserContract, AuthenticatableContract, AuthenticatableTwoFactorContract, AuthorizableContract, CanResetPasswordContract, CanVerifyEmailContract, CanVerifyPhoneContract
 {
     use HasRoles;
     use Notifiable;
@@ -105,17 +107,6 @@ class User extends Model implements AuthenticatableContract, AuthenticatableTwoF
     use CanResetPassword;
     use CacheableEloquent;
     use AuthenticatableTwoFactor;
-
-    /**
-     * {@inheritdoc}
-     */
-    protected $dates = [
-        'email_verified_at',
-        'phone_verified_at',
-        'birthday',
-        'last_activity',
-        'deleted_at',
-    ];
 
     /**
      * {@inheritdoc}
@@ -149,6 +140,34 @@ class User extends Model implements AuthenticatableContract, AuthenticatableTwoF
     /**
      * {@inheritdoc}
      */
+    protected $casts = [
+        'username' => 'string',
+        'password' => 'string',
+        'two_factor' => 'json',
+        'email' => 'string',
+        'email_verified' => 'boolean',
+        'email_verified_at' => 'datetime',
+        'phone' => 'string',
+        'phone_verified' => 'boolean',
+        'phone_verified_at' => 'datetime',
+        'name_prefix' => 'string',
+        'first_name' => 'string',
+        'middle_name' => 'string',
+        'last_name' => 'string',
+        'name_suffix' => 'string',
+        'job_title' => 'string',
+        'country_code' => 'string',
+        'language_code' => 'string',
+        'birthday' => 'string',
+        'gender' => 'string',
+        'is_active' => 'boolean',
+        'last_activity' => 'datetime',
+        'deleted_at' => 'datetime',
+    ];
+
+    /**
+     * {@inheritdoc}
+     */
     protected $hidden = [
         'password',
         'two_factor',
@@ -158,19 +177,27 @@ class User extends Model implements AuthenticatableContract, AuthenticatableTwoF
     /**
      * {@inheritdoc}
      */
-    protected $with = ['abilities', 'roles'];
+    protected $with = [
+        'abilities',
+        'roles',
+    ];
 
     /**
      * {@inheritdoc}
      */
-    protected $observables = ['validating', 'validated'];
+    protected $observables = [
+        'validating',
+        'validated',
+    ];
 
     /**
      * The attributes to be encrypted before saving.
      *
      * @var array
      */
-    protected $hashables = ['password'];
+    protected $hashables = [
+        'password',
+    ];
 
     /**
      * The default rules that the model will validate against.
@@ -198,11 +225,27 @@ class User extends Model implements AuthenticatableContract, AuthenticatableTwoF
 
         $this->setTable(config('rinvex.fort.tables.users'));
         $this->setRules([
-            'email' => 'required|email|min:3|max:150|unique:'.config('rinvex.fort.tables.users').',email',
             'username' => 'required|alpha_dash|min:3|max:150|unique:'.config('rinvex.fort.tables.users').',username',
             'password' => 'sometimes|required|min:'.config('rinvex.fort.password_min_chars'),
-            'gender' => 'nullable|string|in:male,female',
+            'two_factor' => 'nullable|array',
+            'email' => 'required|email|min:3|max:150|unique:'.config('rinvex.fort.tables.users').',email',
+            'email_verified' => 'sometimes|boolean',
+            'email_verified_at' => 'nullable|date',
             'phone' => 'nullable|numeric|min:4',
+            'phone_verified' => 'sometimes|boolean',
+            'phone_verified_at' => 'nullable|date',
+            'name_prefix' => 'nullable|string|max:150',
+            'first_name' => 'nullable|string|max:150',
+            'middle_name' => 'nullable|string|max:150',
+            'last_name' => 'nullable|string|max:150',
+            'name_suffix' => 'nullable|string|max:150',
+            'job_title' => 'nullable|string|max:150',
+            'country_code' => 'nullable|alpha|size:2|country',
+            'language_code' => 'nullable|alpha|size:2|language',
+            'birthday' => 'nullable|date_format:Y-m-d',
+            'gender' => 'nullable|string|in:m,f',
+            'is_active' => 'sometimes|boolean',
+            'last_activity' => 'nullable|date',
         ]);
     }
 
@@ -220,30 +263,6 @@ class User extends Model implements AuthenticatableContract, AuthenticatableTwoF
                 }
             }
         });
-    }
-
-    /**
-     * Register a validating user event with the dispatcher.
-     *
-     * @param \Closure|string $callback
-     *
-     * @return void
-     */
-    public static function validating($callback)
-    {
-        static::registerModelEvent('validating', $callback);
-    }
-
-    /**
-     * Register a validated user event with the dispatcher.
-     *
-     * @param \Closure|string $callback
-     *
-     * @return void
-     */
-    public static function validated($callback)
-    {
-        static::registerModelEvent('validated', $callback);
     }
 
     /**
@@ -269,11 +288,11 @@ class User extends Model implements AuthenticatableContract, AuthenticatableTwoF
     }
 
     /**
-     * A user may have multiple sessions.
+     * A user may have many sessions.
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function sessions()
+    public function sessions(): HasMany
     {
         return $this->hasMany(config('rinvex.fort.models.session'), 'user_id', 'id');
     }
@@ -283,7 +302,7 @@ class User extends Model implements AuthenticatableContract, AuthenticatableTwoF
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function socialites()
+    public function socialites(): HasMany
     {
         return $this->hasMany(config('rinvex.fort.models.socialite'), 'user_id', 'id');
     }
@@ -295,9 +314,9 @@ class User extends Model implements AuthenticatableContract, AuthenticatableTwoF
      */
     public function getNameAttribute()
     {
-        $segments = [$this->name_prefix, $this->first_name, $this->middle_name, $this->last_name, $this->name_suffix];
+        $name = trim(implode(' ', [$this->name_prefix, $this->first_name, $this->middle_name, $this->last_name, $this->name_suffix]));
 
-        return trim(implode(' ', $segments));
+        return $name ?: $this->username;
     }
 
     /**
@@ -399,5 +418,29 @@ class User extends Model implements AuthenticatableContract, AuthenticatableTwoF
         static::saved(function (self $model) use ($abilities) {
             $model->abilities()->sync($abilities);
         });
+    }
+
+    /**
+     * Activate the user.
+     *
+     * @return $this
+     */
+    public function activate()
+    {
+        $this->update(['is_active' => true]);
+
+        return $this;
+    }
+
+    /**
+     * Deactivate the user.
+     *
+     * @return $this
+     */
+    public function deactivate()
+    {
+        $this->update(['is_active' => false]);
+
+        return $this;
     }
 }

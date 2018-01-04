@@ -8,8 +8,14 @@ use Illuminate\Routing\Router;
 use Rinvex\Fort\Guards\SessionGuard;
 use Rinvex\Fort\Services\AccessGate;
 use Illuminate\Support\ServiceProvider;
+use Rinvex\Fort\Contracts\RoleContract;
+use Rinvex\Fort\Contracts\UserContract;
 use Rinvex\Fort\Handlers\GenericHandler;
+use Illuminate\Support\Facades\Validator;
+use Rinvex\Fort\Contracts\AbilityContract;
+use Rinvex\Fort\Contracts\SessionContract;
 use Rinvex\Fort\Http\Middleware\Abilities;
+use Rinvex\Fort\Contracts\SocialiteContract;
 use Rinvex\Fort\Http\Middleware\NoHttpCache;
 use Rinvex\Fort\Http\Middleware\Authenticate;
 use Illuminate\Console\DetectsApplicationNamespace;
@@ -36,6 +42,32 @@ class FortServiceProvider extends ServiceProvider
 
         // Register Access Gate Binding
         $this->registerAccessGate();
+
+        // Bind eloquent models to IoC container
+        $this->app->singleton('rinvex.fort.role', function ($app) {
+            return new $app['config']['rinvex.fort.models.role']();
+        });
+        $this->app->alias('rinvex.fort.role', RoleContract::class);
+
+        $this->app->singleton('rinvex.fort.ability', function ($app) {
+            return new $app['config']['rinvex.fort.models.ability']();
+        });
+        $this->app->alias('rinvex.fort.ability', AbilityContract::class);
+
+        $this->app->singleton('rinvex.fort.session', function ($app) {
+            return new $app['config']['rinvex.fort.models.session']();
+        });
+        $this->app->alias('rinvex.fort.session', SessionContract::class);
+
+        $this->app->singleton('rinvex.fort.socialite', function ($app) {
+            return new $app['config']['rinvex.fort.models.socialite']();
+        });
+        $this->app->alias('rinvex.fort.socialite', SocialiteContract::class);
+
+        $this->app->singleton('rinvex.fort.user', function ($app) {
+            return new $app['config']['auth.providers.'.$app['config']['auth.guards.'.$app['config']['auth.defaults.guard'].'.provider'].'.model']();
+        });
+        $this->app->alias('rinvex.fort.user', UserContract::class);
     }
 
     /**
@@ -57,21 +89,27 @@ class FortServiceProvider extends ServiceProvider
      */
     public function boot(Router $router)
     {
+        // Add country validation rule
+        Validator::extend('country', function ($attribute, $value) {
+            return in_array($value, array_keys(countries()));
+        }, 'Country MUST be valid!');
+
+        // Add langauge validation rule
+        Validator::extend('language', function ($attribute, $value) {
+            return in_array($value, array_keys(languages()));
+        }, 'Language MUST be valid!');
+
         if (config('rinvex.fort.boot.override_middleware')) {
             // Override middlware
             $this->overrideMiddleware($router);
         }
 
-        // Load routes
+        // Load resources
         $this->loadRoutes($router);
+        ! $this->app->runningInConsole() || $this->loadMigrationsFrom(__DIR__.'/../../database/migrations');
 
-        if ($this->app->runningInConsole()) {
-            // Load migrations
-            $this->loadMigrationsFrom(__DIR__.'/../../database/migrations');
-
-            // Publish Resources
-            $this->publishResources();
-        }
+        // Publish resources
+        ! $this->app->runningInConsole() || $this->publishResources();
 
         // Override session guard
         $this->overrideSessionGuard();
@@ -92,15 +130,8 @@ class FortServiceProvider extends ServiceProvider
      */
     protected function publishResources()
     {
-        // Publish config
-        $this->publishes([
-            realpath(__DIR__.'/../../config/config.php') => config_path('rinvex.fort.php'),
-        ], 'config');
-
-        // Publish migrations
-        $this->publishes([
-            realpath(__DIR__.'/../../database/migrations') => database_path('migrations'),
-        ], 'migrations');
+        $this->publishes([realpath(__DIR__.'/../../config/config.php') => config_path('rinvex.fort.php')], 'rinvex-fort-config');
+        $this->publishes([realpath(__DIR__.'/../../database/migrations') => database_path('migrations')], 'rinvex-fort-migrations');
     }
 
     /**
@@ -110,7 +141,7 @@ class FortServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    public function loadRoutes(Router $router)
+    protected function loadRoutes(Router $router)
     {
         // Load routes
         if (! $this->app->routesAreCached() && file_exists(base_path('routes/web.rinvex.fort.php'))) {
@@ -120,6 +151,7 @@ class FortServiceProvider extends ServiceProvider
 
             $this->app->booted(function () use ($router) {
                 $router->getRoutes()->refreshNameLookups();
+                $router->getRoutes()->refreshActionLookups();
             });
         }
     }

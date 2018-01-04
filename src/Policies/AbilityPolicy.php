@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Rinvex\Fort\Policies;
 
-use Rinvex\Fort\Models\User;
-use Rinvex\Fort\Models\Ability;
+use Rinvex\Fort\Contracts\UserContract;
+use Rinvex\Fort\Contracts\AbilityContract;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
 class AbilityPolicy
@@ -15,12 +15,12 @@ class AbilityPolicy
     /**
      * Determine whether the user can list abilities.
      *
-     * @param string                   $ability
-     * @param \Rinvex\Fort\Models\User $user
+     * @param string                              $ability
+     * @param \Rinvex\Fort\Contracts\UserContract $user
      *
      * @return bool
      */
-    public function list($ability, User $user)
+    public function list($ability, UserContract $user)
     {
         return $user->allAbilities->pluck('slug')->contains($ability);
     }
@@ -28,12 +28,12 @@ class AbilityPolicy
     /**
      * Determine whether the user can create abilities.
      *
-     * @param string                   $ability
-     * @param \Rinvex\Fort\Models\User $user
+     * @param string                              $ability
+     * @param \Rinvex\Fort\Contracts\UserContract $user
      *
      * @return bool
      */
-    public function create($ability, User $user)
+    public function create($ability, UserContract $user)
     {
         return $user->allAbilities->pluck('slug')->contains($ability);
     }
@@ -41,13 +41,13 @@ class AbilityPolicy
     /**
      * Determine whether the user can update the ability.
      *
-     * @param string                      $ability
-     * @param \Rinvex\Fort\Models\User    $user
-     * @param \Rinvex\Fort\Models\Ability $resource
+     * @param string                                 $ability
+     * @param \Rinvex\Fort\Contracts\UserContract    $user
+     * @param \Rinvex\Fort\Contracts\AbilityContract $resource
      *
      * @return bool
      */
-    public function update($ability, User $user, Ability $resource)
+    public function update($ability, UserContract $user, AbilityContract $resource)
     {
         return $user->allAbilities->pluck('slug')->contains($ability)           // User can update abilities
                && $user->allAbilities->pluck('slug')->contains($resource->slug) // User already have RESOURCE ability
@@ -58,13 +58,13 @@ class AbilityPolicy
     /**
      * Determine whether the user can delete the ability.
      *
-     * @param string                      $ability
-     * @param \Rinvex\Fort\Models\User    $user
-     * @param \Rinvex\Fort\Models\Ability $resource
+     * @param string                                 $ability
+     * @param \Rinvex\Fort\Contracts\UserContract    $user
+     * @param \Rinvex\Fort\Contracts\AbilityContract $resource
      *
      * @return bool
      */
-    public function delete($ability, User $user, Ability $resource)
+    public function delete($ability, UserContract $user, AbilityContract $resource)
     {
         return $resource->roles->isEmpty()                                      // RESOURCE ability has no roles attached
                && $resource->users->isEmpty()                                   // RESOURCE ability has no users attached
@@ -77,14 +77,14 @@ class AbilityPolicy
     /**
      * Determine whether the user can grant the given ability to the given user.
      *
-     * @param string                      $ability
-     * @param \Rinvex\Fort\Models\User    $user
-     * @param \Rinvex\Fort\Models\Ability $resource
-     * @param \Rinvex\Fort\Models\User    $resourced
+     * @param string                                 $ability
+     * @param \Rinvex\Fort\Contracts\UserContract    $user
+     * @param \Rinvex\Fort\Contracts\AbilityContract $resource
+     * @param \Rinvex\Fort\Contracts\UserContract    $resourced
      *
      * @return bool
      */
-    public function grant($ability, User $user, Ability $resource, User $resourced)
+    public function grant($ability, UserContract $user, AbilityContract $resource, UserContract $resourced)
     {
         return $user->allAbilities->pluck('slug')->contains($ability)           // User can grant abilities
                && $user->allAbilities->pluck('slug')->contains($resource->slug) // User already have RESOURCE ability

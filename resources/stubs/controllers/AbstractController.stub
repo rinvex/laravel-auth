@@ -7,18 +7,15 @@ namespace {{namespace}}Http\Controllers;
 use Illuminate\Routing\Controller;
 use Rinvex\Fort\Traits\GetsMiddleware;
 use Illuminate\Foundation\Bus\DispatchesJobs;
+use Illuminate\Foundation\Validation\ValidatesRequests;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 
 abstract class AbstractController extends Controller
 {
     use GetsMiddleware;
     use DispatchesJobs;
-
-    /**
-     * The browsing area.
-     *
-     * @var string
-     */
-    protected $browsingArea;
+    use ValidatesRequests;
+    use AuthorizesRequests;
 
     /**
      * Whitelisted methods.
@@ -34,14 +31,6 @@ abstract class AbstractController extends Controller
      * @var string
      */
     protected $broker;
-
-    /**
-     * Create a new abstract controller instance.
-     */
-    public function __construct()
-    {
-        $this->browsingArea = request()->route() ? mb_strstr(request()->route()->getName(), '.', true) : 'frontend';
-    }
 
     /**
      * Get the broker to be used.

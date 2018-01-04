@@ -1,0 +1,5 @@
+@extends('frontarea.common.layout-example')
+
+@section('content')
+    @yield('content')
+@endsection

@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Rinvex\Fort\Policies;
 
-use Rinvex\Fort\Models\Role;
-use Rinvex\Fort\Models\User;
+use Rinvex\Fort\Contracts\RoleContract;
+use Rinvex\Fort\Contracts\UserContract;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
 class RolePolicy
@@ -15,12 +15,12 @@ class RolePolicy
     /**
      * Determine whether the user can list roles.
      *
-     * @param string                   $ability
-     * @param \Rinvex\Fort\Models\User $user
+     * @param string                              $ability
+     * @param \Rinvex\Fort\Contracts\UserContract $user
      *
      * @return bool
      */
-    public function list($ability, User $user)
+    public function list($ability, UserContract $user)
     {
         return $user->allAbilities->pluck('slug')->contains($ability);
     }
@@ -28,12 +28,12 @@ class RolePolicy
     /**
      * Determine whether the user can create roles.
      *
-     * @param string                   $ability
-     * @param \Rinvex\Fort\Models\User $user
+     * @param string                              $ability
+     * @param \Rinvex\Fort\Contracts\UserContract $user
      *
      * @return bool
      */
-    public function create($ability, User $user)
+    public function create($ability, UserContract $user)
     {
         return $user->allAbilities->pluck('slug')->contains($ability);
     }
@@ -41,13 +41,13 @@ class RolePolicy
     /**
      * Determine whether the user can update the role.
      *
-     * @param string                   $ability
-     * @param \Rinvex\Fort\Models\User $user
-     * @param \Rinvex\Fort\Models\Role $resource
+     * @param string                              $ability
+     * @param \Rinvex\Fort\Contracts\UserContract $user
+     * @param \Rinvex\Fort\Contracts\RoleContract $resource
      *
      * @return bool
      */
-    public function update($ability, User $user, Role $resource)
+    public function update($ability, UserContract $user, RoleContract $resource)
     {
         return $user->allAbilities->pluck('slug')->contains($ability)           // User can update roles
                && $user->hasRole($resource)                                     // User already have RESOURCE role
@@ -58,13 +58,13 @@ class RolePolicy
     /**
      * Determine whether the user can delete the role.
      *
-     * @param string                   $ability
-     * @param \Rinvex\Fort\Models\User $user
-     * @param \Rinvex\Fort\Models\Role $resource
+     * @param string                              $ability
+     * @param \Rinvex\Fort\Contracts\UserContract $user
+     * @param \Rinvex\Fort\Contracts\RoleContract $resource
      *
      * @return bool
      */
-    public function delete($ability, User $user, Role $resource)
+    public function delete($ability, UserContract $user, RoleContract $resource)
     {
         return $resource->abilities->isEmpty()                                  // RESOURCE role has no abilities attached
                && $resource->users->isEmpty()                                   // RESOURCE role has no users attached
@@ -77,14 +77,14 @@ class RolePolicy
     /**
      * Determine whether the user can assign the given role to the given user.
      *
-     * @param string                   $ability
-     * @param \Rinvex\Fort\Models\User $user
-     * @param \Rinvex\Fort\Models\Role $resource
-     * @param \Rinvex\Fort\Models\User $resourced
+     * @param string                              $ability
+     * @param \Rinvex\Fort\Contracts\UserContract $user
+     * @param \Rinvex\Fort\Contracts\RoleContract $resource
+     * @param \Rinvex\Fort\Contracts\UserContract $resourced
      *
      * @return bool
      */
-    public function assign($ability, User $user, Role $resource, User $resourced)
+    public function assign($ability, UserContract $user, RoleContract $resource, UserContract $resourced)
     {
         return $user->allAbilities->pluck('slug')->contains($ability)           // User can assign roles
                && $user->allAbilities->pluck('slug')->contains($resource->slug) // User already have RESOURCE role
