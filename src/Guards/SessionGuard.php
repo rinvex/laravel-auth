@@ -83,6 +83,8 @@ class SessionGuard extends BaseSessionGuard
     {
         // Fire the authentication attempt event
         $this->fireAttemptEvent($credentials, $remember);
+        $socialLogin = array_get($credentials, 'social');
+        $credentials = array_except($credentials, 'social');
 
         $this->lastAttempted = $user = $this->provider->retrieveByCredentials($credentials);
 
@@ -102,7 +104,7 @@ class SessionGuard extends BaseSessionGuard
         // If an implementation of UserInterface was returned, we'll ask the provider
         // to validate the user against the given credentials, and if they are in
         // fact valid we'll log the users into the application and return true.
-        if ($this->hasValidCredentials($user, $credentials)) {
+        if ($socialLogin || $this->hasValidCredentials($user, $credentials)) {
             // Check if unverified
             if (config('rinvex.fort.emailverification.required') && ! $user->isEmailVerified()) {
                 // Fire the authentication unverified event
