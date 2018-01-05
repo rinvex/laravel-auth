@@ -229,7 +229,6 @@ return [
 
     'boot' => [
         'override_middleware' => true,
-        'override_exceptionhandler' => true,
     ],
 
 ];
