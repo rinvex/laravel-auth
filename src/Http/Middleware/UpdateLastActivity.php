@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Rinvex\Fort\Http\Middleware;
 
 use Closure;
-use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class UpdateLastActivity
