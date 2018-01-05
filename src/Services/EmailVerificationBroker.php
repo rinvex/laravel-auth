@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Rinvex\Fort\Services;
 
 use Closure;
-use Carbon\Carbon;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
 use UnexpectedValueException;
@@ -62,7 +61,7 @@ class EmailVerificationBroker implements EmailVerificationBrokerContract
             return static::INVALID_USER;
         }
 
-        $expiration = Carbon::now()->addMinutes($this->expiration)->timestamp;
+        $expiration = now()->addMinutes($this->expiration)->timestamp;
 
         // Once we have the verification token, we are ready to send the message out to
         // this user with a link to verify their email. We will then redirect back to
@@ -159,7 +158,7 @@ class EmailVerificationBroker implements EmailVerificationBrokerContract
      */
     public function validateTimestamp($expiration)
     {
-        return Carbon::createFromTimestamp($expiration)->isFuture();
+        return now()->createFromTimestamp($expiration)->isFuture();
     }
 
     /**

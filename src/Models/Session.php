@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Rinvex\Fort\Models;
 
-use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
 use Rinvex\Fort\Contracts\SessionContract;
@@ -203,7 +202,7 @@ class Session extends Model implements SessionContract
      */
     public function scopeUsersBySeconds(Builder $builder, $seconds = 60): Builder
     {
-        return $builder->with(['user'])->where('last_activity', '>=', Carbon::now()->subSeconds($seconds))->whereNotNull('user_id');
+        return $builder->with(['user'])->where('last_activity', '>=', now()->subSeconds($seconds))->whereNotNull('user_id');
     }
 
     /**

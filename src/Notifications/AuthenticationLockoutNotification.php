@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Rinvex\Fort\Notifications;
 
-use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Notification;
@@ -56,7 +55,7 @@ class AuthenticationLockoutNotification extends Notification implements ShouldQu
         return (new MailMessage())
             ->subject(trans('emails.auth.lockout.subject'))
             ->line(trans('emails.auth.lockout.intro', [
-                'created_at' => new Carbon(),
+                'created_at' => now(),
                 'ip' => $this->request->ip(),
                 'agent' => $this->request->server('HTTP_USER_AGENT'),
             ]))

@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Rinvex\Fort\Services;
 
 use Closure;
-use Carbon\Carbon;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
 use UnexpectedValueException;
@@ -75,7 +74,7 @@ class PasswordResetBroker implements PasswordResetBrokerContract
             return static::INVALID_USER;
         }
 
-        $expiration = Carbon::now()->addMinutes($this->expiration)->timestamp;
+        $expiration = now()->addMinutes($this->expiration)->timestamp;
 
         // Once we have the reset token, we are ready to send the message out to this
         // user with a link to reset their password. We will then redirect back to
@@ -225,7 +224,7 @@ class PasswordResetBroker implements PasswordResetBrokerContract
      */
     public function validateTimestamp($expiration)
     {
-        return Carbon::createFromTimestamp($expiration)->isFuture();
+        return now()->createFromTimestamp($expiration)->isFuture();
     }
 
     /**

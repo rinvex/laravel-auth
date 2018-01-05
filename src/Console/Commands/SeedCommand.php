@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Rinvex\Fort\Console\Commands;
 
-use Carbon\Carbon;
 use Illuminate\Console\Command;
 use Rinvex\Support\Traits\SeederHelper;
 
@@ -62,7 +61,7 @@ class SeedCommand extends Command
         ];
 
         $user = tap(app('rinvex.fort.user')->firstOrNew($user)->fill([
-            'email_verified_at' => Carbon::now(),
+            'email_verified_at' => now(),
             'remember_token' => str_random(10),
             'password' => $password = str_random(),
         ]), function ($instance) {

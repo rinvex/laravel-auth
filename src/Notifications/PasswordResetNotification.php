@@ -66,7 +66,7 @@ class PasswordResetNotification extends Notification implements ShouldQueue
 
         return (new MailMessage())
             ->subject(trans('emails.passwordreset.request.subject'))
-            ->line(trans('emails.passwordreset.request.intro', ['expire' => Carbon::createFromTimestamp($this->expiration)->diffForHumans()]))
+            ->line(trans('emails.passwordreset.request.intro', ['expire' => now()->createFromTimestamp($this->expiration)->diffForHumans()]))
             ->action(trans('emails.passwordreset.request.action'), $link)
             ->line(trans('emails.passwordreset.request.outro'));
     }
