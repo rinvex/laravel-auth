@@ -20,7 +20,7 @@ class CreateSocialitesTable extends Migration
             $table->increments('id');
             $table->integer('user_id')->unsigned();
             $table->string('provider');
-            $table->integer('provider_uid')->unsigned();
+            $table->string('provider_uid');
             $table->timestamps();
 
             // Indexes

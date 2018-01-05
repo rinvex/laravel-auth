@@ -13,7 +13,7 @@ use Rinvex\Fort\Contracts\SocialiteContract;
  * @property int                           $id
  * @property int                           $user_id
  * @property string                        $provider
- * @property int                           $provider_uid
+ * @property string                        $provider_uid
  * @property \Carbon\Carbon|null           $created_at
  * @property \Carbon\Carbon|null           $updated_at
  * @property-read \Rinvex\Fort\Models\User $user
@@ -43,7 +43,7 @@ class Socialite extends Model implements SocialiteContract
     protected $casts = [
         'user_id' => 'integer',
         'provider' => 'string',
-        'provider_uid' => 'integer',
+        'provider_uid' => 'string',
     ];
 
     /**
