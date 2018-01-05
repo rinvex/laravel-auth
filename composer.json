@@ -87,7 +87,6 @@
         },
         "laravel": {
             "providers": [
-                "Rinvex\\Fort\\Providers\\FortDeferredServiceProvider",
                 "Rinvex\\Fort\\Providers\\FortServiceProvider"
             ]
         }

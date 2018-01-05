@@ -15,23 +15,44 @@ use Illuminate\Support\Facades\Validator;
 use Rinvex\Fort\Contracts\AbilityContract;
 use Rinvex\Fort\Contracts\SessionContract;
 use Rinvex\Fort\Http\Middleware\Abilities;
+use Illuminate\View\Compilers\BladeCompiler;
 use Rinvex\Fort\Contracts\SocialiteContract;
 use Rinvex\Fort\Http\Middleware\NoHttpCache;
 use Rinvex\Fort\Http\Middleware\Authenticate;
-use Illuminate\Console\DetectsApplicationNamespace;
+use Rinvex\Fort\Console\Commands\SeedCommand;
+use Rinvex\Fort\Console\Commands\MigrateCommand;
+use Rinvex\Fort\Console\Commands\PublishCommand;
+use Rinvex\Fort\Console\Commands\RollbackCommand;
 use Rinvex\Fort\Http\Middleware\UpdateLastActivity;
 use Rinvex\Fort\Http\Middleware\RedirectIfAuthenticated;
 use Illuminate\Contracts\Auth\Access\Gate as GateContract;
 
 class FortServiceProvider extends ServiceProvider
 {
-    use DetectsApplicationNamespace;
+    /**
+     * The commands to be registered.
+     *
+     * @var array
+     */
+    protected $commands = [
+        SeedCommand::class => 'command.rinvex.fort.seed',
+        MigrateCommand::class => 'command.rinvex.fort.migrate',
+        PublishCommand::class => 'command.rinvex.fort.publish',
+        RollbackCommand::class => 'command.rinvex.fort.rollback',
+    ];
 
     /**
      * {@inheritdoc}
      */
     public function register()
     {
+        // Register bindings
+        $this->registerPasswordBroker();
+        $this->registerVerificationBroker();
+
+        // Register console commands
+        ! $this->app->runningInConsole() || $this->registerCommands();
+
         // Merge config
         $this->mergeConfigFrom(realpath(__DIR__.'/../../config/config.php'), 'rinvex.fort');
 
@@ -104,10 +125,6 @@ class FortServiceProvider extends ServiceProvider
             $this->overrideMiddleware($router);
         }
 
-        // Load resources
-        $this->loadRoutes($router);
-        ! $this->app->runningInConsole() || $this->loadMigrationsFrom(__DIR__.'/../../database/migrations');
-
         // Publish resources
         ! $this->app->runningInConsole() || $this->publishResources();
 
@@ -121,6 +138,9 @@ class FortServiceProvider extends ServiceProvider
         $this->app['view']->composer('*', function ($view) {
             $view->with('currentUser', auth()->user());
         });
+
+        // Register blade extensions
+        $this->registerBladeExtensions();
     }
 
     /**
@@ -132,28 +152,6 @@ class FortServiceProvider extends ServiceProvider
     {
         $this->publishes([realpath(__DIR__.'/../../config/config.php') => config_path('rinvex.fort.php')], 'rinvex-fort-config');
         $this->publishes([realpath(__DIR__.'/../../database/migrations') => database_path('migrations')], 'rinvex-fort-migrations');
-    }
-
-    /**
-     * Load the routes.
-     *
-     * @param \Illuminate\Routing\Router $router
-     *
-     * @return void
-     */
-    protected function loadRoutes(Router $router)
-    {
-        // Load routes
-        if (! $this->app->routesAreCached() && file_exists(base_path('routes/web.rinvex.fort.php'))) {
-            $router->middleware('web')
-                 ->namespace($this->getAppNamespace().'Http\Controllers')
-                 ->group(base_path('routes/web.rinvex.fort.php'));
-
-            $this->app->booted(function () use ($router) {
-                $router->getRoutes()->refreshNameLookups();
-                $router->getRoutes()->refreshActionLookups();
-            });
-        }
     }
 
     /**
@@ -218,5 +216,97 @@ class FortServiceProvider extends ServiceProvider
             \Illuminate\Contracts\Debug\ExceptionHandler::class,
             \Rinvex\Fort\Handlers\ExceptionHandler::class
         );
+    }
+
+    /**
+     * Register the password broker.
+     *
+     * @return void
+     */
+    protected function registerPasswordBroker()
+    {
+        $this->app->singleton('auth.password', function ($app) {
+            return new PasswordResetBrokerManager($app);
+        });
+
+        $this->app->bind('auth.password.broker', function ($app) {
+            return $app->make('auth.password')->broker();
+        });
+    }
+
+    /**
+     * Register the verification broker.
+     *
+     * @return void
+     */
+    protected function registerVerificationBroker()
+    {
+        $this->app->singleton('rinvex.fort.emailverification', function ($app) {
+            return new EmailVerificationBrokerManager($app);
+        });
+
+        $this->app->bind('rinvex.fort.emailverification.broker', function ($app) {
+            return $app->make('rinvex.fort.emailverification')->broker();
+        });
+    }
+
+    /**
+     * Register the blade extensions.
+     *
+     * @return void
+     */
+    protected function registerBladeExtensions()
+    {
+        $this->app->afterResolving('blade.compiler', function (BladeCompiler $bladeCompiler) {
+
+            // @role('writer') / @hasrole(['writer', 'editor'])
+            $bladeCompiler->directive('role', function ($expression) {
+                return "<?php if(auth()->user()->hasRole({$expression})): ?>";
+            });
+            $bladeCompiler->directive('endrole', function () {
+                return '<?php endif; ?>';
+            });
+
+            // @hasrole('writer') / @hasrole(['writer', 'editor'])
+            $bladeCompiler->directive('hasrole', function ($expression) {
+                return "<?php if(auth()->user()->hasRole({$expression})): ?>";
+            });
+            $bladeCompiler->directive('endhasrole', function () {
+                return '<?php endif; ?>';
+            });
+
+            // @hasanyrole(['writer', 'editor'])
+            $bladeCompiler->directive('hasanyrole', function ($expression) {
+                return "<?php if(auth()->user()->hasAnyRole({$expression})): ?>";
+            });
+            $bladeCompiler->directive('endhasanyrole', function () {
+                return '<?php endif; ?>';
+            });
+
+            // @hasallroles(['writer', 'editor'])
+            $bladeCompiler->directive('hasallroles', function ($expression) {
+                return "<?php if(auth()->user()->hasAllRoles({$expression})): ?>";
+            });
+            $bladeCompiler->directive('endhasallroles', function () {
+                return '<?php endif; ?>';
+            });
+        });
+    }
+
+    /**
+     * Register console commands.
+     *
+     * @return void
+     */
+    protected function registerCommands()
+    {
+        // Register artisan commands
+        foreach ($this->commands as $key => $value) {
+            $this->app->singleton($value, function ($app) use ($key) {
+                return new $key();
+            });
+        }
+
+        $this->commands(array_values($this->commands));
     }
 }
