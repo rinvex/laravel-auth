@@ -24,7 +24,9 @@ use Rinvex\Fort\Console\Commands\MigrateCommand;
 use Rinvex\Fort\Console\Commands\PublishCommand;
 use Rinvex\Fort\Console\Commands\RollbackCommand;
 use Rinvex\Fort\Http\Middleware\UpdateLastActivity;
+use Rinvex\Fort\Services\PasswordResetBrokerManager;
 use Rinvex\Fort\Http\Middleware\RedirectIfAuthenticated;
+use Rinvex\Fort\Services\EmailVerificationBrokerManager;
 use Illuminate\Contracts\Auth\Access\Gate as GateContract;
 
 class FortServiceProvider extends ServiceProvider
