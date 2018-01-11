@@ -201,7 +201,7 @@ trait HasRoles
     /**
      * Parse role IDs.
      *
-     * @param mixed  $roles
+     * @param mixed $roles
      *
      * @return array
      */
