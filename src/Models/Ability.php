@@ -246,7 +246,7 @@ class Ability extends Model implements AbilityContract
      */
     public function isProtected()
     {
-        return in_array($this->id, config('rinvex.fort.protected.abilities'));
+        return in_array($this->getKey(), config('rinvex.fort.protected.abilities'));
     }
 
     /**

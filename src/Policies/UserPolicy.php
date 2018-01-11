@@ -65,7 +65,7 @@ class UserPolicy
     public function delete($ability, UserContract $user, UserContract $resource)
     {
         return $user->allAbilities->pluck('slug')->contains($ability)   // User can delete users
-               && $resource->id !== $user->id                           // User can NOT delete himself
+               && $resource->getKey() !== $user->getKey()               // User can NOT delete himself
                && ! $resource->isSuperadmin()                           // RESOURCE user is NOT superadmin
                && ! $resource->isProtected();                           // RESOURCE user is NOT protected
     }

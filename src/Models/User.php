@@ -346,7 +346,7 @@ class User extends Model implements UserContract, AuthenticatableContract, Authe
      */
     public function isProtected()
     {
-        return in_array($this->id, config('rinvex.fort.protected.users'));
+        return in_array($this->getKey(), config('rinvex.fort.protected.users'));
     }
 
     /**

@@ -121,7 +121,7 @@ class SessionGuard extends BaseSessionGuard
 
                 // Enforce TwoFactor authentication
                 if ($totpStatus || $phoneStatus) {
-                    $this->session->put('_twofactor', ['user_id' => $user->id, 'remember' => $remember, 'totp' => $totpStatus, 'phone' => $phoneStatus]);
+                    $this->session->put('_twofactor', ['user_id' => $user->getKey(), 'remember' => $remember, 'totp' => $totpStatus, 'phone' => $phoneStatus]);
 
                     // Fire the TwoFactor authentication required event
                     $this->events->dispatch('rinvex.fort.twofactor.required', [$user]);
