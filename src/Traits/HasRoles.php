@@ -4,249 +4,218 @@ declare(strict_types=1);
 
 namespace Rinvex\Fort\Traits;
 
-use Rinvex\Fort\Models\Role;
-use Illuminate\Support\Collection;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Support\Collection as BaseCollection;
 
 trait HasRoles
 {
     use HasAbilities;
 
     /**
+     * Register a saved model event with the dispatcher.
+     *
+     * @param \Closure|string $callback
+     *
+     * @return void
+     */
+    abstract public static function saved($callback);
+
+    /**
+     * Register a deleted model event with the dispatcher.
+     *
+     * @param \Closure|string $callback
+     *
+     * @return void
+     */
+    abstract public static function deleted($callback);
+
+    /**
+     * Boot the HasRoles trait for the model.
+     *
+     * @return void
+     */
+    public static function bootHasRoles()
+    {
+        static::deleted(function (self $model) {
+            $model->roles()->detach();
+        });
+    }
+
+    /**
      * Attach the given roles to the model.
      *
-     * @param int|string|array|\ArrayAccess|\Rinvex\Fort\Models\Role $roles
+     * @param mixed $roles
+     *
+     * @return void
+     */
+    public function setRolesAttribute($roles)
+    {
+        static::saved(function (self $model) use ($roles) {
+            $model->syncRoles($roles);
+        });
+    }
+
+    /**
+     * Attach model roles.
+     *
+     * @param mixed $roles
      *
      * @return $this
      */
     public function assignRoles($roles)
     {
-        $this->setRoles($roles, 'syncWithoutDetaching');
+        // Use 'sync' not 'attach' to avoid Integrity constraint violation
+        $this->roles()->sync($this->parseRoles($roles), false);
 
         return $this;
     }
 
     /**
-     * Sync the given roles to the model.
+     * Sync model roles.
      *
-     * @param int|string|array|\ArrayAccess|\Rinvex\Fort\Models\Role $roles
+     * @param mixed $roles
+     * @param bool  $detaching
      *
      * @return $this
      */
-    public function syncRoles($roles)
+    public function syncRoles($roles, bool $detaching = true)
     {
-        $this->setRoles($roles, 'sync');
+        $this->roles()->sync($this->parseRoles($roles), $detaching);
 
         return $this;
     }
 
     /**
-     * Detach the given roles from the model.
+     * Detach model roles.
      *
-     * @param int|string|array|\ArrayAccess|\Rinvex\Fort\Models\Role $roles
+     * @param mixed $roles
      *
      * @return $this
      */
-    public function removeRoles($roles)
+    public function retractRoles($roles = null)
     {
-        $this->setRoles($roles, 'detach');
+        ! $roles || $roles = $this->parseRoles($roles);
+
+        $this->roles()->detach($roles);
 
         return $this;
     }
 
     /**
-     * Set the given role(s) to the model.
+     * Determine if the model has any of the given roles.
      *
-     * @param int|string|array|\ArrayAccess|\Rinvex\Fort\Models\Role $roles
-     * @param string                                                 $process
-     *
-     * @return bool
-     */
-    protected function setRoles($roles, string $process)
-    {
-        // Guess event name
-        $event = $process === 'syncWithoutDetaching' ? 'attach' : $process;
-
-        // If the "attaching/syncing/detaching" event returns false we'll cancel this operation and
-        // return false, indicating that the attaching/syncing/detaching failed. This provides a
-        // chance for any listeners to cancel save operations if validations fail or whatever.
-        if ($this->fireModelEvent($event.'ing') === false) {
-            return false;
-        }
-
-        // Hydrate Roles
-        $roles = $this->hydrateRoles($roles)->pluck('id')->toArray();
-
-        // Set roles
-        $this->roles()->$process($roles);
-
-        // Fire the roles attached/synced/detached event
-        $this->fireModelEvent($event.'ed', false);
-
-        return true;
-    }
-
-    /**
-     * Determine if the entity has (one of) the given roles.
-     *
-     * @param string|int|array|\Rinvex\Fort\Models\Role|\Illuminate\Support\Collection $roles
+     * @param mixed $roles
      *
      * @return bool
      */
-    public function hasRole($roles)
+    public function hasAnyRoles($roles): bool
     {
-        // Single role slug
-        if (is_string($roles)) {
-            return $this->roles->contains('slug', $roles);
-        }
+        $roles = $this->parseRoles($roles);
 
-        // Single role id
-        if (is_int($roles)) {
-            return $this->roles->contains('id', $roles);
-        }
-
-        // Single role model
-        if ($roles instanceof Role) {
-            return $this->roles->contains('slug', $roles->slug);
-        }
-
-        // Array of role slugs
-        if (is_array($roles) && isset($roles[0]) && is_string($roles[0])) {
-            return ! $this->roles->pluck('slug')->intersect($roles)->isEmpty();
-        }
-
-        // Array of role Ids
-        if (is_array($roles) && isset($roles[0]) && is_int($roles[0])) {
-            return ! $this->roles->pluck('id')->intersect($roles)->isEmpty();
-        }
-
-        // Collection of role models
-        if ($roles instanceof Collection) {
-            return ! $roles->intersect($this->roles->pluck('slug'))->isEmpty();
-        }
-
-        return false;
-    }
-
-    /**
-     * Alias for `hasRole` method.
-     *
-     * @param string|int|array|\Rinvex\Fort\Models\Role|\Illuminate\Support\Collection $roles
-     *
-     * @return bool
-     */
-    public function hasAnyRole($roles)
-    {
-        return $this->hasRole($roles);
+        return ! $this->roles->pluck('id')->intersect($roles)->isEmpty();
     }
 
     /**
      * Determine if the given entity has all of the given roles.
      *
-     * @param string|int|array|\Rinvex\Fort\Models\Role|\Illuminate\Support\Collection $roles
+     * @param mixed $roles
      *
      * @return bool
      */
-    public function hasAllRoles($roles)
+    public function hasAllRoles($roles): bool
     {
-        // Single role slug
-        if (is_string($roles)) {
-            return $this->roles->contains('slug', $roles);
-        }
+        $roles = $this->parseRoles($roles);
 
-        // Single role id
-        if (is_int($roles)) {
-            return $this->roles->contains('id', $roles);
-        }
-
-        // Single role model
-        if ($roles instanceof Role) {
-            return $this->roles->contains('slug', $roles->slug);
-        }
-
-        // Array of role slugs
-        if (is_array($roles) && isset($roles[0]) && is_string($roles[0])) {
-            return $this->roles->pluck('slug')->count() === count($roles)
-                   && $this->roles->pluck('slug')->diff($roles)->isEmpty();
-        }
-
-        // Array of role ids
-        if (is_array($roles) && isset($roles[0]) && is_int($roles[0])) {
-            return $this->roles->pluck('id')->count() === count($roles)
-                   && $this->roles->pluck('id')->diff($roles)->isEmpty();
-        }
-
-        // Collection of role models
-        if ($roles instanceof Collection) {
-            return $this->roles->count() === $roles->count() && $this->roles->diff($roles)->isEmpty();
-        }
-
-        return false;
+        return collect($roles)->diff($this->roles->pluck('id'))->isEmpty();
     }
 
     /**
-     * Scope the user query to certain roles only.
+     * Scope query with all the given roles.
      *
-     * @param \Illuminate\Database\Eloquent\Builder                                    $builder
-     * @param string|int|array|\Rinvex\Fort\Models\Role|\Illuminate\Support\Collection $roles
+     * @param \Illuminate\Database\Eloquent\Builder $builder
+     * @param mixed                                 $roles
      *
      * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function scopeRole(Builder $builder, $roles): Builder
+    public function scopeWithAllRoles(Builder $builder, $roles): Builder
     {
-        if (is_string($roles) || is_int($roles) || $roles instanceof Role) {
-            $roles = [$roles];
-        }
+        $roles = $this->parseRoles($roles);
+
+        collect($roles)->each(function ($role) use ($builder) {
+            $builder->whereHas('roles', function (Builder $builder) use ($role) {
+                return $builder->where('id', $role);
+            });
+        });
+
+        return $builder;
+    }
+
+    /**
+     * Scope query with any of the given roles.
+     *
+     * @param \Illuminate\Database\Eloquent\Builder $builder
+     * @param mixed                                 $roles
+     *
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeWithAnyRoles(Builder $builder, $roles): Builder
+    {
+        $roles = $this->parseRoles($roles);
 
         return $builder->whereHas('roles', function (Builder $builder) use ($roles) {
-            $builder->where(function (Builder $builder) use ($roles) {
-                foreach ($roles as $role) {
-                    $column = is_string($role) ? 'slug' : 'id';
-                    $value = $role instanceof Role ? $role->id : $role;
-
-                    $builder->orWhere(config('rinvex.fort.tables.roles').'.'.$column, $value);
-                }
-            });
+            $builder->whereIn('id', $roles);
         });
     }
 
     /**
-     * Hydrate roles.
+     * Scope query without any of the given roles.
      *
-     * @param int|string|array|\ArrayAccess|\Rinvex\Fort\Models\Role $roles
+     * @param \Illuminate\Database\Eloquent\Builder $builder
+     * @param mixed                                 $roles
      *
-     * @return \Illuminate\Support\Collection
+     * @return \Illuminate\Database\Eloquent\Builder
      */
-    protected function hydrateRoles($roles)
+    public function scopeWithoutRoles(Builder $builder, $roles): Builder
     {
-        $isRolesStringBased = $this->isRolesStringBased($roles);
-        $isRolesIntBased = $this->isRolesIntBased($roles);
-        $field = $isRolesStringBased ? 'slug' : 'id';
+        $roles = $this->parseRoles($roles);
 
-        return $isRolesStringBased || $isRolesIntBased ? app('rinvex.fort.role')->whereIn($field, (array) $roles)->get() : collect($roles);
+        return $builder->whereDoesntHave('roles', function (Builder $builder) use ($roles) {
+            $builder->whereIn('id', $roles);
+        });
     }
 
     /**
-     * Determine if the given role(ies) are string based.
+     * Scope query without any roles.
      *
-     * @param int|string|array|\ArrayAccess|\Rinvex\Fort\Models\Role $roles
+     * @param \Illuminate\Database\Eloquent\Builder $builder
      *
-     * @return bool
+     * @return \Illuminate\Database\Eloquent\Builder
      */
-    protected function isRolesStringBased($roles)
+    public function scopeWithoutAnyRoles(Builder $builder): Builder
     {
-        return is_string($roles) || (is_array($roles) && isset($roles[0]) && is_string($roles[0]));
+        return $builder->doesntHave('roles');
     }
 
     /**
-     * Determine if the given role(ies) are integer based.
+     * Parse role IDs.
      *
-     * @param int|string|array|\ArrayAccess|\Rinvex\Fort\Models\Role $roles
+     * @param mixed  $roles
      *
-     * @return bool
+     * @return array
      */
-    protected function isRolesIntBased($roles)
+    protected function parseRoles($roles): array
     {
-        return is_int($roles) || (is_array($roles) && isset($roles[0]) && is_int($roles[0]));
+        ! $roles instanceof Model || $roles = [$roles->getKey()];
+        ! $roles instanceof Collection || $roles = $roles->modelKeys();
+        ! $roles instanceof BaseCollection || $roles = $roles->toArray();
+
+        // Find roles by slug, and get their IDs
+        if (is_string($roles) || (is_array($roles) && is_string(array_first($roles)))) {
+            $roles = app('rinvex.fort.role')->whereIn('slug', (array) $roles)->get()->pluck('id')->toArray();
+        }
+
+        return (array) $roles;
     }
 }

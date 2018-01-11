@@ -50,7 +50,7 @@ class RolePolicy
     public function update($ability, UserContract $user, RoleContract $resource)
     {
         return $user->allAbilities->pluck('slug')->contains($ability)           // User can update roles
-               && $user->hasRole($resource)                                     // User already have RESOURCE role
+               && $user->hasAnyRoles($resource)                                 // User already have RESOURCE role
                && ! $resource->isSuperadmin()                                   // RESOURCE role is NOT superadmin
                && ! $resource->isProtected();                                   // RESOURCE role is NOT protected
     }

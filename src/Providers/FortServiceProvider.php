@@ -243,35 +243,19 @@ class FortServiceProvider extends ServiceProvider
     {
         $this->app->afterResolving('blade.compiler', function (BladeCompiler $bladeCompiler) {
 
-            // @role('writer') / @hasrole(['writer', 'editor'])
-            $bladeCompiler->directive('role', function ($expression) {
-                return "<?php if(auth()->user()->hasRole({$expression})): ?>";
+            // @hasAnyRoles(['writer', 'editor'])
+            $bladeCompiler->directive('hasAnyRoles', function ($expression) {
+                return "<?php if(auth()->user()->hasAnyRoles({$expression})): ?>";
             });
-            $bladeCompiler->directive('endrole', function () {
+            $bladeCompiler->directive('endHasAnyRoles', function () {
                 return '<?php endif; ?>';
             });
 
-            // @hasrole('writer') / @hasrole(['writer', 'editor'])
-            $bladeCompiler->directive('hasrole', function ($expression) {
-                return "<?php if(auth()->user()->hasRole({$expression})): ?>";
-            });
-            $bladeCompiler->directive('endhasrole', function () {
-                return '<?php endif; ?>';
-            });
-
-            // @hasanyrole(['writer', 'editor'])
-            $bladeCompiler->directive('hasanyrole', function ($expression) {
-                return "<?php if(auth()->user()->hasAnyRole({$expression})): ?>";
-            });
-            $bladeCompiler->directive('endhasanyrole', function () {
-                return '<?php endif; ?>';
-            });
-
-            // @hasallroles(['writer', 'editor'])
-            $bladeCompiler->directive('hasallroles', function ($expression) {
+            // @hasAllRoles(['writer', 'editor'])
+            $bladeCompiler->directive('hasAllRoles', function ($expression) {
                 return "<?php if(auth()->user()->hasAllRoles({$expression})): ?>";
             });
-            $bladeCompiler->directive('endhasallroles', function () {
+            $bladeCompiler->directive('endHasAllRoles', function () {
                 return '<?php endif; ?>';
             });
         });

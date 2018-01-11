@@ -12,6 +12,7 @@ use Rinvex\Cacheable\CacheableEloquent;
 use Rinvex\Fort\Contracts\RoleContract;
 use Rinvex\Support\Traits\HasTranslations;
 use Rinvex\Support\Traits\ValidatingTrait;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 /**
  * Rinvex\Fort\Models\Role.
@@ -46,6 +47,14 @@ class Role extends Model implements RoleContract
     /**
      * {@inheritdoc}
      */
+    protected $touches = [
+        'abilities',
+        'users',
+    ];
+
+    /**
+     * {@inheritdoc}
+     */
     protected $fillable = [
         'slug',
         'name',
@@ -73,12 +82,6 @@ class Role extends Model implements RoleContract
      * {@inheritdoc}
      */
     protected $observables = [
-        'attaching',
-        'attached',
-        'syncing',
-        'synced',
-        'detaching',
-        'detached',
         'validating',
         'validated',
     ];
@@ -141,101 +144,14 @@ class Role extends Model implements RoleContract
             app('rinvex.fort.ability')->forgetCache();
             app('rinvex.fort.user')->forgetCache();
         });
-
-        static::attached(function (self $role) {
-            app('rinvex.fort.ability')->forgetCache();
-            app('rinvex.fort.user')->forgetCache();
-        });
-
-        static::synced(function (self $role) {
-            app('rinvex.fort.ability')->forgetCache();
-            app('rinvex.fort.user')->forgetCache();
-        });
-
-        static::detached(function (self $role) {
-            app('rinvex.fort.ability')->forgetCache();
-            app('rinvex.fort.user')->forgetCache();
-        });
     }
 
     /**
-     * Register an attaching role event with the dispatcher.
-     *
-     * @param \Closure|string $callback
-     *
-     * @return void
-     */
-    public static function attaching($callback)
-    {
-        static::registerModelEvent('attaching', $callback);
-    }
-
-    /**
-     * Register an attached role event with the dispatcher.
-     *
-     * @param \Closure|string $callback
-     *
-     * @return void
-     */
-    public static function attached($callback)
-    {
-        static::registerModelEvent('attached', $callback);
-    }
-
-    /**
-     * Register a syncing role event with the dispatcher.
-     *
-     * @param \Closure|string $callback
-     *
-     * @return void
-     */
-    public static function syncing($callback)
-    {
-        static::registerModelEvent('syncing', $callback);
-    }
-
-    /**
-     * Register a synced role event with the dispatcher.
-     *
-     * @param \Closure|string $callback
-     *
-     * @return void
-     */
-    public static function synced($callback)
-    {
-        static::registerModelEvent('synced', $callback);
-    }
-
-    /**
-     * Register a detaching role event with the dispatcher.
-     *
-     * @param \Closure|string $callback
-     *
-     * @return void
-     */
-    public static function detaching($callback)
-    {
-        static::registerModelEvent('detaching', $callback);
-    }
-
-    /**
-     * Register a detached role event with the dispatcher.
-     *
-     * @param \Closure|string $callback
-     *
-     * @return void
-     */
-    public static function detached($callback)
-    {
-        static::registerModelEvent('detached', $callback);
-    }
-
-    /**
-     * A role may be given various abilities.
+     * Get all attached abilities to the model.
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
-    public function abilities()
+    public function abilities(): BelongsToMany
     {
         return $this->belongsToMany(config('rinvex.fort.models.ability'), config('rinvex.fort.tables.ability_role'), 'role_id', 'ability_id')
                     ->withTimestamps();
@@ -274,7 +190,7 @@ class Role extends Model implements RoleContract
      */
     public function isSuperadmin()
     {
-        return $this->abilities->where('resource', 'global')->where('policy', null)->contains('action', 'superadmin');
+        return $this->abilities->where('action', 'superadmin')->where('resource', 'global')->where('policy', null);
     }
 
     /**
@@ -284,21 +200,7 @@ class Role extends Model implements RoleContract
      */
     public function isProtected()
     {
-        return in_array($this->id, config('rinvex.fort.protected.roles'));
-    }
-
-    /**
-     * Attach the role abilities.
-     *
-     * @param mixed $abilities
-     *
-     * @return void
-     */
-    public function setAbilitiesAttribute($abilities)
-    {
-        static::saved(function (self $model) use ($abilities) {
-            $model->abilities()->sync($abilities);
-        });
+        return in_array($this->getKey(), config('rinvex.fort.protected.roles'));
     }
 
     /**

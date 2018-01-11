@@ -4,19 +4,68 @@ declare(strict_types=1);
 
 namespace Rinvex\Fort\Traits;
 
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Support\Collection as BaseCollection;
+
 trait HasAbilities
 {
     /**
+     * Register a saved model event with the dispatcher.
+     *
+     * @param \Closure|string $callback
+     *
+     * @return void
+     */
+    abstract public static function saved($callback);
+
+    /**
+     * Register a deleted model event with the dispatcher.
+     *
+     * @param \Closure|string $callback
+     *
+     * @return void
+     */
+    abstract public static function deleted($callback);
+
+    /**
+     * Boot the HasAbilities trait for the model.
+     *
+     * @return void
+     */
+    public static function bootHasAbilities()
+    {
+        static::deleted(function (self $model) {
+            $model->abilities()->detach();
+        });
+    }
+
+    /**
      * Attach the given abilities to the model.
      *
-     * @param string|array $action
-     * @param string|array $resource
+     * @param mixed $abilities
+     *
+     * @return void
+     */
+    public function setAbilitiesAttribute($abilities)
+    {
+        static::saved(function (self $model) use ($abilities) {
+            $model->syncAbilities($abilities);
+        });
+    }
+
+    /**
+     * Attach the given abilities to the model.
+     *
+     * @param mixed $abilities
      *
      * @return $this
      */
-    public function grantAbilities($action, $resource)
+    public function grantAbilities($abilities)
     {
-        $this->setAbilities($action, $resource, 'syncWithoutDetaching');
+        // Use 'sync' not 'attach' to avoid Integrity constraint violation
+        $this->abilities()->sync($this->parseAbilities($abilities), false);
 
         return $this;
     }
@@ -24,14 +73,14 @@ trait HasAbilities
     /**
      * Sync the given abilities to the model.
      *
-     * @param string|array $action
-     * @param string|array $resource
+     * @param mixed $abilities
+     * @param bool  $detaching
      *
      * @return $this
      */
-    public function syncAbilities($action, $resource)
+    public function syncAbilities($abilities, bool $detaching = true)
     {
-        $this->setAbilities($action, $resource, 'sync');
+        $this->abilities()->sync($this->parseAbilities($abilities), $detaching);
 
         return $this;
     }
@@ -39,67 +88,58 @@ trait HasAbilities
     /**
      * Detach the given abilities from the model.
      *
-     * @param string|array $action
-     * @param string|array $resource
+     * @param mixed $abilities
      *
      * @return $this
      */
-    public function revokeAbilities($action, $resource)
+    public function revokeAbilities($abilities = null)
     {
-        $this->setAbilities($action, $resource, 'detach');
+        ! $abilities || $abilities = $this->parseAbilities($abilities);
+
+        $this->abilities()->detach($abilities);
 
         return $this;
     }
 
     /**
-     * Set the given ability(s) to the model.
+     * Parse slugged abilities.
      *
-     * @param string|array $action
-     * @param string|array $resource
-     * @param string       $process
+     * @param mixed $abilities
      *
-     * @return bool
+     * @return array
      */
-    protected function setAbilities($action, $resource, string $process)
+    protected function parseSluggedAbilities($abilities)
     {
-        // Guess event name
-        $event = $process === 'syncWithoutDetaching' ? 'attach' : $process;
-
-        // If the "attaching/syncing/detaching" event returns false we'll cancel this operation and
-        // return false, indicating that the attaching/syncing/detaching failed. This provides a
-        // chance for any listeners to cancel save operations if validations fail or whatever.
-        if ($this->fireModelEvent($event.'ing') === false) {
-            return false;
-        }
-
-        // Ability model
         $model = app('rinvex.fort.ability')->query();
 
-        if (is_string($action) && $action !== '*') {
-            $model->where('action', $action);
+        collect($abilities)->map(function ($item) use ($model) {
+            return $model->when(mb_strpos($item, '-') !== false, function (Builder $builder) use ($item) {
+                $builder->orWhere(function (Builder $builder) use ($item) {
+                    $builder->where('action', explode('-', $item)[0])->where('resource', explode('-', $item)[1]);
+                });
+            });
+        });
+
+        return $model->get()->pluck('id')->toArray();
+    }
+
+    /**
+     * Parse abilities.
+     *
+     * @param mixed $abilities
+     *
+     * @return array
+     */
+    protected function parseAbilities($abilities): array
+    {
+        ! $abilities instanceof Model || $abilities = [$abilities->getKey()];
+        ! $abilities instanceof Collection || $abilities = $abilities->modelKeys();
+        ! $abilities instanceof BaseCollection || $abilities = $abilities->toArray();
+
+        if (is_string($abilities) || (is_array($abilities) && is_string(array_first($abilities)))) {
+            $abilities = $this->parseSluggedAbilities($abilities);
         }
 
-        if (is_array($action)) {
-            $model->whereIn('action', $action);
-        }
-
-        if (is_string($resource) && $resource !== '*') {
-            $model->where('resource', $resource);
-        }
-
-        if (is_array($resource)) {
-            $model->whereIn('resource', $resource);
-        }
-
-        // Find the given abilities
-        $abilities = $model->get();
-
-        // Sync abilities
-        $this->abilities()->$process($abilities);
-
-        // Fire the roles attached/synced/detached event
-        $this->fireModelEvent($event.'ed', false);
-
-        return true;
+        return (array) $abilities;
     }
 }

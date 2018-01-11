@@ -46,6 +46,14 @@ class Ability extends Model implements AbilityContract
     /**
      * {@inheritdoc}
      */
+    protected $touches = [
+        'roles',
+        'users',
+    ];
+
+    /**
+     * {@inheritdoc}
+     */
     protected $fillable = [
         'name',
         'action',
@@ -69,10 +77,6 @@ class Ability extends Model implements AbilityContract
      * {@inheritdoc}
      */
     protected $observables = [
-        'attaching',
-        'attached',
-        'detaching',
-        'detached',
         'validating',
         'validated',
     ];
@@ -145,64 +149,6 @@ class Ability extends Model implements AbilityContract
             app('rinvex.fort.role')->forgetCache();
             app('rinvex.fort.user')->forgetCache();
         });
-
-        static::attached(function (self $ability) {
-            app('rinvex.fort.role')->forgetCache();
-            app('rinvex.fort.user')->forgetCache();
-        });
-
-        static::detached(function (self $ability) {
-            app('rinvex.fort.role')->forgetCache();
-            app('rinvex.fort.user')->forgetCache();
-        });
-    }
-
-    /**
-     * Register an attaching ability event with the dispatcher.
-     *
-     * @param \Closure|string $callback
-     *
-     * @return void
-     */
-    public static function attaching($callback)
-    {
-        static::registerModelEvent('attaching', $callback);
-    }
-
-    /**
-     * Register an attached ability event with the dispatcher.
-     *
-     * @param \Closure|string $callback
-     *
-     * @return void
-     */
-    public static function attached($callback)
-    {
-        static::registerModelEvent('attached', $callback);
-    }
-
-    /**
-     * Register a detaching ability event with the dispatcher.
-     *
-     * @param \Closure|string $callback
-     *
-     * @return void
-     */
-    public static function detaching($callback)
-    {
-        static::registerModelEvent('detaching', $callback);
-    }
-
-    /**
-     * Register a detached ability event with the dispatcher.
-     *
-     * @param \Closure|string $callback
-     *
-     * @return void
-     */
-    public static function detached($callback)
-    {
-        static::registerModelEvent('detached', $callback);
     }
 
     /**
@@ -236,7 +182,7 @@ class Ability extends Model implements AbilityContract
      */
     public function isSuperadmin()
     {
-        return ! $this->policy && $this->resource === 'global' && $this->action === 'superadmin';
+        return $this->action === 'superadmin' && $this->resource === 'global' && ! $this->policy;
     }
 
     /**

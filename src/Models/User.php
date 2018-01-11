@@ -22,6 +22,7 @@ use Rinvex\Fort\Contracts\CanVerifyPhoneContract;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\Access\Authorizable;
 use Rinvex\Fort\Contracts\CanResetPasswordContract;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Rinvex\Fort\Contracts\AuthenticatableTwoFactorContract;
 use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 use Illuminate\Contracts\Auth\Access\Authorizable as AuthorizableContract;
@@ -56,7 +57,7 @@ use Illuminate\Contracts\Auth\Access\Authorizable as AuthorizableContract;
  * @property \Carbon\Carbon|null                                                                                            $updated_at
  * @property \Carbon\Carbon|null                                                                                            $deleted_at
  * @property \Illuminate\Database\Eloquent\Collection|\Rinvex\Fort\Models\Ability[]                                         $abilities
- * @property-read \Illuminate\Support\Collection                                                                            $all_abilities
+ * @property-read \Illuminate\Support\Collection                                                                            $allAbilities
  * @property-read \Rinvex\Country\Country                                                                                   $country
  * @property-read \Rinvex\Language\Language                                                                                 $language
  * @property-read string                                                                                                    $name
@@ -277,11 +278,11 @@ class User extends Model implements UserContract, AuthenticatableContract, Authe
     }
 
     /**
-     * A user may have multiple roles.
+     * Get all attached roles to the model.
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
-    public function roles()
+    public function roles(): BelongsToMany
     {
         return $this->belongsToMany(config('rinvex.fort.models.role'), config('rinvex.fort.tables.role_user'), 'user_id', 'role_id')
                     ->withTimestamps();
@@ -334,9 +335,9 @@ class User extends Model implements UserContract, AuthenticatableContract, Authe
      *
      * @return bool
      */
-    public function isSuperadmin()
+    public function isSuperadmin(): bool
     {
-        return $this->getAllAbilitiesAttribute()->where('resource', 'global')->where('policy', null)->contains('action', 'superadmin');
+        return $this->allAbilities->where('action', 'superadmin')->where('resource', 'global')->where('policy', null)->isNotEmpty();
     }
 
     /**
@@ -344,7 +345,7 @@ class User extends Model implements UserContract, AuthenticatableContract, Authe
      *
      * @return bool
      */
-    public function isProtected()
+    public function isProtected(): bool
     {
         return in_array($this->getKey(), config('rinvex.fort.protected.users'));
     }
@@ -390,34 +391,6 @@ class User extends Model implements UserContract, AuthenticatableContract, Authe
     public function getLanguageAttribute()
     {
         return language($this->language_code);
-    }
-
-    /**
-     * Attach the user roles.
-     *
-     * @param mixed $roles
-     *
-     * @return void
-     */
-    public function setRolesAttribute($roles)
-    {
-        static::saved(function (self $model) use ($roles) {
-            $model->roles()->sync($roles);
-        });
-    }
-
-    /**
-     * Attach the user abilities.
-     *
-     * @param mixed $abilities
-     *
-     * @return void
-     */
-    public function setAbilitiesAttribute($abilities)
-    {
-        static::saved(function (self $model) use ($abilities) {
-            $model->abilities()->sync($abilities);
-        });
     }
 
     /**

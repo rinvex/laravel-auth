@@ -38,7 +38,7 @@ class SeedCommand extends Command
             $this->seedResources(app('rinvex.fort.ability'), realpath(__DIR__.'/../../../resources/data/abilities.json'), ['name', 'description', 'policy']);
             $this->seedResources(app('rinvex.fort.role'), realpath(__DIR__.'/../../../resources/data/roles.json'), ['name', 'description'], function () {
                 // Grant abilities to roles
-                app('rinvex.fort.role')->where('slug', 'admin')->first()->grantAbilities('superadmin', 'global');
+                app('rinvex.fort.role')->where('slug', 'admin')->first()->grantAbilities('superadmin-global');
             });
             $this->seedUsers();
         }
