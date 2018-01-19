@@ -45,7 +45,7 @@ use Illuminate\Contracts\Auth\Access\Authorizable as AuthorizableContract;
  * @property string                                                                                                         $middle_name
  * @property string                                                                                                         $last_name
  * @property string                                                                                                         $name_suffix
- * @property string                                                                                                         $job_title
+ * @property string                                                                                                         $title
  * @property string                                                                                                         $country_code
  * @property string                                                                                                         $language_code
  * @property array                                                                                                          $two_factor
@@ -78,7 +78,6 @@ use Illuminate\Contracts\Auth\Access\Authorizable as AuthorizableContract;
  * @method static \Illuminate\Database\Eloquent\Builder|\Rinvex\Fort\Models\User whereGender($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\Rinvex\Fort\Models\User whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\Rinvex\Fort\Models\User whereIsActive($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\Rinvex\Fort\Models\User whereJobTitle($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\Rinvex\Fort\Models\User whereLanguageCode($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\Rinvex\Fort\Models\User whereLastActivity($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\Rinvex\Fort\Models\User whereLastName($value)
@@ -90,6 +89,7 @@ use Illuminate\Contracts\Auth\Access\Authorizable as AuthorizableContract;
  * @method static \Illuminate\Database\Eloquent\Builder|\Rinvex\Fort\Models\User wherePhoneVerified($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\Rinvex\Fort\Models\User wherePhoneVerifiedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\Rinvex\Fort\Models\User whereRememberToken($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\Rinvex\Fort\Models\User whereTitle($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\Rinvex\Fort\Models\User whereTwoFactor($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\Rinvex\Fort\Models\User whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\Rinvex\Fort\Models\User whereUsername($value)
@@ -127,7 +127,7 @@ class User extends Model implements UserContract, AuthenticatableContract, Authe
         'middle_name',
         'last_name',
         'name_suffix',
-        'job_title',
+        'title',
         'country_code',
         'language_code',
         'birthday',
@@ -156,7 +156,7 @@ class User extends Model implements UserContract, AuthenticatableContract, Authe
         'middle_name' => 'string',
         'last_name' => 'string',
         'name_suffix' => 'string',
-        'job_title' => 'string',
+        'title' => 'string',
         'country_code' => 'string',
         'language_code' => 'string',
         'birthday' => 'string',
@@ -240,7 +240,7 @@ class User extends Model implements UserContract, AuthenticatableContract, Authe
             'middle_name' => 'nullable|string|max:150',
             'last_name' => 'nullable|string|max:150',
             'name_suffix' => 'nullable|string|max:150',
-            'job_title' => 'nullable|string|max:150',
+            'title' => 'nullable|string|max:150',
             'country_code' => 'nullable|alpha|size:2|country',
             'language_code' => 'nullable|alpha|size:2|language',
             'birthday' => 'nullable|date_format:Y-m-d',

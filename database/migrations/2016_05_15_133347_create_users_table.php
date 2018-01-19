@@ -32,7 +32,7 @@ class CreateUsersTable extends Migration
             $table->string('middle_name')->nullable();
             $table->string('last_name')->nullable();
             $table->string('name_suffix')->nullable();
-            $table->string('job_title')->nullable();
+            $table->string('title')->nullable();
             $table->string('country_code', 2)->nullable();
             $table->string('language_code', 2)->nullable();
             $table->text('two_factor')->nullable();

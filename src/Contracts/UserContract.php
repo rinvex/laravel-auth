@@ -22,7 +22,7 @@ namespace Rinvex\Fort\Contracts;
  * @property string                                                                                                         $middle_name
  * @property string                                                                                                         $last_name
  * @property string                                                                                                         $name_suffix
- * @property string                                                                                                         $job_title
+ * @property string                                                                                                         $title
  * @property string                                                                                                         $country_code
  * @property string                                                                                                         $language_code
  * @property array                                                                                                          $two_factor
@@ -55,7 +55,6 @@ namespace Rinvex\Fort\Contracts;
  * @method static \Illuminate\Database\Eloquent\Builder|\Rinvex\Fort\Models\User whereGender($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\Rinvex\Fort\Models\User whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\Rinvex\Fort\Models\User whereIsActive($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\Rinvex\Fort\Models\User whereJobTitle($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\Rinvex\Fort\Models\User whereLanguageCode($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\Rinvex\Fort\Models\User whereLastActivity($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\Rinvex\Fort\Models\User whereLastName($value)
@@ -67,6 +66,7 @@ namespace Rinvex\Fort\Contracts;
  * @method static \Illuminate\Database\Eloquent\Builder|\Rinvex\Fort\Models\User wherePhoneVerified($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\Rinvex\Fort\Models\User wherePhoneVerifiedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\Rinvex\Fort\Models\User whereRememberToken($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\Rinvex\Fort\Models\User whereTitle($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\Rinvex\Fort\Models\User whereTwoFactor($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\Rinvex\Fort\Models\User whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\Rinvex\Fort\Models\User whereUsername($value)
