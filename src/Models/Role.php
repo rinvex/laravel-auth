@@ -210,7 +210,7 @@ class Role extends Model implements RoleContract
      *
      * @return void
      */
-    public function setUsersAttribute($users)
+    public function setUsersAttribute($users): void
     {
         static::saved(function (self $model) use ($users) {
             $model->users()->sync($users);

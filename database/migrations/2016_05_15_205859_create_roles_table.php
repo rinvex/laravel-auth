@@ -13,7 +13,7 @@ class CreateRolesTable extends Migration
      *
      * @return void
      */
-    public function up()
+    public function up(): void
     {
         Schema::create(config('rinvex.fort.tables.roles'), function (Blueprint $table) {
             // Columns
@@ -34,7 +34,7 @@ class CreateRolesTable extends Migration
      *
      * @return void
      */
-    public function down()
+    public function down(): void
     {
         Schema::dropIfExists(config('rinvex.fort.tables.roles'));
     }

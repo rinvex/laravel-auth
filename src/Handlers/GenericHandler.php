@@ -52,7 +52,7 @@ class GenericHandler
      *
      * @return void
      */
-    public function authLockout(Request $request)
+    public function authLockout(Request $request): void
     {
         if (config('rinvex.fort.throttle.lockout_email')) {
             $user = get_login_field($loginfield = $request->get('loginfield')) === 'email' ? app('rinvex.fort.user')->where('email', $loginfield)->first() : app('rinvex.fort.user')->where('username', $loginfield)->first();
@@ -68,7 +68,7 @@ class GenericHandler
      *
      * @return void
      */
-    public function registerSuccess(Authenticatable $user)
+    public function registerSuccess(Authenticatable $user): void
     {
         // Send welcome email
         if (config('rinvex.fort.registration.welcome_email')) {
@@ -83,7 +83,7 @@ class GenericHandler
      *
      * @return void
      */
-    public function registerSocialSuccess(Authenticatable $user)
+    public function registerSocialSuccess(Authenticatable $user): void
     {
         // Send welcome email
         if (config('rinvex.fort.registration.welcome_email')) {
@@ -98,7 +98,7 @@ class GenericHandler
      *
      * @return void
      */
-    public function emailVerificationSuccess(Authenticatable $user)
+    public function emailVerificationSuccess(Authenticatable $user): void
     {
         if (config('rinvex.fort.emailverification.success_email')) {
             $user->notify(new VerificationSuccessNotification($user->is_active));

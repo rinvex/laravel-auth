@@ -197,7 +197,7 @@ class SessionGuard extends BaseSessionGuard
      *
      * @return void
      */
-    protected function updateSession($id)
+    protected function updateSession($id): void
     {
         $this->session->put($this->getName(), $id);
         $this->session->forget('_twofactor');
@@ -209,7 +209,7 @@ class SessionGuard extends BaseSessionGuard
      *
      * @return void
      */
-    public function logout()
+    public function logout(): void
     {
         $user = $this->user();
 
@@ -279,7 +279,7 @@ class SessionGuard extends BaseSessionGuard
      *
      * @return void
      */
-    protected function invalidateTwoFactorBackup(AuthenticatableTwoFactorContract $user, $token)
+    protected function invalidateTwoFactorBackup(AuthenticatableTwoFactorContract $user, $token): void
     {
         $settings = $user->getTwoFactor();
         $backup = array_get($settings, 'totp.backup');

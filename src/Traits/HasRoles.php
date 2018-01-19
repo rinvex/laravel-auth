@@ -50,7 +50,7 @@ trait HasRoles
      *
      * @return void
      */
-    public function setRolesAttribute($roles)
+    public function setRolesAttribute($roles): void
     {
         static::saved(function (self $model) use ($roles) {
             $model->syncRoles($roles);

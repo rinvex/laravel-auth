@@ -36,7 +36,7 @@ trait CanVerifyEmail
      *
      * @return void
      */
-    public function sendEmailVerificationNotification($token, $expiration)
+    public function sendEmailVerificationNotification($token, $expiration): void
     {
         $this->notify(new EmailVerificationNotification($token, $expiration));
     }

@@ -46,7 +46,7 @@ trait CanVerifyPhone
      *
      * @return void
      */
-    public function sendPhoneVerificationNotification($method, $force)
+    public function sendPhoneVerificationNotification($method, $force): void
     {
         $this->notify(new PhoneVerificationNotification($method, $force));
     }

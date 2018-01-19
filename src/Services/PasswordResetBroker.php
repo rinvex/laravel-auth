@@ -120,7 +120,7 @@ class PasswordResetBroker implements PasswordResetBrokerContract
      *
      * @return void
      */
-    public function validator(Closure $callback)
+    public function validator(Closure $callback): void
     {
         $this->passwordValidator = $callback;
     }

@@ -212,7 +212,7 @@ class Ability extends Model implements AbilityContract
      *
      * @return void
      */
-    public function setRolesAttribute($roles)
+    public function setRolesAttribute($roles): void
     {
         static::saved(function (self $model) use ($roles) {
             $model->roles()->sync($roles);

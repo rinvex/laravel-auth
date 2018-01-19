@@ -30,7 +30,7 @@ class SeedCommand extends Command
      *
      * @return void
      */
-    public function handle()
+    public function handle(): void
     {
         $this->warn($this->description);
 
@@ -49,7 +49,7 @@ class SeedCommand extends Command
      *
      * @return void
      */
-    protected function seedUsers()
+    protected function seedUsers(): void
     {
         $this->warn('Seeding Users:');
 

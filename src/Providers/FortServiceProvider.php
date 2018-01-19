@@ -93,7 +93,7 @@ class FortServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    protected function registerAccessGate()
+    protected function registerAccessGate(): void
     {
         $this->app->singleton(GateContract::class, function ($app) {
             return new AccessGate($app, function () use ($app) {
@@ -145,7 +145,7 @@ class FortServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    protected function publishResources()
+    protected function publishResources(): void
     {
         $this->publishes([realpath(__DIR__.'/../../config/config.php') => config_path('rinvex.fort.php')], 'rinvex-fort-config');
         $this->publishes([realpath(__DIR__.'/../../database/migrations') => database_path('migrations')], 'rinvex-fort-migrations');
@@ -156,7 +156,7 @@ class FortServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    protected function overrideSessionGuard()
+    protected function overrideSessionGuard(): void
     {
         // Add custom session guard
         $this->app['auth']->extend('session', function ($app, $name, array $config) {
@@ -190,7 +190,7 @@ class FortServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    protected function overrideMiddleware(Router $router)
+    protected function overrideMiddleware(Router $router): void
     {
         // Append middleware to the 'web' middlware group
         $router->pushMiddlewareToGroup('web', Abilities::class);
@@ -207,7 +207,7 @@ class FortServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    protected function registerPasswordBroker()
+    protected function registerPasswordBroker(): void
     {
         $this->app->singleton('auth.password', function ($app) {
             return new PasswordResetBrokerManager($app);
@@ -223,7 +223,7 @@ class FortServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    protected function registerVerificationBroker()
+    protected function registerVerificationBroker(): void
     {
         $this->app->singleton('rinvex.fort.emailverification', function ($app) {
             return new EmailVerificationBrokerManager($app);
@@ -239,7 +239,7 @@ class FortServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    protected function registerBladeExtensions()
+    protected function registerBladeExtensions(): void
     {
         $this->app->afterResolving('blade.compiler', function (BladeCompiler $bladeCompiler) {
 
@@ -266,7 +266,7 @@ class FortServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    protected function registerCommands()
+    protected function registerCommands(): void
     {
         // Register artisan commands
         foreach ($this->commands as $key => $value) {

@@ -100,7 +100,7 @@ class PasswordResetBrokerManager implements PasswordBrokerFactory
      *
      * @return void
      */
-    public function setDefaultDriver($name)
+    public function setDefaultDriver($name): void
     {
         $this->app['config']['auth.defaults.passwords'] = $name;
     }

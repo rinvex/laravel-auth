@@ -48,7 +48,7 @@ trait HasAbilities
      *
      * @return void
      */
-    public function setAbilitiesAttribute($abilities)
+    public function setAbilitiesAttribute($abilities): void
     {
         static::saved(function (self $model) use ($abilities) {
             $model->syncAbilities($abilities);

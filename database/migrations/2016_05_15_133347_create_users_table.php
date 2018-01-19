@@ -13,7 +13,7 @@ class CreateUsersTable extends Migration
      *
      * @return void
      */
-    public function up()
+    public function up(): void
     {
         Schema::create(config('rinvex.fort.tables.users'), function (Blueprint $table) {
             // Columns
@@ -54,7 +54,7 @@ class CreateUsersTable extends Migration
      *
      * @return void
      */
-    public function down()
+    public function down(): void
     {
         Schema::dropIfExists(config('rinvex.fort.tables.users'));
     }

@@ -30,7 +30,7 @@ class UpdateLastActivity
      *
      * @return void
      */
-    public function terminate($request, $response)
+    public function terminate($request, $response): void
     {
         if ($user = $request->user()) {
             // We are using database queries rather than eloquent, to bypass triggering events.

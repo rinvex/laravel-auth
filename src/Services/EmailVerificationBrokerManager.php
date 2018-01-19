@@ -100,7 +100,7 @@ class EmailVerificationBrokerManager implements EmailVerificationBrokerFactoryCo
      *
      * @return void
      */
-    public function setDefaultDriver($name)
+    public function setDefaultDriver($name): void
     {
         $this->app['config']['rinvex.fort.emailverification.broker'] = $name;
     }
