@@ -13,7 +13,7 @@ trait CanVerifyEmail
      *
      * @return string
      */
-    public function getEmailForVerification()
+    public function getEmailForVerification(): string
     {
         return $this->email;
     }
@@ -23,7 +23,7 @@ trait CanVerifyEmail
      *
      * @return bool
      */
-    public function isEmailVerified()
+    public function isEmailVerified(): bool
     {
         return (bool) $this->email_verified;
     }

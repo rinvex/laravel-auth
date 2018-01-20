@@ -7,6 +7,7 @@ namespace Rinvex\Fort\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
 use Rinvex\Fort\Contracts\SessionContract;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 /**
  * Rinvex\Fort\Models\Session.
@@ -90,7 +91,7 @@ class Session extends Model implements SessionContract
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function user()
+    public function user(): BelongsTo
     {
         $userModel = config('auth.providers.'.config('auth.guards.'.config('auth.defaults.guard').'.provider').'.model');
 

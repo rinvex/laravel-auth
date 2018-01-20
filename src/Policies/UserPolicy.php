@@ -19,7 +19,7 @@ class UserPolicy
      *
      * @return bool
      */
-    public function list($ability, UserContract $user)
+    public function list($ability, UserContract $user): bool
     {
         return $user->allAbilities->pluck('slug')->contains($ability);
     }
@@ -32,7 +32,7 @@ class UserPolicy
      *
      * @return bool
      */
-    public function create($ability, UserContract $user)
+    public function create($ability, UserContract $user): bool
     {
         return $user->allAbilities->pluck('slug')->contains($ability);
     }
@@ -46,7 +46,7 @@ class UserPolicy
      *
      * @return bool
      */
-    public function update($ability, UserContract $user, UserContract $resource)
+    public function update($ability, UserContract $user, UserContract $resource): bool
     {
         return $user->allAbilities->pluck('slug')->contains($ability)   // User can update users
                && ! $resource->isSuperadmin()                           // RESOURCE user is NOT superadmin
@@ -62,7 +62,7 @@ class UserPolicy
      *
      * @return bool
      */
-    public function delete($ability, UserContract $user, UserContract $resource)
+    public function delete($ability, UserContract $user, UserContract $resource): bool
     {
         return $user->allAbilities->pluck('slug')->contains($ability)   // User can delete users
                && $resource->getKey() !== $user->getKey()               // User can NOT delete himself

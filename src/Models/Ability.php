@@ -9,6 +9,7 @@ use Rinvex\Cacheable\CacheableEloquent;
 use Rinvex\Fort\Contracts\AbilityContract;
 use Rinvex\Support\Traits\HasTranslations;
 use Rinvex\Support\Traits\ValidatingTrait;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 /**
  * Rinvex\Fort\Models\Ability.
@@ -156,7 +157,7 @@ class Ability extends Model implements AbilityContract
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
-    public function roles()
+    public function roles(): BelongsToMany
     {
         return $this->belongsToMany(config('rinvex.fort.models.role'), config('rinvex.fort.tables.ability_role'), 'ability_id', 'role_id')
                     ->withTimestamps();
@@ -167,7 +168,7 @@ class Ability extends Model implements AbilityContract
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
-    public function users()
+    public function users(): BelongsToMany
     {
         $userModel = config('auth.providers.'.config('auth.guards.'.config('auth.defaults.guard').'.provider').'.model');
 
@@ -180,7 +181,7 @@ class Ability extends Model implements AbilityContract
      *
      * @return bool
      */
-    public function isSuperadmin()
+    public function isSuperadmin(): bool
     {
         return $this->action === 'superadmin' && $this->resource === 'global' && ! $this->policy;
     }
@@ -190,7 +191,7 @@ class Ability extends Model implements AbilityContract
      *
      * @return bool
      */
-    public function isProtected()
+    public function isProtected(): bool
     {
         return in_array($this->getKey(), config('rinvex.fort.protected.abilities'));
     }
@@ -200,7 +201,7 @@ class Ability extends Model implements AbilityContract
      *
      * @return string
      */
-    public function getSlugAttribute()
+    public function getSlugAttribute(): string
     {
         return $this->action.'-'.$this->resource;
     }

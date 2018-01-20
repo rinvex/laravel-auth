@@ -63,7 +63,7 @@ class PasswordResetBroker implements PasswordResetBrokerContract
      *
      * @return string
      */
-    public function sendResetLink(array $credentials)
+    public function sendResetLink(array $credentials): string
     {
         // First we will check to see if we found a user at the given credentials and
         // if we did not we will redirect back to this current URI with a piece of
@@ -132,7 +132,7 @@ class PasswordResetBroker implements PasswordResetBrokerContract
      *
      * @return bool
      */
-    public function validateNewPassword(array $credentials)
+    public function validateNewPassword(array $credentials): bool
     {
         if (isset($this->passwordValidator)) {
             list($password, $confirm) = [
@@ -155,7 +155,7 @@ class PasswordResetBroker implements PasswordResetBrokerContract
      *
      * @return bool
      */
-    protected function validatePasswordWithDefaults(array $credentials)
+    protected function validatePasswordWithDefaults(array $credentials): bool
     {
         list($password, $confirm) = [
             $credentials['password'],
@@ -174,7 +174,7 @@ class PasswordResetBroker implements PasswordResetBrokerContract
      *
      * @return \Rinvex\Fort\Contracts\CanResetPasswordContract
      */
-    public function getUser(array $credentials)
+    public function getUser(array $credentials): CanResetPasswordContract
     {
         $user = $this->users->retrieveByCredentials(Arr::only($credentials, ['email']));
 
@@ -193,7 +193,7 @@ class PasswordResetBroker implements PasswordResetBrokerContract
      *
      * @return string
      */
-    public function createToken(CanResetPasswordContract $user, $expiration)
+    public function createToken(CanResetPasswordContract $user, $expiration): string
     {
         $payload = $this->buildPayload($user, $user->getEmailForPasswordReset(), $expiration);
 
@@ -208,7 +208,7 @@ class PasswordResetBroker implements PasswordResetBrokerContract
      *
      * @return bool
      */
-    public function validateToken(CanResetPasswordContract $user, array $credentials)
+    public function validateToken(CanResetPasswordContract $user, array $credentials): bool
     {
         $payload = $this->buildPayload($user, $credentials['email'], $credentials['expiration']);
 
@@ -222,7 +222,7 @@ class PasswordResetBroker implements PasswordResetBrokerContract
      *
      * @return bool
      */
-    public function validateTimestamp($expiration)
+    public function validateTimestamp($expiration): bool
     {
         return now()->createFromTimestamp($expiration)->isFuture();
     }
@@ -232,7 +232,7 @@ class PasswordResetBroker implements PasswordResetBrokerContract
      *
      * @return string
      */
-    public function getKey()
+    public function getKey(): string
     {
         if (Str::startsWith($this->key, 'base64:')) {
             return base64_decode(mb_substr($this->key, 7));
@@ -250,7 +250,7 @@ class PasswordResetBroker implements PasswordResetBrokerContract
      *
      * @return string
      */
-    protected function buildPayload(CanResetPasswordContract $user, $email, $expiration)
+    protected function buildPayload(CanResetPasswordContract $user, $email, $expiration): string
     {
         return implode(';', [
             $email,

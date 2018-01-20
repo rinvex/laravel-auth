@@ -19,7 +19,7 @@ class AdminareaPolicy
      *
      * @return bool
      */
-    public function access($ability, UserContract $user)
+    public function access($ability, UserContract $user): bool
     {
         return $user->allAbilities->pluck('slug')->contains($ability);
     }

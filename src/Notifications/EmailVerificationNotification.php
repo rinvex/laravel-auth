@@ -58,7 +58,7 @@ class EmailVerificationNotification extends Notification implements ShouldQueue
      *
      * @return \Illuminate\Notifications\Messages\MailMessage
      */
-    public function toMail($notifiable)
+    public function toMail($notifiable): MailMessage
     {
         $email = $notifiable->getEmailForVerification();
         $link = route('frontarea.verification.email.verify')."?email={$email}&expiration={$this->expiration}&token={$this->token}";

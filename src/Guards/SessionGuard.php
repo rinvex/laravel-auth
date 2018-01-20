@@ -79,7 +79,7 @@ class SessionGuard extends BaseSessionGuard
      *
      * @return string
      */
-    public function attempt(array $credentials = [], $remember = false)
+    public function attempt(array $credentials = [], $remember = false): string
     {
         // Fire the authentication attempt event
         $this->fireAttemptEvent($credentials, $remember);
@@ -156,7 +156,7 @@ class SessionGuard extends BaseSessionGuard
      *
      * @return string
      */
-    public function login(AuthenticatableContract $user, $remember = false)
+    public function login(AuthenticatableContract $user, $remember = false): string
     {
         // Check persistence mode
         if (config('rinvex.fort.persistence') === 'single') {
@@ -209,7 +209,7 @@ class SessionGuard extends BaseSessionGuard
      *
      * @return void
      */
-    public function logout(): void
+    public function logout()
     {
         $user = $this->user();
 
@@ -256,7 +256,7 @@ class SessionGuard extends BaseSessionGuard
      *
      * @return string
      */
-    public function attemptTwoFactor(AuthenticatableTwoFactorContract $user, $token)
+    public function attemptTwoFactor(AuthenticatableTwoFactorContract $user, $token): string
     {
         // Verify TwoFactor authentication
         if ($this->session->has('_twofactor') && ($this->isValidTwoFactorTotp($user, $token) || $this->isValidTwoFactorBackup($user, $token) || $this->isValidTwoFactorPhone($user, $token))) {
@@ -300,7 +300,7 @@ class SessionGuard extends BaseSessionGuard
      *
      * @return bool
      */
-    protected function isValidTwoFactorPhone(AuthenticatableTwoFactorContract $user, $token)
+    protected function isValidTwoFactorPhone(AuthenticatableTwoFactorContract $user, $token): bool
     {
         $settings = $user->getTwoFactor();
         $authyId = array_get($settings, 'phone.authy_id');
@@ -316,7 +316,7 @@ class SessionGuard extends BaseSessionGuard
      *
      * @return bool
      */
-    protected function isValidTwoFactorBackup(AuthenticatableTwoFactorContract $user, $token)
+    protected function isValidTwoFactorBackup(AuthenticatableTwoFactorContract $user, $token): bool
     {
         $backup = array_get($user->getTwoFactor(), 'totp.backup', []);
         $result = mb_strlen($token) === 10 && in_array($token, $backup);
@@ -333,7 +333,7 @@ class SessionGuard extends BaseSessionGuard
      *
      * @return bool
      */
-    protected function isValidTwoFactorTotp(AuthenticatableTwoFactorContract $user, $token)
+    protected function isValidTwoFactorTotp(AuthenticatableTwoFactorContract $user, $token): bool
     {
         $totpProvider = app(Google2FA::class);
         $secret = array_get($user->getTwoFactor(), 'totp.secret');

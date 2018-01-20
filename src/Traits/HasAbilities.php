@@ -108,7 +108,7 @@ trait HasAbilities
      *
      * @return array
      */
-    protected function parseSluggedAbilities($abilities)
+    protected function parseSluggedAbilities($abilities): array
     {
         $model = app('rinvex.fort.ability')->query();
 

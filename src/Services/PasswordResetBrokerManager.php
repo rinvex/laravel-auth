@@ -6,6 +6,7 @@ namespace Rinvex\Fort\Services;
 
 use InvalidArgumentException;
 use Illuminate\Contracts\Auth\PasswordBrokerFactory;
+use Rinvex\Fort\Contracts\PasswordResetBrokerContract;
 
 class PasswordResetBrokerManager implements PasswordBrokerFactory
 {
@@ -40,7 +41,7 @@ class PasswordResetBrokerManager implements PasswordBrokerFactory
      *
      * @return \Rinvex\Fort\Contracts\PasswordResetBrokerContract
      */
-    public function broker($name = null)
+    public function broker($name = null): PasswordResetBrokerContract
     {
         $name = $name ?: $this->getDefaultDriver();
 
@@ -56,7 +57,7 @@ class PasswordResetBrokerManager implements PasswordBrokerFactory
      *
      * @return \Rinvex\Fort\Contracts\PasswordResetBrokerContract
      */
-    protected function resolve($name)
+    protected function resolve($name): PasswordResetBrokerContract
     {
         $config = $this->getConfig($name);
 
@@ -78,7 +79,7 @@ class PasswordResetBrokerManager implements PasswordBrokerFactory
      *
      * @return array
      */
-    protected function getConfig($name)
+    protected function getConfig($name): array
     {
         return $this->app['config']["auth.passwords.{$name}"];
     }
@@ -88,7 +89,7 @@ class PasswordResetBrokerManager implements PasswordBrokerFactory
      *
      * @return string
      */
-    public function getDefaultDriver()
+    public function getDefaultDriver(): string
     {
         return $this->app['config']['auth.defaults.passwords'];
     }

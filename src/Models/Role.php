@@ -162,7 +162,7 @@ class Role extends Model implements RoleContract
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
-    public function users()
+    public function users(): BelongsToMany
     {
         $userModel = config('auth.providers.'.config('auth.guards.'.config('auth.defaults.guard').'.provider').'.model');
 
@@ -188,7 +188,7 @@ class Role extends Model implements RoleContract
      *
      * @return bool
      */
-    public function isSuperadmin()
+    public function isSuperadmin(): bool
     {
         return $this->abilities->where('action', 'superadmin')->where('resource', 'global')->where('policy', null);
     }
@@ -198,7 +198,7 @@ class Role extends Model implements RoleContract
      *
      * @return bool
      */
-    public function isProtected()
+    public function isProtected(): bool
     {
         return in_array($this->getKey(), config('rinvex.fort.protected.roles'));
     }

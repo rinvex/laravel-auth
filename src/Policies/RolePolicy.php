@@ -20,7 +20,7 @@ class RolePolicy
      *
      * @return bool
      */
-    public function list($ability, UserContract $user)
+    public function list($ability, UserContract $user): bool
     {
         return $user->allAbilities->pluck('slug')->contains($ability);
     }
@@ -33,7 +33,7 @@ class RolePolicy
      *
      * @return bool
      */
-    public function create($ability, UserContract $user)
+    public function create($ability, UserContract $user): bool
     {
         return $user->allAbilities->pluck('slug')->contains($ability);
     }
@@ -47,7 +47,7 @@ class RolePolicy
      *
      * @return bool
      */
-    public function update($ability, UserContract $user, RoleContract $resource)
+    public function update($ability, UserContract $user, RoleContract $resource): bool
     {
         return $user->allAbilities->pluck('slug')->contains($ability)           // User can update roles
                && $user->hasAnyRoles($resource)                                 // User already have RESOURCE role
@@ -64,7 +64,7 @@ class RolePolicy
      *
      * @return bool
      */
-    public function delete($ability, UserContract $user, RoleContract $resource)
+    public function delete($ability, UserContract $user, RoleContract $resource): bool
     {
         return $resource->abilities->isEmpty()                                  // RESOURCE role has no abilities attached
                && $resource->users->isEmpty()                                   // RESOURCE role has no users attached
@@ -84,7 +84,7 @@ class RolePolicy
      *
      * @return bool
      */
-    public function assign($ability, UserContract $user, RoleContract $resource, UserContract $resourced)
+    public function assign($ability, UserContract $user, RoleContract $resource, UserContract $resourced): bool
     {
         return $user->allAbilities->pluck('slug')->contains($ability)           // User can assign roles
                && $user->allAbilities->pluck('slug')->contains($resource->slug) // User already have RESOURCE role

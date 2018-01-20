@@ -20,7 +20,7 @@ class AbilityPolicy
      *
      * @return bool
      */
-    public function list($ability, UserContract $user)
+    public function list($ability, UserContract $user): bool
     {
         return $user->allAbilities->pluck('slug')->contains($ability);
     }
@@ -33,7 +33,7 @@ class AbilityPolicy
      *
      * @return bool
      */
-    public function create($ability, UserContract $user)
+    public function create($ability, UserContract $user): bool
     {
         return $user->allAbilities->pluck('slug')->contains($ability);
     }
@@ -47,7 +47,7 @@ class AbilityPolicy
      *
      * @return bool
      */
-    public function update($ability, UserContract $user, AbilityContract $resource)
+    public function update($ability, UserContract $user, AbilityContract $resource): bool
     {
         return $user->allAbilities->pluck('slug')->contains($ability)           // User can update abilities
                && $user->allAbilities->pluck('slug')->contains($resource->slug) // User already have RESOURCE ability
@@ -64,7 +64,7 @@ class AbilityPolicy
      *
      * @return bool
      */
-    public function delete($ability, UserContract $user, AbilityContract $resource)
+    public function delete($ability, UserContract $user, AbilityContract $resource): bool
     {
         return $resource->roles->isEmpty()                                      // RESOURCE ability has no roles attached
                && $resource->users->isEmpty()                                   // RESOURCE ability has no users attached
@@ -84,7 +84,7 @@ class AbilityPolicy
      *
      * @return bool
      */
-    public function grant($ability, UserContract $user, AbilityContract $resource, UserContract $resourced)
+    public function grant($ability, UserContract $user, AbilityContract $resource, UserContract $resourced): bool
     {
         return $user->allAbilities->pluck('slug')->contains($ability)           // User can grant abilities
                && $user->allAbilities->pluck('slug')->contains($resource->slug) // User already have RESOURCE ability

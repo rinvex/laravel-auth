@@ -19,7 +19,7 @@ trait ThrottlesLogins
      *
      * @return bool
      */
-    protected function hasTooManyLoginAttempts(Request $request)
+    protected function hasTooManyLoginAttempts(Request $request): bool
     {
         $throttleKey = $this->throttleKey($request);
         $throttleAttempts = config('rinvex.fort.throttle.max_login_attempts', 5);
@@ -35,7 +35,7 @@ trait ThrottlesLogins
      *
      * @return string
      */
-    protected function throttleKey(Request $request)
+    protected function throttleKey(Request $request): string
     {
         return Str::lower($request->input('loginfield')).'|'.$request->ip();
     }
@@ -47,7 +47,7 @@ trait ThrottlesLogins
      *
      * @return int
      */
-    public function secondsRemainingOnLockout(Request $request)
+    public function secondsRemainingOnLockout(Request $request): int
     {
         return $this->limiter()->availableIn($this->throttleKey($request));
     }

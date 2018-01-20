@@ -108,7 +108,7 @@ class EmailVerificationBroker implements EmailVerificationBrokerContract
      *
      * @return \Rinvex\Fort\Contracts\CanVerifyEmailContract
      */
-    public function getUser(array $credentials)
+    public function getUser(array $credentials): CanVerifyEmailContract
     {
         $user = $this->users->retrieveByCredentials(Arr::only($credentials, ['email']));
 
@@ -127,7 +127,7 @@ class EmailVerificationBroker implements EmailVerificationBrokerContract
      *
      * @return string
      */
-    public function createToken(CanVerifyEmailContract $user, $expiration)
+    public function createToken(CanVerifyEmailContract $user, $expiration): string
     {
         $payload = $this->buildPayload($user, $user->getEmailForVerification(), $expiration);
 
@@ -142,7 +142,7 @@ class EmailVerificationBroker implements EmailVerificationBrokerContract
      *
      * @return bool
      */
-    public function validateToken(CanVerifyEmailContract $user, array $credentials)
+    public function validateToken(CanVerifyEmailContract $user, array $credentials): bool
     {
         $payload = $this->buildPayload($user, $credentials['email'], $credentials['expiration']);
 
@@ -156,7 +156,7 @@ class EmailVerificationBroker implements EmailVerificationBrokerContract
      *
      * @return bool
      */
-    public function validateTimestamp($expiration)
+    public function validateTimestamp($expiration): bool
     {
         return now()->createFromTimestamp($expiration)->isFuture();
     }
@@ -166,7 +166,7 @@ class EmailVerificationBroker implements EmailVerificationBrokerContract
      *
      * @return string
      */
-    public function getKey()
+    public function getKey(): string
     {
         if (Str::startsWith($this->key, 'base64:')) {
             return base64_decode(mb_substr($this->key, 7));
@@ -184,7 +184,7 @@ class EmailVerificationBroker implements EmailVerificationBrokerContract
      *
      * @return string
      */
-    protected function buildPayload(CanVerifyEmailContract $user, $email, $expiration)
+    protected function buildPayload(CanVerifyEmailContract $user, $email, $expiration): string
     {
         return implode(';', [
             $email,

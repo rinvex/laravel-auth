@@ -50,7 +50,7 @@ interface EmailVerificationBrokerContract
      *
      * @return string
      */
-    public function sendVerificationLink(array $credentials);
+    public function sendVerificationLink(array $credentials): string;
 
     /**
      * Verify given account.

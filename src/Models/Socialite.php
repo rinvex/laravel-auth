@@ -6,6 +6,7 @@ namespace Rinvex\Fort\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Rinvex\Fort\Contracts\SocialiteContract;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 /**
  * Rinvex\Fort\Models\Socialite.
@@ -63,7 +64,7 @@ class Socialite extends Model implements SocialiteContract
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function user()
+    public function user(): BelongsTo
     {
         $userModel = config('auth.providers.'.config('auth.guards.'.config('auth.defaults.guard').'.provider').'.model');
 

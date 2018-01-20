@@ -58,7 +58,7 @@ class PasswordResetNotification extends Notification implements ShouldQueue
      *
      * @return \Illuminate\Notifications\Messages\MailMessage
      */
-    public function toMail($notifiable)
+    public function toMail($notifiable): MailMessage
     {
         $email = $notifiable->getEmailForPasswordReset();
         $link = route('frontarea.passwordreset.reset')."?email={$email}&expiration={$this->expiration}&token={$this->token}";

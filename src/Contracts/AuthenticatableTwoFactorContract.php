@@ -9,7 +9,7 @@ interface AuthenticatableTwoFactorContract
     /**
      * Get the TwoFactor options.
      *
-     * @return array
+     * @return array|null
      */
-    public function getTwoFactor();
+    public function getTwoFactor(): ?array;
 }

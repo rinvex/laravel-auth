@@ -9,9 +9,9 @@ trait AuthenticatableTwoFactor
     /**
      * Get the TwoFactor options.
      *
-     * @return array
+     * @return array|null
      */
-    public function getTwoFactor()
+    public function getTwoFactor(): ?array
     {
         return $this->two_factor;
     }

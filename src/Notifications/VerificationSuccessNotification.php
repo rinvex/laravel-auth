@@ -49,7 +49,7 @@ class VerificationSuccessNotification extends Notification implements ShouldQueu
      *
      * @return \Illuminate\Notifications\Messages\MailMessage
      */
-    public function toMail($notifiable)
+    public function toMail($notifiable): MailMessage
     {
         if ($this->isActive) {
             $phrase = trans('emails.verification.email.success.intro_default');

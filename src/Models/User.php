@@ -4,7 +4,10 @@ declare(strict_types=1);
 
 namespace Rinvex\Fort\Models;
 
+use Rinvex\Country\Country;
+use Rinvex\Language\Language;
 use Rinvex\Fort\Traits\HasRoles;
+use Illuminate\Support\Collection;
 use Illuminate\Auth\Authenticatable;
 use Illuminate\Support\Facades\Hash;
 use Rinvex\Fort\Traits\CanVerifyEmail;
@@ -271,7 +274,7 @@ class User extends Model implements UserContract, AuthenticatableContract, Authe
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
-    public function abilities()
+    public function abilities(): BelongsToMany
     {
         return $this->belongsToMany(config('rinvex.fort.models.ability'), config('rinvex.fort.tables.ability_user'), 'user_id', 'ability_id')
                     ->withTimestamps();
@@ -313,7 +316,7 @@ class User extends Model implements UserContract, AuthenticatableContract, Authe
      *
      * @return string
      */
-    public function getNameAttribute()
+    public function getNameAttribute(): string
     {
         $name = trim(implode(' ', [$this->name_prefix, $this->first_name, $this->middle_name, $this->last_name, $this->name_suffix]));
 
@@ -325,7 +328,7 @@ class User extends Model implements UserContract, AuthenticatableContract, Authe
      *
      * @return \Illuminate\Support\Collection
      */
-    public function getAllAbilitiesAttribute()
+    public function getAllAbilitiesAttribute(): Collection
     {
         return $this->abilities->merge($this->roles->pluck('abilities')->collapse());
     }
@@ -355,7 +358,7 @@ class User extends Model implements UserContract, AuthenticatableContract, Authe
      *
      * @return int
      */
-    public function routeNotificationForAuthy()
+    public function routeNotificationForAuthy(): int
     {
         if (! ($authyId = array_get($this->getTwoFactor(), 'phone.authy_id')) && $this->getEmailForVerification() && $this->getPhoneForVerification() && $this->getCountryForVerification()) {
             $result = app('rinvex.authy.user')->register($this->getEmailForVerification(), preg_replace('/[^0-9]/', '', $this->getPhoneForVerification()), $this->getCountryForVerification());
@@ -378,7 +381,7 @@ class User extends Model implements UserContract, AuthenticatableContract, Authe
      *
      * @return \Rinvex\Country\Country
      */
-    public function getCountryAttribute()
+    public function getCountryAttribute(): Country
     {
         return country($this->country_code);
     }
@@ -388,7 +391,7 @@ class User extends Model implements UserContract, AuthenticatableContract, Authe
      *
      * @return \Rinvex\Language\Language
      */
-    public function getLanguageAttribute()
+    public function getLanguageAttribute(): Language
     {
         return language($this->language_code);
     }

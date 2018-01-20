@@ -13,7 +13,7 @@ trait CanVerifyPhone
      *
      * @return string
      */
-    public function getPhoneForVerification()
+    public function getPhoneForVerification(): string
     {
         return $this->phone;
     }
@@ -23,7 +23,7 @@ trait CanVerifyPhone
      *
      * @return string
      */
-    public function getCountryForVerification()
+    public function getCountryForVerification(): string
     {
         return $this->country_code ? country($this->country_code)->getCallingCode() : null;
     }
@@ -33,7 +33,7 @@ trait CanVerifyPhone
      *
      * @return bool
      */
-    public function isPhoneVerified()
+    public function isPhoneVerified(): bool
     {
         return (bool) $this->phone_verified;
     }

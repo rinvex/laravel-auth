@@ -11,14 +11,14 @@ interface CanVerifyEmailContract
      *
      * @return string
      */
-    public function getEmailForVerification();
+    public function getEmailForVerification(): string;
 
     /**
      * Determine if email is verified or not.
      *
      * @return bool
      */
-    public function isEmailVerified();
+    public function isEmailVerified(): bool;
 
     /**
      * Send the email verification notification.
@@ -28,5 +28,5 @@ interface CanVerifyEmailContract
      *
      * @return void
      */
-    public function sendEmailVerificationNotification($token, $expiration);
+    public function sendEmailVerificationNotification($token, $expiration): void;
 }

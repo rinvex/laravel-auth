@@ -18,7 +18,7 @@ trait GetsMiddleware
      *
      * @return string|null
      */
-    protected function getGuard()
+    protected function getGuard(): ?string
     {
         return $this->guard;
     }
@@ -36,7 +36,7 @@ trait GetsMiddleware
      *
      * @return string
      */
-    protected function getAuthMiddleware()
+    protected function getAuthMiddleware(): string
     {
         return ($guard = $this->getGuard()) ? 'auth:'.$guard : 'auth';
     }

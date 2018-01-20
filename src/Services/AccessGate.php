@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Rinvex\Fort\Services;
 
+use Closure;
 use Illuminate\Support\Str;
 use InvalidArgumentException;
 use Illuminate\Auth\Access\Gate;
@@ -22,7 +23,7 @@ class AccessGate extends Gate
      *
      * @return \Illuminate\Auth\Access\Response
      */
-    public function authorize($ability, $arguments = [])
+    public function authorize($ability, $arguments = []): Response
     {
         $result = $this->raw($ability, $arguments);
 
@@ -71,7 +72,7 @@ class AccessGate extends Gate
      *
      * @return \Closure
      */
-    protected function buildCustomAbilityCallback($callback, $ability)
+    protected function buildCustomAbilityCallback($callback, $ability): Closure
     {
         return function () use ($callback, $ability) {
             list($class, $method) = explode('@', $callback);

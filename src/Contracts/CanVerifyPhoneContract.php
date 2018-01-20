@@ -11,21 +11,21 @@ interface CanVerifyPhoneContract
      *
      * @return string
      */
-    public function getPhoneForVerification();
+    public function getPhoneForVerification(): string;
 
     /**
      * Get the country for verification.
      *
      * @return string
      */
-    public function getCountryForVerification();
+    public function getCountryForVerification(): string;
 
     /**
      * Determine if phone is verified or not.
      *
      * @return bool
      */
-    public function isPhoneVerified();
+    public function isPhoneVerified(): bool;
 
     /**
      * Send the phone verification notification.
@@ -35,5 +35,5 @@ interface CanVerifyPhoneContract
      *
      * @return void
      */
-    public function sendPhoneVerificationNotification($method, $force);
+    public function sendPhoneVerificationNotification($method, $force): void;
 }

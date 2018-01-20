@@ -13,7 +13,7 @@ trait CanResetPassword
      *
      * @return string
      */
-    public function getEmailForPasswordReset()
+    public function getEmailForPasswordReset(): string
     {
         return $this->email;
     }

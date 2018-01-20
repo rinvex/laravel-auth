@@ -57,7 +57,7 @@ class PhoneVerificationNotification extends Notification implements ShouldQueue
      *
      * @return \NotificationChannels\Authy\AuthyMessage
      */
-    public function toAuthy()
+    public function toAuthy(): AuthyMessage
     {
         $message = AuthyMessage::create()->method($this->method);
 

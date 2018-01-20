@@ -49,7 +49,7 @@ class RegistrationSuccessNotification extends Notification implements ShouldQueu
      *
      * @return \Illuminate\Notifications\Messages\MailMessage
      */
-    public function toMail($notifiable)
+    public function toMail($notifiable): MailMessage
     {
         if ($this->social) {
             if (config('rinvex.fort.registration.moderated')) {
