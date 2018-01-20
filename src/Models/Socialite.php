@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Rinvex\Fort\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Rinvex\Fort\Contracts\SocialiteContract;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 /**
@@ -27,7 +26,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @method static \Illuminate\Database\Eloquent\Builder|\Rinvex\Fort\Models\Socialite whereUserId($value)
  * @mixin \Eloquent
  */
-class Socialite extends Model implements SocialiteContract
+class Socialite extends Model
 {
     /**
      * {@inheritdoc}

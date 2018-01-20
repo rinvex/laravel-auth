@@ -6,7 +6,6 @@ namespace Rinvex\Fort\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Rinvex\Cacheable\CacheableEloquent;
-use Rinvex\Fort\Contracts\AbilityContract;
 use Rinvex\Support\Traits\HasTranslations;
 use Rinvex\Support\Traits\ValidatingTrait;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
@@ -38,7 +37,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
  * @method static \Illuminate\Database\Eloquent\Builder|\Rinvex\Fort\Models\Ability whereUpdatedAt($value)
  * @mixin \Eloquent
  */
-class Ability extends Model implements AbilityContract
+class Ability extends Model
 {
     use HasTranslations;
     use ValidatingTrait;

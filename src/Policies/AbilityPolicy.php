@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Rinvex\Fort\Policies;
 
-use Rinvex\Fort\Contracts\UserContract;
-use Rinvex\Fort\Contracts\AbilityContract;
+use Rinvex\Fort\Models\User;
+use Rinvex\Fort\Models\Ability;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
 class AbilityPolicy
@@ -16,11 +16,11 @@ class AbilityPolicy
      * Determine whether the user can list abilities.
      *
      * @param string                              $ability
-     * @param \Rinvex\Fort\Contracts\UserContract $user
+     * @param \Rinvex\Fort\Models\User $user
      *
      * @return bool
      */
-    public function list($ability, UserContract $user): bool
+    public function list($ability, User $user): bool
     {
         return $user->allAbilities->pluck('slug')->contains($ability);
     }
@@ -29,11 +29,11 @@ class AbilityPolicy
      * Determine whether the user can create abilities.
      *
      * @param string                              $ability
-     * @param \Rinvex\Fort\Contracts\UserContract $user
+     * @param \Rinvex\Fort\Models\User $user
      *
      * @return bool
      */
-    public function create($ability, UserContract $user): bool
+    public function create($ability, User $user): bool
     {
         return $user->allAbilities->pluck('slug')->contains($ability);
     }
@@ -42,12 +42,12 @@ class AbilityPolicy
      * Determine whether the user can update the ability.
      *
      * @param string                                 $ability
-     * @param \Rinvex\Fort\Contracts\UserContract    $user
-     * @param \Rinvex\Fort\Contracts\AbilityContract $resource
+     * @param \Rinvex\Fort\Models\User    $user
+     * @param \Rinvex\Fort\Models\Ability $resource
      *
      * @return bool
      */
-    public function update($ability, UserContract $user, AbilityContract $resource): bool
+    public function update($ability, User $user, Ability $resource): bool
     {
         return $user->allAbilities->pluck('slug')->contains($ability)           // User can update abilities
                && $user->allAbilities->pluck('slug')->contains($resource->slug) // User already have RESOURCE ability
@@ -59,12 +59,12 @@ class AbilityPolicy
      * Determine whether the user can delete the ability.
      *
      * @param string                                 $ability
-     * @param \Rinvex\Fort\Contracts\UserContract    $user
-     * @param \Rinvex\Fort\Contracts\AbilityContract $resource
+     * @param \Rinvex\Fort\Models\User    $user
+     * @param \Rinvex\Fort\Models\Ability $resource
      *
      * @return bool
      */
-    public function delete($ability, UserContract $user, AbilityContract $resource): bool
+    public function delete($ability, User $user, Ability $resource): bool
     {
         return $resource->roles->isEmpty()                                      // RESOURCE ability has no roles attached
                && $resource->users->isEmpty()                                   // RESOURCE ability has no users attached
@@ -78,13 +78,13 @@ class AbilityPolicy
      * Determine whether the user can grant the given ability to the given user.
      *
      * @param string                                 $ability
-     * @param \Rinvex\Fort\Contracts\UserContract    $user
-     * @param \Rinvex\Fort\Contracts\AbilityContract $resource
-     * @param \Rinvex\Fort\Contracts\UserContract    $resourced
+     * @param \Rinvex\Fort\Models\User    $user
+     * @param \Rinvex\Fort\Models\Ability $resource
+     * @param \Rinvex\Fort\Models\User    $resourced
      *
      * @return bool
      */
-    public function grant($ability, UserContract $user, AbilityContract $resource, UserContract $resourced): bool
+    public function grant($ability, User $user, Ability $resource, User $resourced): bool
     {
         return $user->allAbilities->pluck('slug')->contains($ability)           // User can grant abilities
                && $user->allAbilities->pluck('slug')->contains($resource->slug) // User already have RESOURCE ability

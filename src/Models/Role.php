@@ -9,7 +9,6 @@ use Rinvex\Support\Traits\HasSlug;
 use Rinvex\Fort\Traits\HasAbilities;
 use Illuminate\Database\Eloquent\Model;
 use Rinvex\Cacheable\CacheableEloquent;
-use Rinvex\Fort\Contracts\RoleContract;
 use Rinvex\Support\Traits\HasTranslations;
 use Rinvex\Support\Traits\ValidatingTrait;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
@@ -36,7 +35,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
  * @method static \Illuminate\Database\Eloquent\Builder|\Rinvex\Fort\Models\Role whereUpdatedAt($value)
  * @mixin \Eloquent
  */
-class Role extends Model implements RoleContract
+class Role extends Model
 {
     use HasSlug;
     use HasAbilities;

@@ -6,7 +6,6 @@ namespace Rinvex\Fort\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
-use Rinvex\Fort\Contracts\SessionContract;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 /**
@@ -39,7 +38,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @method static \Illuminate\Database\Eloquent\Builder|\Rinvex\Fort\Models\Session whereUserId($value)
  * @mixin \Eloquent
  */
-class Session extends Model implements SessionContract
+class Session extends Model
 {
     /**
      * {@inheritdoc}
