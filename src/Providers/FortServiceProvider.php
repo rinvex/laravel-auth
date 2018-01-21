@@ -4,19 +4,19 @@ declare(strict_types=1);
 
 namespace Rinvex\Fort\Providers;
 
+use Rinvex\Fort\Models\Role;
+use Rinvex\Fort\Models\User;
 use Illuminate\Routing\Router;
+use Rinvex\Fort\Models\Ability;
+use Rinvex\Fort\Models\Session;
+use Rinvex\Fort\Models\Socialite;
 use Rinvex\Fort\Guards\SessionGuard;
 use Rinvex\Fort\Services\AccessGate;
 use Illuminate\Support\ServiceProvider;
-use Rinvex\Fort\Models\Role;
-use Rinvex\Fort\Models\User;
 use Rinvex\Fort\Handlers\GenericHandler;
 use Illuminate\Support\Facades\Validator;
-use Rinvex\Fort\Models\Ability;
-use Rinvex\Fort\Models\Session;
 use Rinvex\Fort\Http\Middleware\Abilities;
 use Illuminate\View\Compilers\BladeCompiler;
-use Rinvex\Fort\Models\Socialite;
 use Rinvex\Fort\Http\Middleware\NoHttpCache;
 use Rinvex\Fort\Console\Commands\SeedCommand;
 use Rinvex\Fort\Http\Middleware\Authenticate;

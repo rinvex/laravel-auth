@@ -14,7 +14,7 @@ class AdminareaPolicy
     /**
      * Determine whether the user can access the adminarea.
      *
-     * @param string                              $ability
+     * @param string                   $ability
      * @param \Rinvex\Fort\Models\User $user
      *
      * @return bool
