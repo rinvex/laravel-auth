@@ -18,7 +18,6 @@ use Illuminate\Support\Facades\Validator;
 use Rinvex\Fort\Http\Middleware\Abilities;
 use Illuminate\View\Compilers\BladeCompiler;
 use Rinvex\Fort\Http\Middleware\NoHttpCache;
-use Rinvex\Fort\Console\Commands\SeedCommand;
 use Rinvex\Fort\Http\Middleware\Authenticate;
 use Rinvex\Fort\Console\Commands\MigrateCommand;
 use Rinvex\Fort\Console\Commands\PublishCommand;
@@ -37,7 +36,6 @@ class FortServiceProvider extends ServiceProvider
      * @var array
      */
     protected $commands = [
-        SeedCommand::class => 'command.rinvex.fort.seed',
         MigrateCommand::class => 'command.rinvex.fort.migrate',
         PublishCommand::class => 'command.rinvex.fort.publish',
         RollbackCommand::class => 'command.rinvex.fort.rollback',
