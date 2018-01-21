@@ -52,7 +52,7 @@ class EmailVerificationBroker implements EmailVerificationBrokerContract
     /**
      * {@inheritdoc}
      */
-    public function sendVerificationLink(array $credentials)
+    public function sendVerificationLink(array $credentials): string
     {
         // First we will check to see if we found a user at the given credentials and
         // if we did not we will redirect back to this current URI with a piece of
