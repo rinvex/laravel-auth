@@ -9,9 +9,7 @@ use Rinvex\Fort\Notifications\PhoneVerificationNotification;
 trait CanVerifyPhone
 {
     /**
-     * Get the phone for verification.
-     *
-     * @return string
+     * {@inheritdoc}
      */
     public function getPhoneForVerification(): string
     {
@@ -19,9 +17,7 @@ trait CanVerifyPhone
     }
 
     /**
-     * Get the country for verification.
-     *
-     * @return string
+     * {@inheritdoc}
      */
     public function getCountryForVerification(): string
     {
@@ -29,9 +25,7 @@ trait CanVerifyPhone
     }
 
     /**
-     * Determine if phone is verified or not.
-     *
-     * @return bool
+     * {@inheritdoc}
      */
     public function isPhoneVerified(): bool
     {
@@ -39,12 +33,7 @@ trait CanVerifyPhone
     }
 
     /**
-     * Send the phone verification notification.
-     *
-     * @param string $method
-     * @param bool   $force
-     *
-     * @return void
+     * {@inheritdoc}
      */
     public function sendPhoneVerificationNotification($method, $force): void
     {

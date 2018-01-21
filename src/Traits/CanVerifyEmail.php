@@ -9,9 +9,7 @@ use Rinvex\Fort\Notifications\EmailVerificationNotification;
 trait CanVerifyEmail
 {
     /**
-     * Get the email address where verification links are sent.
-     *
-     * @return string
+     * {@inheritdoc}
      */
     public function getEmailForVerification(): string
     {
@@ -19,9 +17,7 @@ trait CanVerifyEmail
     }
 
     /**
-     * Determine if email is verified or not.
-     *
-     * @return bool
+     * {@inheritdoc}
      */
     public function isEmailVerified(): bool
     {
@@ -29,12 +25,7 @@ trait CanVerifyEmail
     }
 
     /**
-     * Send the email verification notification.
-     *
-     * @param string $token
-     * @param string $expiration
-     *
-     * @return void
+     * {@inheritdoc}
      */
     public function sendEmailVerificationNotification($token, $expiration): void
     {

@@ -9,9 +9,7 @@ use Rinvex\Fort\Notifications\PasswordResetNotification;
 trait CanResetPassword
 {
     /**
-     * Get the email address where password reset links are sent.
-     *
-     * @return string
+     * {@inheritdoc}
      */
     public function getEmailForPasswordReset(): string
     {
@@ -19,12 +17,7 @@ trait CanResetPassword
     }
 
     /**
-     * Send the password reset notification.
-     *
-     * @param string $token
-     * @param string $expiration
-     *
-     * @return void
+     * {@inheritdoc}
      */
     public function sendPasswordResetNotification($token, $expiration): void
     {
