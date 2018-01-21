@@ -6,7 +6,6 @@ namespace Rinvex\Fort\Guards;
 
 use PragmaRX\Google2FA\Google2FA;
 use Rinvex\Fort\Traits\ThrottlesLogins;
-use Illuminate\Auth\Events\Logout as LogoutEvent;
 use Illuminate\Auth\SessionGuard as BaseSessionGuard;
 use Rinvex\Fort\Contracts\AuthenticatableTwoFactorContract;
 use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
@@ -63,13 +62,6 @@ class SessionGuard extends BaseSessionGuard
      * @var string
      */
     const AUTH_PHONE_VERIFIED = 'messages.verification.phone.verified';
-
-    /**
-     * Constant representing a logged out user.
-     *
-     * @var string
-     */
-    const AUTH_LOGOUT = 'messages.auth.logout';
 
     /**
      * Attempt to authenticate a user using the given credentials.
@@ -202,38 +194,6 @@ class SessionGuard extends BaseSessionGuard
         $this->session->put($this->getName(), $id);
         $this->session->forget('_twofactor');
         $this->session->migrate(true);
-    }
-
-    /**
-     * Log the user out of the application.
-     *
-     * @return void
-     */
-    public function logout()
-    {
-        $user = $this->user();
-
-        // If we have an event dispatcher instance, we can fire off the logout event
-        // so any further processing can be done. This allows the developer to be
-        // listening for anytime a user signs out of this application manually.
-        $this->clearUserDataFromStorage();
-
-        if (! is_null($this->user)) {
-            $this->cycleRememberToken($user);
-        }
-
-        if (isset($this->events)) {
-            $this->events->dispatch(new LogoutEvent($user));
-        }
-
-        // Once we have fired the logout event we will clear the users out of memory
-        // so they are no longer available as the user is no longer considered as
-        // being signed into this application and should not be available here.
-        $this->user = null;
-
-        $this->loggedOut = true;
-
-        return static::AUTH_LOGOUT;
     }
 
     /**
