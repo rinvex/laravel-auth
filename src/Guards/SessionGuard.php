@@ -5,15 +5,12 @@ declare(strict_types=1);
 namespace Rinvex\Fort\Guards;
 
 use PragmaRX\Google2FA\Google2FA;
-use Rinvex\Fort\Traits\ThrottlesLogins;
 use Illuminate\Auth\SessionGuard as BaseSessionGuard;
 use Rinvex\Fort\Contracts\AuthenticatableTwoFactorContract;
 use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 
 class SessionGuard extends BaseSessionGuard
 {
-    use ThrottlesLogins;
-
     /**
      * Constant representing a successful login.
      *
@@ -34,13 +31,6 @@ class SessionGuard extends BaseSessionGuard
      * @var string
      */
     const AUTH_UNVERIFIED = 'messages.auth.unverified';
-
-    /**
-     * Constant representing a locked out user.
-     *
-     * @var string
-     */
-    const AUTH_LOCKED_OUT = 'messages.auth.lockout';
 
     /**
      * Constant representing a user with TwoFactor authentication enabled.
@@ -80,19 +70,6 @@ class SessionGuard extends BaseSessionGuard
 
         $this->lastAttempted = $user = $this->provider->retrieveByCredentials($credentials);
 
-        // Login throttling
-        $throttles = config('rinvex.fort.throttle.enabled');
-        $lockedOut = $this->hasTooManyLoginAttempts($this->getRequest());
-
-        if ($throttles && $lockedOut) {
-            // Fire the authentication lockout event (only if user exists)
-            if ($user) {
-                $this->fireLockoutEvent($this->getRequest());
-            }
-
-            return static::AUTH_LOCKED_OUT;
-        }
-
         // If an implementation of UserInterface was returned, we'll ask the provider
         // to validate the user against the given credentials, and if they are in
         // fact valid we'll log the users into the application and return true.
@@ -125,11 +102,6 @@ class SessionGuard extends BaseSessionGuard
             }
 
             return $this->login($user, $remember);
-        }
-
-        // Invalid credentials, increment login attempts
-        if ($throttles && ! $lockedOut) {
-            $this->incrementLoginAttempts($this->getRequest());
         }
 
         // If the authentication attempt fails we will fire an event so that the user
@@ -168,9 +140,7 @@ class SessionGuard extends BaseSessionGuard
         }
 
         // Login successful, clear login attempts
-        if (config('rinvex.fort.throttle.enabled')) {
-            $this->clearLoginAttempts($this->getRequest());
-        }
+        $this->clearLoginAttempts($this->getRequest());
 
         // If we have an event dispatcher instance set we will fire an event so that
         // any listeners will hook into the authentication events and run actions

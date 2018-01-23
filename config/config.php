@@ -147,15 +147,6 @@ return [
 
     'throttle' => [
 
-        // Enable Login Throttling
-        'enabled' => true,
-
-        // Maximum Login Attempts before lockout
-        'max_login_attempts' => 5,
-
-        // Lockout Time (in minutes)
-        'lockout_time' => 1,
-
         // Send Lockout Email
         'lockout_email' => true,
 
