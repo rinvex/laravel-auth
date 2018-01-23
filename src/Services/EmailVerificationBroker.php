@@ -85,9 +85,6 @@ class EmailVerificationBroker implements EmailVerificationBrokerContract
             return $user;
         }
 
-        // Fire the email verification start event
-        event('rinvex.fort.emailverification.start', [$user]);
-
         // Once the email has been verified, we'll call the given
         // callback, then we'll delete the token and return.
         // in their persistent storage.

@@ -11,7 +11,6 @@ use Illuminate\Contracts\Events\Dispatcher;
 use Illuminate\Contracts\Container\Container;
 use Illuminate\Contracts\Auth\Authenticatable;
 use Rinvex\Fort\Notifications\RegistrationSuccessNotification;
-use Rinvex\Fort\Notifications\VerificationSuccessNotification;
 use Rinvex\Fort\Notifications\AuthenticationLockoutNotification;
 
 class GenericHandler
@@ -44,7 +43,6 @@ class GenericHandler
         $dispatcher->listen(Lockout::class, __CLASS__.'@authLockout');
         $dispatcher->listen('rinvex.fort.register.success', __CLASS__.'@registerSuccess');
         $dispatcher->listen('rinvex.fort.register.social.success', __CLASS__.'@registerSocialSuccess');
-        $dispatcher->listen('rinvex.fort.emailverification.success', __CLASS__.'@emailVerificationSuccess');
     }
 
     /**
@@ -102,20 +100,6 @@ class GenericHandler
         // Send welcome email
         if (config('rinvex.fort.registration.welcome_email')) {
             $user->notify(new RegistrationSuccessNotification(true));
-        }
-    }
-
-    /**
-     * Listen to the email verification success.
-     *
-     * @param \Illuminate\Contracts\Auth\Authenticatable $user
-     *
-     * @return void
-     */
-    public function emailVerificationSuccess(Authenticatable $user): void
-    {
-        if (config('rinvex.fort.emailverification.success_email')) {
-            $user->notify(new VerificationSuccessNotification($user->is_active));
         }
     }
 }

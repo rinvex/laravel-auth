@@ -130,8 +130,6 @@ return [
             'expire' => 60,
         ],
 
-        // Send Success Email Upon Verification
-        'success_email' => true,
 
     ],
 
