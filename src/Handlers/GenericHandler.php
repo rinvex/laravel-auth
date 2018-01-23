@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Rinvex\Fort\Handlers;
 
 use Illuminate\Http\Request;
+use Illuminate\Auth\Events\Login;
 use Illuminate\Auth\Events\Lockout;
 use Illuminate\Contracts\Events\Dispatcher;
 use Illuminate\Contracts\Container\Container;
@@ -39,6 +40,7 @@ class GenericHandler
      */
     public function subscribe(Dispatcher $dispatcher)
     {
+        $dispatcher->listen(Login::class, __CLASS__.'@authLogin');
         $dispatcher->listen(Lockout::class, __CLASS__.'@authLockout');
         $dispatcher->listen('rinvex.fort.register.success', __CLASS__.'@registerSuccess');
         $dispatcher->listen('rinvex.fort.register.social.success', __CLASS__.'@registerSocialSuccess');
@@ -59,6 +61,18 @@ class GenericHandler
 
             $user->notify(new AuthenticationLockoutNotification($request));
         }
+    }
+
+    /**
+     * Listen to the authentication login event.
+     *
+     * @param \Illuminate\Auth\Events\Login $event
+     *
+     * @return void
+     */
+    public function authLogin(Login $event): void
+    {
+        ! config('rinvex.fort.persistence') === 'single' || $event->user->sessions()->delete();
     }
 
     /**

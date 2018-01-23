@@ -81,12 +81,6 @@ class SessionGuard extends BaseSessionGuard
      */
     public function login(AuthenticatableContract $user, $remember = false): string
     {
-        // Check persistence mode
-        if (config('rinvex.fort.persistence') === 'single') {
-            $this->cycleRememberToken($user);
-            $user->sessions()->delete();
-        }
-
         $this->updateSession($user->getAuthIdentifier());
 
         // If the user should be permanently "remembered" by the application we will
