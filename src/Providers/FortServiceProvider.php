@@ -10,7 +10,6 @@ use Illuminate\Routing\Router;
 use Rinvex\Fort\Models\Ability;
 use Rinvex\Fort\Models\Session;
 use Rinvex\Fort\Models\Socialite;
-use Rinvex\Fort\Guards\SessionGuard;
 use Rinvex\Fort\Services\AccessGate;
 use Illuminate\Support\ServiceProvider;
 use Rinvex\Fort\Handlers\GenericHandler;
@@ -123,9 +122,6 @@ class FortServiceProvider extends ServiceProvider
         // Publish resources
         ! $this->app->runningInConsole() || $this->publishResources();
 
-        // Override session guard
-        $this->overrideSessionGuard();
-
         // Register event handlers
         $this->app['events']->subscribe(GenericHandler::class);
 
@@ -147,38 +143,6 @@ class FortServiceProvider extends ServiceProvider
     {
         $this->publishes([realpath(__DIR__.'/../../config/config.php') => config_path('rinvex.fort.php')], 'rinvex-fort-config');
         $this->publishes([realpath(__DIR__.'/../../database/migrations') => database_path('migrations')], 'rinvex-fort-migrations');
-    }
-
-    /**
-     * Override session guard.
-     *
-     * @return void
-     */
-    protected function overrideSessionGuard(): void
-    {
-        // Add custom session guard
-        $this->app['auth']->extend('session', function ($app, $name, array $config) {
-            $provider = $app['auth']->createUserProvider($config['provider']);
-
-            $guard = new SessionGuard($name, $provider, $app['session.store'], $app['request']);
-
-            // When using the remember me functionality of the authentication services we
-            // will need to be set the encryption instance of the guard, which allows
-            // secure, encrypted cookie values to get generated for those cookies.
-            if (method_exists($guard, 'setCookieJar')) {
-                $guard->setCookieJar($this->app['cookie']);
-            }
-
-            if (method_exists($guard, 'setDispatcher')) {
-                $guard->setDispatcher($this->app['events']);
-            }
-
-            if (method_exists($guard, 'setRequest')) {
-                $guard->setRequest($this->app->refresh('request', $guard, 'setRequest'));
-            }
-
-            return $guard;
-        });
     }
 
     /**
