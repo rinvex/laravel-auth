@@ -151,28 +151,6 @@ return [
     ],
 
     /*
-    |--------------------------------------------------------------------------
-    | TwoFactor authentication
-    |--------------------------------------------------------------------------
-    |
-    | Rinvex Fort supports a variety of TwoFactor authentication backends through
-    | unified API, giving you convenient access to each using the same syntax.
-    | Here you may set the active TwoFactor authentication providers.
-    |
-    */
-
-    'twofactor' => [
-
-        'providers' => [
-
-            'totp',
-            'phone',
-
-        ],
-
-    ],
-
-    /*
      |--------------------------------------------------------------------------
      | Protected Models
      |--------------------------------------------------------------------------
