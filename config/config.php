@@ -193,8 +193,4 @@ return [
     // List items per page (use accross data lists)
     'items_per_page' => 10,
 
-    'boot' => [
-        'override_middleware' => true,
-    ],
-
 ];

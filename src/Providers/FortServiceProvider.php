@@ -13,16 +13,11 @@ use Rinvex\Fort\Models\Socialite;
 use Rinvex\Fort\Services\AccessGate;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Validator;
-use Rinvex\Fort\Http\Middleware\Abilities;
 use Illuminate\View\Compilers\BladeCompiler;
-use Rinvex\Fort\Http\Middleware\NoHttpCache;
-use Rinvex\Fort\Http\Middleware\Authenticate;
 use Rinvex\Fort\Console\Commands\MigrateCommand;
 use Rinvex\Fort\Console\Commands\PublishCommand;
 use Rinvex\Fort\Console\Commands\RollbackCommand;
-use Rinvex\Fort\Http\Middleware\UpdateLastActivity;
 use Rinvex\Fort\Services\PasswordResetBrokerManager;
-use Rinvex\Fort\Http\Middleware\RedirectIfAuthenticated;
 use Rinvex\Fort\Services\EmailVerificationBrokerManager;
 use Illuminate\Contracts\Auth\Access\Gate as GateContract;
 
@@ -113,11 +108,6 @@ class FortServiceProvider extends ServiceProvider
             return in_array($value, array_keys(languages()));
         }, 'Language MUST be valid!');
 
-        if (config('rinvex.fort.boot.override_middleware')) {
-            // Override middlware
-            $this->overrideMiddleware($router);
-        }
-
         // Publish resources
         ! $this->app->runningInConsole() || $this->publishResources();
 
@@ -139,25 +129,6 @@ class FortServiceProvider extends ServiceProvider
     {
         $this->publishes([realpath(__DIR__.'/../../config/config.php') => config_path('rinvex.fort.php')], 'rinvex-fort-config');
         $this->publishes([realpath(__DIR__.'/../../database/migrations') => database_path('migrations')], 'rinvex-fort-migrations');
-    }
-
-    /**
-     * Override middleware.
-     *
-     * @param \Illuminate\Routing\Router $router
-     *
-     * @return void
-     */
-    protected function overrideMiddleware(Router $router): void
-    {
-        // Append middleware to the 'web' middlware group
-        $router->pushMiddlewareToGroup('web', Abilities::class);
-        $router->pushMiddlewareToGroup('web', UpdateLastActivity::class);
-
-        // Override route middleware on the fly
-        $router->aliasMiddleware('auth', Authenticate::class);
-        $router->aliasMiddleware('nohttpcache', NoHttpCache::class);
-        $router->aliasMiddleware('guest', RedirectIfAuthenticated::class);
     }
 
     /**
