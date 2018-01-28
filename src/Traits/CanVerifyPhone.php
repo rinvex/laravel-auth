@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace Rinvex\Fort\Traits;
 
-use Rinvex\Fort\Notifications\PhoneVerificationNotification;
-
 trait CanVerifyPhone
 {
     /**
@@ -37,6 +35,7 @@ trait CanVerifyPhone
      */
     public function sendPhoneVerificationNotification($method, $force): void
     {
-        $this->notify(new PhoneVerificationNotification($method, $force));
+        ! $this->phoneVerificationNotificationClass
+        || $this->notify(new $this->phoneVerificationNotificationClass($method, $force));
     }
 }

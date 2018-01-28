@@ -218,6 +218,27 @@ class User extends Model implements AuthenticatableContract, AuthenticatableTwoF
     protected $throwValidationExceptions = true;
 
     /**
+     * Phone verification notification class.
+     *
+     * @var string
+     */
+    protected $passwordResetNotificationClass;
+
+    /**
+     * Email verification notification class.
+     *
+     * @var string
+     */
+    protected $emailVerificationNotificationClass;
+
+    /**
+     * Phone verification notification class.
+     *
+     * @var string
+     */
+    protected $phoneVerificationNotificationClass;
+
+    /**
      * Create a new Eloquent model instance.
      *
      * @param array $attributes

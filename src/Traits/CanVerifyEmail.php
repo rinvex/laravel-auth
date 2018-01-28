@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace Rinvex\Fort\Traits;
 
-use Rinvex\Fort\Notifications\EmailVerificationNotification;
-
 trait CanVerifyEmail
 {
     /**
@@ -29,6 +27,7 @@ trait CanVerifyEmail
      */
     public function sendEmailVerificationNotification($token, $expiration): void
     {
-        $this->notify(new EmailVerificationNotification($token, $expiration));
+        ! $this->emailVerificationNotificationClass
+        || $this->notify(new $this->emailVerificationNotificationClass($token, $expiration));
     }
 }
