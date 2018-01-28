@@ -57,7 +57,7 @@ class AccessGate extends Gate
         if (is_callable($callback)) {
             $this->abilities[$ability] = $callback;
         } elseif (is_string($callback) && Str::contains($callback, '@')) {
-            $this->abilities[$ability] = $this->buildCustomAbilityCallback($callback, $ability);
+            $this->abilities[$ability] = $this->buildCustomAbilityCallback($ability, $callback);
         } else {
             throw new InvalidArgumentException("Callback must be a callable or a 'Class@method' string.");
         }
@@ -68,16 +68,31 @@ class AccessGate extends Gate
     /**
      * Create the ability callback for a callback string.
      *
-     * @param string $callback
+     * @param  string  $ability
+     * @param  string  $callback
      *
      * @return \Closure
      */
-    protected function buildCustomAbilityCallback($callback, $ability): Closure
+    protected function buildCustomAbilityCallback($ability, $callback): Closure
     {
-        return function () use ($callback, $ability) {
-            list($class, $method) = explode('@', $callback);
+        return function () use ($ability, $callback) {
+            list($class, $method) = Str::parseCallback($callback);
 
-            return $this->resolvePolicy($class)->{$method}($ability, ...func_get_args());
+            $policy = $this->resolvePolicy($class);
+
+            $arguments = func_get_args();
+
+            $user = array_shift($arguments);
+
+            $result = $this->callPolicyBefore(
+                $policy, $user, $ability, $arguments
+            );
+
+            if (! is_null($result)) {
+                return $result;
+            }
+
+            return $policy->{$method}($ability, ...func_get_args());
         };
     }
 }
