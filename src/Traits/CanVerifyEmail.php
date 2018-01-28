@@ -21,7 +21,7 @@ trait CanVerifyEmail
      */
     public function isEmailVerified(): bool
     {
-        return (bool) $this->email_verified;
+        return $this->email_verified;
     }
 
     /**

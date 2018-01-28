@@ -29,7 +29,7 @@ trait CanVerifyPhone
      */
     public function isPhoneVerified(): bool
     {
-        return (bool) $this->phone_verified;
+        return $this->phone_verified;
     }
 
     /**
