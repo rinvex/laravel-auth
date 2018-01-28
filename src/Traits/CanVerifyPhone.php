@@ -11,7 +11,7 @@ trait CanVerifyPhone
     /**
      * {@inheritdoc}
      */
-    public function getPhoneForVerification(): string
+    public function getPhoneForVerification(): ?string
     {
         return $this->phone;
     }
@@ -19,7 +19,7 @@ trait CanVerifyPhone
     /**
      * {@inheritdoc}
      */
-    public function getCountryForVerification(): string
+    public function getCountryForVerification(): ?string
     {
         return $this->country_code ? country($this->country_code)->getCallingCode() : null;
     }

@@ -9,16 +9,16 @@ interface CanVerifyPhoneContract
     /**
      * Get the phone for verification.
      *
-     * @return string
+     * @return string|null
      */
-    public function getPhoneForVerification(): string;
+    public function getPhoneForVerification(): ?string;
 
     /**
      * Get the country for verification.
      *
-     * @return string
+     * @return string|null
      */
-    public function getCountryForVerification(): string;
+    public function getCountryForVerification(): ?string;
 
     /**
      * Determine if phone is verified or not.
