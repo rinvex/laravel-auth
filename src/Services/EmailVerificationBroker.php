@@ -90,9 +90,6 @@ class EmailVerificationBroker implements EmailVerificationBrokerContract
         // in their persistent storage.
         $callback($user);
 
-        // Fire the email verification success event
-        event('rinvex.fort.emailverification.success', [$user]);
-
         return static::EMAIL_VERIFIED;
     }
 
