@@ -12,7 +12,6 @@ use Rinvex\Fort\Models\Session;
 use Rinvex\Fort\Models\Socialite;
 use Rinvex\Fort\Services\AccessGate;
 use Illuminate\Support\ServiceProvider;
-use Rinvex\Fort\Handlers\GenericHandler;
 use Illuminate\Support\Facades\Validator;
 use Rinvex\Fort\Http\Middleware\Abilities;
 use Illuminate\View\Compilers\BladeCompiler;
@@ -121,9 +120,6 @@ class FortServiceProvider extends ServiceProvider
 
         // Publish resources
         ! $this->app->runningInConsole() || $this->publishResources();
-
-        // Register event handlers
-        $this->app['events']->subscribe(GenericHandler::class);
 
         // Share current user instance with all views
         $this->app['view']->composer('*', function ($view) {
