@@ -53,30 +53,20 @@ class FortServiceProvider extends ServiceProvider
         $this->registerAccessGate();
 
         // Bind eloquent models to IoC container
-        $this->app->singleton('rinvex.fort.role', function ($app) {
-            return new $app['config']['rinvex.fort.models.role']();
-        });
-        $this->app->alias('rinvex.fort.role', Role::class);
+        $this->app->singleton('rinvex.fort.role', $roleModel = $this->app['config']['rinvex.fort.models.role']);
+        $roleModel === Role::class || $this->app->alias('rinvex.fort.role', Role::class);
 
-        $this->app->singleton('rinvex.fort.ability', function ($app) {
-            return new $app['config']['rinvex.fort.models.ability']();
-        });
-        $this->app->alias('rinvex.fort.ability', Ability::class);
+        $this->app->singleton('rinvex.fort.ability', $abilityModel = $this->app['config']['rinvex.fort.models.ability']);
+        $abilityModel === Ability::class || $this->app->alias('rinvex.fort.ability', Ability::class);
 
-        $this->app->singleton('rinvex.fort.session', function ($app) {
-            return new $app['config']['rinvex.fort.models.session']();
-        });
-        $this->app->alias('rinvex.fort.session', Session::class);
+        $this->app->singleton('rinvex.fort.session', $sessionModel = $this->app['config']['rinvex.fort.models.session']);
+        $sessionModel === Session::class || $this->app->alias('rinvex.fort.session', Session::class);
 
-        $this->app->singleton('rinvex.fort.socialite', function ($app) {
-            return new $app['config']['rinvex.fort.models.socialite']();
-        });
-        $this->app->alias('rinvex.fort.socialite', Socialite::class);
+        $this->app->singleton('rinvex.fort.socialite', $socialiteModel = $this->app['config']['rinvex.fort.models.socialite']);
+        $socialiteModel === Socialite::class || $this->app->alias('rinvex.fort.socialite', Socialite::class);
 
-        $this->app->singleton('rinvex.fort.user', function ($app) {
-            return new $app['config']['auth.providers.'.$app['config']['auth.guards.'.$app['config']['auth.defaults.guard'].'.provider'].'.model']();
-        });
-        $this->app->alias('rinvex.fort.user', User::class);
+        $this->app->singleton('rinvex.fort.user', $userModel = $this->app['config']['auth.providers.'.$this->app['config']['auth.guards.'.$this->app['config']['auth.defaults.guard'].'.provider'].'.model']);
+        $userModel === User::class || $this->app->alias('rinvex.fort.user', User::class);
     }
 
     /**
@@ -199,9 +189,7 @@ class FortServiceProvider extends ServiceProvider
     {
         // Register artisan commands
         foreach ($this->commands as $key => $value) {
-            $this->app->singleton($value, function ($app) use ($key) {
-                return new $key();
-            });
+            $this->app->singleton($value, $key);
         }
 
         $this->commands(array_values($this->commands));
