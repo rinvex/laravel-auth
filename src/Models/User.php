@@ -267,7 +267,7 @@ class User extends Model implements AuthenticatableContract, AuthenticatableTwoF
             'country_code' => 'nullable|alpha|size:2|country',
             'language_code' => 'nullable|alpha|size:2|language',
             'birthday' => 'nullable|date_format:Y-m-d',
-            'gender' => 'nullable|string|in:m,f',
+            'gender' => 'nullable|string|in:male,female',
             'is_active' => 'sometimes|boolean',
             'last_activity' => 'nullable|date',
         ]);
