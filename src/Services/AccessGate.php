@@ -68,8 +68,8 @@ class AccessGate extends Gate
     /**
      * Create the ability callback for a callback string.
      *
-     * @param  string  $ability
-     * @param  string  $callback
+     * @param string $ability
+     * @param string $callback
      *
      * @return \Closure
      */
