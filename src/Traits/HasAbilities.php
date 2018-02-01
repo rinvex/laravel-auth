@@ -132,14 +132,20 @@ trait HasAbilities
      */
     protected function parseAbilities($abilities): array
     {
-        ! $abilities instanceof Model || $abilities = [$abilities->getKey()];
-        ! $abilities instanceof Collection || $abilities = $abilities->modelKeys();
-        ! $abilities instanceof BaseCollection || $abilities = $abilities->toArray();
+        (is_iterable($rawAbilities) || is_null($rawAbilities)) || $rawAbilities = [$rawAbilities];
 
-        if (is_string($abilities) || (is_array($abilities) && is_string(array_first($abilities)))) {
-            $abilities = $this->parseSluggedAbilities($abilities);
-        }
+        list($strings, $abilities) = collect($rawAbilities)->map(function ($ability) {
+            ! is_numeric($ability) || $ability = (int) $ability;
 
-        return (array) $abilities;
+            ! $ability instanceof Model || $ability = [$ability->getKey()];
+            ! $ability instanceof Collection || $ability = $ability->modelKeys();
+            ! $ability instanceof BaseCollection || $ability = $ability->toArray();
+
+            return $ability;
+        })->partition(function ($item) {
+            return is_string($item);
+        });
+
+        return $abilities->merge($this->parseSluggedAbilities($abilities))->toArray();
     }
 }

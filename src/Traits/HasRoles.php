@@ -207,15 +207,20 @@ trait HasRoles
      */
     protected function parseRoles($roles): array
     {
-        ! $roles instanceof Model || $roles = [$roles->getKey()];
-        ! $roles instanceof Collection || $roles = $roles->modelKeys();
-        ! $roles instanceof BaseCollection || $roles = $roles->toArray();
+        (is_iterable($rawRoles) || is_null($rawRoles)) || $rawRoles = [$rawRoles];
 
-        // Find roles by slug, and get their IDs
-        if (is_string($roles) || (is_array($roles) && is_string(array_first($roles)))) {
-            $roles = app('rinvex.fort.role')->whereIn('slug', (array) $roles)->get()->pluck('id')->toArray();
-        }
+        list($strings, $roles) = collect($rawRoles)->map(function ($role) {
+            ! is_numeric($role) || $role = (int) $role;
 
-        return (array) $roles;
+            ! $role instanceof Model || $role = [$role->getKey()];
+            ! $role instanceof Collection || $role = $role->modelKeys();
+            ! $role instanceof BaseCollection || $role = $role->toArray();
+
+            return $role;
+        })->partition(function ($item) {
+            return is_string($item);
+        });
+
+        return $roles->merge(app('rinvex.fort.role')->whereIn('slug', $roles)->get()->pluck('id'))->toArray();
     }
 }
