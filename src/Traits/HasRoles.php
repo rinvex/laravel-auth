@@ -201,11 +201,11 @@ trait HasRoles
     /**
      * Parse role IDs.
      *
-     * @param mixed $roles
+     * @param mixed $rawRoles
      *
      * @return array
      */
-    protected function parseRoles($roles): array
+    protected function parseRoles($rawRoles): array
     {
         (is_iterable($rawRoles) || is_null($rawRoles)) || $rawRoles = [$rawRoles];
 

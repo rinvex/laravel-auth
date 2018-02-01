@@ -126,11 +126,11 @@ trait HasAbilities
     /**
      * Parse abilities.
      *
-     * @param mixed $abilities
+     * @param mixed $rawAbilities
      *
      * @return array
      */
-    protected function parseAbilities($abilities): array
+    protected function parseAbilities($rawAbilities): array
     {
         (is_iterable($rawAbilities) || is_null($rawAbilities)) || $rawAbilities = [$rawAbilities];
 
