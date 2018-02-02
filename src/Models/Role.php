@@ -47,7 +47,6 @@ class Role extends Model
      * {@inheritdoc}
      */
     protected $touches = [
-        'abilities',
         'users',
     ];
 
@@ -125,24 +124,6 @@ class Role extends Model
             'name' => 'required|string|max:150',
             'description' => 'nullable|string|max:10000',
         ]);
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    protected static function boot()
-    {
-        parent::boot();
-
-        static::updated(function (self $role) {
-            app('rinvex.fort.ability')->forgetCache();
-            app('rinvex.fort.user')->forgetCache();
-        });
-
-        static::deleted(function (self $role) {
-            app('rinvex.fort.ability')->forgetCache();
-            app('rinvex.fort.user')->forgetCache();
-        });
     }
 
     /**

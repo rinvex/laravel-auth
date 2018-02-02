@@ -134,24 +134,6 @@ class Ability extends Model
     }
 
     /**
-     * {@inheritdoc}
-     */
-    protected static function boot()
-    {
-        parent::boot();
-
-        static::updated(function (self $ability) {
-            app('rinvex.fort.role')->forgetCache();
-            app('rinvex.fort.user')->forgetCache();
-        });
-
-        static::deleted(function (self $ability) {
-            app('rinvex.fort.role')->forgetCache();
-            app('rinvex.fort.user')->forgetCache();
-        });
-    }
-
-    /**
      * An ability can be applied to roles.
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
