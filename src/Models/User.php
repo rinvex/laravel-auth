@@ -20,9 +20,9 @@ use Rinvex\Fort\Traits\AuthenticatableTwoFactor;
 use Rinvex\Fort\Contracts\CanVerifyEmailContract;
 use Rinvex\Fort\Contracts\CanVerifyPhoneContract;
 use Silber\Bouncer\Database\HasRolesAndAbilities;
-use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\Access\Authorizable;
 use Rinvex\Fort\Contracts\CanResetPasswordContract;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Rinvex\Fort\Contracts\AuthenticatableTwoFactorContract;
 use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 use Illuminate\Contracts\Auth\Access\Authorizable as AuthorizableContract;
@@ -210,23 +210,23 @@ class User extends Model implements AuthenticatableContract, AuthenticatableTwoF
     }
 
     /**
-     * A user may have many sessions.
+     * The user may have many sessions.
      *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     * @return \Illuminate\Database\Eloquent\Relations\MorphMany
      */
-    public function sessions(): HasMany
+    public function sessions(): MorphMany
     {
-        return $this->hasMany(config('rinvex.fort.models.session'), 'user_id', 'id');
+        return $this->morphMany(config('rinvex.fort.models.session'), 'user');
     }
 
     /**
-     * A user may have multiple socialites.
+     * The user may have many socialites.
      *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     * @return \Illuminate\Database\Eloquent\Relations\MorphMany
      */
-    public function socialites(): HasMany
+    public function socialites(): MorphMany
     {
-        return $this->hasMany(config('rinvex.fort.models.socialite'), 'user_id', 'id');
+        return $this->morphMany(config('rinvex.fort.models.socialite'), 'user');
     }
 
     /**

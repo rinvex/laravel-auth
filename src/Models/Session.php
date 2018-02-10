@@ -6,18 +6,19 @@ namespace Rinvex\Fort\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\MorphTo;
 
 /**
  * Rinvex\Fort\Models\Session.
  *
- * @property int                                $id
- * @property int                                $user_id
- * @property string                             $ip_address
- * @property string                             $user_agent
- * @property string                             $payload
- * @property \Carbon\Carbon                     $last_activity
- * @property-read \Rinvex\Fort\Models\User|null $user
+ * @property int                                                $id
+ * @property int                                                $user_id
+ * @property string                                             $user_type
+ * @property string                                             $ip_address
+ * @property string                                             $user_agent
+ * @property string                                             $payload
+ * @property \Carbon\Carbon                                     $last_activity
+ * @property-read \Illuminate\Database\Eloquent\Model|\Eloquent $user
  *
  * @method static \Illuminate\Database\Eloquent\Builder|\Rinvex\Fort\Models\Session guests($minutes = 5)
  * @method static \Illuminate\Database\Eloquent\Builder|\Rinvex\Fort\Models\Session guestsByHours($hours = 1)
@@ -25,8 +26,6 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @method static \Illuminate\Database\Eloquent\Builder|\Rinvex\Fort\Models\Session guestsBySeconds($seconds = 60)
  * @method static \Illuminate\Database\Eloquent\Builder|\Rinvex\Fort\Models\Session leastRecent($column = 'last_activity')
  * @method static \Illuminate\Database\Eloquent\Builder|\Rinvex\Fort\Models\Session mostRecent($column = 'last_activity')
- * @method static \Illuminate\Database\Eloquent\Builder|\Rinvex\Fort\Models\Session orderByUsers($column, $dir = 'ASC')
- * @method static \Illuminate\Database\Eloquent\Builder|\Rinvex\Fort\Models\Session users($minutes = 5)
  * @method static \Illuminate\Database\Eloquent\Builder|\Rinvex\Fort\Models\Session usersByHours($hours = 1)
  * @method static \Illuminate\Database\Eloquent\Builder|\Rinvex\Fort\Models\Session usersByMinutes($minutes = 5)
  * @method static \Illuminate\Database\Eloquent\Builder|\Rinvex\Fort\Models\Session usersBySeconds($seconds = 60)
@@ -36,6 +35,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @method static \Illuminate\Database\Eloquent\Builder|\Rinvex\Fort\Models\Session wherePayload($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\Rinvex\Fort\Models\Session whereUserAgent($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\Rinvex\Fort\Models\Session whereUserId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\Rinvex\Fort\Models\Session whereUserType($value)
  * @mixin \Eloquent
  */
 class Session extends Model
@@ -51,6 +51,7 @@ class Session extends Model
     protected $fillable = [
         'id',
         'user_id',
+        'user_type',
         'ip_address',
         'user_agent',
         'payload',
@@ -62,6 +63,7 @@ class Session extends Model
      */
     protected $casts = [
         'user_id' => 'integer',
+        'user_type' => 'string',
         'ip_address' => 'string',
         'user_agent' => 'string',
         'payload' => 'string',
@@ -83,18 +85,6 @@ class Session extends Model
         parent::__construct($attributes);
 
         $this->setTable(config('session.table'));
-    }
-
-    /**
-     * A session always belongs to a user.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
-     */
-    public function user(): BelongsTo
-    {
-        $userModel = config('auth.providers.'.config('auth.guards.'.config('auth.defaults.guard').'.provider').'.model');
-
-        return $this->belongsTo($userModel, 'user_id', 'id');
     }
 
     /**
@@ -121,19 +111,6 @@ class Session extends Model
     public function scopeLeastRecent(Builder $builder, $column = 'last_activity'): Builder
     {
         return $builder->oldest($column);
-    }
-
-    /**
-     * Use joins to order by the users' column attributes.
-     *
-     * @param \Illuminate\Database\Eloquent\Builder $builder
-     * @param string                                $column
-     *
-     * @return \Illuminate\Database\Eloquent\Builder
-     */
-    public function scopeOrderByUsers(Builder $builder, $column, $dir = 'ASC'): Builder
-    {
-        return $builder->join(config('rinvex.fort.tables.users'), config('session.table').'.user_id', '=', config('rinvex.fort.tables.users').'.id')->orderBy(config('rinvex.fort.tables.users').".{$column}", $dir);
     }
 
     /**
@@ -206,19 +183,6 @@ class Session extends Model
     }
 
     /**
-     * Alias for the `usersByMinutes` query method.
-     *
-     * @param \Illuminate\Database\Eloquent\Builder $builder
-     * @param int                                   $minutes
-     *
-     * @return \Illuminate\Database\Eloquent\Builder
-     */
-    public function scopeUsers(Builder $builder, $minutes = 5): Builder
-    {
-        return $builder->usersByMinutes($minutes);
-    }
-
-    /**
      * Constrain the query to retrieve only sessions of users who
      * have been active within the specified number of minutes.
      *
@@ -244,5 +208,28 @@ class Session extends Model
     public function scopeUsersByHours(Builder $builder, $hours = 1): Builder
     {
         return $builder->usersByMinutes($hours * 60);
+    }
+
+    /**
+     * Get the owning user.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\MorphTo
+     */
+    public function user(): MorphTo
+    {
+        return $this->morphTo();
+    }
+
+    /**
+     * Get sessions of the given user.
+     *
+     * @param \Illuminate\Database\Eloquent\Builder $builder
+     * @param \Illuminate\Database\Eloquent\Model   $user
+     *
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeOfUser(Builder $builder, Model $user): Builder
+    {
+        return $builder->where('user_type', $user->getMorphClass())->where('user_id', $user->getKey());
     }
 }

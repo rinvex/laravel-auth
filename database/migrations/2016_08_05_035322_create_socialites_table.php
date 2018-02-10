@@ -18,15 +18,13 @@ class CreateSocialitesTable extends Migration
         Schema::create(config('rinvex.fort.tables.socialites'), function (Blueprint $table) {
             // Columns
             $table->increments('id');
-            $table->integer('user_id')->unsigned();
+            $table->morphs('user');
             $table->string('provider');
             $table->string('provider_uid');
             $table->timestamps();
 
             // Indexes
             $table->unique(['provider', 'provider_uid']);
-            $table->foreign('user_id')->references('id')->on(config('rinvex.fort.tables.users'))
-                  ->onDelete('cascade')->onUpdate('cascade');
         });
     }
 

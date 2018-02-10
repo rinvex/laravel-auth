@@ -5,18 +5,20 @@ declare(strict_types=1);
 namespace Rinvex\Fort\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Relations\MorphTo;
 
 /**
  * Rinvex\Fort\Models\Socialite.
  *
- * @property int                           $id
- * @property int                           $user_id
- * @property string                        $provider
- * @property string                        $provider_uid
- * @property \Carbon\Carbon|null           $created_at
- * @property \Carbon\Carbon|null           $updated_at
- * @property-read \Rinvex\Fort\Models\User $user
+ * @property int                                                $id
+ * @property int                                                $user_id
+ * @property string                                             $user_type
+ * @property string                                             $provider
+ * @property string                                             $provider_uid
+ * @property \Carbon\Carbon|null                                $created_at
+ * @property \Carbon\Carbon|null                                $updated_at
+ * @property-read \Illuminate\Database\Eloquent\Model|\Eloquent $user
  *
  * @method static \Illuminate\Database\Eloquent\Builder|\Rinvex\Fort\Models\Socialite whereCreatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\Rinvex\Fort\Models\Socialite whereId($value)
@@ -24,6 +26,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @method static \Illuminate\Database\Eloquent\Builder|\Rinvex\Fort\Models\Socialite whereProviderUid($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\Rinvex\Fort\Models\Socialite whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\Rinvex\Fort\Models\Socialite whereUserId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\Rinvex\Fort\Models\Socialite whereUserType($value)
  * @mixin \Eloquent
  */
 class Socialite extends Model
@@ -33,6 +36,7 @@ class Socialite extends Model
      */
     protected $fillable = [
         'user_id',
+        'user_type',
         'provider',
         'provider_uid',
     ];
@@ -42,6 +46,7 @@ class Socialite extends Model
      */
     protected $casts = [
         'user_id' => 'integer',
+        'user_type' => 'string',
         'provider' => 'string',
         'provider_uid' => 'string',
     ];
@@ -59,14 +64,25 @@ class Socialite extends Model
     }
 
     /**
-     * A socialite always belongs to a user.
+     * Get the owning user.
      *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * @return \Illuminate\Database\Eloquent\Relations\MorphTo
      */
-    public function user(): BelongsTo
+    public function user(): MorphTo
     {
-        $userModel = config('auth.providers.'.config('auth.guards.'.config('auth.defaults.guard').'.provider').'.model');
+        return $this->morphTo();
+    }
 
-        return $this->belongsTo($userModel, 'user_id', 'id');
+    /**
+     * Get socialites of the given user.
+     *
+     * @param \Illuminate\Database\Eloquent\Builder $builder
+     * @param \Illuminate\Database\Eloquent\Model   $user
+     *
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeOfUser(Builder $builder, Model $user): Builder
+    {
+        return $builder->where('user_type', $user->getMorphClass())->where('user_id', $user->getKey());
     }
 }

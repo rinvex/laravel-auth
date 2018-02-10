@@ -18,7 +18,7 @@ class CreateSessionsTable extends Migration
         Schema::create(config('session.table'), function (Blueprint $table) {
             // Columns
             $table->string('id');
-            $table->integer('user_id')->unsigned()->nullable();
+            $table->nullableMorphs('user');
             $table->string('ip_address', 45)->nullable();
             $table->text('user_agent')->nullable();
             $table->text('payload');
@@ -26,8 +26,6 @@ class CreateSessionsTable extends Migration
 
             // Indexes
             $table->unique('id');
-            $table->foreign('user_id')->references('id')->on(config('rinvex.fort.tables.users'))
-                    ->onDelete('cascade')->onUpdate('cascade');
         });
     }
 
