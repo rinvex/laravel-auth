@@ -4,16 +4,13 @@ declare(strict_types=1);
 
 namespace Rinvex\Fort\Providers;
 
-use Rinvex\Fort\Models\Role;
 use Rinvex\Fort\Models\User;
 use Illuminate\Routing\Router;
-use Rinvex\Fort\Models\Ability;
 use Rinvex\Fort\Models\Session;
 use Rinvex\Fort\Models\Socialite;
 use Rinvex\Fort\Services\AccessGate;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Validator;
-use Illuminate\View\Compilers\BladeCompiler;
 use Rinvex\Fort\Console\Commands\MigrateCommand;
 use Rinvex\Fort\Console\Commands\PublishCommand;
 use Rinvex\Fort\Console\Commands\RollbackCommand;
@@ -53,12 +50,6 @@ class FortServiceProvider extends ServiceProvider
         $this->registerAccessGate();
 
         // Bind eloquent models to IoC container
-        $this->app->singleton('rinvex.fort.role', $roleModel = $this->app['config']['rinvex.fort.models.role']);
-        $roleModel === Role::class || $this->app->alias('rinvex.fort.role', Role::class);
-
-        $this->app->singleton('rinvex.fort.ability', $abilityModel = $this->app['config']['rinvex.fort.models.ability']);
-        $abilityModel === Ability::class || $this->app->alias('rinvex.fort.ability', Ability::class);
-
         $this->app->singleton('rinvex.fort.session', $sessionModel = $this->app['config']['rinvex.fort.models.session']);
         $sessionModel === Session::class || $this->app->alias('rinvex.fort.session', Session::class);
 
@@ -105,9 +96,6 @@ class FortServiceProvider extends ServiceProvider
         $this->app['view']->composer('*', function ($view) {
             $view->with('currentUser', auth()->user());
         });
-
-        // Register blade extensions
-        $this->registerBladeExtensions();
     }
 
     /**
@@ -150,33 +138,6 @@ class FortServiceProvider extends ServiceProvider
 
         $this->app->bind('rinvex.fort.emailverification.broker', function ($app) {
             return $app->make('rinvex.fort.emailverification')->broker();
-        });
-    }
-
-    /**
-     * Register the blade extensions.
-     *
-     * @return void
-     */
-    protected function registerBladeExtensions(): void
-    {
-        $this->app->afterResolving('blade.compiler', function (BladeCompiler $bladeCompiler) {
-
-            // @hasAnyRoles(['writer', 'editor'])
-            $bladeCompiler->directive('hasAnyRoles', function ($expression) {
-                return "<?php if(auth()->user()->hasAnyRoles({$expression})): ?>";
-            });
-            $bladeCompiler->directive('endHasAnyRoles', function () {
-                return '<?php endif; ?>';
-            });
-
-            // @hasAllRoles(['writer', 'editor'])
-            $bladeCompiler->directive('hasAllRoles', function ($expression) {
-                return "<?php if(auth()->user()->hasAllRoles({$expression})): ?>";
-            });
-            $bladeCompiler->directive('endHasAllRoles', function () {
-                return '<?php endif; ?>';
-            });
         });
     }
 

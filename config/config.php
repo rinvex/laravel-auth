@@ -18,8 +18,6 @@ return [
     |       config/auth.php (Check 'model' key inside the 'providers' array)
     |
     | Defaults:
-    | - Rinvex\Fort\Models\Ability::class
-    | - Rinvex\Fort\Models\Role::class
     | - Rinvex\Fort\Models\Session::class
     | - Rinvex\Fort\Models\Socialite::class
     |
@@ -27,8 +25,6 @@ return [
 
     'models' => [
 
-        'ability' => \Rinvex\Fort\Models\Ability::class,
-        'role' => \Rinvex\Fort\Models\Role::class,
         'session' => \Rinvex\Fort\Models\Session::class,
         'socialite' => \Rinvex\Fort\Models\Socialite::class,
 
@@ -48,24 +44,14 @@ return [
     |          config/session.php (Check 'table' key)
     |
     | Defaults:
-    | - abilities
-    | - roles
     | - users
-    | - ability_user
-    | - role_user
-    | - ability_role
     | - socialites
     |
     */
 
     'tables' => [
 
-        'abilities' => 'abilities',
-        'roles' => 'roles',
         'users' => 'users',
-        'ability_user' => 'ability_user',
-        'role_user' => 'role_user',
-        'ability_role' => 'ability_role',
         'socialites' => 'socialites',
 
     ],
@@ -88,9 +74,6 @@ return [
 
         // Moderate New User Registrations (Admin Approval Required)
         'moderated' => false,
-
-        // Default Role For New User Registrations (slug)
-        'default_role' => 'member',
 
         // Send Welcome Email Upon Registration Success
         'welcome_email' => true,
@@ -146,24 +129,6 @@ return [
 
         // Send Lockout Email
         'lockout_email' => true,
-
-    ],
-
-    /*
-     |--------------------------------------------------------------------------
-     | Protected Models
-     |--------------------------------------------------------------------------
-     |
-     | Model Ids of protected abilities, roles, users that no one can control
-     | except someone with "Super Admin" ability (edit, delete, ..etc).
-     |
-     */
-
-    'protected' => [
-
-        'abilities' => [1],
-        'roles' => [1],
-        'users' => [1],
 
     ],
 
