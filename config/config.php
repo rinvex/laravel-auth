@@ -75,9 +75,6 @@ return [
         // Moderate New User Registrations (Admin Approval Required)
         'moderated' => false,
 
-        // Send Welcome Email Upon Registration Success
-        'welcome_email' => true,
-
     ],
 
     /*
@@ -101,9 +98,6 @@ return [
 
     'emailverification' => [
 
-        // Require email verification for new user registrations and email change
-        'required' => true,
-
         // Email Verification Default Broker
         'broker' => 'users',
 
@@ -115,21 +109,10 @@ return [
 
     ],
 
-    /*
-    |--------------------------------------------------------------------------
-    | Login Throttling
-    |--------------------------------------------------------------------------
-    |
-    | You may enable login throttling and specify maximum attemps before
-    | being locked, lockout time, and whether to send email or not.
-    |
-    */
-
-    'throttle' => [
-
-        // Send Lockout Email
-        'lockout_email' => true,
-
+    'emails' => [
+        'welcome' => true,
+        'verification' => true,
+        'throttle_lockout' => true,
     ],
 
     /*
@@ -151,11 +134,5 @@ return [
 
     // Minimum Passwords Characters
     'password_min_chars' => 8,
-
-    // Online Users Activity Interval (minutes to indicate user as active)
-    'online_interval' => 15,
-
-    // List items per page (use accross data lists)
-    'items_per_page' => 10,
 
 ];
