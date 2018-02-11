@@ -30,6 +30,7 @@ class PublishCommand extends Command
     public function handle(): void
     {
         $this->warn($this->description);
+
         $this->call('vendor:publish', ['--tag' => 'rinvex-fort-config', '--force' => $this->option('force')]);
     }
 }

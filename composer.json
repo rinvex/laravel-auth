@@ -66,9 +66,6 @@
         "phpunit/phpunit": "^6.0.0"
     },
     "autoload": {
-        "classmap": [
-            "database"
-        ],
         "files": [
             "src/Support/helpers.php"
         ],
