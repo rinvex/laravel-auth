@@ -25,10 +25,8 @@ return [
 
     'emailverification' => [
 
-        // Email Verification Default Broker
         'broker' => 'users',
 
-        // Email Verification Broker Configuration(s)
         'users' => [
             'provider' => 'users',
             'expire' => 60,
