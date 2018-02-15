@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Rinvex\Fort\Console\Commands;
+namespace Rinvex\Auth\Console\Commands;
 
 use Illuminate\Console\Command;
 
@@ -13,14 +13,14 @@ class PublishCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'rinvex:publish:fort {--force : Overwrite any existing files.}';
+    protected $signature = 'rinvex:publish:auth {--force : Overwrite any existing files.}';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Publish Rinvex Fort Resources.';
+    protected $description = 'Publish Rinvex Auth Resources.';
 
     /**
      * Execute the console command.
@@ -31,6 +31,6 @@ class PublishCommand extends Command
     {
         $this->warn($this->description);
 
-        $this->call('vendor:publish', ['--tag' => 'rinvex-fort-config', '--force' => $this->option('force')]);
+        $this->call('vendor:publish', ['--tag' => 'rinvex-auth-config', '--force' => $this->option('force')]);
     }
 }

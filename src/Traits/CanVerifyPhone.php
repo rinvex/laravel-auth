@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Rinvex\Fort\Traits;
+namespace Rinvex\Auth\Traits;
 
 trait CanVerifyPhone
 {

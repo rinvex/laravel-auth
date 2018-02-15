@@ -14,7 +14,7 @@
          beStrictAboutCoversAnnotation="true"
          printerClass="Codedungeon\PHPUnitPrettyResultPrinter\Printer">
     <testsuites>
-        <testsuite name="Rinvex Fort Unit Test Suite">
+        <testsuite name="Rinvex Auth Unit Test Suite">
             <directory>tests</directory>
         </testsuite>
     </testsuites>

@@ -31,7 +31,7 @@ This project adheres to [Semantic Versioning](CONTRIBUTING.md).
 ## v0.0.1 - 2016-12-19
 - Commit first tagged release
 
-[v0.0.5]: https://github.com/rinvex/fort/compare/v0.0.4...v0.0.5
-[v0.0.4]: https://github.com/rinvex/fort/compare/v0.0.3...v0.0.4
-[v0.0.3]: https://github.com/rinvex/fort/compare/v0.0.2...v0.0.3
-[v0.0.2]: https://github.com/rinvex/fort/compare/v0.0.1...v0.0.2
+[v0.0.5]: https://github.com/rinvex/auth/compare/v0.0.4...v0.0.5
+[v0.0.4]: https://github.com/rinvex/auth/compare/v0.0.3...v0.0.4
+[v0.0.3]: https://github.com/rinvex/auth/compare/v0.0.2...v0.0.3
+[v0.0.2]: https://github.com/rinvex/auth/compare/v0.0.1...v0.0.2

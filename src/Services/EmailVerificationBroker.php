@@ -2,15 +2,15 @@
 
 declare(strict_types=1);
 
-namespace Rinvex\Fort\Services;
+namespace Rinvex\Auth\Services;
 
 use Closure;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
 use UnexpectedValueException;
 use Illuminate\Contracts\Auth\UserProvider;
-use Rinvex\Fort\Contracts\CanVerifyEmailContract;
-use Rinvex\Fort\Contracts\EmailVerificationBrokerContract;
+use Rinvex\Auth\Contracts\CanVerifyEmailContract;
+use Rinvex\Auth\Contracts\EmailVerificationBrokerContract;
 
 class EmailVerificationBroker implements EmailVerificationBrokerContract
 {
@@ -100,7 +100,7 @@ class EmailVerificationBroker implements EmailVerificationBrokerContract
      *
      * @throws \UnexpectedValueException
      *
-     * @return \Rinvex\Fort\Contracts\CanVerifyEmailContract
+     * @return \Rinvex\Auth\Contracts\CanVerifyEmailContract
      */
     public function getUser(array $credentials): CanVerifyEmailContract
     {
@@ -116,7 +116,7 @@ class EmailVerificationBroker implements EmailVerificationBrokerContract
     /**
      * Create a new email verification token for the given user.
      *
-     * @param \Rinvex\Fort\Contracts\CanVerifyEmailContract $user
+     * @param \Rinvex\Auth\Contracts\CanVerifyEmailContract $user
      * @param int                                           $expiration
      *
      * @return string
@@ -131,7 +131,7 @@ class EmailVerificationBroker implements EmailVerificationBrokerContract
     /**
      * Validate the given email verification token.
      *
-     * @param \Rinvex\Fort\Contracts\CanVerifyEmailContract $user
+     * @param \Rinvex\Auth\Contracts\CanVerifyEmailContract $user
      * @param array                                         $credentials
      *
      * @return bool
@@ -172,7 +172,7 @@ class EmailVerificationBroker implements EmailVerificationBrokerContract
     /**
      * Returns the payload string containing.
      *
-     * @param \Rinvex\Fort\Contracts\CanVerifyEmailContract $user
+     * @param \Rinvex\Auth\Contracts\CanVerifyEmailContract $user
      * @param string                                        $email
      * @param int                                           $expiration
      *
@@ -193,7 +193,7 @@ class EmailVerificationBroker implements EmailVerificationBrokerContract
      *
      * @param array $credentials
      *
-     * @return \Rinvex\Fort\Contracts\CanVerifyEmailContract|string
+     * @return \Rinvex\Auth\Contracts\CanVerifyEmailContract|string
      */
     protected function validateVerification(array $credentials)
     {

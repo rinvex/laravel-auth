@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Rinvex\Fort\Services;
+namespace Rinvex\Auth\Services;
 
 use InvalidArgumentException;
 use Illuminate\Contracts\Auth\PasswordBrokerFactory;
-use Rinvex\Fort\Contracts\PasswordResetBrokerContract;
+use Rinvex\Auth\Contracts\PasswordResetBrokerContract;
 
 class PasswordResetBrokerManager implements PasswordBrokerFactory
 {
@@ -39,7 +39,7 @@ class PasswordResetBrokerManager implements PasswordBrokerFactory
      *
      * @param string $name
      *
-     * @return \Rinvex\Fort\Contracts\PasswordResetBrokerContract
+     * @return \Rinvex\Auth\Contracts\PasswordResetBrokerContract
      */
     public function broker($name = null): PasswordResetBrokerContract
     {
@@ -55,7 +55,7 @@ class PasswordResetBrokerManager implements PasswordBrokerFactory
      *
      * @throws \InvalidArgumentException
      *
-     * @return \Rinvex\Fort\Contracts\PasswordResetBrokerContract
+     * @return \Rinvex\Auth\Contracts\PasswordResetBrokerContract
      */
     protected function resolve($name): PasswordResetBrokerContract
     {

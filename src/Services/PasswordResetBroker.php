@@ -2,15 +2,15 @@
 
 declare(strict_types=1);
 
-namespace Rinvex\Fort\Services;
+namespace Rinvex\Auth\Services;
 
 use Closure;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
 use UnexpectedValueException;
 use Illuminate\Contracts\Auth\UserProvider;
-use Rinvex\Fort\Contracts\CanResetPasswordContract;
-use Rinvex\Fort\Contracts\PasswordResetBrokerContract;
+use Rinvex\Auth\Contracts\CanResetPasswordContract;
+use Rinvex\Auth\Contracts\PasswordResetBrokerContract;
 
 class PasswordResetBroker implements PasswordResetBrokerContract
 {
@@ -172,7 +172,7 @@ class PasswordResetBroker implements PasswordResetBrokerContract
      *
      * @throws \UnexpectedValueException
      *
-     * @return \Rinvex\Fort\Contracts\CanResetPasswordContract
+     * @return \Rinvex\Auth\Contracts\CanResetPasswordContract
      */
     public function getUser(array $credentials): CanResetPasswordContract
     {
@@ -188,7 +188,7 @@ class PasswordResetBroker implements PasswordResetBrokerContract
     /**
      * Create a new password reset token for the given user.
      *
-     * @param \Rinvex\Fort\Contracts\CanResetPasswordContract $user
+     * @param \Rinvex\Auth\Contracts\CanResetPasswordContract $user
      * @param int                                             $expiration
      *
      * @return string
@@ -203,7 +203,7 @@ class PasswordResetBroker implements PasswordResetBrokerContract
     /**
      * Validate the given password reset token.
      *
-     * @param \Rinvex\Fort\Contracts\CanResetPasswordContract $user
+     * @param \Rinvex\Auth\Contracts\CanResetPasswordContract $user
      * @param array                                           $credentials
      *
      * @return bool
@@ -244,7 +244,7 @@ class PasswordResetBroker implements PasswordResetBrokerContract
     /**
      * Returns the payload string containing.
      *
-     * @param \Rinvex\Fort\Contracts\CanResetPasswordContract $user
+     * @param \Rinvex\Auth\Contracts\CanResetPasswordContract $user
      * @param string                                          $email
      * @param int                                             $expiration
      *

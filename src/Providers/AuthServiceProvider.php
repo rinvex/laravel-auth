@@ -2,16 +2,16 @@
 
 declare(strict_types=1);
 
-namespace Rinvex\Fort\Providers;
+namespace Rinvex\Auth\Providers;
 
 use Illuminate\Routing\Router;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Validator;
-use Rinvex\Fort\Console\Commands\PublishCommand;
-use Rinvex\Fort\Services\PasswordResetBrokerManager;
-use Rinvex\Fort\Services\EmailVerificationBrokerManager;
+use Rinvex\Auth\Console\Commands\PublishCommand;
+use Rinvex\Auth\Services\PasswordResetBrokerManager;
+use Rinvex\Auth\Services\EmailVerificationBrokerManager;
 
-class FortServiceProvider extends ServiceProvider
+class AuthServiceProvider extends ServiceProvider
 {
     /**
      * The commands to be registered.
@@ -19,7 +19,7 @@ class FortServiceProvider extends ServiceProvider
      * @var array
      */
     protected $commands = [
-        PublishCommand::class => 'command.rinvex.fort.publish',
+        PublishCommand::class => 'command.rinvex.auth.publish',
     ];
 
     /**
@@ -28,7 +28,7 @@ class FortServiceProvider extends ServiceProvider
     public function register()
     {
         // Merge config
-        $this->mergeConfigFrom(realpath(__DIR__.'/../../config/config.php'), 'rinvex.fort');
+        $this->mergeConfigFrom(realpath(__DIR__.'/../../config/config.php'), 'rinvex.auth');
 
         // Register console commands
         ! $this->app->runningInConsole() || $this->registerCommands();
@@ -39,7 +39,7 @@ class FortServiceProvider extends ServiceProvider
         });
 
         // Register the verification broker manager
-        $this->app->singleton('rinvex.fort.emailverification', function ($app) {
+        $this->app->singleton('rinvex.auth.emailverification', function ($app) {
             return new EmailVerificationBrokerManager($app);
         });
     }
@@ -60,7 +60,7 @@ class FortServiceProvider extends ServiceProvider
         }, 'Language MUST be valid!');
 
         // Publish resources
-        ! $this->app->runningInConsole() || $this->publishes([realpath(__DIR__.'/../../config/config.php') => config_path('rinvex.fort.php')], 'rinvex-fort-config');
+        ! $this->app->runningInConsole() || $this->publishes([realpath(__DIR__.'/../../config/config.php') => config_path('rinvex.auth.php')], 'rinvex-auth-config');
     }
 
     /**
