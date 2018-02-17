@@ -2,52 +2,40 @@
 
 declare(strict_types=1);
 
-namespace Rinvex\Fort\Traits;
-
-use Rinvex\Fort\Notifications\PhoneVerificationNotification;
+namespace Rinvex\Auth\Traits;
 
 trait CanVerifyPhone
 {
     /**
-     * Get the phone for verification.
-     *
-     * @return string
+     * {@inheritdoc}
      */
-    public function getPhoneForVerification()
+    public function getPhoneForVerification(): ?string
     {
         return $this->phone;
     }
 
     /**
-     * Get the country for verification.
-     *
-     * @return string
+     * {@inheritdoc}
      */
-    public function getCountryForVerification()
+    public function getCountryForVerification(): ?string
     {
         return $this->country_code ? country($this->country_code)->getCallingCode() : null;
     }
 
     /**
-     * Determine if phone is verified or not.
-     *
-     * @return bool
+     * {@inheritdoc}
      */
-    public function isPhoneVerified()
+    public function isPhoneVerified(): bool
     {
-        return (bool) $this->phone_verified;
+        return $this->phone_verified;
     }
 
     /**
-     * Send the phone verification notification.
-     *
-     * @param string $method
-     * @param bool   $force
-     *
-     * @return void
+     * {@inheritdoc}
      */
-    public function sendPhoneVerificationNotification($method, $force)
+    public function sendPhoneVerificationNotification($method, $force): void
     {
-        $this->notify(new PhoneVerificationNotification($method, $force));
+        ! $this->phoneVerificationNotificationClass
+        || $this->notify(new $this->phoneVerificationNotificationClass($method, $force));
     }
 }

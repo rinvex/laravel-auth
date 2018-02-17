@@ -1,6 +1,6 @@
 {
-    "name": "rinvex/fort",
-    "description": "Rinvex Fort is a powerful authentication, authorization and verification package built on top of Laravel. It provides developers with Role Based Access Control, TwoFactor Authentication, Social Authentication, compatible with Laravel’s standard API and fully featured all-in-one solution out of the box.",
+    "name": "rinvex/auth",
+    "description": "Rinvex Auth is a powerful authentication, authorization and verification package built on top of Laravel. It provides developers with Role Based Access Control, TwoFactor Authentication, Social Authentication, compatible with Laravel’s standard API and fully featured all-in-one solution out of the box.",
     "keywords": [
         "authentication",
         "authorization",
@@ -24,9 +24,9 @@
     "homepage": "https://rinvex.com",
     "support": {
         "email": "help@rinvex.com",
-        "issues": "https://github.com/rinvex/fort/issues",
-        "source": "https://github.com/rinvex/fort",
-        "docs": "https://github.com/rinvex/fort/README.md"
+        "issues": "https://github.com/rinvex/auth/issues",
+        "source": "https://github.com/rinvex/auth",
+        "docs": "https://github.com/rinvex/auth/README.md"
     },
     "authors": [
         {
@@ -42,16 +42,16 @@
         },
         {
             "name": "The Generous Laravel Community",
-            "homepage": "https://github.com/rinvex/fort/contributors"
+            "homepage": "https://github.com/rinvex/auth/contributors"
         }
     ],
     "require": {
-        "php": "^7.1.0",
+        "php": "^7.1.3",
         "bacon/bacon-qr-code": "^1.0.0",
         "laravel-notification-channels/authy": "dev-develop",
-        "laravel/framework": "~5.5.0",
+        "laravel/framework": "~5.5.0|~5.6.0",
         "laravel/socialite": "^3.0.0",
-        "laravelcollective/html": "~5.5.0",
+        "laravelcollective/html": "~5.5.0|~5.6.0",
         "pragmarx/google2fa": "^2.0.0",
         "rinvex/cacheable": "dev-develop",
         "rinvex/country": "dev-develop",
@@ -66,14 +66,11 @@
         "phpunit/phpunit": "^6.0.0"
     },
     "autoload": {
-        "classmap": [
-            "database"
-        ],
         "files": [
             "src/Support/helpers.php"
         ],
         "psr-4": {
-            "Rinvex\\Fort\\": "src"
+            "Rinvex\\Auth\\": "src"
         }
     },
     "config": {
@@ -87,8 +84,7 @@
         },
         "laravel": {
             "providers": [
-                "Rinvex\\Fort\\Providers\\FortDeferredServiceProvider",
-                "Rinvex\\Fort\\Providers\\FortServiceProvider"
+                "Rinvex\\Auth\\Providers\\AuthServiceProvider"
             ]
         }
     },

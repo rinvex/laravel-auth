@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace Rinvex\Fort\Contracts;
+namespace Rinvex\Auth\Contracts;
 
 interface AuthenticatableTwoFactorContract
 {
     /**
      * Get the TwoFactor options.
      *
-     * @return array
+     * @return array|null
      */
-    public function getTwoFactor();
+    public function getTwoFactor(): ?array;
 }

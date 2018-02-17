@@ -2,16 +2,15 @@
 
 declare(strict_types=1);
 
-namespace Rinvex\Fort\Services;
+namespace Rinvex\Auth\Services;
 
 use Closure;
-use Carbon\Carbon;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
 use UnexpectedValueException;
 use Illuminate\Contracts\Auth\UserProvider;
-use Rinvex\Fort\Contracts\CanResetPasswordContract;
-use Rinvex\Fort\Contracts\PasswordResetBrokerContract;
+use Rinvex\Auth\Contracts\CanResetPasswordContract;
+use Rinvex\Auth\Contracts\PasswordResetBrokerContract;
 
 class PasswordResetBroker implements PasswordResetBrokerContract
 {
@@ -64,7 +63,7 @@ class PasswordResetBroker implements PasswordResetBrokerContract
      *
      * @return string
      */
-    public function sendResetLink(array $credentials)
+    public function sendResetLink(array $credentials): string
     {
         // First we will check to see if we found a user at the given credentials and
         // if we did not we will redirect back to this current URI with a piece of
@@ -75,7 +74,7 @@ class PasswordResetBroker implements PasswordResetBrokerContract
             return static::INVALID_USER;
         }
 
-        $expiration = Carbon::now()->addMinutes($this->expiration)->timestamp;
+        $expiration = now()->addMinutes($this->expiration)->timestamp;
 
         // Once we have the reset token, we are ready to send the message out to this
         // user with a link to reset their password. We will then redirect back to
@@ -121,7 +120,7 @@ class PasswordResetBroker implements PasswordResetBrokerContract
      *
      * @return void
      */
-    public function validator(Closure $callback)
+    public function validator(Closure $callback): void
     {
         $this->passwordValidator = $callback;
     }
@@ -133,7 +132,7 @@ class PasswordResetBroker implements PasswordResetBrokerContract
      *
      * @return bool
      */
-    public function validateNewPassword(array $credentials)
+    public function validateNewPassword(array $credentials): bool
     {
         if (isset($this->passwordValidator)) {
             list($password, $confirm) = [
@@ -156,7 +155,7 @@ class PasswordResetBroker implements PasswordResetBrokerContract
      *
      * @return bool
      */
-    protected function validatePasswordWithDefaults(array $credentials)
+    protected function validatePasswordWithDefaults(array $credentials): bool
     {
         list($password, $confirm) = [
             $credentials['password'],
@@ -173,9 +172,9 @@ class PasswordResetBroker implements PasswordResetBrokerContract
      *
      * @throws \UnexpectedValueException
      *
-     * @return \Rinvex\Fort\Contracts\CanResetPasswordContract
+     * @return \Rinvex\Auth\Contracts\CanResetPasswordContract
      */
-    public function getUser(array $credentials)
+    public function getUser(array $credentials): CanResetPasswordContract
     {
         $user = $this->users->retrieveByCredentials(Arr::only($credentials, ['email']));
 
@@ -189,12 +188,12 @@ class PasswordResetBroker implements PasswordResetBrokerContract
     /**
      * Create a new password reset token for the given user.
      *
-     * @param \Rinvex\Fort\Contracts\CanResetPasswordContract $user
+     * @param \Rinvex\Auth\Contracts\CanResetPasswordContract $user
      * @param int                                             $expiration
      *
      * @return string
      */
-    public function createToken(CanResetPasswordContract $user, $expiration)
+    public function createToken(CanResetPasswordContract $user, $expiration): string
     {
         $payload = $this->buildPayload($user, $user->getEmailForPasswordReset(), $expiration);
 
@@ -204,12 +203,12 @@ class PasswordResetBroker implements PasswordResetBrokerContract
     /**
      * Validate the given password reset token.
      *
-     * @param \Rinvex\Fort\Contracts\CanResetPasswordContract $user
+     * @param \Rinvex\Auth\Contracts\CanResetPasswordContract $user
      * @param array                                           $credentials
      *
      * @return bool
      */
-    public function validateToken(CanResetPasswordContract $user, array $credentials)
+    public function validateToken(CanResetPasswordContract $user, array $credentials): bool
     {
         $payload = $this->buildPayload($user, $credentials['email'], $credentials['expiration']);
 
@@ -223,9 +222,9 @@ class PasswordResetBroker implements PasswordResetBrokerContract
      *
      * @return bool
      */
-    public function validateTimestamp($expiration)
+    public function validateTimestamp($expiration): bool
     {
-        return Carbon::createFromTimestamp($expiration)->isFuture();
+        return now()->createFromTimestamp($expiration)->isFuture();
     }
 
     /**
@@ -233,7 +232,7 @@ class PasswordResetBroker implements PasswordResetBrokerContract
      *
      * @return string
      */
-    public function getKey()
+    public function getKey(): string
     {
         if (Str::startsWith($this->key, 'base64:')) {
             return base64_decode(mb_substr($this->key, 7));
@@ -245,13 +244,13 @@ class PasswordResetBroker implements PasswordResetBrokerContract
     /**
      * Returns the payload string containing.
      *
-     * @param \Rinvex\Fort\Contracts\CanResetPasswordContract $user
+     * @param \Rinvex\Auth\Contracts\CanResetPasswordContract $user
      * @param string                                          $email
      * @param int                                             $expiration
      *
      * @return string
      */
-    protected function buildPayload(CanResetPasswordContract $user, $email, $expiration)
+    protected function buildPayload(CanResetPasswordContract $user, $email, $expiration): string
     {
         return implode(';', [
             $email,

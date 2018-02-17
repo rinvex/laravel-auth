@@ -2,32 +2,24 @@
 
 declare(strict_types=1);
 
-namespace Rinvex\Fort\Traits;
-
-use Rinvex\Fort\Notifications\PasswordResetNotification;
+namespace Rinvex\Auth\Traits;
 
 trait CanResetPassword
 {
     /**
-     * Get the email address where password reset links are sent.
-     *
-     * @return string
+     * {@inheritdoc}
      */
-    public function getEmailForPasswordReset()
+    public function getEmailForPasswordReset(): string
     {
         return $this->email;
     }
 
     /**
-     * Send the password reset notification.
-     *
-     * @param string $token
-     * @param string $expiration
-     *
-     * @return void
+     * {@inheritdoc}
      */
-    public function sendPasswordResetNotification($token, $expiration)
+    public function sendPasswordResetNotification($token, $expiration): void
     {
-        $this->notify(new PasswordResetNotification($token, $expiration));
+        ! $this->passwordResetNotificationClass
+        || $this->notify(new $this->passwordResetNotificationClass($token, $expiration));
     }
 }

@@ -2,10 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Rinvex\Fort\Services;
+namespace Rinvex\Auth\Services;
 
 use InvalidArgumentException;
 use Illuminate\Contracts\Auth\PasswordBrokerFactory;
+use Rinvex\Auth\Contracts\PasswordResetBrokerContract;
 
 class PasswordResetBrokerManager implements PasswordBrokerFactory
 {
@@ -38,9 +39,9 @@ class PasswordResetBrokerManager implements PasswordBrokerFactory
      *
      * @param string $name
      *
-     * @return \Rinvex\Fort\Contracts\PasswordResetBrokerContract
+     * @return \Rinvex\Auth\Contracts\PasswordResetBrokerContract
      */
-    public function broker($name = null)
+    public function broker($name = null): PasswordResetBrokerContract
     {
         $name = $name ?: $this->getDefaultDriver();
 
@@ -54,9 +55,9 @@ class PasswordResetBrokerManager implements PasswordBrokerFactory
      *
      * @throws \InvalidArgumentException
      *
-     * @return \Rinvex\Fort\Contracts\PasswordResetBrokerContract
+     * @return \Rinvex\Auth\Contracts\PasswordResetBrokerContract
      */
-    protected function resolve($name)
+    protected function resolve($name): PasswordResetBrokerContract
     {
         $config = $this->getConfig($name);
 
@@ -78,7 +79,7 @@ class PasswordResetBrokerManager implements PasswordBrokerFactory
      *
      * @return array
      */
-    protected function getConfig($name)
+    protected function getConfig($name): array
     {
         return $this->app['config']["auth.passwords.{$name}"];
     }
@@ -88,7 +89,7 @@ class PasswordResetBrokerManager implements PasswordBrokerFactory
      *
      * @return string
      */
-    public function getDefaultDriver()
+    public function getDefaultDriver(): string
     {
         return $this->app['config']['auth.defaults.passwords'];
     }
@@ -100,7 +101,7 @@ class PasswordResetBrokerManager implements PasswordBrokerFactory
      *
      * @return void
      */
-    public function setDefaultDriver($name)
+    public function setDefaultDriver($name): void
     {
         $this->app['config']['auth.defaults.passwords'] = $name;
     }

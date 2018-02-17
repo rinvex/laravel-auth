@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Rinvex\Fort\Contracts;
+namespace Rinvex\Auth\Contracts;
 
 use Illuminate\Contracts\Auth\PasswordBroker;
 

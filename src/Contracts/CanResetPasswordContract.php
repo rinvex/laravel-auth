@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Rinvex\Fort\Contracts;
+namespace Rinvex\Auth\Contracts;
 
 interface CanResetPasswordContract
 {
@@ -11,7 +11,7 @@ interface CanResetPasswordContract
      *
      * @return string
      */
-    public function getEmailForPasswordReset();
+    public function getEmailForPasswordReset(): string;
 
     /**
      * Send the password reset notification.
@@ -21,5 +21,5 @@ interface CanResetPasswordContract
      *
      * @return void
      */
-    public function sendPasswordResetNotification($token, $expiration);
+    public function sendPasswordResetNotification($token, $expiration): void;
 }

@@ -2,30 +2,30 @@
 
 declare(strict_types=1);
 
-namespace Rinvex\Fort\Contracts;
+namespace Rinvex\Auth\Contracts;
 
 interface CanVerifyPhoneContract
 {
     /**
      * Get the phone for verification.
      *
-     * @return string
+     * @return string|null
      */
-    public function getPhoneForVerification();
+    public function getPhoneForVerification(): ?string;
 
     /**
      * Get the country for verification.
      *
-     * @return string
+     * @return string|null
      */
-    public function getCountryForVerification();
+    public function getCountryForVerification(): ?string;
 
     /**
      * Determine if phone is verified or not.
      *
      * @return bool
      */
-    public function isPhoneVerified();
+    public function isPhoneVerified(): bool;
 
     /**
      * Send the phone verification notification.
@@ -35,5 +35,5 @@ interface CanVerifyPhoneContract
      *
      * @return void
      */
-    public function sendPhoneVerificationNotification($method, $force);
+    public function sendPhoneVerificationNotification($method, $force): void;
 }

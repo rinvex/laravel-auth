@@ -2,16 +2,16 @@
 
 declare(strict_types=1);
 
-namespace Rinvex\Fort\Traits;
+namespace Rinvex\Auth\Traits;
 
 trait AuthenticatableTwoFactor
 {
     /**
      * Get the TwoFactor options.
      *
-     * @return array
+     * @return array|null
      */
-    public function getTwoFactor()
+    public function getTwoFactor(): ?array
     {
         return $this->two_factor;
     }

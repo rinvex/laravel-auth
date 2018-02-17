@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Rinvex\Fort\Contracts;
+namespace Rinvex\Auth\Contracts;
 
 interface EmailVerificationBrokerFactoryContract
 {
@@ -11,7 +11,7 @@ interface EmailVerificationBrokerFactoryContract
      *
      * @param string $name
      *
-     * @return \Rinvex\Fort\Contracts\EmailVerificationBrokerContract
+     * @return \Rinvex\Auth\Contracts\EmailVerificationBrokerContract
      */
     public function broker($name = null);
 }

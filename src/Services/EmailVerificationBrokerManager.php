@@ -2,10 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Rinvex\Fort\Services;
+namespace Rinvex\Auth\Services;
 
 use InvalidArgumentException;
-use Rinvex\Fort\Contracts\EmailVerificationBrokerFactoryContract;
+use Rinvex\Auth\Contracts\EmailVerificationBrokerContract;
+use Rinvex\Auth\Contracts\EmailVerificationBrokerFactoryContract;
 
 class EmailVerificationBrokerManager implements EmailVerificationBrokerFactoryContract
 {
@@ -38,9 +39,9 @@ class EmailVerificationBrokerManager implements EmailVerificationBrokerFactoryCo
      *
      * @param string $name
      *
-     * @return \Rinvex\Fort\Contracts\EmailVerificationBrokerContract
+     * @return \Rinvex\Auth\Contracts\EmailVerificationBrokerContract
      */
-    public function broker($name = null)
+    public function broker($name = null): EmailVerificationBrokerContract
     {
         $name = $name ?: $this->getDefaultDriver();
 
@@ -54,9 +55,9 @@ class EmailVerificationBrokerManager implements EmailVerificationBrokerFactoryCo
      *
      * @throws \InvalidArgumentException
      *
-     * @return \Rinvex\Fort\Contracts\EmailVerificationBrokerContract
+     * @return \Rinvex\Auth\Contracts\EmailVerificationBrokerContract
      */
-    protected function resolve($name)
+    protected function resolve($name): EmailVerificationBrokerContract
     {
         $config = $this->getConfig($name);
 
@@ -78,9 +79,9 @@ class EmailVerificationBrokerManager implements EmailVerificationBrokerFactoryCo
      *
      * @return array
      */
-    protected function getConfig($name)
+    protected function getConfig($name): array
     {
-        return $this->app['config']["rinvex.fort.emailverification.{$name}"];
+        return $this->app['config']["rinvex.auth.emailverification.{$name}"];
     }
 
     /**
@@ -88,9 +89,9 @@ class EmailVerificationBrokerManager implements EmailVerificationBrokerFactoryCo
      *
      * @return string
      */
-    public function getDefaultDriver()
+    public function getDefaultDriver(): string
     {
-        return $this->app['config']['rinvex.fort.emailverification.broker'];
+        return $this->app['config']['rinvex.auth.emailverification.broker'];
     }
 
     /**
@@ -100,9 +101,9 @@ class EmailVerificationBrokerManager implements EmailVerificationBrokerFactoryCo
      *
      * @return void
      */
-    public function setDefaultDriver($name)
+    public function setDefaultDriver($name): void
     {
-        $this->app['config']['rinvex.fort.emailverification.broker'] = $name;
+        $this->app['config']['rinvex.auth.emailverification.broker'] = $name;
     }
 
     /**

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Rinvex\Fort\Contracts;
+namespace Rinvex\Auth\Contracts;
 
 use Closure;
 
@@ -50,7 +50,7 @@ interface EmailVerificationBrokerContract
      *
      * @return string
      */
-    public function sendVerificationLink(array $credentials);
+    public function sendVerificationLink(array $credentials): string;
 
     /**
      * Verify given account.
