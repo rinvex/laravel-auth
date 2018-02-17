@@ -57,13 +57,13 @@
         "rinvex/country": "dev-develop",
         "rinvex/language": "dev-develop",
         "rinvex/support": "dev-develop",
-        "spatie/laravel-sluggable": "^2.0.0",
-        "spatie/laravel-translatable": "^2.0.0",
-        "watson/validating": "^3.0.0"
+        "spatie/laravel-sluggable": "^2.1.0",
+        "spatie/laravel-translatable": "^2.1.0",
+        "watson/validating": "^3.1.0"
     },
     "require-dev": {
         "codedungeon/phpunit-result-printer": "^0.4.0",
-        "phpunit/phpunit": "^6.0.0"
+        "phpunit/phpunit": "^7.0.0"
     },
     "autoload": {
         "files": [
