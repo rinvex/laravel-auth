@@ -5,6 +5,10 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](CONTRIBUTING.md).
 
 
+## [v0.0.8] - 2018-02-18
+- Update composer dependencies
+- Drop Laravel 5.5 support
+
 ## [v0.0.7] - 2018-02-17
 - Major refactor with complete package re-write
 - Remove frontend stuff (use cortex/fort for that)
@@ -136,6 +140,7 @@ This project adheres to [Semantic Versioning](CONTRIBUTING.md).
 ## v0.0.1 - 2016-12-19
 - Tag first release
 
+[v0.0.8]: https://github.com/rinvex/auth/compare/v0.0.7...v0.0.8
 [v0.0.7]: https://github.com/rinvex/auth/compare/v0.0.6...v0.0.7
 [v0.0.6]: https://github.com/rinvex/auth/compare/v0.0.5...v0.0.6
 [v0.0.5]: https://github.com/rinvex/auth/compare/v0.0.4...v0.0.5
