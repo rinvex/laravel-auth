@@ -57,8 +57,6 @@
         "rinvex/country": "dev-develop",
         "rinvex/language": "dev-develop",
         "rinvex/support": "dev-develop",
-        "spatie/laravel-sluggable": "^2.1.0",
-        "spatie/laravel-translatable": "^2.1.0",
         "watson/validating": "^3.1.0"
     },
     "require-dev": {
