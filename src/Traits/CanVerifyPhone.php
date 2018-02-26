@@ -33,7 +33,7 @@ trait CanVerifyPhone
     /**
      * {@inheritdoc}
      */
-    public function sendPhoneVerificationNotification($method, $force): void
+    public function sendPhoneVerificationNotification(string $method, bool $force): void
     {
         ! $this->phoneVerificationNotificationClass
         || $this->notify(new $this->phoneVerificationNotificationClass($method, $force));

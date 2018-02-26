@@ -24,9 +24,9 @@ interface CanVerifyEmailContract
      * Send the email verification notification.
      *
      * @param string $token
-     * @param string $expiration
+     * @param int    $expiration
      *
      * @return void
      */
-    public function sendEmailVerificationNotification($token, $expiration): void;
+    public function sendEmailVerificationNotification(string $token, int $expiration): void;
 }

@@ -35,5 +35,5 @@ interface CanVerifyPhoneContract
      *
      * @return void
      */
-    public function sendPhoneVerificationNotification($method, $force): void;
+    public function sendPhoneVerificationNotification(string $method, bool $force): void;
 }

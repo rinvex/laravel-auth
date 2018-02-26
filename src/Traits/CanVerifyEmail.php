@@ -25,7 +25,7 @@ trait CanVerifyEmail
     /**
      * {@inheritdoc}
      */
-    public function sendEmailVerificationNotification($token, $expiration): void
+    public function sendEmailVerificationNotification(string $token, int $expiration): void
     {
         ! $this->emailVerificationNotificationClass
         || $this->notify(new $this->emailVerificationNotificationClass($token, $expiration));
