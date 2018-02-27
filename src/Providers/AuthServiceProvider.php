@@ -49,11 +49,6 @@ class AuthServiceProvider extends ServiceProvider
      */
     public function boot(Router $router)
     {
-        // Add country validation rule
-        Validator::extend('country', function ($attribute, $value) {
-            return in_array($value, array_keys(countries()));
-        }, 'Country MUST be valid!');
-
         // Add langauge validation rule
         Validator::extend('language', function ($attribute, $value) {
             return in_array($value, array_keys(languages()));
