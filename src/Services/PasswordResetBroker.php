@@ -172,9 +172,9 @@ class PasswordResetBroker implements PasswordResetBrokerContract
      *
      * @throws \UnexpectedValueException
      *
-     * @return \Rinvex\Auth\Contracts\CanResetPasswordContract
+     * @return \Rinvex\Auth\Contracts\CanResetPasswordContract|null
      */
-    public function getUser(array $credentials): CanResetPasswordContract
+    public function getUser(array $credentials): ?CanResetPasswordContract
     {
         $user = $this->users->retrieveByCredentials(Arr::only($credentials, ['email']));
 

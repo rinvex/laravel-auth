@@ -100,9 +100,9 @@ class EmailVerificationBroker implements EmailVerificationBrokerContract
      *
      * @throws \UnexpectedValueException
      *
-     * @return \Rinvex\Auth\Contracts\CanVerifyEmailContract
+     * @return \Rinvex\Auth\Contracts\CanVerifyEmailContract|null
      */
-    public function getUser(array $credentials): CanVerifyEmailContract
+    public function getUser(array $credentials): ?CanVerifyEmailContract
     {
         $user = $this->users->retrieveByCredentials(Arr::only($credentials, ['email']));
 
