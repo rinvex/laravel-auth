@@ -6,7 +6,6 @@ namespace Rinvex\Auth\Services;
 
 use Closure;
 use Illuminate\Support\Arr;
-use Illuminate\Support\Str;
 use UnexpectedValueException;
 use Illuminate\Contracts\Auth\UserProvider;
 use Rinvex\Auth\Contracts\CanResetPasswordContract;
@@ -234,7 +233,7 @@ class PasswordResetBroker implements PasswordResetBrokerContract
      */
     public function getKey(): string
     {
-        if (Str::startsWith($this->key, 'base64:')) {
+        if (starts_with($this->key, 'base64:')) {
             return base64_decode(mb_substr($this->key, 7));
         }
 
