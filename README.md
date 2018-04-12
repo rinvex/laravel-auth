@@ -10,18 +10,11 @@
 [![License](https://img.shields.io/packagist/l/rinvex/auth.svg?label=License&style=flat-square)](https://github.com/rinvex/auth/blob/develop/LICENSE)
 
 
-## Table Of Contents
+## Notice
 
-- **[0) Introduction](https://github.com/rinvex/auth/wiki)**
-- **[1) Installation](https://github.com/rinvex/auth/wiki/1\)-Installation)**
-- **[2) Screenshots](https://github.com/rinvex/auth/wiki/2\)-Screenshots)**
-- **[3) Config Options](https://github.com/rinvex/auth/wiki/3\)-Config-Options)**
-- **[4) Authentication](https://github.com/rinvex/auth/wiki/4\)-Authentication)**
-- **[5) Authorization](https://github.com/rinvex/auth/wiki/5\)-Authorization)**
-- **[6) Email Verification](https://github.com/rinvex/auth/wiki/6\)-Email-Verification)**
-- **[7) Phone Verification](https://github.com/rinvex/auth/wiki/7\)-Phone-Verification)**
-- **[8) Password Reset](https://github.com/rinvex/auth/wiki/8\)-Password-Reset)**
-- **[9) Fired Events](https://github.com/rinvex/auth/wiki/9\)-Fired-Events)**
+Documentation to be written!
+
+This package usually used with [rinvex/cortex](https://github.com/rinvex/cortex), so it may not be that useful alone or outside that application layer.
 
 
 ## Changelog
