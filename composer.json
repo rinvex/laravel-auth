@@ -71,6 +71,11 @@
             "Rinvex\\Auth\\": "src"
         }
     },
+    "autoload-dev": {
+        "psr-4": {
+            "Rinvex\\Auth\\Tests\\": "tests"
+        }
+    },
     "config": {
         "sort-packages": true,
         "preferred-install": "dist",
