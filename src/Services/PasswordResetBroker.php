@@ -134,7 +134,7 @@ class PasswordResetBroker implements PasswordResetBrokerContract
     public function validateNewPassword(array $credentials): bool
     {
         if (isset($this->passwordValidator)) {
-            list($password, $confirm) = [
+            [$password, $confirm] = [
                 $credentials['password'],
                 $credentials['password_confirmation'],
             ];
@@ -156,7 +156,7 @@ class PasswordResetBroker implements PasswordResetBrokerContract
      */
     protected function validatePasswordWithDefaults(array $credentials): bool
     {
-        list($password, $confirm) = [
+        [$password, $confirm] = [
             $credentials['password'],
             $credentials['password_confirmation'],
         ];
