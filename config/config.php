@@ -25,10 +25,20 @@ return [
 
     'emailverification' => [
 
-        'broker' => 'users',
+        'broker' => 'members',
 
-        'users' => [
-            'provider' => 'users',
+        'admins' => [
+            'provider' => 'admins',
+            'expire' => 60,
+        ],
+
+        'members' => [
+            'provider' => 'members',
+            'expire' => 60,
+        ],
+
+        'managers' => [
+            'provider' => 'managers',
             'expire' => 60,
         ],
 
