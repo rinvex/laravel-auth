@@ -6,7 +6,6 @@ namespace Rinvex\Auth\Services;
 
 use Closure;
 use Illuminate\Support\Arr;
-use Illuminate\Support\Str;
 use UnexpectedValueException;
 use Illuminate\Contracts\Auth\UserProvider;
 use Rinvex\Auth\Contracts\CanResetPasswordContract;
@@ -135,7 +134,7 @@ class PasswordResetBroker implements PasswordResetBrokerContract
     public function validateNewPassword(array $credentials): bool
     {
         if (isset($this->passwordValidator)) {
-            list($password, $confirm) = [
+            [$password, $confirm] = [
                 $credentials['password'],
                 $credentials['password_confirmation'],
             ];
@@ -157,7 +156,7 @@ class PasswordResetBroker implements PasswordResetBrokerContract
      */
     protected function validatePasswordWithDefaults(array $credentials): bool
     {
-        list($password, $confirm) = [
+        [$password, $confirm] = [
             $credentials['password'],
             $credentials['password_confirmation'],
         ];
@@ -172,9 +171,9 @@ class PasswordResetBroker implements PasswordResetBrokerContract
      *
      * @throws \UnexpectedValueException
      *
-     * @return \Rinvex\Auth\Contracts\CanResetPasswordContract
+     * @return \Rinvex\Auth\Contracts\CanResetPasswordContract|null
      */
-    public function getUser(array $credentials): CanResetPasswordContract
+    public function getUser(array $credentials): ?CanResetPasswordContract
     {
         $user = $this->users->retrieveByCredentials(Arr::only($credentials, ['email']));
 
@@ -234,7 +233,7 @@ class PasswordResetBroker implements PasswordResetBrokerContract
      */
     public function getKey(): string
     {
-        if (Str::startsWith($this->key, 'base64:')) {
+        if (starts_with($this->key, 'base64:')) {
             return base64_decode(mb_substr($this->key, 7));
         }
 

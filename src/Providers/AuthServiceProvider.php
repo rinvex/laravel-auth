@@ -6,7 +6,6 @@ namespace Rinvex\Auth\Providers;
 
 use Illuminate\Routing\Router;
 use Illuminate\Support\ServiceProvider;
-use Illuminate\Support\Facades\Validator;
 use Rinvex\Auth\Console\Commands\PublishCommand;
 use Rinvex\Auth\Services\PasswordResetBrokerManager;
 use Rinvex\Auth\Services\EmailVerificationBrokerManager;
@@ -49,16 +48,6 @@ class AuthServiceProvider extends ServiceProvider
      */
     public function boot(Router $router)
     {
-        // Add country validation rule
-        Validator::extend('country', function ($attribute, $value) {
-            return in_array($value, array_keys(countries()));
-        }, 'Country MUST be valid!');
-
-        // Add langauge validation rule
-        Validator::extend('language', function ($attribute, $value) {
-            return in_array($value, array_keys(languages()));
-        }, 'Language MUST be valid!');
-
         // Publish resources
         ! $this->app->runningInConsole() || $this->publishes([realpath(__DIR__.'/../../config/config.php') => config_path('rinvex.auth.php')], 'rinvex-auth-config');
     }

@@ -17,7 +17,7 @@ trait CanResetPassword
     /**
      * {@inheritdoc}
      */
-    public function sendPasswordResetNotification($token, $expiration): void
+    public function sendPasswordResetNotification(string $token, int $expiration): void
     {
         ! $this->passwordResetNotificationClass
         || $this->notify(new $this->passwordResetNotificationClass($token, $expiration));

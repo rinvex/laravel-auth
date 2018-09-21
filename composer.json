@@ -57,12 +57,10 @@
         "rinvex/country": "dev-develop",
         "rinvex/language": "dev-develop",
         "rinvex/support": "dev-develop",
-        "spatie/laravel-sluggable": "^2.1.0",
-        "spatie/laravel-translatable": "^2.1.0",
         "watson/validating": "^3.1.0"
     },
     "require-dev": {
-        "codedungeon/phpunit-result-printer": "^0.6.0",
+        "codedungeon/phpunit-result-printer": "^0.19.0",
         "phpunit/phpunit": "^7.0.0"
     },
     "autoload": {
@@ -71,6 +69,11 @@
         ],
         "psr-4": {
             "Rinvex\\Auth\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Rinvex\\Auth\\Tests\\": "tests"
         }
     },
     "config": {
