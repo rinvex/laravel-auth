@@ -1,16 +1,21 @@
-# Rinvex Composer Installer Changelog
+# Rinvex Auth Changelog
 
 All notable changes to this project will be documented in this file.
 
 This project adheres to [Semantic Versioning](CONTRIBUTING.md).
 
 
+## [v1.0.0] - 2018-10-01
+- Enforce Consistency
+- Support Laravel 5.7+
+- Rename package to rinvex/laravel-auth
+
 ## [v0.0.9] - 2018-09-22
 - Update travis php versions
 - Drop useless composer dependencies
 - Typehint notifications method parameters
 - Move country validation rule to rinvex/.country package
-- Move language validation rule to rinvex/language package
+- Move language validation rule to rinvex/languages package
 - Allow brokers to return null on user retrieval
 - Use global helper functions instead of class based methods
 - Drop StyleCI multi-language support (paid feature now!)
@@ -51,7 +56,7 @@ This project adheres to [Semantic Versioning](CONTRIBUTING.md).
 - Merge GetsMiddleware trait into AbstractController in cortex/foundation
 - Fix nullable return type phone & country for verification
 - Move middleware & notifications to cortex/fort
-- Move HasHashables trait from rinvex/support
+- Move HasHashables trait from rinvex/laravel-support
 - Simplify IoC binding
 - Convert genders database storage to explicit male/female instead of m/f
 - Refactor parseAbilities & parseRoles
@@ -63,7 +68,7 @@ This project adheres to [Semantic Versioning](CONTRIBUTING.md).
 - Simplify rinvex/fort config options
 - Move GenericException to cortex/foundation from rinvex/fort
 - Refactor package and move app-layer features to cortex/fort
-- Rename rinvex/fort to rinvex/auth
+- Rename rinvex/fort to rinvex/laravel-auth
 
 ## [v0.0.6] - 2018-01-04
 - Support Laravel 5.5
@@ -109,7 +114,7 @@ This project adheres to [Semantic Versioning](CONTRIBUTING.md).
 - Use IoC bound model instead of the explicitly hardcoded
 - Bind model alias into IoC container
 - Use IoC bound model rather than hard coding
-- Move seeder helper from rinvex/support
+- Move seeder helper from rinvex/laravel-support
 - Tweak service provider and enforce consistency
 - Program to an interface not implementation for flexible model swapping
 - Assure unique slugs generated at all times
@@ -155,11 +160,12 @@ This project adheres to [Semantic Versioning](CONTRIBUTING.md).
 ## v0.0.1 - 2016-12-19
 - Tag first release
 
-[v0.0.9]: https://github.com/rinvex/auth/compare/v0.0.8...v0.0.9
-[v0.0.8]: https://github.com/rinvex/auth/compare/v0.0.7...v0.0.8
-[v0.0.7]: https://github.com/rinvex/auth/compare/v0.0.6...v0.0.7
-[v0.0.6]: https://github.com/rinvex/auth/compare/v0.0.5...v0.0.6
-[v0.0.5]: https://github.com/rinvex/auth/compare/v0.0.4...v0.0.5
-[v0.0.4]: https://github.com/rinvex/auth/compare/v0.0.3...v0.0.4
-[v0.0.3]: https://github.com/rinvex/auth/compare/v0.0.2...v0.0.3
-[v0.0.2]: https://github.com/rinvex/auth/compare/v0.0.1...v0.0.2
+[v1.0.0]: https://github.com/rinvex/laravel-auth/compare/v0.0.9...v1.0.0
+[v0.0.9]: https://github.com/rinvex/laravel-auth/compare/v0.0.8...v0.0.9
+[v0.0.8]: https://github.com/rinvex/laravel-auth/compare/v0.0.7...v0.0.8
+[v0.0.7]: https://github.com/rinvex/laravel-auth/compare/v0.0.6...v0.0.7
+[v0.0.6]: https://github.com/rinvex/laravel-auth/compare/v0.0.5...v0.0.6
+[v0.0.5]: https://github.com/rinvex/laravel-auth/compare/v0.0.4...v0.0.5
+[v0.0.4]: https://github.com/rinvex/laravel-auth/compare/v0.0.3...v0.0.4
+[v0.0.3]: https://github.com/rinvex/laravel-auth/compare/v0.0.2...v0.0.3
+[v0.0.2]: https://github.com/rinvex/laravel-auth/compare/v0.0.1...v0.0.2
