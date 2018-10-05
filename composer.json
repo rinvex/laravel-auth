@@ -55,8 +55,8 @@
         "laravelcollective/html": "~5.7.0",
         "pragmarx/google2fa": "^2.0.0",
         "rinvex/laravel-cacheable": "^1.0.0",
-        "rinvex/countries": "v5.0.0",
-        "rinvex/languages": "v5.0.0",
+        "rinvex/countries": "^5.0.0",
+        "rinvex/languages": "^3.0.0",
         "rinvex/laravel-support": "v1.0.0",
         "watson/validating": "^3.1.0"
     },
