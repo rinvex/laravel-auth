@@ -25,9 +25,9 @@ trait CanVerifyPhone
     /**
      * {@inheritdoc}
      */
-    public function isPhoneVerified(): bool
+    public function hasVerifiedPhone(): bool
     {
-        return $this->phone_verified;
+        return ! is_null($this->phone_verified_at);
     }
 
     /**

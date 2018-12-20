@@ -17,9 +17,9 @@ trait CanVerifyEmail
     /**
      * {@inheritdoc}
      */
-    public function isEmailVerified(): bool
+    public function hasVerifiedEmail(): bool
     {
-        return $this->email_verified;
+        return ! is_null($this->email_verified_at);
     }
 
     /**
