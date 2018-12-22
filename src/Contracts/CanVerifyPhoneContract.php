@@ -21,11 +21,11 @@ interface CanVerifyPhoneContract
     public function getCountryForVerification(): ?string;
 
     /**
-     * Determine if phone is verified or not.
+     * Determine if the user has verified their phone number.
      *
      * @return bool
      */
-    public function isPhoneVerified(): bool;
+    public function hasVerifiedPhone(): bool;
 
     /**
      * Send the phone verification notification.

@@ -14,11 +14,11 @@ interface CanVerifyEmailContract
     public function getEmailForVerification(): string;
 
     /**
-     * Determine if email is verified or not.
+     * Determine if the user has verified their email address.
      *
      * @return bool
      */
-    public function isEmailVerified(): bool;
+    public function hasVerifiedEmail(): bool;
 
     /**
      * Send the email verification notification.
