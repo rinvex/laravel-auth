@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Rinvex\Auth\Services;
 
 use Closure;
-use Illuminate\Support\Arr;
 use UnexpectedValueException;
 use Illuminate\Contracts\Auth\UserProvider;
 use Rinvex\Auth\Contracts\CanResetPasswordContract;
@@ -175,7 +174,7 @@ class PasswordResetBroker implements PasswordResetBrokerContract
      */
     public function getUser(array $credentials): ?CanResetPasswordContract
     {
-        $user = $this->users->retrieveByCredentials(Arr::only($credentials, ['email']));
+        $user = $this->users->retrieveByCredentials(array_only($credentials, ['email']));
 
         if ($user && ! $user instanceof CanResetPasswordContract) {
             throw new UnexpectedValueException('User must implement CanResetPassword interface.');

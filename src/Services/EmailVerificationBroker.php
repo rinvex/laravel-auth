@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Rinvex\Auth\Services;
 
 use Closure;
-use Illuminate\Support\Arr;
 use UnexpectedValueException;
 use Illuminate\Contracts\Auth\UserProvider;
 use Rinvex\Auth\Contracts\CanVerifyEmailContract;
@@ -103,7 +102,7 @@ class EmailVerificationBroker implements EmailVerificationBrokerContract
      */
     public function getUser(array $credentials): ?CanVerifyEmailContract
     {
-        $user = $this->users->retrieveByCredentials(Arr::only($credentials, ['email']));
+        $user = $this->users->retrieveByCredentials(array_only($credentials, ['email']));
 
         if ($user && ! $user instanceof CanVerifyEmailContract) {
             throw new UnexpectedValueException('User must implement CanVerifyEmailContract interface.');
