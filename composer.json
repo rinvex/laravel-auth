@@ -48,7 +48,7 @@
     ],
     "require": {
         "php": "^7.2.0",
-        "laravel-notification-channels/authy": "^4.0.0",
+        "laravel-notification-channels/authy": "^5.0.0",
         "laravel/framework": "~5.8.0",
         "laravel/socialite": "^3.0.0",
         "laravelcollective/html": "~5.8.0",
