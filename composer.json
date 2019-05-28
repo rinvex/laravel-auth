@@ -61,7 +61,7 @@
     },
     "require-dev": {
         "codedungeon/phpunit-result-printer": "^0.26.0",
-        "phpunit/phpunit": "^8.0.0"
+        "phpunit/phpunit": "^8.1.0"
     },
     "autoload": {
         "files": [
