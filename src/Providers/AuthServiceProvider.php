@@ -6,12 +6,15 @@ namespace Rinvex\Auth\Providers;
 
 use Illuminate\Routing\Router;
 use Illuminate\Support\ServiceProvider;
+use Rinvex\Support\Traits\ConsoleTools;
 use Rinvex\Auth\Console\Commands\PublishCommand;
 use Rinvex\Auth\Services\PasswordResetBrokerManager;
 use Rinvex\Auth\Services\EmailVerificationBrokerManager;
 
 class AuthServiceProvider extends ServiceProvider
 {
+    use ConsoleTools;
+
     /**
      * The commands to be registered.
      *
@@ -49,21 +52,6 @@ class AuthServiceProvider extends ServiceProvider
     public function boot(Router $router)
     {
         // Publish resources
-        ! $this->app->runningInConsole() || $this->publishes([realpath(__DIR__.'/../../config/config.php') => config_path('rinvex.auth.php')], 'rinvex-auth-config');
-    }
-
-    /**
-     * Register console commands.
-     *
-     * @return void
-     */
-    protected function registerCommands(): void
-    {
-        // Register artisan commands
-        foreach ($this->commands as $key => $value) {
-            $this->app->singleton($value, $key);
-        }
-
-        $this->commands(array_values($this->commands));
+        ! $this->app->runningInConsole() || $this->publishesConfig('rinvex/laravel-auth');
     }
 }
