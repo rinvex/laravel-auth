@@ -49,19 +49,19 @@
     "require": {
         "php": "^7.2.0",
         "laravel-notification-channels/authy": "^5.0.0",
-        "laravel/framework": "~5.8.0",
+        "laravel/framework": "^6.0.0",
         "laravel/socialite": "^4.0.0",
-        "laravelcollective/html": "~5.8.0",
+        "laravelcollective/html": "^6.0.0",
         "pragmarx/google2fa": "^5.0.0",
-        "rinvex/laravel-cacheable": "^2.1.0",
+        "rinvex/laravel-cacheable": "^3.0.0",
         "rinvex/countries": "^6.0.0",
         "rinvex/languages": "^4.0.0",
-        "rinvex/laravel-support": "^2.1.0",
-        "watson/validating": "^3.2.0"
+        "rinvex/laravel-support": "^3.0.0",
+        "watson/validating": "^3.3.0"
     },
     "require-dev": {
         "codedungeon/phpunit-result-printer": "^0.26.0",
-        "phpunit/phpunit": "^8.1.0"
+        "phpunit/phpunit": "^8.3.0"
     },
     "autoload": {
         "files": [
