@@ -34,13 +34,6 @@ class PasswordResetBroker implements PasswordResetBrokerContract
     protected $expiration;
 
     /**
-     * The custom password validator callback.
-     *
-     * @var \Closure
-     */
-    protected $passwordValidator;
-
-    /**
      * Create a new verification broker instance.
      *
      * @param \Illuminate\Contracts\Auth\UserProvider $users
@@ -92,11 +85,11 @@ class PasswordResetBroker implements PasswordResetBrokerContract
      */
     public function reset(array $credentials, Closure $callback)
     {
+        $user = $this->validateReset($credentials);
+
         // If the responses from the validate method is not a user instance, we will
         // assume that it is a redirect and simply return it from this method and
         // the user is properly redirected having an error message on the post.
-        $user = $this->validateReset($credentials);
-
         if (! $user instanceof CanResetPasswordContract) {
             return $user;
         }
@@ -109,58 +102,6 @@ class PasswordResetBroker implements PasswordResetBrokerContract
         $callback($user, $password);
 
         return static::PASSWORD_RESET;
-    }
-
-    /**
-     * Set a custom password validator.
-     *
-     * @param \Closure $callback
-     *
-     * @return void
-     */
-    public function validator(Closure $callback): void
-    {
-        $this->passwordValidator = $callback;
-    }
-
-    /**
-     * Determine if the passwords match for the request.
-     *
-     * @param array $credentials
-     *
-     * @return bool
-     */
-    public function validateNewPassword(array $credentials): bool
-    {
-        if (isset($this->passwordValidator)) {
-            [$password, $confirm] = [
-                $credentials['password'],
-                $credentials['password_confirmation'],
-            ];
-
-            return call_user_func(
-                $this->passwordValidator, $credentials
-            ) && $password === $confirm;
-        }
-
-        return $this->validatePasswordWithDefaults($credentials);
-    }
-
-    /**
-     * Determine if the passwords are valid for the request.
-     *
-     * @param array $credentials
-     *
-     * @return bool
-     */
-    protected function validatePasswordWithDefaults(array $credentials): bool
-    {
-        [$password, $confirm] = [
-            $credentials['password'],
-            $credentials['password_confirmation'],
-        ];
-
-        return $password === $confirm && mb_strlen($password) >= 6;
     }
 
     /**
@@ -269,10 +210,6 @@ class PasswordResetBroker implements PasswordResetBrokerContract
     {
         if (is_null($user = $this->getUser($credentials))) {
             return static::INVALID_USER;
-        }
-
-        if (! $this->validateNewPassword($credentials)) {
-            return static::INVALID_PASSWORD;
         }
 
         if (! $this->validateToken($user, $credentials)) {
