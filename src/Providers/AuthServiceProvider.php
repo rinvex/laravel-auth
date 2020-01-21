@@ -52,6 +52,6 @@ class AuthServiceProvider extends ServiceProvider
     public function boot(Router $router)
     {
         // Publish resources
-        ! $this->app->runningInConsole() || $this->publishesConfig('rinvex/laravel-auth');
+        $this->publishesConfig('rinvex/laravel-auth');
     }
 }
