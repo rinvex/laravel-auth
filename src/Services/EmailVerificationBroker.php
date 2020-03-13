@@ -5,6 +5,9 @@ declare(strict_types=1);
 namespace Rinvex\Auth\Services;
 
 use Closure;
+use Carbon\Carbon;
+use Illuminate\Support\Arr;
+use Illuminate\Support\Str;
 use UnexpectedValueException;
 use Illuminate\Contracts\Auth\UserProvider;
 use Rinvex\Auth\Contracts\CanVerifyEmailContract;
@@ -59,7 +62,7 @@ class EmailVerificationBroker implements EmailVerificationBrokerContract
             return static::INVALID_USER;
         }
 
-        $expiration = now()->addMinutes($this->expiration)->timestamp;
+        $expiration = Carbon::now()->addMinutes($this->expiration)->timestamp;
 
         // Once we have the verification token, we are ready to send the message out to
         // this user with a link to verify their email. We will then redirect back to
@@ -102,7 +105,7 @@ class EmailVerificationBroker implements EmailVerificationBrokerContract
      */
     public function getUser(array $credentials): ?CanVerifyEmailContract
     {
-        $user = $this->users->retrieveByCredentials(array_only($credentials, ['email']));
+        $user = $this->users->retrieveByCredentials(Arr::only($credentials, ['email']));
 
         if ($user && ! $user instanceof CanVerifyEmailContract) {
             throw new UnexpectedValueException('User must implement CanVerifyEmailContract interface.');
@@ -150,7 +153,7 @@ class EmailVerificationBroker implements EmailVerificationBrokerContract
      */
     public function validateTimestamp($expiration): bool
     {
-        return now()->createFromTimestamp($expiration)->isFuture();
+        return Carbon::now()->createFromTimestamp($expiration)->isFuture();
     }
 
     /**
@@ -160,7 +163,7 @@ class EmailVerificationBroker implements EmailVerificationBrokerContract
      */
     public function getKey(): string
     {
-        if (starts_with($this->key, 'base64:')) {
+        if (Str::startsWith($this->key, 'base64:')) {
             return base64_decode(mb_substr($this->key, 7));
         }
 

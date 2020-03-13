@@ -5,6 +5,9 @@ declare(strict_types=1);
 namespace Rinvex\Auth\Services;
 
 use Closure;
+use Carbon\Carbon;
+use Illuminate\Support\Arr;
+use Illuminate\Support\Str;
 use UnexpectedValueException;
 use Illuminate\Contracts\Auth\UserProvider;
 use Rinvex\Auth\Contracts\CanResetPasswordContract;
@@ -65,7 +68,7 @@ class PasswordResetBroker implements PasswordResetBrokerContract
             return static::INVALID_USER;
         }
 
-        $expiration = now()->addMinutes($this->expiration)->timestamp;
+        $expiration = Carbon::now()->addMinutes($this->expiration)->timestamp;
 
         // Once we have the reset token, we are ready to send the message out to this
         // user with a link to reset their password. We will then redirect back to
@@ -115,7 +118,7 @@ class PasswordResetBroker implements PasswordResetBrokerContract
      */
     public function getUser(array $credentials): ?CanResetPasswordContract
     {
-        $user = $this->users->retrieveByCredentials(array_only($credentials, ['email']));
+        $user = $this->users->retrieveByCredentials(Arr::only($credentials, ['email']));
 
         if ($user && ! $user instanceof CanResetPasswordContract) {
             throw new UnexpectedValueException('User must implement CanResetPassword interface.');
@@ -163,7 +166,7 @@ class PasswordResetBroker implements PasswordResetBrokerContract
      */
     public function validateTimestamp($expiration): bool
     {
-        return now()->createFromTimestamp($expiration)->isFuture();
+        return Carbon::now()->createFromTimestamp($expiration)->isFuture();
     }
 
     /**
@@ -173,7 +176,7 @@ class PasswordResetBroker implements PasswordResetBrokerContract
      */
     public function getKey(): string
     {
-        if (starts_with($this->key, 'base64:')) {
+        if (Str::startsWith($this->key, 'base64:')) {
             return base64_decode(mb_substr($this->key, 7));
         }
 
