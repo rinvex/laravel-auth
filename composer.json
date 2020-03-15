@@ -47,21 +47,21 @@
         }
     ],
     "require": {
-        "php": "^7.2.0",
+        "php": "^7.4.0",
         "laravel-notification-channels/authy": "^6.0.0",
-        "laravel/helpers": "^1.1.0",
-        "laravel/framework": "^6.0.0",
+        "laravel/helpers": "^1.2.0",
+        "laravel/framework": "^7.0.0",
         "laravel/socialite": "^4.2.0",
-        "laravelcollective/html": "^6.0.0",
-        "pragmarx/google2fa": "^6.0.0",
-        "rinvex/laravel-cacheable": "^3.0.0",
-        "rinvex/countries": "^6.0.0",
-        "rinvex/languages": "^4.0.0",
-        "rinvex/laravel-support": "^3.0.0"
+        "laravelcollective/html": "^7.0.0",
+        "pragmarx/google2fa": "^7.0.0",
+        "rinvex/laravel-cacheable": "^4.0.0",
+        "rinvex/countries": "^7.0.0",
+        "rinvex/languages": "^5.0.0",
+        "rinvex/laravel-support": "^4.0.0"
     },
     "require-dev": {
-        "codedungeon/phpunit-result-printer": "^0.26.0",
-        "phpunit/phpunit": "^8.3.0"
+        "codedungeon/phpunit-result-printer": "^0.27.0",
+        "phpunit/phpunit": "^9.0.0"
     },
     "autoload": {
         "files": [
