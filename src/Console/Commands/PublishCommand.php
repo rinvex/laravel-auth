@@ -31,7 +31,7 @@ class PublishCommand extends Command
     {
         $this->alert($this->description);
 
-        $this->call('vendor:publish', ['--tag' => 'rinvex-auth-config', '--force' => $this->option('force')]);
+        $this->call('vendor:publish', ['--tag' => 'rinvex/auth::config', '--force' => $this->option('force')]);
 
         $this->line('');
     }
