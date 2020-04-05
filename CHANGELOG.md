@@ -5,6 +5,9 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](CONTRIBUTING.md).
 
 
+## [v4.0.5] - 2020-04-04
+- Fix namespace issue
+
 ## [v4.0.4] - 2020-04-04
 - Enforce consistent artisan command tag namespacing
 - Enforce consistent package namespace
@@ -224,6 +227,7 @@ This project adheres to [Semantic Versioning](CONTRIBUTING.md).
 ## v0.0.1 - 2016-12-19
 - Tag first release
 
+[v4.0.5]: https://github.com/rinvex/laravel-auth/compare/v4.0.4...v4.0.5
 [v4.0.4]: https://github.com/rinvex/laravel-auth/compare/v4.0.3...v4.0.4
 [v4.0.3]: https://github.com/rinvex/laravel-auth/compare/v4.0.2...v4.0.3
 [v4.0.2]: https://github.com/rinvex/laravel-auth/compare/v4.0.1...v4.0.2
