@@ -52,7 +52,7 @@
         "laravel/framework": "^7.0.0",
         "laravel/socialite": "^4.2.0",
         "laravelcollective/html": "^6.1.0",
-        "pragmarx/google2fa": "^7.0.0",
+        "pragmarx/google2fa": "^7.0.0 || ^8.0.0",
         "rinvex/laravel-cacheable": "^4.0.0",
         "rinvex/countries": "^7.0.0",
         "rinvex/languages": "^5.0.0",
