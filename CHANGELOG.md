@@ -5,6 +5,10 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](CONTRIBUTING.md).
 
 
+## [v4.0.6] - 2020-04-09
+- Tweak artisan command registration
+- Refactor publish command and allow multiple resource values
+
 ## [v4.0.5] - 2020-04-04
 - Fix namespace issue
 
@@ -227,6 +231,7 @@ This project adheres to [Semantic Versioning](CONTRIBUTING.md).
 ## v0.0.1 - 2016-12-19
 - Tag first release
 
+[v4.0.6]: https://github.com/rinvex/laravel-auth/compare/v4.0.5...v4.0.6
 [v4.0.5]: https://github.com/rinvex/laravel-auth/compare/v4.0.4...v4.0.5
 [v4.0.4]: https://github.com/rinvex/laravel-auth/compare/v4.0.3...v4.0.4
 [v4.0.3]: https://github.com/rinvex/laravel-auth/compare/v4.0.2...v4.0.3
