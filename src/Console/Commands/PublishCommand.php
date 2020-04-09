@@ -13,7 +13,7 @@ class PublishCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'rinvex:publish:auth {--f|force : Overwrite any existing files.} {--r|resource=all}';
+    protected $signature = 'rinvex:publish:auth {--f|force : Overwrite any existing files.} {--r|resource=* : Specify which resources to publish.}';
 
     /**
      * The console command description.
@@ -31,7 +31,9 @@ class PublishCommand extends Command
     {
         $this->alert($this->description);
 
-        $this->call('vendor:publish', ['--tag' => 'rinvex/auth::config', '--force' => $this->option('force')]);
+        collect($this->option('resource'))->each(function ($resource) {
+            $this->call('vendor:publish', ['--tag' => "rinvex/auth::{$resource}", '--force' => $this->option('force')]);
+        });
 
         $this->line('');
     }
