@@ -33,7 +33,7 @@ class AuthServiceProvider extends ServiceProvider
         $this->mergeConfigFrom(realpath(__DIR__.'/../../config/config.php'), 'rinvex.auth');
 
         // Register console commands
-        $this->registerCommands();
+        $this->registerCommands($this->commands);
 
         // Register the password reset broker manager
         $this->app->singleton('auth.password', function ($app) {
