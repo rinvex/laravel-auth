@@ -53,8 +53,8 @@ class PasswordResetBroker implements PasswordResetBrokerContract
     /**
      * Send a password reset link to a user.
      *
-     * @param array $credentials
-     * @param  \Closure|null  $callback
+     * @param array         $credentials
+     * @param \Closure|null $callback
      *
      * @return string
      */
