@@ -5,6 +5,10 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](CONTRIBUTING.md).
 
 
+## [v5.0.2] - 2021-01-18
+- fix reset password declaration compatibility (#163)
+- Enable StyleCI risky mode
+
 ## [v5.0.1] - 2020-12-25
 - Add support for PHP v8
 
@@ -246,6 +250,7 @@ This project adheres to [Semantic Versioning](CONTRIBUTING.md).
 ## v0.0.1 - 2016-12-19
 - Tag first release
 
+[v5.0.2]: https://github.com/rinvex/laravel-auth/compare/v5.0.1...v5.0.2
 [v5.0.1]: https://github.com/rinvex/laravel-auth/compare/v5.0.0...v5.0.1
 [v5.0.0]: https://github.com/rinvex/laravel-auth/compare/v4.1.0...v5.0.0
 [v4.1.0]: https://github.com/rinvex/laravel-auth/compare/v4.0.7...v4.1.0
