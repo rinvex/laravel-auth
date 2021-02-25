@@ -29,9 +29,6 @@ class AuthServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        // Merge config
-        $this->mergeConfigFrom(realpath(__DIR__.'/../../config/config.php'), 'rinvex.auth');
-
         // Register console commands
         $this->registerCommands($this->commands);
 
