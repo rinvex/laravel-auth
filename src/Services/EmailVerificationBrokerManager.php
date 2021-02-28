@@ -81,7 +81,7 @@ class EmailVerificationBrokerManager implements EmailVerificationBrokerFactoryCo
      */
     protected function getConfig($name): array
     {
-        return $this->app['config']["rinvex.auth.emailverification.{$name}"];
+        return $this->app['config']["auth.emails.{$name}"];
     }
 
     /**
@@ -91,7 +91,7 @@ class EmailVerificationBrokerManager implements EmailVerificationBrokerFactoryCo
      */
     public function getDefaultDriver(): string
     {
-        return $this->app['config']['rinvex.auth.emailverification.broker'];
+        return $this->app['config']['auth.defaults.emails'];
     }
 
     /**
@@ -103,7 +103,7 @@ class EmailVerificationBrokerManager implements EmailVerificationBrokerFactoryCo
      */
     public function setDefaultDriver($name): void
     {
-        $this->app['config']['rinvex.auth.emailverification.broker'] = $name;
+        $this->app['config']['auth.defaults.emails'] = $name;
     }
 
     /**
