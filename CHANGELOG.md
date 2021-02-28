@@ -5,6 +5,9 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](CONTRIBUTING.md).
 
 
+## [v5.0.3] - 2021-02-28
+- Move email verification config to default project config/auth.php file
+
 ## [v5.0.2] - 2021-01-18
 - fix reset password declaration compatibility (#163)
 - Enable StyleCI risky mode
@@ -250,6 +253,7 @@ This project adheres to [Semantic Versioning](CONTRIBUTING.md).
 ## v0.0.1 - 2016-12-19
 - Tag first release
 
+[v5.0.3]: https://github.com/rinvex/laravel-auth/compare/v5.0.2...v5.0.3
 [v5.0.2]: https://github.com/rinvex/laravel-auth/compare/v5.0.1...v5.0.2
 [v5.0.1]: https://github.com/rinvex/laravel-auth/compare/v5.0.0...v5.0.1
 [v5.0.0]: https://github.com/rinvex/laravel-auth/compare/v4.1.0...v5.0.0
