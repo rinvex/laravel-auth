@@ -53,8 +53,8 @@
         "laravel/socialite": "^5.1.0",
         "laravelcollective/html": "^6.2.0",
         "pragmarx/google2fa": "^8.0.0",
-        "rinvex/countries": "^7.0.0",
-        "rinvex/languages": "^5.0.0",
+        "rinvex/countries": "^8.0.0",
+        "rinvex/languages": "^6.0.0",
         "rinvex/laravel-support": "^6.0.0"
     },
     "require-dev": {
