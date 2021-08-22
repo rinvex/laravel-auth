@@ -5,6 +5,11 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](CONTRIBUTING.md).
 
 
+## [v6.0.0] - 2021-08-22
+- Drop PHP v7 support, and upgrade rinvex package dependencies to next major version
+- Update composer dependencies
+- Upgrade to GitHub-native Dependabot (#165)
+
 ## [v5.0.3] - 2021-02-28
 - Move email verification config to default project config/auth.php file
 
@@ -253,6 +258,7 @@ This project adheres to [Semantic Versioning](CONTRIBUTING.md).
 ## v0.0.1 - 2016-12-19
 - Tag first release
 
+[v6.0.0]: https://github.com/rinvex/laravel-auth/compare/v5.0.3...v6.0.0
 [v5.0.3]: https://github.com/rinvex/laravel-auth/compare/v5.0.2...v5.0.3
 [v5.0.2]: https://github.com/rinvex/laravel-auth/compare/v5.0.1...v5.0.2
 [v5.0.1]: https://github.com/rinvex/laravel-auth/compare/v5.0.0...v5.0.1
