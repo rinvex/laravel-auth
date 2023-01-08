@@ -21,7 +21,7 @@ class AuthServiceProvider extends ServiceProvider
      * @var array
      */
     protected $commands = [
-        PublishCommand::class => 'command.rinvex.auth.publish',
+        PublishCommand::class,
     ];
 
     /**
@@ -30,7 +30,7 @@ class AuthServiceProvider extends ServiceProvider
     public function register()
     {
         // Register console commands
-        $this->registerCommands($this->commands);
+        $this->commands($this->commands);
 
         // Register the password reset broker manager
         $this->app->singleton('auth.password', function ($app) {
