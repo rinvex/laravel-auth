@@ -5,6 +5,11 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](CONTRIBUTING.md).
 
 
+## [v7.0.0] - 2023-01-09
+- Tweak artisan commands registration
+- Drop PHP v8.0 support and update composer dependencies
+- Utilize PHP 8.1 attributes feature for artisan commands
+
 ## [v6.1.0] - 2022-02-14
 - Update composer dependencies to Laravel v9
 
@@ -261,6 +266,7 @@ This project adheres to [Semantic Versioning](CONTRIBUTING.md).
 ## v0.0.1 - 2016-12-19
 - Tag first release
 
+[v7.0.0]: https://github.com/rinvex/laravel-auth/compare/v6.1.0...v7.0.0
 [v6.1.0]: https://github.com/rinvex/laravel-auth/compare/v6.0.0...v6.1.0
 [v6.0.0]: https://github.com/rinvex/laravel-auth/compare/v5.0.3...v6.0.0
 [v5.0.3]: https://github.com/rinvex/laravel-auth/compare/v5.0.2...v5.0.3
