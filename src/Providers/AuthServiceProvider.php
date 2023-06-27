@@ -42,13 +42,4 @@ class AuthServiceProvider extends ServiceProvider
             return new EmailVerificationBrokerManager($app);
         });
     }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function boot(Router $router)
-    {
-        // Publish resources
-        $this->publishesConfig('rinvex/laravel-auth');
-    }
 }
