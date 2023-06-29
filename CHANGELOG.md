@@ -5,10 +5,13 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](CONTRIBUTING.md).
 
 
+## [v7.1.1] - 2023-06-29
+- Drop config resource publishing since there's no config for this package
+
 ## [v7.1.0] - 2023-05-02
-- 2e2d2fe: Add support for Laravel v11, and drop support for Laravel v9
-- 38ac050: Upgrade laravel/socialite to v5.6 from v5.5
-- 4e2dd50: Update phpunit to v10.1 from v9.5
+- Add support for Laravel v11, and drop support for Laravel v9
+- Upgrade laravel/socialite to v5.6 from v5.5
+- Update phpunit to v10.1 from v9.5
 
 ## [v7.0.0] - 2023-01-09
 - Tweak artisan commands registration
@@ -271,6 +274,7 @@ This project adheres to [Semantic Versioning](CONTRIBUTING.md).
 ## v0.0.1 - 2016-12-19
 - Tag first release
 
+[v7.1.1]: https://github.com/rinvex/laravel-auth/compare/v7.1.0...v7.1.1
 [v7.1.0]: https://github.com/rinvex/laravel-auth/compare/v7.0.0...v7.1.0
 [v7.0.0]: https://github.com/rinvex/laravel-auth/compare/v6.1.0...v7.0.0
 [v6.1.0]: https://github.com/rinvex/laravel-auth/compare/v6.0.0...v6.1.0
