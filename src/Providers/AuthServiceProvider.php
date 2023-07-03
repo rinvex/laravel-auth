@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Rinvex\Auth\Providers;
 
-use Illuminate\Routing\Router;
 use Illuminate\Support\ServiceProvider;
 use Rinvex\Support\Traits\ConsoleTools;
 use Rinvex\Auth\Console\Commands\PublishCommand;
