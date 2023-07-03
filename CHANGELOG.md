@@ -5,6 +5,10 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](CONTRIBUTING.md).
 
 
+## [v7.1.2] - 2023-07-03
+- Update composer dependencies
+- Replace Carbon\Carbon with Illuminate\Support\Carbon
+
 ## [v7.1.1] - 2023-06-29
 - Drop config resource publishing since there's no config for this package
 
@@ -274,6 +278,7 @@ This project adheres to [Semantic Versioning](CONTRIBUTING.md).
 ## v0.0.1 - 2016-12-19
 - Tag first release
 
+[v7.1.2]: https://github.com/rinvex/laravel-auth/compare/v7.1.1...v7.1.2
 [v7.1.1]: https://github.com/rinvex/laravel-auth/compare/v7.1.0...v7.1.1
 [v7.1.0]: https://github.com/rinvex/laravel-auth/compare/v7.0.0...v7.1.0
 [v7.0.0]: https://github.com/rinvex/laravel-auth/compare/v6.1.0...v7.0.0
