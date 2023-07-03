@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Rinvex\Auth\Services;
 
 use Closure;
-use Carbon\Carbon;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
 use UnexpectedValueException;
