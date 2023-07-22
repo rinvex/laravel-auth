@@ -5,10 +5,10 @@ declare(strict_types=1);
 namespace Rinvex\Auth\Services;
 
 use Closure;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
 use UnexpectedValueException;
-use Illuminate\Support\Carbon;
 use Illuminate\Contracts\Auth\UserProvider;
 use Rinvex\Auth\Contracts\CanResetPasswordContract;
 use Rinvex\Auth\Contracts\PasswordResetBrokerContract;
